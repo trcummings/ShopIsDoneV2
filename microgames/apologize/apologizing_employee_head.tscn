@@ -1,50 +1,67 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=9 format=3 uid="uid://dx64i6ik6omwa"]
 
-[ext_resource type="Texture" uid="uid://d1umnqi4vlrru" path="res://microgames/apologize/apologizing_employee.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://d1umnqi4vlrru" path="res://microgames/apologize/apologizing_employee.png" id="1"]
 
-[sub_resource type="AtlasTexture" id=51]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 840, 180, 210 )
+[sub_resource type="AtlasTexture" id="51"]
+atlas = ExtResource("1")
+region = Rect2(0, 840, 180, 210)
 
-[sub_resource type="AtlasTexture" id=52]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 1050, 180, 210 )
+[sub_resource type="AtlasTexture" id="52"]
+atlas = ExtResource("1")
+region = Rect2(0, 1050, 180, 210)
 
-[sub_resource type="AtlasTexture" id=53]
-atlas = ExtResource( 1 )
-region = Rect2( 180, 840, 180, 210 )
+[sub_resource type="AtlasTexture" id="53"]
+atlas = ExtResource("1")
+region = Rect2(180, 840, 180, 210)
 
-[sub_resource type="AtlasTexture" id=54]
-atlas = ExtResource( 1 )
-region = Rect2( 180, 1050, 180, 210 )
+[sub_resource type="AtlasTexture" id="54"]
+atlas = ExtResource("1")
+region = Rect2(180, 1050, 180, 210)
 
-[sub_resource type="AtlasTexture" id=55]
-atlas = ExtResource( 1 )
-region = Rect2( 360, 840, 180, 210 )
+[sub_resource type="AtlasTexture" id="55"]
+atlas = ExtResource("1")
+region = Rect2(360, 840, 180, 210)
 
-[sub_resource type="AtlasTexture" id=56]
-atlas = ExtResource( 1 )
-region = Rect2( 360, 1050, 180, 210 )
+[sub_resource type="AtlasTexture" id="56"]
+atlas = ExtResource("1")
+region = Rect2(360, 1050, 180, 210)
 
-[sub_resource type="SpriteFrames" id=57]
-animations = [ {
-"frames": [ SubResource( 51 ), SubResource( 52 ) ],
+[sub_resource type="SpriteFrames" id="57"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("51")
+}, {
+"duration": 1.0,
+"texture": SubResource("52")
+}],
 "loop": true,
-"name": "angry",
+"name": &"angry",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 53 ), SubResource( 54 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("53")
+}, {
+"duration": 1.0,
+"texture": SubResource("54")
+}],
 "loop": true,
-"name": "apologizing",
+"name": &"apologizing",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 55 ), SubResource( 56 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("55")
+}, {
+"duration": 1.0,
+"texture": SubResource("56")
+}],
 "loop": true,
-"name": "default",
+"name": &"default",
 "speed": 5.0
-} ]
+}]
 
-[node name="ApologizingEmployeeHead" type="AnimatedSprite"]
-frames = SubResource( 57 )
-frame = 1
-playing = true
+[node name="ApologizingEmployeeHead" type="AnimatedSprite2D"]
+sprite_frames = SubResource("57")
+autoplay = "default"

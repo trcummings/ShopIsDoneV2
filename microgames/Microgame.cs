@@ -54,13 +54,10 @@ namespace Microgames
             _SuccessSfx = GetNode<AudioStreamPlayer>("%SuccessSfxPlayer");
             _FailureSfx = GetNode<AudioStreamPlayer>("%FailureSfxPlayer");
 
-            // Calculate seconds per beat
-            var spb = GetSecondsPerBeat();
-
-            // Create timer, add it to tree, and connect
-            MicrogameTimer = new Timer() { WaitTime = spb };
-            AddChild(MicrogameTimer);
-            MicrogameTimer.Connect("timeout", new Callable(this, nameof(OnBeatTimerTick)));
+            // Create timer with seconds per beat and connect
+            MicrogameTimer = GetNode<Timer>("%MicrogameTimer");
+            MicrogameTimer.WaitTime = GetSecondsPerBeat();
+            MicrogameTimer.Timeout += OnBeatTimerTick;
         }
 
         public virtual void Init(Dictionary<string, Variant> msg)
@@ -87,7 +84,7 @@ namespace Microgames
         // Hooks
         protected virtual void OnTimerFinished()
         {
-            
+
         }
 
         protected virtual void OnBeat(int currentBeat)

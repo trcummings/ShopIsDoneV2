@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="Gridmaps Demo"
-config/icon="res://icon.png"
+config/icon="res://icon.svg"
 
 [rendering]
 

@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Godot.Collections;
 
 namespace Microgames
 {
@@ -19,6 +20,16 @@ namespace Microgames
             _Label = GetNode<Label>("%Label");
         }
 
+        public override void Init(Dictionary<string, Variant> msg)
+        {
+            // Set outcome to win
+            Outcome = (Outcomes)AlwaysOutcome;
+            // Set label
+            _Label.Text = Outcome == Outcomes.Loss
+                ? "Always Lose"
+                : "Always Win";
+        }
+
         public override void Start()
         {
             // Give this thing half the number of beats
@@ -26,13 +37,6 @@ namespace Microgames
 
             // Base call
             base.Start();
-
-            // Set outcome to win
-            Outcome = (Outcomes)AlwaysOutcome;
-            // Set label
-            _Label.Text = Outcome == Outcomes.Loss
-                ? "Always Lose"
-                : "Always Win";
         }
 
         protected override void OnTimerFinished()

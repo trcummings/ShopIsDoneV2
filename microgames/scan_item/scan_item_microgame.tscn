@@ -1,6 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://b3t7y7xkc852q"]
+[gd_scene load_steps=18 format=3 uid="uid://b3t7y7xkc852q"]
 
-[ext_resource type="PackedScene" path="res://microgames/null_microgame.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1"]
 [ext_resource type="Script" path="res://microgames/scan_item/ScanItemMicrogame.cs" id="2"]
 [ext_resource type="PackedScene" uid="uid://bn1cs57lf2etj" path="res://microgames/scan_item/scannable_item.tscn" id="3"]
 [ext_resource type="AudioStream" uid="uid://by7kwylsxypu0" path="res://microgames/common/audio/BARCODE-SCAN__185888__eirikr__barcode-reader.wav" id="3_iqfcn"]
@@ -25,6 +25,8 @@ streams_count = 1
 stream_0/stream = ExtResource("4_rabxt")
 stream_0/weight = 1.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4w252"]
+
 [sub_resource type="QuadMesh" id="3"]
 material = ExtResource("4")
 size = Vector2(1, 0.5)
@@ -37,12 +39,6 @@ BoxMargin = 0.1
 PromptText = "Rotate and Scan!"
 WidgetText = "What's the price on this?"
 
-[node name="SuccessSfxPlayer" parent="." index="0"]
-bus = &"Microgames"
-
-[node name="FailureSfxPlayer" parent="." index="1"]
-bus = &"Microgames"
-
 [node name="ScanSfxPlayer" type="AudioStreamPlayer" parent="." index="2"]
 stream = SubResource("AudioStreamRandomizer_uhdy0")
 bus = &"Microgames"
@@ -51,9 +47,81 @@ bus = &"Microgames"
 stream = SubResource("AudioStreamRandomizer_d28ss")
 bus = &"Microgames"
 
+[node name="PanelContainer" type="PanelContainer" parent="BackgroundRectangle" index="0"]
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_4w252")
+
+[node name="MarginContainer" type="MarginContainer" parent="BackgroundRectangle/PanelContainer" index="0"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BackgroundRectangle/PanelContainer/MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer" index="0"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer" index="1"]
+custom_minimum_size = Vector2(2.08165e-12, 100)
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="ActionIcon" type="TextureRect" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="0"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"move_up"
+
+[node name="ActionIcon2" type="TextureRect" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="1"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"move_left"
+
+[node name="ActionIcon3" type="TextureRect" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="2"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"move_down"
+
+[node name="ActionIcon4" type="TextureRect" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="3"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"move_right"
+
+[node name="Label" type="Label" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="4"]
+layout_mode = 2
+theme = ExtResource("8")
+text = "Rotate"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="ActionIcon" type="TextureRect" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2" index="0"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"ui_accept"
+
+[node name="Label" type="Label" parent="BackgroundRectangle/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2" index="1"]
+layout_mode = 2
+theme = ExtResource("8")
+text = "Scan"
+
 [node name="ViewportContainer" type="SubViewportContainer" parent="." index="5"]
 
 [node name="Viewport" type="SubViewport" parent="ViewportContainer" index="0"]
+own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(940, 940)
@@ -104,60 +172,7 @@ modulate = Color(0.643137, 0, 0, 0.180392)
 pixel_size = 0.125
 texture = ExtResource("10")
 
-[node name="MarginContainer" type="MarginContainer" parent="." index="6"]
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" index="0"]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer" index="0"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="1"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" index="0"]
-layout_mode = 2
-
-[node name="ActionIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="0"]
-layout_mode = 2
-script = ExtResource("7")
-action_name = &"move_up"
-
-[node name="ActionIcon2" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="1"]
-layout_mode = 2
-script = ExtResource("7")
-action_name = &"move_left"
-
-[node name="ActionIcon3" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="2"]
-layout_mode = 2
-script = ExtResource("7")
-action_name = &"move_down"
-
-[node name="ActionIcon4" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="3"]
-layout_mode = 2
-script = ExtResource("7")
-action_name = &"move_right"
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="4"]
-layout_mode = 2
-theme = ExtResource("8")
-text = "Rotate"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" index="1"]
-layout_mode = 2
-
-[node name="ActionIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2" index="0"]
-layout_mode = 2
-script = ExtResource("7")
-action_name = &"ui_accept"
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2" index="1"]
-layout_mode = 2
-theme = ExtResource("8")
-text = "Scan"
-
-[node name="ScannerHand" parent="." index="7" instance=ExtResource("9")]
+[node name="ScannerHand" parent="." index="6" instance=ExtResource("9")]
 unique_name_in_owner = true
 position = Vector2(776, 743)
 rotation = 0.158825
@@ -169,7 +184,7 @@ frame = 1
 [node name="RedX" parent="ScannerHand/Wrapper/SignPivot" index="2"]
 frame = 0
 
-[node name="ScreenshakeHandler" parent="." index="8" instance=ExtResource("13")]
+[node name="ScreenshakeHandler" parent="." index="7" instance=ExtResource("13")]
 unique_name_in_owner = true
 Noise = SubResource("5")
 

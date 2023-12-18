@@ -152,9 +152,17 @@ namespace Microgames.ScanItem
 
                 // Wait out the scan animation
                 await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
+
                 // Emit successful or failed scan
-                if (Outcome == Outcomes.Win) EmitSignal(nameof(ScanSuccessful));
-                else EmitSignal(nameof(ScanFailed));
+                if (Outcome == Outcomes.Win)
+                {
+                    EmitSignal(nameof(ScanSuccessful));
+                }
+                else
+                {
+                    EmitSignal(nameof(ScanFailed));
+                }
+
                 // Wait out new animation + sound
                 await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
 

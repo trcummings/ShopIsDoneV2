@@ -1,14 +1,15 @@
-[gd_scene load_steps=94 format=3 uid="uid://bt46ljijua3d6"]
+[gd_scene load_steps=95 format=3 uid="uid://bt46ljijua3d6"]
 
-[ext_resource type="PackedScene" path="res://microgames/null_microgame.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://c2yy2gbvq347c" path="res://microgames/apologize/customer_service_background.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="3"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="3_b1258"]
 [ext_resource type="Script" path="res://microgames/apologize/ApologizeMicrogame.cs" id="4"]
 [ext_resource type="Texture2D" uid="uid://cedf280igqcbe" path="res://microgames/apologize/angry_customer.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://5lefhks26nci" path="res://microgames/apologize/sorry_animation.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://d1umnqi4vlrru" path="res://microgames/apologize/apologizing_employee.png" id="7"]
-[ext_resource type="PackedScene" path="res://microgames/apologize/apologizing_employee_head.tscn" id="8"]
-[ext_resource type="PackedScene" path="res://microgames/apologize/middle_finger_arm.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://dx64i6ik6omwa" path="res://microgames/apologize/apologizing_employee_head.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://nwgyfu54bqof" path="res://microgames/apologize/middle_finger_arm.tscn" id="9"]
 [ext_resource type="PackedScene" uid="uid://t8kr0hahbiu3" path="res://microgames/common/green_check.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://yat7yv36nbfu" path="res://microgames/common/red_x.tscn" id="11"]
 [ext_resource type="AudioStream" uid="uid://dral5g4c2pqf0" path="res://microgames/common/audio/PUNCH--wariowareclone--punch.wav" id="12"]
@@ -623,26 +624,32 @@ animations = [{
 
 [node name="ApologizeMicrogame" instance=ExtResource("1")]
 script = ExtResource("4")
+_ActionIconScript = ExtResource("3_b1258")
 PromptText = "Apologize!"
 WidgetText = "You messed up my order!"
 
-[node name="SuccessSfxPlayer" parent="." index="0"]
-bus = &"Microgames"
+[node name="MarginContainer" type="MarginContainer" parent="BackgroundRectangle" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = -20
+theme_override_constants/margin_top = -20
+theme_override_constants/margin_right = -20
+theme_override_constants/margin_bottom = -20
 
-[node name="FailureSfxPlayer" parent="." index="1"]
-bus = &"Microgames"
+[node name="Background" type="TextureRect" parent="BackgroundRectangle/MarginContainer" index="0"]
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+layout_mode = 2
+texture = ExtResource("2")
 
 [node name="ImpactSfxPlayer" type="AudioStreamPlayer" parent="." index="3"]
 stream = SubResource("AudioStreamRandomizer_n01da")
 bus = &"Microgames"
 
-[node name="Background" type="TextureRect" parent="." index="4"]
-modulate = Color(0.478431, 0.478431, 0.478431, 1)
-texture = ExtResource("2")
-expand_mode = 1
-stretch_mode = 1
-
-[node name="World" type="Node2D" parent="." index="5"]
+[node name="World" type="Node2D" parent="." index="4"]
 
 [node name="Camera" type="Camera2D" parent="World" index="0"]
 unique_name_in_owner = true
@@ -655,12 +662,14 @@ position = Vector2(231, 586)
 unique_name_in_owner = true
 position = Vector2(-1, 70.5)
 sprite_frames = SubResource("18")
+autoplay = "default"
 frame = 1
 
 [node name="CustomerHead" type="AnimatedSprite2D" parent="World/Customer" index="1"]
 unique_name_in_owner = true
 position = Vector2(-6, -105)
 sprite_frames = SubResource("10")
+autoplay = "default"
 frame = 2
 
 [node name="Sorry" type="Node2D" parent="World" index="2"]
@@ -681,36 +690,42 @@ visible = false
 position = Vector2(170, 0)
 rotation = -0.261799
 sprite_frames = SubResource("26")
+autoplay = "default"
 
 [node name="Y" type="AnimatedSprite2D" parent="World/Sorry/Letters" index="1"]
 visible = false
 position = Vector2(117, 0)
 rotation = -0.261799
 sprite_frames = SubResource("29")
+autoplay = "default"
 
 [node name="R2" type="AnimatedSprite2D" parent="World/Sorry/Letters" index="2"]
 visible = false
 position = Vector2(37, 0)
 rotation = 0.261799
 sprite_frames = SubResource("32")
+autoplay = "default"
 frame = 1
 
 [node name="R1" type="AnimatedSprite2D" parent="World/Sorry/Letters" index="3"]
 visible = false
 position = Vector2(-16, 0)
 sprite_frames = SubResource("35")
+autoplay = "default"
 frame = 1
 
 [node name="O" type="AnimatedSprite2D" parent="World/Sorry/Letters" index="4"]
 visible = false
 position = Vector2(-80, 0)
 sprite_frames = SubResource("38")
+autoplay = "default"
 frame = 1
 
 [node name="S" type="AnimatedSprite2D" parent="World/Sorry/Letters" index="5"]
 visible = false
 position = Vector2(-148, 0)
 sprite_frames = SubResource("41")
+autoplay = "default"
 
 [node name="Employee" type="Node2D" parent="World" index="3"]
 unique_name_in_owner = true
@@ -721,6 +736,7 @@ position = Vector2(635, 586)
 [node name="NormalArm" type="AnimatedSprite2D" parent="World/Employee/Standing" index="0"]
 position = Vector2(38, -11)
 sprite_frames = SubResource("44")
+autoplay = "default"
 
 [node name="MiddleFingerArm" parent="World/Employee/Standing" index="1" instance=ExtResource("9")]
 visible = false
@@ -729,6 +745,7 @@ sprite_frames = SubResource("47")
 
 [node name="Body" type="AnimatedSprite2D" parent="World/Employee/Standing" index="2"]
 sprite_frames = SubResource("50")
+autoplay = "default"
 frame = 1
 
 [node name="ApologizingEmployeeHead" parent="World/Employee/Standing" index="3" instance=ExtResource("8")]
@@ -741,6 +758,7 @@ visible = false
 [node name="NormalArm" type="AnimatedSprite2D" parent="World/Employee/Bowing" index="0"]
 position = Vector2(9, -12)
 sprite_frames = SubResource("69")
+autoplay = "default"
 frame = 1
 
 [node name="MiddleFingerArm" parent="World/Employee/Bowing" index="1" instance=ExtResource("9")]
@@ -751,6 +769,7 @@ frame = 1
 
 [node name="Body" type="AnimatedSprite2D" parent="World/Employee/Bowing" index="2"]
 sprite_frames = SubResource("60")
+autoplay = "default"
 frame = 1
 
 [node name="ApologizingEmployeeHead" parent="World/Employee/Bowing" index="3" instance=ExtResource("8")]
@@ -763,6 +782,7 @@ visible = false
 [node name="NormalArm" type="AnimatedSprite2D" parent="World/Employee/OnKnees" index="0"]
 position = Vector2(-66, 0)
 sprite_frames = SubResource("72")
+autoplay = "default"
 frame = 1
 
 [node name="MiddleFingerArm" parent="World/Employee/OnKnees" index="1" instance=ExtResource("9")]
@@ -772,6 +792,7 @@ sprite_frames = SubResource("47")
 
 [node name="Body" type="AnimatedSprite2D" parent="World/Employee/OnKnees" index="2"]
 sprite_frames = SubResource("63")
+autoplay = "default"
 frame = 1
 
 [node name="ApologizingEmployeeHead" parent="World/Employee/OnKnees" index="3" instance=ExtResource("8")]
@@ -784,6 +805,7 @@ visible = false
 [node name="NormalArm" type="AnimatedSprite2D" parent="World/Employee/Genuflecting" index="0"]
 position = Vector2(-141, 105)
 sprite_frames = SubResource("75")
+autoplay = "default"
 
 [node name="MiddleFingerArm" parent="World/Employee/Genuflecting" index="1" instance=ExtResource("9")]
 visible = false
@@ -797,12 +819,18 @@ sprite_frames = SubResource("57")
 
 [node name="Body" type="AnimatedSprite2D" parent="World/Employee/Genuflecting" index="3"]
 sprite_frames = SubResource("66")
+autoplay = "default"
 frame = 1
 
-[node name="ScreenshakeHandler" parent="." index="6" instance=ExtResource("3")]
+[node name="ScreenshakeHandler" parent="." index="5" instance=ExtResource("3")]
 unique_name_in_owner = true
 
-[node name="PanelContainer" type="PanelContainer" parent="." index="7"]
+[node name="PanelContainer" type="PanelContainer" parent="." index="6"]
+custom_minimum_size = Vector2(454, 160)
+offset_left = 600.0
+offset_top = 135.0
+offset_right = 1054.0
+offset_bottom = 295.0
 
 [node name="MarginContainer2" type="MarginContainer" parent="PanelContainer" index="0"]
 layout_mode = 2

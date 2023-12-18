@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://df0fk08hmrihh"]
+[gd_scene load_steps=9 format=3 uid="uid://df0fk08hmrihh"]
 
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="1"]
 [ext_resource type="Script" path="res://microgames/MicrogameManager.cs" id="2"]
@@ -8,7 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://tsnocvita65y" path="res://microgames/common/audio/CLOCK-TICK-60-BPM--450509__abyeditsound__clockticksound_01.wav" id="8"]
 
 [sub_resource type="ViewportTexture" id="2"]
-viewport_path = NodePath("FrameContainer/MarginContainer/MicrogameViewport")
+viewport_path = NodePath("CenterContainer/FrameContainer/MarginContainer/MicrogameViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7lor"]
+bg_color = Color(0, 0.545098, 0.192157, 1)
 
 [node name="MicrogameManager" type="Control" node_paths=PackedStringArray("_Background", "_FrameContainer", "_MicrogameViewport", "_PromptLabel", "_ProgressBar", "_RemainingTicksLabel", "_ProgressContainer", "_HeartbeatPlayer", "_ClockTickPlayer")]
 layout_mode = 3
@@ -17,14 +20,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("2")
 _Background = NodePath("Background")
-_FrameContainer = NodePath("FrameContainer")
-_MicrogameViewport = NodePath("FrameContainer/MarginContainer/MicrogameViewport")
-_PromptLabel = NodePath("FrameContainer/MarginContainer/PromptLabel")
-_ProgressBar = NodePath("FrameContainer/MarginContainer/ProgressContainer/ProgressBar")
-_RemainingTicksLabel = NodePath("FrameContainer/MarginContainer/ProgressContainer/MarginContainer/RemainingTicksLabel")
-_ProgressContainer = NodePath("FrameContainer/MarginContainer/ProgressContainer")
+_FrameContainer = NodePath("CenterContainer/FrameContainer")
+_MicrogameViewport = NodePath("CenterContainer/FrameContainer/MarginContainer/MicrogameViewport")
+_PromptLabel = NodePath("PromptLabel")
+_ProgressBar = NodePath("CenterContainer/FrameContainer/MarginContainer/ProgressContainer/ProgressBar")
+_RemainingTicksLabel = NodePath("CenterContainer/FrameContainer/MarginContainer/ProgressContainer/MarginContainer/RemainingTicksLabel")
+_ProgressContainer = NodePath("CenterContainer/FrameContainer/MarginContainer/ProgressContainer")
 _HeartbeatPlayer = NodePath("HeartbeatPlayer")
 _ClockTickPlayer = NodePath("ClockTickPlayer")
 
@@ -34,72 +38,99 @@ visible = false
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="FrameContainer" type="AspectRatioContainer" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="FrameContainer"]
+[node name="FrameContainer" type="AspectRatioContainer" parent="CenterContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="FrameContainer/MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/FrameContainer"]
+custom_minimum_size = Vector2(940, 940)
 layout_mode = 2
+mouse_filter = 2
 
-[node name="MicrogameViewport" type="SubViewport" parent="FrameContainer/MarginContainer"]
+[node name="Panel" type="Panel" parent="CenterContainer/FrameContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MicrogameViewport" type="SubViewport" parent="CenterContainer/FrameContainer/MarginContainer"]
 unique_name_in_owner = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(952, 952)
 render_target_update_mode = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="FrameContainer/MarginContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/FrameContainer/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="MicrogameTexture" type="TextureRect" parent="FrameContainer/MarginContainer/MarginContainer2"]
+[node name="MicrogameTexture" type="TextureRect" parent="CenterContainer/FrameContainer/MarginContainer/MarginContainer2"]
 layout_mode = 2
+mouse_filter = 2
 texture = SubResource("2")
 expand_mode = 1
 stretch_mode = 6
-flip_v = true
 
-[node name="BorderedUIWindow" parent="FrameContainer/MarginContainer" instance=ExtResource("1")]
+[node name="BorderedUIWindow" parent="CenterContainer/FrameContainer/MarginContainer" instance=ExtResource("1")]
 layout_mode = 2
 texture = ExtResource("3")
 draw_center = false
 
-[node name="PromptLabel" type="Label" parent="FrameContainer/MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme = ExtResource("6")
-theme_type_variation = &"HeaderLarge"
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-text = "[Prompt]!"
-horizontal_alignment = 1
-
-[node name="ProgressContainer" type="MarginContainer" parent="FrameContainer/MarginContainer"]
+[node name="ProgressContainer" type="MarginContainer" parent="CenterContainer/FrameContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
+mouse_filter = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="FrameContainer/MarginContainer/ProgressContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="CenterContainer/FrameContainer/MarginContainer/ProgressContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(2.08165e-12, 45)
 layout_mode = 2
 size_flags_vertical = 8
+mouse_filter = 2
 theme = ExtResource("6")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/fill = SubResource("StyleBoxFlat_l7lor")
 
-[node name="MarginContainer" type="MarginContainer" parent="FrameContainer/MarginContainer/ProgressContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/FrameContainer/MarginContainer/ProgressContainer"]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="RemainingTicksLabel" type="Label" parent="FrameContainer/MarginContainer/ProgressContainer/MarginContainer"]
+[node name="RemainingTicksLabel" type="Label" parent="CenterContainer/FrameContainer/MarginContainer/ProgressContainer/MarginContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 theme = ExtResource("6")
 text = "3"
+
+[node name="PromptLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 420.0
+offset_top = 527.0
+offset_right = 1500.0
+offset_bottom = 552.0
+theme = ExtResource("6")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 72
+text = "[Prompt]!"
+horizontal_alignment = 1
 
 [node name="HeartbeatPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true

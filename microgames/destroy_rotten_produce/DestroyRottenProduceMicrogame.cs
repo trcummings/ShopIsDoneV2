@@ -47,6 +47,8 @@ namespace Microgames.DestroyRottenProduce
 
         public override void _Ready() 
         {
+            base._Ready();
+
             _ReticuleFist = GetNode<ReticuleFist>("%ReticuleFist");
             _BottomCorner = GetNode<Node2D>("%BottomCorner");
             _Screenshake = GetNode<ScreenshakeHandler>("%ScreenshakeHandler");
@@ -269,9 +271,9 @@ namespace Microgames.DestroyRottenProduce
             var tween = GetTree().CreateTween();
             // Tween fisheye effect scaling param
             tween
-                .TweenProperty(
-                    _BackdropEffect,
-                    "shader_param/effect_scale",
+                .TweenMethod(
+                    new Callable(this, nameof(SetEffectScale)),
+                    _BackdropEffect.GetShaderParameter("effect_scale"),
                     2,
                     GetSecondsPerBeat() * NumBeats
                 )
@@ -280,9 +282,9 @@ namespace Microgames.DestroyRottenProduce
             // Tween fisheye effect
             tween
                 .Parallel()
-                .TweenProperty(
-                    _BackdropEffect,
-                    "shader_param/effect",
+                .TweenMethod(
+                    new Callable(this, nameof(SetEffect)),
+                    _BackdropEffect.GetShaderParameter("effect"),
                     2,
                     GetSecondsPerBeat() * NumBeats
                 )
@@ -294,6 +296,16 @@ namespace Microgames.DestroyRottenProduce
         {
             // These shake values are very small, so amplify them by a lot
             _Camera.Offset = offset * 1000;
+        }
+
+        private void SetEffectScale(Variant value)
+        {
+            _BackdropEffect.SetShaderParameter("effect_scale", value);
+        }
+
+        private void SetEffect(Variant value)
+        {
+            _BackdropEffect.SetShaderParameter("effect", value);
         }
     }
 }

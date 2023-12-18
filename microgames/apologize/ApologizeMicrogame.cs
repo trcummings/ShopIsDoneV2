@@ -5,6 +5,7 @@ using System.Linq;
 using Camera;
 using static Camera.ScreenshakeHandler;
 using Utils.Extensions;
+using System.Threading.Tasks;
 
 namespace Microgames.Apologize
 {
@@ -16,8 +17,8 @@ namespace Microgames.Apologize
         [Signal]
         public delegate void PromptFailedEventHandler();
 
-        [Signal]
-        public delegate void AllPromptsSuccededEventHandler();
+        [Export]
+        public GDScript _ActionIconScript;
 
         // Nodes
         private Camera2D _Camera;
@@ -70,12 +71,10 @@ namespace Microgames.Apologize
             _GreenCheck = GetNode<AnimatedSprite2D>("%GreenCheck");
 
             // Connect screenshake
-            _Screenshake.Connect(nameof(ScreenshakeHandler.ShakeOffsetUpdated), new Callable(this, nameof(ShakeUpdate)));
-
+            _Screenshake.ShakeOffsetUpdated += ShakeUpdate;
             // Connect to prompt events
-            Connect(nameof(PromptSucceded), new Callable(this, nameof(OnPromptSucceded)));
-            Connect(nameof(PromptFailed), new Callable(this, nameof(FailGame)));
-            Connect(nameof(AllPromptsSucceded), new Callable(this, nameof(OnAllPromptsSucceded)));
+            PromptSucceded += OnPromptSucceded;
+            PromptFailed += async () => await FailGame();
 
             // Generate list of prompts
             var candidateList = _AllPrompts.Where(p => p != "ui_accept").ToList();
@@ -85,12 +84,11 @@ namespace Microgames.Apologize
             _Prompts.Add(candidateList.PickRandom());
             _Prompts.Add("ui_accept");
 
-            var actionIconScript = GD.Load<GDScript>("res://addons/ActionIcon/ActionIcon.gd");
             // Create the necessary buttons prompt buttons
             foreach (var prompt in _Prompts)
             {
                 var button = new TextureRect();
-                button.SetScript(actionIconScript);
+                button.SetScript(_ActionIconScript);
                 button.Set("action_name", prompt);
                 _PromptContainer.AddChild(button);
             }
@@ -166,7 +164,7 @@ namespace Microgames.Apologize
         {
             // Run background splash
             _BackgroundSplash.Play("default");
-            _BackgroundSplash.Connect(AnimationPlayer.SignalName.AnimationFinished, new Callable(this, nameof(OnSplashFinished)));
+            _BackgroundSplash.AnimationFinished += OnSplashFinished;
 
             // Tween in letters in sequence
             // NB: We "Bind Node" here so if the animation doesn't cut short
@@ -189,12 +187,14 @@ namespace Microgames.Apologize
                 // Show letter
                 letter.Show();
             }
+
+            return;
         }
 
         private void OnSplashFinished()
         {
             // Disconnect
-            _BackgroundSplash.Disconnect(AnimationPlayer.SignalName.AnimationFinished, new Callable(this, nameof(OnSplashFinished)));
+            _BackgroundSplash.AnimationFinished -= OnSplashFinished;
             // Loop splash
             _BackgroundSplash.Play("loop");
         }
@@ -239,7 +239,10 @@ namespace Microgames.Apologize
             }
 
             // If no more prompts, win!
-            if (_Prompts.Count == 0) EmitSignal(nameof(AllPromptsSucceded));
+            if (_Prompts.Count == 0)
+            {
+                Task _ = OnAllPromptsSucceded();
+            }
         }
 
         protected override void OnTimerFinished()
@@ -250,7 +253,7 @@ namespace Microgames.Apologize
             PlayFailureSfx();
         }
 
-        private async void OnAllPromptsSucceded()
+        private async Task OnAllPromptsSucceded()
         {
             // Stop timer
             MicrogameTimer.Stop();
@@ -267,11 +270,12 @@ namespace Microgames.Apologize
             // Make customer smug
             _CustomerHead.Play("satisfied");
             _CustomerBody.Play("satisfied");
+
             // Show SORRY animation
             SorryAnimation();
 
             // Wait a tick
-            await ToSignal(GetTree().CreateTimer(1f), "timeout");
+            await ToSignal(GetTree().CreateTimer(1, false), "timeout");
 
             // Set outcome to win
             Outcome = Outcomes.Win;
@@ -281,9 +285,11 @@ namespace Microgames.Apologize
 
             // Finish
             EmitSignal(nameof(MicrogameFinished), (int)Outcome);
+
+            return;
         }
 
-        private async void FailGame()
+        private async Task FailGame()
         {
             // Stop timer
             MicrogameTimer.Stop();
@@ -318,6 +324,8 @@ namespace Microgames.Apologize
 
             // Finish
             EmitSignal(nameof(MicrogameFinished), (int)Outcome);
+
+            return;
         }
 
         private void ShakeUpdate(Vector2 offset)

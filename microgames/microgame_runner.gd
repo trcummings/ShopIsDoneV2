@@ -10,10 +10,16 @@ func _ready():
 		var button : Button = button_template.duplicate()
 		container.add_child(button)
 		button.text = microgame.resource_path
-		button.pressed.connect(self._on_microgame_button_pressed.bind(microgame))
+		button.pressed.connect(_on_microgame_button_pressed.bind(microgame))
 	button_template.hide()
 
 func _on_microgame_button_pressed(scene: PackedScene):
-	print(scene)
+	# disable all buttons
+	for button in container.get_children():
+		button.disabled = true
 	var microgame = scene.instantiate()
 	microgame_manager.RunMicrogame(microgame, null)
+	await microgame_manager.MicrogameFinishedRunning
+	# re-enable all buttons
+	for button in container.get_children():
+		button.disabled = false

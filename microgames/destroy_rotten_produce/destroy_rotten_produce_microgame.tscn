@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://b2p7fh56ojclq"]
 
-[ext_resource type="PackedScene" path="res://microgames/null_microgame.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://e8gmag0f10wp" path="res://microgames/destroy_rotten_produce/produce_background_pixel.png" id="2"]
 [ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/fresh_cabbage.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://dpka8jkrj017q" path="res://microgames/destroy_rotten_produce/produce_barrel.png" id="4"]
@@ -48,12 +48,6 @@ RottenPotato = ExtResource("13")
 PromptText = "Destroy The Rot!"
 WidgetText = "These veggies are bad!"
 
-[node name="SuccessSfxPlayer" parent="." index="0"]
-bus = &"Microgames"
-
-[node name="FailureSfxPlayer" parent="." index="1"]
-bus = &"Microgames"
-
 [node name="Backdrop" type="TextureRect" parent="BackgroundRectangle" index="0"]
 unique_name_in_owner = true
 material = ExtResource("9_q11g8")
@@ -63,6 +57,18 @@ anchor_bottom = 1.0
 texture = ExtResource("2")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="BackgroundRectangle" index="1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = -20
+theme_override_constants/margin_top = -20
+theme_override_constants/margin_right = -20
+theme_override_constants/margin_bottom = -20
 
 [node name="World" type="Node2D" parent="." index="3"]
 

@@ -1,25 +1,21 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://cs55ll2s8e14e"]
 
-[ext_resource type="PackedScene" path="res://microgames/null_microgame.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="2"]
 [ext_resource type="Script" path="res://microgames/always_outcome/AlwaysOutcomeMicrogame.cs" id="3"]
 
-[node name="AlwaysLoseMicrogame" instance=ExtResource( 1 )]
-script = ExtResource( 3 )
-PromptText = "Auto-Lose"
+[node name="AlwaysLoseMicrogame" instance=ExtResource("1")]
+script = ExtResource("3")
 AlwaysOutcome = 0
+PromptText = "Auto-Lose"
 
 [node name="CenterContainer" type="CenterContainer" parent="BackgroundRectangle" index="0"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Label" type="Label" parent="BackgroundRectangle/CenterContainer" index="0"]
 unique_name_in_owner = true
-margin_left = 410.0
-margin_top = 461.0
-margin_right = 530.0
-margin_bottom = 479.0
-theme = ExtResource( 2 )
+layout_mode = 2
+theme = ExtResource("2")
 text = "Always Win"
-align = 1
-valign = 1

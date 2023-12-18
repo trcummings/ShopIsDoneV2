@@ -7,6 +7,9 @@ namespace Microgames
 {
 	public partial class MicrogameManager : Node
 	{
+        [Signal]
+        public delegate void MicrogameFinishedRunningEventHandler();
+
         [Export]
         private Control _Background;
 
@@ -59,12 +62,12 @@ namespace Microgames
             _MicrogameViewport.AddChild(_Microgame);
 
             // Connect to microgame signals
-            _Microgame.Connect(nameof(Microgame.BeatTicked), new Callable(this, nameof(OnMicrogameProgress)));
-            _Microgame.Connect(nameof(Microgame.MicrogameFinished), new Callable(this, nameof(OnMicrogameFinished)));
-            _Microgame.Connect(nameof(Microgame.HideTimerRequested), new Callable(this, nameof(OnRequestTimerHidden)));
-            _Microgame.Connect(nameof(Microgame.ShowTimerRequested), new Callable(this, nameof(OnRequestTimerShown)));
-            _Microgame.Connect(nameof(Microgame.HideBackgroundRequested), new Callable(this, nameof(OnRequestBackgroundHidden)));
-            _Microgame.Connect(nameof(Microgame.ShowBackgroundRequested), new Callable(this, nameof(OnRequestBackgroundShown)));
+            _Microgame.BeatTicked += OnMicrogameProgress;
+            _Microgame.MicrogameFinished += OnMicrogameFinished;
+            _Microgame.HideTimerRequested += OnRequestTimerHidden;
+            _Microgame.ShowTimerRequested += OnRequestTimerShown;
+            _Microgame.HideBackgroundRequested += OnRequestBackgroundHidden;
+            _Microgame.ShowBackgroundRequested += OnRequestBackgroundShown;
 
             // Initialize the microgame
             _Microgame.Init(msg);
@@ -80,6 +83,8 @@ namespace Microgames
             _MicrogameViewport.RemoveChild(_Microgame);
             _Microgame.QueueFree();
             _Microgame = null;
+
+            EmitSignal(nameof(MicrogameFinishedRunning));
 		}
 
 		private async Task<Microgame.Outcomes> StartMicrogame()
@@ -101,7 +106,7 @@ namespace Microgames
             _Microgame.Start();
 
             // Wait for microgame to be finished and extract the outcome
-            var result = await ToSignal(_Microgame, nameof(Microgame.MicrogameFinished));
+            var result = await ToSignal(_Microgame, nameof(_Microgame.MicrogameFinished));
             var outcome = (Microgame.Outcomes)(int)result[0];
 
             // Wait a moment afterwards to hold on the screen

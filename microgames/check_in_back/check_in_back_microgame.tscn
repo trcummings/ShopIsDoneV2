@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://cqh47hj66pqly"]
 
-[ext_resource type="PackedScene" path="res://microgames/null_microgame.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://c8vni0a1uju66" path="res://microgames/check_in_back/storage_room_base.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://di62qoqpbau3c" path="res://microgames/check_in_back/storage_room_objects.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://cdtsseftp21kp" path="res://microgames/check_in_back/storage_room_rails.png" id="4"]
@@ -72,12 +72,6 @@ script = ExtResource("9")
 RequestedItemScene = ExtResource("8")
 PromptText = "Search!"
 WidgetText = "Can you check in the back?"
-
-[node name="SuccessSfxPlayer" parent="." index="0"]
-bus = &"Microgames"
-
-[node name="FailureSfxPlayer" parent="." index="1"]
-bus = &"Microgames"
 
 [node name="ViewportContainer" type="SubViewportContainer" parent="." index="3"]
 

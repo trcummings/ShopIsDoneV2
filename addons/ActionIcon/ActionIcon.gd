@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/ActionIcon/icon.png")
+@icon("res://addons/ActionIcon/icon.svg")
 class_name ActionIcon extends TextureRect
 
 ## Use for special actions outside of InputMap. Format is keyboard icon|mouse icon|joypad icon.
