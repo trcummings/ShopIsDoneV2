@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://yat7yv36nbfu"]
+
+[ext_resource type="Texture2D" uid="uid://b52d7l060rsse" path="res://microgames/common/red_x_sheet.png" id="1_k0d8v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ogu5"]
+atlas = ExtResource("1_k0d8v")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7j5cp"]
+atlas = ExtResource("1_k0d8v")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3f4q0"]
+atlas = ExtResource("1_k0d8v")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hveuy"]
+atlas = ExtResource("1_k0d8v")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="10"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ogu5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7j5cp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3f4q0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hveuy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="RedX" type="AnimatedSprite2D"]
+sprite_frames = SubResource("10")
+autoplay = "default"

@@ -1,0 +1,181 @@
+[gd_scene load_steps=20 format=3 uid="uid://b530vht7q6kmg"]
+
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="2"]
+[ext_resource type="Script" path="res://microgames/only_service_animals/OnlyServiceAnimalsMicrogame.cs" id="3"]
+[ext_resource type="Texture2D" uid="uid://ckn08sk2e33go" path="res://microgames/only_service_animals/attendant.png" id="5"]
+[ext_resource type="PackedScene" uid="uid://t8kr0hahbiu3" path="res://microgames/common/green_check.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://yat7yv36nbfu" path="res://microgames/common/red_x.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://microgames/only_service_animals/normal_animal.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://microgames/only_service_animals/service_animal.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://microgames/null_microgame.tscn" id="11"]
+[ext_resource type="Texture2D" uid="uid://b7jact5hm74qr" path="res://microgames/only_service_animals/roof.png" id="12"]
+[ext_resource type="AudioStream" uid="uid://dral5g4c2pqf0" path="res://microgames/common/audio/PUNCH--wariowareclone--punch.wav" id="12_nqiqy"]
+[ext_resource type="Texture2D" uid="uid://86ov68r0xem2" path="res://microgames/only_service_animals/background.png" id="13"]
+
+[sub_resource type="AtlasTexture" id="25"]
+atlas = ExtResource("5")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="26"]
+atlas = ExtResource("5")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="27"]
+atlas = ExtResource("5")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="28"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("25")
+}, {
+"duration": 1.0,
+"texture": SubResource("26")
+}, {
+"duration": 1.0,
+"texture": SubResource("27")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="29"]
+size = Vector2(18, 116)
+
+[sub_resource type="RectangleShape2D" id="30"]
+size = Vector2(60, 760)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vyljb"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("12_nqiqy")
+stream_0/weight = 1.0
+
+[node name="OnlyServiceAnimalsMicrogame" instance=ExtResource("11")]
+script = ExtResource("3")
+ServiceAnimalScene = ExtResource("9")
+NormalAnimalScene = ExtResource("8")
+PromptText = "Only Service Animals!"
+WidgetText = "Is my dog allowed?"
+
+[node name="SuccessSfxPlayer" parent="." index="0"]
+bus = &"Microgames"
+
+[node name="FailureSfxPlayer" parent="." index="1"]
+bus = &"Microgames"
+
+[node name="Background" type="TextureRect" parent="." index="3"]
+texture = ExtResource("13")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="World" type="Node2D" parent="." index="4"]
+
+[node name="Camera" type="Camera2D" parent="World" index="0"]
+unique_name_in_owner = true
+anchor_mode = 0
+
+[node name="Indicators" type="Node2D" parent="World" index="1"]
+
+[node name="ColorRect" type="ColorRect" parent="World/Indicators" index="0"]
+color = Color(0, 0, 0, 0.560784)
+
+[node name="GreenCheck" parent="World/Indicators" index="1" instance=ExtResource("6")]
+position = Vector2(158, 80)
+
+[node name="RedX" parent="World/Indicators" index="2" instance=ExtResource("7")]
+position = Vector2(628, 80)
+
+[node name="NormalAnimalIndicator" type="Node2D" parent="World/Indicators" index="3"]
+unique_name_in_owner = true
+position = Vector2(785, 80)
+
+[node name="ServiceAnimalIndicator" type="Node2D" parent="World/Indicators" index="4"]
+unique_name_in_owner = true
+position = Vector2(315, 80)
+
+[node name="ActionIcon" type="TextureRect" parent="World/Indicators" index="5"]
+modulate = Color(1, 1, 1, 0.564706)
+script = ExtResource("1")
+action_name = &"move_up"
+
+[node name="ActionIcon2" type="TextureRect" parent="World/Indicators" index="6"]
+modulate = Color(1, 1, 1, 0.564706)
+script = ExtResource("1")
+action_name = &"move_down"
+
+[node name="Arena" type="Node2D" parent="World" index="2"]
+
+[node name="Lanes" type="Node2D" parent="World/Arena" index="0"]
+
+[node name="TopLane" type="Node2D" parent="World/Arena/Lanes" index="0"]
+unique_name_in_owner = true
+position = Vector2(-150, 380)
+
+[node name="EndPoint" type="Marker2D" parent="World/Arena/Lanes/TopLane" index="0"]
+position = Vector2(1180, 0)
+
+[node name="AttendantPoint" type="Marker2D" parent="World/Arena/Lanes/TopLane" index="1"]
+position = Vector2(962, 0)
+
+[node name="MiddleLane" type="Node2D" parent="World/Arena/Lanes" index="1"]
+unique_name_in_owner = true
+position = Vector2(-150, 560)
+
+[node name="EndPoint" type="Marker2D" parent="World/Arena/Lanes/MiddleLane" index="0"]
+position = Vector2(1180, 0)
+
+[node name="AttendantPoint" type="Marker2D" parent="World/Arena/Lanes/MiddleLane" index="1"]
+position = Vector2(962, 0)
+
+[node name="BottomLane" type="Node2D" parent="World/Arena/Lanes" index="2"]
+unique_name_in_owner = true
+position = Vector2(-150, 730)
+
+[node name="EndPoint" type="Marker2D" parent="World/Arena/Lanes/BottomLane" index="0"]
+position = Vector2(1180, 0)
+
+[node name="AttendantPoint" type="Marker2D" parent="World/Arena/Lanes/BottomLane" index="1"]
+position = Vector2(962, 0)
+
+[node name="Attendant" type="AnimatedSprite2D" parent="World/Arena" index="1"]
+unique_name_in_owner = true
+position = Vector2(812, 560)
+sprite_frames = SubResource("28")
+frame = 1
+
+[node name="Hitbox" type="Area2D" parent="World/Arena/Attendant" index="0"]
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Arena/Attendant/Hitbox" index="0"]
+position = Vector2(-54, 8)
+shape = SubResource("29")
+
+[node name="Endzone" type="Area2D" parent="World/Arena" index="2"]
+position = Vector2(982, 553)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Arena/Endzone" index="0"]
+shape = SubResource("30")
+
+[node name="Animals" type="Node2D" parent="World/Arena" index="3"]
+unique_name_in_owner = true
+
+[node name="Roof" type="TextureRect" parent="." index="5"]
+texture = ExtResource("12")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ScreenshakeHandler" parent="." index="6" instance=ExtResource("2")]
+unique_name_in_owner = true
+
+[node name="ImpactSfxPlayer" type="AudioStreamPlayer" parent="." index="7"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_vyljb")
+bus = &"Microgames"

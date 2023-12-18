@@ -1,0 +1,151 @@
+[gd_scene load_steps=21 format=3 uid="uid://b2p7fh56ojclq"]
+
+[ext_resource type="PackedScene" path="res://microgames/null_microgame.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://e8gmag0f10wp" path="res://microgames/destroy_rotten_produce/produce_background_pixel.png" id="2"]
+[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/fresh_cabbage.tscn" id="3"]
+[ext_resource type="Texture2D" uid="uid://dpka8jkrj017q" path="res://microgames/destroy_rotten_produce/produce_barrel.png" id="4"]
+[ext_resource type="Script" path="res://microgames/destroy_rotten_produce/DestroyRottenProduceMicrogame.cs" id="5"]
+[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/rotten_cabbage.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/fist.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="8"]
+[ext_resource type="AudioStream" uid="uid://dral5g4c2pqf0" path="res://microgames/common/audio/PUNCH--wariowareclone--punch.wav" id="9"]
+[ext_resource type="Material" uid="uid://gk8cijbp58pc" path="res://microgames/destroy_rotten_produce/fisheye.material" id="9_q11g8"]
+[ext_resource type="AudioStream" uid="uid://b5bcj4km1327f" path="res://microgames/common/audio/WHIFF__353048__deleted_user_6479820__g_whiff_3.mp3" id="10"]
+[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/fresh_broccoli.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/rotten_broccoli.tscn" id="12"]
+[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/rotten_potato.tscn" id="13"]
+[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/fresh_potato.tscn" id="14"]
+[ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="15"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(980, 320)
+
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(64, 1000)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_iwr41"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("9")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mote3"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("10")
+stream_0/weight = 1.0
+
+[node name="DestroyRottenProduceMicrogame" instance=ExtResource("1")]
+script = ExtResource("5")
+FistSpeed = 10
+Difficulty = 3
+FreshCabbage = ExtResource("3")
+RottenCabbage = ExtResource("6")
+FreshBroccoli = ExtResource("11")
+RottenBroccoli = ExtResource("12")
+FreshPotato = ExtResource("14")
+RottenPotato = ExtResource("13")
+PromptText = "Destroy The Rot!"
+WidgetText = "These veggies are bad!"
+
+[node name="SuccessSfxPlayer" parent="." index="0"]
+bus = &"Microgames"
+
+[node name="FailureSfxPlayer" parent="." index="1"]
+bus = &"Microgames"
+
+[node name="Backdrop" type="TextureRect" parent="BackgroundRectangle" index="0"]
+unique_name_in_owner = true
+material = ExtResource("9_q11g8")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="World" type="Node2D" parent="." index="3"]
+
+[node name="Camera" type="Camera2D" parent="World" index="0"]
+unique_name_in_owner = true
+anchor_mode = 0
+
+[node name="Arena" type="Node2D" parent="World" index="1"]
+
+[node name="BarrelBackboard" type="Node2D" parent="World/Arena" index="0"]
+position = Vector2(0, -207)
+
+[node name="BarrelBack" type="Sprite2D" parent="World/Arena/BarrelBackboard" index="0"]
+position = Vector2(471, 952)
+scale = Vector2(6, 6)
+texture = ExtResource("4")
+hframes = 2
+vframes = 3
+frame = 5
+
+[node name="BarrelPlate" type="Sprite2D" parent="World/Arena/BarrelBackboard" index="1"]
+position = Vector2(471, 952)
+scale = Vector2(6, 6)
+texture = ExtResource("4")
+hframes = 2
+vframes = 3
+frame = 3
+
+[node name="Floor" type="StaticBody2D" parent="World/Arena" index="1"]
+position = Vector2(471, 875)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Arena/Floor" index="0"]
+shape = SubResource("1")
+
+[node name="Bounds" type="Node2D" parent="World/Arena" index="2"]
+
+[node name="Wall" type="StaticBody2D" parent="World/Arena/Bounds" index="0"]
+position = Vector2(-35, 491)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Arena/Bounds/Wall" index="0"]
+shape = SubResource("3")
+
+[node name="Wall2" type="StaticBody2D" parent="World/Arena/Bounds" index="1"]
+position = Vector2(974, 502)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Arena/Bounds/Wall2" index="0"]
+shape = SubResource("3")
+
+[node name="Produce" type="Node2D" parent="World/Arena" index="3"]
+unique_name_in_owner = true
+
+[node name="Barrel" type="Node2D" parent="World/Arena" index="4"]
+
+[node name="BarrelFront" type="Sprite2D" parent="World/Arena/Barrel" index="0"]
+position = Vector2(471, 776)
+scale = Vector2(6.31765, 6)
+texture = ExtResource("4")
+hframes = 2
+vframes = 3
+frame = 1
+
+[node name="ReticuleFist" parent="World" index="2" instance=ExtResource("7")]
+position = Vector2(470, 470)
+
+[node name="BottomCorner" type="Marker2D" parent="World" index="3"]
+unique_name_in_owner = true
+position = Vector2(942, 715)
+
+[node name="ScreenshakeHandler" parent="." index="4" instance=ExtResource("8")]
+unique_name_in_owner = true
+
+[node name="ImpactSfxPlayer" type="AudioStreamPlayer" parent="." index="5"]
+stream = SubResource("AudioStreamRandomizer_iwr41")
+bus = &"Microgames"
+
+[node name="WhiffSfxPlayer" type="AudioStreamPlayer" parent="." index="6"]
+stream = SubResource("AudioStreamRandomizer_mote3")
+pitch_scale = 0.89
+bus = &"Microgames"
+
+[node name="MicrosleepHelper" type="Node" parent="." index="7"]
+script = ExtResource("15")
+
+[connection signal="HitProduce" from="." to="ImpactSfxPlayer" method="play"]
+[connection signal="HitProduce" from="." to="MicrosleepHelper" method="Microsleep"]
+[connection signal="Whiffed" from="World/ReticuleFist" to="WhiffSfxPlayer" method="play"]

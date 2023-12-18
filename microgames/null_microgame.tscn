@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://microgames/Microgame.cs" id="1"]
+[ext_resource type="AudioStream" uid="uid://c8yyhdcfl8wp8" path="res://microgames/common/audio/MICROGAME-WON--wariowareclone-correct.wav" id="2"]
+[ext_resource type="AudioStream" uid="uid://bitghutedn2as" path="res://microgames/common/audio/MICROGAME-LOST--wariowareclone-incorrect.wav" id="3"]
+
+[node name="NullMicrogame" type="Node"]
+script = ExtResource( 1 )
+
+[node name="SuccessSfxPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource( 2 )
+bus = "Microgames"
+
+[node name="FailureSfxPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource( 3 )
+bus = "Microgames"
+
+[node name="BackgroundRectangle" type="ColorRect" parent="."]
+margin_right = 940.0
+margin_bottom = 940.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}

@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://t8kr0hahbiu3"]
+
+[ext_resource type="Texture2D" uid="uid://bpacx5sm1a8br" path="res://microgames/common/green_check_sheet.png" id="1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ojll"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6e0lb"]
+atlas = ExtResource("1")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drgwp"]
+atlas = ExtResource("1")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmm2g"]
+atlas = ExtResource("1")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ojll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6e0lb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drgwp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmm2g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GreenCheck" type="AnimatedSprite2D"]
+sprite_frames = SubResource("5")
+autoplay = "default"

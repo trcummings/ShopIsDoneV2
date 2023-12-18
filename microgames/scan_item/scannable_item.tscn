@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bn1cs57lf2etj"]
+
+[ext_resource type="PackedScene" uid="uid://bmpe00n0028wm" path="res://microgames/scan_item/scannable_item_box.glb" id="1"]
+[ext_resource type="Material" path="res://microgames/scan_item/ScanItemBox1.material" id="2"]
+
+[node name="ScannableItem" instance=ExtResource("1")]
+
+[node name="Cube" parent="." index="0"]
+surface_material_override/0 = ExtResource("2")

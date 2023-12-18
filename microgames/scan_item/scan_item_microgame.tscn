@@ -1,0 +1,183 @@
+[gd_scene load_steps=17 format=3 uid="uid://b3t7y7xkc852q"]
+
+[ext_resource type="PackedScene" path="res://microgames/null_microgame.tscn" id="1"]
+[ext_resource type="Script" path="res://microgames/scan_item/ScanItemMicrogame.cs" id="2"]
+[ext_resource type="PackedScene" uid="uid://bn1cs57lf2etj" path="res://microgames/scan_item/scannable_item.tscn" id="3"]
+[ext_resource type="AudioStream" uid="uid://by7kwylsxypu0" path="res://microgames/common/audio/BARCODE-SCAN__185888__eirikr__barcode-reader.wav" id="3_iqfcn"]
+[ext_resource type="Material" path="res://microgames/scan_item/Barcode.material" id="4"]
+[ext_resource type="AudioStream" uid="uid://b23k1tsco6hrp" path="res://audio/ui/select.wav" id="4_rabxt"]
+[ext_resource type="Texture2D" uid="uid://ckfs1r5vqt1ra" path="res://microgames/scan_item/scanner_background.png" id="5"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="7"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="8"]
+[ext_resource type="PackedScene" uid="uid://cffkvl6xnst5k" path="res://microgames/scan_item/scanner_hand.tscn" id="9"]
+[ext_resource type="Texture2D" uid="uid://v1fjlkw1t0ng" path="res://microgames/common/bayer16.png" id="10"]
+[ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="13"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uhdy0"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("3_iqfcn")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d28ss"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("4_rabxt")
+stream_0/weight = 1.0
+
+[sub_resource type="QuadMesh" id="3"]
+material = ExtResource("4")
+size = Vector2(1, 0.5)
+
+[sub_resource type="FastNoiseLite" id="5"]
+
+[node name="ScanItemMicrogame" instance=ExtResource("1")]
+script = ExtResource("2")
+BoxMargin = 0.1
+PromptText = "Rotate and Scan!"
+WidgetText = "What's the price on this?"
+
+[node name="SuccessSfxPlayer" parent="." index="0"]
+bus = &"Microgames"
+
+[node name="FailureSfxPlayer" parent="." index="1"]
+bus = &"Microgames"
+
+[node name="ScanSfxPlayer" type="AudioStreamPlayer" parent="." index="2"]
+stream = SubResource("AudioStreamRandomizer_uhdy0")
+bus = &"Microgames"
+
+[node name="RotateSfxPlayer" type="AudioStreamPlayer" parent="." index="3"]
+stream = SubResource("AudioStreamRandomizer_d28ss")
+bus = &"Microgames"
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="." index="5"]
+
+[node name="Viewport" type="SubViewport" parent="ViewportContainer" index="0"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(940, 940)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="ViewportContainer/Viewport" index="0"]
+
+[node name="Camera" type="Camera3D" parent="ViewportContainer/Viewport/World" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+cull_mask = 1
+fov = 90.0
+size = 4.0
+
+[node name="Background" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.03)
+modulate = Color(0.356863, 0.34902, 0.34902, 1)
+pixel_size = 0.04
+texture = ExtResource("5")
+
+[node name="ItemPivot" type="Node3D" parent="ViewportContainer/Viewport/World" index="2"]
+transform = Transform3D(0.95035, -0.185295, 0.25, 0.25, 0.933013, -0.258819, -0.185295, 0.308469, 0.933013, -0.5, 0.5, 2)
+
+[node name="ScannableItem" parent="ViewportContainer/Viewport/World/ItemPivot" index="0" instance=ExtResource("3")]
+unique_name_in_owner = true
+
+[node name="BarcodePivot" type="Node3D" parent="ViewportContainer/Viewport/World/ItemPivot/ScannableItem" index="1"]
+unique_name_in_owner = true
+
+[node name="Barcode" type="MeshInstance3D" parent="ViewportContainer/Viewport/World/ItemPivot/ScannableItem/BarcodePivot" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.001)
+mesh = SubResource("3")
+skeleton = NodePath("../../../..")
+
+[node name="Candidate" type="Marker3D" parent="ViewportContainer/Viewport/World/ItemPivot/ScannableItem/BarcodePivot" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="Judge" type="Marker3D" parent="ViewportContainer/Viewport/World/ItemPivot" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="Dither" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="3"]
+unique_name_in_owner = true
+transform = Transform3D(0.95035, -0.185295, 0.25, 0.25, 0.933013, -0.258819, -0.185295, 0.308469, 0.933013, -0.219462, 0.20729, 2.98201)
+modulate = Color(0.643137, 0, 0, 0.180392)
+pixel_size = 0.125
+texture = ExtResource("10")
+
+[node name="MarginContainer" type="MarginContainer" parent="." index="6"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer" index="0"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="ActionIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="0"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"move_up"
+
+[node name="ActionIcon2" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="1"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"move_left"
+
+[node name="ActionIcon3" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="2"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"move_down"
+
+[node name="ActionIcon4" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="3"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"move_right"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer" index="4"]
+layout_mode = 2
+theme = ExtResource("8")
+text = "Rotate"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="ActionIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2" index="0"]
+layout_mode = 2
+script = ExtResource("7")
+action_name = &"ui_accept"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2" index="1"]
+layout_mode = 2
+theme = ExtResource("8")
+text = "Scan"
+
+[node name="ScannerHand" parent="." index="7" instance=ExtResource("9")]
+unique_name_in_owner = true
+position = Vector2(776, 743)
+rotation = 0.158825
+scale = Vector2(1.5, 1.5)
+
+[node name="GreenCheck" parent="ScannerHand/Wrapper/SignPivot" index="1"]
+frame = 1
+
+[node name="RedX" parent="ScannerHand/Wrapper/SignPivot" index="2"]
+frame = 0
+
+[node name="ScreenshakeHandler" parent="." index="8" instance=ExtResource("13")]
+unique_name_in_owner = true
+Noise = SubResource("5")
+
+[connection signal="CubeRotated" from="." to="RotateSfxPlayer" method="play"]
+[connection signal="ScanFailed" from="." to="ScannerHand/AnimationPlayer" method="play" binds= ["Failure"]]
+[connection signal="ScanSuccessful" from="." to="ScanSfxPlayer" method="play"]
+[connection signal="ScanSuccessful" from="." to="ScannerHand/AnimationPlayer" method="play" binds= ["Success"]]
+[connection signal="ScanTriggered" from="." to="ScannerHand/AnimationPlayer" method="play" binds= ["Squeeze"]]
+
+[editable path="ViewportContainer/Viewport/World/ItemPivot/ScannableItem"]
+[editable path="ScannerHand"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture" uid="uid://d1umnqi4vlrru" path="res://microgames/apologize/apologizing_employee.png" id="1"]
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 1 )
+region = Rect2( 546, 840, 223, 210 )
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 1 )
+region = Rect2( 546, 1050, 223, 210 )
+
+[sub_resource type="SpriteFrames" id=47]
+animations = [ {
+"frames": [ SubResource( 45 ), SubResource( 46 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="MiddleFingerArm" type="AnimatedSprite"]
+frames = SubResource( 47 )
+playing = true

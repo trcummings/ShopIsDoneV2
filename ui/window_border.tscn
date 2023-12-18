@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmafmnvdq8368"]
+
+[ext_resource type="Texture2D" uid="uid://vtlcwxh6bkop" path="res://ui/nine_patch_border_white.png" id="1"]
+
+[node name="BorderedUIWindow" type="NinePatchRect"]
+texture = ExtResource("1")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16

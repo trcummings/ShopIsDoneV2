@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/base_produce_item.tscn" id="1"]
+[ext_resource type="Texture" uid="uid://b2y1raynl2n07" path="res://microgames/destroy_rotten_produce/rotten_produce_sheet.png" id="2"]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 83.0
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 256, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 256, 256, 256, 256 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 4.0
+} ]
+
+[node name="FreshBroccoli" instance=ExtResource( 1 )]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" parent="." index="0"]
+shape = SubResource( 4 )
+
+[node name="AnimatedSprite" parent="." index="1"]
+frames = SubResource( 3 )
+frame = 1
+playing = true
+__meta__ = {
+"_edit_lock_": true
+}

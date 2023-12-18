@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://521m8e8gm0lc"]
+
+[ext_resource type="Script" path="res://camera/ScreenshakeHandler.cs" id="1_hxawy"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2f8cg"]
+
+[node name="ScreenshakeHandler" type="Node"]
+script = ExtResource("1_hxawy")
+Noise = SubResource("FastNoiseLite_2f8cg")

@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://4kv7xejw6n4l"]
+
+[ext_resource type="Script" path="res://microgames/destroy_rotten_produce/Produce/BaseProduceItem.cs" id="1_8mha5"]
+
+[sub_resource type="Animation" id="1"]
+resource_name = "SpinOff"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.574349),
+"update": 0,
+"values": [0.0, -720.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.307786),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.203063),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-50, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3gdmt"]
+_data = {
+"SpinOff": SubResource("1")
+}
+
+[node name="BaseProduceItem" type="RigidBody2D"]
+collision_layer = 3
+gravity_scale = 8.0
+script = ExtResource("1_8mha5")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_3gdmt")
+}

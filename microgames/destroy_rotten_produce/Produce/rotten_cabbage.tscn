@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/base_produce_item.tscn" id="1"]
+[ext_resource type="Texture" uid="uid://b2y1raynl2n07" path="res://microgames/destroy_rotten_produce/rotten_produce_sheet.png" id="2"]
+[ext_resource type="Material" path="res://microgames/common/rotten_produce_outline.material" id="3"]
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 110.0
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 512, 512, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 768, 512, 256, 256 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 4.0
+} ]
+
+[node name="RottenCabbage" instance=ExtResource( 1 )]
+IsRotten = true
+
+[node name="CollisionShape" parent="." index="0"]
+shape = SubResource( 5 )
+
+[node name="AnimatedSprite" parent="." index="1"]
+material = ExtResource( 3 )
+frames = SubResource( 4 )
+playing = true
