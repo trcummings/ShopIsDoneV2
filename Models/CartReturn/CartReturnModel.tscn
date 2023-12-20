@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Models/CartReturn/CartReturn.glb" type="PackedScene" id=1]
+
+[node name="CartReturnModel" type="Spatial"]
+
+[node name="CartReturn" parent="." instance=ExtResource( 1 )]

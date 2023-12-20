@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Models/SupermarketVegetableDisplay/SupermarketVegetableDisplay.glb" type="PackedScene" id=1]
+[ext_resource path="res://textures/Objects/vegetables.png" type="Texture" id=2]
+
+[node name="Prop_VegetableFridge_" type="Spatial"]
+
+[node name="Pivot" type="Spatial" parent="."]
+
+[node name="SupermarketVegetableDisplay" parent="Pivot" instance=ExtResource( 1 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, -0.7 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Pivot"]
+transform = Transform( 1.05395, 0, 0, 0, 0.695512, 0.239533, 0, -0.171594, 0.970888, 0, 1.6138, 0.380964 )
+double_sided = false
+texture = ExtResource( 2 )

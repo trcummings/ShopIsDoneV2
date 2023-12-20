@@ -1,6 +1,5 @@
-[gd_scene load_steps=17 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=16 format=3 uid="uid://clfmotf3uelqh"]
 
-[ext_resource type="MeshLibrary" uid="uid://diqp0yq51jroq" path="res://gridmap_starter/MeshLibrary.tres" id="1_gtrro"]
 [ext_resource type="Script" path="res://microgames/microgame_runner.gd" id="2_tqx2s"]
 [ext_resource type="PackedScene" uid="uid://cs55ll2s8e14e" path="res://microgames/always_outcome/always_lose_microgame.tscn" id="3_7aqal"]
 [ext_resource type="PackedScene" uid="uid://df0fk08hmrihh" path="res://microgames/microgame_manager.tscn" id="3_fpukf"]
@@ -12,9 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b3t7y7xkc852q" path="res://microgames/scan_item/scan_item_microgame.tscn" id="9_4xati"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="10_01q2v"]
 
-[sub_resource type="Environment" id="Environment_2uxxw"]
-background_mode = 1
-ambient_light_source = 1
+[sub_resource type="Environment" id="Environment_j6wrf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3dsoq"]
 height = 1.5
@@ -23,8 +20,6 @@ height = 1.5
 height = 1.5
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_rqdll"]
-vertices = PackedVector3Array(-5.5, 1.75, -3.5, -5.5, 1.75, 5.5, 5.5, 1.75, 5.5, 5.5, 1.75, -3.5)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydnh5"]
 
@@ -32,9 +27,10 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 metadata/_edit_lock_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_2uxxw")
+environment = SubResource("Environment_j6wrf")
 
 [node name="PlayerUnits" type="Node3D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="PlayerUnits"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.977181, 0.25646, 1.29361)
@@ -65,20 +61,16 @@ metadata/_edit_lock_ = true
 [node name="Environment" type="Node3D" parent="NavigationRegion3D"]
 metadata/_edit_lock_ = true
 
-[node name="GridMap" type="GridMap" parent="NavigationRegion3D/Environment"]
-mesh_library = ExtResource("1_gtrro")
-data = {
-"cells": PackedInt32Array(65534, 65535, 0, 65535, 65535, 0, 0, 65535, 0, 1, 65535, 0, 0, 0, 0, 1, 0, 0, 65535, 0, 0, 65534, 0, 0, 65534, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 1, 0, 65533, 65534, 7, 65533, 2, 1048583, 2, 2, 655367, 2, 65534, 1441799, 2, 65535, 1441794, 2, 0, 1441794, 2, 1, 1441794, 1, 2, 655362, 0, 2, 655362, 65535, 2, 655362, 65534, 2, 655362, 65533, 1, 1048578, 65533, 0, 1048578, 65533, 65535, 1048578, 65534, 65534, 2, 65535, 65534, 2, 1, 65534, 2, 0, 65534, 2)
-}
-metadata/_editor_floor_ = Vector3(0, 0, 0)
-
 [node name="OmniLight3D" type="OmniLight3D" parent="NavigationRegion3D/Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9877, 2.16969, 0)
+metadata/_edit_lock_ = true
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="NavigationRegion3D/Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.62586, 2.16969, 2.71732)
+metadata/_edit_lock_ = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
@@ -88,6 +80,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ydnh5")
+metadata/_edit_lock_ = true
 
 [node name="MicrogameRunner" type="Control" parent="PanelContainer" node_paths=PackedStringArray("container", "microgame_manager", "button_template")]
 layout_mode = 2

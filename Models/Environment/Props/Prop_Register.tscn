@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://AssetPacks/SimpleShopInteriors/_Models/Props/SI_Prop_Register_01.fbx" type="PackedScene" id=1]
+[ext_resource path="res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material" type="Material" id=2]
+
+[node name="Prop_Register" type="Spatial"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+
+[node name="SI_Prop_Register_01" parent="." instance=ExtResource( 1 )]
+transform = Transform( 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0 )
+
+[node name="SI_Prop_Register_01" parent="SI_Prop_Register_01/RootNode" index="0"]
+material/0 = ExtResource( 2 )
+
+[editable path="SI_Prop_Register_01"]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://AssetPacks/LowPolyAssetBundle/ModelsInterior2_FBX_1.02/Interior/Light/Light_12.mesh" type="ArrayMesh" id=2]
+
+[node name="Light_12" type="Spatial"]
+
+[node name="RootNode" type="Spatial" parent="."]
+
+[node name="Light_12" type="MeshInstance" parent="RootNode"]
+mesh = ExtResource( 2 )

@@ -1,0 +1,32 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/CustomTexturePackerImporter/TexturePackerSpriteSheet.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+SpriteDict = {
+"legs-downleft-0": Rect2( 786, 405, 124, 177 ),
+"legs-downleft-1": Rect2( 390, 807, 166, 198 ),
+"legs-downleft-2": Rect2( 607, 1, 189, 200 ),
+"legs-downleft-3": Rect2( 203, 405, 197, 198 ),
+"legs-downleft-4": Rect2( 1, 1, 200, 200 ),
+"legs-downleft-5": Rect2( 1, 203, 200, 200 ),
+"legs-downright-0": Rect2( 718, 808, 146, 194 ),
+"legs-downright-1": Rect2( 604, 405, 180, 200 ),
+"legs-downright-2": Rect2( 405, 203, 193, 200 ),
+"legs-downright-3": Rect2( 558, 807, 158, 195 ),
+"legs-downright-4": Rect2( 203, 1, 200, 200 ),
+"legs-downright-5": Rect2( 1, 405, 200, 200 ),
+"legs-upleft-0": Rect2( 560, 607, 158, 196 ),
+"legs-upleft-1": Rect2( 600, 203, 185, 200 ),
+"legs-upleft-2": Rect2( 1, 805, 186, 200 ),
+"legs-upleft-3": Rect2( 720, 607, 153, 199 ),
+"legs-upleft-4": Rect2( 203, 203, 200, 200 ),
+"legs-upleft-5": Rect2( 405, 1, 200, 200 ),
+"legs-upright-0": Rect2( 798, 1, 111, 181 ),
+"legs-upright-1": Rect2( 388, 605, 170, 200 ),
+"legs-upright-2": Rect2( 203, 605, 183, 200 ),
+"legs-upright-3": Rect2( 189, 807, 199, 177 ),
+"legs-upright-4": Rect2( 1, 607, 200, 196 ),
+"legs-upright-5": Rect2( 402, 405, 200, 186 )
+}

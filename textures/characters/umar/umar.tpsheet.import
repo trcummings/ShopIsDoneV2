@@ -1,0 +1,13 @@
+[remap]
+
+importer="moodprobiotic.CustomTexturepackerImporter"
+type="Resource"
+path="res://.import/umar.tpsheet-f5d3731fd48e476635484e0b98535fc1.res"
+
+[deps]
+
+source_file="res://textures/characters/umar/umar.tpsheet"
+dest_files=[ "res://.import/umar.tpsheet-f5d3731fd48e476635484e0b98535fc1.res" ]
+
+[params]
+

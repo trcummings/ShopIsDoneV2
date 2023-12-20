@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material" type="Material" id=1]
+[ext_resource path="res://AssetPacks/SimpleShopInteriors/_Models/Environment/SI_Env_Wall_01.fbx" type="PackedScene" id=2]
+
+[node name="Geo_Wall_01_" type="Spatial"]
+
+[node name="SI_Env_Wall_01" parent="." instance=ExtResource( 2 )]
+transform = Transform( 40, 0, 0, 0, 60, 0, 0, 0, 40, -1, 0.15, -1 )
+
+[node name="SI_Env_Wall_01" parent="SI_Env_Wall_01/RootNode" index="0"]
+material/0 = ExtResource( 1 )
+
+[editable path="SI_Env_Wall_01"]

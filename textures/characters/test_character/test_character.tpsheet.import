@@ -1,0 +1,13 @@
+[remap]
+
+importer="moodprobiotic.CustomTexturepackerImporter"
+type="Resource"
+path="res://.import/test_character.tpsheet-1bb9e1fabcdeb97bd4ef190f03f0d94d.res"
+
+[deps]
+
+source_file="res://textures/characters/test_character/test_character.tpsheet"
+dest_files=[ "res://.import/test_character.tpsheet-1bb9e1fabcdeb97bd4ef190f03f0d94d.res" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="moodprobiotic.CustomTexturepackerImporter"
+type="Resource"
+path="res://.import/ricky.tpsheet-8110ed5fbc34816ed5c3018c59ec518c.res"
+
+[deps]
+
+source_file="res://textures/characters/ricky/ricky.tpsheet"
+dest_files=[ "res://.import/ricky.tpsheet-8110ed5fbc34816ed5c3018c59ec518c.res" ]
+
+[params]
+
