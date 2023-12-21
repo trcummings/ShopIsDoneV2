@@ -229,7 +229,7 @@ namespace ShopIsDone.Cameras
             // fire off a tween to that target
             _MoveTween = GetTree().CreateTween();
             _MoveTween
-                .TweenProperty(this, "global_translation", Target.GlobalPosition, MoveDuration)
+                .TweenProperty(this, "global_position", _TargetDestination, MoveDuration)
                 // Set ease and trans type
                 .SetEase(Tween.EaseType.OutIn)
                 .SetTrans(Tween.TransitionType.Linear);

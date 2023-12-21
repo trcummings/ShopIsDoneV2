@@ -5,7 +5,7 @@ using ShopIsDone.Utils.Extensions;
 namespace ShopIsDone.Models.IsometricModels
 {
     [Tool]
-    public partial class SkeletalIsometricSprite2D : IsometricSpriteRenderer2D
+    public partial class SkeletalIsometricSprite2D : IsometricSprite2D
     {
         // Nodes
         [Export]

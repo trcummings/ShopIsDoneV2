@@ -56,7 +56,7 @@ namespace ShopIsDone.Models
                 )
             {
                 // Await an idle frame
-                await ToSignal(GetTree(), "idle_frame");
+                await ToSignal(GetTree(), "process_frame");
             }
             // Then, filter actions through the main animation player
             else if (_AnimPlayer.HasAnimation(animName))
@@ -70,7 +70,7 @@ namespace ShopIsDone.Models
                 else
                 {
                     _AnimPlayer.Advance(_AnimPlayer.CurrentAnimationLength);
-                    await ToSignal(GetTree(), "idle_frame");
+                    await ToSignal(GetTree(), "process_frame");
                 }
             }
             // Otherwise, error case
@@ -78,7 +78,7 @@ namespace ShopIsDone.Models
             {
                 GD.PrintErr($"Action {animName} not valid for {Name}");
                 // Await an idle frame
-                await ToSignal(GetTree(), "idle_frame");
+                await ToSignal(GetTree(), "process_frame");
             }
 
             // Emit signal

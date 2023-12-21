@@ -14,7 +14,7 @@ namespace ShopIsDone.Models.IsometricModels
 
         // Nodes
         [Export]
-        protected IsometricSpriteRenderer2D _Sprite;
+        protected IsometricSprite2D _Sprite;
 
         // State vars
         protected Vector3 _ViewedDir = Vec3.BackRight;
@@ -78,13 +78,13 @@ namespace ShopIsDone.Models.IsometricModels
             // Do not set the action if we don't yet have one (or if the sprite isn't set yet)
             if (string.IsNullOrEmpty(actionName) || _Sprite == null)
             {
-                await ToSignal(GetTree(), "idle_frame");
+                await ToSignal(GetTree(), "process_frame");
                 return;
             }
 
             // Play animation
             _Sprite.PlayAnimation(actionName);
-            await ToSignal(_Sprite, nameof(IsometricSpriteRenderer2D.AnimationFinished));
+            await ToSignal(_Sprite, nameof(_Sprite.AnimationFinished));
         }
 
         private Task RunIsometricAnimation()

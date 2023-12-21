@@ -6,7 +6,7 @@ using Godot.Collections;
 namespace ShopIsDone.Models.IsometricModels
 {
     [Tool]
-    public partial class IsometricSpriteRenderer2D : Node2D
+    public partial class IsometricSprite2D : Node2D
     {
         [Signal]
         public delegate void AnimationFinishedEventHandler(string animName);
@@ -43,7 +43,7 @@ namespace ShopIsDone.Models.IsometricModels
             }
             else
             {
-                await ToSignal(GetTree(), "idle_frame");
+                await ToSignal(GetTree(), "process_frame");
                 EmitSignal(nameof(AnimationFinished));
             }
         }
