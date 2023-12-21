@@ -2,17 +2,20 @@ using Godot;
 using ShopIsDone.GameSettings;
 using System;
 using System.Linq;
+using Godot.Collections;
 using System.Threading.Tasks;
+using ShopIsDone.Debug;
+using ShopIsDone.Utils.StateMachine;
 
 namespace ShopIsDone.Game
 {
     public partial class GameManager : Node
     {
-        [Export(PropertyHint.Enum, "Vanity Card, Main Menu, Level, Level Editor, Debug Level Select, Break Room")]
+        [Export(PropertyHint.Enum, "Vanity Card, Main Menu, Level, Break Room")]
         public int OverrideModeAfterLoad = 1;
 
         [Export(PropertyHint.Dir)]
-        public string InitialLevelFolderPath;
+        public string InitialLevel;
 
         // Enum for what game mode should be picked
         public enum InitialGameState
@@ -20,37 +23,35 @@ namespace ShopIsDone.Game
             VanityCard = 0,
             MainMenu = 1,
             Level = 2,
-            LevelEditor = 3,
-            DebugLevelSelect = 4,
-            BreakRoom = 5
+            BreakRoom = 3
         }
 
         // Nodes
-        //private StateMachine _GSM;
+        private StateMachine _GSM;
         private WorldEnvironment _WorldEnvironment;
         private ColorRect _BlackOverlay;
-        //private DebugDisplay _DebugDisplay;
+        private DebugDisplay _DebugDisplay;
         private GameSettingsManager _GameSettings;
 
         public override void _Ready()
         {
             // Ready nodes
-            //_GSM = GetNode<StateMachine>("%GameStateMachine");
+            _GSM = GetNode<StateMachine>("%GameStateMachine");
             _WorldEnvironment = GetNode<WorldEnvironment>("%WorldEnvironment");
             _BlackOverlay = GetNode<ColorRect>("%BlackOverlay");
-            //_DebugDisplay = GetNode<DebugDisplay>("%DebugDisplay");
-            _GameSettings = GameSettingsManager.GetGameSettings(this);
+            _DebugDisplay = GetNode<DebugDisplay>("%DebugDisplay");
 
             // Show black overlay
             _BlackOverlay.Color = Colors.Black;
             _BlackOverlay.Show();
 
-            //// Connect to settings events
-            //_GameSettings.Connect(nameof(GameSettings.ShowDebugDisplayChanged), this, nameof(SetDebugDisplayVisibility));
-            //_GameSettings.Connect(nameof(GameSettings.ResolutionChanged), this, nameof(SetRootViewportSize));
-            //_GameSettings.Connect(nameof(GameSettings.ResolutionScaleChanged), this, nameof(OnResolutionScaleChanged));
-            //_GameSettings.Connect(nameof(GameSettings.FxaaChanged), this, nameof(OnFxaaChanged));
-            //_GameSettings.Connect(nameof(GameSettings.MsaaChanged), this, nameof(OnMsaaChanged));
+            // Game settings
+            _GameSettings = GameSettingsManager.GetGameSettings(this);
+            _GameSettings.ShowDebugDisplayChanged += SetDebugDisplayVisibility;
+            _GameSettings.ResolutionChanged += SetRootViewportSize;
+            _GameSettings.ResolutionScaleChanged += OnResolutionScaleChanged;
+            _GameSettings.FxaaChanged += OnFxaaChanged;
+            _GameSettings.MsaaChanged += OnMsaaChanged;
 
             //// Connect to whenever a node is added to the scene (for viewport filtering)
             //GetTree().Connect("node_added", this, nameof(OnPotentialViewportAdded));
@@ -60,7 +61,11 @@ namespace ShopIsDone.Game
             //foreach (var state in states) state.Init(this);
 
             //// Set GSM into settings load state
-            //_GSM.ChangeState("InitialLoadGameState");
+            _GSM.ChangeState(Consts.GameStates.INITIAL_LOAD, new Dictionary<string, Variant>()
+            {
+                { Consts.OVERRIDE_GAME_STATE, OverrideModeAfterLoad },
+                { Consts.INITIAL_LEVEL, InitialLevel ?? default(Variant) }
+            });
         }
 
 
@@ -119,7 +124,7 @@ namespace ShopIsDone.Game
         // Debug Display
         private void SetDebugDisplayVisibility(bool value)
         {
-            //_DebugDisplay.SetVisibility(value);
+            _DebugDisplay.SetVisibility(value);
         }
 
         // Overlay
@@ -140,20 +145,18 @@ namespace ShopIsDone.Game
         // Viewport options
         private void SetRootViewportSize(Vector2 newSize)
         {
-            // Get root viewport
-            var rootViewport = GetViewport();
             // Set size
-            //rootViewport.Size = newSize;
+            GetWindow().Size = (Vector2I)newSize;
             //GetTree().SetScreenStretch(SceneTree.StretchMode.Viewport, SceneTree.StretchAspect.Keep, newSize);
 
-            //// Set viewports that aren't contained in viewport containers
-            //foreach (var viewport in GetTree().GetNodesInGroup(Consts.Groups.WorldViewport).OfType<Viewport>())
-            //{
-            //    viewport.Size = newSize;
-            //}
+            // Set viewports that aren't contained in viewport containers
+            foreach (var viewport in GetTree().GetNodesInGroup(Consts.WORLD_VIEWPORT).OfType<SubViewport>())
+            {
+                viewport.Size = (Vector2I)newSize;
+            }
         }
 
-        private void OnResolutionScaleChanged(int _)
+        private void OnResolutionScaleChanged(float _)
         {
             SetAllViewportsProperties();
         }
@@ -184,26 +187,25 @@ namespace ShopIsDone.Game
             //}
         }
 
-        private void SetViewportProperties(Viewport viewport)
+        private void SetViewportProperties(SubViewport viewport)
         {
             var resolution = _GameSettings.GetResolution();
             var scaling = _GameSettings.GetResolutionScaling();
 
-            //// Set viewport size as scaled size
-            //var scaledSize = (resolution * (scaling / 100f)).Round();
-            //viewport.Size = scaledSize;
+            // Set viewport size as scaled size
+            viewport.Size = (Vector2I)(resolution * (scaling / 100f)).Round();
 
-            //// Calculate and set sharpness
-            //var screenWidth = resolution.x;
-            //var d = screenWidth - viewport.Size.x;
-            //var sharpness = Mathf.Clamp(d / screenWidth, 0, 1);
-            //viewport.SharpenIntensity = sharpness;
+            // Calculate and set sharpness
+            var screenWidth = resolution.X;
+            var d = screenWidth - viewport.Size.X;
+            var sharpness = Mathf.Clamp(d / screenWidth, 0, 1);
+            viewport.FsrSharpness = sharpness;
 
-            //// Set msaa and fxaa
-            //var msaa = _GameSettings.GetMsaa();
-            //var fxaa = _GameSettings.GetFxaa();
-            //viewport.Msaa = (Viewport.MSAA)msaa;
-            //viewport.Fxaa = fxaa;
+            // Set msaa and fxaa
+            var msaa = _GameSettings.GetMsaa();
+            var fxaa = _GameSettings.GetFxaa();
+            viewport.Msaa3D = (Viewport.Msaa)msaa;
+            //viewport = fxaa;
         }
 
         public static Vector2 GetProjectViewportSize()

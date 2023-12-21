@@ -1,9 +1,8 @@
 using Godot;
 using System;
 using Godot.Collections;
-using System.Linq;
 
-namespace Utils.StateMachine
+namespace ShopIsDone.Utils.StateMachine
 {
     public partial class State : Node
     {

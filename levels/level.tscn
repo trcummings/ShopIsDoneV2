@@ -1,11 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=22 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://camera/CameraSystem.cs" id="1_hman2"]
-[ext_resource type="Script" path="res://Level.cs" id="1_uriqi"]
+[ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
+[ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_b2cin"]
 [ext_resource type="Script" path="res://camera/InputXformer.cs" id="2_f8i2e"]
 [ext_resource type="PackedScene" path="res://camera/isometric_camera.tscn" id="2_s72y3"]
 [ext_resource type="Script" path="res://microgames/microgame_runner.gd" id="2_tqx2s"]
 [ext_resource type="PackedScene" uid="uid://cs55ll2s8e14e" path="res://microgames/always_outcome/always_lose_microgame.tscn" id="3_7aqal"]
+[ext_resource type="Script" path="res://util/state_machine/State.cs" id="3_8uuqm"]
 [ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_53pcu"]
 [ext_resource type="PackedScene" uid="uid://df0fk08hmrihh" path="res://microgames/microgame_manager.tscn" id="3_fpukf"]
 [ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="4_vqgup"]
@@ -25,7 +27,7 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydnh5"]
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("_DefaultSpawnPoint", "_CameraSystem", "_Camera", "_Haskell")]
+[node name="Level" type="Node3D" node_paths=PackedStringArray("_DefaultSpawnPoint", "_CameraSystem", "_Camera", "_Haskell")]
 script = ExtResource("1_uriqi")
 _DefaultSpawnPoint = NodePath("DefaultSpawnPoint")
 _CameraSystem = NodePath("Services/CameraService")
@@ -35,6 +37,21 @@ metadata/_edit_lock_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j6wrf")
+
+[node name="LevelStateMachine" type="Node" parent="."]
+script = ExtResource("2_b2cin")
+
+[node name="InitializingState" type="Node" parent="LevelStateMachine"]
+script = ExtResource("3_8uuqm")
+
+[node name="FreeMoveState" type="Node" parent="LevelStateMachine"]
+script = ExtResource("3_8uuqm")
+
+[node name="ArenaState" type="Node" parent="LevelStateMachine"]
+script = ExtResource("3_8uuqm")
+
+[node name="ExitingState" type="Node" parent="LevelStateMachine"]
+script = ExtResource("3_8uuqm")
 
 [node name="Services" type="Node" parent="."]
 

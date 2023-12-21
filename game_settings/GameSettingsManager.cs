@@ -147,7 +147,6 @@ namespace ShopIsDone.GameSettings
 
         public void SetVsync(bool newValue)
         {
-            var window = GetWindow();
             DisplayServer.WindowSetVsyncMode(newValue ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
             _UserSettings.SetValue("video", "vsync", newValue);
 

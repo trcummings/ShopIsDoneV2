@@ -22,7 +22,7 @@ ResourceScriptDirectories=["res://"]
 [application]
 
 config/name="Shop Is Done"
-run/main_scene="res://world.tscn"
+run/main_scene="res://game/game.tscn"
 config/features=PackedStringArray("4.2", "C#")
 config/icon="res://icon.svg"
 

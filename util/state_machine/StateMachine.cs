@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using Godot.Collections;
 
-namespace Utils.StateMachine
+namespace ShopIsDone.Utils.StateMachine
 {
     public partial class StateMachine : Node
     {
