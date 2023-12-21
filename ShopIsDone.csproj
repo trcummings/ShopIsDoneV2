@@ -7,5 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="util\extensions\" />
+    <Folder Include="util\command\" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://wh0r4kqiaui"]
 
-[ext_resource path="res://Models/CartReturn/CartReturn.glb" type="PackedScene" id=1]
+[ext_resource type="PackedScene" uid="uid://bw2bejce4g1n3" path="res://Models/CartReturn/CartReturn.glb" id="1"]
+[ext_resource type="Material" path="res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material" id="2_dujqc"]
 
-[node name="CartReturnModel" type="Spatial"]
+[node name="CartReturnModel" type="Node3D"]
 
-[node name="CartReturn" parent="." instance=ExtResource( 1 )]
+[node name="CartReturn" parent="." instance=ExtResource("1")]
+
+[node name="CartReturn2" parent="CartReturn" index="0"]
+surface_material_override/0 = ExtResource("2_dujqc")
+
+[editable path="CartReturn"]
