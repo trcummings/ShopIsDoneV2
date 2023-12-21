@@ -10,6 +10,15 @@ export_presets.cfg
 *.translation
 
 # Mono-specific ignores
+mono_crash.*
 .mono/
 data_*/
-mono_crash.*.json
+
+# VS Code
+.vs/
+
+# Temporary data
+tmp/*
+scratch/*
+
+.DS_Store
