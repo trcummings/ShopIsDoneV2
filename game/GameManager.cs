@@ -32,6 +32,7 @@ namespace ShopIsDone.Game
         private ColorRect _BlackOverlay;
         private DebugDisplay _DebugDisplay;
         private GameSettingsManager _GameSettings;
+        private GlobalEvents _GlobalEvents;
 
         public override void _Ready()
         {
@@ -48,19 +49,15 @@ namespace ShopIsDone.Game
             // Game settings
             _GameSettings = GameSettingsManager.GetGameSettings(this);
             _GameSettings.ShowDebugDisplayChanged += SetDebugDisplayVisibility;
-            _GameSettings.ResolutionChanged += SetRootViewportSize;
-            _GameSettings.ResolutionScaleChanged += OnResolutionScaleChanged;
-            _GameSettings.FxaaChanged += OnFxaaChanged;
-            _GameSettings.MsaaChanged += OnMsaaChanged;
 
-            //// Connect to whenever a node is added to the scene (for viewport filtering)
-            //GetTree().Connect("node_added", this, nameof(OnPotentialViewportAdded));
+            // Events
+            _GlobalEvents = GlobalEvents.GetGlobalEvents(this);
+            _GlobalEvents.FadeInRequested += () => _ = FadeInOverlay();
+            _GlobalEvents.FadeOutRequested += () => _ = FadeOutOverlay();
+            _GlobalEvents.ChangeEnvironmentRequested += SetEnvironment;
+            _GlobalEvents.QuitGameRequested += QuitGame;
 
-            //// Init Game states with given vars
-            //var states = _GSM.GetChildren().OfType<GameState>();
-            //foreach (var state in states) state.Init(this);
-
-            //// Set GSM into settings load state
+            // Set GSM into settings load state
             _GSM.ChangeState(Consts.GameStates.INITIAL_LOAD, new Dictionary<string, Variant>()
             {
                 { Consts.OVERRIDE_GAME_STATE, OverrideModeAfterLoad },
@@ -84,7 +81,7 @@ namespace ShopIsDone.Game
         }
 
         // Quit
-        public void QuitGame()
+        private void QuitGame()
         {
             // Save settings
             _GameSettings.Save();
@@ -95,30 +92,9 @@ namespace ShopIsDone.Game
 
 
         // World environment
-        public void SetEnvironment(Godot.Environment environment)
+        private void SetEnvironment(Godot.Environment environment)
         {
             _WorldEnvironment.Environment = environment;
-        }
-
-        // Game Settings
-        public void LoadInitialGameSettings()
-        {
-            // Load in settings
-            _GameSettings.Load();
-            // Video settings
-            _GameSettings.SetFullscreen(_GameSettings.GetFullscreen());
-            _GameSettings.SetResolution(_GameSettings.GetResolution());
-            _GameSettings.SetResolutionScaling(_GameSettings.GetResolutionScaling());
-            _GameSettings.SetFxaa(_GameSettings.GetFxaa());
-            _GameSettings.SetMsaa(_GameSettings.GetMsaa());
-            _GameSettings.SetVsync(_GameSettings.GetVsync());
-            // Audio Settings
-            _GameSettings.SetMasterVolume(_GameSettings.GetMasterVolume());
-            _GameSettings.SetSfxVolume(_GameSettings.GetSfxVolume());
-            _GameSettings.SetMusicVolume(_GameSettings.GetMusicVolume());
-            // Debug Settings
-            _GameSettings.SetDebugDisplayVisible(_GameSettings.GetIsDebugDisplayVisible());
-            _GameSettings.SetBlurDuringPause(_GameSettings.GetBlurDuringPause());
         }
 
         // Debug Display
@@ -133,6 +109,7 @@ namespace ShopIsDone.Game
             var tween = GetTree().CreateTween();
             tween.TweenProperty(_BlackOverlay, "color", new Color(0, 0, 0, 0), 0.5F);
             await ToSignal(tween, "finished");
+            _GlobalEvents.EmitSignal(nameof(_GlobalEvents.FadeOutFinished));
         }
 
         public async Task FadeInOverlay()
@@ -140,72 +117,7 @@ namespace ShopIsDone.Game
             var tween = GetTree().CreateTween();
             tween.TweenProperty(_BlackOverlay, "color", Colors.Black, 0.5F);
             await ToSignal(tween, "finished");
-        }
-
-        // Viewport options
-        private void SetRootViewportSize(Vector2 newSize)
-        {
-            // Set size
-            GetWindow().Size = (Vector2I)newSize;
-            //GetTree().SetScreenStretch(SceneTree.StretchMode.Viewport, SceneTree.StretchAspect.Keep, newSize);
-
-            // Set viewports that aren't contained in viewport containers
-            foreach (var viewport in GetTree().GetNodesInGroup(Consts.WORLD_VIEWPORT).OfType<SubViewport>())
-            {
-                viewport.Size = (Vector2I)newSize;
-            }
-        }
-
-        private void OnResolutionScaleChanged(float _)
-        {
-            SetAllViewportsProperties();
-        }
-
-        private void OnFxaaChanged(bool _)
-        {
-            SetAllViewportsProperties();
-        }
-
-        private void OnMsaaChanged(int _)
-        {
-            SetAllViewportsProperties();
-        }
-
-        private void OnPotentialViewportAdded(Node node)
-        {
-            //if (node is Viewport viewport && viewport.IsInGroup(Consts.Groups.WorldViewport))
-            //{
-            //    SetViewportProperties(viewport);
-            //}
-        }
-
-        private void SetAllViewportsProperties()
-        {
-            //foreach (var viewport in GetTree().GetNodesInGroup(Consts.Groups.WorldViewport).OfType<Viewport>())
-            //{
-            //    SetViewportProperties(viewport);
-            //}
-        }
-
-        private void SetViewportProperties(SubViewport viewport)
-        {
-            var resolution = _GameSettings.GetResolution();
-            var scaling = _GameSettings.GetResolutionScaling();
-
-            // Set viewport size as scaled size
-            viewport.Size = (Vector2I)(resolution * (scaling / 100f)).Round();
-
-            // Calculate and set sharpness
-            var screenWidth = resolution.X;
-            var d = screenWidth - viewport.Size.X;
-            var sharpness = Mathf.Clamp(d / screenWidth, 0, 1);
-            viewport.FsrSharpness = sharpness;
-
-            // Set msaa and fxaa
-            var msaa = _GameSettings.GetMsaa();
-            var fxaa = _GameSettings.GetFxaa();
-            viewport.Msaa3D = (Viewport.Msaa)msaa;
-            //viewport = fxaa;
+            _GlobalEvents.EmitSignal(nameof(_GlobalEvents.FadeInFinished));
         }
 
         public static Vector2 GetProjectViewportSize()

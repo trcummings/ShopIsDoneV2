@@ -37,9 +37,8 @@ namespace ShopIsDone.GameSettings
         private HSlider _ResolutionScaling;
         private Label _ResolutionScalingLabel;
         private Button _ResetScalingButton;
+        private OptionButton _ScalingMode;
         private CheckButton _Vsync;
-        private CheckButton _Fxaa;
-        private OptionButton _Msaa;
 
         // Debug
         private Control _DebugSettingsContainer;
@@ -80,14 +79,13 @@ namespace ShopIsDone.GameSettings
             _ResolutionScalingLabel = GetNode<Label>("%ResolutionScalingLabel");
             _ResetScalingButton = GetNode<Button>("%ResetScalingButton");
             _Vsync = GetNode<CheckButton>("%Vsync");
-            _Fxaa = GetNode<CheckButton>("%Fxaa");
-            _Msaa = GetNode<OptionButton>("%Msaa");
+            _ScalingMode = GetNode<OptionButton>("%ScalingMode");
             // Connect
-            _Fullscreen.Connect("toggled", new Callable(_GameSettings, nameof(_GameSettings.SetFullscreen)));
+            _Fullscreen.Toggled += _GameSettings.SetFullscreen;
             _Resolution.Connect("item_selected", new Callable(this, nameof(OnResolutionSelected)));
             _ResolutionScaling.Connect("value_changed", new Callable(this, nameof(OnResolutionScalingChanged)));
-            _Msaa.Connect("item_selected", new Callable(_GameSettings, nameof(_GameSettings.SetMsaa)));
-            _Fxaa.Connect("toggled", new Callable(_GameSettings, nameof(_GameSettings.SetFxaa)));
+            _ScalingMode.Connect("item_selected", new Callable(this, nameof(OnScalingModeChanged)));
+            //_Fxaa.Connect("toggled", new Callable(_GameSettings, nameof(_GameSettings.SetFxaa)));
             _ResetScalingButton.Connect("pressed", new Callable(this, nameof(OnResetScaling)));
 
             // Debug
@@ -95,11 +93,11 @@ namespace ShopIsDone.GameSettings
             _ShowDebugDisplay = GetNode<CheckButton>("%ShowDebugDisplay");
             _BlurOnPause = GetNode<CheckButton>("%BlurDuringPause");
             // Connect
-            _ShowDebugDisplay.Connect("toggled", new Callable(_GameSettings, nameof(_GameSettings.SetDebugDisplayVisible)));
+            _ShowDebugDisplay.Toggled += _GameSettings.SetDebugDisplayVisible;
             // NB: Because this value can change with a button press, we should
             // connect this UI element to its change event
-            _GameSettings.Connect(nameof(GameSettingsManager.ShowDebugDisplayChanged), new Callable(this, nameof(OnSettingsDebugDisplayChanged)));
-            _BlurOnPause.Connect("toggled", new Callable(_GameSettings, nameof(_GameSettings.SetBlurDuringPause)));
+            _GameSettings.ShowDebugDisplayChanged += OnSettingsDebugDisplayChanged;
+            _BlurOnPause.Toggled += _GameSettings.SetBlurDuringPause;
 
             // Hide Debug if not a debug build
             if (!GameManager.IsDebugMode())
@@ -157,9 +155,16 @@ namespace ShopIsDone.GameSettings
             var resolutionScale = _GameSettings.GetResolutionScaling();
             _ResolutionScaling.Value = resolutionScale;
             _ResolutionScalingLabel.Text = resolutionScale.ToString() + "%";
-            // Set Options
-            _Msaa.Select(_GameSettings.GetMsaa());
-            _Fxaa.SetPressedNoSignal(_GameSettings.GetFxaa());
+            // Set scaling mode
+            _ScalingMode.AddItem("Bilinear", 0);
+            _ScalingMode.SetItemMetadata(0, (int)Viewport.Scaling3DModeEnum.Bilinear);
+            _ScalingMode.AddItem("FSR 2", 1);
+            _ScalingMode.SetItemMetadata(1, (int)Viewport.Scaling3DModeEnum.Fsr2);
+            var scaleMode = _GameSettings.GetResolutionScalingMode();
+            if (scaleMode == Viewport.Scaling3DModeEnum.Bilinear) _ScalingMode.Select(0);
+            else if (scaleMode == Viewport.Scaling3DModeEnum.Fsr2) _ScalingMode.Select(1);
+            else _ScalingMode.Select(-1);
+            // Set Vsync
             _Vsync.SetPressedNoSignal(_GameSettings.GetVsync());
 
             // Debug
@@ -236,8 +241,15 @@ namespace ShopIsDone.GameSettings
             _ResolutionScalingLabel.Text = value.ToString() + "%";
         }
 
+        private void OnScalingModeChanged(int idx)
+        {
+            var mode = _ScalingMode.GetItemMetadata(idx);
+            _GameSettings.SetResolutionScalingMode((Viewport.Scaling3DModeEnum)(int)mode);
+        }
+
         private void OnResetScaling()
         {
+            _ResolutionScaling.SetValueNoSignal(100);
             OnResolutionScalingChanged(100);
         }
 

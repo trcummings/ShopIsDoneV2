@@ -1,260 +1,157 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://djplffn73ui5s"]
 
 [ext_resource type="Script" path="res://game_settings/SettingsMenu.cs" id="1"]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0, 0, 0, 0.796078 )
-
 [node name="SettingsMenu" type="PanelContainer"]
+custom_minimum_size = Vector2(400, 400)
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-custom_styles/panel = SubResource( 1 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_vertical_guides_": [ 42.0, 1872.0 ]
-}
+mouse_filter = 2
+script = ExtResource("1")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-margin_right = 1920.0
-margin_bottom = 1080.0
+layout_mode = 2
 mouse_filter = 2
-custom_constants/margin_right = 16
-custom_constants/margin_top = 16
-custom_constants/margin_left = 16
-custom_constants/margin_bottom = 16
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer"]
 unique_name_in_owner = true
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 1904.0
-margin_bottom = 1064.0
-tab_align = 0
+layout_mode = 2
+current_tab = 1
 
 [node name="Audio" type="MarginContainer" parent="MarginContainer/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+visible = false
+layout_mode = 2
 size_flags_vertical = 4
-custom_constants/margin_right = 16
-custom_constants/margin_top = 16
-custom_constants/margin_left = 16
-custom_constants/margin_bottom = 16
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="AudioSettingsContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Audio"]
 unique_name_in_owner = true
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 1864.0
-margin_bottom = 996.0
-custom_constants/separation = 16
+layout_mode = 2
 
 [node name="MasterVolumeContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer"]
-margin_right = 1848.0
-margin_bottom = 16.0
+layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer/MasterVolumeContainer"]
-margin_top = 1.0
-margin_right = 60.0
-margin_bottom = 15.0
-rect_min_size = Vector2( 60, 0 )
+layout_mode = 2
 text = "Master:"
-valign = 1
 
 [node name="MasterVolume" type="HSlider" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer/MasterVolumeContainer"]
 unique_name_in_owner = true
-margin_left = 64.0
-margin_right = 1814.0
-margin_bottom = 16.0
-focus_neighbour_top = NodePath("../../MusicVolumeContainer/MusicVolume")
+layout_mode = 2
+size_flags_horizontal = 3
 focus_next = NodePath("../../SfxVolumeContainer/SfxVolume")
 focus_previous = NodePath("../../MusicVolumeContainer/MusicVolume")
-size_flags_horizontal = 3
 scrollable = false
 tick_count = 10
 ticks_on_borders = true
 
 [node name="MasterLabel" type="Label" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer/MasterVolumeContainer"]
 unique_name_in_owner = true
-margin_left = 1818.0
-margin_top = 1.0
-margin_right = 1848.0
-margin_bottom = 15.0
-rect_min_size = Vector2( 30, 0 )
+layout_mode = 2
 text = "100"
-align = 2
-valign = 1
 
 [node name="SfxVolumeContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer"]
-margin_top = 32.0
-margin_right = 1848.0
-margin_bottom = 48.0
+layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer/SfxVolumeContainer"]
-margin_top = 1.0
-margin_right = 60.0
-margin_bottom = 15.0
-rect_min_size = Vector2( 60, 0 )
+layout_mode = 2
 text = "SFX:"
-valign = 1
 
 [node name="SfxVolume" type="HSlider" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer/SfxVolumeContainer"]
 unique_name_in_owner = true
-margin_left = 64.0
-margin_right = 1814.0
-margin_bottom = 16.0
+layout_mode = 2
+size_flags_horizontal = 3
 focus_next = NodePath("../../MusicVolumeContainer/MusicVolume")
 focus_previous = NodePath("../../MasterVolumeContainer/MasterVolume")
-size_flags_horizontal = 3
 scrollable = false
 tick_count = 10
 ticks_on_borders = true
 
 [node name="SfxLabel" type="Label" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer/SfxVolumeContainer"]
 unique_name_in_owner = true
-margin_left = 1818.0
-margin_top = 1.0
-margin_right = 1848.0
-margin_bottom = 15.0
-rect_min_size = Vector2( 30, 0 )
+layout_mode = 2
 text = "100"
-align = 2
-valign = 1
 
 [node name="MusicVolumeContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer"]
-margin_top = 64.0
-margin_right = 1848.0
-margin_bottom = 80.0
+layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer/MusicVolumeContainer"]
-margin_top = 1.0
-margin_right = 60.0
-margin_bottom = 15.0
-rect_min_size = Vector2( 60, 0 )
+layout_mode = 2
 text = "Music:"
-valign = 1
 
 [node name="MusicVolume" type="HSlider" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer/MusicVolumeContainer"]
 unique_name_in_owner = true
-margin_left = 64.0
-margin_right = 1814.0
-margin_bottom = 16.0
-focus_neighbour_bottom = NodePath("../../MasterVolumeContainer/MasterVolume")
+layout_mode = 2
+size_flags_horizontal = 3
 focus_next = NodePath("../../MasterVolumeContainer/MasterVolume")
 focus_previous = NodePath("../../SfxVolumeContainer/SfxVolume")
-size_flags_horizontal = 3
 scrollable = false
 tick_count = 10
 ticks_on_borders = true
 
 [node name="MusicLabel" type="Label" parent="MarginContainer/TabContainer/Audio/AudioSettingsContainer/MusicVolumeContainer"]
 unique_name_in_owner = true
-margin_left = 1818.0
-margin_top = 1.0
-margin_right = 1848.0
-margin_bottom = 15.0
-rect_min_size = Vector2( 30, 0 )
+layout_mode = 2
 text = "100"
-align = 2
-valign = 1
 
 [node name="Video" type="MarginContainer" parent="MarginContainer/TabContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+layout_mode = 2
 size_flags_vertical = 4
-custom_constants/margin_right = 16
-custom_constants/margin_top = 16
-custom_constants/margin_left = 16
-custom_constants/margin_bottom = 16
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="VideoSettingsContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Video"]
 unique_name_in_owner = true
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 1864.0
-margin_bottom = 996.0
-custom_constants/separation = 16
+layout_mode = 2
 
 [node name="Fullscreen" type="CheckButton" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer"]
 unique_name_in_owner = true
-margin_right = 1848.0
-margin_bottom = 40.0
-focus_neighbour_top = NodePath("../MsaaContainer/HBoxContainer/Msaa")
+layout_mode = 2
 focus_next = NodePath("../ResolutionContainer/HBoxContainer/Resolution")
-focus_previous = NodePath("../MsaaContainer/HBoxContainer/Msaa")
+focus_previous = NodePath("../Vsync")
 text = "Fullscreen:"
 
 [node name="ResolutionContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer"]
-margin_top = 56.0
-margin_right = 1848.0
-margin_bottom = 96.0
-custom_constants/margin_right = 12
-custom_constants/margin_top = 10
-custom_constants/margin_left = 6
-custom_constants/margin_bottom = 10
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionContainer"]
-margin_left = 6.0
-margin_top = 10.0
-margin_right = 1836.0
-margin_bottom = 30.0
+layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionContainer/HBoxContainer"]
-margin_top = 3.0
-margin_right = 72.0
-margin_bottom = 17.0
+layout_mode = 2
 text = "Resolution:"
 
 [node name="Resolution" type="OptionButton" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionContainer/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 76.0
-margin_right = 1830.0
-margin_bottom = 20.0
-focus_next = NodePath("../../../Vsync")
-focus_previous = NodePath("../../../Fullscreen")
+layout_mode = 2
 size_flags_horizontal = 3
+focus_next = NodePath("../../../ResolutionScalingContainer/ResolutionScalingContainer/ResolutionScaling")
+focus_previous = NodePath("../../../Fullscreen")
 
 [node name="ResolutionScalingContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer"]
-margin_top = 112.0
-margin_right = 1848.0
-margin_bottom = 132.0
-custom_constants/margin_right = 12
-custom_constants/margin_left = 6
+layout_mode = 2
 
 [node name="ResolutionScalingContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionScalingContainer"]
-margin_left = 6.0
-margin_right = 1836.0
-margin_bottom = 20.0
-custom_constants/separation = 10
+layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionScalingContainer/ResolutionScalingContainer"]
-margin_top = 3.0
-margin_right = 109.0
-margin_bottom = 17.0
-rect_min_size = Vector2( 60, 0 )
+layout_mode = 2
 text = "Resolution Scale:"
-valign = 1
 
 [node name="ResolutionScaling" type="HSlider" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionScalingContainer/ResolutionScalingContainer"]
 unique_name_in_owner = true
-margin_left = 119.0
-margin_right = 1673.0
-margin_bottom = 16.0
-focus_neighbour_top = NodePath("../../MusicVolumeContainer/MusicVolume")
-focus_next = NodePath("../../SfxVolumeContainer/SfxVolume")
-focus_previous = NodePath("../../MusicVolumeContainer/MusicVolume")
+layout_mode = 2
 size_flags_horizontal = 3
+focus_next = NodePath("../ResetScalingButton")
+focus_previous = NodePath("../../../ResolutionContainer/HBoxContainer/Resolution")
 min_value = 50.0
 max_value = 200.0
 step = 10.0
@@ -265,118 +162,70 @@ ticks_on_borders = true
 
 [node name="ResolutionScalingLabel" type="Label" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionScalingContainer/ResolutionScalingContainer"]
 unique_name_in_owner = true
-margin_left = 1683.0
-margin_top = 3.0
-margin_right = 1713.0
-margin_bottom = 17.0
-rect_min_size = Vector2( 30, 0 )
+layout_mode = 2
 text = "100"
-align = 2
-valign = 1
 
 [node name="ResetScalingButton" type="Button" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionScalingContainer/ResolutionScalingContainer"]
 unique_name_in_owner = true
-margin_left = 1723.0
-margin_right = 1830.0
-margin_bottom = 20.0
+layout_mode = 2
+focus_next = NodePath("../../../ResolutionScalingModeContainer/ResolutionScalingContainer/ScalingMode")
+focus_previous = NodePath("../ResolutionScaling")
 text = "Reset To 100%"
+
+[node name="ResolutionScalingModeContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer"]
+layout_mode = 2
+
+[node name="ResolutionScalingContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionScalingModeContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionScalingModeContainer/ResolutionScalingContainer"]
+layout_mode = 2
+text = "Scaling Mode:"
+
+[node name="ScalingMode" type="OptionButton" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionScalingModeContainer/ResolutionScalingContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_next = NodePath("../../../Vsync")
+focus_previous = NodePath("../../../ResolutionScalingContainer/ResolutionScalingContainer/ResetScalingButton")
 
 [node name="Vsync" type="CheckButton" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer"]
 unique_name_in_owner = true
-margin_top = 148.0
-margin_right = 1848.0
-margin_bottom = 188.0
-focus_next = NodePath("../Fxaa")
-focus_previous = NodePath("../ResolutionContainer/HBoxContainer/Resolution")
+layout_mode = 2
+focus_next = NodePath("../Fullscreen")
+focus_previous = NodePath("../ResolutionScalingModeContainer/ResolutionScalingContainer/ScalingMode")
 text = "V-Sync:"
-
-[node name="Fxaa" type="CheckButton" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer"]
-unique_name_in_owner = true
-margin_top = 204.0
-margin_right = 1848.0
-margin_bottom = 244.0
-focus_next = NodePath("../MsaaContainer/HBoxContainer/Msaa")
-focus_previous = NodePath("../Vsync")
-text = "FXAA:"
-
-[node name="MsaaContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer"]
-margin_top = 260.0
-margin_right = 1848.0
-margin_bottom = 300.0
-custom_constants/margin_right = 12
-custom_constants/margin_top = 10
-custom_constants/margin_left = 6
-custom_constants/margin_bottom = 10
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/MsaaContainer"]
-margin_left = 6.0
-margin_top = 10.0
-margin_right = 1836.0
-margin_bottom = 30.0
-
-[node name="Label" type="Label" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/MsaaContainer/HBoxContainer"]
-margin_top = 3.0
-margin_right = 41.0
-margin_bottom = 17.0
-text = "MSAA:"
-
-[node name="Msaa" type="OptionButton" parent="MarginContainer/TabContainer/Video/VideoSettingsContainer/MsaaContainer/HBoxContainer"]
-unique_name_in_owner = true
-margin_left = 45.0
-margin_right = 1830.0
-margin_bottom = 20.0
-focus_neighbour_bottom = NodePath("../../../Fullscreen")
-focus_next = NodePath("../../../Fullscreen")
-focus_previous = NodePath("../../../Fxaa")
-size_flags_horizontal = 3
-text = "Disabled"
-items = [ "Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", null, false, 2, null ]
-selected = 0
 
 [node name="Debug" type="MarginContainer" parent="MarginContainer/TabContainer"]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+layout_mode = 2
 size_flags_vertical = 4
-custom_constants/margin_right = 16
-custom_constants/margin_top = 16
-custom_constants/margin_left = 16
-custom_constants/margin_bottom = 16
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="DebugSettingsContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Debug"]
 unique_name_in_owner = true
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 1864.0
-margin_bottom = 996.0
-custom_constants/separation = 16
+layout_mode = 2
 
 [node name="ShowDebugDisplay" type="CheckButton" parent="MarginContainer/TabContainer/Debug/DebugSettingsContainer"]
 unique_name_in_owner = true
-margin_right = 1848.0
-margin_bottom = 40.0
+layout_mode = 2
 text = "Show Debug Display Panel:"
 
 [node name="BlurDuringPause" type="CheckButton" parent="MarginContainer/TabContainer/Debug/DebugSettingsContainer"]
 unique_name_in_owner = true
-margin_right = 1848.0
-margin_bottom = 40.0
+layout_mode = 2
 text = "Blur Level On Pause / More Info:"
 
 [node name="Control" type="Control" parent="."]
-margin_right = 1920.0
-margin_bottom = 1080.0
+layout_mode = 2
 mouse_filter = 2
 
 [node name="CloseButton" type="Button" parent="Control"]
 unique_name_in_owner = true
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -32.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 32, 32 )
 text = "X"

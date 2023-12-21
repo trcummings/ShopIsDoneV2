@@ -18,10 +18,7 @@ namespace ShopIsDone.GameSettings
         public delegate void VsyncChangedEventHandler(bool newValue);
 
         [Signal]
-        public delegate void MsaaChangedEventHandler(int newMsaa);
-
-        [Signal]
-        public delegate void FxaaChangedEventHandler(bool newValue);
+        public delegate void ScalingModeChangedEventHandler(int newValue);
 
         // Debug Signals
         [Signal]
@@ -51,6 +48,22 @@ namespace ShopIsDone.GameSettings
             if (error != Error.Ok) ResetToDefaults();
             // Otherwise, make sure we copy over any defaults we might be missing
             else CopyOverMissingValues();
+        }
+
+        public void InitValues()
+        {
+            SetFullscreen(GetFullscreen());
+            SetResolution(GetResolution());
+            SetResolutionScaling(GetResolutionScaling());
+            SetResolutionScalingMode(GetResolutionScalingMode());
+            SetVsync(GetVsync());
+            // Audio Settings
+            SetMasterVolume(GetMasterVolume());
+            SetSfxVolume(GetSfxVolume());
+            SetMusicVolume(GetMusicVolume());
+            // Debug Settings
+            SetDebugDisplayVisible(GetIsDebugDisplayVisible());
+            SetBlurDuringPause(GetBlurDuringPause());
         }
 
         public void Save()
@@ -123,8 +136,10 @@ namespace ShopIsDone.GameSettings
                 var window = GetWindow();
                 window.Size = new Vector2I((int)resolution.X, (int)resolution.Y);
 
-                // Set the window at the top left
-                window.Position = Vector2I.Zero;
+                // Get center of screen
+                var centerScreen = DisplayServer.ScreenGetPosition() + DisplayServer.ScreenGetSize() / 2;
+                // Set the window at the center
+                window.Position = centerScreen;
             }
         }
 
@@ -135,9 +150,31 @@ namespace ShopIsDone.GameSettings
 
         public void SetResolutionScaling(int scale)
         {
+            // Set value in settings
             _UserSettings.SetValue("video", "resolution_scale", scale);
+
+            // Update value in viewport
+            GetViewport().Scaling3DScale = scale;
+
             // Emit signal
             EmitSignal(nameof(ResolutionScaleChanged), scale);
+        }
+
+        public Window.Scaling3DModeEnum GetResolutionScalingMode()
+        {
+            return (Window.Scaling3DModeEnum)(int)_UserSettings.GetValue("video", "scaling_mode", (int)Window.Scaling3DModeEnum.Bilinear);
+        }
+
+        public void SetResolutionScalingMode(Window.Scaling3DModeEnum scalingMode)
+        {
+            // Set value in settings
+            _UserSettings.SetValue("video", "scaling_mode", (int)scalingMode);
+
+            // Set scaling in viewport
+            GetViewport().Scaling3DMode = scalingMode;
+
+            // Emit signal
+            EmitSignal(nameof(ScalingModeChanged), (int)scalingMode);
         }
 
         public bool GetVsync()
@@ -147,37 +184,15 @@ namespace ShopIsDone.GameSettings
 
         public void SetVsync(bool newValue)
         {
-            DisplayServer.WindowSetVsyncMode(newValue ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
+            // Update value in settings
             _UserSettings.SetValue("video", "vsync", newValue);
+
+            // Update the value on the display server
+            DisplayServer.WindowSetVsyncMode(newValue ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
 
             // Emit signal
             EmitSignal(nameof(VsyncChanged), newValue);
         }
-
-        public bool GetFxaa()
-        {
-            return (bool)_UserSettings.GetValue("video", "fxaa", false);
-        }
-
-        public void SetFxaa(bool value)
-        {
-            _UserSettings.SetValue("video", "fxaa", value);
-            // Emit signal
-            EmitSignal(nameof(FxaaChanged), value);
-        }
-
-        public int GetMsaa()
-        {
-            return (int)_UserSettings.GetValue("video", "msaa", 0);
-        }
-
-        public void SetMsaa(int msaa)
-        {
-            _UserSettings.SetValue("video", "msaa", msaa);
-            // Emit signal
-            EmitSignal(nameof(MsaaChanged), msaa);
-        }
-
 
         // Audio
         public int GetMasterVolume()

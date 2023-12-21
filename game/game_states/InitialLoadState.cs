@@ -30,8 +30,10 @@ namespace ShopIsDone.Game.States
 
             // TODO: Make sure the user save data folder exists
 
-            // Settings
-            LoadInitialGameSettings();
+            // Load in settings
+            _GameSettings.Load();
+            // Initialize settings
+            _GameSettings.InitValues();
 
             //// Run shader cache
             //_ShaderCache.RunCache();
@@ -89,26 +91,6 @@ namespace ShopIsDone.Game.States
                         return;
                     }
             }
-        }
-
-        private void LoadInitialGameSettings()
-        {
-            // Load in settings
-            _GameSettings.Load();
-            // Video settings
-            _GameSettings.SetFullscreen(_GameSettings.GetFullscreen());
-            _GameSettings.SetResolution(_GameSettings.GetResolution());
-            _GameSettings.SetResolutionScaling(_GameSettings.GetResolutionScaling());
-            _GameSettings.SetFxaa(_GameSettings.GetFxaa());
-            _GameSettings.SetMsaa(_GameSettings.GetMsaa());
-            _GameSettings.SetVsync(_GameSettings.GetVsync());
-            // Audio Settings
-            _GameSettings.SetMasterVolume(_GameSettings.GetMasterVolume());
-            _GameSettings.SetSfxVolume(_GameSettings.GetSfxVolume());
-            _GameSettings.SetMusicVolume(_GameSettings.GetMusicVolume());
-            // Debug Settings
-            _GameSettings.SetDebugDisplayVisible(_GameSettings.GetIsDebugDisplayVisible());
-            _GameSettings.SetBlurDuringPause(_GameSettings.GetBlurDuringPause());
         }
     }
 }

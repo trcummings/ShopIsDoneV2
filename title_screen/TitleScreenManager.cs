@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ShopIsDone.TitleScreen
 {
-    public partial class TitleScreen : FocusMenu
+    public partial class TitleScreenManager : FocusMenu
     {
         [Signal]
         public delegate void LevelEditorRequestedEventHandler();
@@ -38,10 +38,10 @@ namespace ShopIsDone.TitleScreen
             _QuitGameButton = GetNode<Button>("%QuitGameButton");
 
             // Connect to button events
-            _LevelEditorButton.Connect("pressed", new Callable(this, nameof(OnLevelEditorPressed)));
-            _ContinueButton.Connect("pressed", new Callable(this, nameof(OnContinuePressed)));
-            _QuitGameButton.Connect("pressed", new Callable(this, nameof(OnQuitGamePressed)));
-            _SettingsButton.Connect("pressed", new Callable(this, nameof(OnSettingsPressed)));
+            _LevelEditorButton.Pressed += OnLevelEditorPressed;
+            _ContinueButton.Pressed += OnContinuePressed;
+            _QuitGameButton.Pressed += OnQuitGamePressed;
+            _SettingsButton.Pressed += OnSettingsPressed;
 
             // TODO: If we have a Suspended Game folder, then we can continue
 
