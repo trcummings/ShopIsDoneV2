@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cstrf18fypse2"]
+[gd_scene load_steps=5 format=3 uid="uid://cstrf18fypse2"]
 
 [ext_resource type="Script" path="res://title_screen/TitleScreen.cs" id="3"]
 [ext_resource type="PackedScene" uid="uid://4vlshcui36ix" path="res://title_screen/title_screen_clown_puppet.tscn" id="4"]
+[ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="4_87d5g"]
 [ext_resource type="PackedScene" path="res://game_settings/settings_menu.tscn" id="8"]
 
 [node name="TitleScreen" type="CanvasLayer"]
@@ -145,3 +146,6 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("4_87d5g")

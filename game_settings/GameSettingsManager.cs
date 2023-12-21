@@ -37,7 +37,7 @@ namespace ShopIsDone.GameSettings
         // Static function to help get the singleton
         public static GameSettingsManager GetGameSettings(Node node)
         {
-            return node.GetNode<GameSettingsManager>("/root/GameSettings");
+            return node.GetNode<GameSettingsManager>("/root/GameSettingsManager");
         }
 
         public void Load()
