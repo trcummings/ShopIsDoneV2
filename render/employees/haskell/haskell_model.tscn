@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgx1b2mmmsdr5"]
+
+[ext_resource type="PackedScene" uid="uid://cvky7xhrr3ygf" path="res://render/employees/employee_isometric_model.tscn" id="1_4yeif"]
+[ext_resource type="PackedScene" uid="uid://bpo67gv0w44ln" path="res://render/employees/haskell/haskell_2d.tscn" id="2_pfsvf"]
+
+[sub_resource type="ViewportTexture" id="2"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="3"]
+resource_local_to_scene = true
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = SubResource("2")
+billboard_mode = 2
+
+[node name="HaskellRenderManager" instance=ExtResource("1_4yeif")]
+
+[node name="Haskell2D" parent="SubViewport" index="0" instance=ExtResource("2_pfsvf")]
+position = Vector2(300, 300)
+
+[node name="MeshInstance3D" parent="." index="2"]
+material_override = SubResource("3")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ucxxr6c3jxcb"
-path="res://.godot/imported/haskell-skeleton.png-ec1c07deae7055e7fb4796671810598d.ctex"
+uid="uid://crcbegli8ry2j"
+path="res://.godot/imported/haskell_skeleton.png-d61947cfbd32d0acc35ac9fe455af629.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/characters/haskell/haskell-skeleton.png"
-dest_files=["res://.godot/imported/haskell-skeleton.png-ec1c07deae7055e7fb4796671810598d.ctex"]
+source_file="res://render/employees/haskell/haskell_skeleton.png"
+dest_files=["res://.godot/imported/haskell_skeleton.png-d61947cfbd32d0acc35ac9fe455af629.ctex"]
 
 [params]
 
