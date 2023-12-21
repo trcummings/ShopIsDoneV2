@@ -24,22 +24,22 @@ namespace ShopIsDone.Utils
         public static readonly Vector3 ForwardRight = new Vector3(1, 0, -1);
 
         public static readonly Array<Vector3> DirCardinal = new Array<Vector3>{
-        Right,
-        Back,
-        Left,
-        Forward,
-    };
+            Right,
+            Back,
+            Left,
+            Forward,
+        };
 
         public static readonly Array<Vector3> Dir = new Array<Vector3>{
-        Right,
-        BackRight,
-        Back,
-        BackLeft,
-        Left,
-        ForwardLeft,
-        Forward,
-        ForwardRight,
-    };
+            Right,
+            BackRight,
+            Back,
+            BackLeft,
+            Left,
+            ForwardLeft,
+            Forward,
+            ForwardRight,
+        };
 
         public static readonly Vector3 RightNorm = new Vector3(1, 0, 0);
         public static readonly Vector3 BackRightNorm = new Vector3(0.7071067811865475244f, 0, 0.7071067811865475244f);
@@ -51,15 +51,15 @@ namespace ShopIsDone.Utils
         public static readonly Vector3 ForwardRightNorm = new Vector3(0.7071067811865475244f, 0, -0.7071067811865475244f);
 
         public static readonly Array<Vector3> DirNorm = new Array<Vector3>{
-        RightNorm,
-        BackRightNorm,
-        BackNorm,
-        BackLeftNorm,
-        LeftNorm,
-        ForwardLeftNorm,
-        ForwardNorm,
-        ForwardRightNorm,
-    };
+            RightNorm,
+            BackRightNorm,
+            BackNorm,
+            BackLeftNorm,
+            LeftNorm,
+            ForwardLeftNorm,
+            ForwardNorm,
+            ForwardRightNorm,
+        };
 
         public static readonly Vector3 E = new Vector3(1, 0, 0);
         public static readonly Vector3 SE = new Vector3(1, 0, 1);
@@ -90,23 +90,23 @@ namespace ShopIsDone.Utils
         public static readonly Vector3 NEE = new Vector3(0.9238795325112867561f, 0, -0.3826834323650897717f);
 
         public static readonly Array<Vector3> Dir16 = new Array<Vector3>{
-        ENorm,
-        SEE,
-        SENorm,
-        SSE,
-        SNorm,
-        SSW,
-        SWNorm,
-        SWW,
-        WNorm,
-        NWW,
-        NWNorm,
-        NNW,
-        NNorm,
-        NNE,
-        NENorm,
-        NEE,
-    };
+            ENorm,
+            SEE,
+            SENorm,
+            SSE,
+            SNorm,
+            SSW,
+            SWNorm,
+            SWW,
+            WNorm,
+            NWW,
+            NWNorm,
+            NNW,
+            NNorm,
+            NNE,
+            NENorm,
+            NEE,
+        };
 
         public static readonly Vector3 Up = new Vector3(0, 1, 0);
         public static readonly Vector3 UpRight = new Vector3(1, 1, 0);
@@ -374,6 +374,5 @@ namespace ShopIsDone.Utils
         {
             return Mathf.DegToRad(FacingDirToYDeg(dir));
         }
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Godot;
 
-namespace ShopIsDone.Cameras
+namespace ShopIsDone.Models.IsometricModels
 {
 	public interface IIsometricViewable
 	{

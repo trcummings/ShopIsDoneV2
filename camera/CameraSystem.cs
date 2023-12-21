@@ -2,6 +2,7 @@
 using Godot;
 using System.Linq;
 using ShopIsDone.Utils.Commands;
+using ShopIsDone.Models.IsometricModels;
 
 namespace ShopIsDone.Cameras
 {
