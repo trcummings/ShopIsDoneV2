@@ -8,5 +8,7 @@
   <ItemGroup>
     <Folder Include="util\extensions\" />
     <Folder Include="util\command\" />
+    <Folder Include="render\isometric_models\" />
+    <Folder Include="render\employees\" />
   </ItemGroup>
 </Project>
