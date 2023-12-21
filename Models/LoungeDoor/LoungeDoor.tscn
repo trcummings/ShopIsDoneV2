@@ -1,36 +1,36 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://ceqxqsihsqq7u"]
 
-[ext_resource path="res://textures/LoungeDoor/lounge_sign.png" type="Texture" id=1]
-[ext_resource path="res://textures/LoungeDoor/lounge_door.png" type="Texture" id=2]
+[ext_resource type="Texture2D" uid="uid://mkti2ldn18r0" path="res://Models/LoungeDoor/lounge_sign.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bwqd1q86dhqoj" path="res://Models/LoungeDoor/lounge_door.png" id="2"]
 
-[sub_resource type="SpatialMaterial" id=1]
-flags_transparent = true
-albedo_texture = ExtResource( 2 )
+[sub_resource type="StandardMaterial3D" id="1"]
+transparency = 1
+albedo_texture = ExtResource("2")
 metallic_specular = 0.0
 
-[sub_resource type="QuadMesh" id=4]
-material = SubResource( 1 )
-size = Vector2( 2, 4 )
+[sub_resource type="QuadMesh" id="4"]
+material = SubResource("1")
+size = Vector2(2, 4)
 
-[sub_resource type="SpatialMaterial" id=3]
-flags_transparent = true
-albedo_texture = ExtResource( 1 )
+[sub_resource type="StandardMaterial3D" id="3"]
+transparency = 1
+albedo_texture = ExtResource("1")
 
-[sub_resource type="QuadMesh" id=5]
-material = SubResource( 3 )
-size = Vector2( 2, 1 )
+[sub_resource type="QuadMesh" id="5"]
+material = SubResource("3")
+size = Vector2(2, 1)
 
-[node name="LoungeDoor" type="Spatial" groups=["renderable"]]
+[node name="LoungeDoor" type="Node3D" groups=["renderable"]]
 
-[node name="Door" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+[node name="Door" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
-[node name="DoorMesh" type="MeshInstance" parent="Door"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0.01 )
-mesh = SubResource( 4 )
+[node name="DoorMesh" type="MeshInstance3D" parent="Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0.01)
+mesh = SubResource("4")
 skeleton = NodePath("../../../..")
 
-[node name="LoungeSign" type="MeshInstance" parent="Door"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0.02 )
-mesh = SubResource( 5 )
+[node name="LoungeSign" type="MeshInstance3D" parent="Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0.02)
+mesh = SubResource("5")
 skeleton = NodePath("../../..")
