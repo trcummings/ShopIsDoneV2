@@ -1,0 +1,560 @@
+[gd_scene load_steps=29 format=3 uid="uid://bdn0vm5ucv8ge"]
+
+[ext_resource type="Texture2D" uid="uid://c0ehsetj3dvnp" path="res://textures/Portraits/haskell_portrait_happy.png" id="2"]
+[ext_resource type="PackedScene" path="res://Models/PawnMannequin/PawnMannequinModel.tscn" id="3"]
+[ext_resource type="Texture2D" uid="uid://cyll45sq3k0kn" path="res://textures/test_character_portrait.png" id="5"]
+[ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_ShoppingCartEmpty_.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_ShoppingCartFull_.tscn" id="7"]
+[ext_resource type="Texture2D" uid="uid://6s4238slg6tk" path="res://textures/white_circle.png" id="8"]
+[ext_resource type="PackedScene" path="res://Models/ClownArm/ClownArmModel.tscn" id="9"]
+[ext_resource type="Script" path="res://addons/verlet_rope_4/VerletRope.cs" id="10"]
+[ext_resource type="Material" path="res://Materials/TitleScreenMannequinString.material" id="11"]
+[ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_Shelf_Isle_Empty_02_.tscn" id="12"]
+[ext_resource type="Texture2D" uid="uid://bbdqwgogk3jup" path="res://textures/Widgets/Demerits/pink_slip.png" id="13"]
+[ext_resource type="PackedScene" uid="uid://cojwv587ghlem" path="res://exit/exit_door_light.tscn" id="14"]
+[ext_resource type="Material" path="res://exit/ExitDoor.material" id="15"]
+
+[sub_resource type="QuadMesh" id="1"]
+
+[sub_resource type="BoxShape3D" id="15"]
+size = Vector3(2, 2, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="7"]
+transparency = 1
+albedo_color = Color(0.870588, 0.878431, 0, 1)
+albedo_texture = ExtResource("8")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="8"]
+material = SubResource("7")
+size = Vector2(0.01, 0.01)
+
+[sub_resource type="Curve" id="6"]
+_data = [Vector2(0, 0), 0.0, 7.81927, 0, 1, Vector2(0.127098, 0.993816), 0.0, 0.0, 0, 0, Vector2(0.810552, 0.991584), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.23406, 0.0, 1, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="9"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.327913, 0.655827, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Animation" id="3"]
+resource_name = "default"
+length = 30.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MannequinPlatform:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 30),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 360, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_057e2"]
+_data = {
+"default": SubResource("3")
+}
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_8lla8"]
+resource_local_to_scene = true
+metadata/creation_stamp = 37743568699002
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_mvhsh"]
+resource_local_to_scene = true
+metadata/creation_stamp = 37852838709498
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_hmlcm"]
+resource_local_to_scene = true
+metadata/creation_stamp = 37967645198598
+
+[sub_resource type="QuadMesh" id="17"]
+material = ExtResource("15")
+size = Vector2(1, 2)
+center_offset = Vector3(0, 0, -0.5)
+
+[sub_resource type="Animation" id="14"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClownArmModel:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.21949, 1.10229, -2.70219)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ClownArmModel2:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.84095, 1.03294, -2.37777)]
+}
+
+[sub_resource type="Animation" id="13"]
+resource_name = "default"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClownArmModel/ClownArm/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": ["SpreadHand", -1, 0.1, false],
+"method": &"play"
+}, {
+"args": ["SpreadHand", -1, -0.1, true],
+"method": &"play"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ClownArmModel2/ClownArm/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5, 15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": ["SpreadHand", -1, -0.1, true],
+"method": &"play"
+}, {
+"args": ["SpreadHand", -1, 0.1, false],
+"method": &"play"
+}, {
+"args": ["SpreadHand", -1, -0.1, true],
+"method": &"play"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ClownArmModel:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 9, 19.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.21949, 1.10229, -2.70219), Vector3(-1.21949, 1.10229, -2.19373), Vector3(-1.21949, 1.10229, -2.70219)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ClownArmModel2:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 4.7, 11.5, 20),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.84095, 1.03294, -2.37777), Vector3(0.84095, 1.03294, -2.15317), Vector3(0.84095, 1.03294, -2.75197), Vector3(0.84095, 1.03294, -2.37777)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ClownArmModel2/ClownArm/AnimationPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.5, false],
+"method": &"seek"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_afcem"]
+_data = {
+"RESET": SubResource("14"),
+"default": SubResource("13")
+}
+
+[node name="TitleScreenMannequin" type="Node3D"]
+
+[node name="SpotLight" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 2.18011, 1.37486)
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.941565, 0.336832, 0, -0.336832, 0.941565, 0, 0, 0)
+
+[node name="Camera" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 5.96046e-08, 0, -2.98023e-08, 1, -0.872, 0.33, 4)
+
+[node name="MannequinPlatform" type="Node3D" parent="."]
+
+[node name="PawnMannequin" parent="MannequinPlatform" instance=ExtResource("3")]
+
+[node name="Skeleton3D" parent="MannequinPlatform/PawnMannequin/Armature" index="0"]
+bones/3/rotation = Quaternion(1.80215e-05, -0.00932328, 0.00193319, 0.999955)
+bones/6/rotation = Quaternion(-0.00115859, 0.178242, -0.00603736, 0.983968)
+bones/7/rotation = Quaternion(0.00291939, -0.164206, -0.00048598, 0.986422)
+bones/10/rotation = Quaternion(-0.00115859, -0.178242, 0.00603736, 0.983968)
+bones/11/rotation = Quaternion(0.00291939, 0.164206, 0.00048598, 0.986422)
+bones/12/rotation = Quaternion(-0.675574, 0.00298486, 0.737285, 0.0016032)
+bones/14/rotation = Quaternion(0.0840755, -0.00687243, 0.668652, 0.738775)
+bones/15/rotation = Quaternion(0.675574, 0.00298486, 0.737285, -0.0016032)
+bones/17/rotation = Quaternion(0.0840755, 0.00687248, -0.668652, 0.738775)
+
+[node name="MannequinFace" type="Sprite3D" parent="MannequinPlatform"]
+transform = Transform3D(0.990268, 0.0229678, -0.137265, 0.0170164, 0.958907, 0.28321, 0.138129, -0.282789, 0.949184, 0.0110881, 0.786286, 0.318243)
+pixel_size = 0.0005
+transparent = false
+shaded = true
+double_sided = false
+texture = ExtResource("2")
+region_enabled = true
+region_rect = Rect2(120.148, 35.6073, 616.776, 675.818)
+
+[node name="Floor" type="MeshInstance3D" parent="MannequinPlatform"]
+transform = Transform3D(8, 0, 0, 0, -3.49691e-07, 1, 0, -8, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("1")
+skeleton = NodePath("../..")
+
+[node name="StaticBody" type="StaticBody3D" parent="MannequinPlatform/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+
+[node name="CollisionShape" type="CollisionShape3D" parent="MannequinPlatform/Floor/StaticBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.03)
+shape = SubResource("15")
+
+[node name="Shadow" type="Sprite3D" parent="MannequinPlatform" groups=["skip_silhouette"]]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.03, 0.295478)
+modulate = Color(0, 0, 0, 1)
+transparent = false
+alpha_cut = 1
+texture = ExtResource("5")
+
+[node name="Prop_ShoppingCartEmpty_" parent="MannequinPlatform" instance=ExtResource("6")]
+transform = Transform3D(0.12763, 0.723079, 0.678872, 0.991738, -0.0841677, -0.0968012, -0.0128559, 0.685618, -0.727848, -1.32743, 0.2883, -0.158868)
+
+[node name="Prop_ShoppingCartFull_" parent="MannequinPlatform" instance=ExtResource("7")]
+transform = Transform3D(0.472612, 0, 0.88127, 0, 1, 0, -0.88127, 0, 0.472612, 0.0485888, 0, -0.441374)
+
+[node name="CPUParticles" type="CPUParticles3D" parent="MannequinPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+amount = 300
+lifetime = 5.27
+preprocess = 4.71
+lifetime_randomness = 1.0
+mesh = SubResource("8")
+emission_shape = 2
+emission_sphere_radius = 1.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+scale_amount_curve = SubResource("6")
+color = Color(1, 1, 1, 0.270588)
+color_ramp = SubResource("9")
+
+[node name="RotateStageAnimationPlayer" type="AnimationPlayer" parent="MannequinPlatform"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_057e2")
+}
+autoplay = "default"
+
+[node name="RightRope" type="MeshInstance3D" parent="MannequinPlatform" node_paths=PackedStringArray("AttachEnd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.125217, 0.0723204, 0.257253)
+material_override = ExtResource("11")
+cast_shadow = 0
+mesh = SubResource("ImmediateMesh_8lla8")
+script = ExtResource("10")
+AttachEnd = NodePath("../RightRopeEnd")
+RopeWidth = 0.01
+ApplyCollision = true
+
+[node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="MannequinPlatform/RightRope"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -3.2, 0.16)
+aabb = AABB(-0.00660338, -0.053992, -0.00149638, 1.05645, 0.0613611, 3.22652)
+
+[node name="LeftRope" type="MeshInstance3D" parent="MannequinPlatform" node_paths=PackedStringArray("AttachEnd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0754573, 0.0861323, 0.22808)
+material_override = ExtResource("11")
+cast_shadow = 0
+mesh = SubResource("ImmediateMesh_mvhsh")
+script = ExtResource("10")
+AttachEnd = NodePath("../LeftRopeEnd")
+RopeWidth = 0.01
+ApplyCollision = true
+
+[node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="MannequinPlatform/LeftRope"]
+aabb = AABB(-0.974413, -0.0652571, -0.530301, 1.15172, 0.0733908, 3.3299)
+
+[node name="HeadRope" type="MeshInstance3D" parent="MannequinPlatform" node_paths=PackedStringArray("AttachEnd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, -0.62)
+material_override = ExtResource("11")
+cast_shadow = 0
+mesh = SubResource("ImmediateMesh_hmlcm")
+script = ExtResource("10")
+AttachEnd = NodePath("../HeadRopeEnd")
+RopeLength = 2.0
+RopeWidth = 0.01
+
+[node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="MannequinPlatform/HeadRope"]
+aabb = AABB(-0.00976319, -2.23905, -0.00212931, 0.0195364, 2.23944, 0.709485)
+
+[node name="LeftRopeEnd" type="Marker3D" parent="MannequinPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04083, -0.000354376, 3.02409)
+
+[node name="RightRopeEnd" type="Marker3D" parent="MannequinPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.16911, 0.0472798, 3.48024)
+
+[node name="HeadRopeEnd" type="Marker3D" parent="MannequinPlatform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.962299, 0.0852529)
+
+[node name="Prop_Shelf_Isle_Empty_02_" parent="MannequinPlatform" instance=ExtResource("12")]
+transform = Transform3D(-0.589093, 0, -0.216621, 0, 0.75, 0, 0.464187, 0, -0.27491, -1.29532, 0.013435, -0.817155)
+
+[node name="Prop_Shelf_Isle_Empty_02_2" parent="MannequinPlatform" instance=ExtResource("12")]
+transform = Transform3D(-0.383031, 0, 0.322408, 0, 0.75, 0, -0.644816, 0, -0.191516, 1.15585, 0.0134354, -0.233823)
+
+[node name="PinkSlips" type="Node3D" parent="MannequinPlatform"]
+
+[node name="Sprite3D" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.565126, 0.825005, 3.60621e-08, 0, -4.37114e-08, 1, 0.825005, 0.565126, 2.47024e-08, -0.731414, 0.0100001, 0.68936)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D2" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.773265, -0.634083, -2.77167e-08, 0, -4.37114e-08, 1, -0.634083, 0.773265, 3.38005e-08, 0.832012, 0.0100001, 0.426522)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D3" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.427594, -0.903971, -3.95138e-08, 0, -4.37114e-08, 1, -0.903971, 0.427594, 1.86907e-08, 0.0773956, 0.0100001, 1.19099)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D4" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(0.538756, -0.842462, -3.68252e-08, 0, -4.37114e-08, 1, -0.842462, -0.538756, -2.35498e-08, 1.6842, 0.0100001, -0.672824)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D5" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.915789, -0.40166, -1.75571e-08, 0, -4.37114e-08, 1, -0.40166, 0.915789, 4.00304e-08, -1.53501, 0.0100001, 0.30619)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D6" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(0.805846, -0.592126, -2.58826e-08, 0, -4.37114e-08, 1, -0.592126, -0.805846, -3.52246e-08, 0.243735, 0.001, 1.20401)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D7" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(0.998254, -0.0590623, -2.5817e-09, 0, -4.37114e-08, 1, -0.0590623, -0.998254, -4.36351e-08, 1.29327, 0.001, 0.794488)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D8" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(0.929809, 0.368044, 1.60877e-08, 0, -4.37114e-08, 1, 0.368044, -0.929809, -4.06432e-08, -1.04744, 0.001, 1.16018)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D9" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(0.856618, 0.515951, 2.25529e-08, 0, -4.37114e-08, 1, 0.515951, -0.856618, -3.7444e-08, -1.39834, 0.002, -2.22122)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D10" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(0.553478, 0.832863, 3.64056e-08, 0, -4.37114e-08, 1, 0.832863, -0.553478, -2.41933e-08, -0.761847, 0.002, -3.08652)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D11" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.411642, 0.911346, 3.98362e-08, 0, -4.37114e-08, 1, 0.911346, 0.411642, 1.79934e-08, -2.08309, 0.002, -1.01048)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D12" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(0.964137, 0.265405, 1.16012e-08, 0, -4.37114e-08, 1, 0.265405, -0.964137, -4.21438e-08, 0.961298, 0.002, -2.44347)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D13" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.245764, 0.96933, 4.23707e-08, 0, -4.37114e-08, 1, 0.96933, 0.245764, 1.07427e-08, -0.574655, 0.002, -2.48023)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D16" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.937622, 0.347656, 1.51965e-08, 0, -4.37114e-08, 1, 0.347656, 0.937622, 4.09848e-08, -1.055, 0.003, -1.407)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D17" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(0.488789, 0.872402, 3.81339e-08, 0, -4.37114e-08, 1, 0.872402, -0.488789, -2.13656e-08, 2.10392, 0.002, -0.24811)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D18" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.848759, -0.528779, -2.31137e-08, 0, -4.37114e-08, 1, -0.528779, 0.848759, 3.71005e-08, 0.382148, 0.002, -1.76394)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D14" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.979304, 0.202394, 8.84692e-09, 0, -4.37114e-08, 1, 0.202394, 0.979304, 4.28067e-08, -1.22662, 0.002, -1.2305)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Sprite3D15" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
+transform = Transform3D(-0.973163, -0.230118, -1.00588e-08, 0, -4.37114e-08, 1, -0.230118, 0.973163, 4.25383e-08, 1.03691, 0.002, -1.9299)
+pixel_size = 0.0025
+transparent = false
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("13")
+
+[node name="Exit" type="Node3D" parent="MannequinPlatform"]
+transform = Transform3D(-3.93403e-08, 0, 0.9, 0, 0.9, 0, -0.9, 0, -3.93403e-08, 0.01, 0, 10.0379)
+
+[node name="ExitDoorMesh" type="CSGMesh3D" parent="MannequinPlatform/Exit"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 1, 0)
+layers = 5
+mesh = SubResource("17")
+
+[node name="DoorLight" parent="MannequinPlatform/Exit" instance=ExtResource("14")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.9, 2.15, 0)
+LightLockedMaterial = null
+LightOpenMaterial = null
+
+[node name="SpotLight" type="SpotLight3D" parent="MannequinPlatform/Exit" groups=["arena_light"]]
+transform = Transform3D(0.00570855, -0.85662, 0.515916, 0.020541, 0.515916, 0.856393, -0.999773, 0.00570864, 0.0205409, 0.32425, 2.44709, 0.0129098)
+layers = 4
+light_color = Color(0.709804, 1, 0, 1)
+light_indirect_energy = 5.0
+light_cull_mask = 4293918724
+spot_range = 3.0
+spot_attenuation = 2.0
+
+[node name="Spatial" type="Node3D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Spatial"]
+libraries = {
+"": SubResource("AnimationLibrary_afcem")
+}
+autoplay = "default"
+
+[node name="ClownArmModel" parent="Spatial" instance=ExtResource("9")]
+transform = Transform3D(-0.144009, -0.250006, -0.408361, 0.474165, -0.133735, -0.0853399, -0.0665529, -0.41184, 0.275606, -1.21949, 1.10229, -2.70219)
+
+[node name="Armature" parent="Spatial/ClownArmModel/ClownArm" index="0"]
+transform = Transform3D(0.991992, 0.114767, 0.0527368, -0.115078, 0.993352, 0.0028829, -0.0520553, -0.00892854, 0.998604, 0.446304, 11.9082, -0.0803261)
+
+[node name="ClownArmModel2" parent="Spatial" instance=ExtResource("9")]
+transform = Transform3D(0.162268, 0.179757, 0.437443, 0.460939, -0.163619, -0.103749, -0.105849, -0.43694, 0.218815, 0.84095, 1.03294, -2.37777)
+
+[node name="Armature" parent="Spatial/ClownArmModel2/ClownArm" index="0"]
+transform = Transform3D(0.991992, 0.114767, 0.0527368, -0.115078, 0.993352, 0.0028829, -0.0520553, -0.00892854, 0.998604, 0.446304, 11.9082, -0.0803261)
+
+[node name="OmniLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.57257, 1.10492, -2.37311)
+layers = 2
+light_cull_mask = 4294967294
+omni_range = 1.5
+omni_attenuation = 2.46229
+
+[node name="OmniLight2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944932, 1.10492, -2.28965)
+layers = 2
+light_cull_mask = 4294967294
+omni_range = 1.5
+omni_attenuation = 2.46229
+
+[connection signal="ready" from="." to="MannequinPlatform/PawnMannequin/AnimationPlayer" method="play" binds= ["Slump"]]
+
+[editable path="MannequinPlatform/PawnMannequin"]
+[editable path="Spatial/ClownArmModel"]
+[editable path="Spatial/ClownArmModel/ClownArm"]
+[editable path="Spatial/ClownArmModel2"]
+[editable path="Spatial/ClownArmModel2/ClownArm"]

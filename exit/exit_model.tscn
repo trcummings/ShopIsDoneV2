@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3edvxooy0nm3"]
+
+[ext_resource type="Material" path="res://exit/ExitDoor.material" id="1_442ua"]
+[ext_resource type="PackedScene" uid="uid://cojwv587ghlem" path="res://exit/exit_door_light.tscn" id="2_jreyl"]
+
+[sub_resource type="QuadMesh" id="2"]
+material = ExtResource("1_442ua")
+size = Vector2(1, 2)
+center_offset = Vector3(0, 0, -0.5)
+
+[node name="ExitModel" type="Node3D" groups=["renderable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01, 0, 0)
+
+[node name="ExitDoorMesh" type="CSGMesh3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 1, 0)
+mesh = SubResource("2")
+
+[node name="DoorLight" parent="." instance=ExtResource("2_jreyl")]
+unique_name_in_owner = true
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.9, 2.15, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

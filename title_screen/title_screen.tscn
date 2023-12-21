@@ -1,0 +1,147 @@
+[gd_scene load_steps=4 format=3 uid="uid://cstrf18fypse2"]
+
+[ext_resource type="Script" path="res://title_screen/TitleScreen.cs" id="3"]
+[ext_resource type="PackedScene" uid="uid://4vlshcui36ix" path="res://title_screen/title_screen_clown_puppet.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://game_settings/settings_menu.tscn" id="8"]
+
+[node name="TitleScreen" type="CanvasLayer"]
+script = ExtResource("3")
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MainRender" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+
+[node name="Viewport" type="SubViewport" parent="MainRender" groups=["world_viewport"]]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="TitleScreenClownPuppet" parent="MainRender/Viewport" instance=ExtResource("4")]
+
+[node name="TextOverlayContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextOverlayContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextOverlayContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="TextOverlayContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Shop Is Done"
+
+[node name="Description" type="Label" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "A Game by Moodprobiotic"
+
+[node name="MarginContainer" type="MarginContainer" parent="TextOverlayContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ButtonContainer" type="VBoxContainer" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="LevelEditorButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_next = NodePath("../ContinueButton")
+focus_previous = NodePath("../QuitGameButton")
+text = "Level Editor"
+
+[node name="ContinueButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_next = NodePath("../NewGameButton")
+focus_previous = NodePath("../LevelEditorButton")
+disabled = true
+text = "Continue"
+
+[node name="NewGameButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../ContinueButton")
+disabled = true
+text = "New Game"
+
+[node name="SettingsButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_next = NodePath("../QuitGameButton")
+focus_previous = NodePath("../NewGameButton")
+text = "Settings"
+
+[node name="QuitGameButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_next = NodePath("../LevelEditorButton")
+focus_previous = NodePath("../SettingsButton")
+text = "Quit Game"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextOverlayContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 9
+alignment = 2
+
+[node name="BuildLabel" type="Label" parent="TextOverlayContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Pre-Alpha v1.00 | Build 0"
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="SettingsMenu" parent="CenterContainer" instance=ExtResource("8")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
