@@ -55,7 +55,7 @@ namespace ShopIsDone.GameSettings
             SetFullscreen(GetFullscreen());
             SetResolution(GetResolution());
             SetResolutionScaling(GetResolutionScaling());
-            SetResolutionScalingMode(GetResolutionScalingMode());
+            SetResolutionScalingMode((int)GetResolutionScalingMode());
             SetVsync(GetVsync());
             // Audio Settings
             SetMasterVolume(GetMasterVolume());
@@ -148,33 +148,33 @@ namespace ShopIsDone.GameSettings
             return (int)_UserSettings.GetValue("video", "resolution_scale", 100);
         }
 
-        public void SetResolutionScaling(int scale)
+        public void SetResolutionScaling(float scale)
         {
             // Set value in settings
             _UserSettings.SetValue("video", "resolution_scale", scale);
 
             // Update value in viewport
-            GetViewport().Scaling3DScale = scale;
+            GetViewport().Scaling3DScale = scale / 100;
 
             // Emit signal
             EmitSignal(nameof(ResolutionScaleChanged), scale);
         }
 
-        public Window.Scaling3DModeEnum GetResolutionScalingMode()
+        public Viewport.Scaling3DModeEnum GetResolutionScalingMode()
         {
-            return (Window.Scaling3DModeEnum)(int)_UserSettings.GetValue("video", "scaling_mode", (int)Window.Scaling3DModeEnum.Bilinear);
+            return (Viewport.Scaling3DModeEnum)(int)_UserSettings.GetValue("video", "scaling_mode", (int)Viewport.Scaling3DModeEnum.Bilinear);
         }
 
-        public void SetResolutionScalingMode(Window.Scaling3DModeEnum scalingMode)
+        public void SetResolutionScalingMode(int scalingMode)
         {
             // Set value in settings
-            _UserSettings.SetValue("video", "scaling_mode", (int)scalingMode);
+            _UserSettings.SetValue("video", "scaling_mode", scalingMode);
 
             // Set scaling in viewport
-            GetViewport().Scaling3DMode = scalingMode;
+            GetViewport().Scaling3DMode = (Viewport.Scaling3DModeEnum)scalingMode;
 
             // Emit signal
-            EmitSignal(nameof(ScalingModeChanged), (int)scalingMode);
+            EmitSignal(nameof(ScalingModeChanged), scalingMode);
         }
 
         public bool GetVsync()

@@ -34,10 +34,7 @@ namespace ShopIsDone.GameSettings
         private Control _VideoSettingsContainer;
         private CheckButton _Fullscreen;
         private OptionButton _Resolution;
-        private HSlider _ResolutionScaling;
-        private Label _ResolutionScalingLabel;
-        private Button _ResetScalingButton;
-        private OptionButton _ScalingMode;
+        private ResolutionScaling _ResolutionScaling;
         private CheckButton _Vsync;
 
         // Debug
@@ -75,18 +72,13 @@ namespace ShopIsDone.GameSettings
             _VideoSettingsContainer = GetNode<Control>("%VideoSettingsContainer");
             _Fullscreen = GetNode<CheckButton>("%Fullscreen");
             _Resolution = GetNode<OptionButton>("%Resolution");
-            _ResolutionScaling = GetNode<HSlider>("%ResolutionScaling");
-            _ResolutionScalingLabel = GetNode<Label>("%ResolutionScalingLabel");
-            _ResetScalingButton = GetNode<Button>("%ResetScalingButton");
+            _ResolutionScaling = GetNode<ResolutionScaling>("%ResolutionScaling");
             _Vsync = GetNode<CheckButton>("%Vsync");
-            _ScalingMode = GetNode<OptionButton>("%ScalingMode");
             // Connect
             _Fullscreen.Toggled += _GameSettings.SetFullscreen;
             _Resolution.Connect("item_selected", new Callable(this, nameof(OnResolutionSelected)));
-            _ResolutionScaling.Connect("value_changed", new Callable(this, nameof(OnResolutionScalingChanged)));
-            _ScalingMode.Connect("item_selected", new Callable(this, nameof(OnScalingModeChanged)));
-            //_Fxaa.Connect("toggled", new Callable(_GameSettings, nameof(_GameSettings.SetFxaa)));
-            _ResetScalingButton.Connect("pressed", new Callable(this, nameof(OnResetScaling)));
+            _ResolutionScaling.ModeChanged += _GameSettings.SetResolutionScalingMode;
+            _ResolutionScaling.ScaleChanged += _GameSettings.SetResolutionScaling;
 
             // Debug
             _DebugSettingsContainer = GetNode<Control>("%VideoSettingsContainer");
@@ -152,18 +144,10 @@ namespace ShopIsDone.GameSettings
             // Select current resolution
             _Resolution.Select(selectedIdx);
             // Set Scaling
-            var resolutionScale = _GameSettings.GetResolutionScaling();
-            _ResolutionScaling.Value = resolutionScale;
-            _ResolutionScalingLabel.Text = resolutionScale.ToString() + "%";
-            // Set scaling mode
-            _ScalingMode.AddItem("Bilinear", 0);
-            _ScalingMode.SetItemMetadata(0, (int)Viewport.Scaling3DModeEnum.Bilinear);
-            _ScalingMode.AddItem("FSR 2", 1);
-            _ScalingMode.SetItemMetadata(1, (int)Viewport.Scaling3DModeEnum.Fsr2);
-            var scaleMode = _GameSettings.GetResolutionScalingMode();
-            if (scaleMode == Viewport.Scaling3DModeEnum.Bilinear) _ScalingMode.Select(0);
-            else if (scaleMode == Viewport.Scaling3DModeEnum.Fsr2) _ScalingMode.Select(1);
-            else _ScalingMode.Select(-1);
+            _ResolutionScaling.Init(
+                _GameSettings.GetResolutionScaling(),
+                (int)_GameSettings.GetResolutionScalingMode()
+            );
             // Set Vsync
             _Vsync.SetPressedNoSignal(_GameSettings.GetVsync());
 
@@ -233,24 +217,6 @@ namespace ShopIsDone.GameSettings
         {
             var resolution = (Vector2)_Resolution.GetItemMetadata(idx);
             _GameSettings.SetResolution(resolution);
-        }
-
-        private void OnResolutionScalingChanged(int value)
-        {
-            _GameSettings.SetResolutionScaling(value);
-            _ResolutionScalingLabel.Text = value.ToString() + "%";
-        }
-
-        private void OnScalingModeChanged(int idx)
-        {
-            var mode = _ScalingMode.GetItemMetadata(idx);
-            _GameSettings.SetResolutionScalingMode((Viewport.Scaling3DModeEnum)(int)mode);
-        }
-
-        private void OnResetScaling()
-        {
-            _ResolutionScaling.SetValueNoSignal(100);
-            OnResolutionScalingChanged(100);
         }
 
         // General

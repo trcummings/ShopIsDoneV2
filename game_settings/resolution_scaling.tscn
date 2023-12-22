@@ -1,0 +1,89 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq2bt74o52ayq"]
+
+[ext_resource type="Script" path="res://game_settings/ResolutionScaling.cs" id="1_q7frp"]
+
+[node name="ResolutionScaling" type="VBoxContainer"]
+script = ExtResource("1_q7frp")
+
+[node name="ResolutionScalingContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ResolutionScalingContainer" type="HBoxContainer" parent="ResolutionScalingContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ResolutionScalingContainer/ResolutionScalingContainer"]
+layout_mode = 2
+text = "Resolution Scale:"
+
+[node name="ResolutionScaling" type="HSlider" parent="ResolutionScalingContainer/ResolutionScalingContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_next = NodePath("../ResetScalingButton")
+min_value = 50.0
+max_value = 200.0
+step = 5.0
+value = 100.0
+scrollable = false
+tick_count = 10
+ticks_on_borders = true
+
+[node name="ResolutionScalingLabel" type="Label" parent="ResolutionScalingContainer/ResolutionScalingContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "100"
+
+[node name="ResetScalingButton" type="Button" parent="ResolutionScalingContainer/ResolutionScalingContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_next = NodePath("../../../ResolutionScalingModeContainer/ResolutionScalingContainer/ScalingMode")
+focus_previous = NodePath("../ResolutionScaling")
+text = "Reset To 100%"
+
+[node name="QualityContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="QualityContainer" type="HBoxContainer" parent="QualityContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="QualityContainer/QualityContainer"]
+layout_mode = 2
+text = "Quality:"
+
+[node name="Quality" type="OptionButton" parent="QualityContainer/QualityContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_next = NodePath("../../../ResolutionScalingModeContainer/ResolutionScalingContainer/ScalingMode")
+item_count = 4
+popup/item_0/text = "Performance"
+popup/item_0/id = 0
+popup/item_1/text = "Balanced"
+popup/item_1/id = 1
+popup/item_2/text = "Quality"
+popup/item_2/id = 2
+popup/item_3/text = "Ultra Quality"
+popup/item_3/id = 3
+
+[node name="ResolutionScalingModeContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="ResolutionScalingContainer" type="HBoxContainer" parent="ResolutionScalingModeContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ResolutionScalingModeContainer/ResolutionScalingContainer"]
+layout_mode = 2
+text = "Scaling Mode:"
+
+[node name="ScalingMode" type="OptionButton" parent="ResolutionScalingModeContainer/ResolutionScalingContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_previous = NodePath("../../../ResolutionScalingContainer/ResolutionScalingContainer/ResetScalingButton")
+item_count = 2
+popup/item_0/text = "Bilinear"
+popup/item_0/id = 0
+popup/item_1/text = "FSR 2"
+popup/item_1/id = 1
