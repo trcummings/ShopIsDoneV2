@@ -10,6 +10,7 @@ namespace ShopIsDone.Pausing
         private ShaderMaterial _ShaderMaterial;
         private Callable _SetLod;
         private Callable _SetDistort;
+        private ImageTexture _BgImage;
 
         public override void _Ready()
         {
@@ -21,18 +22,20 @@ namespace ShopIsDone.Pausing
         public void FadeIn()
         {
             // Set the screenshot
-            Texture = GetViewport().GetTexture();
+            _BgImage = new ImageTexture();
+            _BgImage.SetImage(GetViewport().GetTexture().GetImage());
+            Texture = _BgImage;
 
             // Kill tween if it exists already
             if (_Tween != null) _Tween.Kill();
-            // Create new tween tween
+            // Create new tween
             _Tween = CreateTween();
 
             // Tween in transparency
             _Tween.TweenProperty(this, "modulate", Colors.White, 0.25f);
             // Tween in LoD in parallel
             var lod = (float)_ShaderMaterial.GetShaderParameter("lod");
-            _Tween.Parallel().TweenMethod(_SetLod, lod, 5.0, 0.25f);
+            _Tween.Parallel().TweenMethod(_SetLod, lod, 5, 0.25f);
             // Tween in distort strength after
             var distortStrength = (float)_ShaderMaterial.GetShaderParameter("distort_strength");
             _Tween.TweenMethod(_SetDistort, distortStrength, 1, 0.25f);
@@ -40,12 +43,9 @@ namespace ShopIsDone.Pausing
 
         public void FadeOut()
         {
-            // Set the screenshot
-            Texture = GetViewport().GetTexture();
-
             // Kill tween if it exists already
             if (_Tween != null) _Tween.Kill();
-            // Create new tween tween
+            // Create new tween
             _Tween = CreateTween();
 
             // Tween all values out in parallel

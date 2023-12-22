@@ -4,6 +4,7 @@ uniform sampler2D noise_texture;
 uniform float distort_strength: hint_range(0.0, 1.0) = 0.0;
 uniform float lod: hint_range(0.0, 5) = 0.0;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform float distort_factor : hint_range(0.0, 1.0) = 0.5;
 const float speed = 0.5; 
 const float volume = 6.0; 
 const float volume1 = 0.3; 
@@ -22,8 +23,8 @@ void fragment()
 	factor = pow(min(min(val1,val2),val3), 7.0);
 
 	// Get the blurred screen texture input
-	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV - factor, lod) - factor * 3.0;
-	vec4 distorted_color = texture(noise_texture, SCREEN_UV + factor, lod) + factor * 3.0;
+	vec4 color = texture(TEXTURE, UV - factor, lod) - factor * 3.0;
+	vec4 distorted_color = texture(noise_texture, UV + factor, lod) + factor * 3.0;
 	
-	COLOR = mix(color, distorted_color, distort_strength * 0.5);
+	COLOR = mix(color, distorted_color, distort_strength * distort_factor);
 }
