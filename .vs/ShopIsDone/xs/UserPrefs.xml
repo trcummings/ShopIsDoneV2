@@ -4,29 +4,28 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="title_screen/FocusMenu.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="util/shader_cache/ShaderCache.cs">
     <Files>
-      <File FileName="game_settings/Consts.cs" />
-      <File FileName="game/GameManager.cs" />
-      <File FileName="game/game_states/MainMenuState.cs" />
-      <File FileName="game/game_states/InitialLoadState.cs" />
-      <File FileName="title_screen/FocusMenu.cs" Line="92" Column="14" />
-      <File FileName="global_events/GlobalEvents.cs" />
-      <File FileName="game_settings/SettingsMenu.cs" Line="149" Column="22" />
-      <File FileName="game/game_states/LevelState.cs" />
-      <File FileName="game_settings/ResolutionScaling.cs" Line="116" Column="38" />
-      <File FileName="game_settings/GameSettingsManager.cs" Line="8" Column="34" />
-      <File FileName="title_screen/TitleScreenManager.cs" Line="21" Column="43" />
+      <File FileName="levels/PauseInputHandler.cs" Line="4" Column="29" />
+      <File FileName="pausing/LevelPauseMenu.cs" Line="8" Column="29" />
+      <File FileName="pausing/BlurBackground.cs" Line="63" Column="1" />
+      <File FileName="camera/IsometricCamera.cs" Line="222" Column="1" />
+      <File FileName="ui/FocusMenu.cs" Line="10" Column="1" />
+      <File FileName="title_screen/TitleScreenManager.cs" Line="3" Column="14" />
+      <File FileName="levels/Level.cs" Line="13" Column="17" />
+      <File FileName="util/ShaderCache.cs" Line="111" Column="10" />
+      <File FileName="game/game_states/InitialLoadState.cs" Line="17" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ShopIsDone">
             <Node name="ShopIsDone">
-              <Node name="global_events" expanded="True" />
-              <Node name="title_screen" expanded="True">
-                <Node name="FocusMenu.cs" selected="True" />
-              </Node>
+              <Node name="camera" expanded="True" />
+              <Node name="game_settings" expanded="True" />
+              <Node name="levels" expanded="True" />
+              <Node name="title_screen" expanded="True" />
+              <Node name="ui" expanded="True" />
               <Node name="util" expanded="True">
                 <Node name="extensions" expanded="True" />
                 <Node name="state_machine" expanded="True" />

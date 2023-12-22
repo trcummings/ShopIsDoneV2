@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://bdn0vm5ucv8ge"]
 
-[ext_resource type="Texture2D" uid="uid://c0ehsetj3dvnp" path="res://textures/Portraits/haskell_portrait_happy.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://c0ehsetj3dvnp" path="res://dialogue/haskell/haskell_portrait_happy.png" id="2"]
 [ext_resource type="PackedScene" path="res://Models/PawnMannequin/PawnMannequinModel.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://cyll45sq3k0kn" path="res://textures/test_character_portrait.png" id="5"]
 [ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_ShoppingCartEmpty_.tscn" id="6"]

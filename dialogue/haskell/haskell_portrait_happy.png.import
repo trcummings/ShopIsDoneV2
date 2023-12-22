@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhf1etn3y82a2"
-path.s3tc="res://.godot/imported/diamond_floor.png-5d63bf954f946f69450d8409242807cd.s3tc.ctex"
+uid="uid://c0ehsetj3dvnp"
+path.s3tc="res://.godot/imported/haskell_portrait_happy.png-8c15f3260e87e3bf0645934a978508ce.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/diamond_floor.png"
-dest_files=["res://.godot/imported/diamond_floor.png-5d63bf954f946f69450d8409242807cd.s3tc.ctex"]
+source_file="res://dialogue/haskell/haskell_portrait_happy.png"
+dest_files=["res://.godot/imported/haskell_portrait_happy.png-8c15f3260e87e3bf0645934a978508ce.s3tc.ctex"]
 
 [params]
 

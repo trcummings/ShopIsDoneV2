@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=27 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://camera/CameraSystem.cs" id="1_hman2"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
@@ -19,12 +19,16 @@
 [ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="8_ewftn"]
 [ext_resource type="PackedScene" uid="uid://b3t7y7xkc852q" path="res://microgames/scan_item/scan_item_microgame.tscn" id="9_4xati"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="10_01q2v"]
+[ext_resource type="Texture2D" uid="uid://dhf1etn3y82a2" path="res://textures/diamond_floor.png" id="10_d6c6p"]
+[ext_resource type="Script" path="res://dialogue/dialogue_area.gd" id="10_er2ei"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="20_qvdr3"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_rqdll"]
 vertices = PackedVector3Array(-5.5, 0.5, -1.5, -5.5, 0.5, 3.5, 5.5, 0.5, 3.5, 5.5, 0.5, -1.5)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ejctr"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydnh5"]
 
@@ -73,6 +77,8 @@ process_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="HaskellActor" parent="World/PlayerUnits" instance=ExtResource("3_53pcu")]
+collision_layer = 3
+collision_mask = 0
 
 [node name="PlayerActorInput" parent="World/PlayerUnits/HaskellActor" index="3" node_paths=PackedStringArray("_InputXformer")]
 _InputXformer = NodePath("../../../../Services/InputXformer")
@@ -105,6 +111,24 @@ metadata/_edit_lock_ = true
 
 [node name="DefaultSpawnPoint" type="Node3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.10353, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.99152, -4.76835e-07, 2.03626)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("10_er2ei")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.5, 2.08165e-12)
+shape = SubResource("BoxShape3D_ejctr")
+
+[node name="Sprite3D" type="Sprite3D" parent="World/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.02, 2.08165e-12)
+pixel_size = 0.005
+axis = 1
+texture = ExtResource("10_d6c6p")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 process_mode = 1
