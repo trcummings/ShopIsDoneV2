@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2w74wgll0h7v"]
+
+[ext_resource type="AudioStream" uid="uid://b1nskylxbkxik" path="res://pausing/audio/Unpause-098_Unpause_04_leohpaz_free_ui_sfx.wav" id="1_c5tsg"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kwils"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1_c5tsg")
+stream_0/weight = 1.0
+
+[node name="ui_unpause_player" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_kwils")
+bus = &"SFX"

@@ -12,7 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="9_fk3ww"]
 
 [node name="Game" type="Node"]
+process_mode = 3
 script = ExtResource("1_ej1mk")
+OverrideModeAfterLoad = 2
 InitialLevel = "res://levels"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

@@ -1,7 +1,7 @@
 using Godot;
 using ShopIsDone.GameSettings;
 using System;
-using System.Linq;
+using ShopIsDone.UI;
 
 namespace ShopIsDone.TitleScreen
 {

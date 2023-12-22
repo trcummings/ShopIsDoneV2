@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://yf8n5mfvodmr"]
+
+[ext_resource type="AudioStream" uid="uid://1yxeixyyq6eh" path="res://pausing/audio/Pause-092_Pause_04_leohpaz_free_ui_sfx.wav" id="1_h7ddi"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gnmsf"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1_h7ddi")
+stream_0/weight = 1.0
+
+[node name="ui_pause_player" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_gnmsf")
+bus = &"SFX"

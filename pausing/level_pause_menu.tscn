@@ -1,0 +1,96 @@
+[gd_scene load_steps=7 format=3 uid="uid://dekbcridbwhhs"]
+
+[ext_resource type="Script" path="res://pausing/LevelPauseMenu.cs" id="2"]
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="2_jnwmj"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="3_3gjfb"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="4_vrhud"]
+[ext_resource type="PackedScene" uid="uid://djplffn73ui5s" path="res://game_settings/settings_menu.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://dqrhke68klwx2" path="res://audio/ui/ui_invalid_player.tscn" id="5_hjy0t"]
+
+[node name="LevelPauseMenu" type="CanvasLayer"]
+script = ExtResource("2")
+
+[node name="Sfx" type="Node" parent="."]
+
+[node name="UISelectPlayer" parent="Sfx" instance=ExtResource("2_jnwmj")]
+
+[node name="UIConfirmPlayer" parent="Sfx" instance=ExtResource("3_3gjfb")]
+
+[node name="UICancelPlayer" parent="Sfx" instance=ExtResource("4_vrhud")]
+
+[node name="UIInvalidPlayer" parent="Sfx" instance=ExtResource("5_hjy0t")]
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0.196078)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ButtonContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="ResumeGameButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_previous = NodePath("../QuitWithoutSavingButton")
+text = "Resume"
+
+[node name="RestartLevelFromLoadButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Restart Level"
+
+[node name="SettingsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_next = NodePath("../SuspendGameButton")
+text = "Settings"
+
+[node name="SuspendGameButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_next = NodePath("../QuitWithoutSavingButton")
+focus_previous = NodePath("../SettingsButton")
+disabled = true
+text = "Suspend Game"
+
+[node name="QuitWithoutSavingButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_next = NodePath("../ResumeGameButton")
+focus_previous = NodePath("../SuspendGameButton")
+text = "Quit Without Saving"
+
+[node name="SettingsMenu" parent="CenterContainer" instance=ExtResource("5")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[connection signal="Canceled" from="." to="Sfx/UICancelPlayer" method="play"]
+[connection signal="ChangedSelection" from="." to="Sfx/UISelectPlayer" method="play"]
+[connection signal="Confirmed" from="." to="Sfx/UIConfirmPlayer" method="play"]
+[connection signal="InvalidConfirm" from="." to="Sfx/UIInvalidPlayer" method="play"]

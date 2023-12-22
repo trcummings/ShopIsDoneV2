@@ -1,7 +1,7 @@
 ﻿using System;
 using Godot;
 
-namespace ShopIsDone.TitleScreen
+namespace ShopIsDone.UI
 {
     public partial class FocusMenu : CanvasLayer
     {

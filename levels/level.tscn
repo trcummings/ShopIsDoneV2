@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=24 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://camera/CameraSystem.cs" id="1_hman2"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
@@ -14,10 +14,13 @@
 [ext_resource type="MeshLibrary" uid="uid://diqp0yq51jroq" path="res://gridmap_starter/MeshLibrary.tres" id="5_b26fo"]
 [ext_resource type="PackedScene" uid="uid://bt46ljijua3d6" path="res://microgames/apologize/apologize_microgame.tscn" id="5_r8afv"]
 [ext_resource type="PackedScene" uid="uid://cqh47hj66pqly" path="res://microgames/check_in_back/check_in_back_microgame.tscn" id="6_u0iqf"]
+[ext_resource type="PackedScene" uid="uid://bsmp1sdllx60e" path="res://pausing/pause_input_handler.tscn" id="6_urg1m"]
 [ext_resource type="PackedScene" uid="uid://b2p7fh56ojclq" path="res://microgames/destroy_rotten_produce/destroy_rotten_produce_microgame.tscn" id="7_lylgh"]
 [ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="8_ewftn"]
 [ext_resource type="PackedScene" uid="uid://b3t7y7xkc852q" path="res://microgames/scan_item/scan_item_microgame.tscn" id="9_4xati"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="10_01q2v"]
+[ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="20_qvdr3"]
+[ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_rqdll"]
 vertices = PackedVector3Array(-5.5, 0.5, -1.5, -5.5, 0.5, 3.5, 5.5, 0.5, 3.5, 5.5, 0.5, -1.5)
@@ -27,10 +30,10 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("_DefaultSpawnPoint", "_CameraSystem", "_Camera", "_Haskell")]
 script = ExtResource("1_uriqi")
-_DefaultSpawnPoint = NodePath("DefaultSpawnPoint")
+_DefaultSpawnPoint = NodePath("World/DefaultSpawnPoint")
 _CameraSystem = NodePath("Services/CameraService")
-_Camera = NodePath("IsometricCamera")
-_Haskell = NodePath("PlayerUnits/HaskellActor")
+_Camera = NodePath("World/IsometricCamera")
+_Haskell = NodePath("World/PlayerUnits/HaskellActor")
 metadata/_edit_lock_ = true
 
 [node name="LevelStateMachine" type="Node" parent="."]
@@ -52,38 +55,44 @@ script = ExtResource("3_8uuqm")
 
 [node name="CameraService" type="Node" parent="Services" node_paths=PackedStringArray("_IsometricCamera")]
 script = ExtResource("1_hman2")
-_IsometricCamera = NodePath("../../IsometricCamera")
+_IsometricCamera = NodePath("../../World/IsometricCamera")
 
 [node name="InputXformer" type="Node" parent="Services" node_paths=PackedStringArray("_Camera")]
 script = ExtResource("2_f8i2e")
-_Camera = NodePath("../../IsometricCamera")
+_Camera = NodePath("../../World/IsometricCamera")
 
-[node name="IsometricCamera" parent="." instance=ExtResource("2_s72y3")]
+[node name="PauseInputHandler" parent="Services" instance=ExtResource("6_urg1m")]
+IsActive = true
 
-[node name="PlayerUnits" type="Node3D" parent="."]
+[node name="World" type="Node3D" parent="."]
+process_mode = 1
+
+[node name="IsometricCamera" parent="World" instance=ExtResource("2_s72y3")]
+
+[node name="PlayerUnits" type="Node3D" parent="World"]
 metadata/_edit_lock_ = true
 
-[node name="HaskellActor" parent="PlayerUnits" instance=ExtResource("3_53pcu")]
+[node name="HaskellActor" parent="World/PlayerUnits" instance=ExtResource("3_53pcu")]
 
-[node name="PlayerActorInput" parent="PlayerUnits/HaskellActor" index="3" node_paths=PackedStringArray("_InputXformer")]
-_InputXformer = NodePath("../../../Services/InputXformer")
+[node name="PlayerActorInput" parent="World/PlayerUnits/HaskellActor" index="3" node_paths=PackedStringArray("_InputXformer")]
+_InputXformer = NodePath("../../../../Services/InputXformer")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="World"]
 navigation_mesh = SubResource("NavigationMesh_rqdll")
 metadata/_edit_lock_ = true
 
-[node name="Environment" type="Node3D" parent="NavigationRegion3D"]
+[node name="Environment" type="Node3D" parent="World/NavigationRegion3D"]
 metadata/_edit_lock_ = true
 
-[node name="OmniLight3D" type="OmniLight3D" parent="NavigationRegion3D/Environment"]
+[node name="OmniLight3D" type="OmniLight3D" parent="World/NavigationRegion3D/Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9877, 2.16969, 0)
 metadata/_edit_lock_ = true
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="NavigationRegion3D/Environment"]
+[node name="OmniLight3D2" type="OmniLight3D" parent="World/NavigationRegion3D/Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.62586, 2.16969, 2.71732)
 metadata/_edit_lock_ = true
 
-[node name="GridMap" type="GridMap" parent="NavigationRegion3D/Environment"]
+[node name="GridMap" type="GridMap" parent="World/NavigationRegion3D/Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -1, 2.08165e-12)
 mesh_library = ExtResource("5_b26fo")
 bake_navigation = true
@@ -91,10 +100,16 @@ data = {
 "cells": PackedInt32Array(65533, 1, 0, 65534, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 65535, 0, 65535, 65535, 0, 65534, 65535, 0, 65533, 65535, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 2, 1, 0, 2, 65535, 0, 1, 65535, 0)
 }
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
 metadata/_edit_lock_ = true
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="DefaultSpawnPoint" type="Node3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.10353, 0, 0)
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+process_mode = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer"]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -105,7 +120,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ydnh5")
 metadata/_edit_lock_ = true
 
-[node name="MicrogameRunner" type="Control" parent="PanelContainer" node_paths=PackedStringArray("container", "microgame_manager", "button_template")]
+[node name="MicrogameRunner" type="Control" parent="UILayer/PanelContainer" node_paths=PackedStringArray("container", "microgame_manager", "button_template")]
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2_tqx2s")
@@ -114,7 +129,7 @@ container = NodePath("VBoxContainer")
 microgame_manager = NodePath("../MicrogameManager")
 button_template = NodePath("VBoxContainer/Button")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MicrogameRunner"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/PanelContainer/MicrogameRunner"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -125,16 +140,23 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="Button" type="Button" parent="PanelContainer/MicrogameRunner/VBoxContainer"]
+[node name="Button" type="Button" parent="UILayer/PanelContainer/MicrogameRunner/VBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme = ExtResource("10_01q2v")
 
-[node name="MicrogameManager" parent="PanelContainer" instance=ExtResource("3_fpukf")]
+[node name="MicrogameManager" parent="UILayer/PanelContainer" instance=ExtResource("3_fpukf")]
 layout_mode = 2
 
-[node name="DefaultSpawnPoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.10353, 0, 0)
+[node name="BlurBackground" parent="UILayer" instance=ExtResource("20_qvdr3")]
 
-[editable path="IsometricCamera"]
-[editable path="PlayerUnits/HaskellActor"]
+[node name="LevelPauseMenu" parent="." node_paths=PackedStringArray("_BlurBackground") instance=ExtResource("21_u1g8v")]
+visible = false
+_BlurBackground = NodePath("../UILayer/BlurBackground")
+
+[connection signal="GamePaused" from="Services/PauseInputHandler" to="LevelPauseMenu" method="Activate"]
+[connection signal="GameUnpaused" from="Services/PauseInputHandler" to="LevelPauseMenu" method="Deactivate"]
+[connection signal="UnpauseRequested" from="LevelPauseMenu" to="Services/PauseInputHandler" method="RequestUnpause"]
+
+[editable path="World/IsometricCamera"]
+[editable path="World/PlayerUnits/HaskellActor"]

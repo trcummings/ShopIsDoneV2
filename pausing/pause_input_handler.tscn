@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsmp1sdllx60e"]
+
+[ext_resource type="Script" path="res://pausing/PauseInputHandler.cs" id="1_8tsri"]
+[ext_resource type="PackedScene" uid="uid://yf8n5mfvodmr" path="res://pausing/audio/ui_pause_player.tscn" id="2_o842k"]
+[ext_resource type="PackedScene" uid="uid://c2w74wgll0h7v" path="res://pausing/audio/ui_unpause_player.tscn" id="3_rvj6g"]
+
+[node name="PauseInputHandler" type="Node"]
+script = ExtResource("1_8tsri")
+
+[node name="ui_pause_player" parent="." instance=ExtResource("2_o842k")]
+
+[node name="ui_unpause_player" parent="." instance=ExtResource("3_rvj6g")]
+
+[connection signal="GamePaused" from="." to="ui_pause_player" method="play"]
+[connection signal="GameUnpaused" from="." to="ui_unpause_player" method="play"]
