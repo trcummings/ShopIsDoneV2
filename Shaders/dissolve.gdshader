@@ -1,8 +1,8 @@
 shader_type spatial;
-render_mode depth_draw_alpha_prepass, cull_disabled;
+render_mode cull_disabled;
 
 uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : hint_albedo;
+uniform sampler2D texture_albedo : source_color;
 
 uniform vec4 emission_color : source_color = vec4(1);
 uniform float emission_amount;

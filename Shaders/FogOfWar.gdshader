@@ -88,7 +88,7 @@ void fragment() {
 
 	// transform from view to world space
 //	vec3 vertexTransformed = ((MODEL_MATRIX) * vec4(VERTEX, 1.0)).xyz;
-	vec3 vertexTransformed = (inverse(INV_INV_VIEW_MATRIX) * vec4(VERTEX, 1.0)).xyz; 
+	vec3 vertexTransformed = (inverse(VIEW_MATRIX) * vec4(VERTEX, 1.0)).xyz; 
 
 	// Get the fragment coordinates
 	float fx = vertexTransformed.x;

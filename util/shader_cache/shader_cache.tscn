@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://t0mg5tmksjhn"]
+
+[ext_resource type="Script" path="res://util/shader_cache/ShaderCache.cs" id="1"]
+
+[node name="ShaderCache" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Materials" type="Node3D" parent="."]
+unique_name_in_owner = true

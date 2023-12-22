@@ -3,16 +3,16 @@ using System;
 using Godot.Collections;
 using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.GameSettings;
+using ShopIsDone.Utils;
 using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Game.States
 {
     public partial class InitialLoadState : State
     {
-        //[Export]
-        //public NodePath ShaderCachePath;
+        [Export]
+        private ShaderCache _ShaderCache;
 
-        //private ShaderCache _ShaderCache;
         private GameSettingsManager _GameSettings;
 
         public override void _Ready()
@@ -20,11 +20,10 @@ namespace ShopIsDone.Game.States
             base._Ready();
 
             // Ready nodes
-            //_ShaderCache = GetNode<ShaderCache>(ShaderCachePath);
             _GameSettings = GameSettingsManager.GetGameSettings(this);
         }
 
-        public override void OnStart(Dictionary<string, Variant> message = null)
+        public async override void OnStart(Dictionary<string, Variant> message = null)
         {
             base.OnStart(message);
 
@@ -35,9 +34,9 @@ namespace ShopIsDone.Game.States
             // Initialize settings
             _GameSettings.InitValues();
 
-            //// Run shader cache
-            //_ShaderCache.RunCache();
-            //await ToSignal(_ShaderCache, nameof(ShaderCache.FinishedCaching));
+            // Run shader cache
+            _ShaderCache.RunCache();
+            await ToSignal(_ShaderCache, nameof(ShaderCache.FinishedCaching));
 
             // If the game is in release mode (debug build or no), proceed to the
             // vanity card

@@ -1,13 +1,13 @@
 // NOTE: Shader automatically converted from Godot Engine 3.5.stable.mono's SpatialMaterial.
 
 shader_type spatial;
-render_mode async_visible,blend_mix,depth_draw_opaque,cull_front,diffuse_burley,specular_schlick_ggx;
+render_mode blend_mix,depth_draw_opaque,cull_front,diffuse_burley,specular_schlick_ggx;
 
 uniform sampler2D noise_img;
 uniform float alpha_amount : hint_range(0, 1) = 1;
 
 uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : hint_albedo;
+uniform sampler2D texture_albedo : source_color;
 uniform float specular;
 uniform float metallic;
 uniform float grow;

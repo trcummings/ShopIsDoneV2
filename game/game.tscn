@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bx0clnsygo7im"]
+[gd_scene load_steps=12 format=3 uid="uid://bx0clnsygo7im"]
 
 [ext_resource type="Script" path="res://game/GameManager.cs" id="1_ej1mk"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_gcynx"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cstrf18fypse2" path="res://title_screen/title_screen.tscn" id="7_yill8"]
 [ext_resource type="Script" path="res://game/game_states/LevelState.cs" id="8_k0lyi"]
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="9_fk3ww"]
+[ext_resource type="PackedScene" uid="uid://t0mg5tmksjhn" path="res://util/shader_cache/shader_cache.tscn" id="10_xnonk"]
 
 [node name="Game" type="Node"]
 process_mode = 3
@@ -25,8 +26,9 @@ environment = ExtResource("2_gcynx")
 unique_name_in_owner = true
 script = ExtResource("4_kjt3r")
 
-[node name="InitialLoad" type="Node" parent="GameStateMachine"]
+[node name="InitialLoad" type="Node" parent="GameStateMachine" node_paths=PackedStringArray("_ShaderCache")]
 script = ExtResource("4_3nogo")
+_ShaderCache = NodePath("../../ShaderCache")
 
 [node name="VanityCard" type="Node" parent="GameStateMachine"]
 script = ExtResource("5_8eg8s")
@@ -43,6 +45,8 @@ LevelEnvironment = ExtResource("2_gcynx")
 
 [node name="BreakRoom" type="Node" parent="GameStateMachine"]
 script = ExtResource("5_8eg8s")
+
+[node name="ShaderCache" parent="." instance=ExtResource("10_xnonk")]
 
 [node name="OverlayLayer" type="CanvasLayer" parent="."]
 layer = 16
