@@ -30,7 +30,6 @@ config/icon="res://icon.svg"
 
 GameSettingsManager="*res://game_settings/GameSettingsManager.cs"
 GlobalEvents="*res://global_events/GlobalEvents.cs"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [dialogic]
 
@@ -90,7 +89,7 @@ project/assembly_name="Shop Is Done"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ActionIcon/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg", "res://addons/verlet_rope_4/plugin.cfg")
+enabled=PackedStringArray("res://addons/ActionIcon/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg", "res://addons/verlet_rope_4/plugin.cfg")
 
 [importer_defaults]
 
