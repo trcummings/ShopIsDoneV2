@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=21 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://camera/CameraSystem.cs" id="1_hman2"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
@@ -19,8 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://b3t7y7xkc852q" path="res://microgames/scan_item/scan_item_microgame.tscn" id="9_4xati"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="10_01q2v"]
 
-[sub_resource type="Environment" id="Environment_j6wrf"]
-
 [sub_resource type="NavigationMesh" id="NavigationMesh_rqdll"]
 vertices = PackedVector3Array(-5.5, 0.5, -1.5, -5.5, 0.5, 3.5, 5.5, 0.5, 3.5, 5.5, 0.5, -1.5)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
@@ -34,9 +32,6 @@ _CameraSystem = NodePath("Services/CameraService")
 _Camera = NodePath("IsometricCamera")
 _Haskell = NodePath("PlayerUnits/HaskellActor")
 metadata/_edit_lock_ = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_j6wrf")
 
 [node name="LevelStateMachine" type="Node" parent="."]
 script = ExtResource("2_b2cin")

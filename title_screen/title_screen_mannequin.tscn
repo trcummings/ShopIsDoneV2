@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bdn0vm5ucv8ge"]
+[gd_scene load_steps=30 format=3 uid="uid://bdn0vm5ucv8ge"]
 
 [ext_resource type="Texture2D" uid="uid://c0ehsetj3dvnp" path="res://textures/Portraits/haskell_portrait_happy.png" id="2"]
 [ext_resource type="PackedScene" path="res://Models/PawnMannequin/PawnMannequinModel.tscn" id="3"]
@@ -6,12 +6,13 @@
 [ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_ShoppingCartEmpty_.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_ShoppingCartFull_.tscn" id="7"]
 [ext_resource type="Texture2D" uid="uid://6s4238slg6tk" path="res://textures/white_circle.png" id="8"]
-[ext_resource type="PackedScene" path="res://Models/ClownArm/ClownArmModel.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://k4300tt6673u" path="res://Models/ClownArm/ClownArmModel.tscn" id="9"]
 [ext_resource type="Script" path="res://addons/verlet_rope_4/VerletRope.cs" id="10"]
-[ext_resource type="Material" path="res://Materials/TitleScreenMannequinString.material" id="11"]
+[ext_resource type="Material" path="res://title_screen/TitleScreenMannequinString.material" id="11"]
 [ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_Shelf_Isle_Empty_02_.tscn" id="12"]
 [ext_resource type="Texture2D" uid="uid://bbdqwgogk3jup" path="res://textures/Widgets/Demerits/pink_slip.png" id="13"]
 [ext_resource type="PackedScene" uid="uid://cojwv587ghlem" path="res://exit/exit_door_light.tscn" id="14"]
+[ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="14_7vwky"]
 [ext_resource type="Material" path="res://exit/ExitDoor.material" id="15"]
 
 [sub_resource type="QuadMesh" id="1"]
@@ -63,17 +64,17 @@ _data = {
 "default": SubResource("3")
 }
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_8lla8"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_3mfep"]
 resource_local_to_scene = true
-metadata/creation_stamp = 37743568699002
+metadata/creation_stamp = 8972874629803
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_mvhsh"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_js0yj"]
 resource_local_to_scene = true
-metadata/creation_stamp = 37852838709498
+metadata/creation_stamp = 8972908184237
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_hmlcm"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_jqmkx"]
 resource_local_to_scene = true
-metadata/creation_stamp = 37967645198598
+metadata/creation_stamp = 8972941738671
 
 [sub_resource type="QuadMesh" id="17"]
 material = ExtResource("15")
@@ -118,7 +119,7 @@ tracks/0/path = NodePath("ClownArmModel/ClownArm/AnimationPlayer")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 10),
+"times": PackedFloat32Array(0.1, 10),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": ["SpreadHand", -1, 0.1, false],
@@ -135,7 +136,7 @@ tracks/1/path = NodePath("ClownArmModel2/ClownArm/AnimationPlayer")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 5, 15),
+"times": PackedFloat32Array(0.1, 5, 15),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": ["SpreadHand", -1, -0.1, true],
@@ -151,7 +152,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("ClownArmModel:translation")
+tracks/2/path = NodePath("ClownArmModel:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -163,7 +164,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ClownArmModel2:translation")
+tracks/3/path = NodePath("ClownArmModel2:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -261,10 +262,12 @@ lifetime = 5.27
 preprocess = 4.71
 lifetime_randomness = 1.0
 mesh = SubResource("8")
-emission_shape = 2
-emission_sphere_radius = 1.0
+emission_shape = 1
+emission_sphere_radius = 3.0
 spread = 180.0
-gravity = Vector3(0, 0, 0)
+gravity = Vector3(0.1, -0.25, -0.1)
+tangential_accel_min = 0.05
+tangential_accel_max = 0.1
 scale_amount_curve = SubResource("6")
 color = Color(1, 1, 1, 0.270588)
 color_ramp = SubResource("9")
@@ -280,41 +283,43 @@ autoplay = "default"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.125217, 0.0723204, 0.257253)
 material_override = ExtResource("11")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_8lla8")
+mesh = SubResource("ImmediateMesh_3mfep")
 script = ExtResource("10")
 AttachEnd = NodePath("../RightRopeEnd")
 RopeWidth = 0.01
+PreprocessIterations = 20
 ApplyCollision = true
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="MannequinPlatform/RightRope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -3.2, 0.16)
-aabb = AABB(-0.00660338, -0.053992, -0.00149638, 1.05645, 0.0613611, 3.22652)
+aabb = AABB(-0.00655456, -0.0502589, -0.001528, 1.05638, 0.0576651, 3.22669)
 
 [node name="LeftRope" type="MeshInstance3D" parent="MannequinPlatform" node_paths=PackedStringArray("AttachEnd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0754573, 0.0861323, 0.22808)
 material_override = ExtResource("11")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_mvhsh")
+mesh = SubResource("ImmediateMesh_js0yj")
 script = ExtResource("10")
 AttachEnd = NodePath("../LeftRopeEnd")
 RopeWidth = 0.01
+PreprocessIterations = 20
 ApplyCollision = true
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="MannequinPlatform/LeftRope"]
-aabb = AABB(-0.974413, -0.0652571, -0.530301, 1.15172, 0.0733908, 3.3299)
+aabb = AABB(-1.37099, -0.0596558, -0.00302555, 1.38035, 0.0615149, 3.71559)
 
 [node name="HeadRope" type="MeshInstance3D" parent="MannequinPlatform" node_paths=PackedStringArray("AttachEnd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, -0.62)
 material_override = ExtResource("11")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_hmlcm")
+mesh = SubResource("ImmediateMesh_jqmkx")
 script = ExtResource("10")
 AttachEnd = NodePath("../HeadRopeEnd")
 RopeLength = 2.0
 RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="MannequinPlatform/HeadRope"]
-aabb = AABB(-0.00976319, -2.23905, -0.00212931, 0.0195364, 2.23944, 0.709485)
+aabb = AABB(-0.00976319, -2.23905, -0.0021293, 0.0195364, 2.23944, 0.709485)
 
 [node name="LeftRopeEnd" type="Marker3D" parent="MannequinPlatform"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04083, -0.000354376, 3.02409)
@@ -433,7 +438,7 @@ alpha_cut = 1
 texture = ExtResource("13")
 
 [node name="Sprite3D12" type="Sprite3D" parent="MannequinPlatform/PinkSlips"]
-transform = Transform3D(0.964137, 0.265405, 1.16012e-08, 0, -4.37114e-08, 1, 0.265405, -0.964137, -4.21438e-08, 0.961298, 0.002, -2.44347)
+transform = Transform3D(0.964137, 0.265405, 1.16012e-08, 0, -4.37114e-08, 1, 0.265405, -0.964137, -4.21438e-08, 0.961, 0.003, -2.443)
 pixel_size = 0.0025
 transparent = false
 shaded = true
@@ -531,25 +536,86 @@ transform = Transform3D(-0.144009, -0.250006, -0.408361, 0.474165, -0.133735, -0
 [node name="Armature" parent="Spatial/ClownArmModel/ClownArm" index="0"]
 transform = Transform3D(0.991992, 0.114767, 0.0527368, -0.115078, 0.993352, 0.0028829, -0.0520553, -0.00892854, 0.998604, 0.446304, 11.9082, -0.0803261)
 
+[node name="Skeleton3D" parent="Spatial/ClownArmModel/ClownArm/Armature" index="0"]
+bones/3/rotation = Quaternion(-0.413075, -8.3761e-09, 0.195321, 0.889505)
+bones/4/rotation = Quaternion(0.184377, 0.146831, -0.477828, 0.846242)
+bones/5/rotation = Quaternion(0.658154, 0.00579572, 0.00662973, 0.752832)
+bones/6/rotation = Quaternion(0.166381, -0.0859316, -0.0145564, 0.982202)
+bones/7/rotation = Quaternion(-0.0870728, -0.0434534, 0.00380168, 0.995247)
+bones/8/rotation = Quaternion(-0.0871557, -1.49581e-08, -7.47904e-09, 0.996195)
+bones/9/rotation = Quaternion(-0.0868241, 0.0868241, -0.00759612, 0.992404)
+bones/10/rotation = Quaternion(0.24473, 0.0422904, 0.0106852, 0.96861)
+bones/11/rotation = Quaternion(0.188616, -1.89669e-09, 9.48344e-09, 0.982051)
+bones/12/rotation = Quaternion(-0.0868241, 0.0868241, -0.00759612, 0.992404)
+bones/13/rotation = Quaternion(0.277675, 0.0419007, 0.0121236, 0.959684)
+bones/14/rotation = Quaternion(0.187794, -7.11144e-09, 7.85391e-38, 0.982209)
+bones/15/rotation = Quaternion(-0.0868241, 0.0868241, -0.00759612, 0.992404)
+bones/16/rotation = Quaternion(0.230834, 0.0424391, 0.0100784, 0.972015)
+bones/17/rotation = Quaternion(0.302085, -2.68665e-09, -5.82317e-17, 0.953281)
+bones/19/position = Vector3(-0.226712, 3.31999, -0.446834)
+bones/20/position = Vector3(0.549196, 3.31999, -0.275964)
+bones/21/position = Vector3(1.05326, 3.31999, -0.0837336)
+bones/22/position = Vector3(1.9574, 3.31999, -0.15493)
+bones/23/position = Vector3(1.14664, 0.721905, -1.87475)
+bones/24/position = Vector3(-0.971752, 2.05511, -2.42326)
+
+[node name="Hand" parent="Spatial/ClownArmModel/ClownArm/Armature/Skeleton3D" index="0"]
+layers = 3
+
+[node name="BoneAttachment3D" parent="Spatial/ClownArmModel/ClownArm/Armature/Skeleton3D" index="1"]
+transform = Transform3D(0.161364, 0.734864, -0.658739, -0.347477, -0.582438, -0.734864, -0.9237, 0.347477, 0.161364, 5.58121e-28, -7.98196, 1.28802e-07)
+
 [node name="ClownArmModel2" parent="Spatial" instance=ExtResource("9")]
 transform = Transform3D(0.162268, 0.179757, 0.437443, 0.460939, -0.163619, -0.103749, -0.105849, -0.43694, 0.218815, 0.84095, 1.03294, -2.37777)
 
 [node name="Armature" parent="Spatial/ClownArmModel2/ClownArm" index="0"]
 transform = Transform3D(0.991992, 0.114767, 0.0527368, -0.115078, 0.993352, 0.0028829, -0.0520553, -0.00892854, 0.998604, 0.446304, 11.9082, -0.0803261)
 
+[node name="Skeleton3D" parent="Spatial/ClownArmModel2/ClownArm/Armature" index="0"]
+bones/3/rotation = Quaternion(-0.435234, -4.93259e-16, 1.90247e-08, 0.900317)
+bones/4/rotation = Quaternion(0.155191, -0.409652, -0.544414, 0.715342)
+bones/5/rotation = Quaternion(0.595881, 0.00524732, 0.00707173, 0.803024)
+bones/6/rotation = Quaternion(0.0407748, -0.0870827, -0.00356733, 0.99536)
+bones/7/rotation = Quaternion(0.342524, -0.0409756, -0.0149549, 0.938496)
+bones/8/rotation = Quaternion(0.206474, -1.42775e-09, 1.57681e-38, 0.978452)
+bones/9/rotation = Quaternion(0.0982575, 3.7259e-08, 3.67878e-09, 0.995161)
+bones/10/rotation = Quaternion(0.28857, -1.13186e-09, -3.41134e-10, 0.957459)
+bones/11/rotation = Quaternion(0.211452, 1.47668e-15, -2.27182e-16, 0.977388)
+bones/12/rotation = Quaternion(0.103363, 4.0755e-08, 4.23524e-09, 0.994644)
+bones/13/rotation = Quaternion(0.297716, -1.9068e-10, -5.94651e-11, 0.954654)
+bones/14/rotation = Quaternion(0.199638, -3.68235e-16, 9.06425e-16, 0.97987)
+bones/15/rotation = Quaternion(0.0607613, 0.0869935, 0.00531593, 0.99434)
+bones/16/rotation = Quaternion(0.369573, 0.0405251, 0.0161359, 0.928177)
+bones/17/rotation = Quaternion(0.178252, 1.40493e-09, -3.78592e-09, 0.983985)
+bones/19/position = Vector3(-1.05784, 1.83489, -1.37546)
+bones/20/position = Vector3(-0.281937, 1.83489, -1.20459)
+bones/21/position = Vector3(0.222132, 1.83489, -1.01236)
+bones/22/position = Vector3(1.12627, 1.83489, -1.08355)
+bones/23/position = Vector3(1.12067, 0.721905, -1.87475)
+bones/24/position = Vector3(-3.65902e-07, 2.05511, -2.42326)
+
+[node name="Hand" parent="Spatial/ClownArmModel2/ClownArm/Armature/Skeleton3D" index="0"]
+layers = 3
+
+[node name="BoneAttachment3D" parent="Spatial/ClownArmModel2/ClownArm/Armature/Skeleton3D" index="1"]
+transform = Transform3D(-2.7151e-08, 0.783697, -0.621143, -2.46999e-09, -0.621143, -0.783697, -1, -1.9744e-08, 1.88004e-08, 5.58121e-28, -7.98196, 1.28802e-07)
+
 [node name="OmniLight" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.57257, 1.10492, -2.37311)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55797, 1.10492, -2.09565)
 layers = 2
 light_cull_mask = 4294967294
 omni_range = 1.5
-omni_attenuation = 2.46229
+omni_attenuation = 4.59479
 
 [node name="OmniLight2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944932, 1.10492, -2.28965)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01795, 1.10492, -2.58171)
 layers = 2
 light_cull_mask = 4294967294
 omni_range = 1.5
-omni_attenuation = 2.46229
+omni_attenuation = 4.59479
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("14_7vwky")
 
 [connection signal="ready" from="." to="MannequinPlatform/PawnMannequin/AnimationPlayer" method="play" binds= ["Slump"]]
 

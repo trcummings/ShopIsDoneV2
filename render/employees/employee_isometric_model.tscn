@@ -24,7 +24,7 @@ script = ExtResource("1")
 disable_3d = true
 transparent_bg = true
 size = Vector2i(600, 600)
-render_target_update_mode = 3
+render_target_update_mode = 4
 
 [node name="Shadow" type="Sprite3D" parent="." groups=["skip_silhouette"]]
 transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 0, 0.03, 0)
