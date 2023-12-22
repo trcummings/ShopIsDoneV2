@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1djrupohmfdf"]
+
+[ext_resource type="AudioStream" uid="uid://b23k1tsco6hrp" path="res://audio/ui/select.wav" id="1_i6btm"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ws84g"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1_i6btm")
+stream_0/weight = 1.0
+
+[node name="UISelectPlayer" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_ws84g")
+bus = &"SFX"

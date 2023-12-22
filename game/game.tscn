@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bx0clnsygo7im"]
+[gd_scene load_steps=11 format=3 uid="uid://bx0clnsygo7im"]
 
 [ext_resource type="Script" path="res://game/GameManager.cs" id="1_ej1mk"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_gcynx"]
@@ -8,9 +8,12 @@
 [ext_resource type="Script" path="res://util/state_machine/State.cs" id="5_8eg8s"]
 [ext_resource type="Script" path="res://game/game_states/MainMenuState.cs" id="6_awquy"]
 [ext_resource type="PackedScene" uid="uid://cstrf18fypse2" path="res://title_screen/title_screen.tscn" id="7_yill8"]
+[ext_resource type="Script" path="res://game/game_states/LevelState.cs" id="8_k0lyi"]
+[ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="9_fk3ww"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_ej1mk")
+InitialLevel = "res://levels"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 unique_name_in_owner = true
@@ -32,7 +35,9 @@ TitleScreenScene = ExtResource("7_yill8")
 MainMenuEnvironment = ExtResource("2_gcynx")
 
 [node name="Level" type="Node" parent="GameStateMachine"]
-script = ExtResource("5_8eg8s")
+script = ExtResource("8_k0lyi")
+LevelScene = ExtResource("9_fk3ww")
+LevelEnvironment = ExtResource("2_gcynx")
 
 [node name="BreakRoom" type="Node" parent="GameStateMachine"]
 script = ExtResource("5_8eg8s")

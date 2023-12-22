@@ -66,17 +66,17 @@ _data = {
 "idle": SubResource("7")
 }
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_t28x0"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_ver2p"]
 resource_local_to_scene = true
-metadata/creation_stamp = 75636622311410
+metadata/creation_stamp = 2432075637283
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_uxndw"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_3kc4y"]
 resource_local_to_scene = true
-metadata/creation_stamp = 75636655864874
+metadata/creation_stamp = 2432109191717
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_v07sf"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_4sfi8"]
 resource_local_to_scene = true
-metadata/creation_stamp = 75636689420261
+metadata/creation_stamp = 2432142746151
 
 [node name="TitleScreenClownPuppet" type="Node3D"]
 
@@ -131,7 +131,7 @@ transform = Transform3D(1, -2.05474e-14, 2.38419e-07, -8.0757e-08, 0.940888, 0.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 3.2, -0.16)
 material_override = ExtResource("1")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_t28x0")
+mesh = SubResource("ImmediateMesh_ver2p")
 script = ExtResource("2")
 AttachEnd = NodePath("../ClownPuppetModel/RightHandHandle")
 RopeLength = 2.0
@@ -139,26 +139,26 @@ RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="RightRope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -3.2, 0.16)
-aabb = AABB(-0.577723, -2.32914, -0.00318681, 0.587087, 2.33067, 0.16198)
+aabb = AABB(-0.577724, -2.32914, -0.00318713, 0.587087, 2.33067, 0.16198)
 
 [node name="LeftRope" type="MeshInstance3D" parent="." node_paths=PackedStringArray("AttachEnd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 3.2, -0.16)
 material_override = ExtResource("1")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_uxndw")
+mesh = SubResource("ImmediateMesh_3kc4y")
 script = ExtResource("2")
 AttachEnd = NodePath("../ClownPuppetModel/LeftHandHandle")
 RopeLength = 2.0
 RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="LeftRope"]
-aabb = AABB(-0.00953618, -2.32287, -0.0027416, 0.491824, 2.32412, 0.146867)
+aabb = AABB(-0.00953638, -2.32287, -0.00274106, 0.491824, 2.32412, 0.146867)
 
 [node name="HeadRope" type="MeshInstance3D" parent="." node_paths=PackedStringArray("AttachEnd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, -0.62)
 material_override = ExtResource("1")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_v07sf")
+mesh = SubResource("ImmediateMesh_4sfi8")
 script = ExtResource("2")
 AttachEnd = NodePath("../ClownPuppetModel/HeadHandle")
 RopeLength = 1.5

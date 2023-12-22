@@ -141,7 +141,5 @@ layout_mode = 2
 [node name="DefaultSpawnPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.10353, 0, 0)
 
-[connection signal="ready" from="." to="." method="Init"]
-
 [editable path="IsometricCamera"]
 [editable path="PlayerUnits/HaskellActor"]

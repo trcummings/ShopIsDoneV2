@@ -61,7 +61,7 @@ namespace ShopIsDone.TitleScreen
                 }
             }
 
-            else if (focusedElement is Slider slider)
+            else if (focusedElement is Slider _)
             {
                 if (downPressed) EmitSignal(nameof(ChangedSelection));
                 else if (upPressed) EmitSignal(nameof(ChangedSelection));

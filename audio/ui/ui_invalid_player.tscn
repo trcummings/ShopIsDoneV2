@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqrhke68klwx2"]
+
+[ext_resource type="AudioStream" uid="uid://gsugsxvo0114" path="res://audio/ui/error.wav" id="1_xm6q5"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bh6qf"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1_xm6q5")
+stream_0/weight = 1.0
+
+[node name="UIInvalidPlayer" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_bh6qf")
+bus = &"SFX"

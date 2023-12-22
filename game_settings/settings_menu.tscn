@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://djplffn73ui5s"]
+[gd_scene load_steps=5 format=3 uid="uid://djplffn73ui5s"]
 
 [ext_resource type="Script" path="res://game_settings/SettingsMenu.cs" id="1"]
 [ext_resource type="PackedScene" uid="uid://bq2bt74o52ayq" path="res://game_settings/resolution_scaling.tscn" id="2_3qlh1"]
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="3_i6dtg"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="4_crlfr"]
 
 [node name="SettingsMenu" type="PanelContainer"]
 custom_minimum_size = Vector2(400, 400)
@@ -184,5 +186,12 @@ layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 text = "X"
+
+[node name="UISelectPlayer" parent="." instance=ExtResource("3_i6dtg")]
+
+[node name="UICancelPlayer" parent="." instance=ExtResource("4_crlfr")]
+
+[connection signal="ChangedTab" from="." to="UISelectPlayer" method="play"]
+[connection signal="CloseRequested" from="." to="UICancelPlayer" method="play"]
 
 [editable path="MarginContainer/TabContainer/Video/VideoSettingsContainer/ResolutionScaling"]

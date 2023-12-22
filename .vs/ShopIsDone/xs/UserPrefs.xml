@@ -2,38 +2,34 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="addons/verlet_rope_cs/VerletRopeCs.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="title_screen/FocusMenu.cs">
     <Files>
-      <File FileName="title_screen/TitleScreen.cs" Line="8" Column="49" />
-      <File FileName="title_screen/SettingsMenu.cs" Line="9" Column="6" />
-      <File FileName="game/Game.cs" Line="5" Column="30" />
-      <File FileName="game_settings/GameSettings.cs" Line="294" Column="38" />
-      <File FileName="util/extensions/TabContainerExtensions.cs" Line="4" Column="11" />
-      <File FileName="game_settings/Consts.cs" Line="2" Column="1" />
-      <File FileName="addons/verlet_rope_cs/VerletRopePlugin.cs" Line="8" Column="36" />
-      <File FileName="addons/verlet_rope_cs/VerletRopeCs.cs" Line="206" Column="18" />
+      <File FileName="game_settings/Consts.cs" />
+      <File FileName="game/GameManager.cs" />
+      <File FileName="game/game_states/MainMenuState.cs" />
+      <File FileName="game/game_states/InitialLoadState.cs" />
+      <File FileName="title_screen/FocusMenu.cs" Line="92" Column="14" />
+      <File FileName="global_events/GlobalEvents.cs" />
+      <File FileName="game_settings/SettingsMenu.cs" Line="149" Column="22" />
+      <File FileName="game/game_states/LevelState.cs" />
+      <File FileName="game_settings/ResolutionScaling.cs" Line="116" Column="38" />
+      <File FileName="game_settings/GameSettingsManager.cs" Line="8" Column="34" />
+      <File FileName="title_screen/TitleScreenManager.cs" Line="21" Column="43" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ShopIsDone">
             <Node name="ShopIsDone">
-              <Node name="actors" expanded="True" />
-              <Node name="addons" expanded="True">
-                <Node name="verlet_rope_cs" expanded="True">
-                  <Node name="VerletRopeCs.cs" selected="True" />
-                </Node>
+              <Node name="global_events" expanded="True" />
+              <Node name="title_screen" expanded="True">
+                <Node name="FocusMenu.cs" selected="True" />
               </Node>
-              <Node name="camera" expanded="True" />
-              <Node name="game" expanded="True" />
-              <Node name="game_settings" expanded="True" />
-              <Node name="render" expanded="True">
-                <Node name="employees" expanded="True" />
-                <Node name="isometric_models" expanded="True" />
-              </Node>
-              <Node name="title_screen" expanded="True" />
               <Node name="util" expanded="True">
                 <Node name="extensions" expanded="True" />
+                <Node name="state_machine" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -41,7 +37,5 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

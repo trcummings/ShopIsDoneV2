@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3gagjd3n48d2"]
+
+[ext_resource type="AudioStream" uid="uid://dijnt4ni3asor" path="res://audio/ui/confirm_1.wav" id="1_cwbny"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4mylw"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1_cwbny")
+stream_0/weight = 1.0
+
+[node name="UIConfirmPlayer" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_4mylw")
+bus = &"SFX"

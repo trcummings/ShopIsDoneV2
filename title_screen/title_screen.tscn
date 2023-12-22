@@ -1,34 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://cstrf18fypse2"]
+[gd_scene load_steps=8 format=3 uid="uid://cstrf18fypse2"]
 
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="2_d05bg"]
 [ext_resource type="Script" path="res://title_screen/TitleScreenManager.cs" id="3"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="3_6upy8"]
 [ext_resource type="PackedScene" uid="uid://4vlshcui36ix" path="res://title_screen/title_screen_clown_puppet.tscn" id="4"]
-[ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="4_87d5g"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="4_8d5dc"]
+[ext_resource type="PackedScene" uid="uid://dqrhke68klwx2" path="res://audio/ui/ui_invalid_player.tscn" id="5_8thyy"]
 [ext_resource type="PackedScene" uid="uid://djplffn73ui5s" path="res://game_settings/settings_menu.tscn" id="8"]
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("3")
 
-[node name="BackgroundColor" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
+[node name="Sfx" type="Node" parent="."]
 
-[node name="MainRender" type="SubViewportContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-stretch = true
+[node name="UISelectPlayer" parent="Sfx" instance=ExtResource("2_d05bg")]
 
-[node name="Viewport" type="SubViewport" parent="MainRender" groups=["world_viewport"]]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(1920, 1080)
-render_target_update_mode = 4
+[node name="UIConfirmPlayer" parent="Sfx" instance=ExtResource("3_6upy8")]
 
-[node name="TitleScreenClownPuppet" parent="MainRender/Viewport" instance=ExtResource("4")]
+[node name="UICancelPlayer" parent="Sfx" instance=ExtResource("4_8d5dc")]
+
+[node name="UIInvalidPlayer" parent="Sfx" instance=ExtResource("5_8thyy")]
+
+[node name="TitleScreenClownPuppet" parent="." instance=ExtResource("4")]
 
 [node name="TextOverlayContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -148,5 +141,7 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("4_87d5g")
+[connection signal="Canceled" from="." to="Sfx/UICancelPlayer" method="play"]
+[connection signal="ChangedSelection" from="." to="Sfx/UISelectPlayer" method="play"]
+[connection signal="Confirmed" from="." to="Sfx/UIConfirmPlayer" method="play"]
+[connection signal="InvalidConfirm" from="." to="Sfx/UIInvalidPlayer" method="play"]
