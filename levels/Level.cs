@@ -2,6 +2,8 @@ using Godot;
 using System;
 using ShopIsDone.Actors;
 using ShopIsDone.Cameras;
+using ShopIsDone.Arenas;
+using System.Linq;
 
 namespace ShopIsDone.Levels
 {
@@ -22,6 +24,12 @@ namespace ShopIsDone.Levels
         public override void _Ready()
         {
             SetProcess(false);
+            // Connect to arena entrances
+            var entrances = GetTree().GetNodesInGroup("arena_entrance").OfType<EnterArenaArea>();
+            foreach (var entrance in entrances)
+            {
+                entrance.EnteredArena += (arena) => OnPlayerEnteredArena(entrance, arena);
+            }
         }
 
         public void Init()
@@ -46,6 +54,14 @@ namespace ShopIsDone.Levels
             {
                 _Camera.RotateRight();
             }
+        }
+
+        private void OnPlayerEnteredArena(EnterArenaArea area, Arena arena)
+        {
+            // Disable the area
+            area.Disable();
+            // Enter the arena
+            GD.Print($"Entered {arena.Name}!");
         }
     }
 }
