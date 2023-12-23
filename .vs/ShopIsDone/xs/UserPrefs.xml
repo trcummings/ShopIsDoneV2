@@ -4,17 +4,9 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="util/shader_cache/ShaderCache.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="pausing/BlurBackground.cs">
     <Files>
-      <File FileName="levels/PauseInputHandler.cs" Line="4" Column="29" />
-      <File FileName="pausing/LevelPauseMenu.cs" Line="8" Column="29" />
-      <File FileName="pausing/BlurBackground.cs" Line="63" Column="1" />
-      <File FileName="camera/IsometricCamera.cs" Line="222" Column="1" />
-      <File FileName="ui/FocusMenu.cs" Line="10" Column="1" />
-      <File FileName="title_screen/TitleScreenManager.cs" Line="3" Column="14" />
-      <File FileName="levels/Level.cs" Line="13" Column="17" />
-      <File FileName="util/ShaderCache.cs" Line="111" Column="10" />
-      <File FileName="game/game_states/InitialLoadState.cs" Line="17" Column="1" />
+      <File FileName="pausing/BlurBackground.cs" Line="20" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -22,13 +14,8 @@
           <Node name="ShopIsDone">
             <Node name="ShopIsDone">
               <Node name="camera" expanded="True" />
-              <Node name="game_settings" expanded="True" />
-              <Node name="levels" expanded="True" />
-              <Node name="title_screen" expanded="True" />
-              <Node name="ui" expanded="True" />
-              <Node name="util" expanded="True">
-                <Node name="extensions" expanded="True" />
-                <Node name="state_machine" expanded="True" />
+              <Node name="pausing" expanded="True">
+                <Node name="BlurBackground.cs" selected="True" />
               </Node>
             </Node>
           </Node>

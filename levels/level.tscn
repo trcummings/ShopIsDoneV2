@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=27 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://camera/CameraSystem.cs" id="1_hman2"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
@@ -11,27 +11,31 @@
 [ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_53pcu"]
 [ext_resource type="PackedScene" uid="uid://df0fk08hmrihh" path="res://microgames/microgame_manager.tscn" id="3_fpukf"]
 [ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="4_vqgup"]
-[ext_resource type="MeshLibrary" uid="uid://diqp0yq51jroq" path="res://gridmap_starter/MeshLibrary.tres" id="5_b26fo"]
 [ext_resource type="PackedScene" uid="uid://bt46ljijua3d6" path="res://microgames/apologize/apologize_microgame.tscn" id="5_r8afv"]
 [ext_resource type="PackedScene" uid="uid://cqh47hj66pqly" path="res://microgames/check_in_back/check_in_back_microgame.tscn" id="6_u0iqf"]
 [ext_resource type="PackedScene" uid="uid://bsmp1sdllx60e" path="res://pausing/pause_input_handler.tscn" id="6_urg1m"]
 [ext_resource type="PackedScene" uid="uid://b2p7fh56ojclq" path="res://microgames/destroy_rotten_produce/destroy_rotten_produce_microgame.tscn" id="7_lylgh"]
 [ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="8_ewftn"]
+[ext_resource type="PackedScene" uid="uid://mn346u6gevet" path="res://levels/test_level/test_layout.tscn" id="9_4ornf"]
 [ext_resource type="PackedScene" uid="uid://b3t7y7xkc852q" path="res://microgames/scan_item/scan_item_microgame.tscn" id="9_4xati"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="10_01q2v"]
+[ext_resource type="Texture2D" uid="uid://dhf1etn3y82a2" path="res://textures/diamond_floor.png" id="10_a6wcp"]
 [ext_resource type="PackedScene" uid="uid://dvyl4d7ds1ji7" path="res://dialogue/dialogue_area.tscn" id="10_js0wk"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="20_qvdr3"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_rqdll"]
-vertices = PackedVector3Array(-5.5, 0.5, -1.5, -5.5, 0.5, 3.5, 5.5, 0.5, 3.5, 5.5, 0.5, -1.5)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+vertices = PackedVector3Array(-19.5, 0.5, -18, -17, 0.5, -18, -16.75, 0.5, -18.75, -19.5, 0.5, -19.5, 10.75, 0.5, -18.75, 19.5, 0.5, -19.5, -19.5, 0.5, -19.5, -16.75, 0.5, -18.75, 11.25, 0.5, -18.25, 11.25, 0.5, -16, 13, 0.5, -11, 19.5, 0.5, -11, 19.5, 0.5, -19.5, 10.75, 0.5, -18.75, 11.25, 0.5, -18.25, 19.5, 0.5, -19.5, 9.5, 0.5, -11.5, 10.75, 0.5, -12.5, 10.75, 0.5, -13.25, 10, 0.5, -15.5, -16.5, 0.5, -15.25, -17, 0.5, -16, -17, 0.5, -18, -19.5, 0.5, -18, -19.5, 0.5, 14.25, -16.75, 0.5, 14.25, -16.5, 0.5, 13, -16.5, 0.5, -15.25, -17, 0.5, -16, -19.5, 0.5, -18, 10, 0.5, 13, 11.5, 0.5, 9, 9.75, 0.5, 9, 10, 0.5, 4.5, 10, 0.5, -9.75, 9.5, 0.5, -11.5, -16.5, 0.5, -15.25, -16.5, 0.5, 13, 8.5, 0.5, 6.25, -16.5, 0.5, 13, 8.5, 0.5, 7.25, 8.5, 0.5, 6.25, 10, 0.5, 13, 9.75, 0.5, 9, 8.5, 0.5, 7.25, -16.5, 0.5, 13, -16, 6, -17.75, -16, 6, -16.5, 10.25, 6, -16.5, 10.25, 6, -17.75, -15.75, 0.5, -17.5, -15.75, 0.5, -16.75, 10, 0.5, -16.75, 10, 0.5, -17.5, 11, 1.75, -11.25, 11, 1.75, -10.5, 11.75, 1.75, -10.75, 11.75, 1.75, -11.25, 19.5, 0.5, -11, 13, 0.5, -11, 12.25, 0.5, -9.25, 12.25, 0.5, 4.5, 13.5, 0.5, 6.5, 19.5, 0.5, 6.5, 10.5, 0.5, -9.25, 10, 0.5, 4.5, 12.25, 0.5, 4.5, 12.25, 0.5, -9.25, 10.5, 0.5, -9.25, 10, 0.5, -9.75, 10, 0.5, 4.5, 10.25, 2.5, 6.5, 10.5, 2.5, 7.5, 11.75, 2.25, 7.25, 11.5, 2.25, 6, 10.75, 0.5, 6.5, 10.75, 0.5, 7.25, 11.25, 0.5, 7.25, 11.25, 0.5, 6.25, 11.5, 0.5, 13.5, 11.5, 0.5, 15.75, 11.75, 0.5, 19.5, 19.5, 0.5, 19.5, 19.5, 0.5, 6.5, 13.5, 0.5, 9, 19.5, 0.5, 6.5, 13.5, 0.5, 6.5, 13.5, 0.5, 9, -15.5, 6, 15.25, 10.5, 6, 15.25, 10.5, 6, 14, -15.75, 6, 14, 11.75, 0.5, 19.5, 11.5, 0.5, 15.75, 11.25, 0.5, 16.25, -16.25, 0.5, 16.25, -16.75, 0.5, 14.25, -19.5, 0.5, 14.25, -19.5, 0.5, 19.5, 11.75, 0.5, 19.5, 11.25, 0.5, 16.25, -16.25, 0.5, 16.25, -19.5, 0.5, 19.5, -15.25, 0.5, 14.25, -15.25, 0.5, 15, 10.25, 0.5, 15, 10.25, 0.5, 14.25)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 12), PackedInt32Array(15, 14, 13), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(19, 16, 20), PackedInt32Array(23, 22, 21), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(27, 24, 28), PackedInt32Array(28, 24, 29), PackedInt32Array(32, 31, 30), PackedInt32Array(34, 33, 35), PackedInt32Array(35, 33, 38), PackedInt32Array(35, 38, 36), PackedInt32Array(36, 38, 37), PackedInt32Array(41, 40, 39), PackedInt32Array(43, 42, 44), PackedInt32Array(44, 42, 45), PackedInt32Array(49, 48, 46), PackedInt32Array(46, 48, 47), PackedInt32Array(53, 52, 50), PackedInt32Array(50, 52, 51), PackedInt32Array(57, 56, 54), PackedInt32Array(54, 56, 55), PackedInt32Array(59, 58, 60), PackedInt32Array(60, 58, 61), PackedInt32Array(61, 58, 62), PackedInt32Array(62, 58, 63), PackedInt32Array(67, 66, 64), PackedInt32Array(64, 66, 65), PackedInt32Array(70, 69, 68), PackedInt32Array(72, 71, 73), PackedInt32Array(73, 71, 74), PackedInt32Array(76, 75, 77), PackedInt32Array(77, 75, 78), PackedInt32Array(80, 79, 81), PackedInt32Array(81, 79, 84), PackedInt32Array(81, 84, 82), PackedInt32Array(82, 84, 83), PackedInt32Array(87, 86, 85), PackedInt32Array(89, 88, 90), PackedInt32Array(90, 88, 91), PackedInt32Array(94, 93, 92), PackedInt32Array(96, 95, 97), PackedInt32Array(97, 95, 98), PackedInt32Array(100, 99, 101), PackedInt32Array(101, 99, 102), PackedInt32Array(106, 105, 103), PackedInt32Array(103, 105, 104)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_apani"]
+size = Vector3(2, 1, 13.4182)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydnh5"]
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("_DefaultSpawnPoint", "_CameraSystem", "_Camera", "_Haskell")]
 script = ExtResource("1_uriqi")
-_DefaultSpawnPoint = NodePath("World/DefaultSpawnPoint")
+_DefaultSpawnPoint = NodePath("World/NavigationRegion3D/Environment/DefaultSpawnPoint")
 _CameraSystem = NodePath("Services/CameraService")
 _Camera = NodePath("World/IsometricCamera")
 _Haskell = NodePath("World/PlayerUnits/HaskellActor")
@@ -70,12 +74,15 @@ process_mode = 1
 
 [node name="IsometricCamera" parent="World" instance=ExtResource("2_s72y3")]
 
+[node name="Camera" parent="World/IsometricCamera" index="0"]
+current = true
+
 [node name="PlayerUnits" type="Node3D" parent="World"]
 metadata/_edit_lock_ = true
 
 [node name="HaskellActor" parent="World/PlayerUnits" instance=ExtResource("3_53pcu")]
 collision_layer = 3
-collision_mask = 0
+collision_mask = 3
 
 [node name="PlayerActorInput" parent="World/PlayerUnits/HaskellActor" index="3" node_paths=PackedStringArray("_InputXformer")]
 _InputXformer = NodePath("../../../../Services/InputXformer")
@@ -95,21 +102,31 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.62586, 2.16969, 2.71732)
 metadata/_edit_lock_ = true
 
-[node name="GridMap" type="GridMap" parent="World/NavigationRegion3D/Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -1, 2.08165e-12)
-mesh_library = ExtResource("5_b26fo")
-bake_navigation = true
-data = {
-"cells": PackedInt32Array(65533, 1, 0, 65534, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 65535, 0, 65535, 65535, 0, 65534, 65535, 0, 65533, 65535, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 2, 1, 0, 2, 65535, 0, 1, 65535, 0)
-}
+[node name="test_layout" parent="World/NavigationRegion3D/Environment" instance=ExtResource("9_4ornf")]
+
+[node name="DefaultSpawnPoint" type="Node3D" parent="World/NavigationRegion3D/Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8026, 0, -16.3284)
+
+[node name="DialogueArea" parent="World/NavigationRegion3D/Environment" instance=ExtResource("10_js0wk")]
+
+[node name="EnterArenaArea" type="Area3D" parent="World/NavigationRegion3D/Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1581, -4.76835e-07, 0.789272)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Environment/EnterArenaArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.07478e-12, -1.49158)
+shape = SubResource("BoxShape3D_apani")
+
+[node name="Sprite3D" type="Sprite3D" parent="World/NavigationRegion3D/Environment/EnterArenaArea"]
+transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 5.17971, 0, 0.02, -1.43668)
+axis = 1
+texture = ExtResource("10_a6wcp")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
-metadata/_edit_lock_ = true
-
-[node name="DefaultSpawnPoint" type="Node3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.10353, 0, 0)
-
-[node name="DialogueArea" parent="World" instance=ExtResource("10_js0wk")]
+transform = Transform3D(1, 0, 0, 0, 0.683325, 0.730115, 0, -0.730115, 0.683325, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 process_mode = 1
