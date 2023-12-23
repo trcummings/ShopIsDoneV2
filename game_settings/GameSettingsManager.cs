@@ -91,8 +91,7 @@ namespace ShopIsDone.GameSettings
         public List<Vector2> GetAvailableResolutions()
         {
             // Detect the screen size
-            var window = GetWindow();
-            var screenSize = window.Size;
+            var screenSize = DisplayServer.ScreenGetSize(DisplayServer.WindowGetCurrentScreen());
 
             // Get the raw resolutions and convert to a list
             var rawResolutions = (Godot.Collections.Array)_UserSettings.GetValue("video", "_resolutions", new Godot.Collections.Array());
@@ -137,9 +136,10 @@ namespace ShopIsDone.GameSettings
                 window.Size = new Vector2I((int)resolution.X, (int)resolution.Y);
 
                 // Get center of screen
-                var centerScreen = DisplayServer.ScreenGetPosition() + DisplayServer.ScreenGetSize() / 2;
-                // Set the window at the center
-                window.Position = centerScreen;
+                var currentScreen = DisplayServer.WindowGetCurrentScreen();
+                var centerScreen = DisplayServer.ScreenGetPosition(currentScreen) + DisplayServer.ScreenGetSize(currentScreen) / 2;
+                // Set the window at the center (offset by half its size)
+                window.Position = centerScreen - (window.Size / 2);
             }
         }
 
