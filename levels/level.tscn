@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=37 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://camera/CameraSystem.cs" id="1_hman2"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
@@ -25,9 +25,12 @@
 [ext_resource type="Texture2D" uid="uid://dhf1etn3y82a2" path="res://tiles/diamond_floor.png" id="10_a6wcp"]
 [ext_resource type="PackedScene" uid="uid://dvyl4d7ds1ji7" path="res://dialogue/dialogue_area.tscn" id="10_js0wk"]
 [ext_resource type="PackedScene" uid="uid://swb4777ufru4" path="res://widgets/tile_indicator/tile_indicator.tscn" id="10_xe6sp"]
+[ext_resource type="PackedScene" uid="uid://crqg03tk3cpdo" path="res://widgets/tile_cursor/tile_cursor.tscn" id="11_6qmyn"]
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="11_al7y6"]
 [ext_resource type="MeshLibrary" uid="uid://bwefv47l4buq4" path="res://tiles/arena_tiles.meshlib" id="12_45t6e"]
 [ext_resource type="Script" path="res://arenas/EnterArenaArea.cs" id="12_o67nf"]
+[ext_resource type="PackedScene" uid="uid://clxx8lr4tixdi" path="res://widgets/facing_widget/FacingWidget.tscn" id="12_vtx7j"]
+[ext_resource type="Script" path="res://tiles/TileManager.cs" id="18_vnty8"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="20_qvdr3"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
 
@@ -88,6 +91,12 @@ process_mode = 1
 [node name="TileIndicator" parent="World/Widgets" instance=ExtResource("10_xe6sp")]
 visible = false
 
+[node name="TileCursor" parent="World/Widgets" instance=ExtResource("11_6qmyn")]
+visible = false
+
+[node name="FacingWidget" parent="World/Widgets" instance=ExtResource("12_vtx7j")]
+visible = false
+
 [node name="IsometricCamera" parent="World" instance=ExtResource("2_s72y3")]
 
 [node name="Camera" parent="World/IsometricCamera" index="0"]
@@ -135,6 +144,7 @@ collision_mask = 0
 data = {
 "cells": PackedInt32Array(4, 1, 1, 4, 0, 1, 4, 65535, 1, 4, 65534, 1, 3, 65535, 1, 3, 0, 1, 4, 65533, 0, 4, 65532, 0, 3, 65532, 0, 3, 65533, 0, 3, 65534, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 4, 3, 0, 4, 2, 0, 2, 3, 0, 1, 3, 0, 0, 3, 0, 65534, 3, 0, 65535, 3, 0, 65533, 3, 0, 65533, 2, 0, 65533, 1, 0, 65533, 0, 0, 65533, 65535, 0, 65533, 65534, 0, 65533, 65533, 0, 65533, 65532, 0, 2, 65532, 0, 1, 65532, 0, 0, 65532, 0, 65535, 65532, 0, 65534, 65532, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 1, 0, 0, 1, 1, 0, 2, 1, 0, 1, 2, 0, 2, 2, 0, 0, 2, 0, 0, 1, 0, 65535, 2, 0, 65534, 2, 0, 65534, 1, 0, 65534, 0, 0, 65535, 0, 0, 65535, 1, 0, 0, 0, 0, 1, 65535, 0, 1, 65534, 0, 1, 65533, 0, 0, 65533, 0, 65535, 65533, 0, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65535, 65535, 0, 65535, 65534, 0, 0, 65534, 0, 0, 65535, 0)
 }
+script = ExtResource("18_vnty8")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 metadata/_edit_lock_ = true
 

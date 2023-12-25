@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://clxx8lr4tixdi"]
+
+[ext_resource type="Script" path="res://widgets/facing_widget/FacingWidget.cs" id="1_v6jav"]
+[ext_resource type="Texture2D" uid="uid://cbhr5wk4wn2kk" path="res://widgets/facing_widget/test_direction_select_dots.png" id="2_a0dp5"]
+
+[node name="FacingWidget" type="Node3D"]
+script = ExtResource("1_v6jav")
+
+[node name="RightSphere" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 1, 1, 0, 0)
+layers = 513
+cast_shadow = 0
+billboard = 1
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("2_a0dp5")
+hframes = 2
+
+[node name="LeftSphere" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 1, -1, 0, 0)
+layers = 513
+cast_shadow = 0
+billboard = 1
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("2_a0dp5")
+hframes = 2
+
+[node name="ForwardSphere" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 1, 0, 0, -1)
+layers = 513
+cast_shadow = 0
+billboard = 1
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("2_a0dp5")
+hframes = 2
+
+[node name="BackSphere" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 1, 0, 0, 1)
+layers = 513
+cast_shadow = 0
+billboard = 1
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("2_a0dp5")
+hframes = 2

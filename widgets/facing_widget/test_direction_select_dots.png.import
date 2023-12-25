@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cbhr5wk4wn2kk"
-path="res://.godot/imported/test_direction_select_dots.png-96b0b50a76fae3d8c9832f058c012ecf.ctex"
+path="res://.godot/imported/test_direction_select_dots.png-70c9f257640d2df65f552fb69a2c23b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/test_direction_select_dots.png"
-dest_files=["res://.godot/imported/test_direction_select_dots.png-96b0b50a76fae3d8c9832f058c012ecf.ctex"]
+source_file="res://widgets/facing_widget/test_direction_select_dots.png"
+dest_files=["res://.godot/imported/test_direction_select_dots.png-70c9f257640d2df65f552fb69a2c23b4.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
