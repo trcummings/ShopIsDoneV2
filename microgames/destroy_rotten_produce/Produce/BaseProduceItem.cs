@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace Microgames.DestroyRottenProduce
+namespace ShopIsDone.Microgames.DestroyRottenProduce
 {
     public partial class BaseProduceItem : RigidBody2D
     {

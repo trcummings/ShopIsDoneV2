@@ -2,7 +2,7 @@
 using Godot;
 using Godot.Collections;
 
-namespace Microgames
+namespace ShopIsDone.Microgames
 {
     public partial class Microgame : Node
     {

@@ -3,7 +3,7 @@ using Godot;
 using System.Threading.Tasks;
 using Godot.Collections;
 
-namespace Microgames
+namespace ShopIsDone.Microgames
 {
 	public partial class MicrogameManager : Node
 	{

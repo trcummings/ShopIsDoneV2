@@ -6,7 +6,7 @@ using Camera;
 using static Camera.ScreenshakeHandler;
 using Utils.Extensions;
 
-namespace Microgames.OnlyServiceAnimals
+namespace ShopIsDone.Microgames.OnlyServiceAnimals
 {
     public partial class OnlyServiceAnimalsMicrogame : Microgame
     {

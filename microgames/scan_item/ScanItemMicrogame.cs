@@ -5,7 +5,7 @@ using Camera;
 using static Camera.ScreenshakeHandler;
 using Utils.Extensions;
 
-namespace Microgames.ScanItem
+namespace ShopIsDone.Microgames.ScanItem
 {
     public partial class ScanItemMicrogame : Microgame
     {

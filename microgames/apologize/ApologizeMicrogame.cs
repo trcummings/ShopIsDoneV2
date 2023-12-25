@@ -7,7 +7,7 @@ using static Camera.ScreenshakeHandler;
 using Utils.Extensions;
 using System.Threading.Tasks;
 
-namespace Microgames.Apologize
+namespace ShopIsDone.Microgames.Apologize
 {
     public partial class ApologizeMicrogame : Microgame
     {

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace Microgames.OnlyServiceAnimals
+namespace ShopIsDone.Microgames.OnlyServiceAnimals
 {
     public partial class Animal : Node2D
     {

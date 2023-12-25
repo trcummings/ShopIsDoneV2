@@ -7,7 +7,7 @@ using Godot.Collections;
 //using System.Linq;
 //using ShopIsDone.Util.Positioning;
 
-namespace Microgames
+namespace ShopIsDone.Microgames
 {
     public partial class MicrogamePayload : GodotObject
     {

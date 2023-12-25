@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Utils.Extensions;
 
-namespace Microgames.CheckInBack
+namespace ShopIsDone.Microgames.CheckInBack
 {
     public partial class CheckInBackMicrogame : Microgame
     {

@@ -6,7 +6,7 @@ using Camera;
 using static Camera.ScreenshakeHandler;
 using Utils.Extensions;
 
-namespace Microgames.DestroyRottenProduce
+namespace ShopIsDone.Microgames.DestroyRottenProduce
 {
     public partial class DestroyRottenProduceMicrogame : Microgame
     {

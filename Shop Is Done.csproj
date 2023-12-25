@@ -6,4 +6,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>ShopIsDone</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="tasks\" />
+  </ItemGroup>
 </Project>

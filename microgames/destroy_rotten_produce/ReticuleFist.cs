@@ -1,7 +1,7 @@
 using Godot;
 using System.Linq;
 
-namespace Microgames.DestroyRottenProduce
+namespace ShopIsDone.Microgames.DestroyRottenProduce
 {
     public partial class ReticuleFist : Node2D
     {
