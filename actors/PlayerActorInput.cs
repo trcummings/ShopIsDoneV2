@@ -4,10 +4,14 @@ using ShopIsDone.Cameras;
 
 namespace ShopIsDone.Actors
 {
-	public partial class PlayerActorInput : Node
+	public partial class PlayerActorInput : Resource, IActorInput
 	{
-        [Export]
         private InputXformer _InputXformer;
+
+        public void Init(InputXformer xformer)
+        {
+            _InputXformer = xformer;
+        }
 
         public Vector3 MoveDir { get; set; }
 

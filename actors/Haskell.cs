@@ -6,9 +6,6 @@ namespace ShopIsDone.Actors
     public partial class Haskell : CharacterBody3D
     {
         [Export]
-        private PlayerActorInput _ActorInput;
-
-        [Export]
         private ActorAnimator _ActorAnimator;
 
         [Export]
@@ -17,8 +14,11 @@ namespace ShopIsDone.Actors
         [Export]
         private ActorFloorIndicator _ActorFloorIndicator;
 
-        public void Init()
+        private IActorInput _ActorInput = new ActorInput();
+
+        public void Init(IActorInput actorInput)
         {
+            _ActorInput = actorInput;
             _ActorAnimator.Init();
         }
 
