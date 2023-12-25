@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=34 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://camera/CameraSystem.cs" id="1_hman2"]
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
@@ -24,6 +24,7 @@
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="10_01q2v"]
 [ext_resource type="Texture2D" uid="uid://dhf1etn3y82a2" path="res://tiles/diamond_floor.png" id="10_a6wcp"]
 [ext_resource type="PackedScene" uid="uid://dvyl4d7ds1ji7" path="res://dialogue/dialogue_area.tscn" id="10_js0wk"]
+[ext_resource type="PackedScene" uid="uid://swb4777ufru4" path="res://widgets/tile_indicator/tile_indicator.tscn" id="10_xe6sp"]
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="11_al7y6"]
 [ext_resource type="MeshLibrary" uid="uid://bwefv47l4buq4" path="res://tiles/arena_tiles.meshlib" id="12_45t6e"]
 [ext_resource type="Script" path="res://arenas/EnterArenaArea.cs" id="12_o67nf"]
@@ -81,6 +82,11 @@ IsActive = true
 
 [node name="World" type="Node3D" parent="."]
 process_mode = 1
+
+[node name="Widgets" type="Node3D" parent="World"]
+
+[node name="TileIndicator" parent="World/Widgets" instance=ExtResource("10_xe6sp")]
+visible = false
 
 [node name="IsometricCamera" parent="World" instance=ExtResource("2_s72y3")]
 
