@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="ArenaEvents" load_steps=2 format=3 uid="uid://durr60h4mv3xr"]
+
+[ext_resource type="Script" path="res://arenas/ArenaEvents.cs" id="1_kcu4u"]
+
+[resource]
+script = ExtResource("1_kcu4u")

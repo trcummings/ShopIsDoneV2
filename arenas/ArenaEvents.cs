@@ -5,6 +5,7 @@ using ShopIsDone.Arenas.ArenaScripts;
 
 namespace ShopIsDone.Arenas
 {
+    [GlobalClass]
     public partial class ArenaEvents : Resource
     {
         [Signal]

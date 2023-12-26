@@ -8,5 +8,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="tasks\" />
+    <Folder Include="util\pathfinding\" />
   </ItemGroup>
 </Project>

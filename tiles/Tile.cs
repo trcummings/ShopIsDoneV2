@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 namespace ShopIsDone.Tiles
 {
@@ -8,5 +9,10 @@ namespace ShopIsDone.Tiles
 		public Vector3 TilemapPosition;
 
 		public bool Enabled = true;
+
+		public Dictionary<Vector3, Tile> FindNeighbors()
+		{
+			return new Dictionary<Vector3, Tile>();
+		}
 	}
 }

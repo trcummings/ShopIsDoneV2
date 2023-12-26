@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource path="res://scripts/Core/LevelEntity.cs" type="Script" id=1]
-[ext_resource path="res://scenes/Arena/ArenaEvents.tres" type="Resource" id=2]
+[ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1"]
+[ext_resource type="Resource" uid="uid://durr60h4mv3xr" path="res://scenes/ArenaEvents.tres" id="2"]
 
 [node name="LevelEntity" type="Spatial" groups=["entity", "persistable"]]
 script = ExtResource( 1 )
