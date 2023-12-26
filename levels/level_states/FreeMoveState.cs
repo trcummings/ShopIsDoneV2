@@ -9,6 +9,9 @@ namespace ShopIsDone.Levels.States
 {
     public partial class FreeMoveState : State
     {
+        [Signal]
+        public delegate void CameraRotatedEventHandler();
+
         [Export]
         private CameraSystem _CameraSystem;
 
@@ -49,10 +52,12 @@ namespace ShopIsDone.Levels.States
             if (Input.IsActionJustPressed("rotate_camera_left"))
             {
                 _Camera.RotateLeft();
+                EmitSignal(nameof(CameraRotated));
             }
             if (Input.IsActionJustPressed("rotate_camera_right"))
             {
                 _Camera.RotateRight();
+                EmitSignal(nameof(CameraRotated));
             }
         }
     }
