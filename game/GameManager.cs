@@ -14,8 +14,8 @@ namespace ShopIsDone.Game
         [Export(PropertyHint.Enum, "Vanity Card, Main Menu, Level, Break Room")]
         public int OverrideModeAfterLoad = 1;
 
-        [Export(PropertyHint.Dir)]
-        public string InitialLevel;
+        [Export]
+        public PackedScene InitialLevel;
 
         // Enum for what game mode should be picked
         public enum InitialGameState

@@ -3,13 +3,14 @@ using System;
 using Godot.Collections;
 using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.Levels;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Game.States
 {
     public partial class LevelState : State
     {
         [Export]
-        public PackedScene LevelScene;
+        public PackedScene LevelOverride;
 
         [Export]
         public Godot.Environment LevelEnvironment;
@@ -26,11 +27,14 @@ namespace ShopIsDone.Game.States
 
         public async override void OnStart(Dictionary<string, Variant> message = null)
         {
+            // Pull the initial level from the message
+            var levelScene = (PackedScene)message.GetValueOrDefault(Consts.LEVEL_KEY);
+
             // Set render environment
             _GlobalEvents.EmitSignal(nameof(_GlobalEvents.ChangeEnvironmentRequested), LevelEnvironment);
 
             // Ready scene
-            _Level = LevelScene.Instantiate<Level>();
+            _Level = (LevelOverride ?? levelScene).Instantiate<Level>();
             AddChild(_Level);
 
             // TODO: Connect to level events

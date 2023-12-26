@@ -78,7 +78,7 @@ namespace ShopIsDone.Game.States
                         // Otherwise, go directly to the given level
                         ChangeState(Consts.GameStates.LEVEL, new Dictionary<string, Variant>()
                         {
-                            { Consts.INITIAL_LEVEL, initialLevel }
+                            { Consts.LEVEL_KEY, initialLevel }
                         });
                         return;
                     }

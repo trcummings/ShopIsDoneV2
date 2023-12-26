@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using ShopIsDone.Utils.Commands;
 
 namespace ShopIsDone.Arenas
 {
@@ -7,6 +8,11 @@ namespace ShopIsDone.Arenas
     {
         [Export]
         private GridMap _Tiles;
+
+        public void ExecuteAction(Command action)
+        {
+
+        }
     }
 }
 
