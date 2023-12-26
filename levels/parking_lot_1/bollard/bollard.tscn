@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://do3k55e4n3g6m"]
 
-[ext_resource type="PackedScene" uid="uid://dlaleqgo58vwd" path="res://levels/parking_lot_1/bollard.glb" id="1_1ys05"]
+[ext_resource type="PackedScene" uid="uid://dlaleqgo58vwd" path="res://levels/parking_lot_1/bollard/bollard.glb" id="1_1ys05"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ry3i7"]
 size = Vector3(0.466064, 1.22461, 0.431747)

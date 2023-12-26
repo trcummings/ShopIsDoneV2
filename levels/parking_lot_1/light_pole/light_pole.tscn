@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://csp1qcwdjly14"]
 
-[ext_resource type="PackedScene" uid="uid://buqgpa6krqpij" path="res://levels/parking_lot_1/light_pole.glb" id="1_u4gll"]
+[ext_resource type="PackedScene" uid="uid://buqgpa6krqpij" path="res://levels/parking_lot_1/light_pole/light_pole.glb" id="1_u4gll"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qy2ei"]
 size = Vector3(0.496582, 0.489258, 0.490723)

@@ -2,22 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://de2k3nhp84eim"
-path.s3tc="res://.godot/imported/parking_lot_1_Texture_01.png-d1f4d3fbad79a7ae92494da3489935c6.s3tc.ctex"
+uid="uid://6opt0lua884g"
+path="res://.godot/imported/bollard_Texture_01.png-b269da6c46c06337732d77d4dab464c4.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={}
 
 [deps]
 
-source_file="res://levels/parking_lot_1/parking_lot_1_Texture_01.png"
-dest_files=["res://.godot/imported/parking_lot_1_Texture_01.png-d1f4d3fbad79a7ae92494da3489935c6.s3tc.ctex"]
+source_file="res://levels/parking_lot_1/bollard/bollard_Texture_01.png"
+dest_files=["res://.godot/imported/bollard_Texture_01.png-b269da6c46c06337732d77d4dab464c4.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -33,4 +32,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

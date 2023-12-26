@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://buqgpa6krqpij"
-path="res://.godot/imported/light_pole.glb-bd1175443835b33b5a5c1f49440178c0.scn"
+uid="uid://txa7eluqkanq"
+path="res://.godot/imported/parking_lot_1.glb-80b6b1dedc6d794a6d751b40349742aa.scn"
 
 [deps]
 
-source_file="res://levels/parking_lot_1/light_pole.glb"
-dest_files=["res://.godot/imported/light_pole.glb-bd1175443835b33b5a5c1f49440178c0.scn"]
+source_file="res://levels/parking_lot_1/parking_lot/parking_lot_1.glb"
+dest_files=["res://.godot/imported/parking_lot_1.glb-80b6b1dedc6d794a6d751b40349742aa.scn"]
 
 [params]
 
