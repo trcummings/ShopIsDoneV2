@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://xh2e5s84nxyv"]
+[gd_scene load_steps=10 format=3 uid="uid://xh2e5s84nxyv"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_qcbwj"]
 [ext_resource type="PackedScene" uid="uid://txa7eluqkanq" path="res://levels/parking_lot_1/parking_lot_1.glb" id="2_erdvt"]
+[ext_resource type="PackedScene" uid="uid://csp1qcwdjly14" path="res://levels/parking_lot_1/light_pole.tscn" id="3_o677u"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="3_p6qf0"]
 [ext_resource type="AudioStream" uid="uid://n4qsvpb3svkh" path="res://levels/parking_lot_1/ROOM-TONE--404378__eskimoneil__parking-lot-grove-mall.wav" id="4_id0w3"]
+[ext_resource type="PackedScene" uid="uid://do3k55e4n3g6m" path="res://levels/parking_lot_1/bollard/bollard.tscn" id="4_sfbcs"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tt51n"]
 
@@ -25,12 +27,41 @@ density_texture = SubResource("NoiseTexture3D_dprvk")
 transform = Transform3D(0.707107, 0.353553, -0.612372, 3.02058e-16, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, 0, 0, 0)
 
 [node name="parking_lot_1" parent="World/NavigationRegion3D/Environment" index="0" instance=ExtResource("2_erdvt")]
-transform = Transform3D(0.707107, 1.60554e-24, 0.707107, 3.48787e-16, 1, -3.48787e-16, -0.707107, 4.93259e-16, 0.707107, 0, 0, 0)
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 0, 0, 0)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.85512, 0.410568, 0)
-omni_range = 10.0
-omni_attenuation = 0.00340059
+[node name="OmniLight3D" type="OmniLight3D" parent="World/NavigationRegion3D/Environment/parking_lot_1" index="5"]
+transform = Transform3D(1, 3.74793e-24, 0, -1.21652e-31, 1, 0, 3.74793e-24, -3.74793e-24, 1, -3.1171, 1.86744, -19.4074)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="World/NavigationRegion3D/Environment/parking_lot_1" index="6"]
+transform = Transform3D(1, 3.74793e-24, 0, -1.21652e-31, 1, 0, 3.74793e-24, -3.74793e-24, 1, 5.19318, 1.86744, -19.4074)
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="World/NavigationRegion3D/Environment/parking_lot_1" index="7"]
+transform = Transform3D(1, 3.74793e-24, 0, -1.21652e-31, 1, 0, 3.74793e-24, -3.74793e-24, 1, 0.404151, 1.86744, -16.4812)
+omni_range = 8.735
+
+[node name="LightPole" parent="World/NavigationRegion3D/Environment" index="1" instance=ExtResource("3_o677u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75302, 0, 0)
+
+[node name="LightPole2" parent="World/NavigationRegion3D/Environment" index="2" instance=ExtResource("3_o677u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75302, 0, 7.58314)
+
+[node name="LightPole3" parent="World/NavigationRegion3D/Environment" index="3" instance=ExtResource("3_o677u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75302, 0, -9.78207)
+
+[node name="LightPole4" parent="World/NavigationRegion3D/Environment" index="4" instance=ExtResource("3_o677u")]
+transform = Transform3D(-1, 0, 0.00073305, 0, 1, 0, -0.00073305, 0, -1, -4.89761, -4.76837e-07, -0.125023)
+
+[node name="LightPole5" parent="World/NavigationRegion3D/Environment" index="5" instance=ExtResource("3_o677u")]
+transform = Transform3D(-1, 0, 0.00073305, 0, 1, 0, -0.00073305, 0, -1, -4.89205, -4.76837e-07, -9.7603)
+
+[node name="LightPole6" parent="World/NavigationRegion3D/Environment" index="6" instance=ExtResource("3_o677u")]
+transform = Transform3D(-1, 0, 0.00073305, 0, 1, 0, -0.00073305, 0, -1, -4.90478, -4.76837e-07, 7.54426)
+
+[node name="Bollard" parent="World/NavigationRegion3D/Environment" index="7" instance=ExtResource("4_sfbcs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2747, 0, -14.5346)
+
+[node name="Bollard2" parent="World/NavigationRegion3D/Environment" index="8" instance=ExtResource("4_sfbcs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.08837, 0, -14.5346)
 
 [node name="FogVolume" type="FogVolume" parent="World" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50473, 3.01313, 2.50418)
@@ -39,6 +70,7 @@ material = SubResource("FogMaterial_g1l4w")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="6"]
 transform = Transform3D(0.671608, 0.606754, -0.425197, -0.221229, 0.711934, 0.666489, 0.707107, -0.353553, 0.612372, 0, 0, 0)
+visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="5"]
 environment = ExtResource("3_p6qf0")

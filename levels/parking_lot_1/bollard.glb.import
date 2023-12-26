@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://txa7eluqkanq"
-path="res://.godot/imported/parking_lot_1.glb-19c3c944a36c304f03eb1bc8e405d094.scn"
+uid="uid://dlaleqgo58vwd"
+path="res://.godot/imported/bollard.glb-aec18b8f9a1458a0e0b5f89285ddb498.scn"
 
 [deps]
 
-source_file="res://levels/parking_lot_1/parking_lot_1.glb"
-dest_files=["res://.godot/imported/parking_lot_1.glb-19c3c944a36c304f03eb1bc8e405d094.scn"]
+source_file="res://levels/parking_lot_1/bollard.glb"
+dest_files=["res://.godot/imported/bollard.glb-aec18b8f9a1458a0e0b5f89285ddb498.scn"]
 
 [params]
 

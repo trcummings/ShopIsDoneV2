@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://do3k55e4n3g6m"]
+
+[ext_resource type="PackedScene" uid="uid://dlaleqgo58vwd" path="res://levels/parking_lot_1/bollard.glb" id="1_1ys05"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ry3i7"]
+size = Vector3(0.466064, 1.22461, 0.431747)
+
+[node name="Bollard" type="StaticBody3D"]
+
+[node name="bollard" parent="." instance=ExtResource("1_1ys05")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00964355, 0.597656, -0.00296783)
+shape = SubResource("BoxShape3D_ry3i7")
