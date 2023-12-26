@@ -17,6 +17,9 @@ namespace ShopIsDone.Models.IsometricModels
         [Signal]
         public delegate void AnimationUnpausedEventHandler();
 
+        [Signal]
+        public delegate void AnimationEventFiredEventHandler(string eventName);
+
         [Export]
         protected Array<string> LoopingAnimations;
 
@@ -25,6 +28,7 @@ namespace ShopIsDone.Models.IsometricModels
 
         public override void _Ready()
         {
+            base._Ready();
             // Connect to animation finished
             _AnimPlayer.Connect("animation_finished", new Callable(this, nameof(OnAnimationFinished)));
         }
@@ -69,6 +73,11 @@ namespace ShopIsDone.Models.IsometricModels
         public virtual void SetDirection(string direction)
         {
             // Set direction here
+        }
+
+        private void FireEvent(string eventName)
+        {
+            EmitSignal(nameof(AnimationEventFired), eventName);
         }
 
         private void OnAnimationFinished(string animName)

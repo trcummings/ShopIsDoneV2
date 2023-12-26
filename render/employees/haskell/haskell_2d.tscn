@@ -1706,6 +1706,23 @@ tracks/19/keys = {
 "update": 0,
 "values": [90.0002, 90.0002, 90.0002, 90.0002, 90.0002]
 }
+tracks/20/type = "method"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath(".")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": ["footstep"],
+"method": &"FireEvent"
+}, {
+"args": ["footstep"],
+"method": &"FireEvent"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wnh0l"]
 _data = {

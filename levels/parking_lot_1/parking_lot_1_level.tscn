@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://xh2e5s84nxyv"]
+[gd_scene load_steps=8 format=3 uid="uid://xh2e5s84nxyv"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_qcbwj"]
 [ext_resource type="PackedScene" uid="uid://txa7eluqkanq" path="res://levels/parking_lot_1/parking_lot_1.glb" id="2_erdvt"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="3_p6qf0"]
+[ext_resource type="AudioStream" uid="uid://n4qsvpb3svkh" path="res://levels/parking_lot_1/ROOM-TONE--404378__eskimoneil__parking-lot-grove-mall.wav" id="4_id0w3"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tt51n"]
 
@@ -24,6 +25,7 @@ density_texture = SubResource("NoiseTexture3D_dprvk")
 transform = Transform3D(0.707107, 0.353553, -0.612372, 3.02058e-16, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, 0, 0, 0)
 
 [node name="parking_lot_1" parent="World/NavigationRegion3D/Environment" index="0" instance=ExtResource("2_erdvt")]
+transform = Transform3D(0.707107, 1.60554e-24, 0.707107, 3.48787e-16, 1, -3.48787e-16, -0.707107, 4.93259e-16, 0.707107, 0, 0, 0)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.85512, 0.410568, 0)
@@ -40,6 +42,11 @@ transform = Transform3D(0.671608, 0.606754, -0.425197, -0.221229, 0.711934, 0.66
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="5"]
 environment = ExtResource("3_p6qf0")
+
+[node name="Ambience" type="AudioStreamPlayer" parent="." index="6"]
+stream = ExtResource("4_id0w3")
+autoplay = true
+bus = &"SFX"
 
 [editable path="World/IsometricCamera"]
 [editable path="World/PlayerUnits/HaskellActor"]

@@ -1,4 +1,5 @@
 using Godot;
+using ShopIsDone.Audio;
 using System;
 
 namespace ShopIsDone.Actors
@@ -22,7 +23,7 @@ namespace ShopIsDone.Actors
             _ActorAnimator.Init();
         }
 
-        public override void _Process(double _)
+        public override void _Process(double delta)
         {
             _ActorInput.UpdateInput();
             _ActorVelocity.AccelerateInDirection(_ActorInput.MoveDir);

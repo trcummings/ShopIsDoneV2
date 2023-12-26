@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://2ae2lvic7v6g"]
+
+[ext_resource type="AudioStream" uid="uid://wmm6umpvyorh" path="res://audio/footsteps/tile/FOOTSTEPS-TILE-SLOW-1__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="1_klag0"]
+[ext_resource type="AudioStream" uid="uid://clxvmop5qr6ak" path="res://audio/footsteps/tile/FOOTSTEPS-TILE-SLOW-2__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="2_tlxkb"]
+[ext_resource type="AudioStream" uid="uid://dofuh1xnvrni3" path="res://audio/footsteps/tile/FOOTSTEPS-TILE-SLOW-3__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="3_2wl0u"]
+[ext_resource type="AudioStream" uid="uid://dol8afck6n3st" path="res://audio/footsteps/tile/FOOTSTEPS-TILE-SLOW-4__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="4_clvtj"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5l65i"]
+random_pitch = 1.2
+streams_count = 4
+stream_0/stream = ExtResource("1_klag0")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_tlxkb")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_2wl0u")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_clvtj")
+stream_3/weight = 1.0
+
+[node name="FootstepsTileSlow" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_5l65i")
+bus = &"SFX"

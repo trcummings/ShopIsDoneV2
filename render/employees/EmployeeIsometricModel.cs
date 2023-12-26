@@ -1,11 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Godot;
 using ShopIsDone.Models.IsometricModels;
 
 namespace ShopIsDone.Models.Employees
 {
 	public partial class EmployeeIsometricModel : IsometricModel
 	{
+        [Signal]
+        public delegate void FootstepEventHandler();
+
+        public override void _Ready()
+        {
+            base._Ready();
+            AnimationEventFired += (string eventName) =>
+            {
+                if (eventName == "footstep") EmitSignal(nameof(Footstep));
+            };
+        }
+
         public override async Task PerformAnimation(string rawAnimName, bool advance = false)
         {
             var actionName = rawAnimName;

@@ -12,6 +12,9 @@ namespace ShopIsDone.Models.IsometricModels
         [Signal]
         public delegate void AnimationFinishedEventHandler(string animName);
 
+        [Signal]
+        public delegate void AnimationEventFiredEventHandler(string eventName);
+
         // Nodes
         [Export]
         protected IsometricSprite2D _Sprite;
@@ -23,9 +26,20 @@ namespace ShopIsDone.Models.IsometricModels
         // Action vars
         protected string _ActionName = "";
 
+        public override void _Ready()
+        {
+            base._Ready();
+            _Sprite.AnimationEventFired += FireEvent;
+        }
+
         public void Init()
         {
 
+        }
+
+        private void FireEvent(string eventName)
+        {
+            EmitSignal(nameof(AnimationEventFired), eventName);
         }
 
         public virtual string GetDefaultAnimationName()

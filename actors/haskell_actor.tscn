@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=11 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://q7vt4gyur1aa" path="res://actors/base_actor.tscn" id="2"]
@@ -6,6 +6,10 @@
 [ext_resource type="Script" path="res://actors/ActorAnimator.cs" id="5"]
 [ext_resource type="Script" path="res://actors/Haskell.cs" id="6"]
 [ext_resource type="PackedScene" path="res://actors/actor_floor_indicator.tscn" id="7"]
+[ext_resource type="Script" path="res://audio/footsteps/FootstepsController.cs" id="7_5g5gq"]
+[ext_resource type="PackedScene" uid="uid://ccauejj4i4k3v" path="res://audio/footsteps/tile/footsteps_tile_fast.tscn" id="8_h2my1"]
+[ext_resource type="PackedScene" uid="uid://cmq4kldjoormo" path="res://audio/footsteps/tile/footsteps_tile_medium.tscn" id="9_lim5r"]
+[ext_resource type="PackedScene" uid="uid://2ae2lvic7v6g" path="res://audio/footsteps/tile/footsteps_tile_slow.tscn" id="10_0nb28"]
 
 [node name="HaskellActor" node_paths=PackedStringArray("_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator") instance=ExtResource("2")]
 script = ExtResource("6")
@@ -23,3 +27,17 @@ script = ExtResource("5")
 ModelPath = NodePath("../HaskellModel")
 
 [node name="ActorFloorIndicator" parent="." index="4" instance=ExtResource("7")]
+
+[node name="FootstepController" type="Node" parent="." index="5" node_paths=PackedStringArray("_SlowPlayer", "_MediumPlayer", "_FastPlayer")]
+script = ExtResource("7_5g5gq")
+_SlowPlayer = NodePath("FootstepsTileSlow")
+_MediumPlayer = NodePath("FootstepsTileMedium")
+_FastPlayer = NodePath("FootstepsTileFast")
+
+[node name="FootstepsTileFast" parent="FootstepController" index="0" instance=ExtResource("8_h2my1")]
+
+[node name="FootstepsTileMedium" parent="FootstepController" index="1" instance=ExtResource("9_lim5r")]
+
+[node name="FootstepsTileSlow" parent="FootstepController" index="2" instance=ExtResource("10_0nb28")]
+
+[connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
