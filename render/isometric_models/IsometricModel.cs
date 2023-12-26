@@ -7,6 +7,7 @@ using ShopIsDone.Utils;
 
 namespace ShopIsDone.Models.IsometricModels
 {
+    [Tool]
     public partial class IsometricModel : Node3D, IModel, IIsometricViewable
     {
         [Signal]

@@ -5,6 +5,7 @@ using ShopIsDone.Models.IsometricModels;
 
 namespace ShopIsDone.Models.Employees
 {
+    [Tool]
 	public partial class EmployeeIsometricModel : IsometricModel
 	{
         [Signal]
