@@ -3,11 +3,12 @@ using Godot;
 using System.Linq;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Models.IsometricModels;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Cameras
 {
-	public partial class CameraSystem : Node
-	{
+	public partial class CameraService : Node, IService
+    {
         [Export]
         public IsometricCamera _IsometricCamera;
 
@@ -20,6 +21,16 @@ namespace ShopIsDone.Cameras
             // When an isometric sprite gets added, make sure it gets initialized
             // with the proper viewing direction
             GetTree().NodeAdded += OnPotentialIsoSpriteAdded;
+        }
+
+        public void RotateRight()
+        {
+            _IsometricCamera.RotateRight();
+        }
+
+        public void RotateLeft()
+        {
+            _IsometricCamera.RotateLeft();
         }
 
         public Command SetCameraTarget(Node3D target)

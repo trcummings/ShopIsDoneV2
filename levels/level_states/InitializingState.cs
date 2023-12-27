@@ -23,7 +23,7 @@ namespace ShopIsDone.Levels.States
             base.OnStart(message);
 
             // Go to the free move state for now
-            ChangeState("FreeMoveState");
+            ChangeState(Consts.States.FREE_MOVE_STATE);
         }
     }
 }

@@ -7,6 +7,7 @@ using ShopIsDone.Tiles;
 using System.Threading.Tasks;
 using ShopIsDone.Core;
 using System.Linq;
+using ShopIsDone.Utils.StateMachine;
 
 namespace ShopIsDone.Arenas
 {
@@ -35,11 +36,8 @@ namespace ShopIsDone.Arenas
         [Export]
         private TileManager _TileManager;
 
-        public override void _Ready()
-        {
-            base._Ready();
-            SetProcess(false);
-        }
+        [Export]
+        public StateMachine _ArenaStateMachine;
 
         public void Init(LevelEntity playerUnit)
         {
@@ -52,7 +50,9 @@ namespace ShopIsDone.Arenas
                 .Where(IsAncestorOf);
             var placement = placementTiles.First();
             playerUnit.GlobalPosition = placement.GlobalPosition;
-            SetProcess(true);
+
+            // Change state to initializing
+            _ArenaStateMachine.ChangeState("Initializing");
         }
 
         public void ExecuteAction(Command action)

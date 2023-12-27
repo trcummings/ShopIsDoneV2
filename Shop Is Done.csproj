@@ -9,5 +9,6 @@
   <ItemGroup>
     <Folder Include="tasks\" />
     <Folder Include="util\pathfinding\" />
+    <Folder Include="util\dependency_injection\" />
   </ItemGroup>
 </Project>

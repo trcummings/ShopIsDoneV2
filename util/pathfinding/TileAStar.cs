@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ShopIsDone.Tiles;
 
-namespace ShopIsDone.Util.Pathfinding
+namespace ShopIsDone.Utils.Pathfinding
 {
     public interface INeighborStrategy
     {

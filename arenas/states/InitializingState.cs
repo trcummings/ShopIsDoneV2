@@ -1,18 +1,16 @@
 using Godot;
 using System;
+using ShopIsDone.Utils.StateMachine;
+using Godot.Collections;
 
 namespace ShopIsDone.Arenas.States
 {
-	public partial class InitializingState : Node
+	public partial class InitializingState : State
 	{
-		// Called when the node enters the scene tree for the first time.
-		public override void _Ready()
-		{
-		}
-
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
-		public override void _Process(double delta)
-		{
-		}
-	}
+        public override void OnStart(Dictionary<string, Variant> message)
+        {
+            base.OnStart(message);
+            ChangeState("Running");
+        }
+    }
 }

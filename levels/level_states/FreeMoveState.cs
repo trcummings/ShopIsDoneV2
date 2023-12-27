@@ -13,7 +13,7 @@ namespace ShopIsDone.Levels.States
         public delegate void CameraRotatedEventHandler();
 
         [Export]
-        private CameraSystem _CameraSystem;
+        private CameraService _CameraSystem;
 
         [Export]
         private IsometricCamera _Camera;
