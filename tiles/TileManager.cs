@@ -1,11 +1,12 @@
 using Godot;
 using System;
 using Godot.Collections;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Tiles
 {
-	public partial class TileManager : Node3D
-	{
+	public partial class TileManager : Node3D, IService
+    {
         [Export]
         private GridMap _ArenaTilemap;
 

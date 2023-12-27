@@ -29,6 +29,14 @@ namespace ShopIsDone.Levels.States
             // Finish start hook
             base.OnStart(message);
         }
+
+        public override void OnExit(string nextState)
+        {
+            // Clean up arena
+            _Arena.CleanUp();
+            
+            base.OnExit(nextState);
+        }
     }
 }
 

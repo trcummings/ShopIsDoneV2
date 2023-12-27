@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ShopIsDone.Core;
 using System.Linq;
 using ShopIsDone.Utils.StateMachine;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Arenas
 {
@@ -39,6 +40,14 @@ namespace ShopIsDone.Arenas
         [Export]
         public StateMachine _ArenaStateMachine;
 
+        private InjectionProvider _InjectionProvider;
+
+        public override void _Ready()
+        {
+            base._Ready();
+            _InjectionProvider = InjectionProvider.GetProvider(this);
+        }
+
         public void Init(LevelEntity playerUnit)
         {
             _TileManager.Init();
@@ -51,8 +60,17 @@ namespace ShopIsDone.Arenas
             var placement = placementTiles.First();
             playerUnit.GlobalPosition = placement.GlobalPosition;
 
+            // Register services
+            _InjectionProvider.RegisterService(_TileManager);
+
             // Change state to initializing
             _ArenaStateMachine.ChangeState("Initializing");
+        }
+
+        public void CleanUp()
+        {
+            // Unregister services
+            _InjectionProvider.UnregisterService(_TileManager);
         }
 
         public void ExecuteAction(Command action)

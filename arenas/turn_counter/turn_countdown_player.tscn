@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://n8e1ja8wwpky"]
+
+[ext_resource type="AudioStream" uid="uid://bo4fsnxd8snv4" path="res://arenas/turn_counter/turnpass_less_scary.wav" id="1_p1vpt"]
+
+[node name="TurnCountdownPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_p1vpt")
+bus = &"SFX"

@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqw2sf0ivpiqj"]
+
+[ext_resource type="PackedScene" uid="uid://db82wey2dqitt" path="res://arenas/turn_counter/countdown_number_strip.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://xxcdmxd2sm84" path="res://arenas/turn_counter/countdown_frame.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bqdah312ypifa" path="res://textures/white_square.png" id="3"]
+[ext_resource type="Script" path="res://arenas/turn_counter/TurnsRemainingPanel.cs" id="4"]
+[ext_resource type="Texture2D" uid="uid://df5ykpnniks3p" path="res://textures/black_square.png" id="5"]
+[ext_resource type="PackedScene" uid="uid://n8e1ja8wwpky" path="res://arenas/turn_counter/turn_countdown_player.tscn" id="6_wvqx6"]
+
+[node name="TurnsRemainingPanel" type="Node2D"]
+script = ExtResource("4")
+
+[node name="BaseBlack" type="Sprite2D" parent="."]
+position = Vector2(235, 207)
+scale = Vector2(29.375, 25.875)
+texture = ExtResource("5")
+
+[node name="FirstDigit" parent="." instance=ExtResource("1")]
+unique_name_in_owner = true
+position = Vector2(81, 72)
+
+[node name="SecondDigit" parent="." instance=ExtResource("1")]
+unique_name_in_owner = true
+position = Vector2(185, 72)
+
+[node name="ThirdDigit" parent="." instance=ExtResource("1")]
+unique_name_in_owner = true
+position = Vector2(287, 72)
+
+[node name="FourthDigit" parent="." instance=ExtResource("1")]
+unique_name_in_owner = true
+position = Vector2(393, 72)
+
+[node name="BackingPanel" type="Sprite2D" parent="."]
+light_mask = 3
+position = Vector2(237, 323.75)
+scale = Vector2(28.625, 6.53125)
+texture = ExtResource("3")
+
+[node name="PanelFrame" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+light_mask = 0
+position = Vector2(235, 207)
+texture = ExtResource("2")
+hframes = 7
+
+[node name="PanelFrameOverlay" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+light_mask = 0
+position = Vector2(235, 207)
+texture = ExtResource("2")
+hframes = 7
+
+[node name="TurnCountdownPlayer" parent="." instance=ExtResource("6_wvqx6")]
+
+[connection signal="CountdownBegan" from="." to="TurnCountdownPlayer" method="play"]

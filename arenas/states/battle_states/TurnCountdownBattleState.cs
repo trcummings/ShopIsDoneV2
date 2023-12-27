@@ -2,17 +2,21 @@ using Godot;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
 using ShopIsDone.Utils.Commands;
+using ShopIsDone.Arenas.Turns;
+using ShopIsDone.Utils.UI;
 
 namespace ShopIsDone.Arenas.Battles.States
 {
     public partial class TurnCountdownBattleState : State
     {
-        //[OnReadyGet]
-        //private TurnsRemainingUI _TurnsRemainingUI;
-
-        // Turn management
         [Export]
-        private ArenaTurnCounter _TurnCounter;
+        private ControlTweener _ControlTweener;
+
+        [Export]
+        private TurnsRemainingPanel _TurnsPanel;
+
+        [Export]
+        private TurnCounter _TurnCounter;
 
         [Export]
         private BattlePhaseManager _PhaseManager;
@@ -63,21 +67,20 @@ namespace ShopIsDone.Arenas.Battles.States
                 // Otherwise, show remaining turn UI, then advance
                 // normally
                 new SeriesCommand(
-                    //new ActionCommand(() =>
-                    //{
-                    //    // Set "Turns Remaining UI" with turns left
-                    //    _TurnsRemainingUI.SetTurnsRemaining(
-                    //        TurnManager.GetTurnsRemaining(),
-                    //        TurnManager.GetMaxTurnsRemaining()
-                    //    );
-                    //}),
-                    //new AsyncActionCommand(() => _TurnsRemainingUI.TweenIn(0.5f)),
-                    //new ForcedSyncCommand(Arena.PlaySound("turn_tick_down")),
-                    //new ActionCommand(_TurnsRemainingUI.CountdownTurns),
-                    //new WaitForCommand(this, 3f),
-                    //new AsyncActionCommand(() => _TurnsRemainingUI.TweenOut(0.5f)),
-                    //new ActionCommand(_TurnsRemainingUI.ResetTurnPanel),
-                    //Arena.AdvanceToNextPhase()
+                    new ActionCommand(() =>
+                    {
+                        // Update turns panel
+                        _TurnsPanel.SetTurnsRemaining(
+                            _TurnCounter.TurnsRemaining,
+                            _TurnCounter.MaxTurnsRemaining
+                        );
+                    }),
+                    new AsyncCommand(() => _ControlTweener.TweenInAsync(0.5f)),
+                    new ActionCommand(_TurnsPanel.CountdownTurns),
+                    new WaitForCommand(this, 3f),
+                    new AsyncCommand(() => _ControlTweener.TweenOutAsync(0.5f)),
+                    new ActionCommand(_TurnsPanel.ResetTurnPanel),
+                    new ActionCommand(_PhaseManager.AdvanceToNextPhase)
                 )
             );
         }
