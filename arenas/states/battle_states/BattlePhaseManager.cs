@@ -43,7 +43,7 @@ namespace ShopIsDone.Arenas.Battles
             EmitSignal(nameof(PhaseChanged), CurrentPhase.Name);
         }
 
-        public void AdvancePhase()
+        public void AdvanceToNextPhase()
         {
             // Find the current phase in the phase order and get the next phase
             // circularly
