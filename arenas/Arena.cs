@@ -35,6 +35,12 @@ namespace ShopIsDone.Arenas
         [Export]
         private TileManager _TileManager;
 
+        public override void _Ready()
+        {
+            base._Ready();
+            SetProcess(false);
+        }
+
         public void Init(LevelEntity playerUnit)
         {
             _TileManager.Init();
@@ -46,6 +52,7 @@ namespace ShopIsDone.Arenas
                 .Where(IsAncestorOf);
             var placement = placementTiles.First();
             playerUnit.GlobalPosition = placement.GlobalPosition;
+            SetProcess(true);
         }
 
         public void ExecuteAction(Command action)

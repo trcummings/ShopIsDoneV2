@@ -1,31 +1,128 @@
-[gd_scene load_steps=3 format=3 uid="uid://by15boho1w3hl"]
+[gd_scene load_steps=11 format=3 uid="uid://dq2epbd2snfbt"]
 
-[ext_resource type="MeshLibrary" uid="uid://bwefv47l4buq4" path="res://tiles/arena_tiles.meshlib" id="1_cbp4i"]
+[ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
+[ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
+[ext_resource type="Script" path="res://util/state_machine/State.cs" id="3_q440h"]
+[ext_resource type="Script" path="res://arenas/states/battle_states/BattlePhaseManager.cs" id="4_c0td2"]
+[ext_resource type="Script" path="res://tiles/TileManager.cs" id="4_hwpdd"]
+[ext_resource type="Script" path="res://arenas/EnterArenaArea.cs" id="5_2f7tb"]
+[ext_resource type="PackedScene" uid="uid://k1cfuob2nivk" path="res://tiles/tile/tile.tscn" id="5_hl2gx"]
+[ext_resource type="PackedScene" uid="uid://d3bnxo337mk18" path="res://tiles/tile/placement_tile.tscn" id="6_4mx0t"]
+[ext_resource type="Texture2D" uid="uid://dhf1etn3y82a2" path="res://tiles/diamond_floor.png" id="6_s8win"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_apani"]
-size = Vector3(2, 0.25, 6)
+[sub_resource type="BoxShape3D" id="BoxShape3D_gufqt"]
+size = Vector3(0.646393, 1, 6)
 
-[node name="Arena" type="Node3D"]
-
-[node name="Tiles" type="GridMap" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -0.99, 2.08165e-12)
-mesh_library = ExtResource("1_cbp4i")
-collision_layer = 0
-collision_mask = 0
-metadata/_editor_floor_ = Vector3(0, 0, 0)
+[node name="Arena" type="Node3D" node_paths=PackedStringArray("_TileManager") groups=["arena"]]
+script = ExtResource("1_loukv")
+_TileManager = NodePath("Tiles")
 metadata/_edit_lock_ = true
 
-[node name="EnterArenaArea" type="Area3D" parent="."]
-unique_name_in_owner = true
+[node name="ArenaStateMachine" type="Node" parent="."]
+script = ExtResource("2_1igvu")
+
+[node name="Initializing" type="Node" parent="ArenaStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="Running" type="Node" parent="ArenaStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="BattlePhaseManager" type="Node" parent="ArenaStateMachine/Running" node_paths=PackedStringArray("CurrentPhase", "PhaseOrder", "_BattleStateMachine")]
+script = ExtResource("4_c0td2")
+CurrentPhase = NodePath("../BattleStateMachine/CleanUp")
+PhaseOrder = [NodePath("../BattleStateMachine/TurnCountdown"), NodePath("../BattleStateMachine/CleanUp"), NodePath("../BattleStateMachine/EnemyActivity"), NodePath("../BattleStateMachine/PrepPlayerTurn"), NodePath("../BattleStateMachine/PlayerTurn")]
+_BattleStateMachine = NodePath("../BattleStateMachine")
+
+[node name="BattleStateMachine" type="Node" parent="ArenaStateMachine/Running"]
+script = ExtResource("2_1igvu")
+
+[node name="TurnCountdown" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="CleanUp" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="EnemyActivity" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="PrepPlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="PlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="PlayerTurnStateMachine" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn"]
+script = ExtResource("2_1igvu")
+
+[node name="Idle" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="ChoosingUnit" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="ChoosingAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="ActionStateMachine" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction"]
+script = ExtResource("2_1igvu")
+
+[node name="Menu" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="FacingDirection" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="Move" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="Targeting" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="MoreInfo" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="MoreInfo" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="Finished" type="Node" parent="ArenaStateMachine"]
+
+[node name="OutcomeStateMachine" type="Node" parent="ArenaStateMachine/Finished"]
+script = ExtResource("2_1igvu")
+
+[node name="OutOfTime" type="Node" parent="ArenaStateMachine/Finished/OutcomeStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="Victory" type="Node" parent="ArenaStateMachine/Finished/OutcomeStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="Failure" type="Node" parent="ArenaStateMachine/Finished/OutcomeStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="Tiles" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+script = ExtResource("4_hwpdd")
+_TileScenes = Array[PackedScene]([ExtResource("5_hl2gx"), ExtResource("6_4mx0t")])
+
+[node name="EnterArenaArea" type="Area3D" parent="." node_paths=PackedStringArray("_Arena") groups=["arena_entrance"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1839, 0, 0)
 collision_layer = 0
 collision_mask = 2
 monitorable = false
+script = ExtResource("5_2f7tb")
+_Arena = NodePath("..")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnterArenaArea"]
-shape = SubResource("BoxShape3D_apani")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.676804, 0.5, 2.08165e-12)
+shape = SubResource("BoxShape3D_gufqt")
 
 [node name="Sprite3D" type="Sprite3D" parent="EnterArenaArea"]
 transform = Transform3D(0.76722, 0, 0, 0, 1, 0, 0, 0, 2.33261, 2.08165e-12, 0.01, 2.08165e-12)
 axis = 1
+texture = ExtResource("6_s8win")

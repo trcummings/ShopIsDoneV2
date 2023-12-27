@@ -4,10 +4,10 @@ using Godot.Collections;
 
 namespace ShopIsDone.Tiles
 {
-	public partial class TileManager : GridMap
+	public partial class TileManager : Node3D
 	{
         [Export]
-        private Node3D _Tiles;
+        private GridMap _ArenaTilemap;
 
         [Export]
         private Array<PackedScene> _TileScenes;
@@ -18,23 +18,24 @@ namespace ShopIsDone.Tiles
         public override void _Ready()
         {
             base._Ready();
-            // Hide self
-            Hide();
+            // Hide tilemap
+            _ArenaTilemap.Hide();
         }
 
         public void Init()
         {
-            foreach (var cell in GetUsedCells())
+            foreach (var cell in _ArenaTilemap.GetUsedCells())
             {
-                var cellItem = GetCellItem(cell);
+                var cellItem = _ArenaTilemap.GetCellItem(cell);
                 var scene = _TileScenes[cellItem];
                 // Ignore if no configuration for it
                 if (scene == null) continue;
                 // Otherwise, create the tile there and add it as a child
                 var tileScene = scene.Instantiate<Tile>();
-                _Tiles.AddChild(tileScene);
+                AddChild(tileScene);
                 tileScene.TilemapPosition = cell;
-                tileScene.GlobalPosition = ToGlobal(MapToLocal(cell));
+                var cellPosition = _ArenaTilemap.ToGlobal(_ArenaTilemap.MapToLocal(cell));
+                tileScene.GlobalPosition = cellPosition;
                 // Set cell in dictionary
                 SetTile(tileScene);
             }
@@ -47,7 +48,7 @@ namespace ShopIsDone.Tiles
 
             // Create entry in tilemap so we can convert between tilemap
             // position and world position
-            SetCellItem(new Vector3I((int)tilePos.X, (int)tilePos.Y, (int)tilePos.Z), 1);
+            _ArenaTilemap.SetCellItem(new Vector3I((int)tilePos.X, (int)tilePos.Y, (int)tilePos.Z), 1);
         }
 
         public void RemoveTile(Tile tile)
@@ -56,7 +57,7 @@ namespace ShopIsDone.Tiles
             // Remove from dictionary
             if (_TilesByPos.ContainsKey(tilePos)) _TilesByPos.Remove(tilePos);
             // Remove entry from tilemap
-            SetCellItem(new Vector3I((int)tilePos.X, (int)tilePos.Y, (int)tilePos.Z), (int)InvalidCellItem);
+            _ArenaTilemap.SetCellItem(new Vector3I((int)tilePos.X, (int)tilePos.Y, (int)tilePos.Z), (int)GridMap.InvalidCellItem);
         }
 
         public bool HasTileAtTilemapPos(Vector3 tilemapPosition)

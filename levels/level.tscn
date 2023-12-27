@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_b2cin"]
 [ext_resource type="Script" path="res://camera/InputXformer.cs" id="2_f8i2e"]
-[ext_resource type="PackedScene" path="res://camera/isometric_camera.tscn" id="2_s72y3"]
+[ext_resource type="PackedScene" uid="uid://b2efiom6qa6ym" path="res://camera/isometric_camera.tscn" id="2_s72y3"]
 [ext_resource type="Script" path="res://microgames/microgame_runner.gd" id="2_tqx2s"]
 [ext_resource type="PackedScene" uid="uid://cs55ll2s8e14e" path="res://microgames/always_outcome/always_lose_microgame.tscn" id="3_7aqal"]
 [ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_53pcu"]
@@ -168,4 +168,3 @@ _BlurBackground = NodePath("../UILayer/BlurBackground")
 [connection signal="UnpauseRequested" from="LevelPauseMenu" to="Services/PauseInputHandler" method="RequestUnpause"]
 
 [editable path="World/IsometricCamera"]
-[editable path="World/PlayerUnits/HaskellActor"]
