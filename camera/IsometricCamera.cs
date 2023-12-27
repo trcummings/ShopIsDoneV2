@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Linq;
 using ShopIsDone.Utils;
+using ShopIsDone.Cameras.Zooms;
 
 namespace ShopIsDone.Cameras
 {
@@ -16,6 +17,9 @@ namespace ShopIsDone.Cameras
         [Signal]
         public delegate void ZoomChangedEventHandler(float zoom);
 
+        [Export]
+        private CameraZoom _Zoom;
+
         // Rotation Consts
         public const float ROTATION_SPEED = 6.0F;
 
@@ -24,17 +28,6 @@ namespace ShopIsDone.Cameras
         public const Tween.EaseType EASE_TYPE = Tween.EaseType.OutIn;
         public const Tween.TransitionType TRANS_TYPE = Tween.TransitionType.Linear;
 
-        // Zoom Consts
-        // The base "size" zoom level that the camera starts with
-        public const float BASE_ZOOM = 15F;
-        // Zoom bounds
-        public const float MIN_ZOOM = 5F;
-        public const float MAX_ZOOM = 25.0F;
-        // The amount per frame the camera zooms in
-        public const float ZOOM_RATE = 4.0F;
-        // The amount per call that the zoom target gets set
-        public const float ZOOM_INCREMENT = 0.75F;
-
         // Camera state
         private float _Yaw = -45.0F; // Y-Axis rotation
 
@@ -42,17 +35,12 @@ namespace ShopIsDone.Cameras
         public Node3D Target = null;
         private Vector3 _TargetDestination;
 
-        // Zoom state
-        // NB: Isomorphic Projection uses "Size" as zoom instead of Zoom
-        private float _TargetZoom = 15f;
-
         // Movement State
         private Tween _MoveTween;
         public float MoveDuration = MOVEMENT_DURATION;
 
         public Camera3D Camera { get { return _Camera; } }
         private Camera3D _Camera;
-        private Node3D _IsometricPosition;
         private Vector3 _PrevForwardBasis;
 
         public override void _Ready()
@@ -61,13 +49,9 @@ namespace ShopIsDone.Cameras
 
             // Ready nodes
             _Camera = GetNode<Camera3D>("%Camera");
-            _IsometricPosition = GetNode<Node3D>("%IsometricPosition");
 
             // Record previous forward basis
             _PrevForwardBasis = GetNormalizedForwardBasis();
-
-            // Set target zoom to size
-            _TargetZoom = BASE_ZOOM;
 
             // Set current target destination to initial position
             _TargetDestination = GlobalPosition;
@@ -80,6 +64,12 @@ namespace ShopIsDone.Cameras
                 Mathf.DegToRad(_Yaw),
                 0
             );
+
+            // Connect to zoom
+            _Zoom.ZoomChanged += (float newZoom) =>
+            {
+                EmitSignal(nameof(ZoomChanged), newZoom);
+            };
         }
 
         public override void _PhysicsProcess(double delta)
@@ -88,10 +78,8 @@ namespace ShopIsDone.Cameras
             RotateAround(delta);
             UpdateTargetReached(delta);
 
-            // Update zoom
-            var oldSize = _Camera.Size;
-            _Camera.Size = (float)Mathf.Lerp(_Camera.Size, _TargetZoom, ZOOM_RATE * delta);
-            if (oldSize != _Camera.Size) EmitSignal(nameof(ZoomChanged), GetZoom());
+            // Update Zoom
+            _Zoom.UpdateZoom(delta);
 
             // Emit any changes to our basis
             var newForwardBasis = GetNormalizedForwardBasis();
@@ -108,7 +96,7 @@ namespace ShopIsDone.Cameras
             {
                 clone.HOffset = _Camera.HOffset;
                 clone.VOffset = _Camera.VOffset;
-                if (!clone.IsInGroup("ignore_camera_clone_zoom")) clone.Size = _Camera.Size;
+                _Zoom.SyncClone(clone);
             }
         }
 
@@ -170,28 +158,27 @@ namespace ShopIsDone.Cameras
 
         public void ZoomIn()
         {
-            _TargetZoom = Mathf.Max(_TargetZoom - ZOOM_INCREMENT, MIN_ZOOM);
+            _Zoom.ZoomIn();
         }
 
         public void ZoomOut()
         {
-            _TargetZoom = Mathf.Min(_TargetZoom + ZOOM_INCREMENT, MAX_ZOOM);
+            _Zoom.ZoomOut();
         }
 
         public float GetZoom()
         {
-            return _Camera.Size / BASE_ZOOM;
+            return _Zoom.GetZoom();
         }
 
         public void SetZoom(float zoomAmount)
         {
-            _TargetZoom = Mathf.Clamp(zoomAmount * BASE_ZOOM, MIN_ZOOM, MAX_ZOOM);
+            _Zoom.SetZoom(zoomAmount);
         }
 
         public void ForceZoom(float zoomAmount)
         {
-            // Forcibly set the camera zoom amount
-            _Camera.Size = Mathf.Clamp(zoomAmount * BASE_ZOOM, MIN_ZOOM, MAX_ZOOM);
+            _Zoom.ForceZoom(zoomAmount);
         }
 
         public void SetYawToDir(Vector3 dir)

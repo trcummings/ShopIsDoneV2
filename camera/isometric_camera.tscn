@@ -1,17 +1,19 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://b2efiom6qa6ym"]
 
 [ext_resource type="Script" path="res://camera/IsometricCamera.cs" id="1"]
+[ext_resource type="Script" path="res://camera/zooms/OrthographicZoom.cs" id="2_a26hc"]
 
-[node name="IsometricCamera" type="Spatial"]
-script = ExtResource( 1 )
+[node name="IsometricCamera" type="Node3D" node_paths=PackedStringArray("_Zoom")]
+script = ExtResource("1")
+_Zoom = NodePath("OrthographicZoom")
 
-[node name="Camera" type="Camera" parent="."]
+[node name="Camera" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
 cull_mask = 1
 projection = 1
 size = 15.0
 
-[node name="IsometricPosition" type="Position3D" parent="."]
-unique_name_in_owner = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
+[node name="OrthographicZoom" type="Node" parent="." node_paths=PackedStringArray("_Camera")]
+script = ExtResource("2_a26hc")
+_Camera = NodePath("../Camera")
