@@ -1,9 +1,10 @@
 using Godot;
 using System;
+using ShopIsDone.Core;
 
 namespace ShopIsDone.Actors
 {
-    public partial class Ricky : CharacterBody3D
+    public partial class Ricky : LevelEntity
     {
         [Export]
         public Node3D Target;
@@ -17,9 +18,16 @@ namespace ShopIsDone.Actors
         [Export]
         private ActorPathfinder _ActorPathfinder;
 
+        public override void _Ready()
+        {
+            base._Ready();
+            SetProcess(false);
+        }
+
         public void Init()
         {
             _ActorAnimator.Init();
+            SetProcess(true);
         }
 
         public override void _Process(double _)

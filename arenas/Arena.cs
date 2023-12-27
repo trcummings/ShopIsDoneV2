@@ -36,7 +36,12 @@ namespace ShopIsDone.Arenas
     public partial class Arena : Node3D
     {
         [Export]
-        private GridMap _Tiles;
+        private TileManager _TileManager;
+
+        public void Init()
+        {
+            _TileManager.Init();
+        }
 
         public void ExecuteAction(Command action)
         {

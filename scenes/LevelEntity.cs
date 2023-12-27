@@ -1,6 +1,7 @@
 ﻿using System;
 using Godot;
-using System.Collections.Generic;
+using Godot.Collections;
+using SystemCollections = System.Collections.Generic;
 using System.Linq;
 using ShopIsDone.Tiles;
 using ShopIsDone.Arenas.ArenaScripts;
@@ -12,18 +13,15 @@ namespace ShopIsDone.Core
 {
     public interface IComponentContainer
     {
-        List<IComponent> Components { get; }
+        SystemCollections.List<IComponent> Components { get; }
 
         C GetComponent<C>() where C : IComponent;
 
         bool HasComponent<C>() where C : IComponent;
     }
 
-    public partial class LevelEntity : Node3D, IComponentContainer
+    public partial class LevelEntity : CharacterBody3D, IComponentContainer
     {
-        [Signal]
-        public delegate void ChangedFacingDirectionEventHandler(Vector3 newDir);
-
         [Signal]
         public delegate void EntityEnabledEventHandler();
 
@@ -36,63 +34,27 @@ namespace ShopIsDone.Core
         [Export]
         protected ArenaEvents _ArenaEvents;
 
-        // A reference to an ID that contains a data template for this specific entity
-        [Export]
-        public string DataTemplateId
-        {
-            get { return _DataTemplateId; }
-            set { _DataTemplateId = value; }
-        }
-        private string _DataTemplateId;
-
-        // Entity Data
-        private LevelEntityData _Data;
-        public LevelEntityData Data
-        {
-            get { return _Data; }
-            set { _Data = value; }
-        }
-
         // Id
-        public string Id
-        {
-            get { return Data.Id; }
-        }
+        [Export]
+        public string Id;
 
         // IsActive
-        public bool Enabled
-        {
-            get { return Data.Enabled; }
-        }
+        [Export]
+        public bool Enabled;
 
         // Name
-        public string EntityName
-        {
-            get { return Data?.EntityName ?? ""; }
-            set { Data.EntityName = value; }
-        }
+        [Export]
+        public string EntityName;
 
-        // Facing Direction
-        public Vector3 FacingDirection
-        {
-            get { return Data.FacingDirection; }
-            set
-            {
-                Data.FacingDirection = value;
-                EmitSignal(nameof(ChangedFacingDirection), Data.FacingDirection);
-            }
-        }
+        [Export]
+        public Dictionary<string, Variant> DataStore = new Dictionary<string, Variant>();
 
         // Tilemap position
-        public Vector3 TilemapPosition
-        {
-            get { return Data.TilemapPosition; }
-            set { Data.TilemapPosition = value; }
-        }
+        public Vector3 TilemapPosition = Vector3.Zero;
 
         #region Components
-        protected List<IComponent> _Components = new List<IComponent>();
-        public List<IComponent> Components { get { return _Components; } }
+        protected SystemCollections.List<IComponent> _Components = new SystemCollections.List<IComponent>();
+        public SystemCollections.List<IComponent> Components { get { return _Components; } }
 
         public C GetComponent<C>() where C : IComponent
         {
@@ -122,7 +84,6 @@ namespace ShopIsDone.Core
             // Connect to enabled/disabled hooks
             EntityEnabled += OnEnabled;
             EntityDisabled += OnDisabled;
-            ChangedFacingDirection += OnChangedFacingDir;
         }
 
         // Init
@@ -160,21 +121,6 @@ namespace ShopIsDone.Core
         public virtual void SetGlobalPosition(Vector3 pos)
         {
             GlobalPosition = pos;
-        }
-
-        // Facing Direction
-        public Command SetFacingDirection(Vector3 facingDir)
-        {
-            return new SetFacingDirCommand()
-            {
-                Entity = this,
-                FacingDir = facingDir
-            };
-        }
-
-        private void OnChangedFacingDir(Vector3 newDir)
-        {
-            GlobalRotation = Vector3.Up * Vec3.FacingDirToYRad(newDir);
         }
 
         // Enabled
@@ -215,7 +161,7 @@ namespace ShopIsDone.Core
         }
 
         // In arena / available
-        private List<IEntityActiveHandler> _ActiveHandlers;
+        private SystemCollections.List<IEntityActiveHandler> _ActiveHandlers;
         public virtual bool IsInArena()
         {
             if (_ActiveHandlers == null)
@@ -249,49 +195,7 @@ namespace ShopIsDone.Core
         }
         #endregion
 
-        #region DataStore
-        public IEnumerable<string> GetDataStoreKeys()
-        {
-            return Data.DataStore.Keys;
-        }
-
-        public Command SetDataStoreValue(string key, Variant value)
-        {
-            return Data.SetDictValue(key, value);
-        }
-
-        public Command RemoveDataStoreValue(string key)
-        {
-            return Data.RemoveDictKey(key);
-        }
-
-        public bool HasDataStoreValue(string key)
-        {
-            return Data.DataStore.ContainsKey(key);
-        }
-
-        public Variant GetDataStoreValue(string key, Variant defaultValue = default)
-        {
-            return Data.DataStore.GetValueOrDefault(key, defaultValue);
-        }
-        #endregion
-
         // Commands
-        private partial class SetFacingDirCommand : Command
-        {
-            public LevelEntity Entity;
-            public Vector3 FacingDir;
-
-            public override void Execute()
-            {
-                // Set facing dir
-                Entity.FacingDirection = FacingDir;
-
-                // Finish
-                Finish();
-            }
-        }
-
         private partial class SetEnabledCommand : Command
         {
             public LevelEntity Entity;
@@ -300,7 +204,7 @@ namespace ShopIsDone.Core
             public override void Execute()
             {
                 // Only update if the value changed
-                if (Value == Entity.Data.Enabled) 
+                if (Value == Entity.Enabled) 
                 {
                     Finish();
                     return;
@@ -311,7 +215,7 @@ namespace ShopIsDone.Core
                 else Entity.EmitSignal(nameof(EntityDisabled));
 
                 // Set enabled
-                Entity.Data.Enabled = Value;
+                Entity.Enabled = Value;
 
                 // Finish
                 Finish();

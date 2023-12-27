@@ -14,10 +14,7 @@ namespace ShopIsDone.Models.Employees
         public override void _Ready()
         {
             base._Ready();
-            AnimationEventFired += (string eventName) =>
-            {
-                if (eventName == "footstep") EmitSignal(nameof(Footstep));
-            };
+            AnimationEventFired += OnEvent;
         }
 
         public override async Task PerformAnimation(string rawAnimName, bool advance = false)
@@ -34,6 +31,11 @@ namespace ShopIsDone.Models.Employees
             else if (actionName == Consts.Anims.Employee.DO_TASK) actionName = "do_task";
 
             await base.PerformAnimation(actionName.ToLower(), advance);
+        }
+
+        private void OnEvent(string eventName)
+        {
+            if (eventName == "footstep") EmitSignal(nameof(Footstep));
         }
     }
 }

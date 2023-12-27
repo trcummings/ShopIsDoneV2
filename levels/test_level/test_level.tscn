@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=9 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="PackedScene" uid="uid://mn346u6gevet" path="res://levels/test_level/test_layout.tscn" id="2_5q5uu"]
 [ext_resource type="PackedScene" uid="uid://dvyl4d7ds1ji7" path="res://dialogue/dialogue_area.tscn" id="3_hk7sm"]
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="4_wq15v"]
-[ext_resource type="MeshLibrary" uid="uid://bwefv47l4buq4" path="res://tiles/arena_tiles.meshlib" id="5_4eexi"]
-[ext_resource type="Script" path="res://tiles/TileManager.cs" id="6_ilhr0"]
+[ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/tile_manager.tscn" id="5_acxp3"]
 [ext_resource type="Script" path="res://arenas/EnterArenaArea.cs" id="7_5hyhn"]
 [ext_resource type="Texture2D" uid="uid://dhf1etn3y82a2" path="res://tiles/diamond_floor.png" id="8_lyg8s"]
 
@@ -29,23 +28,21 @@ metadata/_edit_lock_ = true
 [node name="DialogueArea" parent="World/NavigationRegion3D/Environment" index="3" instance=ExtResource("3_hk7sm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1546, -4.76835e-07, -1.31345)
 
-[node name="Arena" type="Node3D" parent="World/NavigationRegion3D/Environment" index="4" node_paths=PackedStringArray("_Tiles") groups=["arena"]]
+[node name="Arena" type="Node3D" parent="World/NavigationRegion3D/Environment" index="4" node_paths=PackedStringArray("_TileManager") groups=["arena"]]
 script = ExtResource("4_wq15v")
-_Tiles = NodePath("Tiles")
-
-[node name="Tiles" type="GridMap" parent="World/NavigationRegion3D/Environment/Arena" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -0.99, 2.08165e-12)
-mesh_library = ExtResource("5_4eexi")
-collision_layer = 0
-collision_mask = 0
-data = {
-"cells": PackedInt32Array(4, 1, 1, 4, 0, 1, 4, 65535, 1, 4, 65534, 1, 3, 65535, 1, 3, 0, 1, 4, 65533, 0, 4, 65532, 0, 3, 65532, 0, 3, 65533, 0, 3, 65534, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 4, 3, 0, 4, 2, 0, 2, 3, 0, 1, 3, 0, 0, 3, 0, 65534, 3, 0, 65535, 3, 0, 65533, 3, 0, 65533, 2, 0, 65533, 1, 0, 65533, 0, 0, 65533, 65535, 0, 65533, 65534, 0, 65533, 65533, 0, 65533, 65532, 0, 2, 65532, 0, 1, 65532, 0, 0, 65532, 0, 65535, 65532, 0, 65534, 65532, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 1, 0, 0, 1, 1, 0, 2, 1, 0, 1, 2, 0, 2, 2, 0, 0, 2, 0, 0, 1, 0, 65535, 2, 0, 65534, 2, 0, 65534, 1, 0, 65534, 0, 0, 65535, 0, 0, 65535, 1, 0, 0, 0, 0, 1, 65535, 0, 1, 65534, 0, 1, 65533, 0, 0, 65533, 0, 65535, 65533, 0, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65535, 65535, 0, 65535, 65534, 0, 0, 65534, 0, 0, 65535, 0)
-}
-script = ExtResource("6_ilhr0")
-metadata/_editor_floor_ = Vector3(0, 0, 0)
+_TileManager = NodePath("TileManager")
 metadata/_edit_lock_ = true
 
-[node name="EnterArenaArea" type="Area3D" parent="World/NavigationRegion3D/Environment/Arena" index="1" node_paths=PackedStringArray("_Arena") groups=["arena_entrance"]]
+[node name="TileManager" parent="World/NavigationRegion3D/Environment/Arena" index="0" node_paths=PackedStringArray("_Tiles") instance=ExtResource("5_acxp3")]
+data = {
+"cells": PackedInt32Array(4, 1, 1, 4, 0, 1, 4, 65535, 1, 4, 65534, 1, 3, 0, 1, 3, 65535, 1, 4, 65533, 0, 4, 65532, 0, 3, 65532, 0, 3, 65533, 0, 3, 65534, 0, 3, 1, 0, 3, 2, 0, 2, 3, 0, 3, 3, 0, 4, 3, 0, 4, 2, 0, 2, 65532, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0, 2, 2, 0, 1, 3, 0, 1, 2, 0, 1, 1, 0, 1, 0, 0, 1, 65535, 0, 1, 65534, 0, 1, 65533, 0, 1, 65532, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 65535, 3, 0, 65535, 2, 0, 65535, 1, 0, 65535, 0, 0, 65535, 65535, 0, 65535, 65534, 0, 65535, 65533, 0, 65535, 65532, 0, 65534, 65532, 0, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65533, 3, 0, 65533, 2, 0, 65533, 1, 0, 65533, 0, 0, 65533, 65535, 0, 65533, 65534, 0, 65533, 65533, 0, 65533, 65532, 0)
+}
+_Tiles = NodePath("../Tiles")
+metadata/_edit_lock_ = true
+
+[node name="Tiles" type="Node3D" parent="World/NavigationRegion3D/Environment/Arena" index="1"]
+
+[node name="EnterArenaArea" type="Area3D" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_Arena") groups=["arena_entrance"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1839, 0, 0)
 collision_layer = 0
 collision_mask = 2

@@ -153,7 +153,7 @@ namespace ShopIsDone.Tiles
                     CommandProcessor = _CommandProcessor,
                     SeriesCommand = new SeriesCommand(
                         // Set the pawn facing direction to the new direction
-                        Entity.SetFacingDirection(nextTile.TilemapPosition - currentTile.TilemapPosition),
+                        //Entity.SetFacingDirection(nextTile.TilemapPosition - currentTile.TilemapPosition),
                         // Move between the two
                         new MoveBetweenTilesCommand()
                         {

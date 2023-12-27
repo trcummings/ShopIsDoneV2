@@ -3451,12 +3451,13 @@ _data = {
 "RESET": SubResource("17")
 }
 
-[node name="Jessica2D" type="Node2D" node_paths=PackedStringArray("_FrontView", "_BackView", "_Skeleton")]
+[node name="Jessica2D" type="Node2D" node_paths=PackedStringArray("_FrontView", "_BackView", "_Skeleton", "_AnimPlayer")]
 script = ExtResource("2")
 _FrontView = NodePath("Model/Polygons/Front")
 _BackView = NodePath("Model/Polygons/Back")
 _Skeleton = NodePath("Model/Skeleton2D")
 LoopingAnimations = ["walk", "idle", "do_task"]
+_AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

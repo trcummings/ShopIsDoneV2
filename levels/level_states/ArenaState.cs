@@ -27,6 +27,10 @@ namespace ShopIsDone.Levels.States
 
             // Pull arena from message
             _Arena = (Arena)message.GetValueOrDefault(Consts.States.ARENA_KEY, default);
+            // Initialize arena
+            _Arena.Init();
+
+            // TODO: Move units into arena
 
             // Finish start hook
             base.OnStart(message);

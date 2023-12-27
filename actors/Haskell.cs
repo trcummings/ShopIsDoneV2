@@ -1,10 +1,10 @@
 using Godot;
-using ShopIsDone.Audio;
 using System;
+using ShopIsDone.Core;
 
 namespace ShopIsDone.Actors
 {
-    public partial class Haskell : CharacterBody3D
+    public partial class Haskell : LevelEntity
     {
         [Export]
         private ActorAnimator _ActorAnimator;
@@ -17,10 +17,17 @@ namespace ShopIsDone.Actors
 
         private IActorInput _ActorInput = new ActorInput();
 
+        public override void _Ready()
+        {
+            base._Ready();
+            SetProcess(false);
+        }
+
         public void Init(IActorInput actorInput)
         {
             _ActorInput = actorInput;
             _ActorAnimator.Init();
+            SetProcess(true);
         }
 
         public override void _Process(double delta)

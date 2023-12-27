@@ -33,7 +33,7 @@ namespace ShopIsDone.Core
             var instance = EntityScene.Instantiate<LevelEntity>();
 
             // Set data
-            instance.Data = data;
+            //instance.Data = data;
 
             // Return instance
             return instance;
