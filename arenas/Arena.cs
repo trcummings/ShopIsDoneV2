@@ -5,14 +5,11 @@ using ShopIsDone.Utils.Commands;
 using Camera;
 using ShopIsDone.Tiles;
 using System.Threading.Tasks;
+using ShopIsDone.Core;
+using System.Linq;
 
 namespace ShopIsDone.Arenas
 {
-    public partial class LevelEntity : GodotObject
-    {
-
-    }
-
     public partial class ArenaAction : GodotObject
     {
 
@@ -38,9 +35,17 @@ namespace ShopIsDone.Arenas
         [Export]
         private TileManager _TileManager;
 
-        public void Init()
+        public void Init(LevelEntity playerUnit)
         {
             _TileManager.Init();
+
+            // Move units into arena
+            var placementTiles = GetTree()
+                .GetNodesInGroup("placement_tile")
+                .OfType<Tile>()
+                .Where(IsAncestorOf);
+            var placement = placementTiles.First();
+            playerUnit.GlobalPosition = placement.GlobalPosition;
         }
 
         public void ExecuteAction(Command action)

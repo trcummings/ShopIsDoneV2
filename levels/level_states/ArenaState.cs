@@ -5,9 +5,12 @@ using Godot.Collections;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Arenas;
 using ShopIsDone.Actors;
+using System.Linq;
+using ShopIsDone.Tiles;
 
 namespace ShopIsDone.Levels.States
 {
+    // This state initializes an arena
     public partial class ArenaState : State
     {
         [Export]
@@ -28,9 +31,7 @@ namespace ShopIsDone.Levels.States
             // Pull arena from message
             _Arena = (Arena)message.GetValueOrDefault(Consts.States.ARENA_KEY, default);
             // Initialize arena
-            _Arena.Init();
-
-            // TODO: Move units into arena
+            _Arena.Init(_Haskell);
 
             // Finish start hook
             base.OnStart(message);

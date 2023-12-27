@@ -61,7 +61,7 @@ axis = 1
 texture = ExtResource("8_lyg8s")
 
 [node name="DefaultSpawnPoint" parent="World" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.11, 0, -16.6397)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6855, 0, -0.636568)
 
 [editable path="World/IsometricCamera"]
 [editable path="World/PlayerUnits/HaskellActor"]

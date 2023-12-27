@@ -14,7 +14,7 @@ size = Vector2(2, 2)
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(1.38, 0.2, 1.38)
 
-[node name="Tile" type="Area3D" groups=["entity", "persistable", "tile"]]
+[node name="Tile" type="Area3D" groups=["tile"]]
 script = ExtResource("6")
 
 [node name="Collision" type="CollisionShape3D" parent="."]

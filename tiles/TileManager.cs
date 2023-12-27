@@ -15,11 +15,6 @@ namespace ShopIsDone.Tiles
         // Tiles by tilemap position
         private Dictionary<Vector3, Tile> _TilesByPos = new Dictionary<Vector3, Tile>();
 
-        public Tile GetTileAtTilemapPos(Vector3 tilemapPos)
-		{
-			return new Tile();
-		}
-
         public override void _Ready()
         {
             base._Ready();
@@ -67,6 +62,15 @@ namespace ShopIsDone.Tiles
         public bool HasTileAtTilemapPos(Vector3 tilemapPosition)
         {
             return _TilesByPos.ContainsKey(tilemapPosition);
+        }
+
+        public Tile GetTileAtTilemapPos(Vector3 tilemapPosition)
+        {
+            if (_TilesByPos.TryGetValue(tilemapPosition, out Tile tile))
+            {
+                return tile;
+            }
+            return null;
         }
     }
 }

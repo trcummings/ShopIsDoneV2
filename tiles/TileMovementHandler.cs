@@ -13,7 +13,7 @@ namespace ShopIsDone.Tiles
 {
     // This component helps generate movement on the tilemap for all moveable
     // units
-    public partial class MovementComponent : NodeComponent
+    public partial class TileMovementHandler : NodeComponent
     {
         [Export]
         private CharacterBody3D _Body;
@@ -190,7 +190,7 @@ namespace ShopIsDone.Tiles
         // Movement commands
         public partial class PawnMoveCommand : Command, IPhysicsProcessableCommand
         {
-            public MovementComponent Movement;
+            public TileMovementHandler Movement;
             public LevelEntity Entity;
             public CommandProcessor CommandProcessor;
             public Tile InitialTile;

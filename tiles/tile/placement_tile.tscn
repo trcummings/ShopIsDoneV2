@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3bnxo337mk18"]
+
+[ext_resource type="PackedScene" uid="uid://k1cfuob2nivk" path="res://tiles/tile/tile.tscn" id="1_mxgst"]
+
+[node name="Tile" groups=["placement_tile"] instance=ExtResource("1_mxgst")]

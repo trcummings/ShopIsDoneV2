@@ -6,15 +6,33 @@ using ShopIsDone.Tiles;
 
 namespace ShopIsDone.Utils.Pathfinding
 {
+    // Helper class for tracking navigation data
+    public class TileNavigationData
+    {
+        public Tile Root = null;
+        public int Distance = 0;
+        public List<Tile> Neighbors = new List<Tile>();
+    }
+
+    // Strategy patterns for deciding to skip tile
+    public interface IShouldSkipTileStrategy
+    {
+        bool ShouldSkipTile(Tile currentCandidate, Tile currentNeighbor);
+    }
+
+    // Default strategy
+    public class SimpleShouldSkipTileStrategy : IShouldSkipTileStrategy
+    {
+        public bool ShouldSkipTile(Tile _, Tile currentNeighbor)
+        {
+            return !currentNeighbor.Enabled;
+        }
+    }
+
+    // Move generator class
     public partial class MoveGenerator : Resource
     {
-        // Helper class for tracking navigation data
-        public class TileNavigationData
-        {
-            public Tile Root = null;
-            public int Distance = 0;
-            public List<Tile> Neighbors = new List<Tile>();
-        }
+        private IShouldSkipTileStrategy _ShouldSkipTileStrategy = new SimpleShouldSkipTileStrategy();
 
         // State
         private readonly Dictionary<Vector3, TileNavigationData> _TileNavMap = new Dictionary<Vector3, TileNavigationData>();
@@ -68,10 +86,16 @@ namespace ShopIsDone.Utils.Pathfinding
                     var neighborNavData = _TileNavMap[neighbor.TilemapPosition];
 
                     // If we haven't been rooted, skip
-                    if (!(neighborNavData.Root == null && neighbor != currentCandidateTile)) continue;
+                    if (!(neighborNavData.Root == null && neighbor != currentCandidateTile))
+                    {
+                        continue;
+                    }
 
                     // Check if we should skip this tile for any other reason
-                    if (ShouldSkipTile(currentCandidateTile, neighbor)) continue;
+                    if (_ShouldSkipTileStrategy.ShouldSkipTile(currentCandidateTile, neighbor))
+                    {
+                        continue;
+                    }
 
                     // If we can, update the nav data for that neighbor
                     neighborNavData.Root = currentCandidateTile;
@@ -111,16 +135,6 @@ namespace ShopIsDone.Utils.Pathfinding
         {
             _TileNavMap.Remove(tilePosition);
             _TileNavMap.Add(tilePosition, data);
-        }
-
-        public virtual bool ShouldSkipTile(Tile currentCandidate, Tile currentNeighbor)
-        {
-            return !currentNeighbor.Enabled;
-        }
-
-        public virtual bool IsValidMovePath(List<Tile> tiles)
-        {
-            return true;
         }
     }
 }
