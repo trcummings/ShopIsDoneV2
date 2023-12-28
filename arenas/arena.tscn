@@ -48,7 +48,6 @@ metadata/_edit_lock_ = true
 
 [node name="TurnCounter" type="Node" parent="Services"]
 script = ExtResource("2_qt0kh")
-IsFirstTurn = false
 
 [node name="ActionService" type="Node" parent="Services"]
 script = ExtResource("3_y84tj")

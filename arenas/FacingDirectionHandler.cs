@@ -78,6 +78,11 @@ namespace ShopIsDone.Tiles
             FacingDirectionChanged += OnFacingDirChanged;
         }
 
+        public void SetFacingDirection(Vector3 dir)
+        {
+            FacingDirection = dir;
+        }
+
         private void OnFacingDirChanged(Vector3 newDir)
         {
             // Rotate the facing target when the facing direction changes

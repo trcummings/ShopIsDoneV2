@@ -2,13 +2,19 @@ using System;
 using Godot;
 using System.Collections.Generic;
 using ShopIsDone.Core;
-using ShopIsDone.Utils.Commands;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ShopIsDone.EntityStates
 {
     public partial class EntityStateHandler : NodeComponent, IEntityActiveHandler
     {
+        [Signal]
+        public delegate void ChangedStateEventHandler();
+
+        [Signal]
+        public delegate void PushedStateEventHandler();
+
         [Export]
         public EntityState InitialState;
 
@@ -57,59 +63,65 @@ namespace ShopIsDone.EntityStates
             _CurrentState.Enter();
         }
 
-        public Command ChangeState(string state)
+        public void ChangeState(string state)
         {
-            return new AsyncCommand(async () =>
+            ChangeStateAsync(state)
+                .ContinueWith((_) => { EmitSignal(nameof(ChangedState)); });
+        }
+
+        public void PushState(string state)
+        {
+            PushStateAsync(state)
+                .ContinueWith((_) => { EmitSignal(nameof(PushedState)); });
+        }
+
+        public async Task ChangeStateAsync(string state)
+        {
+            if (!_States.ContainsKey(state))
             {
-                if (!_States.ContainsKey(state))
-                {
-                    GD.PrintErr($"No state named {state} in EntityStateHandler!");
-                    return;
-                }
+                GD.PrintErr($"No state named {state} in EntityStateHandler!");
+                return;
+            }
 
-                // Grab new state
-                var newState = _States[state];
+            // Grab new state
+            var newState = _States[state];
 
-                // Exit current state
-                _CurrentState.Exit();
-                await ToSignal(_CurrentState, nameof(_CurrentState.StateExited));
+            // Exit current state
+            _CurrentState.Exit();
+            await ToSignal(_CurrentState, nameof(_CurrentState.StateExited));
 
 
-                // Enter next state
-                _CurrentState = newState;
-                _CurrentState.Enter();
-                await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
-            });
+            // Enter next state
+            _CurrentState = newState;
+            _CurrentState.Enter();
+            await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
         }
 
         // Pushes a state on, enters, immediately exits
-        public Command PushState(string state)
+        private async Task PushStateAsync(string state)
         {
-            return new AsyncCommand(async () =>
+            if (!_States.ContainsKey(state))
             {
-                if (!_States.ContainsKey(state))
-                {
-                    GD.PrintErr($"No state named {state} in EntityStateHandler!");
-                    return;
-                }
+                GD.PrintErr($"No state named {state} in EntityStateHandler!");
+                return;
+            }
 
-                // Grab new state
-                var pushState = _States[state];
+            // Grab new state
+            var pushState = _States[state];
 
-                // Exit current state
-                _CurrentState.Exit();
-                await ToSignal(_CurrentState, nameof(_CurrentState.StateExited));
+            // Exit current state
+            _CurrentState.Exit();
+            await ToSignal(_CurrentState, nameof(_CurrentState.StateExited));
 
-                // Push state on, enter then exit
-                pushState.Enter();
-                await ToSignal(pushState, nameof(_CurrentState.StateEntered));
-                pushState.Exit();
-                await ToSignal(pushState, nameof(_CurrentState.StateExited));
+            // Push state on, enter then exit
+            pushState.Enter();
+            await ToSignal(pushState, nameof(_CurrentState.StateEntered));
+            pushState.Exit();
+            await ToSignal(pushState, nameof(_CurrentState.StateExited));
 
-                // Re-enter current state
-                _CurrentState.Enter();
-                await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
-            });
+            // Re-enter current state
+            _CurrentState.Enter();
+            await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
         }
     }
 }

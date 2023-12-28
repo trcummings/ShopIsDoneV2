@@ -59,7 +59,12 @@ namespace ShopIsDone.Actions
                 _CameraService.SetCameraTarget(Entity),
 
                 // Change the pawn to a movement state
-                _StateHandler.ChangeState("move"),
+                new AwaitSignalCommand(
+                    _StateHandler,
+                    nameof(_StateHandler.ChangedState),
+                    nameof(_StateHandler.ChangeState),
+                    "move"
+                ),
 
                 // Accumulate the movement action as a series of conditional commands
                 // that execute sub-movement actions which only continue if the unit
@@ -70,7 +75,12 @@ namespace ShopIsDone.Actions
                 // to a normal state
                 new ConditionalCommand(
                     () => _StateHandler.IsInState("move"),
-                    _StateHandler.ChangeState("idle")
+                    new AwaitSignalCommand(
+                        _StateHandler,
+                        nameof(_StateHandler.ChangedState),
+                        nameof(_StateHandler.ChangeState),
+                        "idle"
+                    )
                 )
             );
         }
@@ -109,11 +119,21 @@ namespace ShopIsDone.Actions
                         // normal state
                         new SeriesCommand(
                             // Idle
-                            _StateHandler.ChangeState("idle"),
+                            new AwaitSignalCommand(
+                                _StateHandler,
+                                nameof(_StateHandler.ChangedState),
+                                nameof(_StateHandler.ChangeState),
+                                "idle"
+                            ),
                             // Face towards the interruption
                             new ActionCommand(() => _FacingDirectionHandler.FacingDirection = dirTowards),
-                            // Play effects
-                            _StateHandler.PushState("alert")
+                            // Push alert state
+                            new AwaitSignalCommand(
+                                _StateHandler,
+                                nameof(_StateHandler.PushedState),
+                                nameof(_StateHandler.PushState),
+                                "alert"
+                            )
                         )
                     )
                 )

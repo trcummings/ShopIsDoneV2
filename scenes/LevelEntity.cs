@@ -5,7 +5,6 @@ using SystemCollections = System.Collections.Generic;
 using System.Linq;
 using ShopIsDone.Tiles;
 using ShopIsDone.Arenas.ArenaScripts;
-using ShopIsDone.Utils;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Arenas;
 
@@ -18,6 +17,15 @@ namespace ShopIsDone.Core
         C GetComponent<C>() where C : IComponent;
 
         bool HasComponent<C>() where C : IComponent;
+    }
+
+    public interface ILevelEntity : IComponentContainer
+    {
+        public Vector3 TilemapPosition { get; }
+
+        public Vector3 FacingDirection { get; }
+
+        public Vector3 GlobalPosition { get; }
     }
 
     [Tool]

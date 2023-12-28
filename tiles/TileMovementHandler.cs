@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 //using ShopIsDone.Pawns.Pathfinding;
-using ShopIsDone.Tiles;
 using ShopIsDone.Core;
-//using ShopIsDone.Render;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.DependencyInjection;
@@ -16,6 +14,9 @@ namespace ShopIsDone.Tiles
     // units
     public partial class TileMovementHandler : NodeComponent
     {
+        [Signal]
+        public delegate void TurnedToFaceDirEventHandler(Vector3 dir);
+
         [Export]
         private CharacterBody3D _Body;
 
@@ -67,13 +68,6 @@ namespace ShopIsDone.Tiles
         //{
         //    return MoveGenerator.IsValidMovePath(movePath);
         //}
-
-        public class PathMoveData
-        {
-            public Tile From;
-            public Tile To;
-            public bool IsPassThrough;
-        }
 
         // NB: Assume that MovePath will always have two or more tiles in it, that
         // the first tile should always be the current position of the unit, and
@@ -153,6 +147,8 @@ namespace ShopIsDone.Tiles
             // If the height is the same between the two, add a move command
             if (currentTile.TilemapPosition.Y == nextTile.TilemapPosition.Y)
             {
+                // Get new facing direction
+                var newFacingDir = (nextTile.TilemapPosition - currentTile.TilemapPosition).Sign();
                 // Define a series command so we can perform an animation and set
                 // the facing direction as commands rather than as mutations
                 return new PawnMoveSeriesCommand()
@@ -164,7 +160,7 @@ namespace ShopIsDone.Tiles
                     CommandProcessor = _CommandProcessor,
                     SeriesCommand = new SeriesCommand(
                         // Set the pawn facing direction to the new direction
-                        //Entity.SetFacingDirection(nextTile.TilemapPosition - currentTile.TilemapPosition),
+                        new ActionCommand(() => EmitSignal(nameof(TurnedToFaceDir), newFacingDir)),
                         // Move between the two
                         new MoveBetweenTilesCommand()
                         {
