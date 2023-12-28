@@ -25,6 +25,18 @@ namespace ShopIsDone.Utils.Extensions
             // Look at the target
             if (up != Vector3.Zero) spatial.LookAtFromPosition(position, target, up);
         }
+
+        public static Vector3 GetFacingDirTowards(this Node3D from, Vector3 destination)
+        {
+            var diff = ((destination - from.GlobalPosition) with { Y = 0 }).Normalized();
+            // Compute a facing direction
+            var newDir = diff.Round() with { Y = 0 };
+            // Handle the situation where bot x and z vectors are 1, by just zeroing
+            // out the z vector
+            if (Mathf.Abs(newDir.X) == Mathf.Abs(newDir.Z)) newDir.Z = 0;
+            // Return the direction
+            return newDir;
+        }
     }
 }
 

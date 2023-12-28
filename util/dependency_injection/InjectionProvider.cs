@@ -20,7 +20,7 @@ namespace ShopIsDone.Utils.DependencyInjection
 
         public static void Inject(Node node)
         {
-            GetProvider(node).InjectNode(node);
+            GetProvider(node).InjectObject(node);
         }
 
         public void RegisterService<TService>(TService service)
@@ -44,10 +44,10 @@ namespace ShopIsDone.Utils.DependencyInjection
             throw new InvalidOperationException($"No service registered for type {serviceType}");
         }
 
-        private void InjectNode(Node node)
+        public void InjectObject(GodotObject obj)
         {
             // Get all fields marked with the inject attribute
-            var fields = node
+            var fields = obj
                 .GetType()
                 .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                 .Where(prop => Attribute.IsDefined(prop, typeof(InjectAttribute)));
@@ -57,7 +57,7 @@ namespace ShopIsDone.Utils.DependencyInjection
             {
                 var serviceType = field.FieldType;
                 var service = Resolve(serviceType);
-                field.SetValue(node, service);
+                field.SetValue(obj, service);
             }
         }
     }

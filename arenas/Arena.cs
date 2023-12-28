@@ -9,14 +9,10 @@ using ShopIsDone.Core;
 using System.Linq;
 using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Actions;
 
 namespace ShopIsDone.Arenas
 {
-    public partial class ArenaAction : GodotObject
-    {
-
-    }
-
     public partial class ActionRule : GodotObject
     {
 
