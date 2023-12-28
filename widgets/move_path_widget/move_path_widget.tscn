@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://b4uxifgjvks6n"]
+
+[ext_resource type="Script" path="res://widgets/move_path_widget/MovePathWidget.cs" id="1_v7kev"]
+[ext_resource type="Material" path="res://widgets/move_path_widget/closed_base.material" id="2_37anc"]
+[ext_resource type="Material" uid="uid://c21g741ooc7n6" path="res://widgets/move_path_widget/line_cap_with_gradient.material" id="3_tbwen"]
+[ext_resource type="Material" path="res://widgets/move_path_widget/open_base.material" id="4_syyw0"]
+[ext_resource type="Material" path="res://widgets/move_path_widget/straight_line.material" id="5_4de0o"]
+[ext_resource type="Material" path="res://widgets/move_path_widget/curved_line.material" id="6_y2qjy"]
+
+[sub_resource type="QuadMesh" id="1"]
+material = ExtResource("2_37anc")
+size = Vector2(2, 2)
+
+[sub_resource type="QuadMesh" id="3"]
+material = ExtResource("3_tbwen")
+size = Vector2(2, 2)
+
+[sub_resource type="QuadMesh" id="2"]
+material = ExtResource("4_syyw0")
+size = Vector2(2, 2)
+
+[sub_resource type="QuadMesh" id="4"]
+material = ExtResource("5_4de0o")
+size = Vector2(2, 2)
+
+[sub_resource type="QuadMesh" id="5"]
+material = ExtResource("6_y2qjy")
+size = Vector2(2, 2)
+
+[node name="MovePathWidget" type="Node3D"]
+script = ExtResource("1_v7kev")
+
+[node name="PathNodes" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="ClosedLineBase" type="Node3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ClosedLineBase" type="MeshInstance3D" parent="ClosedLineBase"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.02, 0)
+layers = 5
+mesh = SubResource("1")
+skeleton = NodePath("../..")
+
+[node name="LineCap" type="Node3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="LineCapMesh" type="MeshInstance3D" parent="LineCap"]
+unique_name_in_owner = true
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 0.02, 0)
+layers = 5
+mesh = SubResource("3")
+skeleton = NodePath("../..")
+
+[node name="OpenLineBase" type="Node3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="OpenLineBase" type="MeshInstance3D" parent="OpenLineBase"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.02, 0)
+layers = 5
+mesh = SubResource("2")
+skeleton = NodePath("../..")
+
+[node name="StraightLineTemplate" type="Node3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="StraightLineTemplate" type="MeshInstance3D" parent="StraightLineTemplate"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.02, 0)
+layers = 5
+mesh = SubResource("4")
+skeleton = NodePath("../..")
+
+[node name="CurvedLineTemplate" type="Node3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="CurvedLineTemplate" type="MeshInstance3D" parent="CurvedLineTemplate"]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 0.02, 0)
+layers = 5
+mesh = SubResource("5")
+skeleton = NodePath("../..")
