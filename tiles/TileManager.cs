@@ -2,6 +2,7 @@ using Godot;
 using System;
 using Godot.Collections;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Core;
 
 namespace ShopIsDone.Tiles
 {
@@ -73,6 +74,16 @@ namespace ShopIsDone.Tiles
                 return tile;
             }
             return null;
+        }
+
+        public bool IsTileOccupied(Tile tile)
+        {
+            return false;
+        }
+
+        public bool CanPassThroughTile(LevelEntity entity, Tile tile)
+        {
+            return true;
         }
     }
 }

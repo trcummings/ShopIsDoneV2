@@ -11,7 +11,7 @@ namespace ShopIsDone.Selectables
     // This component associates our tile world map with entities that are
     // selectable by the player, and to help determine an entity's association
     // with any tiles nearby it
-    public partial class Selectable : SpatialComponent, IUpdateOnActionComponent
+    public partial class Selectable : Node3DComponent, IUpdateOnActionComponent
     {
         // Selectable tiles that associate the entity to where it can be
         // selected on the board
@@ -26,7 +26,7 @@ namespace ShopIsDone.Selectables
             foreach (var tile in _SelectableTiles) tile.Hide();
         }
 
-        public virtual void Init()
+        public override void Init()
         {
             // Register tiles with interactables and the associated tile
             SetSelectableInTiles();

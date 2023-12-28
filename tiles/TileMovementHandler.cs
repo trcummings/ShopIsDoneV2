@@ -8,6 +8,7 @@ using ShopIsDone.Core;
 //using ShopIsDone.Render;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Tiles
 {
@@ -38,7 +39,18 @@ namespace ShopIsDone.Tiles
         public float MoveEffortMod = 0.6f; // (3 -> 5 ratio)
 
         [Export]
+        public bool CanPassThroughAllies = false;
+
+        [Export]
         public bool CanSeeInTheDark = false;
+
+        [Inject]
+        private TileManager _TileManager;
+
+        public void Init(EntityManager _)
+        {
+            InjectionProvider.Inject(this);
+        }
 
         //public List<Tile> GetAvailableMoves(Tile fromTile, bool includeFromTile = true, int moveRange = -1)
         //{
@@ -84,8 +96,7 @@ namespace ShopIsDone.Tiles
                 {
                     // Find out if we need to pass through a friendly unit to make
                     // this movement work
-                    //var isPassThrough = record.Previous.HasUnitThatCanBePassedThroughBy(Entity as Pawn);
-                    var isPassThrough = false;
+                    var isPassThrough = _TileManager.CanPassThroughTile(Entity, record.Previous);
 
                     // If the first tile is not a pass through tile, then create a
                     // new entry to map over

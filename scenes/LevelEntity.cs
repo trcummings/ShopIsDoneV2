@@ -20,6 +20,7 @@ namespace ShopIsDone.Core
         bool HasComponent<C>() where C : IComponent;
     }
 
+    [Tool]
     public partial class LevelEntity : CharacterBody3D, IComponentContainer
     {
         [Signal]
@@ -74,9 +75,6 @@ namespace ShopIsDone.Core
         }
         #endregion
 
-        // Reference other entities
-        protected EntityManager _EntityManager;
-
         public override void _Ready()
         {
             base._Ready();
@@ -84,37 +82,28 @@ namespace ShopIsDone.Core
             // Connect to enabled/disabled hooks
             EntityEnabled += OnEnabled;
             EntityDisabled += OnDisabled;
+
+            // Get all components in the children of the entity
+            foreach (var component in GetChildren().OfType<IComponent>())
+            {
+                AddComponent(component);
+            }
         }
 
         // Init
-        public virtual Command Init(EntityManager entityManager)
+        public virtual void Init()
         {
-            return new ActionCommand(() =>
+            if (Enabled) OnEnabled();
+            else OnDisabled();
+
+            // Initialize components
+            foreach (var component in _Components)
             {
-                // Set entity manager
-                _EntityManager = entityManager;
+                component.Init();
+            }
 
-                // Get all components in the children of the entity
-                foreach (var component in GetChildren().OfType<IComponent>())
-                {
-                    AddComponent(component);
-                }
-
-                // Register whole entity
-                _EntityManager.AddEntity(this);
-
-                if (Enabled) OnEnabled();
-                else OnDisabled();
-
-                // Initialize components with entity manager
-                foreach (var component in _Components.OfType<IInitializableComponent>())
-                {
-                    component.Init(_EntityManager);
-                }
-
-                // Emit initialized signal
-                EmitSignal(nameof(Initialized));
-            });
+            // Emit initialized signal
+            EmitSignal(nameof(Initialized));
         }
 
         // Positioning

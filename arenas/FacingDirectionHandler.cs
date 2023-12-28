@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using ShopIsDone.Core;
 using ShopIsDone.Utils;
 
 namespace ShopIsDone.Tiles
@@ -7,8 +8,8 @@ namespace ShopIsDone.Tiles
 	/* This class handles the Facing Direction of entities that need to be 
 	 * positioned on an arena grid */
 	[Tool]
-	public partial class FacingDirectionHandler : Node
-	{
+	public partial class FacingDirectionHandler : NodeComponent
+    {
         [Signal]
         public delegate void FacingDirectionChangedEventHandler(Vector3 newDir);
 

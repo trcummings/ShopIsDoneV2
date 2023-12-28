@@ -7,7 +7,7 @@ using ShopIsDone.Utils.Extensions;
 namespace ShopIsDone.ActionPoints
 {
     // This is a component that handles damage, debt, guard, and death
-    public partial class ActionPointHandlerComponent : NodeComponent
+    public partial class ActionPointHandler : NodeComponent
     {
         [Signal]
         public delegate void SpentApEventHandler(int amount);

@@ -9,30 +9,37 @@ namespace ShopIsDone.Actions
 {
     public partial class ArenaAction : Resource
     {
+        [ExportGroup("Identification")]
         [Export]
         public string Id;
 
         [Export]
         public string ActionName;
 
+        [ExportGroup("Usage")]
         [Export]
         public bool EndsTurnAfterUse = false;
 
         [Export]
         public bool CanBeUsedMultipleTimes = false;
 
+        [ExportGroup("Action Cost")]
         [Export]
         public int ActionCost = 0;
 
         [Export]
         public int ExcessAPCost = 0;
 
+        [ExportGroup("Targeting")]
         [Export]
         public bool CanTargetSelf = false;
 
         [Export]
         public int Range = 0;
 
+        [ExportGroup("Widget")]
+        [Export]
+        public ActionTypes ActionType = 0;
         public enum ActionTypes
         {
             Null,
@@ -41,17 +48,23 @@ namespace ShopIsDone.Actions
             Target,
             Inspect
         }
-        [Export]
-        public ActionTypes ActionType = 0;
 
+        [Export]
+        public IndicatorTypes IndicatorType = 0;
         public enum IndicatorTypes
         {
             Neutral,
             Friendly,
             Hostile
         }
+
+        [ExportGroup("Camera Behavior")]
         [Export]
-        public IndicatorTypes IndicatorType = 0;
+        public bool FollowEntity = false;
+
+        [Export]
+        public bool FocusEntity = false;
+
 
         public virtual bool HasRequiredComponents(LevelEntity entity)
         {
@@ -65,9 +78,9 @@ namespace ShopIsDone.Actions
 
         // The pawn using the action
         public LevelEntity Entity;
-        private ActionHandler _ActionHandler;
+        protected ActionHandler _ActionHandler;
 
-        public void Init(ActionHandler actionHandler)
+        public virtual void Init(ActionHandler actionHandler)
         {
             _ActionHandler = actionHandler;
             Entity = _ActionHandler.Entity;
@@ -81,5 +94,10 @@ namespace ShopIsDone.Actions
                 if (EndsTurnAfterUse) _ActionHandler.EndTurn();
             });
         }
+    }
+
+    public partial class ActionResult : GodotObject
+    {
+
     }
 }

@@ -24,7 +24,7 @@ namespace ShopIsDone.Actors
             SetProcess(false);
         }
 
-        public void Init()
+        public override void Init()
         {
             _ActorAnimator.Init();
             SetProcess(true);

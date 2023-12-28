@@ -4,6 +4,7 @@ using System.Linq;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Models.IsometricModels;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Actions;
 
 namespace ShopIsDone.Cameras
 {
@@ -69,7 +70,6 @@ namespace ShopIsDone.Cameras
         {
             _IsometricCamera.SetYawToDir(facingDir);
         }
-
 
         // Decorator command that saves whatever the prior target was and goes
         // back to it after a command is completed

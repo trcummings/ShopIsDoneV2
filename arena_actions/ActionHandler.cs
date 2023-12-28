@@ -9,7 +9,7 @@ using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Actions
 {
-    public partial class ActionHandler : NodeComponent, IInitializableComponent
+    public partial class ActionHandler : NodeComponent
     {
         public partial class ActionStateData : GodotObject
         {
@@ -26,7 +26,7 @@ namespace ShopIsDone.Actions
 
         protected bool _IsTurnEnded = false;
 
-        private ActionPointHandlerComponent _ActionPointHandler;
+        private ActionPointHandler _ActionPointHandler;
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -36,7 +36,7 @@ namespace ShopIsDone.Actions
         }
 
         // Public API
-        public virtual void Init(EntityManager _)
+        public override void Init()
         {
             // Duplicate actions
             Actions = Actions.Duplicate();

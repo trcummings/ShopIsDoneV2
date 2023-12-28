@@ -31,10 +31,14 @@ namespace ShopIsDone.Arenas
     public partial class Arena : Node3D
     {
         [Export]
+        public StateMachine _ArenaStateMachine;
+
+        // Services
+        [Export]
         private TileManager _TileManager;
 
         [Export]
-        public StateMachine _ArenaStateMachine;
+        private ActionService _ActionService;
 
         private InjectionProvider _InjectionProvider;
 
@@ -47,6 +51,7 @@ namespace ShopIsDone.Arenas
         public void Init(LevelEntity playerUnit)
         {
             _TileManager.Init();
+            _ActionService.Init();
 
             // Move units into arena
             var placementTiles = GetTree()
@@ -58,6 +63,7 @@ namespace ShopIsDone.Arenas
 
             // Register services
             _InjectionProvider.RegisterService(_TileManager);
+            _InjectionProvider.RegisterService(_ActionService);
 
             // Change state to initializing
             _ArenaStateMachine.ChangeState("Initializing");
@@ -67,11 +73,7 @@ namespace ShopIsDone.Arenas
         {
             // Unregister services
             _InjectionProvider.UnregisterService(_TileManager);
-        }
-
-        public void ExecuteAction(Command action)
-        {
-
+            _InjectionProvider.UnregisterService(_ActionService);
         }
 
         public Command Start()

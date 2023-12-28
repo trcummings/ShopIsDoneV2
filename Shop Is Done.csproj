@@ -10,5 +10,6 @@
     <Folder Include="tasks\" />
     <Folder Include="util\pathfinding\" />
     <Folder Include="util\dependency_injection\" />
+    <Folder Include="entity_states\employee_states\" />
   </ItemGroup>
 </Project>
