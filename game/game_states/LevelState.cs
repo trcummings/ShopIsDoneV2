@@ -12,9 +12,6 @@ namespace ShopIsDone.Game.States
         [Export]
         public PackedScene LevelOverride;
 
-        [Export]
-        public Godot.Environment LevelEnvironment;
-
         // Nodes
         private Level _Level;
         private GlobalEvents _GlobalEvents;
@@ -29,9 +26,6 @@ namespace ShopIsDone.Game.States
         {
             // Pull the initial level from the message
             var levelScene = (PackedScene)message.GetValueOrDefault(Consts.LEVEL_KEY);
-
-            // Set render environment
-            _GlobalEvents.EmitSignal(nameof(_GlobalEvents.ChangeEnvironmentRequested), LevelEnvironment);
 
             // Ready scene
             _Level = (LevelOverride ?? levelScene).Instantiate<Level>();

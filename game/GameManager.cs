@@ -28,7 +28,6 @@ namespace ShopIsDone.Game
 
         // Nodes
         private StateMachine _GSM;
-        private WorldEnvironment _WorldEnvironment;
         private ColorRect _BlackOverlay;
         private DebugDisplay _DebugDisplay;
         private GameSettingsManager _GameSettings;
@@ -38,7 +37,6 @@ namespace ShopIsDone.Game
         {
             // Ready nodes
             _GSM = GetNode<StateMachine>("%GameStateMachine");
-            _WorldEnvironment = GetNode<WorldEnvironment>("%WorldEnvironment");
             _BlackOverlay = GetNode<ColorRect>("%BlackOverlay");
             _DebugDisplay = GetNode<DebugDisplay>("%DebugDisplay");
 
@@ -54,7 +52,6 @@ namespace ShopIsDone.Game
             _GlobalEvents = GlobalEvents.GetGlobalEvents(this);
             _GlobalEvents.FadeInRequested += () => _ = FadeInOverlay();
             _GlobalEvents.FadeOutRequested += () => _ = FadeOutOverlay();
-            _GlobalEvents.ChangeEnvironmentRequested += SetEnvironment;
             _GlobalEvents.QuitGameRequested += QuitGame;
 
             // Set GSM into settings load state
@@ -88,13 +85,6 @@ namespace ShopIsDone.Game
 
             // Quit game
             GetTree().Quit();
-        }
-
-
-        // World environment
-        private void SetEnvironment(Godot.Environment environment)
-        {
-            _WorldEnvironment.Environment = environment;
         }
 
         // Debug Display

@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cstrf18fypse2"]
+[gd_scene load_steps=9 format=3 uid="uid://cstrf18fypse2"]
 
 [ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="2_d05bg"]
+[ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_y6b84"]
 [ext_resource type="Script" path="res://title_screen/TitleScreenManager.cs" id="3"]
 [ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="3_6upy8"]
 [ext_resource type="PackedScene" uid="uid://4vlshcui36ix" path="res://title_screen/title_screen_clown_puppet.tscn" id="4"]
@@ -10,6 +11,9 @@
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_y6b84")
 
 [node name="Sfx" type="Node" parent="."]
 

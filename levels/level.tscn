@@ -44,6 +44,8 @@ _FingerCursor = NodePath("World/Widgets/FingerCursor")
 _TileCursor = NodePath("World/Widgets/TileCursor")
 metadata/_edit_lock_ = true
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
 [node name="LevelStateMachine" type="Node" parent="."]
 script = ExtResource("2_b2cin")
 

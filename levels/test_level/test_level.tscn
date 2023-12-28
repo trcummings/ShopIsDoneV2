@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=7 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
+[ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
 [ext_resource type="PackedScene" uid="uid://mn346u6gevet" path="res://levels/test_level/test_layout.tscn" id="2_5q5uu"]
 [ext_resource type="PackedScene" uid="uid://dvyl4d7ds1ji7" path="res://dialogue/dialogue_area.tscn" id="3_hk7sm"]
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="4_duy8r"]
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="5_arh5s"]
 
 [node name="Level" instance=ExtResource("1_egns7")]
+
+[node name="WorldEnvironment" parent="." index="0"]
+environment = ExtResource("2_2x2uj")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
 

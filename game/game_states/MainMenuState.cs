@@ -11,9 +11,6 @@ namespace ShopIsDone.Game.States
         [Export]
         public PackedScene TitleScreenScene;
 
-        [Export]
-        public Godot.Environment MainMenuEnvironment;
-
         // Nodes
         private TitleScreenManager _TitleScreen;
         private GlobalEvents _GlobalEvents;
@@ -26,9 +23,6 @@ namespace ShopIsDone.Game.States
 
         public async override void OnStart(Dictionary<string, Variant> message = null)
         {
-            // Set render environment
-            _GlobalEvents.EmitSignal(nameof(_GlobalEvents.ChangeEnvironmentRequested), MainMenuEnvironment);
-
             // Ready main menu scene
             _TitleScreen = TitleScreenScene.Instantiate<TitleScreenManager>();
             AddChild(_TitleScreen);
