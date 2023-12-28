@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ccauejj4i4k3v" path="res://audio/footsteps/tile/footsteps_tile_fast.tscn" id="8_h2my1"]
 [ext_resource type="PackedScene" uid="uid://cmq4kldjoormo" path="res://audio/footsteps/tile/footsteps_tile_medium.tscn" id="9_lim5r"]
 [ext_resource type="PackedScene" uid="uid://2ae2lvic7v6g" path="res://audio/footsteps/tile/footsteps_tile_slow.tscn" id="10_0nb28"]
-[ext_resource type="Script" path="res://tiles/ArenaTilePlacementHandler.cs" id="11_862jn"]
+[ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="11_862jn"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75

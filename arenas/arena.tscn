@@ -48,6 +48,8 @@ metadata/_edit_lock_ = true
 script = ExtResource("2_qt0kh")
 IsFirstTurn = false
 
+[node name="Node" type="Node" parent="Services"]
+
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
 

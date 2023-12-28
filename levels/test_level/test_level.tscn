@@ -25,7 +25,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1546, -4.76835e-07, -1.313
 
 [node name="Arena" parent="World/NavigationRegion3D/Environment" index="4" instance=ExtResource("5_arh5s")]
 
-[node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="1" node_paths=PackedStringArray("_ArenaTilemap")]
+[node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../TileManager")
 
 [node name="TileManager" parent="World/NavigationRegion3D/Environment/Arena" index="3" instance=ExtResource("4_duy8r")]
