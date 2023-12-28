@@ -37,10 +37,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_gufqt"]
 size = Vector3(0.646393, 1, 6)
 
-[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager") groups=["arena"]]
+[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService") groups=["arena"]]
 script = ExtResource("1_loukv")
 _ArenaStateMachine = NodePath("ArenaStateMachine")
 _TileManager = NodePath("Tiles")
+_ActionService = NodePath("Services/ActionService")
 metadata/_edit_lock_ = true
 
 [node name="Services" type="Node" parent="."]
