@@ -4,7 +4,7 @@ using Godot.Collections;
 
 namespace ShopIsDone.Tiles
 {
-	public partial class Tile : Node3D
+	public partial class Tile : StaticBody3D
 	{
 		public Vector3 TilemapPosition;
 

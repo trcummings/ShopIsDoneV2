@@ -14,7 +14,9 @@ size = Vector2(2, 2)
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(1.38, 0.2, 1.38)
 
-[node name="Tile" type="Area3D" groups=["tile"]]
+[node name="Tile" type="StaticBody3D" groups=["tile"]]
+collision_layer = 128
+collision_mask = 0
 script = ExtResource("6")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
@@ -44,23 +46,22 @@ mesh = SubResource("2")
 
 [node name="Neighbors" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-visible = false
 
 [node name="South" type="RayCast3D" parent="Neighbors"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 2)
-collide_with_areas = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2)
+collision_mask = 128
 
 [node name="North" type="RayCast3D" parent="Neighbors"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -2)
-collide_with_areas = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, -2)
+collision_mask = 128
 
 [node name="East" type="RayCast3D" parent="Neighbors"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 5, 0)
-collide_with_areas = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 2.08165e-12)
+collision_mask = 128
 
 [node name="West" type="RayCast3D" parent="Neighbors"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 5, 0)
-collide_with_areas = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 2.08165e-12)
+collision_mask = 128
 
 [node name="LightDetector" type="Node3D" parent="."]
 

@@ -4,16 +4,13 @@ using ShopIsDone.Utils;
 
 namespace ShopIsDone.Tiles
 {
-	/* This class handles the Tilemap Position and Facing Direction of every 
-	 * entity that needs to be positioned on an arena grid */
+	/* This class handles the Facing Direction of entities that need to be 
+	 * positioned on an arena grid */
 	[Tool]
-	public partial class ArenaTilePlacementHandler : Node
+	public partial class FacingDirectionHandler : Node
 	{
         [Signal]
         public delegate void FacingDirectionChangedEventHandler(Vector3 newDir);
-
-        [Signal]
-        public delegate void TilemapPositionChangedEventHandler(Vector3 newDir);
 
         #region Dir Tool Export
         public enum DirEnum
@@ -23,7 +20,7 @@ namespace ShopIsDone.Tiles
             Left = 2,
             Right = 3
         }
-        [Export(PropertyHint.Enum, "Forward,Backward,Left,Right")]
+        [Export]
 		private DirEnum EditorFacingDir
         {
             get {
@@ -70,13 +67,6 @@ namespace ShopIsDone.Tiles
 			set { _FacingDirection = value; EmitSignal(nameof(FacingDirectionChanged), value); }
 		}
 		private Vector3 _FacingDirection = Vector3.Forward;
-
-		public Vector3 TilemapPosition
-		{
-            get { return _TilemapPosition; }
-            set { _TilemapPosition = value; EmitSignal(nameof(TilemapPositionChanged), value); }
-        }
-        private Vector3 _TilemapPosition = Vector3.Zero;
 
         [Export]
         public Node3D FacingTarget;
