@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=24 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://actors/ActorVelocity.cs" id="3"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="19_dsksq"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="20_1bpch"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="21_k5t6c"]
+[ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="22_f48js"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
@@ -102,6 +103,9 @@ CanPassThroughAllies = true
 script = ExtResource("20_1bpch")
 
 [node name="TilemapPositionHandler" parent="." instance=ExtResource("21_k5t6c")]
+
+[node name="DemeritHandler" type="Node" parent="."]
+script = ExtResource("22_f48js")
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="HaskellModel" method="SetFacingDir"]

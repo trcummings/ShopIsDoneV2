@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://jwe8q05skw4o"
-path="res://.godot/imported/action_point_meter_bulbs.png-41e361a4449786e3c30eafae0f38c9df.ctex"
+path="res://.godot/imported/action_point_meter_bulbs.png-a37858b465707b0b78fe74f919786483.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/UI/ActionPointMeterUI/action_point_meter_bulbs.png"
-dest_files=["res://.godot/imported/action_point_meter_bulbs.png-41e361a4449786e3c30eafae0f38c9df.ctex"]
+source_file="res://arenas/ui/player_unit/textures/action_point_meter_bulbs.png"
+dest_files=["res://.godot/imported/action_point_meter_bulbs.png-a37858b465707b0b78fe74f919786483.ctex"]
 
 [params]
 

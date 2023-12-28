@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3 uid="uid://jemifixdagp1"]
+
+[ext_resource type="Script" path="res://arenas/ui/player_unit/PlayerPawnUIContainer.cs" id="1_hx46p"]
+[ext_resource type="PackedScene" uid="uid://daffdkouahgqp" path="res://arenas/ui/player_unit/player_unit_ui.tscn" id="2_837o3"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="3_cepu3"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="4_njwto"]
+[ext_resource type="PackedScene" uid="uid://owvl5qshyl5r" path="res://arenas/ui/player_unit/select_unit_ui.tscn" id="5_5m2af"]
+
+[node name="PlayerPawnUIContainer" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("1_hx46p")
+PawnUIElementScene = ExtResource("2_837o3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PawnUIElements" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CycleUnitsUI" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/CycleUnitsUI"]
+layout_mode = 2
+theme = ExtResource("3_cepu3")
+text = "Cycle Units"
+
+[node name="ActionIcon" type="TextureRect" parent="VBoxContainer/CycleUnitsUI"]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4_njwto")
+action_name = &"cycle_player_pawns_backward"
+joypad_model = 2
+
+[node name="ActionIcon2" type="TextureRect" parent="VBoxContainer/CycleUnitsUI"]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4_njwto")
+action_name = &"cycle_player_pawns_forward"
+joypad_model = 2
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CycleTasksUI" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/CycleTasksUI"]
+layout_mode = 2
+theme = ExtResource("3_cepu3")
+text = "Cycle Tasks"
+
+[node name="ActionIcon" type="TextureRect" parent="VBoxContainer/CycleTasksUI"]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4_njwto")
+action_name = &"cycle_tasks_backward"
+joypad_model = 2
+
+[node name="ActionIcon2" type="TextureRect" parent="VBoxContainer/CycleTasksUI"]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4_njwto")
+action_name = &"cycle_tasks_forward"
+joypad_model = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SelectUnitUI" parent="VBoxContainer" instance=ExtResource("5_5m2af")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0

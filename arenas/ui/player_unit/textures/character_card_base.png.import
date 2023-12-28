@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0ra0647c30u3"
-path="res://.godot/imported/simple_arrow.png-8b7444e19ab0980095b93d4bcab9b630.ctex"
+uid="uid://df7k41uwwwerr"
+path="res://.godot/imported/character_card_base.png-25186018f18a67189b8959734dfd8302.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/UI/CharacterCardUI/simple_arrow.png"
-dest_files=["res://.godot/imported/simple_arrow.png-8b7444e19ab0980095b93d4bcab9b630.ctex"]
+source_file="res://arenas/ui/player_unit/textures/character_card_base.png"
+dest_files=["res://.godot/imported/character_card_base.png-25186018f18a67189b8959734dfd8302.ctex"]
 
 [params]
 

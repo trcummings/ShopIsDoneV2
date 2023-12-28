@@ -9,6 +9,7 @@ using ShopIsDone.Widgets;
 using Godot.Collections;
 using System.Linq;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Arenas.UI;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -35,13 +36,18 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         //private Arena _Arena;
 
-        //private PlayerPawnUIContainer _PawnUIContainer;
+        [Export]
+        public PlayerUnitService _PlayerUnitService;
+
+        [Export]
+        private PlayerPawnUIContainer _PawnUIContainer;
 
         //private InteractableUIContainer _InteractableUIContainer;
 
         //private TileUIContainer _TileUIContainer;
 
-        //private Control _EndPlayerTurnWidget;
+        [Export]
+        private Control _EndPlayerTurnWidget;
 
         //private Control _MoreInfoUI;
 
@@ -86,13 +92,13 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _TileCursor.MoveCursorTo(_LastSelectedTile);
             _FingerCursor.WarpCursorTo(_LastSelectedTile.GlobalPosition);
 
-            //    // Initialize PawnUIContainer with all units in the arena and show it
-            //    _PawnUIContainer.Init(PTM.GetPlayerPawns().Select(e => e as Pawn).ToList());
-            //    SelectTile(_LastSelectedTile);
-            //    _PawnUIContainer.Show();
+            // Initialize PawnUIContainer with all units in the arena and show it
+            _PawnUIContainer.Init(_PlayerUnitService.PlayerUnits);
+            //SelectTile(_LastSelectedTile);
+            _PawnUIContainer.Show();
 
-            //    // Show the "End turn" UI
-            //    _EndPlayerTurnWidget.Show();
+            // Show the "End turn" UI
+            _EndPlayerTurnWidget.Show();
 
             //    // Show the "More Info" UI
             //    _MoreInfoUI.Show();

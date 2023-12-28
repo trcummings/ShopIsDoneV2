@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu38xkw3jh4g6"
-path="res://.godot/imported/jessica_mini_portrait.png-9a8f3483de95ab2e24c12e4091870139.ctex"
+uid="uid://b0ra0647c30u3"
+path="res://.godot/imported/simple_arrow.png-e5a075f055c8db0d6d230dfef503c497.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/UI/CharacterCardUI/jessica_mini_portrait.png"
-dest_files=["res://.godot/imported/jessica_mini_portrait.png-9a8f3483de95ab2e24c12e4091870139.ctex"]
+source_file="res://arenas/ui/player_unit/textures/simple_arrow.png"
+dest_files=["res://.godot/imported/simple_arrow.png-e5a075f055c8db0d6d230dfef503c497.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=38 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -34,6 +34,8 @@
 [ext_resource type="Script" path="res://arenas/states/finished_states/FailureFinishedState.cs" id="24_ych7k"]
 [ext_resource type="Script" path="res://util/ControlTweener.cs" id="32_b7vkh"]
 [ext_resource type="PackedScene" uid="uid://dqw2sf0ivpiqj" path="res://arenas/turn_counter/turns_remaining_panel.tscn" id="33_otw68"]
+[ext_resource type="PackedScene" uid="uid://jemifixdagp1" path="res://arenas/ui/player_unit/player_unit_ui_container.tscn" id="35_gpbff"]
+[ext_resource type="PackedScene" uid="uid://bgrl3b7hwon66" path="res://arenas/ui/end_player_turn_ui.tscn" id="36_nf6kd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gufqt"]
 size = Vector3(0.646393, 1, 6)
@@ -107,8 +109,11 @@ script = ExtResource("2_1igvu")
 [node name="Idle" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
 script = ExtResource("3_q440h")
 
-[node name="ChoosingUnit" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
+[node name="ChoosingUnit" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_EndPlayerTurnWidget")]
 script = ExtResource("12_jioot")
+_PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
+_PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
+_EndPlayerTurnWidget = NodePath("../../../../../../UILayer/CenterContainer/MarginContainer/EndPlayerTurnUI")
 
 [node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
 script = ExtResource("13_sabdx")
@@ -223,3 +228,25 @@ size = Vector2i(470, 414)
 render_target_update_mode = 0
 
 [node name="TurnsRemainingPanel" parent="UILayer/TurnsRemaining/CenterContainer/PanelContainer/ViewportContainer/Viewport" instance=ExtResource("33_otw68")]
+
+[node name="PlayerPawnUIContainer" parent="UILayer" instance=ExtResource("35_gpbff")]
+visible = false
+
+[node name="CenterContainer" type="CenterContainer" parent="UILayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_right = 100.0
+offset_bottom = 60.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 16
+
+[node name="EndPlayerTurnUI" parent="UILayer/CenterContainer/MarginContainer" instance=ExtResource("36_nf6kd")]
+visible = false
+layout_mode = 2

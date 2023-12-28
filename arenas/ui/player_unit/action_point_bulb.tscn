@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7vca6ydo632e"]
+
+[ext_resource type="Texture2D" uid="uid://jwe8q05skw4o" path="res://arenas/ui/player_unit/textures/action_point_meter_bulbs.png" id="1"]
+[ext_resource type="Script" path="res://arenas/ui/player_unit/ActionPointBulb.cs" id="2"]
+
+[node name="ActionPointBulb" type="Control"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("2")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1")
+centered = false
+hframes = 4

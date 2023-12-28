@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cl0yr05wkeuas"
-path="res://.godot/imported/base_character_portrait.png-e5357213c69d1d009d8316480d3f2901.ctex"
+path="res://.godot/imported/base_character_portrait.png-6326508ec5986888e4999cb670f37e79.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/UI/CharacterCardUI/base_character_portrait.png"
-dest_files=["res://.godot/imported/base_character_portrait.png-e5357213c69d1d009d8316480d3f2901.ctex"]
+source_file="res://arenas/ui/player_unit/textures/base_character_portrait.png"
+dest_files=["res://.godot/imported/base_character_portrait.png-6326508ec5986888e4999cb670f37e79.ctex"]
 
 [params]
 

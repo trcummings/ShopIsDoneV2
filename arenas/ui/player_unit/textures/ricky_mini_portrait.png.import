@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df7k41uwwwerr"
-path="res://.godot/imported/character_card_base.png-50ebd5554181ec4d579924a9fed21299.ctex"
+uid="uid://btbbo2rdtmy75"
+path="res://.godot/imported/ricky_mini_portrait.png-1f3f1dc1ca51541571322b34d0ae3af5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/UI/CharacterCardUI/character_card_base.png"
-dest_files=["res://.godot/imported/character_card_base.png-50ebd5554181ec4d579924a9fed21299.ctex"]
+source_file="res://arenas/ui/player_unit/textures/ricky_mini_portrait.png"
+dest_files=["res://.godot/imported/ricky_mini_portrait.png-1f3f1dc1ca51541571322b34d0ae3af5.ctex"]
 
 [params]
 
