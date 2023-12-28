@@ -6,6 +6,9 @@ namespace ShopIsDone.Arenas.Battles.States
 {
     public partial class EnemyActivityBattleState : State
     {
+        [Export]
+        private BattlePhaseManager _PhaseManager;
+
         //[Export]
         //public Team CustomerTeam;
 
@@ -65,6 +68,7 @@ namespace ShopIsDone.Arenas.Battles.States
 
             //// End the turn
             //await AddToCommandManager(Arena.AdvanceToNextPhase()).ExecuteAsTask();
+            _PhaseManager.AdvanceToNextPhase();
         }
     }
 }

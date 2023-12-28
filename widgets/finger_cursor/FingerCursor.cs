@@ -1,10 +1,11 @@
 using Godot;
 using System;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Widgets
 {
-    public partial class FingerCursor : Node3D
+    public partial class FingerCursor : Node3D, IService
     {
         private readonly Vector3 _PointerOffset = Vector3.Up * 2.5F;
 

@@ -6,6 +6,7 @@ using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Cameras;
+using ShopIsDone.Widgets;
 
 namespace ShopIsDone.Levels
 {
@@ -17,6 +18,15 @@ namespace ShopIsDone.Levels
         // Services
         [Export]
         private CameraService _CameraService;
+
+        [Export]
+        private InputXformer _InputXformer;
+
+        [Export]
+        private FingerCursor _FingerCursor;
+
+        [Export]
+        private TileCursor _TileCursor;
 
         private InjectionProvider _InjectionProvider;
 
@@ -34,6 +44,9 @@ namespace ShopIsDone.Levels
 
             // Register all services (NB: We have to do this manually, unfortunately)
             _InjectionProvider.RegisterService(_CameraService);
+            _InjectionProvider.RegisterService(_InputXformer);
+            _InjectionProvider.RegisterService(_FingerCursor);
+            _InjectionProvider.RegisterService(_TileCursor);
         }
 
         public void Init()

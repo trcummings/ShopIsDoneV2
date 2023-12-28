@@ -40,6 +40,9 @@ namespace ShopIsDone.Arenas
         [Export]
         private ActionService _ActionService;
 
+        [Export]
+        private PlayerUnitService _PlayerUnitService;
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -61,9 +64,13 @@ namespace ShopIsDone.Arenas
             var placement = placementTiles.First();
             playerUnit.GlobalPosition = placement.GlobalPosition;
 
+            // Add player unit to player unit service
+            _PlayerUnitService.Init(new System.Collections.Generic.List<LevelEntity>() { playerUnit });
+
             // Register services
             _InjectionProvider.RegisterService(_TileManager);
             _InjectionProvider.RegisterService(_ActionService);
+            _InjectionProvider.RegisterService(_PlayerUnitService);
 
             // Change state to initializing
             _ArenaStateMachine.ChangeState("Initializing");
@@ -74,6 +81,7 @@ namespace ShopIsDone.Arenas
             // Unregister services
             _InjectionProvider.UnregisterService(_TileManager);
             _InjectionProvider.UnregisterService(_ActionService);
+            _InjectionProvider.UnregisterService(_PlayerUnitService);
         }
 
         public Command Start()

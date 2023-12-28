@@ -1,11 +1,12 @@
 using Godot;
+using ShopIsDone.Utils.DependencyInjection;
 using System;
 
 namespace ShopIsDone.Cameras
 {
     // This class is to help transform the input for the break room actor to
     // move around in a coherent manner regardless of camera rotation
-    public partial class InputXformer : Node
+    public partial class InputXformer : Node, IService
     {
         [Export]
         private IsometricCamera _Camera;

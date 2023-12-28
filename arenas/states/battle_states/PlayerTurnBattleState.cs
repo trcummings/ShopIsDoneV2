@@ -5,6 +5,7 @@ using Godot.Collections;
 using ShopIsDone.Tiles;
 using Consts = ShopIsDone.Arenas.PlayerTurn.Consts;
 using ShopIsDone.Utils.DependencyInjection;
+using System.Linq;
 
 namespace ShopIsDone.Arenas.Battles.States
 {
@@ -12,6 +13,9 @@ namespace ShopIsDone.Arenas.Battles.States
 	{
         [Export]
         private StateMachine _StateMachine;
+
+        [Export]
+        public PlayerUnitService _PlayerUnitService;
 
         [Inject]
         private TileManager _TileManager;
@@ -38,22 +42,22 @@ namespace ShopIsDone.Arenas.Battles.States
             //SaveTempArenaData();
 
             // Get all units
-            //var units = GetActivePlayerPawns();
+            var units = _PlayerUnitService.PlayerUnits;
 
-            //// If we have no active units, end the turn
-            //if (units.Count() == 0)
-            //{
-            //    ChangeState("EndingTurn");
-            //    return;
-            //}
+            // If we have no active units, end the turn
+            if (units.Count == 0)
+            {
+                ChangeState("EndingTurn");
+                return;
+            }
 
             // If no "last selected tile", pick the tile where the last unit the player
             // the player made move, even if that unit is now gone. If it's null,
             // just grab the first unit in the list and focus that tile
             if (_LastSelectedTile == null)
             {
-                //var firstUnit = GetActivePlayerPawns().First();
-                //LastSelectedTile = _TileManager.GetTileAtTilemapPos(firstUnit.TilemapPosition);
+                var firstUnit = units.First();
+                _LastSelectedTile = _TileManager.GetTileAtTilemapPos(firstUnit.TilemapPosition);
             }
 
             // Initialize and pass along the last selected tile

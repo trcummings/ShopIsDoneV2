@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=36 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://arena_actions/ActionService.cs" id="3_y84tj"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/BattlePhaseManager.cs" id="4_c0td2"]
 [ext_resource type="Script" path="res://tiles/TileManager.cs" id="4_hwpdd"]
+[ext_resource type="Script" path="res://arenas/PlayerUnitService.cs" id="4_m7h52"]
 [ext_resource type="Script" path="res://arenas/states/RunningState.cs" id="4_oqnwb"]
 [ext_resource type="Script" path="res://arenas/EnterArenaArea.cs" id="5_2f7tb"]
 [ext_resource type="PackedScene" uid="uid://k1cfuob2nivk" path="res://tiles/tile/tile.tscn" id="5_hl2gx"]
@@ -37,11 +38,12 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_gufqt"]
 size = Vector3(0.646393, 1, 6)
 
-[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService") groups=["arena"]]
+[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService") groups=["arena"]]
 script = ExtResource("1_loukv")
 _ArenaStateMachine = NodePath("ArenaStateMachine")
 _TileManager = NodePath("Tiles")
 _ActionService = NodePath("Services/ActionService")
+_PlayerUnitService = NodePath("Services/PlayerUnitService")
 metadata/_edit_lock_ = true
 
 [node name="Services" type="Node" parent="."]
@@ -51,6 +53,9 @@ script = ExtResource("2_qt0kh")
 
 [node name="ActionService" type="Node" parent="Services"]
 script = ExtResource("3_y84tj")
+
+[node name="PlayerUnitService" type="Node" parent="Services"]
+script = ExtResource("4_m7h52")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
@@ -78,19 +83,23 @@ _TurnsPanel = NodePath("../../../../UILayer/TurnsRemaining/CenterContainer/Panel
 _TurnCounter = NodePath("../../../../Services/TurnCounter")
 _PhaseManager = NodePath("../../BattlePhaseManager")
 
-[node name="CleanUp" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_Arena")]
+[node name="CleanUp" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_Arena")]
 script = ExtResource("7_dwkpa")
+_PhaseManager = NodePath("../../BattlePhaseManager")
 _Arena = NodePath("../../../..")
 
-[node name="EnemyActivity" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine"]
+[node name="EnemyActivity" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager")]
 script = ExtResource("8_om56i")
+_PhaseManager = NodePath("../../BattlePhaseManager")
 
-[node name="PrepPlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine"]
+[node name="PrepPlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager")]
 script = ExtResource("9_quvvh")
+_PhaseManager = NodePath("../../BattlePhaseManager")
 
-[node name="PlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_StateMachine")]
+[node name="PlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_StateMachine", "_PlayerUnitService")]
 script = ExtResource("10_hv83v")
 _StateMachine = NodePath("PlayerTurnStateMachine")
+_PlayerUnitService = NodePath("../../../../Services/PlayerUnitService")
 
 [node name="PlayerTurnStateMachine" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn"]
 script = ExtResource("2_1igvu")

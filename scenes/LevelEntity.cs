@@ -58,8 +58,22 @@ namespace ShopIsDone.Core
         [Export]
         public Dictionary<string, Variant> DataStore = new Dictionary<string, Variant>();
 
+        [Export]
+        private TilemapPositionHandler _TilemapPositionHandler;
+
+        [Export]
+        private FacingDirectionHandler _FacingDirectionHandler;
+
         // Tilemap position
-        public Vector3 TilemapPosition = Vector3.Zero;
+        public Vector3 TilemapPosition
+        {
+            get { return _TilemapPositionHandler.TilemapPosition; }
+        }
+
+        public Vector3 FacingDirection
+        {
+            get { return _FacingDirectionHandler.FacingDirection; }
+        }
 
         #region Components
         protected SystemCollections.List<IComponent> _Components = new SystemCollections.List<IComponent>();

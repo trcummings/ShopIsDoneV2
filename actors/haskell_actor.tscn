@@ -25,13 +25,15 @@
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
 
-[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator")]
+[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_TilemapPositionHandler", "_FacingDirectionHandler")]
 script = ExtResource("6")
 _ActorAnimator = NodePath("ActorAnimator")
 _ActorVelocity = NodePath("ActorVelocity")
 _ActorFloorIndicator = NodePath("ActorFloorIndicator")
 Id = "haskell"
 EntityName = "Haskell"
+_TilemapPositionHandler = NodePath("TilemapPositionHandler")
+_FacingDirectionHandler = NodePath("FacingDirectionHandler")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 0, 1.25, 0)

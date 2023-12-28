@@ -27,8 +27,9 @@ _data = {
 "default": SubResource("1")
 }
 
-[node name="FingerCursor" type="Node3D"]
+[node name="FingerCursor" type="Node3D" node_paths=PackedStringArray("_Pointer")]
 script = ExtResource("2")
+_Pointer = NodePath("Pointer")
 
 [node name="Pointer" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true

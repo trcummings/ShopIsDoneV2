@@ -9,6 +9,9 @@ namespace ShopIsDone.Arenas.Battles.States
     public partial class CleanUpBattleState : State
     {
         [Export]
+        private BattlePhaseManager _PhaseManager;
+
+        [Export]
         private Arena _Arena;
 
         public override void OnStart(Dictionary<string, Variant> message = null)
@@ -27,7 +30,7 @@ namespace ShopIsDone.Arenas.Battles.States
                     //If so, end the arena!
                     _Arena.AdvanceToVictoryPhase(),
                     // Otherwise, kick off the next turn
-                    _Arena.AdvanceToNextPhase()
+                    new ActionCommand(_PhaseManager.AdvanceToNextPhase)
                 )
             ).Execute();
         }

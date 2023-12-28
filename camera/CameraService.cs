@@ -24,6 +24,11 @@ namespace ShopIsDone.Cameras
             GetTree().NodeAdded += OnPotentialIsoSpriteAdded;
         }
 
+        public Vector3 GetBasisXformedDir(float horizontal, float vertical, float rotateBy = Mathf.Pi / 4)
+        {
+            return _IsometricCamera.GetBasisXformedDir(horizontal, vertical, rotateBy);
+        }
+
         public void RotateRight()
         {
             _IsometricCamera.RotateRight();

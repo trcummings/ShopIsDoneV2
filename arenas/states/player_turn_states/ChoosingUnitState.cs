@@ -8,6 +8,7 @@ using ShopIsDone.Tiles;
 using ShopIsDone.Widgets;
 using Godot.Collections;
 using System.Linq;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -40,192 +41,238 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         //private TileUIContainer _TileUIContainer;
 
-        private Control _EndPlayerTurnWidget;
+        //private Control _EndPlayerTurnWidget;
 
-        private Control _MoreInfoUI;
+        //private Control _MoreInfoUI;
+
+        [Inject]
+        private CameraService _CameraService;
+
+        [Inject]
+        private InputXformer _InputXformer;
+
+        [Inject]
+        private TileManager _TileManager;
 
         // Widgets
+        [Inject]
         private FingerCursor _FingerCursor;
 
+        [Inject]
         private TileCursor _TileCursor;
 
-        private TileIndicator _TileIndicatorWidget;
+        //private TileIndicator _TileIndicatorWidget;
 
         // State
         private Tile _LastSelectedTile;
 
-        //public override void OnStart(Dictionary<string, Variant> message = null)
-        //{
-        //    base.OnStart(message);
+        public override void OnStart(Dictionary<string, Variant> message = null)
+        {
+            // Get last selected tile from message to focus cursor on initially
+            if (message.ContainsKey(Consts.LAST_SELECTED_TILE_KEY))
+            {
+                _LastSelectedTile = (Tile)message[Consts.LAST_SELECTED_TILE_KEY];
+            }
 
-        //    // Get last selected tile from message to focus cursor on initially
-        //    if (message.ContainsKey("LastSelectedTile"))
-        //    {
-        //        _LastSelectedTile = (Tile)message["LastSelectedTile"];
-        //    }
+            // Inject dependencies
+            InjectionProvider.Inject(this);
+            // Init tile cursor
+            _TileCursor.Init(_TileManager);
 
-        //    // Have camera follow cursor
-        //    _IsometricCamera.Target = _TileCursor;
+            // Have camera follow cursor
+            _CameraService.SetCameraTarget(_TileCursor).Execute();
 
-        //    // Move the cursors to the last selected tile
-        //    _TileCursor.MoveCursorTo(_LastSelectedTile);
-        //    _FingerCursor.WarpCursorTo(_LastSelectedTile.GlobalPosition);
+            // Move the cursors to the last selected tile
+            _TileCursor.MoveCursorTo(_LastSelectedTile);
+            _FingerCursor.WarpCursorTo(_LastSelectedTile.GlobalPosition);
 
-        //    // Initialize PawnUIContainer with all units in the arena and show it
-        //    _PawnUIContainer.Init(PTM.GetPlayerPawns().Select(e => e as Pawn).ToList());
-        //    SelectTile(_LastSelectedTile);
-        //    _PawnUIContainer.Show();
+            //    // Initialize PawnUIContainer with all units in the arena and show it
+            //    _PawnUIContainer.Init(PTM.GetPlayerPawns().Select(e => e as Pawn).ToList());
+            //    SelectTile(_LastSelectedTile);
+            //    _PawnUIContainer.Show();
 
-        //    // Show the "End turn" UI
-        //    _EndPlayerTurnWidget.Show();
+            //    // Show the "End turn" UI
+            //    _EndPlayerTurnWidget.Show();
 
-        //    // Show the "More Info" UI
-        //    _MoreInfoUI.Show();
+            //    // Show the "More Info" UI
+            //    _MoreInfoUI.Show();
 
-        //    // Connect to tile cursor signal and the invalid move signal
-        //    _TileCursor.CursorEnteredTile += OnCursorHoveredTile;
-        //    _TileCursor.AttemptedUnavailableMove += OnAttemptedInvalidMove;
+            // Connect to tile cursor signal and the invalid move signal
+            _TileCursor.CursorEnteredTile += OnCursorHoveredTile;
+            _TileCursor.AttemptedUnavailableMove += OnAttemptedInvalidMove;
 
-        //    // Show cursors
-        //    _TileCursor.Show();
-        //    _FingerCursor.Show();
-        //}
+            // Show cursors
+            _TileCursor.Show();
+            _FingerCursor.Show();
 
-        //public override void UpdateState(double delta)
-        //{
-        //    base.UpdateState(delta);
+            // Base start hook
+            base.OnStart(message);
+        }
 
-        //    // Camera and conditions input
-        //    ProcessConditionsInput();
-        //    ProcessCameraInput();
+        public override void UpdateState(double delta)
+        {
+            base.UpdateState(delta);
 
-        //    // Check for "more info" input
-        //    if (Input.IsActionJustPressed("open_more_info"))
-        //    {
-        //        // Do not open more info if tile is hidden
-        //        if (!_LastSelectedTile.IsLit()) return;
+            //    // Camera and conditions input
+            //    ProcessConditionsInput();
+            //    ProcessCameraInput();
 
-        //        // SFX Feedback
-        //        EmitSignal(nameof(SelectedUnit));
+            //    // Check for "more info" input
+            //    if (Input.IsActionJustPressed("open_more_info"))
+            //    {
+            //        // Do not open more info if tile is hidden
+            //        if (!_LastSelectedTile.IsLit()) return;
 
-        //        // Grab the last selected entity
-        //        var lastSelected = GetSelectableOnTile(_LastSelectedTile);
-        //        // Change to "More Info" state with payload
-        //        ChangeState("MoreInfoState", new Dictionary<string, Variant>()
-        //        {
-        //            { "Tile", _LastSelectedTile },
-        //            { "Pawn", _LastSelectedTile.CurrentPawn },
-        //            { "Interactable", lastSelected is Interactable ? lastSelected : null }
-        //        });
-        //        return;
-        //    }
+            //        // SFX Feedback
+            //        EmitSignal(nameof(SelectedUnit));
 
-        //    // Check for end turn early input
-        //    if (Input.IsActionJustPressed("end_player_turn"))
-        //    {
-        //        // SFX Feedback
-        //        EmitSignal(nameof(SelectedUnit));
+            //        // Grab the last selected entity
+            //        var lastSelected = GetSelectableOnTile(_LastSelectedTile);
+            //        // Change to "More Info" state with payload
+            //        ChangeState("MoreInfoState", new Dictionary<string, Variant>()
+            //        {
+            //            { "Tile", _LastSelectedTile },
+            //            { "Pawn", _LastSelectedTile.CurrentPawn },
+            //            { "Interactable", lastSelected is Interactable ? lastSelected : null }
+            //        });
+            //        return;
+            //    }
 
-        //        ChangeState("EndingTurnState");
-        //        return;
-        //    }
+            //    // Check for end turn early input
+            //    if (Input.IsActionJustPressed("end_player_turn"))
+            //    {
+            //        // SFX Feedback
+            //        EmitSignal(nameof(SelectedUnit));
 
-        //    // Select unit input
-        //    if (Input.IsActionJustPressed("ui_accept"))
-        //    {
-        //        // Get the unit on the tile if they have one
-        //        var unit = GetActiveUnitOnTile(_LastSelectedTile);
+            //        ChangeState("EndingTurnState");
+            //        return;
+            //    }
 
-        //        // If null, emit an invalid selection signal
-        //        if (unit == null)
-        //        {
-        //            EmitSignal(nameof(AttemptedInvalidSelection));
-        //            return;
-        //        }
+            //    // Select unit input
+            //    if (Input.IsActionJustPressed("ui_accept"))
+            //    {
+            //        // Get the unit on the tile if they have one
+            //        var unit = GetActiveUnitOnTile(_LastSelectedTile);
 
-        //        // Emit a selection signal
-        //        EmitSignal(nameof(SelectedUnit));
+            //        // If null, emit an invalid selection signal
+            //        if (unit == null)
+            //        {
+            //            EmitSignal(nameof(AttemptedInvalidSelection));
+            //            return;
+            //        }
 
-        //        // Then change to the action state
-        //        ChangeState("ChoosingActionState", new Dictionary<string, Variant>()
-        //        {
-        //            { "SelectedUnit", unit }
-        //        });
-        //        return;
-        //    }
+            //        // Emit a selection signal
+            //        EmitSignal(nameof(SelectedUnit));
 
-        //    // Cycle through units input
-        //    if (Input.IsActionJustPressed("cycle_player_pawns_forward"))
-        //    {
-        //        CycleActivePawns(1);
-        //        return;
-        //    }
-        //    if (Input.IsActionJustPressed("cycle_player_pawns_backward"))
-        //    {
-        //        CycleActivePawns(-1);
-        //        return;
-        //    }
+            //        // Then change to the action state
+            //        ChangeState("ChoosingActionState", new Dictionary<string, Variant>()
+            //        {
+            //            { "SelectedUnit", unit }
+            //        });
+            //        return;
+            //    }
 
-        //    // Cycle through tasks input
-        //    if (Input.IsActionJustPressed("cycle_tasks_forward"))
-        //    {
-        //        CycleActiveTasks(1);
-        //        return;
-        //    }
-        //    if (Input.IsActionJustPressed("cycle_tasks_backward"))
-        //    {
-        //        CycleActiveTasks(-1);
-        //        return;
-        //    }
+            //    // Cycle through units input
+            //    if (Input.IsActionJustPressed("cycle_player_pawns_forward"))
+            //    {
+            //        CycleActivePawns(1);
+            //        return;
+            //    }
+            //    if (Input.IsActionJustPressed("cycle_player_pawns_backward"))
+            //    {
+            //        CycleActivePawns(-1);
+            //        return;
+            //    }
 
-        //    // Cursor movement input
-        //    var moveVec = _DirectionalInputHelper.MoveVec;
+            //    // Cycle through tasks input
+            //    if (Input.IsActionJustPressed("cycle_tasks_forward"))
+            //    {
+            //        CycleActiveTasks(1);
+            //        return;
+            //    }
+            //    if (Input.IsActionJustPressed("cycle_tasks_backward"))
+            //    {
+            //        CycleActiveTasks(-1);
+            //        return;
+            //    }
 
-        //    // Ignore if no movement input
-        //    if (moveVec == Vector3.Zero) return;
+            // Handle camera rotation
+            if (Input.IsActionJustPressed("rotate_camera_left"))
+            {
+                _CameraService.RotateLeft();
+            }
+            if (Input.IsActionJustPressed("rotate_camera_right"))
+            {
+                _CameraService.RotateRight();
+            }
 
-        //    // Otherwise, move the two cursors in that direction
-        //    _TileCursor.MoveCursorInDirection(moveVec);
-        //    _FingerCursor.MoveCursorTo(_TileCursor.CurrentTile.GlobalPosition);
-        //}
+            // Cursor movement input
+            int horizontal = 0;
+            int vertical = 0;
+            if (Input.IsActionJustPressed("move_up") || Input.IsActionJustPressed("fps_move_forward"))
+            {
+                vertical += 1;
+            }
+            if (Input.IsActionJustPressed("move_down") || Input.IsActionJustPressed("fps_move_backward"))
+            {
+                vertical -= 1;
+            }
+            if (Input.IsActionJustPressed("move_left") || Input.IsActionJustPressed("fps_move_left"))
+            {
+                horizontal -= 1;
+            }
+            if (Input.IsActionJustPressed("move_right") || Input.IsActionJustPressed("fps_move_right"))
+            {
+                horizontal += 1;
+            }
 
-        //public override void OnExit(string nextState)
-        //{
-        //    // Remove camera target
-        //    _IsometricCamera.Target = null;
+            var moveVec = _CameraService.GetBasisXformedDir(horizontal, vertical).Round();
 
-        //    // Disconnect from tile cursor
-        //    _TileCursor.CursorEnteredTile -= OnCursorHoveredTile;
-        //    _TileCursor.AttemptedUnavailableMove -= OnAttemptedInvalidMove;
+            // Ignore if no movement input
+            if (moveVec == Vector3.Zero) return;
 
-        //    // Hide the "End turn" UI
-        //    _EndPlayerTurnWidget.Hide();
+            // Otherwise, move the two cursors in that direction
+            _TileCursor.MoveCursorInDirection(moveVec);
+            _FingerCursor.MoveCursorTo(_TileCursor.CurrentTile.GlobalPosition);
+        }
 
-        //    // Hide player pawn UI
-        //    _PawnUIContainer.Hide();
+        public override void OnExit(string nextState)
+        {
+            // Remove camera target
+            _CameraService.SetCameraTarget(null).Execute();
 
-        //    // Hide Interactable Container UI
-        //    _InteractableUIContainer.Hide();
+            // Disconnect from tile cursor
+            _TileCursor.CursorEnteredTile -= OnCursorHoveredTile;
+            _TileCursor.AttemptedUnavailableMove -= OnAttemptedInvalidMove;
 
-        //    // Hide tile UI
-        //    _TileUIContainer.Hide();
+            //    // Hide the "End turn" UI
+            //    _EndPlayerTurnWidget.Hide();
 
-        //    // Hide and clear indicator widget
-        //    _TileIndicatorWidget.ClearIndicators();
-        //    _TileIndicatorWidget.Hide();
+            //    // Hide player pawn UI
+            //    _PawnUIContainer.Hide();
 
-        //    // Hide MoreInfo UI CTA
-        //    _MoreInfoUI.Hide();
+            //    // Hide Interactable Container UI
+            //    _InteractableUIContainer.Hide();
 
-        //    // Unhighlight all interactables
-        //    foreach (var hoverable in PTM.GetAllEntities().Where(e => e.HasComponent<HoverEntityComponent>()))
-        //    {
-        //        hoverable.GetComponent<HoverEntityComponent>()?.Unhover();
-        //    }
+            //    // Hide tile UI
+            //    _TileUIContainer.Hide();
 
-        //    // Base OnExit
-        //    base.OnExit(nextState);
-        //}
+            //    // Hide and clear indicator widget
+            //    _TileIndicatorWidget.ClearIndicators();
+            //    _TileIndicatorWidget.Hide();
+
+            //    // Hide MoreInfo UI CTA
+            //    _MoreInfoUI.Hide();
+
+            //    // Unhighlight all interactables
+            //    foreach (var hoverable in PTM.GetAllEntities().Where(e => e.HasComponent<HoverEntityComponent>()))
+            //    {
+            //        hoverable.GetComponent<HoverEntityComponent>()?.Unhover();
+            //    }
+
+            // Base OnExit
+            base.OnExit(nextState);
+        }
 
         //private Pawn GetActiveUnitOnTile(Tile tile)
         //{
@@ -236,17 +283,17 @@ namespace ShopIsDone.Arenas.PlayerTurn
         //    return activeUnits.Contains(tile.CurrentPawn) ? tile.CurrentPawn : null;
         //}
 
-        //private void OnCursorHoveredTile(Tile tile)
-        //{
-        //    // Update our internal tile tracking
-        //    _LastSelectedTile = tile;
+        private void OnCursorHoveredTile(Tile tile)
+        {
+            // Update our internal tile tracking
+            _LastSelectedTile = tile;
 
-        //    // Select the tile to show information about that tile
-        //    SelectTile(_LastSelectedTile);
+            // Select the tile to show information about that tile
+            //SelectTile(_LastSelectedTile);
 
-        //    // Emit signal
-        //    EmitSignal(nameof(MovedCursor));
-        //}
+            // Emit signal
+            EmitSignal(nameof(MovedCursor));
+        }
 
         //private void SelectTile(Tile tile)
         //{
@@ -266,10 +313,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
         //    _TileUIContainer.SelectTile(tile);
         //}
 
-        //private void OnAttemptedInvalidMove()
-        //{
-        //    EmitSignal(nameof(AttemptedInvalidMove));
-        //}
+        private void OnAttemptedInvalidMove()
+        {
+            EmitSignal(nameof(AttemptedInvalidMove));
+        }
 
         //private void SelectInteractable(Tile tile)
         //{
@@ -430,4 +477,4 @@ namespace ShopIsDone.Arenas.PlayerTurn
         //        .ToList();
         //}
     }
-}
+    }
