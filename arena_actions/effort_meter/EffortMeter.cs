@@ -3,7 +3,7 @@ using ShopIsDone.Utils.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ShopIsDone.Actions
+namespace ShopIsDone.Actions.Effort
 {
     public partial class EffortMeter : Control
     {

@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using ShopIsDone.Utils.StateMachine;
-using ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu;
 using ShopIsDone.Arenas.UI;
 using Godot.Collections;
 using ShopIsDone.Core;

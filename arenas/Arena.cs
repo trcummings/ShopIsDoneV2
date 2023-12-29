@@ -10,6 +10,7 @@ using System.Linq;
 using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Actions;
+using ShopIsDone.Actions.Effort;
 
 namespace ShopIsDone.Arenas
 {
@@ -43,6 +44,10 @@ namespace ShopIsDone.Arenas
         [Export]
         private PlayerUnitService _PlayerUnitService;
 
+
+        [Export]
+        private EffortMeterService _EffortMeterService;
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -57,6 +62,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.RegisterService(_TileManager);
             _InjectionProvider.RegisterService(_ActionService);
             _InjectionProvider.RegisterService(_PlayerUnitService);
+            _InjectionProvider.RegisterService(_EffortMeterService);
 
             // Initialize services
             _TileManager.Init();
@@ -86,6 +92,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.UnregisterService(_TileManager);
             _InjectionProvider.UnregisterService(_ActionService);
             _InjectionProvider.UnregisterService(_PlayerUnitService);
+            _InjectionProvider.UnregisterService(_EffortMeterService);
         }
 
         public Command Start()

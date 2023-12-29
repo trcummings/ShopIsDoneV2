@@ -46,11 +46,7 @@ namespace ShopIsDone.Utils.DependencyInjection
 
         public void InjectObject(GodotObject obj)
         {
-            // Get all fields marked with the inject attribute
-            var fields = obj
-                .GetType()
-                .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                .Where(prop => Attribute.IsDefined(prop, typeof(InjectAttribute)));
+            var fields = GetFields(obj.GetType()).Where(prop => Attribute.IsDefined(prop, typeof(InjectAttribute)));
 
             // Resolve each property
             foreach (var field in fields)
@@ -58,6 +54,43 @@ namespace ShopIsDone.Utils.DependencyInjection
                 var serviceType = field.FieldType;
                 var service = Resolve(serviceType);
                 field.SetValue(obj, service);
+            }
+        }
+
+        private IEnumerable<FieldInfo> GetFields(Type type)
+        {
+            // Loop over public and protected members
+            foreach (var item in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                yield return item;
+            }
+
+            // Get first base type
+            type = type.BaseType;
+
+            // Find their "private" memebers
+            while (
+                type != null &&
+                type != typeof(Node) &&
+                type != typeof(Resource) &&
+                type != typeof(GodotObject) &&
+                type != typeof(object) &&
+                type != typeof(Variant)
+            )
+            {
+                // Loop over non-public members
+                foreach (var item in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+                {
+                    // Make sure it's private!
+                    // To prevent doubleing up on protected members
+                    if (item.IsPrivate)
+                    {
+                        yield return item;
+                    }
+                }
+
+                // Get next base type.
+                type = type.BaseType;
             }
         }
     }

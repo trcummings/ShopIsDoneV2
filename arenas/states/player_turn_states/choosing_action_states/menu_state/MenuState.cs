@@ -31,8 +31,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         // State
         private bool IsFirstSelection = false;
 
-        private LevelEntity _SelectedUnit;
-
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
             base.OnStart(message);
@@ -41,7 +39,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             IsFirstSelection = true;
 
             // Get Selected unit
-            _SelectedUnit = (LevelEntity)message[PlayerTurnConsts.SELECTED_UNIT_KEY];
             var actionHandler = _SelectedUnit.GetComponent<ActionHandler>();
             var actions = actionHandler.Actions.Where(action => action.IsVisibleInMenu()).ToList();
 
@@ -150,8 +147,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // If this action has a cost, emit
             if (action.IsAvailable())
             {
-                var apHandler = _SelectedUnit.GetComponent<ActionPointHandler>();
-                RequestApDiff(apHandler, new ActionPointHandler()
+                RequestApDiff(new ActionPointHandler()
                 {
                     ActionPoints = action.ActionCost
                 });

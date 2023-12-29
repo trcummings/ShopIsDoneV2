@@ -26,6 +26,7 @@ namespace ShopIsDone.Tiles
 
         public void Init()
         {
+            _TilesByPos.Clear();
             foreach (var cell in _ArenaTilemap.GetUsedCells())
             {
                 var cellItem = _ArenaTilemap.GetCellItem(cell);

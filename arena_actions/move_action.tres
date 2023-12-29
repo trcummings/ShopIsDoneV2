@@ -12,6 +12,7 @@ EndsTurnAfterUse = false
 CanBeUsedMultipleTimes = false
 ActionCost = 0
 ExcessAPCost = 0
+UsesEffort = true
 CanTargetSelf = false
 Range = 0
 ActionType = 1

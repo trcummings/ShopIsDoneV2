@@ -29,6 +29,9 @@ namespace ShopIsDone.Actions
         [Export]
         public int ExcessAPCost = 0;
 
+        [Export]
+        public bool UsesEffort = false;
+
         [ExportGroup("Targeting")]
         [Export]
         public bool CanTargetSelf = false;
@@ -101,6 +104,11 @@ namespace ShopIsDone.Actions
         public virtual bool TargetHasRequiredComponents(LevelEntity entity)
         {
             return true;
+        }
+
+        public void SetEffort(int effort)
+        {
+            _ActionHandler.SetActionEffort(Id, effort);
         }
 
         public int GetEffortSpent()

@@ -1,16 +1,12 @@
 using Godot;
 using System;
-using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.Cameras;
 using ShopIsDone.Tiles;
 using ShopIsDone.Widgets;
 using System.Collections.Generic;
 using GodotCollections = Godot.Collections;
 using ShopIsDone.Actions;
-using ShopIsDone.Core;
 using ShopIsDone.Utils.DependencyInjection;
-using PlayerTurnConsts = ShopIsDone.Arenas.PlayerTurn.Consts;
-using ShopIsDone.ActionPoints;
 using System.Linq;
 using ShopIsDone.Utils;
 
@@ -34,9 +30,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         public delegate void UpdatedPathEventHandler();
 
         // Nodes
-        [Export]
-        private EffortMeter _EffortMeter;
-
         [Inject]
         private TileIndicator _TileIndicator;
 
@@ -52,12 +45,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         [Inject]
         private TileManager _TileManager;
 
-        // Message vars
-        private MoveAction _MoveAction;
-        private LevelEntity _SelectedUnit;
-        private Tile _CurrentTile;
-        private ActionHandler _ActionHandler;
-        private ActionPointHandler _ActionPointHandler;
+        // Components
         private TileMovementHandler _TileMoveHandler;
 
         // State vars
@@ -67,6 +55,8 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         public override void OnStart(GodotCollections.Dictionary<string, Variant> message = null)
         {
+            base.OnStart(message);
+
             // Inject dependencies
             InjectionProvider.Inject(this);
 
@@ -74,19 +64,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             ConfirmedInvalidPath += OnScreenshake;
             AttemptedInvalidMove += OnScreenshake;
 
-            // Connect to effort meter events
-            _EffortMeter.InvalidSelection += OnInvalidEffort;
-            _EffortMeter.Activated += OnEffortActivated;
-            _EffortMeter.Deactivated += OnEffortDeactivated;
-            _EffortMeter.Incremented += OnEffortIncremented;
-            _EffortMeter.Decremented += OnEffortDecremented;
-
-            // Grab the move action from the message
-            _MoveAction = (MoveAction)message[Consts.ACTION_KEY];
-            _SelectedUnit = (LevelEntity)message[PlayerTurnConsts.SELECTED_UNIT_KEY];
-            _CurrentTile = _TileManager.GetTileAtTilemapPos(_SelectedUnit.TilemapPosition);
-            _ActionHandler = _SelectedUnit.GetComponent<ActionHandler>();
-            _ActionPointHandler = _SelectedUnit.GetComponent<ActionPointHandler>();
+            // Grab the tile move handler
             _TileMoveHandler = _SelectedUnit.GetComponent<TileMovementHandler>();
 
             // Clear the move path and available moves
@@ -97,14 +75,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Clear available moves and all possible moves
             _AllPossibleMoves.Clear();
             _RemainingMoves.Clear();
-
-            // Get the action cost and the prior effort cost (maxed to the pawn's current AP)
-            var actionCost = _MoveAction.ActionCost;
-            var effortCost = _MoveAction.GetEffortSpent();
-
-            // Init the effort meter with the effort and the pawn's available AP
-            _EffortMeter.Init(effortCost, _ActionPointHandler.ActionPoints - actionCost);
-            _EffortMeter.Show();
 
             // Get all possible moves for the selected pawn
             var moves = _TileMoveHandler.GetAvailableMoves(_CurrentTile, true, GetAdjustedMoveRange());
@@ -124,51 +94,18 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             _MovePathWidget.SetPath(GetMovePathPositions());
             _MovePathWidget.Show();
 
-            // Show the movement cost
-            RequestApDiff(_ActionPointHandler, new ActionPointHandler()
-            {
-                ActionPoints = actionCost + effortCost
-            });
-
+            // Connect to change in effort service
+            _EffortService.UpdatedTotalCost += OnCostUpdate;
             // Connect to path change event
             UpdatedPath += OnPathChanged;
-
-            base.OnStart(message);
         }
 
         public override void UpdateState(double delta)
         {
             base.UpdateState(delta);
 
-            // If we're using the meter, do not process other input
-            if (Input.IsActionPressed("effort_meter"))
-            {
-                if (Input.IsActionJustPressed("effort_meter"))
-                {
-                    // Activate the meter
-                    _EffortMeter.Activate();
-                }
-                else
-                {
-                    // Test increment / decrement input
-                    if (Input.IsActionJustPressed("move_up") || Input.IsActionJustPressed("move_right"))
-                    {
-                        _EffortMeter.Increment();
-                    }
-                    else if (Input.IsActionJustPressed("move_down") || Input.IsActionJustPressed("move_left"))
-                    {
-                        _EffortMeter.Decrement();
-                    }
-                }
-
-                return;
-            }
-            // If we just released though, we can process on the same frame
-            else if (Input.IsActionJustReleased("effort_meter"))
-            {
-                // Deactivate the meter
-                _EffortMeter.Deactivate();
-            }
+            // Do not process while the effort service is active
+            if (_EffortService.IsActive) return;
 
             // Confirm movement path
             if (Input.IsActionJustPressed("ui_accept"))
@@ -188,7 +125,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 foreach (var tile in _MovePath) moveArray.Add(tile);
                 EmitSignal(nameof(RunActionRequested), new GodotCollections.Dictionary<string, Variant>()
                 {
-                    { Consts.ACTION_KEY, _MoveAction },
+                    { Consts.ACTION_KEY, _Action },
                     { MoveAction.MOVE_PATH_KEY, moveArray }
                 });
                 return;
@@ -279,13 +216,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             ConfirmedInvalidPath -= OnScreenshake;
             AttemptedInvalidMove -= OnScreenshake;
 
-            // Disconnect from effort meter events
-            _EffortMeter.InvalidSelection -= OnInvalidEffort;
-            _EffortMeter.Activated -= OnEffortActivated;
-            _EffortMeter.Deactivated -= OnEffortDeactivated;
-            _EffortMeter.Incremented -= OnEffortIncremented;
-            _EffortMeter.Decremented -= OnEffortDecremented;
-
             // Hide the tile path indicator
             _MovePathWidget.Hide();
 
@@ -298,21 +228,17 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             _TileIndicator.ClearIndicators();
             _TileIndicator.Hide();
 
-            // Clear the ap diff
-            CancelApDiff();
-
+            // Disconnect from effort service update
+            _EffortService.UpdatedTotalCost -= OnCostUpdate;
             // Disconnect from path change event
             UpdatedPath -= OnPathChanged;
-
-            // Hide the effort meter
-            _EffortMeter.Hide();
 
             base.OnExit(nextState);
         }
 
         private int GetAdjustedMoveRange()
         {
-            var additionalMove = _EffortMeter.CurrentIndex * _TileMoveHandler.MoveEffortMod;
+            var additionalMove = _EffortService.EffortAmount * _TileMoveHandler.MoveEffortMod;
             return Mathf.FloorToInt(_TileMoveHandler.BaseMove + additionalMove);
         }
 
@@ -323,9 +249,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         private void OnPathChanged()
         {
-            // Set the new effort in the action
-            _ActionHandler.SetActionEffort(_MoveAction.Id, _EffortMeter.CurrentIndex);
-
             // Compute the new all possible moves
             var adjustedMove = GetAdjustedMoveRange();
             _AllPossibleMoves = _TileMoveHandler.GetAvailableMoves(_CurrentTile, true, adjustedMove);
@@ -355,6 +278,17 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             _MovePathWidget.SetIsValidPath(_TileMoveHandler.IsValidMovePath(_MovePath));
         }
 
+        private void OnCostUpdate(int _, int dir)
+        {
+            if (dir == -1)
+            {
+                // If move path is longer than the available moves with the new level of
+                // effort, truncate it by the amount allowed (+1 for initial tile)
+                _MovePath = _MovePath.Take(GetAdjustedMoveRange() + 1).ToList();
+            }
+            // Update path as normal
+            OnPathChanged();
+        }
 
         private void OnScreenshake()
         {
@@ -363,53 +297,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 ScreenshakeHandler.ShakePayload.ShakeSizes.Mild,
                 ScreenshakeHandler.ShakeAxis.XOnly
             );
-        }
-
-        private void OnEffortIncremented()
-        {
-            UpdateEffort();
-            EmitSignal(nameof(UpdatedPath));
-        }
-
-        private void OnEffortDecremented()
-        {
-            UpdateEffort();
-
-            // If move path is longer than the available moves with the new level of
-            // effort, truncate it by the amount allowed (+1 for initial tile)
-            _MovePath = _MovePath.Take(GetAdjustedMoveRange() + 1).ToList();
-
-            EmitSignal(nameof(UpdatedPath));
-        }
-
-        private void UpdateEffort()
-        {
-            // Set the new effort in the action
-            _ActionHandler.SetActionEffort(_MoveAction.Id, _EffortMeter.CurrentIndex);
-
-            // Update the cost diff
-            var actionCost = _MoveAction.ActionCost;
-            var effortCost = _MoveAction.GetEffortSpent();
-
-            RequestApDiff(_ActionPointHandler, new ActionPointHandler()
-            {
-                ActionPoints = actionCost + effortCost
-            });
-        }
-
-        private void OnInvalidEffort()
-        {
-            EmitSignal(nameof(AttemptedInvalidMove));
-        }
-
-        private void OnEffortActivated()
-        {
-            EmitSignal(nameof(ConfirmedPath));
-        }
-
-        private void OnEffortDeactivated()
-        {
-            EmitSignal(nameof(CanceledPath));
         }
     }
 }
