@@ -26,7 +26,9 @@ namespace ShopIsDone.Actions
 
         protected bool _IsTurnEnded = false;
 
+        [Export]
         private ActionPointHandler _ActionPointHandler;
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()

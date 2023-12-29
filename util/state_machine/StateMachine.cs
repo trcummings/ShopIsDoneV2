@@ -22,13 +22,24 @@ namespace ShopIsDone.Utils.StateMachine
         // Reference to state object
         protected State _State = null;
 
+        public Array<State> States { get { return _States; } }
+        private Array<State> _States = new Array<State>();
+
         public override void _Ready()
         {
             foreach (State _state in GetChildren().OfType<State>().ToList())
             {
+                _States.Add(_state);
                 // Connect to state change requests
-                _state.Connect(nameof(State.StateChangeRequested), new Callable(this, nameof(ChangeState)));
+                _state.Connect(nameof(_state.StateChangeRequested), new Callable(this, nameof(ChangeState)));
             }
+        }
+
+        public State GetState(string stateName)
+        {
+            var state = _States.ToList().Find(state => state.Name == stateName);
+            if (state == null) GD.PrintErr($"No state with {stateName} in states!");
+            return state;
         }
 
         // Input hooks
@@ -78,7 +89,7 @@ namespace ShopIsDone.Utils.StateMachine
 
             // Traverse the states and find the new state, set to that state
             // and emit the state changed signal
-            foreach (State _state in GetChildren().OfType<State>().ToList())
+            foreach (State _state in _States)
             {
                 if (stateName == _state.Name)
                 {

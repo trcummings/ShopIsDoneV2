@@ -4,8 +4,8 @@ using ShopIsDone.Utils.StateMachine;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
-	public partial class MoveState : State
-	{
+	public partial class MoveState : ActionState
+    {
 
 	}
 }

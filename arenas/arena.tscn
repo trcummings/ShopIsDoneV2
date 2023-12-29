@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=41 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -23,10 +23,10 @@
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/ChoosingUnitState.cs" id="12_jioot"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/EndingTurnState.cs" id="13_sabdx"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/ChoosingActionState.cs" id="14_rj6r3"]
-[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/MenuState.cs" id="15_quash"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/FacingDirectionState.cs" id="16_sn5g2"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/MoveState.cs" id="17_mdtsr"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/TargetingState.cs" id="18_12jle"]
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/MenuState.cs" id="18_cxp4n"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/RunningActionState.cs" id="19_3o4ep"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/MoreInfoState.cs" id="20_por72"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/OutOfTimeFinishedState.cs" id="22_qh40g"]
@@ -36,9 +36,13 @@
 [ext_resource type="PackedScene" uid="uid://dqw2sf0ivpiqj" path="res://arenas/turn_counter/turns_remaining_panel.tscn" id="33_otw68"]
 [ext_resource type="PackedScene" uid="uid://jemifixdagp1" path="res://arenas/ui/player_unit/player_unit_ui_container.tscn" id="35_gpbff"]
 [ext_resource type="PackedScene" uid="uid://bgrl3b7hwon66" path="res://arenas/ui/end_player_turn_ui.tscn" id="36_nf6kd"]
+[ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/options_menu.tscn" id="37_ml7ek"]
+[ext_resource type="PackedScene" uid="uid://daffdkouahgqp" path="res://arenas/ui/player_unit/player_unit_ui.tscn" id="38_qf0ro"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gufqt"]
 size = Vector3(0.646393, 1, 6)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_esplx"]
 
 [node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService") groups=["arena"]]
 script = ExtResource("1_loukv")
@@ -98,9 +102,9 @@ _PhaseManager = NodePath("../../BattlePhaseManager")
 script = ExtResource("9_quvvh")
 _PhaseManager = NodePath("../../BattlePhaseManager")
 
-[node name="PlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_StateMachine", "_PlayerUnitService")]
+[node name="PlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PlayerTurnStateMachine", "_PlayerUnitService")]
 script = ExtResource("10_hv83v")
-_StateMachine = NodePath("PlayerTurnStateMachine")
+_PlayerTurnStateMachine = NodePath("PlayerTurnStateMachine")
 _PlayerUnitService = NodePath("../../../../Services/PlayerUnitService")
 
 [node name="PlayerTurnStateMachine" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn"]
@@ -118,14 +122,17 @@ _EndPlayerTurnWidget = NodePath("../../../../../../UILayer/CenterContainer/Margi
 [node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
 script = ExtResource("13_sabdx")
 
-[node name="ChoosingAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
+[node name="ChoosingAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionStateMachine", "_PlayerPawnUI")]
 script = ExtResource("14_rj6r3")
+_ActionStateMachine = NodePath("ActionStateMachine")
+_PlayerPawnUI = NodePath("../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/PlayerPawnUI")
 
 [node name="ActionStateMachine" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction"]
 script = ExtResource("2_1igvu")
 
-[node name="Menu" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
-script = ExtResource("15_quash")
+[node name="Menu" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_OptionsMenu")]
+script = ExtResource("18_cxp4n")
+_OptionsMenu = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/OptionsMenu")
 
 [node name="FacingDirection" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
 script = ExtResource("16_sn5g2")
@@ -250,3 +257,40 @@ theme_override_constants/margin_top = 16
 [node name="EndPlayerTurnUI" parent="UILayer/CenterContainer/MarginContainer" instance=ExtResource("36_nf6kd")]
 visible = false
 layout_mode = 2
+
+[node name="ActionMenuContainer" type="PanelContainer" parent="UILayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_esplx")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/ActionMenuContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="PlayerPawnUI" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("38_qf0ro")]
+visible = false
+layout_mode = 2
+
+[node name="OptionsMenu" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("37_ml7ek")]
+visible = false
+layout_mode = 2
+
+[node name="Control" type="Control" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3

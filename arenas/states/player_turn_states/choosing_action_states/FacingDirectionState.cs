@@ -4,7 +4,7 @@ using ShopIsDone.Utils.StateMachine;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
-	public partial class FacingDirectionState : State
+	public partial class FacingDirectionState : ActionState
     {
 
 	}

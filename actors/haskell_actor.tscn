@@ -89,9 +89,10 @@ Id = "alert"
 [node name="ActionPointHandler" type="Node" parent="."]
 script = ExtResource("11_8632j")
 
-[node name="ActionHandler" type="Node" parent="."]
+[node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("16_87xgg")
 Actions = [ExtResource("17_xmxqu"), ExtResource("18_64csj")]
+_ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_CommandProcessor")]
 script = ExtResource("19_dsksq")

@@ -1,9 +1,8 @@
 using Godot;
-using ShopIsDone.Arenas;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using Godot.Collections;
-using System;
+using ShopIsDone.Tiles;
 
 namespace ShopIsDone.Actions
 {
@@ -65,6 +64,35 @@ namespace ShopIsDone.Actions
         [Export]
         public bool FocusEntity = false;
 
+        [ExportGroup("Action Menu")]
+        [Export]
+        public string MenuTitle = "";
+
+        [Export(PropertyHint.MultilineText)]
+        public string MenuDescription = "";
+
+        // The pawn using the action
+        public LevelEntity Entity;
+        // The action handler
+        protected ActionHandler _ActionHandler;
+
+        // Functions for action selection either through AI or though a menu
+        public virtual bool IsVisibleInMenu()
+        {
+            return false;
+        }
+
+        public virtual bool IsAvailable()
+        {
+            return false;
+        }
+
+        /* This function is for targeting. Does this curernt tile contain a valid 
+         * target? */
+        public virtual bool ContainsValidTarget(Tile tile)
+        {
+            return false;
+        }
 
         public virtual bool HasRequiredComponents(LevelEntity entity)
         {
@@ -75,10 +103,6 @@ namespace ShopIsDone.Actions
         {
             return true;
         }
-
-        // The pawn using the action
-        public LevelEntity Entity;
-        protected ActionHandler _ActionHandler;
 
         public virtual void Init(ActionHandler actionHandler)
         {
@@ -94,10 +118,5 @@ namespace ShopIsDone.Actions
                 if (EndsTurnAfterUse) _ActionHandler.EndTurn();
             });
         }
-    }
-
-    public partial class ActionResult : GodotObject
-    {
-
     }
 }

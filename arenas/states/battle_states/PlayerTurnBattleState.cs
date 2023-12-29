@@ -12,7 +12,7 @@ namespace ShopIsDone.Arenas.Battles.States
 	public partial class PlayerTurnBattleState : State
 	{
         [Export]
-        private StateMachine _StateMachine;
+        private StateMachine _PlayerTurnStateMachine;
 
         [Export]
         public PlayerUnitService _PlayerUnitService;
@@ -27,8 +27,9 @@ namespace ShopIsDone.Arenas.Battles.States
         public override void _Ready()
         {
             base._Ready();
-            // Initialize state machine
-            _StateMachine.ChangeState("Init");
+
+            // Initialize battle state machine
+            _PlayerTurnStateMachine.ChangeState(Consts.States.IDLE);
         }
 
         public override void OnStart(Dictionary<string, Variant> message)
@@ -47,7 +48,7 @@ namespace ShopIsDone.Arenas.Battles.States
             // If we have no active units, end the turn
             if (units.Count == 0)
             {
-                ChangeState("EndingTurn");
+                _PlayerTurnStateMachine.ChangeState(Consts.States.ENDING_TURN);
                 return;
             }
 
@@ -61,7 +62,7 @@ namespace ShopIsDone.Arenas.Battles.States
             }
 
             // Initialize and pass along the last selected tile
-            _StateMachine.ChangeState(Consts.States.CHOOSING_UNIT_STATE, new Dictionary<string, Variant>()
+            _PlayerTurnStateMachine.ChangeState(Consts.States.CHOOSING_UNIT, new Dictionary<string, Variant>()
             {
                 { Consts.LAST_SELECTED_TILE_KEY, _LastSelectedTile }
             });

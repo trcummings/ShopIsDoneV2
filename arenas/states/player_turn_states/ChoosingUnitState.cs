@@ -10,6 +10,7 @@ using Godot.Collections;
 using System.Linq;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Arenas.UI;
+using ShopIsDone.Actions;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -28,13 +29,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         [Signal]
         public delegate void MovedCursorEventHandler();
-
-        // Nodes
-        //private IsometricCamera _IsometricCamera;
-
-        //private DirectionalInputHelper _DirectionalInputHelper;
-
-        //private Arena _Arena;
 
         [Export]
         public PlayerUnitService _PlayerUnitService;
@@ -144,39 +138,43 @@ namespace ShopIsDone.Arenas.PlayerTurn
             //        return;
             //    }
 
-            //    // Check for end turn early input
-            //    if (Input.IsActionJustPressed("end_player_turn"))
-            //    {
-            //        // SFX Feedback
-            //        EmitSignal(nameof(SelectedUnit));
+            // Check for end turn early input
+            if (Input.IsActionJustPressed("end_player_turn"))
+            {
+                // SFX Feedback
+                EmitSignal(nameof(SelectedUnit));
 
-            //        ChangeState("EndingTurnState");
-            //        return;
-            //    }
+                ChangeState(Consts.States.ENDING_TURN);
+                return;
+            }
 
-            //    // Select unit input
-            //    if (Input.IsActionJustPressed("ui_accept"))
-            //    {
-            //        // Get the unit on the tile if they have one
-            //        var unit = GetActiveUnitOnTile(_LastSelectedTile);
+            // Select unit input
+            if (Input.IsActionJustPressed("ui_accept"))
+            {
+                // Get the unit on the tile if they have one
+                var unit = _PlayerUnitService
+                    .PlayerUnits
+                    .Where(e => e.GetComponent<ActionHandler>().HasAvailableActions())
+                    .ToList()
+                    .Find(e => e.TilemapPosition == _LastSelectedTile.TilemapPosition);
 
-            //        // If null, emit an invalid selection signal
-            //        if (unit == null)
-            //        {
-            //            EmitSignal(nameof(AttemptedInvalidSelection));
-            //            return;
-            //        }
+                // If null, emit an invalid selection signal
+                if (unit == null)
+                {
+                    EmitSignal(nameof(AttemptedInvalidSelection));
+                    return;
+                }
 
-            //        // Emit a selection signal
-            //        EmitSignal(nameof(SelectedUnit));
+                // Emit a selection signal
+                EmitSignal(nameof(SelectedUnit));
 
-            //        // Then change to the action state
-            //        ChangeState("ChoosingActionState", new Dictionary<string, Variant>()
-            //        {
-            //            { "SelectedUnit", unit }
-            //        });
-            //        return;
-            //    }
+                // Then change to the action state
+                ChangeState(Consts.States.CHOOSING_ACTION, new Dictionary<string, Variant>()
+                {
+                    { Consts.SELECTED_UNIT_KEY, unit }
+                });
+                return;
+            }
 
             //    // Cycle through units input
             //    if (Input.IsActionJustPressed("cycle_player_pawns_forward"))
