@@ -1,5 +1,5 @@
 ﻿using System;
-using Camera;
+using ShopIsDone.Cameras;
 using Godot;
 using ShopIsDone.Arenas.ArenaScripts;
 

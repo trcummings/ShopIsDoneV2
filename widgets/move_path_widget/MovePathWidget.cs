@@ -2,10 +2,11 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Widgets
 {
-    public partial class MovePathWidget : Node3D
+    public partial class MovePathWidget : Node3D, IService
     {
         // Nodes
         private Node3D _LineCap;

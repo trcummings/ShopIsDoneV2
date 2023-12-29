@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=43 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://bgrl3b7hwon66" path="res://arenas/ui/end_player_turn_ui.tscn" id="36_nf6kd"]
 [ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/options_menu.tscn" id="37_ml7ek"]
 [ext_resource type="PackedScene" uid="uid://daffdkouahgqp" path="res://arenas/ui/player_unit/player_unit_ui.tscn" id="38_qf0ro"]
+[ext_resource type="PackedScene" uid="uid://cvfjwqjfca0rm" path="res://arena_actions/effort_meter/effort_meter.tscn" id="40_ho46i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gufqt"]
 size = Vector3(0.646393, 1, 6)
@@ -139,8 +140,9 @@ _OptionsMenu = NodePath("../../../../../../../../UILayer/ActionMenuContainer/Mar
 [node name="FacingDirection" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
 script = ExtResource("16_sn5g2")
 
-[node name="Move" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
+[node name="Move" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_EffortMeter")]
 script = ExtResource("17_mdtsr")
+_EffortMeter = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/EffortMeter")
 
 [node name="Targeting" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
 script = ExtResource("18_12jle")
@@ -293,6 +295,23 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
+[node name="VBoxContainer2" type="VBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+mouse_filter = 2
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="EffortMeter" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer" instance=ExtResource("40_ho46i")]
+visible = false
+layout_mode = 2
+
 [node name="Control" type="Control" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2

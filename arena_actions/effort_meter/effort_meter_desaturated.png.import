@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlovikfrmbp34"
-path="res://.godot/imported/effort_meter_outline.png-3ed58510fa6b877c02327431332ec6af.ctex"
+uid="uid://cnimp2wvnw3jd"
+path="res://.godot/imported/effort_meter_desaturated.png-52edc92e191761537a1b7c78686496a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/effort_meter/effort_meter_outline.png"
-dest_files=["res://.godot/imported/effort_meter_outline.png-3ed58510fa6b877c02327431332ec6af.ctex"]
+source_file="res://arena_actions/effort_meter/effort_meter_desaturated.png"
+dest_files=["res://.godot/imported/effort_meter_desaturated.png-52edc92e191761537a1b7c78686496a5.ctex"]
 
 [params]
 

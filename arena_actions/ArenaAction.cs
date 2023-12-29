@@ -83,7 +83,7 @@ namespace ShopIsDone.Actions
 
         public virtual bool IsAvailable()
         {
-            return false;
+            return _ActionHandler.IsActionAvailable(this);
         }
 
         /* This function is for targeting. Does this curernt tile contain a valid 
@@ -101,6 +101,11 @@ namespace ShopIsDone.Actions
         public virtual bool TargetHasRequiredComponents(LevelEntity entity)
         {
             return true;
+        }
+
+        public int GetEffortSpent()
+        {
+            return _ActionHandler.GetActionState(Id)?.EffortSpent ?? 0;
         }
 
         public virtual void Init(ActionHandler actionHandler)

@@ -13,9 +13,9 @@ namespace ShopIsDone.Actions
     {
         public partial class ActionStateData : GodotObject
         {
-            public bool UsedThisTurn;
+            public bool UsedThisTurn = false;
 
-            public int EffortSpent;
+            public int EffortSpent = 0;
         }
 
         // The actions the pawn has available to use
@@ -49,6 +49,8 @@ namespace ShopIsDone.Actions
                 _InjectionProvider.InjectObject(action);
                 // Init object
                 action.Init(this);
+                // Add action state
+                _ActionStates.Add(action.Id, new ActionStateData());
             }
         }
 
@@ -82,12 +84,12 @@ namespace ShopIsDone.Actions
 
         public void SetActionUsed(string id)
         {
-            _ActionStates[id].UsedThisTurn = true;
+            GetActionState(id).UsedThisTurn = true;
         }
 
         public void SetActionEffort(string id, int effort)
         {
-            _ActionStates[id].EffortSpent = effort;
+            GetActionState(id).EffortSpent = effort;
         }
 
         public virtual void ResetActions()

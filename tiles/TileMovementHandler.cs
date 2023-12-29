@@ -53,21 +53,23 @@ namespace ShopIsDone.Tiles
             InjectionProvider.Inject(this);
         }
 
-        //public List<Tile> GetAvailableMoves(Tile fromTile, bool includeFromTile = true, int moveRange = -1)
-        //{
-        //    return MoveGenerator.GetAvailableMoves(
-        //        fromTile,
-        //        includeFromTile,
-        //        // If the given move range is less than zero, use our base move range
-        //        // This is in order to keep the function flexible
-        //        moveRange < 0 ? BaseMove : moveRange
-        //    );
-        //}
+        public List<Tile> GetAvailableMoves(Tile fromTile, bool includeFromTile = true, int moveRange = -1)
+        {
+            return new List<Tile>();
+            //return MoveGenerator.GetAvailableMoves(
+            //    fromTile,
+            //    includeFromTile,
+            //    // If the given move range is less than zero, use our base move range
+            //    // This is in order to keep the function flexible
+            //    moveRange < 0 ? BaseMove : moveRange
+            //);
+        }
 
-        //public bool IsValidMovePath(List<Tile> movePath)
-        //{
-        //    return MoveGenerator.IsValidMovePath(movePath);
-        //}
+        public bool IsValidMovePath(List<Tile> movePath)
+        {
+            return false;
+            //return MoveGenerator.IsValidMovePath(movePath);
+        }
 
         // NB: Assume that MovePath will always have two or more tiles in it, that
         // the first tile should always be the current position of the unit, and

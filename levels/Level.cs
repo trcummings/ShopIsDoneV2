@@ -7,6 +7,7 @@ using Godot.Collections;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Cameras;
 using ShopIsDone.Widgets;
+using ShopIsDone.Utils;
 
 namespace ShopIsDone.Levels
 {
@@ -28,6 +29,18 @@ namespace ShopIsDone.Levels
         [Export]
         private TileCursor _TileCursor;
 
+        [Export]
+        private ScreenshakeService _Screenshake;
+
+        [Export]
+        private DirectionalInputHelper _DirectionalInput;
+
+        [Export]
+        private TileIndicator _TileIndicator;
+
+        [Export]
+        private MovePathWidget _MovePathWidget;
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -47,6 +60,10 @@ namespace ShopIsDone.Levels
             _InjectionProvider.RegisterService(_InputXformer);
             _InjectionProvider.RegisterService(_FingerCursor);
             _InjectionProvider.RegisterService(_TileCursor);
+            _InjectionProvider.RegisterService(_Screenshake);
+            _InjectionProvider.RegisterService(_DirectionalInput);
+            _InjectionProvider.RegisterService(_TileIndicator);
+            _InjectionProvider.RegisterService(_MovePathWidget);
         }
 
         public void Init()

@@ -11,6 +11,7 @@ using System.Linq;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Arenas.UI;
 using ShopIsDone.Actions;
+using ShopIsDone.Utils;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -44,6 +45,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
         private Control _EndPlayerTurnWidget;
 
         //private Control _MoreInfoUI;
+
+        [Inject]
+        private DirectionalInputHelper _InputHelper;
 
         [Inject]
         private CameraService _CameraService;
@@ -218,33 +222,11 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 _CameraService.RotateRight();
             }
 
-            // Cursor movement input
-            int horizontal = 0;
-            int vertical = 0;
-            if (Input.IsActionJustPressed("move_up") || Input.IsActionJustPressed("fps_move_forward"))
-            {
-                vertical += 1;
-            }
-            if (Input.IsActionJustPressed("move_down") || Input.IsActionJustPressed("fps_move_backward"))
-            {
-                vertical -= 1;
-            }
-            if (Input.IsActionJustPressed("move_left") || Input.IsActionJustPressed("fps_move_left"))
-            {
-                horizontal -= 1;
-            }
-            if (Input.IsActionJustPressed("move_right") || Input.IsActionJustPressed("fps_move_right"))
-            {
-                horizontal += 1;
-            }
-
-            var moveVec = _CameraService.GetBasisXformedDir(horizontal, vertical).Round();
-
             // Ignore if no movement input
-            if (moveVec == Vector3.Zero) return;
+            if (_InputHelper.InputDir == Vector3.Zero) return;
 
             // Otherwise, move the two cursors in that direction
-            _TileCursor.MoveCursorInDirection(moveVec);
+            _TileCursor.MoveCursorInDirection(_InputHelper.InputDir);
             _FingerCursor.MoveCursorTo(_TileCursor.CurrentTile.GlobalPosition);
         }
 

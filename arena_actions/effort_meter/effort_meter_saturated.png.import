@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4h0yu1vtoec"
-path="res://.godot/imported/effort_smiles.png-3865a31383940833be577836b78db73b.ctex"
+uid="uid://dg2kpft1q8ake"
+path="res://.godot/imported/effort_meter_saturated.png-51315e982943096817cf4361e6ca6d1c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/effort_smiles.png"
-dest_files=["res://.godot/imported/effort_smiles.png-3865a31383940833be577836b78db73b.ctex"]
+source_file="res://arena_actions/effort_meter/effort_meter_saturated.png"
+dest_files=["res://.godot/imported/effort_meter_saturated.png-51315e982943096817cf4361e6ca6d1c.ctex"]
 
 [params]
 

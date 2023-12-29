@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=36 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_b2cin"]
@@ -22,13 +22,18 @@
 [ext_resource type="PackedScene" uid="uid://b3t7y7xkc852q" path="res://microgames/scan_item/scan_item_microgame.tscn" id="9_4xati"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="10_01q2v"]
 [ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="10_5oljb"]
+[ext_resource type="Script" path="res://camera/ScreenshakeService.cs" id="10_urica"]
 [ext_resource type="PackedScene" uid="uid://swb4777ufru4" path="res://widgets/tile_indicator/tile_indicator.tscn" id="10_xe6sp"]
 [ext_resource type="PackedScene" uid="uid://crqg03tk3cpdo" path="res://widgets/tile_cursor/tile_cursor.tscn" id="11_6qmyn"]
+[ext_resource type="Script" path="res://camera/ScreenshakeHandler.cs" id="11_nb1sm"]
 [ext_resource type="PackedScene" uid="uid://clxx8lr4tixdi" path="res://widgets/facing_widget/FacingWidget.tscn" id="12_vtx7j"]
+[ext_resource type="Script" path="res://util/DirectionalInputHelper.cs" id="12_xguo8"]
 [ext_resource type="PackedScene" uid="uid://bx37eiog04urf" path="res://widgets/finger_cursor/finger_cursor.tscn" id="14_vwmfj"]
 [ext_resource type="PackedScene" uid="uid://b4uxifgjvks6n" path="res://widgets/move_path_widget/move_path_widget.tscn" id="15_3qirb"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="20_qvdr3"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lbwya"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_rqdll"]
 vertices = PackedVector3Array(7.75, 0.5, -13.75, 5.75, 0.5, -13.75, 5.75, 0.5, -11.25, 7.75, 0.5, -13.75, 5.75, 0.5, -11.25, 11, 0.5, -11, 18.75, 0.5, -19.5, 11, 0.5, -11, 11, 0.5, -8.5, 12.75, 0.5, -3.5, 24.25, 0.5, -3.5, 24.25, 0.5, -12.25, 18.75, 0.5, -19.5, -19.5, 0.5, -9.75, -17.25, 0.5, -9.75, -17, 0.5, -11.25, -19.25, 0.5, -13.75, -17, 0.5, -11.25, 5.75, 0.5, -11.25, 5.75, 0.5, -13.75, -19.25, 0.5, -13.75, -16, 6, -9, 10, 6, -9, 10, 6, -10.25, -16.25, 6, -10.25, -15.75, 0.5, -9.25, 9.75, 0.5, -9.25, 9.75, 0.5, -10, -16, 0.5, -10, -19.5, 0.5, 9.5, -16.75, 0.5, 9.5, -16.5, 0.5, 8.25, -16.75, 0.5, -8, -17.25, 0.5, -9.75, -19.5, 0.5, -9.75, 9.5, 0.5, 4.5, 9.5, 0.5, 3.25, 9.25, 0.5, -3, 9.5, 0.5, -4.5, 10.5, 0.5, -5.25, 9.75, 0.5, -8, 9.5, 0.5, 8.25, 10.5, 0.5, 5.5, 9.5, 0.5, 4.5, 10.25, 0.5, 2.25, 11.25, 0.5, 2.25, 11, 0.5, -2, 9.75, 0.5, -2.25, 9.5, 0.5, 8.25, 9.5, 0.5, 4.5, 9.25, 0.5, -3, -16.75, 0.5, -8, -16.5, 0.5, 8.25, 9.25, 0.5, -3, 9.5, 0.5, -4.5, 9.75, 0.5, -8, -16.75, 0.5, -8, 10.25, 0.5, 2.25, 9.75, 0.5, -2.25, 9.25, 0.5, -3, 9.5, 0.5, 3.25, 10.75, 1.75, -3.25, 11.5, 1.75, -3.25, 11.25, 1.75, -4, 10.75, 1.75, -4, 12, 0.5, -2, 11, 0.5, -2, 11.25, 0.5, 2.25, 12.75, 0.5, 2.75, 12.75, 0.5, -3.5, 12.75, 0.5, -2.75, 13, 0.5, 4.25, 24, 0.5, 4.75, 24.25, 0.5, -3.5, 12.75, 0.5, -2.75, 12, 0.5, -2, 12.75, 0.5, 2.75, 13, 0.5, 4.25, 10.75, 1.75, 3.75, 11.5, 1.75, 4.25, 11.5, 1.75, 3.5, 13, 0.5, 4.25, 12.5, 0.75, 4.5, 11.25, 0.5, 7.75, 11.5, 0.5, 11.25, 11, 0.5, 11.5, 15, 0.5, 15.75, 17.25, 0.5, 14.25, 13, 0.5, 4.25, 11.25, 0.5, 7.75, 11.5, 0.5, 11.25, 17.25, 0.5, 14.25, 22, 0.5, 9.5, 24, 0.5, 4.75, -15.5, 6, 10.5, 10.5, 6, 10.5, 10.5, 6, 9.25, -15.75, 6, 9.25, -16.25, 0.5, 11.5, -16.75, 0.5, 9.5, -19.5, 0.5, 9.5, -19.5, 0.5, 19.5, 13.25, 0.5, 17.25, 15, 0.5, 15.75, 11, 0.5, 11.5, -16.25, 0.5, 11.5, -19.5, 0.5, 19.5, 7.5, 0.5, 19.5, -15.25, 0.5, 9.5, -15.25, 0.5, 10.25, 10.25, 0.5, 10.25, 10.25, 0.5, 9.5)
@@ -36,13 +41,17 @@ polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Arr
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydnh5"]
 
-[node name="Level" type="Node3D" node_paths=PackedStringArray("_LevelStateMachine", "_CameraService", "_InputXformer", "_FingerCursor", "_TileCursor")]
+[node name="Level" type="Node3D" node_paths=PackedStringArray("_LevelStateMachine", "_CameraService", "_InputXformer", "_FingerCursor", "_TileCursor", "_Screenshake", "_DirectionalInput", "_TileIndicator", "_MovePathWidget")]
 script = ExtResource("1_uriqi")
 _LevelStateMachine = NodePath("LevelStateMachine")
 _CameraService = NodePath("Services/CameraService")
 _InputXformer = NodePath("Services/InputXformer")
 _FingerCursor = NodePath("World/Widgets/FingerCursor")
 _TileCursor = NodePath("World/Widgets/TileCursor")
+_Screenshake = NodePath("Services/ScreenshakeService")
+_DirectionalInput = NodePath("Services/DirectionalInputHelper")
+_TileIndicator = NodePath("World/Widgets/TileIndicator")
+_MovePathWidget = NodePath("World/Widgets/MovePathWidget")
 metadata/_edit_lock_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -81,6 +90,19 @@ _Camera = NodePath("../../World/IsometricCamera")
 
 [node name="PauseInputHandler" parent="Services" instance=ExtResource("6_urg1m")]
 IsActive = true
+
+[node name="ScreenshakeService" type="Node" parent="Services" node_paths=PackedStringArray("_IsometricCamera", "_Screenshake")]
+script = ExtResource("10_urica")
+_IsometricCamera = NodePath("../../World/IsometricCamera")
+_Screenshake = NodePath("ScreenshakeHandler")
+
+[node name="ScreenshakeHandler" type="Node" parent="Services/ScreenshakeService"]
+script = ExtResource("11_nb1sm")
+Noise = SubResource("FastNoiseLite_lbwya")
+
+[node name="DirectionalInputHelper" type="Node" parent="Services" node_paths=PackedStringArray("_IsometricCamera")]
+script = ExtResource("12_xguo8")
+_IsometricCamera = NodePath("../../World/IsometricCamera")
 
 [node name="Audio" type="Node" parent="."]
 

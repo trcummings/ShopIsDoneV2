@@ -1,0 +1,245 @@
+[gd_scene load_steps=15 format=3 uid="uid://cvfjwqjfca0rm"]
+
+[ext_resource type="Script" path="res://arena_actions/effort_meter/EffortMeter.cs" id="1_pmobc"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2_b1c8c"]
+[ext_resource type="Texture2D" uid="uid://csan0vr51l2b3" path="res://textures/test_ui_nine_patch_transparent.png" id="3_djbjn"]
+[ext_resource type="Texture2D" uid="uid://cnimp2wvnw3jd" path="res://arena_actions/effort_meter/effort_meter_desaturated.png" id="4_gdgl1"]
+[ext_resource type="Material" uid="uid://fkqq7g5ckkkh" path="res://arena_actions/effort_meter/canvas_wipe.material" id="5_h21pv"]
+[ext_resource type="Texture2D" uid="uid://dg2kpft1q8ake" path="res://arena_actions/effort_meter/effort_meter_saturated.png" id="6_is0ni"]
+[ext_resource type="Texture2D" uid="uid://dlovikfrmbp34" path="res://arena_actions/effort_meter/effort_meter_outline.png" id="7_7hr7f"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="8_ebcek"]
+[ext_resource type="Texture2D" uid="uid://cv0fefs21ky4p" path="res://textures/test_ui_cursor.png" id="9_kkpog"]
+[ext_resource type="Texture2D" uid="uid://b4h0yu1vtoec" path="res://arena_actions/effort_meter/effort_smiles.png" id="10_afo7j"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="11_hieq4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qlp3a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_376t4"]
+
+[sub_resource type="AtlasTexture" id="3"]
+atlas = ExtResource("10_afo7j")
+region = Rect2(0, 0, 100, 100)
+
+[node name="EffortMeter" type="PanelContainer"]
+custom_minimum_size = Vector2(304, 124)
+offset_right = 304.0
+offset_bottom = 124.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qlp3a")
+script = ExtResource("1_pmobc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BorderedUIWindow" parent="." instance=ExtResource("2_b1c8c")]
+layout_mode = 2
+texture = ExtResource("3_djbjn")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Desaturated" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_gdgl1")
+
+[node name="SaturatedMeter" type="TextureRect" parent="MarginContainer"]
+unique_name_in_owner = true
+material = ExtResource("5_h21pv")
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_is0ni")
+
+[node name="Outline" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("7_7hr7f")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_bottom = 22
+
+[node name="NumbersContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+alignment = 1
+
+[node name="NumberLabel0" type="Label" parent="MarginContainer/MarginContainer/MarginContainer2/NumbersContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 12
+theme = ExtResource("8_ebcek")
+theme_type_variation = &"LabelDark"
+text = "0"
+horizontal_alignment = 1
+
+[node name="NumberLabel1" type="Label" parent="MarginContainer/MarginContainer/MarginContainer2/NumbersContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 12
+theme = ExtResource("8_ebcek")
+theme_type_variation = &"LabelDark"
+text = "0"
+horizontal_alignment = 1
+
+[node name="NumberLabel2" type="Label" parent="MarginContainer/MarginContainer/MarginContainer2/NumbersContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 12
+theme = ExtResource("8_ebcek")
+theme_type_variation = &"LabelDark"
+text = "0"
+horizontal_alignment = 1
+
+[node name="NumberLabel3" type="Label" parent="MarginContainer/MarginContainer/MarginContainer2/NumbersContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 12
+theme = ExtResource("8_ebcek")
+theme_type_variation = &"LabelDark"
+text = "0"
+horizontal_alignment = 1
+
+[node name="NumberLabel4" type="Label" parent="MarginContainer/MarginContainer/MarginContainer2/NumbersContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 12
+theme = ExtResource("8_ebcek")
+theme_type_variation = &"LabelDark"
+text = "0"
+horizontal_alignment = 1
+
+[node name="NumberLabel5" type="Label" parent="MarginContainer/MarginContainer/MarginContainer2/NumbersContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 12
+theme = ExtResource("8_ebcek")
+theme_type_variation = &"LabelDark"
+text = "0"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = -26
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/MarginContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+use_top_left = true
+
+[node name="PointerContainer" type="PanelContainer" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_376t4")
+
+[node name="BorderedUIWindow" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer" instance=ExtResource("2_b1c8c")]
+layout_mode = 2
+texture = ExtResource("3_djbjn")
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer"]
+show_behind_parent = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Pointer" type="MarginContainer" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer"]
+unique_name_in_owner = true
+show_behind_parent = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="PointerViewport" type="SubViewportContainer" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer/Pointer"]
+show_behind_parent = true
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+stretch = true
+
+[node name="Viewport" type="SubViewport" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer/Pointer/PointerViewport"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(50, 50)
+render_target_update_mode = 4
+
+[node name="Sprite" type="Sprite2D" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer/Pointer/PointerViewport/Viewport"]
+position = Vector2(50, -5)
+rotation = 1.5708
+texture = ExtResource("9_kkpog")
+centered = false
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer"]
+show_behind_parent = true
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 13
+size_flags_vertical = 13
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="EffortSmiley" type="TextureRect" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("3")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="ActivateMeterIcon" type="TextureRect" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("11_hieq4")
+action_name = &"effort_meter"
+joypad_mode = 2
+joypad_model = 2
+fit_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_right = -200
+
+[node name="AdjustEffortLabel" type="Label" parent="MarginContainer/MarginContainer/MarginContainer/CenterContainer/PointerContainer/PanelContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("8_ebcek")
+text = "Adjust Effort?"
+horizontal_alignment = 1
+vertical_alignment = 1

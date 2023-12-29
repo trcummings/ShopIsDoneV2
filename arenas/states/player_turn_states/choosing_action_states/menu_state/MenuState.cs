@@ -114,7 +114,8 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                     {
                         ChangeState(Consts.States.MOVE, new Dictionary<string, Variant>()
                         {
-                            { Consts.ACTION_KEY, action }
+                            { Consts.ACTION_KEY, action },
+                            { PlayerTurnConsts.SELECTED_UNIT_KEY, _SelectedUnit }
                         });
                         break;
                     }
@@ -123,7 +124,8 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                     {
                         ChangeState(Consts.States.FACING_DIRECTION, new Dictionary<string, Variant>()
                         {
-                            { Consts.ACTION_KEY, action }
+                            { Consts.ACTION_KEY, action },
+                            { PlayerTurnConsts.SELECTED_UNIT_KEY, _SelectedUnit }
                         });
                         break;
                     }
@@ -132,7 +134,8 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                     {
                         ChangeState(Consts.States.TARGETING, new Dictionary<string, Variant>()
                         {
-                            { Consts.ACTION_KEY, action }
+                            { Consts.ACTION_KEY, action },
+                            { PlayerTurnConsts.SELECTED_UNIT_KEY, _SelectedUnit }
                         });
                         break;
                     }

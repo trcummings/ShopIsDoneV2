@@ -14,5 +14,14 @@ namespace ShopIsDone.Tiles
 		{
 			return new Dictionary<Vector3, Tile>();
 		}
-	}
+
+        public Tile GetNeighborAtDir(Vector3 dir)
+        {
+            // Get neighbors
+            var neighbors = FindNeighbors();
+
+            if (!neighbors.ContainsKey(dir)) return null;
+            return neighbors[dir];
+        }
+    }
 }

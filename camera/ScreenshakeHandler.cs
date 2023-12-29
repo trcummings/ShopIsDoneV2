@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace Camera
+namespace ShopIsDone.Cameras
 {
     public partial class ScreenshakeHandler : Node
     {
