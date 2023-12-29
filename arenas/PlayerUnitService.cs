@@ -15,6 +15,7 @@ namespace ShopIsDone.Arenas
 		public void Init(List<LevelEntity> playerUnits)
 		{
 			_PlayerUnits = playerUnits;
+			foreach (var unit in _PlayerUnits) unit.Init();
 		}
 	}
 }

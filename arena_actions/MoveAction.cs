@@ -29,6 +29,8 @@ namespace ShopIsDone.Actions
         private EntityStateHandler _StateHandler;
         private FacingDirectionHandler _FacingDirectionHandler;
 
+        public const string MOVE_PATH_KEY = "MovePath";
+
         public override void Init(ActionHandler actionHandler)
         {
             base.Init(actionHandler);
@@ -45,10 +47,16 @@ namespace ShopIsDone.Actions
                 entity.HasComponent<EntityStateHandler>();
         }
 
+        // Visible in menu if we're in the idle state, as most actions are
+        public override bool IsVisibleInMenu()
+        {
+            return _StateHandler.IsInState("idle");
+        }
+
         public override Command Execute(Dictionary<string, Variant> message = null)
         {
             // Get the move path from the message
-            var movePath = (Array<Tile>)message["MovePath"];
+            var movePath = (Array<Tile>)message[MOVE_PATH_KEY];
             var moveQueue = new SystemGeneric.Queue<Command>(_MovementHandler.GetMoveCommands(movePath.ToList()));
 
             return new SeriesCommand(

@@ -154,7 +154,15 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 // Get the unit on the tile if they have one
                 var unit = _PlayerUnitService
                     .PlayerUnits
-                    .Where(e => e.GetComponent<ActionHandler>().HasAvailableActions())
+                    .Where(e =>
+                    {
+                        var actionHandler = e.GetComponent<ActionHandler>();
+                        // The unit must at least have one action visible in the
+                        // menu, even if others are technically available
+                        return
+                            actionHandler.HasAvailableActions() &&
+                            actionHandler.Actions.Any(a => a.IsVisibleInMenu());
+                    })
                     .ToList()
                     .Find(e => e.TilemapPosition == _LastSelectedTile.TilemapPosition);
 
@@ -252,8 +260,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
             //    // Hide the "End turn" UI
             //    _EndPlayerTurnWidget.Hide();
 
-            //    // Hide player pawn UI
-            //    _PawnUIContainer.Hide();
+            // Hide player pawn UI
+            _PawnUIContainer.Hide();
 
             //    // Hide Interactable Container UI
             //    _InteractableUIContainer.Hide();

@@ -31,6 +31,15 @@ namespace ShopIsDone.Arenas.PlayerTurn
         {
             base._Ready();
 
+            // Idle the action state machine
+            _ActionStateMachine.ChangeState(ActionConsts.States.IDLE);
+        }
+
+        public override void OnStart(Dictionary<string, Variant> message = null)
+        {
+            InjectionProvider.Inject(this);
+
+            // Connect to state signals
             foreach (var state in _ActionStateMachine.States.OfType<ActionState>())
             {
                 state.GoBackRequested += GoBackToChoosingUnit;
@@ -40,15 +49,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 state.PawnAPDiffCanceled += _PlayerPawnUI.ClearApDiff;
             }
 
-            // Idle the action state machine
-            _ActionStateMachine.ChangeState(ActionConsts.States.IDLE);
-        }
-
-        public override void OnStart(Dictionary<string, Variant> message = null)
-        {
-            base.OnStart(message);
-            InjectionProvider.Inject(this);
-
             // Get selected Unit from message
             _SelectedUnit = (LevelEntity)message[Consts.SELECTED_UNIT_KEY];
 
@@ -56,6 +56,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _PlayerPawnUI.Init(_SelectedUnit);
             _PlayerPawnUI.SelectPawnUI(true);
             _PlayerPawnUI.Show();
+
+            // base start
+            base.OnStart(message);
 
             // Go right to the main action menu
             GoToMainActionMenu();
@@ -74,6 +77,16 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // Set the action state machine back to idle
             _ActionStateMachine.ChangeState(ActionConsts.States.IDLE);
 
+            // Disconnect from state signals
+            foreach (var state in _ActionStateMachine.States.OfType<ActionState>())
+            {
+                state.GoBackRequested -= GoBackToChoosingUnit;
+                state.MainMenuRequested -= GoToMainActionMenu;
+                state.RunActionRequested -= RunAction;
+                state.PawnAPDiffRequested -= _PlayerPawnUI.SetApDiff;
+                state.PawnAPDiffCanceled -= _PlayerPawnUI.ClearApDiff;
+            }
+
             // Hide the Player Pawn UI
             _PlayerPawnUI.Hide();
 
@@ -83,32 +96,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
         // This function is public for our child states to use
         private void GoToMainActionMenu()
         {
-            // Go directly to ChoosingMenuActionState with the top level submenu and
-            // an OnCancel action that takes us back to choosing the unit
             _ActionStateMachine.ChangeState(ActionConsts.States.MENU, new Dictionary<string, Variant>()
             {
                 // Pass through selected unit
                 { Consts.SELECTED_UNIT_KEY, _SelectedUnit },
-                // TODO: Add top level submenu
-                {
-                    "SubMenuAction",
-                    new SubMenuAction()
-                    {
-                        Title = "Turn",
-                        MenuActions = new System.Collections.Generic.List<MenuAction>()
-                        {
-                            //new InterruptTaskMenuAction(),
-                            //new MoveMenuAction(),
-                            //new InteractMenuAction(),
-                            //new HelpCustomerMenuAction(),
-                            //new PayOffDebtMenuAction(),
-                            //new GuardMenuAction(),
-                            //new WaitMenuAction()
-                        }
-                    }
-                }
-
-                // TODO: Add oncancel action
             });
         }
 

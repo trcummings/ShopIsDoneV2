@@ -49,7 +49,7 @@ namespace ShopIsDone.Core
 
         // IsActive
         [Export]
-        public bool Enabled;
+        public bool Enabled = true;
 
         // Name
         [Export]
@@ -119,10 +119,7 @@ namespace ShopIsDone.Core
             else OnDisabled();
 
             // Initialize components
-            foreach (var component in _Components)
-            {
-                component.Init();
-            }
+            foreach (var component in _Components) component.Init();
 
             // Emit initialized signal
             EmitSignal(nameof(Initialized));

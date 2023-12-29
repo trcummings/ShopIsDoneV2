@@ -44,8 +44,7 @@ namespace ShopIsDone.Actions
             Null,
             Move,
             Facing,
-            Target,
-            Inspect
+            Target
         }
 
         [Export]

@@ -1,4 +1,5 @@
 using Godot;
+using ShopIsDone.Actions;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
 	{
         // State vars
         public bool IsDisabled = false;
-        public MenuAction MenuAction = new MenuAction();
+        public ArenaAction Action = new ArenaAction();
 
         // Nodes
         private Label _Unselected;
@@ -38,19 +39,19 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
             _CursorContainer = GetNode<SubViewportContainer>("%CursorContainer");
         }
 
-        public void Init(bool isSelected, MenuAction menuAction)
+        public void Init(bool isSelected, ArenaAction action)
         {
             // Set label text
             foreach (var label in _Labels)
             {
-                label.Text = menuAction.Name;
+                label.Text = action.MenuTitle;
             }
 
             // Set Menu Action
-            MenuAction = menuAction;
+            Action = action;
 
             // Set disabled state
-            IsDisabled = !menuAction.IsAvailable();
+            IsDisabled = !action.IsAvailable();
 
             // Select the proper initial label based on logic
             var labelToShow = _Unselected;

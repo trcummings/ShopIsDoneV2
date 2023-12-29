@@ -1,4 +1,6 @@
 using Godot;
+using ShopIsDone.Actions;
+using ShopIsDone.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +13,11 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
         {
             public int InitialSelectedIndex = 0;
             public string MenuTitle;
-            public List<MenuAction> MenuActions;
+            public List<ArenaAction> Actions;
         }
 
         [Signal]
-        public delegate void ConfirmedSelectionEventHandler(MenuAction menuAction);
+        public delegate void ConfirmedSelectionEventHandler(ArenaAction menuAction);
 
         [Signal]
         public delegate void CanceledSelectionEventHandler();
@@ -24,7 +26,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
         public delegate void SelectedDisabledOptionEventHandler();
 
         [Signal]
-        public delegate void ChangedSelectionEventHandler(MenuAction menuAction);
+        public delegate void ChangedSelectionEventHandler(ArenaAction menuAction);
 
         [Export]
         public PackedScene MenuOptionScene;
@@ -33,6 +35,8 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
         private int _Idx = 0;
 
         // Nodes
+        public IEnumerable<MenuOptionItem> Options
+        { get { return _Options.GetChildren().OfType<MenuOptionItem>(); } }
         private Control _Options;
         private Label _MenuTitle;
 
@@ -63,7 +67,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
                 else
                 {
                     selectedOption.PressOption();
-                    EmitSignal(nameof(ConfirmedSelection), selectedOption.MenuAction);
+                    EmitSignal(nameof(ConfirmedSelection), selectedOption.Action);
                 }
 
                 return;
@@ -112,9 +116,10 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
             _MenuTitle.Text = props.MenuTitle;
 
             // Create Options
-            for (int i = 0; i < props.MenuActions.ToList().Count; i++)
+            _Options.RemoveChildrenOfType<MenuOptionItem>();
+            for (int i = 0; i < props.Actions.ToList().Count; i++)
             {
-                var menuAction = props.MenuActions[i];
+                var menuAction = props.Actions[i];
 
                 // Create the option scene
                 var newOptionScene = MenuOptionScene.Instantiate<MenuOptionItem>();
@@ -136,11 +141,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
         public void Deactivate()
         {
             // Destroy all options
-            foreach (var option in GetMenuOptionsItems())
-            {
-                _Options.RemoveChild(option);
-                option.QueueFree();
-            }
+            _Options.RemoveChildrenOfType<MenuOptionItem>();
 
             // Stop processing
             SetProcess(false);
@@ -149,7 +150,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
         private void SelectOption(int idx)
         {
             // Deselect all other options
-            foreach (var option in GetMenuOptionsItems()) option.DeselectOption();
+            foreach (var option in Options) option.DeselectOption();
 
             // Select the current option and update the index
             var nextOption = _Options.GetChild<MenuOptionItem>(idx);
@@ -157,7 +158,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
             _Idx = idx;
 
             // Emit signal that this one was selected
-            EmitSignal(nameof(ChangedSelection), nextOption.MenuAction);
+            EmitSignal(nameof(ChangedSelection), nextOption.Action);
         }
 
         private int GetNextOption(int idx, int size)
@@ -172,11 +173,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
             var nextIdx = idx - 1;
             if (nextIdx < 0) nextIdx = size - 1;
             return nextIdx;
-        }
-
-        private IEnumerable<MenuOptionItem> GetMenuOptionsItems()
-        {
-            return _Options.GetChildren().OfType<MenuOptionItem>();
         }
     }
 }

@@ -6,6 +6,7 @@ using ShopIsDone.ActionPoints;
 using ShopIsDone.Core;
 using System.Linq;
 using PlayerTurnConsts = ShopIsDone.Arenas.PlayerTurn.Consts;
+using ShopIsDone.Actions;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
@@ -39,16 +40,10 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Reset first selection var
             IsFirstSelection = true;
 
-            // Pull the sub menu action out of the message
-            var subMenuAction = (SubMenuAction)message["SubMenuAction"];
             // Get Selected unit
             _SelectedUnit = (LevelEntity)message[PlayerTurnConsts.SELECTED_UNIT_KEY];
-
-            // Initialize the menu actions with the pawn
-            foreach (var action in subMenuAction.MenuActions.OfType<ActionMenuAction>())
-            {
-                action.Pawn = _SelectedUnit;
-            }
+            var actionHandler = _SelectedUnit.GetComponent<ActionHandler>();
+            var actions = actionHandler.Actions.Where(action => action.IsVisibleInMenu()).ToList();
 
             // Connect to option menu signals
             _OptionsMenu.ConfirmedSelection += OnConfirmSelection;
@@ -60,9 +55,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             _OptionsMenu.Activate(new OptionsMenu.Props()
             {
                 InitialSelectedIndex = 0,
-                MenuTitle = subMenuAction.Title,
+                MenuTitle = "Turn",
                 // Filter out the invisible actions
-                MenuActions = subMenuAction.MenuActions.Where(action => action.IsVisible()).ToList()
+                Actions = actions
             });
 
             // Show the menu
@@ -104,24 +99,58 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             EmitSignal(nameof(GoBackRequested));
         }
 
-        private void OnConfirmSelection(MenuAction menuAction)
+        private void OnConfirmSelection(ArenaAction action)
         {
-            // Select the action
-            menuAction.SelectAction(this);
+            // Change state based on action type
+            switch (action.ActionType)
+            {
+                case ArenaAction.ActionTypes.Null:
+                    {
+                        EmitSignal(nameof(RunActionRequested), action);
+                        break;
+                    }
+
+                case ArenaAction.ActionTypes.Move:
+                    {
+                        ChangeState(Consts.States.MOVE, new Dictionary<string, Variant>()
+                        {
+                            { Consts.ACTION_KEY, action }
+                        });
+                        break;
+                    }
+
+                case ArenaAction.ActionTypes.Facing:
+                    {
+                        ChangeState(Consts.States.FACING_DIRECTION, new Dictionary<string, Variant>()
+                        {
+                            { Consts.ACTION_KEY, action }
+                        });
+                        break;
+                    }
+
+                case ArenaAction.ActionTypes.Target:
+                    {
+                        ChangeState(Consts.States.TARGETING, new Dictionary<string, Variant>()
+                        {
+                            { Consts.ACTION_KEY, action }
+                        });
+                        break;
+                    }
+            }
 
             // Emit signal
             EmitSignal(nameof(Confirmed));
         }
 
-        private void OnChangeSelection(MenuAction menuAction)
+        private void OnChangeSelection(ArenaAction action)
         {
             // If this action has a cost, emit
-            if (menuAction.IsAvailable() && menuAction is ActionMenuAction sAction)
+            if (action.IsAvailable())
             {
                 var apHandler = _SelectedUnit.GetComponent<ActionPointHandler>();
-                RequestApDiff(new ActionPointHandler()
+                RequestApDiff(apHandler, new ActionPointHandler()
                 {
-                    ActionPoints = sAction.Action.ActionCost
+                    ActionPoints = action.ActionCost
                 });
             }
             // Otherwise, cancel the diff
@@ -133,22 +162,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Emit signal if it's not our first time selecting an option
             if (IsFirstSelection) IsFirstSelection = false;
             else EmitSignal(nameof(Selected));
-        }
-
-        protected void RequestApDiff(ActionPointHandler subtractableAp)
-        {
-            var apHandler = _SelectedUnit.GetComponent<ActionPointHandler>();
-            EmitSignal(nameof(PawnAPDiffRequested), new ActionPointHandler()
-            {
-                ActionPoints = Mathf.Max(apHandler.ActionPoints - subtractableAp.ActionPoints, 0),
-                ActionPointDebt = Mathf.Max(apHandler.ActionPointDebt - subtractableAp.ActionPointDebt, 0),
-                ActionPointExcess = Mathf.Max(apHandler.ActionPointExcess - subtractableAp.ActionPointExcess, 0)
-            });
-        }
-
-        protected void CancelApDiff()
-        {
-            EmitSignal(nameof(PawnAPDiffCanceled));
         }
     }
 }
