@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-//using ShopIsDone.Pawns.Pathfinding;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Utils.Pathfinding;
 
 namespace ShopIsDone.Tiles
 {
@@ -23,6 +23,12 @@ namespace ShopIsDone.Tiles
         [Export]
         public CommandProcessor _CommandProcessor;
 
+        [Export]
+        public UnitTileMoveValidator _MoveValidator;
+
+        [Export]
+        public SkipTileStrategyNode _SkipTileStrategy;
+
         // Properties
         [Export]
         // This describes how many tiles the unit can move every turn at baseline
@@ -33,9 +39,6 @@ namespace ShopIsDone.Tiles
         // movement animation
         public double MovementSpeed = 10;
 
-        //[Export]
-        //public PawnMoveGenerator MoveGenerator = new PawnMoveGenerator();
-
         [Export]
         public float MoveEffortMod = 0.6f; // (3 -> 5 ratio)
 
@@ -45,9 +48,6 @@ namespace ShopIsDone.Tiles
         [Export]
         public bool CanSeeInTheDark = false;
 
-        [Inject]
-        private TileManager _TileManager;
-
         public void Init(EntityManager _)
         {
             InjectionProvider.Inject(this);
@@ -55,20 +55,18 @@ namespace ShopIsDone.Tiles
 
         public List<Tile> GetAvailableMoves(Tile fromTile, bool includeFromTile = true, int moveRange = -1)
         {
-            return new List<Tile>();
-            //return MoveGenerator.GetAvailableMoves(
-            //    fromTile,
-            //    includeFromTile,
-            //    // If the given move range is less than zero, use our base move range
-            //    // This is in order to keep the function flexible
-            //    moveRange < 0 ? BaseMove : moveRange
-            //);
+            return new MoveGenerator(_SkipTileStrategy).GetAvailableMoves(
+                fromTile,
+                includeFromTile,
+                // If the given move range is less than zero, use our base move range
+                // This is in order to keep the function flexible
+                moveRange < 0 ? BaseMove : moveRange
+            );
         }
 
         public bool IsValidMovePath(List<Tile> movePath)
         {
-            return false;
-            //return MoveGenerator.IsValidMovePath(movePath);
+            return _MoveValidator.IsValidMovePath(movePath);
         }
 
         // NB: Assume that MovePath will always have two or more tiles in it, that
@@ -90,9 +88,8 @@ namespace ShopIsDone.Tiles
                 // pawn passing through another pawn or not
                 .Aggregate(new List<List<(Tile, Tile)>>(), (acc, record) =>
                 {
-                    // Find out if we need to pass through a friendly unit to make
-                    // this movement work
-                    var isPassThrough = _TileManager.CanPassThroughTile(Entity, record.Previous);
+                    // Find out if we can pass through this tile
+                    var isPassThrough = _SkipTileStrategy.CanPassThroughUnitOnTile(record.Previous);
 
                     // If the first tile is not a pass through tile, then create a
                     // new entry to map over

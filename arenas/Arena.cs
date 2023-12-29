@@ -53,13 +53,14 @@ namespace ShopIsDone.Arenas
 
         public void Init(LevelEntity playerUnit)
         {
-            _TileManager.Init();
-            _ActionService.Init();
-
             // Register services
             _InjectionProvider.RegisterService(_TileManager);
             _InjectionProvider.RegisterService(_ActionService);
             _InjectionProvider.RegisterService(_PlayerUnitService);
+
+            // Initialize services
+            _TileManager.Init();
+            _ActionService.Init();
 
             // Move units into arena
             var placementTiles = GetTree()
@@ -71,6 +72,9 @@ namespace ShopIsDone.Arenas
 
             // Add player unit to player unit service
             _PlayerUnitService.Init(new System.Collections.Generic.List<LevelEntity>() { playerUnit });
+
+            // Update all tiles
+            _TileManager.UpdateTiles();
 
             // Change state to initializing
             _ArenaStateMachine.ChangeState("Initializing");

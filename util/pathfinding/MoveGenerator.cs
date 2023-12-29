@@ -23,16 +23,21 @@ namespace ShopIsDone.Utils.Pathfinding
     // Default strategy
     public class SimpleShouldSkipTileStrategy : IShouldSkipTileStrategy
     {
-        public bool ShouldSkipTile(Tile _, Tile currentNeighbor)
+        public virtual bool ShouldSkipTile(Tile _, Tile currentNeighbor)
         {
             return !currentNeighbor.Enabled;
         }
     }
 
     // Move generator class
-    public partial class MoveGenerator : Resource
+    public class MoveGenerator
     {
-        private IShouldSkipTileStrategy _ShouldSkipTileStrategy = new SimpleShouldSkipTileStrategy();
+        private IShouldSkipTileStrategy _ShouldSkipTileStrategy;
+
+        public MoveGenerator(IShouldSkipTileStrategy skipStrategy)
+        {
+            _ShouldSkipTileStrategy = skipStrategy ?? new SimpleShouldSkipTileStrategy();
+        }
 
         // State
         private readonly Dictionary<Vector3, TileNavigationData> _TileNavMap = new Dictionary<Vector3, TileNavigationData>();

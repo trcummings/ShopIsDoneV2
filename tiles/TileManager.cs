@@ -43,6 +43,11 @@ namespace ShopIsDone.Tiles
             }
         }
 
+        public void UpdateTiles()
+        {
+            foreach (var tile in _TilesByPos.Values) tile.Update();
+        }
+
         public void SetTile(Tile tile)
         {
             var tilePos = tile.TilemapPosition;
@@ -78,7 +83,7 @@ namespace ShopIsDone.Tiles
 
         public bool IsTileOccupied(Tile tile)
         {
-            return false;
+            return !tile.IsTileAvailable();
         }
 
         public bool CanPassThroughTile(LevelEntity entity, Tile tile)

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cvk0tlaw0lnrt"
-path.s3tc="res://.godot/imported/move_path.png-49aed01cdc6c769528258c34516f8e31.s3tc.ctex"
+path.s3tc="res://.godot/imported/move_path.png-b347602e99991bc4586571b753656869.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/Widgets/MovePath/move_path.png"
-dest_files=["res://.godot/imported/move_path.png-49aed01cdc6c769528258c34516f8e31.s3tc.ctex"]
+source_file="res://widgets/move_path_widget/move_path.png"
+dest_files=["res://.godot/imported/move_path.png-b347602e99991bc4586571b753656869.s3tc.ctex"]
 
 [params]
 

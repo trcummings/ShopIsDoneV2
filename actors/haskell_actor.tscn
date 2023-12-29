@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=27 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://actors/ActorVelocity.cs" id="3"]
@@ -21,7 +21,10 @@
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="19_dsksq"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="20_1bpch"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="21_k5t6c"]
+[ext_resource type="Script" path="res://tiles/UnitTileMoveValidator.cs" id="21_lkw5d"]
+[ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="22_4rv4k"]
 [ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="22_f48js"]
+[ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="23_sv0kt"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
@@ -94,19 +97,33 @@ script = ExtResource("16_87xgg")
 Actions = [ExtResource("17_xmxqu"), ExtResource("18_64csj")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
-[node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_CommandProcessor")]
+[node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_CommandProcessor", "_MoveValidator", "_SkipTileStrategy")]
 script = ExtResource("19_dsksq")
 _Body = NodePath("..")
 _CommandProcessor = NodePath("CommandProcessor")
+_MoveValidator = NodePath("TileMoveValidator")
+_SkipTileStrategy = NodePath("ShouldSkipTileStrategy")
 CanPassThroughAllies = true
 
 [node name="CommandProcessor" type="Node" parent="TileMovementHandler"]
 script = ExtResource("20_1bpch")
 
+[node name="TileMoveValidator" type="Node" parent="TileMovementHandler" node_paths=PackedStringArray("_TileMovementHandler")]
+script = ExtResource("21_lkw5d")
+_TileMovementHandler = NodePath("..")
+
+[node name="ShouldSkipTileStrategy" type="Node" parent="TileMovementHandler" node_paths=PackedStringArray("_TileMoveHandler", "_TeamHandler")]
+script = ExtResource("22_4rv4k")
+_TileMoveHandler = NodePath("..")
+_TeamHandler = NodePath("../../TeamHandler")
+
 [node name="TilemapPositionHandler" parent="." instance=ExtResource("21_k5t6c")]
 
 [node name="DemeritHandler" type="Node" parent="."]
 script = ExtResource("22_f48js")
+
+[node name="TeamHandler" type="Node" parent="."]
+script = ExtResource("23_sv0kt")
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="HaskellModel" method="SetFacingDir"]

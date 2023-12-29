@@ -5,6 +5,7 @@ using ShopIsDone.Utils.DependencyInjection;
 using Godot.Collections;
 using System;
 using ShopIsDone.Cameras;
+using ShopIsDone.Tiles;
 
 namespace ShopIsDone.Actions
 {
@@ -16,6 +17,9 @@ namespace ShopIsDone.Actions
         [Inject]
         private CameraService _CameraService;
 
+        [Inject]
+        private TileManager _TileManager;
+
         public void Init()
         {
             InjectionProvider.Inject(this);
@@ -23,8 +27,14 @@ namespace ShopIsDone.Actions
 
         public Command ExecuteAction(ArenaAction action, Dictionary<string, Variant> message = null)
         {
-            return ApplyCameraFollow(action,
-                ApplyCameraZoom(action, action.Execute(message))
+            return new SeriesCommand(
+                ApplyCameraFollow(action,
+                    ApplyCameraZoom(action,
+                        action.Execute(message)
+                    )
+                ),
+                // Post action updates
+                new DeferredCommand(() => new ActionCommand(_TileManager.UpdateTiles))
             );
         }
 

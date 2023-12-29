@@ -107,7 +107,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             _EffortMeter.Show();
 
             // Get all possible moves for the selected pawn
-            var moves = _TileMoveHandler.GetAvailableMoves(null, true, GetAdjustedMoveRange());
+            var moves = _TileMoveHandler.GetAvailableMoves(_CurrentTile, true, GetAdjustedMoveRange());
             _AllPossibleMoves = moves.ToList();
             _RemainingMoves = moves.ToList();
 
@@ -328,7 +328,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Compute the new all possible moves
             var adjustedMove = GetAdjustedMoveRange();
-            _AllPossibleMoves = _TileMoveHandler.GetAvailableMoves(null, true, adjustedMove);
+            _AllPossibleMoves = _TileMoveHandler.GetAvailableMoves(_CurrentTile, true, adjustedMove);
 
             // Compute the remaining possible moves
             // NB: The initial tile is always in the range, so adjust the count by 1

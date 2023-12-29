@@ -239,8 +239,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _TileCursor.CursorEnteredTile -= OnCursorHoveredTile;
             _TileCursor.AttemptedUnavailableMove -= OnAttemptedInvalidMove;
 
-            //    // Hide the "End turn" UI
-            //    _EndPlayerTurnWidget.Hide();
+            // Hide the "End turn" UI
+            _EndPlayerTurnWidget.Hide();
 
             // Hide player pawn UI
             _PawnUIContainer.Hide();
