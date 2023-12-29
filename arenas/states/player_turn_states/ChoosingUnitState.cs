@@ -53,6 +53,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
         private CameraService _CameraService;
 
         [Inject]
+        private PlayerCameraService _PlayerCameraService;
+
+        [Inject]
         private InputXformer _InputXformer;
 
         [Inject]
@@ -80,6 +83,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
             // Inject dependencies
             InjectionProvider.Inject(this);
+
             // Init tile cursor
             _TileCursor.Init(_TileManager);
 
@@ -108,6 +112,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // Show cursors
             _TileCursor.Show();
             _FingerCursor.Show();
+
+            _PlayerCameraService.Activate();
 
             // Base start hook
             base.OnStart(message);
@@ -212,16 +218,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
             //        return;
             //    }
 
-            // Handle camera rotation
-            if (Input.IsActionJustPressed("rotate_camera_left"))
-            {
-                _CameraService.RotateLeft();
-            }
-            if (Input.IsActionJustPressed("rotate_camera_right"))
-            {
-                _CameraService.RotateRight();
-            }
-
             // Ignore if no movement input
             if (_InputHelper.InputDir == Vector3.Zero) return;
 
@@ -232,6 +228,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         public override void OnExit(string nextState)
         {
+            _PlayerCameraService.Deactivate();
             // Remove camera target
             _CameraService.SetCameraTarget(null).Execute();
 

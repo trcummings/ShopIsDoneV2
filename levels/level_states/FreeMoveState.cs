@@ -9,14 +9,11 @@ namespace ShopIsDone.Levels.States
 {
     public partial class FreeMoveState : State
     {
-        [Signal]
-        public delegate void CameraRotatedEventHandler();
-
         [Export]
         private CameraService _CameraSystem;
 
         [Export]
-        private IsometricCamera _Camera;
+        private PlayerCameraService _PlayerCameraService;
 
         [Export]
         private Haskell _Haskell;
@@ -39,26 +36,17 @@ namespace ShopIsDone.Levels.States
             _CameraSystem.SetCameraTarget(_Haskell).Execute();
             // Start actor
             _Haskell.Init(_PlayerInput);
+            // Start camera
+            _PlayerCameraService.Activate();
 
             // Finish start hook
             base.OnStart(message);
         }
 
-        public override void UpdateState(double delta)
+        public override void OnExit(string nextState)
         {
-            base.UpdateState(delta);
-
-            // Handle camera rotation
-            if (Input.IsActionJustPressed("rotate_camera_left"))
-            {
-                _Camera.RotateLeft();
-                EmitSignal(nameof(CameraRotated));
-            }
-            if (Input.IsActionJustPressed("rotate_camera_right"))
-            {
-                _Camera.RotateRight();
-                EmitSignal(nameof(CameraRotated));
-            }
+            _PlayerCameraService.Deactivate();
+            base.OnExit(nextState);
         }
     }
 }

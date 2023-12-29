@@ -21,6 +21,9 @@ namespace ShopIsDone.Levels
         private CameraService _CameraService;
 
         [Export]
+        private PlayerCameraService _PlayerCameraService;
+
+        [Export]
         private InputXformer _InputXformer;
 
         [Export]
@@ -64,6 +67,7 @@ namespace ShopIsDone.Levels
             _InjectionProvider.RegisterService(_DirectionalInput);
             _InjectionProvider.RegisterService(_TileIndicator);
             _InjectionProvider.RegisterService(_MovePathWidget);
+            _InjectionProvider.RegisterService(_PlayerCameraService);
         }
 
         public void Init()

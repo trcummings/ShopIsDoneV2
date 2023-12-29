@@ -10,6 +10,7 @@ using ShopIsDone.Core;
 using ShopIsDone.Tiles;
 using PlayerTurnConsts = ShopIsDone.Arenas.PlayerTurn.Consts;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Cameras;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
@@ -37,6 +38,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         [Inject]
         private TileManager _TileManager;
 
+        [Inject]
+        private PlayerCameraService _PlayerCameraService;
+
         protected ArenaAction _Action;
         protected LevelEntity _SelectedUnit;
         protected Tile _CurrentTile;
@@ -63,12 +67,13 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 // Otherwise, launch an AP diff
                 else RequestApDiff(new ActionPointHandler() { ActionPoints = _Action.ActionCost });
             }
-
+            _PlayerCameraService.Activate();
             base.OnStart(message);
         }
 
         public override void OnExit(string nextState)
         {
+            _PlayerCameraService.Deactivate();
             // Disconnect and clean up
             _EffortService.UpdatedTotalCost -= OnTotalCostChange;
             _EffortService.CleanUp();
