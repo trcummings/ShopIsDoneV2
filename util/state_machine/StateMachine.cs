@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Linq;
 using Godot.Collections;
+using ShopIsDone.Game;
 
 namespace ShopIsDone.Utils.StateMachine
 {
@@ -15,6 +16,9 @@ namespace ShopIsDone.Utils.StateMachine
         [Export]
         public bool IgnoreTransitionRestrictions = true;
 
+        [Export]
+        public bool Debug = false;
+
         // State vars
         public string CurrentState;
         public string LastState;
@@ -25,13 +29,18 @@ namespace ShopIsDone.Utils.StateMachine
         public Array<State> States { get { return _States; } }
         private Array<State> _States = new Array<State>();
 
+        private Callable _AfterExitCallable;
+        private Callable _AfterStartCallable;
+
         public override void _Ready()
         {
+            _AfterExitCallable = new Callable(this, nameof(OnAfterExit));
+            _AfterStartCallable = new Callable(this, nameof(OnAfterStart));
             foreach (State _state in GetChildren().OfType<State>().ToList())
             {
                 _States.Add(_state);
                 // Connect to state change requests
-                _state.Connect(nameof(_state.StateChangeRequested), new Callable(this, nameof(ChangeState)));
+                _state.StateChangeRequested += ChangeState;
             }
         }
 
@@ -75,6 +84,7 @@ namespace ShopIsDone.Utils.StateMachine
 
         public void ChangeState(string stateName, Dictionary<string, Variant> message = null)
         {
+            if (GameManager.IsDebugMode() && Debug) GD.Print($"{Name}.ChangeState called with {stateName}");
             // If we have a previous state, test state change restrictions
             if (_State != null)
             {
@@ -115,12 +125,16 @@ namespace ShopIsDone.Utils.StateMachine
                 // Connect to state's StateExited signal
                 // NB: Because we can enter and exit the same states, check for
                 // an existing connection
-                if (!_State.IsConnected(nameof(State.StateExited), new Callable(this, nameof(OnAfterExit))))
+                if (!_State.IsConnected(nameof(_State.StateExited), _AfterExitCallable))
                 {
-                    _State.StateExited += () => OnAfterExit(nextState, message);
+                    // Set bound callable to disconnect from afterwards
+                    _AfterExitCallable = Callable.From(() => OnAfterExit(nextState, message));
+                    // Connect to bound callable
+                    _State.Connect(nameof(_State.StateExited), _AfterExitCallable);
                 }
 
                 // Run state's OnExit hook with the name of the next state
+                if (GameManager.IsDebugMode() && Debug) GD.Print($"{Name} exiting {_State.Name}");
                 _State.OnExit(nextState.Name);
             }
             // Otherwise, skip directly to the after exit function
@@ -130,36 +144,34 @@ namespace ShopIsDone.Utils.StateMachine
         private void OnAfterExit(State nextState, Dictionary<string, Variant> message = null)
         {
             // Disconnect if connected
-            if (_State?.IsConnected(nameof(State.StateExited), new Callable(this, nameof(OnAfterExit))) ?? false)
+            if (_State?.IsConnected(nameof(_State.StateExited), _AfterExitCallable) ?? false)
             {
-                _State.Disconnect(nameof(State.StateExited), new Callable(this, nameof(OnAfterExit)));
+                _State.Disconnect(nameof(_State.StateExited), _AfterExitCallable);
             }
 
             // Update the state tracking vars
-            LastState = CurrentState;
             CurrentState = nextState.Name;
-
-            // Update state reference
             _State = nextState;
 
             // Connect to state's StateEntered signal
             // NB: Because we can enter and exit the same states, check for
             // an existing connection
-            if (!_State.IsConnected(nameof(State.StateStarted), new Callable(this, nameof(OnAfterStart))))
+            if (!_State.IsConnected(nameof(_State.StateStarted), _AfterStartCallable))
             {
-                _State.Connect(nameof(State.StateStarted), new Callable(this, nameof(OnAfterStart)));
+                _State.Connect(nameof(_State.StateStarted), _AfterStartCallable);
             }
 
             // Start the next state
+            if (GameManager.IsDebugMode() && Debug) GD.Print($"{Name} entering {_State.Name}");
             _State.OnStart(message);
         }
 
         private void OnAfterStart()
         {
             // Disconnect from started event
-            if (_State.IsConnected(nameof(State.StateStarted), new Callable(this, nameof(OnAfterStart))))
+            if (_State.IsConnected(nameof(_State.StateStarted), _AfterStartCallable))
             {
-                _State.Disconnect(nameof(State.StateStarted), new Callable(this, nameof(OnAfterStart)));
+                _State.Disconnect(nameof(_State.StateStarted), _AfterStartCallable);
             }
 
             // Run state update function
