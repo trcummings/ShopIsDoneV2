@@ -23,7 +23,7 @@
 [ext_resource type="Script" path="res://arenas/states/battle_states/PlayerTurnBattleState.cs" id="10_hv83v"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/ChoosingActionState.cs" id="14_rj6r3"]
 [ext_resource type="PackedScene" uid="uid://2ptpw2u53fdh" path="res://arenas/states/player_turn_states/choosing_unit_state.tscn" id="15_hbm50"]
-[ext_resource type="PackedScene" uid="uid://bpxwmajircoir" path="res://arenas/states/player_turn_states/ending_turn_state.tscn" id="17_cvl73"]
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/EndingTurnState.cs" id="17_4ddch"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/RunningActionState.cs" id="19_3o4ep"]
 [ext_resource type="PackedScene" uid="uid://dkgbq0y5ahht5" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/menu_state.tscn" id="19_pommw"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/MoreInfoState.cs" id="20_por72"]
@@ -128,7 +128,8 @@ _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 _PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
 _EndPlayerTurnWidget = NodePath("../../../../../../UILayer/CenterContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
 
-[node name="EndingTurn" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService") instance=ExtResource("17_cvl73")]
+[node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService")]
+script = ExtResource("17_4ddch")
 _PhaseManager = NodePath("../../../../BattlePhaseManager")
 _ConfirmEndTurnPopup = NodePath("../../../../../../UILayer/CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer2/ConfirmEndTurnPopup")
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")

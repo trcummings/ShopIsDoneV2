@@ -9,18 +9,11 @@ using ShopIsDone.Cameras;
 using ShopIsDone.Tiles;
 using System.Linq;
 using ShopIsDone.Arenas.UI;
-using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
     public partial class EndingTurnState : State
 	{
-        [Signal]
-        public delegate void CanceledEndTurnEventHandler();
-
-        [Signal]
-        public delegate void AcceptedEndTurnEventHandler();
-
         [Export]
         public BattlePhaseManager _PhaseManager;
 
@@ -43,9 +36,12 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
+            InjectionProvider.Inject(this);
+
             base.OnStart(message);
 
-            InjectionProvider.Inject(this);
+            _ConfirmEndTurnPopup.Accepted += _PhaseManager.AdvanceToNextPhase;
+            _ConfirmEndTurnPopup.Canceled += OnCancel;
 
             // Hide the cursors
             _TileCursor.Hide();
@@ -81,36 +77,23 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 ))
                 .ToList();
             _ConfirmEndTurnPopup.Init(endTurnInfo);
-            _ConfirmEndTurnPopup.Show();
+            _ConfirmEndTurnPopup.Activate();
         }
 
-        public override void UpdateState(double delta)
+        private void OnCancel()
         {
-            base.UpdateState(delta);
-
-            // Wait for confirmation / decline input
-            if (Input.IsActionJustPressed("ui_accept"))
+            ChangeState(Consts.States.CHOOSING_UNIT, new Dictionary<string, Variant>()
             {
-                EmitSignal(nameof(AcceptedEndTurn));
-                _PhaseManager.AdvanceToNextPhase();
-                return;
-            }
-
-            if (Input.IsActionJustPressed("ui_cancel"))
-            {
-                EmitSignal(nameof(CanceledEndTurn));
-                ChangeState(Consts.States.CHOOSING_UNIT, new Dictionary<string, Variant>()
-                {
-                    { Consts.LAST_SELECTED_TILE_KEY, _LastSelectedTile }
-                });
-                return;
-            }
+                { Consts.LAST_SELECTED_TILE_KEY, _LastSelectedTile }
+            });
         }
 
         public override void OnExit(string nextState)
         {
             // Close the confirmation panel
-            _ConfirmEndTurnPopup.Hide();
+            _ConfirmEndTurnPopup.Accepted -= _PhaseManager.AdvanceToNextPhase;
+            _ConfirmEndTurnPopup.Canceled -= OnCancel;
+            _ConfirmEndTurnPopup.Deactivate();
 
             // Deactivate camera service
             _PlayerCameraService.Deactivate();

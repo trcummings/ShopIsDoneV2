@@ -54,16 +54,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _FingerCursor.Show();
             _TileCursor.Show();
 
-            // If not only this unit can't act, but no units remain to act, then end
-            // the turn immediately (this is the prelude to a player victory)
-            if (!_PlayerUnitService.HasRemainingActiveUnits())
-            {
-                ChangeState(Consts.States.ENDING_TURN, new Dictionary<string, Variant>()
-                {
-                    { Consts.LAST_SELECTED_TILE_KEY, unitLastTile }
-                });
-            }
-
             // If unit can still act, continue choosing actions for that unit
             if (_PlayerUnitService.UnitHasAvailableActions(unit))
             {

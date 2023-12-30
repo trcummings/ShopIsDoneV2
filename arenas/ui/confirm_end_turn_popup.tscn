@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://fh6c0ylvm7qx"]
+[gd_scene load_steps=9 format=3 uid="uid://fh6c0ylvm7qx"]
 
 [ext_resource type="Script" path="res://arenas/ui/ConfirmEndTurnPopup.cs" id="1_vu48g"]
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2_kneqr"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="3_7bqiu"]
 [ext_resource type="PackedScene" uid="uid://0jgrva8keltv" path="res://arenas/ui/end_turn_unit_info.tscn" id="4_uary6"]
 [ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="5_jqibk"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="6_mbvrv"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="7_8g5xx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cxbec"]
 
@@ -98,3 +100,10 @@ layout_mode = 2
 theme = ExtResource("3_7bqiu")
 theme_type_variation = &"LabelDark"
 text = "Yes"
+
+[node name="UIConfirmPlayer" parent="." instance=ExtResource("6_mbvrv")]
+
+[node name="UICancelPlayer" parent="." instance=ExtResource("7_8g5xx")]
+
+[connection signal="Accepted" from="." to="UIConfirmPlayer" method="play"]
+[connection signal="Canceled" from="." to="UICancelPlayer" method="play"]
