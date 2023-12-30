@@ -8,7 +8,6 @@ namespace ShopIsDone.Actions
 {
     public partial class ArenaAction : Resource
     {
-        [ExportGroup("Identification")]
         [Export]
         public string Id;
 
@@ -39,6 +38,16 @@ namespace ShopIsDone.Actions
         [Export]
         public int Range = 0;
 
+        [Export]
+        public DispositionTypes TargetDisposition = 0;
+        public enum DispositionTypes
+        {
+            Any,
+            Friends,
+            Enemies,
+            Neutrals
+        }
+
         [ExportGroup("Widget")]
         [Export]
         public ActionTypes ActionType = 0;
@@ -66,12 +75,8 @@ namespace ShopIsDone.Actions
         [Export]
         public bool FocusEntity = false;
 
-        [ExportGroup("Action Menu")]
         [Export]
-        public string MenuTitle = "";
-
-        [Export(PropertyHint.MultilineText)]
-        public string MenuDescription = "";
+        public bool RotateToFaceEntity = false;
 
         // The pawn using the action
         public LevelEntity Entity;

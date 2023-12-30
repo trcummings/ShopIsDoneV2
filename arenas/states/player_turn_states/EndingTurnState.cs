@@ -72,7 +72,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
                     u.EntityName,
                     _PlayerUnitService
                         .GetUnitRemainingAvailableActions(u)
-                        .Select(a => a.MenuTitle)
+                        .Select(a => a.ActionName)
                         .ToList()
                 ))
                 .ToList();

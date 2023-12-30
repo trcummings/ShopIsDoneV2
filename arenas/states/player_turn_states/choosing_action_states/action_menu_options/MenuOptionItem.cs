@@ -44,7 +44,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu
             // Set label text
             foreach (var label in _Labels)
             {
-                label.Text = action.MenuTitle;
+                label.Text = action.ActionName;
             }
 
             // Set Menu Action
