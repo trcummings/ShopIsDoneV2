@@ -20,6 +20,7 @@ namespace ShopIsDone.Levels.States
         {
             // Null out actor movement with dummy input
             _Haskell.Init(new ActorInput());
+            _Haskell.EnterArena();
 
             // Pull arena from message
             _Arena = (Arena)message.GetValueOrDefault(Consts.States.ARENA_KEY, default);
@@ -34,7 +35,9 @@ namespace ShopIsDone.Levels.States
         {
             // Clean up arena
             _Arena.CleanUp();
-            
+            // Let player units free move again
+            _Haskell.ExitArena();
+
             base.OnExit(nextState);
         }
     }

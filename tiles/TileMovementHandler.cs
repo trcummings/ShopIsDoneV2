@@ -74,12 +74,12 @@ namespace ShopIsDone.Tiles
         // also assume that each tile will be neighbors with the next. We can also
         // assume that the movement will never end with the unit on a tile with
         // another unit on it. A path will also never loop in on itself.
-        public List<Command> GetMoveCommands(List<Tile> MovePath)
+        public List<Command> GetMoveCommands(List<Tile> movePath)
         {
             // Break each move to each tile on the list into a series of commands
             // NB: We only want to look to the second last value of the list because
             // we're looking forward
-            return MovePath
+            return movePath
                 // Turn into list of prev-next entries
                 .WithPrevious(null)
                 // Skip first where prev value is null

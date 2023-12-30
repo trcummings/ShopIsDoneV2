@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using ShopIsDone.Core;
+using ShopIsDone.Utils.StateMachine;
+using ShopIsDone.Actors.States;
 
 namespace ShopIsDone.Actors
 {
@@ -10,33 +12,26 @@ namespace ShopIsDone.Actors
         private ActorAnimator _ActorAnimator;
 
         [Export]
-        private ActorVelocity _ActorVelocity;
+        private StateMachine _ActorStateMachine;
 
         [Export]
-        private ActorFloorIndicator _ActorFloorIndicator;
-
-        private IActorInput _ActorInput = new ActorInput();
-
-        public override void _Ready()
-        {
-            base._Ready();
-            SetProcess(false);
-        }
+        private FreeMoveActorState _FreeMoveState;
 
         public void Init(IActorInput actorInput)
         {
-            _ActorInput = actorInput;
+            _FreeMoveState.Init(actorInput);
             _ActorAnimator.Init();
-            SetProcess(true);
+            _ActorStateMachine.ChangeState("FreeMove");
         }
 
-        public override void _Process(double delta)
+        public void EnterArena()
         {
-            _ActorInput.UpdateInput();
-            _ActorVelocity.AccelerateInDirection(_ActorInput.MoveDir);
-            _ActorVelocity.Move(this);
-            _ActorAnimator.UpdateAnimations(_ActorVelocity.Velocity);
-            _ActorFloorIndicator.UpdateIndicator(_ActorVelocity.Velocity);
+            _ActorStateMachine.ChangeState("InArena");
+        }
+
+        public void ExitArena()
+        {
+            _ActorStateMachine.ChangeState("FreeMove");
         }
     }
 }

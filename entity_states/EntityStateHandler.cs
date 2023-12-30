@@ -33,6 +33,8 @@ namespace ShopIsDone.EntityStates
                     seed.Add(state.Id, state);
                     return seed;
                 });
+            _CurrentState = InitialState;
+            _CurrentState.Enter();
         }
 
         // Public API
@@ -57,22 +59,20 @@ namespace ShopIsDone.EntityStates
             return _CurrentState.CanAct();
         }
 
-        public override void Init()
-        {
-            _CurrentState = InitialState;
-            _CurrentState.Enter();
-        }
+        //public override void Init()
+        //{
+        //    _CurrentState = InitialState;
+        //    _CurrentState.Enter();
+        //}
 
         public void ChangeState(string state)
         {
-            ChangeStateAsync(state)
-                .ContinueWith((_) => { EmitSignal(nameof(ChangedState)); });
+            Task _ = ChangeStateAsync(state);
         }
 
         public void PushState(string state)
         {
-            PushStateAsync(state)
-                .ContinueWith((_) => { EmitSignal(nameof(PushedState)); });
+            Task _ = PushStateAsync(state);
         }
 
         public async Task ChangeStateAsync(string state)
@@ -95,6 +95,8 @@ namespace ShopIsDone.EntityStates
             _CurrentState = newState;
             _CurrentState.Enter();
             await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
+
+            EmitSignal(nameof(ChangedState));
         }
 
         // Pushes a state on, enters, immediately exits
@@ -122,6 +124,8 @@ namespace ShopIsDone.EntityStates
             // Re-enter current state
             _CurrentState.Enter();
             await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
+
+            EmitSignal(nameof(PushedState));
         }
     }
 }

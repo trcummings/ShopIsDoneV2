@@ -28,12 +28,12 @@ namespace ShopIsDone.EntityStates
 
         public virtual void Enter()
         {
-            EmitSignal(nameof(StateEntered));
+            CallDeferred("emit_signal", nameof(StateEntered));
         }
 
         public virtual void Exit()
         {
-            EmitSignal(nameof(StateExited));
+            CallDeferred("emit_signal", nameof(StateExited));
         }
 
         // Default to false

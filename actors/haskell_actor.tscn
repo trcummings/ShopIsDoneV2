@@ -1,7 +1,10 @@
-[gd_scene load_steps=27 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=30 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
+[ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_6jaxx"]
 [ext_resource type="Script" path="res://actors/ActorVelocity.cs" id="3"]
+[ext_resource type="Script" path="res://actors/states/FreeMoveActorState.cs" id="3_f0qiv"]
+[ext_resource type="Script" path="res://actors/states/InArenaActorState.cs" id="4_oqqp8"]
 [ext_resource type="Script" path="res://actors/ActorAnimator.cs" id="5"]
 [ext_resource type="Script" path="res://actors/Haskell.cs" id="6"]
 [ext_resource type="PackedScene" path="res://actors/actor_floor_indicator.tscn" id="7"]
@@ -29,15 +32,29 @@
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
 
-[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_TilemapPositionHandler", "_FacingDirectionHandler")]
+[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine", "_FreeMoveState", "_TilemapPositionHandler", "_FacingDirectionHandler")]
 script = ExtResource("6")
 _ActorAnimator = NodePath("ActorAnimator")
-_ActorVelocity = NodePath("ActorVelocity")
-_ActorFloorIndicator = NodePath("ActorFloorIndicator")
+_ActorStateMachine = NodePath("StateMachine")
+_FreeMoveState = NodePath("StateMachine/FreeMove")
 Id = "haskell"
 EntityName = "Haskell"
 _TilemapPositionHandler = NodePath("TilemapPositionHandler")
 _FacingDirectionHandler = NodePath("FacingDirectionHandler")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_6jaxx")
+
+[node name="FreeMove" type="Node" parent="StateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator")]
+script = ExtResource("3_f0qiv")
+_Body = NodePath("../..")
+_ActorAnimator = NodePath("../../ActorAnimator")
+_ActorVelocity = NodePath("../../ActorVelocity")
+_ActorFloorIndicator = NodePath("../../ActorFloorIndicator")
+
+[node name="InArena" type="Node" parent="StateMachine" node_paths=PackedStringArray("_StateHandler")]
+script = ExtResource("4_oqqp8")
+_StateHandler = NodePath("../../StateHandler")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 0, 1.25, 0)
@@ -48,9 +65,10 @@ shape = SubResource("1")
 [node name="ActorVelocity" type="Node" parent="."]
 script = ExtResource("3")
 
-[node name="ActorAnimator" type="Node" parent="."]
+[node name="ActorAnimator" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("5")
 ModelPath = NodePath("../HaskellModel")
+_StateHandler = NodePath("../StateHandler")
 
 [node name="ActorFloorIndicator" parent="." instance=ExtResource("7")]
 
@@ -126,5 +144,6 @@ script = ExtResource("22_f48js")
 script = ExtResource("23_sv0kt")
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
+[connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="HaskellModel" method="SetFacingDir"]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
