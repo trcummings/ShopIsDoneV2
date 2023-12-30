@@ -63,14 +63,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
             GoToMainActionMenu();
         }
 
-        public override void UpdateState(double delta)
-        {
-            base.UpdateState(delta);
-
-            //ProcessConditionsInput();
-            //ProcessCameraInput();
-        }
-
         public override void OnExit(string nextState)
         {
             // Set the action state machine back to idle

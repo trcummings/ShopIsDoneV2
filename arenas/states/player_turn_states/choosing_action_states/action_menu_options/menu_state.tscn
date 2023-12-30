@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dkgbq0y5ahht5"]
 
-[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/MenuState.cs" id="1_ae4w5"]
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/MenuState.cs" id="1_ae4w5"]
 [ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="2_cni1v"]
 [ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="3_6bwox"]
 [ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="4_cjirs"]

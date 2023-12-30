@@ -13,8 +13,11 @@ namespace ShopIsDone.Arenas.PlayerTurn
 {
 	public partial class RunningActionState : State
 	{
-        [Inject]
+        [Export]
         private ActionService _ActionService;
+
+        [Export]
+        private PlayerUnitService _PlayerUnitService;
 
         [Inject]
         private FingerCursor _FingerCursor;
@@ -25,8 +28,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
         [Inject]
         private TileManager _TileManager;
 
-        [Inject]
-        private PlayerUnitService _PlayerUnitService;
 
         public override async void OnStart(Dictionary<string, Variant> message = null)
         {
@@ -50,31 +51,31 @@ namespace ShopIsDone.Arenas.PlayerTurn
             command.CallDeferred(nameof(command.Execute));
             await ToSignal(command, "Finished");
 
-            // Show the cursors
-            _FingerCursor.Show();
-            _TileCursor.Show();
+            //// Show the cursors
+            //_FingerCursor.Show();
+            //_TileCursor.Show();
 
             // If unit can still act, continue choosing actions for that unit
-            if (unit.GetComponent<ActionHandler>().HasAvailableActions())
+            if (_PlayerUnitService.UnitHasAvailableActions(unit))
             {
                 // Focus cursors on unit
                 var newTile = _TileManager.GetTileAtTilemapPos(unit.TilemapPosition);
                 _TileCursor.MoveCursorTo(newTile);
                 _FingerCursor.WarpCursorTo(newTile.GlobalPosition);
 
-                // Go back to ChoosingActionState
+                // Go back to choosing actions
                 ChangeState(Consts.States.CHOOSING_ACTION, new Dictionary<string, Variant>()
                 {
                     { Consts.SELECTED_UNIT_KEY, unit }
                 });
             }
-            // If not only this unit can act, but no units remain to act, then end
+            // If not only this unit can't act, but no units remain to act, then end
             // the turn immediately (this is the prelude to a player victory)
-            else if (!_PlayerUnitService.PlayerUnits.Any(u => u.IsInArena()))
+            else if (!_PlayerUnitService.HasRemainingActiveUnits())
             {
                 ChangeState(Consts.States.ENDING_TURN);
             }
-            // Otherwise, go back to choosing a unit in the ChoosingUnitState
+            // Otherwise, go back to choosing the next unit
             else
             {
                 ChangeState(Consts.States.CHOOSING_UNIT, new Dictionary<string, Variant>()

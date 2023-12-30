@@ -45,8 +45,8 @@ namespace ShopIsDone.Widgets
             }
             _Tween = GetTree()
                 .CreateTween()
-                .SetEase(Tween.EaseType.OutIn)
-                .SetTrans(Tween.TransitionType.Bounce);
+                .SetEase(Tween.EaseType.In)
+                .SetTrans(Tween.TransitionType.Cubic);
 
             // If it's an invalid path, tween to full gradient strength
             // If it's a valid path, tween to 0 strength

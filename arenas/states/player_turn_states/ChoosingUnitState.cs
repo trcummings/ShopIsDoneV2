@@ -164,15 +164,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 // Get the unit on the tile if they have one
                 var unit = _PlayerUnitService
                     .PlayerUnits
-                    .Where(e =>
-                    {
-                        var actionHandler = e.GetComponent<ActionHandler>();
-                        // The unit must at least have one action visible in the
-                        // menu, even if others are technically available
-                        return
-                            actionHandler.HasAvailableActions() &&
-                            actionHandler.Actions.Any(a => a.IsVisibleInMenu());
-                    })
+                    .Where(_PlayerUnitService.UnitHasAvailableActions)
                     .ToList()
                     .Find(e => e.TilemapPosition == _LastSelectedTile.TilemapPosition);
 

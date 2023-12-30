@@ -4,7 +4,6 @@ using Godot.Collections;
 using ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Menu;
 using ShopIsDone.ActionPoints;
 using ShopIsDone.Core;
-using System.Linq;
 using PlayerTurnConsts = ShopIsDone.Arenas.PlayerTurn.Consts;
 using ShopIsDone.Actions;
 
@@ -26,6 +25,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         // Nodes
         [Export]
+        public PlayerUnitService _PlayerUnitService;
+
+        [Export]
         private OptionsMenu _OptionsMenu;
 
         // State
@@ -37,10 +39,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Reset first selection var
             IsFirstSelection = true;
-
-            // Get Selected unit
-            var actionHandler = _SelectedUnit.GetComponent<ActionHandler>();
-            var actions = actionHandler.Actions.Where(action => action.IsVisibleInMenu()).ToList();
 
             // Connect to option menu signals
             _OptionsMenu.ConfirmedSelection += OnConfirmSelection;
@@ -54,7 +52,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 InitialSelectedIndex = 0,
                 MenuTitle = "Turn",
                 // Filter out the invisible actions
-                Actions = actions
+                Actions = _PlayerUnitService.GetVisibleActions(_SelectedUnit)
             });
 
             // Show the menu

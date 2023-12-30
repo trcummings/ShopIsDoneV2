@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c5rioydymu4kr"]
 
-[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/MenuOptionItem.cs" id="1"]
-[ext_resource type="PackedScene" uid="uid://0x4rrftiek01" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/cursor_container.tscn" id="2"]
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/MenuOptionItem.cs" id="1"]
+[ext_resource type="PackedScene" uid="uid://0x4rrftiek01" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/cursor_container.tscn" id="2"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="3"]
 
 [node name="MenuOptionItem" type="Control"]

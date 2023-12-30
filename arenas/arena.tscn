@@ -26,8 +26,8 @@
 [ext_resource type="PackedScene" uid="uid://2ptpw2u53fdh" path="res://arenas/states/player_turn_states/choosing_unit_state.tscn" id="15_hbm50"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/FacingDirectionState.cs" id="16_sn5g2"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/TargetingState.cs" id="18_12jle"]
-[ext_resource type="PackedScene" uid="uid://dkgbq0y5ahht5" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/menu_state.tscn" id="18_xoeob"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/RunningActionState.cs" id="19_3o4ep"]
+[ext_resource type="PackedScene" uid="uid://dkgbq0y5ahht5" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/menu_state.tscn" id="19_pommw"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/MoreInfoState.cs" id="20_por72"]
 [ext_resource type="PackedScene" uid="uid://dmawm142xfh0t" path="res://arenas/states/player_turn_states/choosing_action_states/move_state.tscn" id="21_6pg1j"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/OutOfTimeFinishedState.cs" id="22_qh40g"]
@@ -37,8 +37,8 @@
 [ext_resource type="PackedScene" uid="uid://dqw2sf0ivpiqj" path="res://arenas/turn_counter/turns_remaining_panel.tscn" id="33_otw68"]
 [ext_resource type="PackedScene" uid="uid://jemifixdagp1" path="res://arenas/ui/player_unit/player_unit_ui_container.tscn" id="35_gpbff"]
 [ext_resource type="PackedScene" uid="uid://bgrl3b7hwon66" path="res://arenas/ui/end_player_turn_ui.tscn" id="36_nf6kd"]
-[ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/options_menu.tscn" id="37_ml7ek"]
 [ext_resource type="PackedScene" uid="uid://daffdkouahgqp" path="res://arenas/ui/player_unit/player_unit_ui.tscn" id="38_qf0ro"]
+[ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/options_menu.tscn" id="39_yls7l"]
 [ext_resource type="PackedScene" uid="uid://cvfjwqjfca0rm" path="res://arena_actions/effort_meter/effort_meter.tscn" id="40_ho46i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gufqt"]
@@ -139,7 +139,8 @@ script = ExtResource("2_1igvu")
 [node name="Idle" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
 script = ExtResource("3_q440h")
 
-[node name="Menu" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_OptionsMenu") instance=ExtResource("18_xoeob")]
+[node name="Menu" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_OptionsMenu") instance=ExtResource("19_pommw")]
+_PlayerUnitService = NodePath("../../../../../../../../Services/PlayerUnitService")
 _OptionsMenu = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/OptionsMenu")
 
 [node name="FacingDirection" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
@@ -150,8 +151,10 @@ script = ExtResource("16_sn5g2")
 [node name="Targeting" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
 script = ExtResource("18_12jle")
 
-[node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
+[node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionService", "_PlayerUnitService")]
 script = ExtResource("19_3o4ep")
+_ActionService = NodePath("../../../../../../Services/ActionService")
+_PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 
 [node name="MoreInfo" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
 script = ExtResource("20_por72")
@@ -294,7 +297,7 @@ alignment = 2
 visible = false
 layout_mode = 2
 
-[node name="OptionsMenu" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("37_ml7ek")]
+[node name="OptionsMenu" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("39_yls7l")]
 visible = false
 layout_mode = 2
 

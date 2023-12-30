@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://i5cebkjm0fmq"]
 
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2"]
-[ext_resource type="PackedScene" uid="uid://c5rioydymu4kr" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/menu_option_item.tscn" id="2_2xjnr"]
-[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/menu_state/OptionsMenu.cs" id="3"]
+[ext_resource type="PackedScene" uid="uid://c5rioydymu4kr" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/menu_option_item.tscn" id="2_2xjnr"]
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/OptionsMenu.cs" id="3"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ux55h"]
