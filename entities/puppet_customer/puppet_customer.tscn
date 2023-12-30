@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c84riwntsfpy5"]
+[gd_scene load_steps=19 format=3 uid="uid://c84riwntsfpy5"]
 
 [ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1_hv7oi"]
 [ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
@@ -14,7 +14,9 @@
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="12_tm0l2"]
 [ext_resource type="Script" path="res://entity_states/employee_states/IdleEntityState.cs" id="13_75how"]
 [ext_resource type="Script" path="res://entity_states/employee_states/MoveEntityState.cs" id="14_xpga7"]
+[ext_resource type="Script" path="res://entities/puppet_customer/states/IntimidateEntityState.cs" id="16_6jv6x"]
 [ext_resource type="Script" path="res://entity_states/employee_states/HurtEntityState.cs" id="16_81snl"]
+[ext_resource type="PackedScene" uid="uid://hj3hfw66ke8t" path="res://entities/puppet_customer/states/audio/intimidate_player.tscn" id="17_r0uob"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0cyyf"]
 radius = 0.75
@@ -90,3 +92,10 @@ Id = "move"
 script = ExtResource("16_81snl")
 _Model = NodePath("../../CustomerType1Model")
 Id = "hurt"
+
+[node name="Intimidate" type="Node" parent="StateHandler" node_paths=PackedStringArray("_IntimidatePlayer")]
+script = ExtResource("16_6jv6x")
+_IntimidatePlayer = NodePath("IntimidatePlayer")
+Id = "intimidate"
+
+[node name="IntimidatePlayer" parent="StateHandler/Intimidate" instance=ExtResource("17_r0uob")]

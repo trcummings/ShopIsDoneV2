@@ -62,11 +62,11 @@ _data = {
 "RESET": SubResource("16")
 }
 
-[node name="SpawnPool" type="MeshInstance3D"]
+[node name="SpawnPool" type="MeshInstance3D" node_paths=PackedStringArray("_AnimPlayer")]
 transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 1, 0, -3, -4.37114e-08, 0, 0, 0)
-visible = false
 mesh = SubResource("12")
 script = ExtResource("2_sq3bd")
+_AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
