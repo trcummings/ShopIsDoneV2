@@ -3,6 +3,7 @@ using System;
 using Godot.Collections;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Core;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Tiles
 {
@@ -90,6 +91,11 @@ namespace ShopIsDone.Tiles
         public bool CanPassThroughTile(LevelEntity entity, Tile tile)
         {
             return true;
+        }
+
+        public Array<Tile> GetAllTilesInArena()
+        {
+            return _TilesByPos.Values.ToGodotArray();
         }
     }
 }

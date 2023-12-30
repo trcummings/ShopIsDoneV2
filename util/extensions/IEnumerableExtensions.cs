@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GodotCollections = Godot.Collections;
 
 namespace ShopIsDone.Utils.Extensions
 {
@@ -133,5 +134,21 @@ namespace ShopIsDone.Utils.Extensions
         }
 
         public static IEnumerable<int> Range(int stop) => Range(0, stop, 1);
+
+
+        // To Godot Array
+        private static GodotCollections.Array<T> ToGodotArrayImpl<[MustBeVariant] T>(this IEnumerable<T> source)
+        {
+            var arr = new GodotCollections.Array<T>();
+            foreach (var entry in source) arr.Add(entry);
+            return arr;
+        }
+
+        public static GodotCollections.Array<T> ToGodotArray<[MustBeVariant] T>(this IEnumerable<T> source)
+        {
+            // Throw if source is null
+            if (source == null) throw new ArgumentNullException("source");
+            return ToGodotArrayImpl(source);
+        }
     }
 }

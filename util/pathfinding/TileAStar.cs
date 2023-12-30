@@ -39,7 +39,7 @@ namespace ShopIsDone.Utils.Pathfinding
         // Strategy pattern for injecting alternative neighbor finding functions
         private INeighborStrategy _NeighborStrategy;
 
-        public TileAStar(INeighborStrategy neighborStrategy)
+        public TileAStar(INeighborStrategy neighborStrategy = null)
         {
             _NeighborStrategy = neighborStrategy ?? new SimpleNeighborStrategy();
         }
