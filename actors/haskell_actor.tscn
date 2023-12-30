@@ -32,7 +32,7 @@
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
 
-[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine", "_FreeMoveState", "_TilemapPositionHandler", "_FacingDirectionHandler")]
+[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine", "_FreeMoveState", "_TilemapPositionHandler", "_FacingDirectionHandler") groups=["entities"]]
 script = ExtResource("6")
 _ActorAnimator = NodePath("ActorAnimator")
 _ActorStateMachine = NodePath("StateMachine")
