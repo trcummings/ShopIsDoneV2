@@ -77,7 +77,7 @@ namespace ShopIsDone.Arenas.Battles.States
                     }),
                     new AsyncCommand(() => _ControlTweener.TweenInAsync(0.5f)),
                     new ActionCommand(_TurnsPanel.CountdownTurns),
-                    new WaitForCommand(this, 3f),
+                    new WaitForCommand(this, 2.5f),
                     new AsyncCommand(() => _ControlTweener.TweenOutAsync(0.5f)),
                     new ActionCommand(_TurnsPanel.ResetTurnPanel),
                     new ActionCommand(_PhaseManager.AdvanceToNextPhase)

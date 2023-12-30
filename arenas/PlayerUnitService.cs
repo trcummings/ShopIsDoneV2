@@ -64,9 +64,14 @@ namespace ShopIsDone.Arenas
 			return GetActiveUnits().Count > 0;
         }
 
+		public List<LevelEntity> GetUnitsThatCanStillAct()
+		{
+			return GetActiveUnits().Where(UnitHasAvailableActions).ToList();
+        }
+
 		public bool HasUnitsThatCanStillAct()
 		{
-			return GetActiveUnits().Where(UnitHasAvailableActions).Count() > 0;
+			return GetUnitsThatCanStillAct().Count > 0;
 
         }
 	}

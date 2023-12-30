@@ -41,7 +41,7 @@ namespace ShopIsDone.Arenas.Battles.States
             //SaveTempArenaData();
 
             // Get all units
-            var units = _PlayerUnitService.GetUnits();
+            var units = _PlayerUnitService.GetUnitsThatCanStillAct();
 
             // If we have no active units, end the turn
             if (units.Count == 0)
@@ -65,6 +65,12 @@ namespace ShopIsDone.Arenas.Battles.States
             {
                 { Consts.LAST_SELECTED_TILE_KEY, _LastSelectedTile }
             });
+        }
+
+        public override void OnExit(string nextState)
+        {
+            _PlayerTurnStateMachine.ChangeState(Consts.States.IDLE);
+            base.OnExit(nextState);
         }
     }
 }

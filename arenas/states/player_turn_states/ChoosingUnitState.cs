@@ -76,7 +76,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
             // Get last selected tile from message to focus cursor on initially
-            if (message.ContainsKey(Consts.LAST_SELECTED_TILE_KEY))
+            if (message?.ContainsKey(Consts.LAST_SELECTED_TILE_KEY) ?? false)
             {
                 _LastSelectedTile = (Tile)message[Consts.LAST_SELECTED_TILE_KEY];
             }

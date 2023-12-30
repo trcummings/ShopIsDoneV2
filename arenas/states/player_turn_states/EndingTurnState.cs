@@ -43,6 +43,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
+            base.OnStart(message);
+
             InjectionProvider.Inject(this);
 
             // Hide the cursors
@@ -50,7 +52,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _FingerCursor.Hide();
 
             // Get last selected tile from message to focus cursor on initially
-            if (message.ContainsKey(Consts.LAST_SELECTED_TILE_KEY))
+            if (message?.ContainsKey(Consts.LAST_SELECTED_TILE_KEY) ?? false)
             {
                 _LastSelectedTile = (Tile)message[Consts.LAST_SELECTED_TILE_KEY];
             }
@@ -58,8 +60,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // If player has no more moves left, just end the turn immediately
             if (!_PlayerUnitService.HasUnitsThatCanStillAct())
             {
-                ChangeState(Consts.States.IDLE);
-                _PhaseManager.AdvanceToNextPhase();
+                _PhaseManager.CallDeferred(nameof(_PhaseManager.AdvanceToNextPhase));
                 return;
             }
 
@@ -81,8 +82,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 .ToList();
             _ConfirmEndTurnPopup.Init(endTurnInfo);
             _ConfirmEndTurnPopup.Show();
-
-            base.OnStart(message);
         }
 
         public override void UpdateState(double delta)
@@ -93,7 +92,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
             if (Input.IsActionJustPressed("ui_accept"))
             {
                 EmitSignal(nameof(AcceptedEndTurn));
-                ChangeState(Consts.States.IDLE);
                 _PhaseManager.AdvanceToNextPhase();
                 return;
             }
