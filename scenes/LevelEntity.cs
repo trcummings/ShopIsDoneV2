@@ -67,7 +67,7 @@ namespace ShopIsDone.Core
         // Tilemap position
         public Vector3 TilemapPosition
         {
-            get { return _TilemapPositionHandler.TilemapPosition; }
+            get { return _TilemapPositionHandler?.TilemapPosition ?? Vector3.Inf; }
         }
 
         public Vector3 FacingDirection

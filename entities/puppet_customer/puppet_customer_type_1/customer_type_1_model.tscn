@@ -426,6 +426,10 @@ _data = {
 script = ExtResource("1")
 LoopingAnimations = ["Travel", "Idle"]
 _AnimPlayer = NodePath("AnimationPlayer")
+_AnimationNameMap = {
+"take_hit": "takehit",
+"walk": "travel"
+}
 
 [node name="SpawnPool" parent="." instance=ExtResource("4")]
 transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 1, 0, -3, -4.37114e-08, 0, 0.05, 0)
@@ -435,7 +439,7 @@ layers = 33
 libraries = {
 "": SubResource("AnimationLibrary_q0xw6")
 }
-autoplay = "hidden"
+autoplay = "Idle"
 
 [node name="CustomerType1" parent="." instance=ExtResource("3")]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)

@@ -110,8 +110,10 @@ script = ExtResource("14_hf8lc")
 _Model = NodePath("../../HaskellModel")
 Id = "alert"
 
-[node name="Hurt" type="Node" parent="StateHandler"]
+[node name="Hurt" type="Node" parent="StateHandler" node_paths=PackedStringArray("_Model")]
 script = ExtResource("18_phypm")
+_Model = NodePath("../../HaskellModel")
+Id = "hurt"
 
 [node name="ActionPointHandler" type="Node" parent="."]
 script = ExtResource("11_8632j")

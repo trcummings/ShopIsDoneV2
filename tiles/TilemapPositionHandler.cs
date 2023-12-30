@@ -4,6 +4,7 @@ using System;
 
 namespace ShopIsDone.Tiles
 {
+    [Tool]
     public partial class TilemapPositionHandler : Node3DComponent
     {
         [Signal]
