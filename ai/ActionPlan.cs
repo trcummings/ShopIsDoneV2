@@ -1,12 +1,18 @@
-﻿using Godot;
+﻿using System.Linq;
+using Godot;
 using ShopIsDone.Actions;
+using ShopIsDone.Core;
+using ShopIsDone.Tiles;
 using ShopIsDone.Utils.Commands;
+using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Utils.Pathfinding;
 
 namespace ShopIsDone.AI
 {
     public partial class ActionPlan : Resource
     {
-        private ActionHandler _ActionHandler;
+        protected LevelEntity _Entity;
+        protected ActionHandler _ActionHandler;
 
         protected ArenaAction _Action;
 
@@ -31,6 +37,25 @@ namespace ShopIsDone.AI
         {
             // Do nothing
             return new Command();
+        }
+
+        // Subclass sandbox methods
+        protected bool InActionRange(TileManager tileManager, LevelEntity target)
+        {
+            // If the action range is 0, return false.
+            if (_Action.Range == 0) return false;
+
+            // Grab our current tile
+            var currentTile = tileManager.GetTileAtTilemapPos(_Entity.TilemapPosition);
+            // Grab the target tile
+            var targetTile = tileManager.GetTileAtTilemapPos(target.TilemapPosition);
+
+            // Get a path between the target and us
+            var allTiles = tileManager.GetAllTilesInArena().ToList();
+            var path = new TileAStar().GetMovePath(allTiles, currentTile, targetTile);
+
+            // If the path length is equal to the action range, then we're in range
+            return path.Count >= _Action.Range;
         }
     }
 }

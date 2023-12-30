@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using ShopIsDone.Actions;
-using Lighting;
 using ShopIsDone.Core;
-using ShopIsDone.Arenas;
 using ShopIsDone.Utils.Commands;
 
 namespace ShopIsDone.AI
