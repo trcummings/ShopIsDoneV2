@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfq5mnuo3b4rd"
-path="res://.godot/imported/PuppetSkinUV.png-df3dcbfb87c3f22c384121412e0a3fd2.ctex"
+uid="uid://cwdbqh3cxpeem"
+path="res://.godot/imported/PuppetEyesUVLayout.png-6360bf3f6f482536205a3dbf08956f23.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/CustomerType1/PuppetSkinUV.png"
-dest_files=["res://.godot/imported/PuppetSkinUV.png-df3dcbfb87c3f22c384121412e0a3fd2.ctex"]
+source_file="res://entities/puppet_customer/puppet_customer_type_1/PuppetEyesUVLayout.png"
+dest_files=["res://.godot/imported/PuppetEyesUVLayout.png-6360bf3f6f482536205a3dbf08956f23.ctex"]
 
 [params]
 

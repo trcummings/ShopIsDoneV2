@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://wyrodpxy55q2"
-path="res://.godot/imported/PuppetSkinUVLayout.png-60feb06fabe7b802259b6ab48483ea10.ctex"
+path="res://.godot/imported/PuppetSkinUVLayout.png-388dd515578acb2fb1dc197038689012.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/CustomerType1/PuppetSkinUVLayout.png"
-dest_files=["res://.godot/imported/PuppetSkinUVLayout.png-60feb06fabe7b802259b6ab48483ea10.ctex"]
+source_file="res://entities/puppet_customer/puppet_customer_type_1/PuppetSkinUVLayout.png"
+dest_files=["res://.godot/imported/PuppetSkinUVLayout.png-388dd515578acb2fb1dc197038689012.ctex"]
 
 [params]
 

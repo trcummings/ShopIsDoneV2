@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c2oc8csoiqbq7"
-path="res://.godot/imported/CustomerType1.blend-dfb330591ce363b8dc5d311264fe038b.scn"
+path="res://.godot/imported/customer_type_1.blend-7d14ba7e96520f4d87189f797dac47d0.scn"
 
 [deps]
 
-source_file="res://Models/CustomerType1/CustomerType1.blend"
-dest_files=["res://.godot/imported/CustomerType1.blend-dfb330591ce363b8dc5d311264fe038b.scn"]
+source_file="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1.blend"
+dest_files=["res://.godot/imported/customer_type_1.blend-7d14ba7e96520f4d87189f797dac47d0.scn"]
 
 [params]
 

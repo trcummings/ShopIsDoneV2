@@ -1,8 +1,9 @@
 ﻿using Godot;
 using System;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Godot.Collections;
 using ShopIsDone.Utils;
 
 namespace ShopIsDone.Models.IsometricModels
@@ -19,6 +20,12 @@ namespace ShopIsDone.Models.IsometricModels
         // Nodes
         [Export]
         protected IsometricSprite2D _Sprite;
+
+        // This maps a normalized action name that we call in a state handler or
+        // through a script to a specific animation name that the model may have
+        // for that action
+        [Export]
+        private Dictionary<string, string> _AnimationNameMap = new Dictionary<string, string>();
 
         // State vars
         protected Vector3 _ViewedDir = Vec3.BackRight;
@@ -66,10 +73,23 @@ namespace ShopIsDone.Models.IsometricModels
             }
         }
 
+        private string TransformAnimName(string rawActionName)
+        {
+            var animationName = rawActionName;
+
+            // Map the given 
+            if (_AnimationNameMap.ContainsKey(rawActionName))
+            {
+                animationName = _AnimationNameMap[rawActionName];
+            }
+
+            return animationName.ToLower();
+        }
+
         public virtual async Task PerformAnimation(string animName, bool advance = false)
         {
             // Persist action name in state
-            _ActionName = animName;
+            _ActionName = TransformAnimName(animName);
 
             // Await action to finish
             await RunIsometricAnimation();

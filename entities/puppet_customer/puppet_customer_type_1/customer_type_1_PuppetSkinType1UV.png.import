@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfs7wp31ux6bg"
-path.s3tc="res://.godot/imported/ClothingUV.png-f1032e83c4e6af93e532c8a69541ce92.s3tc.ctex"
+uid="uid://b63u2jj0kq7au"
+path.s3tc="res://.godot/imported/customer_type_1_PuppetSkinType1UV.png-e9be385e8cfd17f4f1083f9dbe636b13.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://Models/CustomerType1/ClothingUV.png"
-dest_files=["res://.godot/imported/ClothingUV.png-f1032e83c4e6af93e532c8a69541ce92.s3tc.ctex"]
+source_file="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_PuppetSkinType1UV.png"
+dest_files=["res://.godot/imported/customer_type_1_PuppetSkinType1UV.png-e9be385e8cfd17f4f1083f9dbe636b13.s3tc.ctex"]
 
 [params]
 

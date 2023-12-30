@@ -59,12 +59,6 @@ namespace ShopIsDone.EntityStates
             return _CurrentState.CanAct();
         }
 
-        //public override void Init()
-        //{
-        //    _CurrentState = InitialState;
-        //    _CurrentState.Enter();
-        //}
-
         public void ChangeState(string state)
         {
             Task _ = ChangeStateAsync(state);

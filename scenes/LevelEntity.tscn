@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://1dvpph1q0oen"]
-
-[ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1"]
-[ext_resource type="Resource" uid="uid://durr60h4mv3xr" path="res://scenes/ArenaEvents.tres" id="2"]
-
-[node name="LevelEntity" type="Node3D" groups=["entity", "persistable"]]
-script = ExtResource("1")
-_ArenaEvents = ExtResource("2")

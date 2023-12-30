@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://f1ekvg0sq7dr"
-path="res://.godot/imported/Retopo_PuppetHead.png-f64abbff15a63aeb59bc33e349d4bf7c.ctex"
+path="res://.godot/imported/Retopo_PuppetHead.png-a1f2de896b99fe0a3715f6312ff0bf93.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/CustomerType1/Retopo_PuppetHead.png"
-dest_files=["res://.godot/imported/Retopo_PuppetHead.png-f64abbff15a63aeb59bc33e349d4bf7c.ctex"]
+source_file="res://entities/puppet_customer/puppet_customer_type_1/Retopo_PuppetHead.png"
+dest_files=["res://.godot/imported/Retopo_PuppetHead.png-a1f2de896b99fe0a3715f6312ff0bf93.ctex"]
 
 [params]
 

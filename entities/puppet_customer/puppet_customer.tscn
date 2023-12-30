@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c84riwntsfpy5"]
+
+[ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1_hv7oi"]
+[ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0cyyf"]
+radius = 0.75
+
+[node name="Customer" type="CharacterBody3D" groups=["entities"]]
+script = ExtResource("1_hv7oi")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 1, 2.08165e-12)
+shape = SubResource("CapsuleShape3D_0cyyf")
+
+[node name="CustomerType1Model" parent="." instance=ExtResource("2_5ehyc")]
