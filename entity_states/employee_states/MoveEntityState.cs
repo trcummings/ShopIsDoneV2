@@ -15,6 +15,16 @@ namespace ShopIsDone.EntityStates.EmployeeStates
             Task _ = _Model.PerformAnimation("walk");
             base.Enter();
         }
+
+        public override bool IsInArena()
+        {
+            return true;
+        }
+
+        public override bool CanAct()
+        {
+            return true;
+        }
     }
 }
 

@@ -28,7 +28,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
         [Inject]
         private TileManager _TileManager;
 
-
         public override async void OnStart(Dictionary<string, Variant> message = null)
         {
             base.OnStart(message);
@@ -51,9 +50,19 @@ namespace ShopIsDone.Arenas.PlayerTurn
             command.CallDeferred(nameof(command.Execute));
             await ToSignal(command, "Finished");
 
-            //// Show the cursors
-            //_FingerCursor.Show();
-            //_TileCursor.Show();
+            // Show the cursors
+            _FingerCursor.Show();
+            _TileCursor.Show();
+
+            // If not only this unit can't act, but no units remain to act, then end
+            // the turn immediately (this is the prelude to a player victory)
+            if (!_PlayerUnitService.HasRemainingActiveUnits())
+            {
+                ChangeState(Consts.States.ENDING_TURN, new Dictionary<string, Variant>()
+                {
+                    { Consts.LAST_SELECTED_TILE_KEY, unitLastTile }
+                });
+            }
 
             // If unit can still act, continue choosing actions for that unit
             if (_PlayerUnitService.UnitHasAvailableActions(unit))
@@ -71,9 +80,12 @@ namespace ShopIsDone.Arenas.PlayerTurn
             }
             // If not only this unit can't act, but no units remain to act, then end
             // the turn immediately (this is the prelude to a player victory)
-            else if (!_PlayerUnitService.HasRemainingActiveUnits())
+            else if (!_PlayerUnitService.HasUnitsThatCanStillAct())
             {
-                ChangeState(Consts.States.ENDING_TURN);
+                ChangeState(Consts.States.ENDING_TURN, new Dictionary<string, Variant>()
+                {
+                    { Consts.LAST_SELECTED_TILE_KEY, unitLastTile }
+                });
             }
             // Otherwise, go back to choosing the next unit
             else

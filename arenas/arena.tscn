@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=45 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -21,10 +21,10 @@
 [ext_resource type="Script" path="res://arenas/states/battle_states/EnemyActivityBattleState.cs" id="8_om56i"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/PrepPlayerTurnBattleState.cs" id="9_quvvh"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/PlayerTurnBattleState.cs" id="10_hv83v"]
-[ext_resource type="Script" path="res://arenas/states/player_turn_states/EndingTurnState.cs" id="13_sabdx"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/ChoosingActionState.cs" id="14_rj6r3"]
 [ext_resource type="PackedScene" uid="uid://2ptpw2u53fdh" path="res://arenas/states/player_turn_states/choosing_unit_state.tscn" id="15_hbm50"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/FacingDirectionState.cs" id="16_sn5g2"]
+[ext_resource type="PackedScene" uid="uid://bpxwmajircoir" path="res://arenas/states/player_turn_states/ending_turn_state.tscn" id="17_cvl73"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/TargetingState.cs" id="18_12jle"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/RunningActionState.cs" id="19_3o4ep"]
 [ext_resource type="PackedScene" uid="uid://dkgbq0y5ahht5" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/menu_state.tscn" id="19_pommw"]
@@ -37,12 +37,15 @@
 [ext_resource type="PackedScene" uid="uid://dqw2sf0ivpiqj" path="res://arenas/turn_counter/turns_remaining_panel.tscn" id="33_otw68"]
 [ext_resource type="PackedScene" uid="uid://jemifixdagp1" path="res://arenas/ui/player_unit/player_unit_ui_container.tscn" id="35_gpbff"]
 [ext_resource type="PackedScene" uid="uid://bgrl3b7hwon66" path="res://arenas/ui/end_player_turn_ui.tscn" id="36_nf6kd"]
+[ext_resource type="PackedScene" uid="uid://fh6c0ylvm7qx" path="res://arenas/ui/confirm_end_turn_popup.tscn" id="38_1enao"]
 [ext_resource type="PackedScene" uid="uid://daffdkouahgqp" path="res://arenas/ui/player_unit/player_unit_ui.tscn" id="38_qf0ro"]
 [ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/options_menu.tscn" id="39_yls7l"]
 [ext_resource type="PackedScene" uid="uid://cvfjwqjfca0rm" path="res://arena_actions/effort_meter/effort_meter.tscn" id="40_ho46i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gufqt"]
 size = Vector3(0.646393, 1, 6)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_esplx"]
 
@@ -123,10 +126,12 @@ script = ExtResource("3_q440h")
 [node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_EndPlayerTurnWidget") instance=ExtResource("15_hbm50")]
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 _PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
-_EndPlayerTurnWidget = NodePath("../../../../../../UILayer/CenterContainer/MarginContainer/EndPlayerTurnUI")
+_EndPlayerTurnWidget = NodePath("../../../../../../UILayer/CenterContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
 
-[node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
-script = ExtResource("13_sabdx")
+[node name="EndingTurn" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService") instance=ExtResource("17_cvl73")]
+_PhaseManager = NodePath("../../../../BattlePhaseManager")
+_ConfirmEndTurnPopup = NodePath("../../../../../../UILayer/CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer2/ConfirmEndTurnPopup")
+_PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 
 [node name="ChoosingAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionStateMachine", "_PlayerPawnUI")]
 script = ExtResource("14_rj6r3")
@@ -249,22 +254,49 @@ render_target_update_mode = 0
 [node name="PlayerPawnUIContainer" parent="UILayer" instance=ExtResource("35_gpbff")]
 visible = false
 
-[node name="CenterContainer" type="CenterContainer" parent="UILayer"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -100.0
-offset_right = 100.0
-offset_bottom = 60.0
+[node name="CenterContainer" type="PanelContainer" parent="UILayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xrpe1")
 
 [node name="MarginContainer" type="MarginContainer" parent="UILayer/CenterContainer"]
 layout_mode = 2
 mouse_filter = 2
+theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="EndPlayerTurnUI" parent="UILayer/CenterContainer/MarginContainer" instance=ExtResource("36_nf6kd")]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/CenterContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="EndPlayerTurnUI" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("36_nf6kd")]
+visible = false
+layout_mode = 2
+
+[node name="Control" type="Control" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/CenterContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="ConfirmEndTurnPopup" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource("38_1enao")]
 visible = false
 layout_mode = 2
 

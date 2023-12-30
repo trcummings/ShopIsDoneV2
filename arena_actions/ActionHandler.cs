@@ -62,7 +62,7 @@ namespace ShopIsDone.Actions
                 // If it wasn't used or we can use it multiple times
                 (!actionState.UsedThisTurn || action.CanBeUsedMultipleTimes)
                 // ...But we can also afford it
-                && _ActionPointHandler.HasEnoughAPForAction(action.ActionCost);
+                && _ActionPointHandler.HasEnoughAPForAction(action.ActionCost, action.ExcessAPCost);
         }
 
         public int GetTotalActionCost(string id)

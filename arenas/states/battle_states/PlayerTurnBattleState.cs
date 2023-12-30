@@ -20,8 +20,6 @@ namespace ShopIsDone.Arenas.Battles.States
         [Inject]
         private TileManager _TileManager;
 
-        public Tile LastSelectedTile
-        { get { return _LastSelectedTile; } }
         private Tile _LastSelectedTile = null;
 
         public override void _Ready()
@@ -43,7 +41,7 @@ namespace ShopIsDone.Arenas.Battles.States
             //SaveTempArenaData();
 
             // Get all units
-            var units = _PlayerUnitService.PlayerUnits;
+            var units = _PlayerUnitService.GetUnits();
 
             // If we have no active units, end the turn
             if (units.Count == 0)
@@ -52,9 +50,10 @@ namespace ShopIsDone.Arenas.Battles.States
                 return;
             }
 
-            // If no "last selected tile", pick the tile where the last unit the player
-            // the player made move, even if that unit is now gone. If it's null,
-            // just grab the first unit in the list and focus that tile
+            // If no "last selected tile" (from last turn), pick the tile where
+            // the last unit the player the player made move, even if that unit
+            // is now gone. If it's null, just grab the first unit in the list
+            // and focus that tile
             if (_LastSelectedTile == null)
             {
                 var firstUnit = units.First();

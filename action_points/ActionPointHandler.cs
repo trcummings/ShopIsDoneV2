@@ -71,9 +71,9 @@ namespace ShopIsDone.ActionPoints
         }
 
         // Public API
-        public virtual bool HasEnoughAPForAction(int amount)
+        public virtual bool HasEnoughAPForAction(int apCost, int excessCost)
         {
-            return ActionPoints >= amount;
+            return ActionPoints >= apCost && ActionPointExcess >= excessCost;
         }
 
         public bool IsMaxedOut()

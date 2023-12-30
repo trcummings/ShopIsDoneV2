@@ -10,26 +10,28 @@ namespace ShopIsDone.Arenas
 {
 	public partial class PlayerUnitService : Node, IService
     {
-		public List<LevelEntity> PlayerUnits
-		{ get { return _PlayerUnits; } }
 		private List<LevelEntity> _PlayerUnits = new List<LevelEntity>();
 
 		public void Init(List<LevelEntity> playerUnits)
 		{
 			_PlayerUnits = playerUnits;
-			foreach (var unit in _PlayerUnits)
-			{
-				unit.Init();
-			}
+			foreach (var unit in _PlayerUnits) unit.Init();
 		}
 
-		public List<ArenaAction> GetUnitRemainingAvailableActions(LevelEntity unit)
+        public List<LevelEntity> GetUnits()
+        {
+            return _PlayerUnits
+                .Where(u => u.IsInArena())
+                .ToList();
+        }
+
+        public List<ArenaAction> GetUnitRemainingAvailableActions(LevelEntity unit)
 		{
             var actionHandler = unit.GetComponent<ActionHandler>();
 			// If we can no longer act, return an empty list
 			if (!actionHandler.HasAvailableActions()) return new List<ArenaAction>();
-            // The unit must at least have one action visible in the
-            // menu, even if others are technically available
+			// The unit must at least have one action visible in the
+			// menu, even if others are technically available
 			return actionHandler
 				.GetAvailableActions()
 				.Where(a => a.IsVisibleInMenu())
@@ -50,11 +52,21 @@ namespace ShopIsDone.Arenas
 				.ToList();
         }
 
+		public List<LevelEntity> GetActiveUnits()
+		{
+			return GetUnits()
+                .Where(u => u.GetComponent<ActionHandler>().HasAvailableActions())
+				.ToList();
+        }
+
 		public bool HasRemainingActiveUnits()
 		{
-			return PlayerUnits
-				.Where(u => u.GetComponent<ActionHandler>().HasAvailableActions())
-				.Any(u => u.IsInArena());
+			return GetActiveUnits().Count > 0;
+        }
+
+		public bool HasUnitsThatCanStillAct()
+		{
+			return GetActiveUnits().Where(UnitHasAvailableActions).Count() > 0;
 
         }
 	}

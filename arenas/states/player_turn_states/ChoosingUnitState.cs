@@ -95,7 +95,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _FingerCursor.WarpCursorTo(_LastSelectedTile.GlobalPosition);
 
             // Initialize PawnUIContainer with all units in the arena and show it
-            _PawnUIContainer.Init(_PlayerUnitService.PlayerUnits);
+            _PawnUIContainer.Init(_PlayerUnitService.GetUnits());
             //SelectTile(_LastSelectedTile);
             _PawnUIContainer.Show();
 
@@ -154,7 +154,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 // SFX Feedback
                 EmitSignal(nameof(SelectedUnit));
 
-                ChangeState(Consts.States.ENDING_TURN);
+                ChangeState(Consts.States.ENDING_TURN, new Dictionary<string, Variant>()
+                {
+                    { Consts.LAST_SELECTED_TILE_KEY, _LastSelectedTile }
+                });
                 return;
             }
 
@@ -163,7 +166,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
             {
                 // Get the unit on the tile if they have one
                 var unit = _PlayerUnitService
-                    .PlayerUnits
+                    .GetUnits()
                     .Where(_PlayerUnitService.UnitHasAvailableActions)
                     .ToList()
                     .Find(e => e.TilemapPosition == _LastSelectedTile.TilemapPosition);

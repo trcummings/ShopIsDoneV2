@@ -14,5 +14,15 @@ namespace ShopIsDone.EntityStates.EmployeeStates
             await _Model.PerformAnimation("alert");
             base.Enter();
         }
+
+        public override bool IsInArena()
+        {
+            return true;
+        }
+
+        public override bool CanAct()
+        {
+            return true;
+        }
     }
 }
