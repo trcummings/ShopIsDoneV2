@@ -24,12 +24,12 @@
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/ChoosingActionState.cs" id="14_rj6r3"]
 [ext_resource type="PackedScene" uid="uid://2ptpw2u53fdh" path="res://arenas/states/player_turn_states/choosing_unit_state.tscn" id="15_hbm50"]
 [ext_resource type="PackedScene" uid="uid://bpxwmajircoir" path="res://arenas/states/player_turn_states/ending_turn_state.tscn" id="17_cvl73"]
-[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/TargetingState.cs" id="18_12jle"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/RunningActionState.cs" id="19_3o4ep"]
 [ext_resource type="PackedScene" uid="uid://dkgbq0y5ahht5" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/menu_state.tscn" id="19_pommw"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/MoreInfoState.cs" id="20_por72"]
 [ext_resource type="PackedScene" uid="uid://d4f3h0uwl480d" path="res://arenas/states/player_turn_states/choosing_action_states/facing_direction_state.tscn" id="20_ycbal"]
 [ext_resource type="PackedScene" uid="uid://dmawm142xfh0t" path="res://arenas/states/player_turn_states/choosing_action_states/move_state.tscn" id="21_6pg1j"]
+[ext_resource type="PackedScene" uid="uid://bswkvjqatmnba" path="res://arenas/states/player_turn_states/choosing_action_states/targeting_state.tscn" id="22_e5qdl"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/OutOfTimeFinishedState.cs" id="22_qh40g"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/VictoryFinishedState.cs" id="23_2yhgl"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/FailureFinishedState.cs" id="24_ych7k"]
@@ -152,8 +152,7 @@ _OptionsMenu = NodePath("../../../../../../../../UILayer/ActionMenuContainer/Mar
 
 [node name="Move" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" instance=ExtResource("21_6pg1j")]
 
-[node name="Targeting" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
-script = ExtResource("18_12jle")
+[node name="Targeting" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" instance=ExtResource("22_e5qdl")]
 
 [node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionService", "_PlayerUnitService")]
 script = ExtResource("19_3o4ep")

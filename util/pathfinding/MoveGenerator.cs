@@ -34,7 +34,7 @@ namespace ShopIsDone.Utils.Pathfinding
     {
         private IShouldSkipTileStrategy _ShouldSkipTileStrategy;
 
-        public MoveGenerator(IShouldSkipTileStrategy skipStrategy)
+        public MoveGenerator(IShouldSkipTileStrategy skipStrategy = null)
         {
             _ShouldSkipTileStrategy = skipStrategy ?? new SimpleShouldSkipTileStrategy();
         }
