@@ -42,18 +42,19 @@ polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Arr
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydnh5"]
 
-[node name="Level" type="Node3D" node_paths=PackedStringArray("_LevelStateMachine", "_CameraService", "_PlayerCameraService", "_InputXformer", "_FingerCursor", "_TileCursor", "_Screenshake", "_DirectionalInput", "_TileIndicator", "_MovePathWidget")]
+[node name="Level" type="Node3D" node_paths=PackedStringArray("_LevelStateMachine", "_CameraService", "_PlayerCameraService", "_InputXformer", "_Screenshake", "_DirectionalInput", "_FingerCursor", "_TileCursor", "_TileIndicator", "_MovePathWidget", "_FacingWidget")]
 script = ExtResource("1_uriqi")
 _LevelStateMachine = NodePath("LevelStateMachine")
 _CameraService = NodePath("Services/CameraService")
 _PlayerCameraService = NodePath("Services/PlayerCameraService")
 _InputXformer = NodePath("Services/InputXformer")
-_FingerCursor = NodePath("World/Widgets/FingerCursor")
-_TileCursor = NodePath("World/Widgets/TileCursor")
 _Screenshake = NodePath("Services/ScreenshakeService")
 _DirectionalInput = NodePath("Services/DirectionalInputHelper")
+_FingerCursor = NodePath("World/Widgets/FingerCursor")
+_TileCursor = NodePath("World/Widgets/TileCursor")
 _TileIndicator = NodePath("World/Widgets/TileIndicator")
 _MovePathWidget = NodePath("World/Widgets/MovePathWidget")
+_FacingWidget = NodePath("World/Widgets/FacingWidget")
 metadata/_edit_lock_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

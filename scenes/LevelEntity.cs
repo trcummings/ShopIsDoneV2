@@ -73,6 +73,7 @@ namespace ShopIsDone.Core
         public Vector3 FacingDirection
         {
             get { return _FacingDirectionHandler.FacingDirection; }
+            set { _FacingDirectionHandler.FacingDirection = value; }
         }
 
         #region Components

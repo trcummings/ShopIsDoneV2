@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://cikhvf3va63xe"]
 
-[ext_resource type="Script" path="res://arena_actions/NullAction.cs" id="1_pk3rq"]
+[ext_resource type="Script" path="res://arena_actions/actions/NullAction.cs" id="1_pk3rq"]
 
 [resource]
 script = ExtResource("1_pk3rq")

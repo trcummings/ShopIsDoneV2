@@ -56,6 +56,9 @@ namespace ShopIsDone.Actions
 
         public virtual bool IsActionAvailable(ArenaAction action)
         {
+            // No action is available if turn was ended
+            if (_IsTurnEnded) return false;
+
             // Get action state
             var actionState = _ActionStates.GetValueOrDefault(action.Id, new ActionStateData());
             return

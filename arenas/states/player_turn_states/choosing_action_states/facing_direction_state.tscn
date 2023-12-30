@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4f3h0uwl480d"]
+
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/FacingDirectionState.cs" id="1_veyjo"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="2_th3cr"]
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="3_ck1q7"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="4_6hgbx"]
+
+[node name="FacingDirection" type="Node"]
+script = ExtResource("1_veyjo")
+
+[node name="UIConfirmPlayer" parent="." instance=ExtResource("2_th3cr")]
+
+[node name="UISelectPlayer" parent="." instance=ExtResource("3_ck1q7")]
+
+[node name="UICancelPlayer" parent="." instance=ExtResource("4_6hgbx")]
+
+[connection signal="CanceledSelection" from="." to="UICancelPlayer" method="play"]
+[connection signal="ChangedDirection" from="." to="UISelectPlayer" method="play"]
+[connection signal="ConfirmedDirection" from="." to="UIConfirmPlayer" method="play"]

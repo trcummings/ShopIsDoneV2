@@ -27,22 +27,26 @@ namespace ShopIsDone.Levels
         private InputXformer _InputXformer;
 
         [Export]
+        private ScreenshakeService _Screenshake;
+
+        [Export]
+        private DirectionalInputHelper _DirectionalInput;
+
+        // Widgets
+        [Export]
         private FingerCursor _FingerCursor;
 
         [Export]
         private TileCursor _TileCursor;
 
         [Export]
-        private ScreenshakeService _Screenshake;
-
-        [Export]
-        private DirectionalInputHelper _DirectionalInput;
-
-        [Export]
         private TileIndicator _TileIndicator;
 
         [Export]
         private MovePathWidget _MovePathWidget;
+
+        [Export]
+        private FacingWidget _FacingWidget;
 
         private InjectionProvider _InjectionProvider;
 
@@ -61,12 +65,13 @@ namespace ShopIsDone.Levels
             // Register all services (NB: We have to do this manually, unfortunately)
             _InjectionProvider.RegisterService(_CameraService);
             _InjectionProvider.RegisterService(_InputXformer);
-            _InjectionProvider.RegisterService(_FingerCursor);
-            _InjectionProvider.RegisterService(_TileCursor);
             _InjectionProvider.RegisterService(_Screenshake);
             _InjectionProvider.RegisterService(_DirectionalInput);
+            _InjectionProvider.RegisterService(_FingerCursor);
+            _InjectionProvider.RegisterService(_TileCursor);
             _InjectionProvider.RegisterService(_TileIndicator);
             _InjectionProvider.RegisterService(_MovePathWidget);
+            _InjectionProvider.RegisterService(_FacingWidget);
             _InjectionProvider.RegisterService(_PlayerCameraService);
         }
 

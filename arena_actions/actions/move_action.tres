@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://cup25aeyo3fel"]
 
-[ext_resource type="Script" path="res://arena_actions/MoveAction.cs" id="1_0k5a4"]
-[ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/move_sub_action.tres" id="1_k8pgg"]
+[ext_resource type="Script" path="res://arena_actions/actions/MoveAction.cs" id="1_0k5a4"]
+[ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="1_k8pgg"]
 
 [resource]
 script = ExtResource("1_0k5a4")

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dqrp4gg7h6k1n"]
+
+[ext_resource type="Script" path="res://arena_actions/actions/WaitAction.cs" id="1_kexbd"]
+
+[resource]
+script = ExtResource("1_kexbd")
+Id = "wait"
+ActionName = "Wait"
+EndsTurnAfterUse = true
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = false
+Range = 0
+ActionType = 2
+IndicatorType = 0
+FollowEntity = false
+FocusEntity = false
+MenuTitle = "Wait"
+MenuDescription = ""
