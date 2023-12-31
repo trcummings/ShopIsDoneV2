@@ -81,9 +81,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             _AllPossibleMoves = moves.ToList();
             _RemainingMoves = moves.ToList();
 
-            // Show Tile Indicator Widget
-            _TileIndicator.Show();
-
             // Show indicators on the tiles that the pawn can move on
             foreach (var move in _AllPossibleMoves)
             {
@@ -226,7 +223,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Clear the tile indicator and hide it
             _TileIndicator.ClearIndicators();
-            _TileIndicator.Hide();
 
             // Disconnect from effort service update
             _EffortService.UpdatedTotalCost -= OnCostUpdate;

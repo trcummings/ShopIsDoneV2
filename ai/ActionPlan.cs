@@ -10,6 +10,7 @@ using ShopIsDone.Utils.DependencyInjection;
 using static ShopIsDone.Widgets.TileIndicator;
 using SystemGenerics = System.Collections.Generic;
 using ShopIsDone.Widgets;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.AI
 {
@@ -88,7 +89,7 @@ namespace ShopIsDone.AI
 
         protected void CreateTileIndicators(SystemGenerics.IEnumerable<Vector3> tiles, IndicatorColor color)
         {
-            _TileIndicator.CreateIndicators(tiles, color);
+            _TileIndicator.CreateIndicators(tiles.Select(_TileManager.TilePosToGlobalPos), color);
         }
 
         protected void ClearTileIndicators()

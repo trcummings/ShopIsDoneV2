@@ -88,7 +88,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 _AvailableTiles.Select(t => t.GlobalPosition),
                 GetIndicatorColor()
             );
-            _TileIndicatorWidget.Show();
 
             // Request a diff (and include excess cost)
             RequestApDiff(new ActionPointHandler()
@@ -214,7 +213,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Hide and reset widgets
             _TileCursor.Hide();
-            _TileIndicatorWidget.Hide();
             _TileIndicatorWidget.ClearIndicators();
 
             // Clear diff

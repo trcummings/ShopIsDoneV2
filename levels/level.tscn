@@ -123,7 +123,6 @@ process_mode = 1
 [node name="Widgets" type="Node3D" parent="World"]
 
 [node name="TileIndicator" parent="World/Widgets" instance=ExtResource("10_xe6sp")]
-visible = false
 
 [node name="TileCursor" parent="World/Widgets" instance=ExtResource("11_6qmyn")]
 visible = false
@@ -147,7 +146,6 @@ metadata/_edit_lock_ = true
 
 [node name="HaskellActor" parent="World/PlayerUnits" instance=ExtResource("3_53pcu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9561, 0, 10.9063)
-collision_layer = 3
 collision_mask = 3
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="World"]

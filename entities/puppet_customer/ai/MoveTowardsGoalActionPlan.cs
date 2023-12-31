@@ -86,7 +86,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                 {
                     { MoveAction.MOVE_PATH_KEY, finalPath }
                 }),
-                //// Hide indicators
+                // Hide indicators
                 new ActionCommand(ClearTileIndicators)
             );
         }

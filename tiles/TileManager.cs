@@ -50,6 +50,11 @@ namespace ShopIsDone.Tiles
             foreach (var tile in _TilesByPos.Values) tile.Update();
         }
 
+        public Vector3 TilePosToGlobalPos(Vector3 pos)
+        {
+            return _ArenaTilemap.ToGlobal(_ArenaTilemap.MapToLocal((Vector3I)pos));
+        }
+
         public void SetTile(Tile tile)
         {
             var tilePos = tile.TilemapPosition;
