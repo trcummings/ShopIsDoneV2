@@ -18,6 +18,10 @@ namespace ShopIsDone.Models
         [Export]
         protected AnimationPlayer _AnimPlayer;
 
+        [ExportGroup("Animation Mapping")]
+        [Export]
+        private bool _ForceAnimLowercase = false;
+
         // This maps a normalized action name that we call in a state handler or
         // through a script to a specific animation name that the model may have
         // for that action
@@ -61,7 +65,7 @@ namespace ShopIsDone.Models
                 animationName = _AnimationNameMap[rawActionName];
             }
 
-            return animationName.ToLower();
+            return _ForceAnimLowercase ? animationName.ToLower() : animationName;
         }
 
         public virtual async Task PerformAnimation(string actionName, bool advance = false)

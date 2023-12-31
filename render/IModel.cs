@@ -12,7 +12,7 @@ namespace ShopIsDone.Models
 
         string GetDefaultAnimationName();
 
-        Task PerformAnimation(string animName, bool advance);
+        Task PerformAnimation(string animName, bool advance = false);
 
         void Show();
 

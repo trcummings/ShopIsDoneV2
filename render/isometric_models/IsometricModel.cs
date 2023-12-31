@@ -21,6 +21,10 @@ namespace ShopIsDone.Models.IsometricModels
         [Export]
         protected IsometricSprite2D _Sprite;
 
+        [ExportGroup("Animation Mapping")]
+        [Export]
+        private bool _ForceAnimLowercase = false;
+
         // This maps a normalized action name that we call in a state handler or
         // through a script to a specific animation name that the model may have
         // for that action
@@ -83,7 +87,7 @@ namespace ShopIsDone.Models.IsometricModels
                 animationName = _AnimationNameMap[rawActionName];
             }
 
-            return animationName.ToLower();
+            return _ForceAnimLowercase ? animationName.ToLower() : animationName;
         }
 
         public virtual async Task PerformAnimation(string animName, bool advance = false)

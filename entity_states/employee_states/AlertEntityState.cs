@@ -1,13 +1,20 @@
 ﻿using System;
 using Godot;
-using ShopIsDone.Models.Employees;
+using ShopIsDone.Models;
 
 namespace ShopIsDone.EntityStates.EmployeeStates
 {
     public partial class AlertEntityState : EntityState
     {
         [Export]
-        public EmployeeIsometricModel _Model;
+        public NodePath ModelPath;
+        private IModel _Model;
+
+        public override void _Ready()
+        {
+            base._Ready();
+            _Model = GetNode<IModel>(ModelPath);
+        }
 
         public async override void Enter()
         {

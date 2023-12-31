@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=8 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dvyl4d7ds1ji7" path="res://dialogue/dialogue_area.tscn" id="3_hk7sm"]
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="4_duy8r"]
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="5_arh5s"]
+[ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="7_xooi4"]
 
 [node name="Level" instance=ExtResource("1_egns7")]
 
@@ -37,6 +38,9 @@ data = {
 "cells": PackedInt32Array(4, 1, 1, 4, 0, 1, 4, 65535, 1, 4, 65534, 1, 3, 0, 1, 3, 65535, 1, 4, 65533, 0, 4, 65532, 0, 3, 65532, 0, 3, 65533, 0, 3, 65534, 0, 3, 1, 0, 3, 2, 0, 2, 3, 0, 3, 3, 0, 4, 3, 0, 4, 2, 0, 2, 65532, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0, 2, 2, 0, 1, 3, 0, 1, 2, 0, 1, 1, 0, 1, 0, 0, 1, 65535, 0, 1, 65534, 0, 1, 65533, 0, 1, 65532, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 65535, 3, 0, 65535, 2, 0, 65535, 1, 0, 65535, 0, 0, 65535, 65535, 0, 65535, 65534, 0, 65535, 65533, 0, 65535, 65532, 0, 65534, 65532, 0, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65533, 3, 0, 65533, 2, 0, 65533, 1, 0, 65533, 0, 0, 65533, 65535, 0, 65533, 65534, 0, 65533, 65533, 0, 65533, 65532, 0)
 }
 metadata/_edit_lock_ = true
+
+[node name="Customer" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="0" instance=ExtResource("7_xooi4")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 1)
 
 [node name="DefaultSpawnPoint" parent="World" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6855, 0, -0.636568)

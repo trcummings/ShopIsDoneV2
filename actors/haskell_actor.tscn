@@ -15,13 +15,13 @@
 [ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="11_862jn"]
 [ext_resource type="Script" path="res://action_points/ActionPointHandler.cs" id="11_8632j"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="11_uh075"]
-[ext_resource type="Script" path="res://entity_states/employee_states/IdleEntityState.cs" id="12_togsl"]
-[ext_resource type="Script" path="res://entity_states/employee_states/MoveEntityState.cs" id="13_q5f80"]
 [ext_resource type="Script" path="res://entity_states/employee_states/AlertEntityState.cs" id="14_hf8lc"]
+[ext_resource type="Script" path="res://entity_states/IdleEntityState.cs" id="15_imqew"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="16_87xgg"]
+[ext_resource type="Script" path="res://entity_states/MoveEntityState.cs" id="16_f32gd"]
 [ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="17_xmxqu"]
 [ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="18_64csj"]
-[ext_resource type="Script" path="res://entity_states/employee_states/HurtEntityState.cs" id="18_phypm"]
+[ext_resource type="Script" path="res://entity_states/HurtEntityState.cs" id="18_brpwm"]
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="19_dsksq"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="20_1bpch"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="21_k5t6c"]
@@ -95,24 +95,24 @@ FacingTarget = NodePath("..")
 script = ExtResource("11_uh075")
 InitialState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateHandler" node_paths=PackedStringArray("_Model")]
-script = ExtResource("12_togsl")
-_Model = NodePath("../../HaskellModel")
+[node name="Idle" type="Node" parent="StateHandler"]
+script = ExtResource("15_imqew")
+ModelPath = NodePath("../../HaskellModel")
 Id = "idle"
 
-[node name="Move" type="Node" parent="StateHandler" node_paths=PackedStringArray("_Model")]
-script = ExtResource("13_q5f80")
-_Model = NodePath("../../HaskellModel")
+[node name="Move" type="Node" parent="StateHandler"]
+script = ExtResource("16_f32gd")
+ModelPath = NodePath("../../HaskellModel")
 Id = "move"
 
-[node name="Alert" type="Node" parent="StateHandler" node_paths=PackedStringArray("_Model")]
+[node name="Alert" type="Node" parent="StateHandler"]
 script = ExtResource("14_hf8lc")
-_Model = NodePath("../../HaskellModel")
+ModelPath = NodePath("../../HaskellModel")
 Id = "alert"
 
-[node name="Hurt" type="Node" parent="StateHandler" node_paths=PackedStringArray("_Model")]
-script = ExtResource("18_phypm")
-_Model = NodePath("../../HaskellModel")
+[node name="Hurt" type="Node" parent="StateHandler"]
+script = ExtResource("18_brpwm")
+ModelPath = NodePath("../../HaskellModel")
 Id = "hurt"
 
 [node name="ActionPointHandler" type="Node" parent="."]

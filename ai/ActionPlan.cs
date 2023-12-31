@@ -6,6 +6,7 @@ using ShopIsDone.Tiles;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.Pathfinding;
 using Godot.Collections;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.AI
 {
@@ -17,6 +18,9 @@ namespace ShopIsDone.AI
         protected LevelEntity _Entity;
         protected Dictionary<string, Variant> _Blackboard;
         protected ArenaAction _Action;
+
+        [Inject]
+        protected ActionService _ActionService;
 
         public void Init(ArenaAction action, Dictionary<string, Variant> blackboard)
         {
@@ -41,8 +45,8 @@ namespace ShopIsDone.AI
 
         public virtual Command ExecuteAction()
         {
-            // Do nothing
-            return new Command();
+            // Execute the action without anything fancy otherwise
+            return _ActionService.ExecuteAction(_Action);
         }
 
         // Subclass sandbox methods

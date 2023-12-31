@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=47 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -15,8 +15,10 @@
 [ext_resource type="PackedScene" uid="uid://k1cfuob2nivk" path="res://tiles/tile/tile.tscn" id="5_hl2gx"]
 [ext_resource type="PackedScene" uid="uid://d3bnxo337mk18" path="res://tiles/tile/placement_tile.tscn" id="6_4mx0t"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/TurnCountdownBattleState.cs" id="6_maxjv"]
+[ext_resource type="Script" path="res://arenas/states/battle_states/UnitTurnService.cs" id="6_qjeqh"]
 [ext_resource type="Texture2D" uid="uid://dhf1etn3y82a2" path="res://tiles/diamond_floor.png" id="6_s8win"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/CleanUpBattleState.cs" id="7_dwkpa"]
+[ext_resource type="Script" path="res://arenas/states/battle_states/UnitAIService.cs" id="7_fplic"]
 [ext_resource type="Script" path="res://arenas/states/FinishedState.cs" id="7_wmirh"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/EnemyActivityBattleState.cs" id="8_om56i"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/PrepPlayerTurnBattleState.cs" id="9_quvvh"]
@@ -73,6 +75,13 @@ script = ExtResource("4_m7h52")
 script = ExtResource("5_gmbyy")
 _EffortMeter = NodePath("../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/EffortMeter")
 
+[node name="PlayerTurnUnitService" type="Node" parent="Services"]
+script = ExtResource("6_qjeqh")
+
+[node name="EnemyTurnUnitService" type="Node" parent="Services"]
+script = ExtResource("7_fplic")
+Team = 1
+
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
 
@@ -99,18 +108,22 @@ _TurnsPanel = NodePath("../../../../UILayer/TurnsRemaining/CenterContainer/Panel
 _TurnCounter = NodePath("../../../../Services/TurnCounter")
 _PhaseManager = NodePath("../../BattlePhaseManager")
 
-[node name="CleanUp" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_Arena")]
+[node name="CleanUp" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_Arena", "_PlayerUnitTurnService", "_EnemyUnitTurnService")]
 script = ExtResource("7_dwkpa")
 _PhaseManager = NodePath("../../BattlePhaseManager")
 _Arena = NodePath("../../../..")
+_PlayerUnitTurnService = NodePath("../../../../Services/PlayerTurnUnitService")
+_EnemyUnitTurnService = NodePath("../../../../Services/EnemyTurnUnitService")
 
-[node name="EnemyActivity" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager")]
+[node name="EnemyActivity" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_EnemyTurnService")]
 script = ExtResource("8_om56i")
 _PhaseManager = NodePath("../../BattlePhaseManager")
+_EnemyTurnService = NodePath("../../../../Services/EnemyTurnUnitService")
 
-[node name="PrepPlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager")]
+[node name="PrepPlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_PlayerUnitTurnService")]
 script = ExtResource("9_quvvh")
 _PhaseManager = NodePath("../../BattlePhaseManager")
+_PlayerUnitTurnService = NodePath("../../../../Services/PlayerTurnUnitService")
 
 [node name="PlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PlayerTurnStateMachine", "_PlayerUnitService")]
 script = ExtResource("10_hv83v")

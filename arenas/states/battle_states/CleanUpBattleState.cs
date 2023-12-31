@@ -3,9 +3,6 @@ using Godot;
 using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.Utils.Commands;
 using Godot.Collections;
-using System.Linq;
-using ShopIsDone.Core;
-using ShopIsDone.Actions;
 
 namespace ShopIsDone.Arenas.Battles.States
 {
@@ -17,22 +14,23 @@ namespace ShopIsDone.Arenas.Battles.States
         [Export]
         private Arena _Arena;
 
+        [Export]
+        private UnitTurnService _PlayerUnitTurnService;
+
+        [Export]
+        private UnitTurnService _EnemyUnitTurnService;
+
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
             base.OnStart(message);
 
             new SeriesCommand(
-                // Reset all units and tiles for the next turn
-                new SeriesCommand(
-                    GetTree()
-                        .GetNodesInGroup("entities")
-                        .OfType<LevelEntity>()
-                        .Where(e => e.HasComponent<ActionHandler>())
-                        .Select(e => e.GetComponent<ActionHandler>())
-                        .Select(ah => new ActionCommand(ah.ResetActions))
-                        .ToArray()
-                ),
-
+                new ActionCommand(() =>
+                {
+                    // Reset all units for the next turn
+                    _PlayerUnitTurnService.ResetActions();
+                    _EnemyUnitTurnService.ResetActions();
+                }),
                 // Check if all player units have exited
                 new IfElseCommand(
                     // Exit check

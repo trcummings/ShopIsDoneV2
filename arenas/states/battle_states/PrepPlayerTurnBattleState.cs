@@ -9,18 +9,24 @@ namespace ShopIsDone.Arenas.Battles.States
 	{
         [Export]
         private BattlePhaseManager _PhaseManager;
-        // Update silhouettes
 
-        // Refill AP
+        [Export]
+        private UnitTurnService _PlayerUnitTurnService;
 
-        // Resolve status effects
-
-        // Resolve in progress tasks
-
-        // Advance
         public override void OnStart(Dictionary<string, Variant> message)
         {
             base.OnStart(message);
+
+            // Update silhouettes
+
+            // Refill AP
+            _PlayerUnitTurnService.RefillApToMax();
+
+            // Resolve status effects
+
+            // Resolve in progress tasks
+
+            // Advance
             _PhaseManager.AdvanceToNextPhase();
         }
     }

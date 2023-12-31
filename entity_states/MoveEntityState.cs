@@ -1,14 +1,21 @@
 ﻿using System;
 using Godot;
 using System.Threading.Tasks;
-using ShopIsDone.Models.Employees;
+using ShopIsDone.Models;
 
-namespace ShopIsDone.EntityStates.EmployeeStates
+namespace ShopIsDone.EntityStates
 {
     public partial class MoveEntityState : EntityState
     {
         [Export]
-        public EmployeeIsometricModel _Model;
+        public NodePath ModelPath;
+        private IModel _Model;
+
+        public override void _Ready()
+        {
+            base._Ready();
+            _Model = GetNode<IModel>(ModelPath);
+        }
 
         public override void Enter()
         {

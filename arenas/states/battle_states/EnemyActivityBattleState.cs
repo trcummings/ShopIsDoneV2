@@ -1,6 +1,8 @@
 using Godot;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
+using ShopIsDone.AI;
+using SystemGenerics = System.Collections.Generic;
 
 namespace ShopIsDone.Arenas.Battles.States
 {
@@ -9,59 +11,70 @@ namespace ShopIsDone.Arenas.Battles.States
         [Export]
         private BattlePhaseManager _PhaseManager;
 
-        //[Export]
-        //public Team CustomerTeam;
-
         //// Nodes
         //[OnReadyGet]
         //private Control _EnemyActivityUI;
 
-        //[OnReadyGet]
-        //private EntityTurnSystem _EnemyTurnSystem;
+        [Export]
+        private UnitAIService _EnemyTurnService;
 
-        //// State
-        //private Queue<ActionPlannerComponent> _Customers = new Queue<ActionPlannerComponent>();
-        //private ActionPlannerComponent _CurrentCustomer = null;
+        // State
+        private SystemGenerics.Queue<ActionPlanner> _Customers = new SystemGenerics.Queue<ActionPlanner>();
+        private ActionPlanner _CurrentCustomer = null;
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
             base.OnStart(message);
 
-            //// Refill enemy AP
-            //await AddToCommandManager(_EnemyTurnSystem.RefillApToMax()).ExecuteAsTask();
+            // Refill enemy AP
+            _EnemyTurnService.RefillApToMax();
 
-            //// Resolve status effects
-            //await AddToCommandManager(_EnemyTurnSystem.ResolveStatusEffects(Arena)).ExecuteAsTask();
+            // Reset AI
+            _EnemyTurnService.ResetAI();
 
-            //// Clear state
-            //_Customers.Clear();
-            //_CurrentCustomer = null;
+            // Resolve status effects
+            //_EnemyTurnSystem.ResolveStatusEffects();
 
-            //// Set the units as a queue
-            //_Customers = new Queue<ActionPlannerComponent>(
-            //    _EnemyTurnSystem
-            //        .GetActiveTurnEntities()
-            //        .Select(e => e.GetComponent<ActionPlannerComponent>()
-            //));
+            // Clear state
+            _Customers.Clear();
+            _CurrentCustomer = null;
 
-            //// While queue exists
-            //while (_Customers.Count > 0 || (_CurrentCustomer != null && _CurrentCustomer.CanStillAct()))
-            //{
-            //    // Have each unit Think at the beginning of each action loop
-            //    foreach (var customer in _Customers) await AddToCommandManager(customer.Think(Arena)).ExecuteAsTask();
+            // Set the units as a queue
+            _Customers = new SystemGenerics.Queue<ActionPlanner>(
+                _EnemyTurnService.GetAllUnitAI()
+            );
 
-            //    // Set current customer at beginning of while loop
-            //    if (_CurrentCustomer == null) _CurrentCustomer = _Customers.Dequeue();
+            // Run the queue
+            RunQueue();
+        }
 
-            //    // If our current customer can still act, then act
-            //    if (_CurrentCustomer.CanStillAct()) await AddToCommandManager(_CurrentCustomer.Act(Arena)).ExecuteAsTask();
-            //    // Otherwise, null out the current customer and loop
-            //    else _CurrentCustomer = null;
-            //}
+        private void RunQueue()
+        {
+            // As long as there's still customers that can act, run the queue
+            if (_Customers.Count > 0 || (_CurrentCustomer != null && _CurrentCustomer.CanStillAct()))
+            {
+                // Have each unit Think at the beginning of each action loop
+                foreach (var customer in _Customers) customer.Think();
 
-            //// End the turn
-            //await AddToCommandManager(Arena.AdvanceToNextPhase()).ExecuteAsTask();
-            _PhaseManager.AdvanceToNextPhase();
+                // Set current customer at beginning of while loop
+                if (_CurrentCustomer == null) _CurrentCustomer = _Customers.Dequeue();
+
+                // If our current customer can still act, then act
+                if (_CurrentCustomer.CanStillAct())
+                {
+                    var command = _CurrentCustomer.Act();
+                    command.Connect(
+                        nameof(command.Finished),
+                        new Callable(this, nameof(RunQueue)),
+                        (uint)ConnectFlags.OneShot
+                    );
+                    command.Execute();
+                }
+                // Otherwise, null out the current customer and loop
+                else _CurrentCustomer = null;
+            }
+            // Otherwise, end the turn
+            else _PhaseManager.AdvanceToNextPhase();
         }
     }
 }

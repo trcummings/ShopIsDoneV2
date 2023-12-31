@@ -12,10 +12,10 @@
 [ext_resource type="Script" path="res://action_points/ActionPointHandler.cs" id="10_hfe28"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="11_5w0ou"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="12_tm0l2"]
-[ext_resource type="Script" path="res://entity_states/employee_states/IdleEntityState.cs" id="13_75how"]
-[ext_resource type="Script" path="res://entity_states/employee_states/MoveEntityState.cs" id="14_xpga7"]
+[ext_resource type="Script" path="res://entity_states/IdleEntityState.cs" id="13_gxh5t"]
+[ext_resource type="Script" path="res://entity_states/MoveEntityState.cs" id="14_yfj8o"]
+[ext_resource type="Script" path="res://entity_states/HurtEntityState.cs" id="15_4kes7"]
 [ext_resource type="Script" path="res://entities/puppet_customer/states/IntimidateEntityState.cs" id="16_6jv6x"]
-[ext_resource type="Script" path="res://entity_states/employee_states/HurtEntityState.cs" id="16_81snl"]
 [ext_resource type="PackedScene" uid="uid://hj3hfw66ke8t" path="res://entities/puppet_customer/states/audio/intimidate_player.tscn" id="17_r0uob"]
 [ext_resource type="Script" path="res://ai/ActionPlanner.cs" id="18_ock78"]
 [ext_resource type="Resource" uid="uid://dgdoi87t5014c" path="res://entities/puppet_customer/ai/aggressive_turn_plan.tres" id="19_ynvcu"]
@@ -35,6 +35,11 @@ transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-
 shape = SubResource("CapsuleShape3D_0cyyf")
 
 [node name="CustomerType1Model" parent="." instance=ExtResource("2_5ehyc")]
+_AnimationNameMap = {
+"idle": "Idle",
+"take_hit": "TakeHit",
+"walk": "Travel"
+}
 
 [node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
 script = ExtResource("3_v23cd")
@@ -80,19 +85,19 @@ _ActionPointHandler = NodePath("../ActionPointHandler")
 script = ExtResource("12_tm0l2")
 InitialState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateHandler" node_paths=PackedStringArray("_Model")]
-script = ExtResource("13_75how")
-_Model = NodePath("../../CustomerType1Model")
+[node name="Idle" type="Node" parent="StateHandler"]
+script = ExtResource("13_gxh5t")
+ModelPath = NodePath("../../CustomerType1Model")
 Id = "idle"
 
-[node name="Move" type="Node" parent="StateHandler" node_paths=PackedStringArray("_Model")]
-script = ExtResource("14_xpga7")
-_Model = NodePath("../../CustomerType1Model")
+[node name="Move" type="Node" parent="StateHandler"]
+script = ExtResource("14_yfj8o")
+ModelPath = NodePath("../../CustomerType1Model")
 Id = "move"
 
-[node name="Hurt" type="Node" parent="StateHandler" node_paths=PackedStringArray("_Model")]
-script = ExtResource("16_81snl")
-_Model = NodePath("../../CustomerType1Model")
+[node name="Hurt" type="Node" parent="StateHandler"]
+script = ExtResource("15_4kes7")
+ModelPath = NodePath("../../CustomerType1Model")
 Id = "hurt"
 
 [node name="Intimidate" type="Node" parent="StateHandler" node_paths=PackedStringArray("_IntimidatePlayer")]
