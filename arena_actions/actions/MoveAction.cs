@@ -8,6 +8,7 @@ using ShopIsDone.Utils.Commands;
 using ShopIsDone.Cameras;
 using ShopIsDone.Utils.DependencyInjection;
 using SystemGeneric = System.Collections.Generic;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Actions
 {
@@ -27,7 +28,6 @@ namespace ShopIsDone.Actions
 
         private TileMovementHandler _MovementHandler;
         private EntityStateHandler _StateHandler;
-        private FacingDirectionHandler _FacingDirectionHandler;
 
         public const string MOVE_PATH_KEY = "MovePath";
 
@@ -36,13 +36,11 @@ namespace ShopIsDone.Actions
             base.Init(actionHandler);
             _MovementHandler = Entity.GetComponent<TileMovementHandler>();
             _StateHandler = Entity.GetComponent<EntityStateHandler>();
-            _FacingDirectionHandler = Entity.GetComponent<FacingDirectionHandler>();
         }
 
         public override bool HasRequiredComponents(LevelEntity entity)
         {
             return
-                entity.HasComponent<FacingDirectionHandler>() &&
                 entity.HasComponent<TileMovementHandler>() &&
                 entity.HasComponent<EntityStateHandler>();
         }
@@ -107,40 +105,42 @@ namespace ShopIsDone.Actions
             nextSubMove.NextMove = nextMovement;
 
             // Get direction towards
-            var dirTowards = nextMovement.FinalTile.TilemapPosition - Entity.TilemapPosition;
+            var dirTowards = Entity.GetFacingDirTowards(nextMovement.FinalTile.TilemapPosition);
 
             // Induction step
             return new ConditionalCommand(
                 () => _StateHandler.IsInState("move"),
-                // Run deferrred calculation on if we should continue or fail the move
-                new DeferredCommand(() =>
-                    new IfElseCommand(
-                        // If the next tile is still available
-                        () => !_TileManager.IsTileOccupied(nextMovement.FinalTile),
-                        new SeriesCommand(
-                            // Execute the sub-movement action with the given command
-                            _ActionService.ExecuteAction(nextSubMove),
-                            // Recurse
-                            GenerateSubMovements(commands)
-                        ),
-                        // Otherwise, play interruption animation and change pawn back to a
-                        // normal state
-                        new SeriesCommand(
-                            // Idle
-                            new AwaitSignalCommand(
-                                _StateHandler,
-                                nameof(_StateHandler.ChangedState),
-                                nameof(_StateHandler.ChangeState),
-                                "idle"
+                new SeriesCommand(
+                    // Face towards the next tile
+                    new ActionCommand(() => Entity.FacingDirection = dirTowards),
+                    // Run deferrred calculation on if we should continue or fail the move
+                    new DeferredCommand(() =>
+                        new IfElseCommand(
+                            // If the next tile is still available
+                            () => !_TileManager.IsTileOccupied(nextMovement.FinalTile),
+                            new SeriesCommand(
+                                // Execute the sub-movement action with the given command
+                                _ActionService.ExecuteAction(nextSubMove),
+                                // Recurse
+                                GenerateSubMovements(commands)
                             ),
-                            // Face towards the interruption
-                            new ActionCommand(() => _FacingDirectionHandler.FacingDirection = dirTowards),
-                            // Push alert state
-                            new AwaitSignalCommand(
-                                _StateHandler,
-                                nameof(_StateHandler.PushedState),
-                                nameof(_StateHandler.PushState),
-                                "alert"
+                            // Otherwise, play interruption animation and change pawn back to a
+                            // normal state
+                            new SeriesCommand(
+                                // Idle
+                                new AwaitSignalCommand(
+                                    _StateHandler,
+                                    nameof(_StateHandler.ChangedState),
+                                    nameof(_StateHandler.ChangeState),
+                                    "idle"
+                                ),
+                                // Push alert state
+                                new AwaitSignalCommand(
+                                    _StateHandler,
+                                    nameof(_StateHandler.PushedState),
+                                    nameof(_StateHandler.PushState),
+                                    "alert"
+                                )
                             )
                         )
                     )

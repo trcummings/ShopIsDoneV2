@@ -41,7 +41,7 @@ namespace ShopIsDone.Actions
         public override void Init()
         {
             // Duplicate actions
-            Actions = Actions.Duplicate();
+            Actions = Actions.Select(action => (ArenaAction)action.Duplicate()).ToGodotArray();
             // Initialize with pawn
             foreach (var action in Actions)
             {

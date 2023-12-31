@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_wr7rx")
-ActionId = ""
+Distance = 1
+ActionId = "move"

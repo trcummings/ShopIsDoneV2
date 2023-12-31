@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bqh5iqllvqmhp"]
+
+[ext_resource type="Script" path="res://entities/puppet_customer/actions/IntimidateAction.cs" id="1_s046a"]
+
+[resource]
+script = ExtResource("1_s046a")
+Id = "intimidate"
+ActionName = "Intimidate"
+EndsTurnAfterUse = false
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = false
+Range = 0
+TargetDisposition = 0
+ActionType = 0
+IndicatorType = 0
+FollowEntity = false
+FocusEntity = false
+RotateToFaceEntity = false

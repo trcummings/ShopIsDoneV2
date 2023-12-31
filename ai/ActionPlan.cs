@@ -7,6 +7,9 @@ using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.Pathfinding;
 using Godot.Collections;
 using ShopIsDone.Utils.DependencyInjection;
+using static ShopIsDone.Widgets.TileIndicator;
+using SystemGenerics = System.Collections.Generic;
+using ShopIsDone.Widgets;
 
 namespace ShopIsDone.AI
 {
@@ -22,7 +25,13 @@ namespace ShopIsDone.AI
         [Inject]
         protected ActionService _ActionService;
 
-        public void Init(ArenaAction action, Dictionary<string, Variant> blackboard)
+        [Inject]
+        protected TileManager _TileManager;
+
+        [Inject]
+        protected TileIndicator _TileIndicator;
+
+        public virtual void Init(ArenaAction action, Dictionary<string, Variant> blackboard)
         {
             _Action = action;
             _Entity = action.Entity;
@@ -40,32 +49,51 @@ namespace ShopIsDone.AI
 
         public virtual int GetPriority()
         {
-            return 1;
+            // Default to lowest priority
+            return int.MinValue;
         }
 
         public virtual Command ExecuteAction()
         {
-            // Execute the action without anything fancy otherwise
             return _ActionService.ExecuteAction(_Action);
         }
 
         // Subclass sandbox methods
-        protected bool InActionRange(TileManager tileManager, LevelEntity target)
+        protected bool TileWithinDistanceOfUs(Tile target, int distance)
         {
-            // If the action range is 0, return false.
-            if (_Action.Range == 0) return false;
+            // If the distance is 0, return false.
+            if (distance == 0) return false;
 
             // Grab our current tile
-            var currentTile = tileManager.GetTileAtTilemapPos(_Entity.TilemapPosition);
-            // Grab the target tile
-            var targetTile = tileManager.GetTileAtTilemapPos(target.TilemapPosition);
+            var currentTile = GetTileAtTilemapPos(_Entity.TilemapPosition);
 
             // Get a path between the target and us
-            var allTiles = tileManager.GetAllTilesInArena().ToList();
-            var path = new TileAStar().GetMovePath(allTiles, currentTile, targetTile);
+            var allTiles = GetAllTiles().ToList();
+            var path = new TileAStar().GetMovePath(allTiles, currentTile, target);
 
-            // If the path length is equal to the action range, then we're in range
-            return path.Count >= _Action.Range;
+            // If the path length is less than or equal to the distance, then
+            // we're in range
+            return path.Count <= distance;
+        }
+
+        protected Tile GetTileAtTilemapPos(Vector3 pos)
+        {
+            return _TileManager.GetTileAtTilemapPos(pos);
+        }
+
+        protected Array<Tile> GetAllTiles()
+        {
+            return _TileManager.GetAllTilesInArena();
+        }
+
+        protected void CreateTileIndicators(SystemGenerics.IEnumerable<Vector3> tiles, IndicatorColor color)
+        {
+            _TileIndicator.CreateIndicators(tiles, color);
+        }
+
+        protected void ClearTileIndicators()
+        {
+            _TileIndicator.ClearIndicators();
         }
     }
 }

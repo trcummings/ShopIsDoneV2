@@ -314,7 +314,7 @@ tracks/0/path = NodePath("CustomerType1/CustomerType1/AnimationPlayer")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("Travel-loop"),
+"clips": PackedStringArray("Travel"),
 "times": PackedFloat32Array(0)
 }
 tracks/1/type = "value"
@@ -444,7 +444,7 @@ libraries = {
 autoplay = "Idle"
 
 [node name="CustomerType1" parent="." instance=ExtResource("3")]
-transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+transform = Transform3D(0.75, -2.6159e-16, 2.6159e-16, 2.6159e-16, 0.75, -2.6159e-16, -2.6159e-16, 2.6159e-16, 0.75, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CustomerType1/CustomerType1/rig" index="0"]
 bones/1/rotation = Quaternion(0.747352, 0, 0, 0.664428)

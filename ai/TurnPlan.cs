@@ -5,6 +5,7 @@ using ShopIsDone.Actions;
 using ShopIsDone.Utils.Commands;
 using System.Linq;
 using GenericCollections = System.Collections.Generic;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.AI
 {
@@ -25,6 +26,11 @@ namespace ShopIsDone.AI
 
         public virtual void Init(Dictionary<string, Variant> blackboard, Array<ArenaAction> actions)
         {
+            // Set blackboard
+            _Blackboard = blackboard;
+
+            // Duplicate plans
+            _ActionPlans = _ActionPlans.Select(ap => (ActionPlan)ap.Duplicate()).ToGodotArray();
             // Initialize each action plan with the accompanying action
             foreach (var plan in _ActionPlans)
             {
@@ -33,6 +39,7 @@ namespace ShopIsDone.AI
                     .ToList()
                     .Find(a => a.Id == plan.ActionId);
                 if (action != null) plan.Init(action, _Blackboard);
+                else GD.PrintErr($"Unable to find Action {plan.ActionId} for {ResourceName}");
             }
         }
 

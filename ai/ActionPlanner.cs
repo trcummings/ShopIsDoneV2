@@ -5,8 +5,8 @@ using ShopIsDone.Actions;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using Godot.Collections;
-using GenericCollections = System.Collections.Generic;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.AI
 {
@@ -17,6 +17,7 @@ namespace ShopIsDone.AI
 
         [Export]
         protected Node3D _SensorsNode;
+        protected Array<Sensor> _Sensors;
 
         [Export]
         protected ActionHandler _ActionHandler;
@@ -25,13 +26,19 @@ namespace ShopIsDone.AI
         // sensors to update, and for turns and action plans to use
         protected Dictionary<string, Variant> _Blackboard = new Dictionary<string, Variant>();
 
+        public override void _Ready()
+        {
+            base._Ready();
+            _Sensors = _SensorsNode.GetChildren().OfType<Sensor>().ToGodotArray();
+        }
+
         public override void Init()
         {
             base.Init();
             // TODO: Initialize
             var provider = InjectionProvider.GetProvider(this);
             // Duplicate turn plans (recursively)
-            _TurnPlans = _TurnPlans.Duplicate(true);
+            _TurnPlans = _TurnPlans.Select(tp => (TurnPlan)tp.Duplicate()).ToGodotArray();
             // Initialize turn plans and inject depdencies
             foreach (var turnPlan in _TurnPlans)
             {
@@ -42,6 +49,8 @@ namespace ShopIsDone.AI
                     provider.InjectObject(plan);
                 }
             }
+            // Init sensors
+            foreach (var sensor in _Sensors) sensor.Init();
         }
 
         public void ResetPlanner()
@@ -55,7 +64,7 @@ namespace ShopIsDone.AI
             // Ignore if entity is not active
             if (!Entity.IsInArena() || !Entity.IsActive()) return;
             // Update sensors
-            foreach (var sensor in GetSensors()) sensor.Sense(_Blackboard);
+            foreach (var sensor in _Sensors) sensor.Sense(Entity, _Blackboard);
         }
 
         public Command Act()
@@ -86,11 +95,6 @@ namespace ShopIsDone.AI
                 .Where(a => a.IsValid())
                 .OrderByDescending(a => a.GetPriority())
                 .First();
-        }
-
-        private GenericCollections.IEnumerable<Sensor> GetSensors()
-        {
-            return _SensorsNode.GetChildren().OfType<Sensor>();
         }
     }
 }

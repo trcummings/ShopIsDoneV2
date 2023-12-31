@@ -78,6 +78,12 @@ namespace ShopIsDone.Arenas
 
             // Add player unit to player unit service
             _PlayerUnitService.Init(new System.Collections.Generic.List<LevelEntity>() { playerUnit });
+            // Init all entities
+            var allEntities = GetTree()
+                .GetNodesInGroup("entities")
+                .OfType<LevelEntity>()
+                .Where(IsAncestorOf);
+            foreach (var entity in allEntities) entity.Init();
 
             // Update all tiles
             _TileManager.UpdateTiles();

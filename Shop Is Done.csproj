@@ -12,5 +12,6 @@
     <Folder Include="util\dependency_injection\" />
     <Folder Include="entity_states\employee_states\" />
     <Folder Include="actors\states\" />
+    <Folder Include="entities\puppet_customer\ai\sensors\" />
   </ItemGroup>
 </Project>

@@ -59,9 +59,11 @@ namespace ShopIsDone.Core
         public Dictionary<string, Variant> DataStore = new Dictionary<string, Variant>();
 
         [Export]
+        private NodePath _TilemapPositionHandlerPath;
         private TilemapPositionHandler _TilemapPositionHandler;
 
         [Export]
+        private NodePath _FacingDirectionHandlerPath;
         private FacingDirectionHandler _FacingDirectionHandler;
 
         // Tilemap position
@@ -101,6 +103,8 @@ namespace ShopIsDone.Core
         public override void _Ready()
         {
             base._Ready();
+            _TilemapPositionHandler = GetNode<TilemapPositionHandler>(_TilemapPositionHandlerPath);
+            _FacingDirectionHandler = GetNode<FacingDirectionHandler>(_FacingDirectionHandlerPath);
 
             // Connect to enabled/disabled hooks
             EntityEnabled += OnEnabled;

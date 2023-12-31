@@ -1,14 +1,21 @@
 ﻿using System;
 using Godot;
 using Godot.Collections;
+using ShopIsDone.Core;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.AI
 {
-    public partial class Sensor : Node
+    public partial class Sensor : Node3D
 	{
-		public virtual void Sense(Dictionary<string, Variant> blackboard)
+		public void Init()
 		{
+			InjectionProvider.Inject(this);
+		}
 
+		public virtual void Sense(LevelEntity entity, Dictionary<string, Variant> blackboard)
+		{
+			// Do nothing
 		}
 	}
 }

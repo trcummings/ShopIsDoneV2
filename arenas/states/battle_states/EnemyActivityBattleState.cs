@@ -62,6 +62,7 @@ namespace ShopIsDone.Arenas.Battles.States
                 // If our current customer can still act, then act
                 if (_CurrentCustomer.CanStillAct())
                 {
+                    // One shot connection to finish action execution
                     var command = _CurrentCustomer.Act();
                     command.Connect(
                         nameof(command.Finished),
@@ -69,9 +70,15 @@ namespace ShopIsDone.Arenas.Battles.States
                         (uint)ConnectFlags.OneShot
                     );
                     command.Execute();
+
+                    return;
                 }
                 // Otherwise, null out the current customer and loop
-                else _CurrentCustomer = null;
+                else
+                {
+                    _CurrentCustomer = null;
+                    RunQueue();
+                }
             }
             // Otherwise, end the turn
             else _PhaseManager.AdvanceToNextPhase();
