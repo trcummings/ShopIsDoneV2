@@ -1,59 +1,73 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using ShopIsDone.Actions;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
+using Godot.Collections;
+using GenericCollections = System.Collections.Generic;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.AI
 {
     public partial class ActionPlanner : NodeComponent
     {
         [Export]
-        public TurnPlan TurnPlan = new TurnPlan();
+        private Array<TurnPlan> _TurnPlans = new Array<TurnPlan>();
 
-        // Properties
-        protected Dictionary<string, Variant> _Blackboard = new Dictionary<string, Variant>();
-        protected List<ActionPlan> _ActionPlans;
-
-        // Nodes
         [Export]
-        protected Node3D _Sensors;
+        protected Node3D _SensorsNode;
 
         [Export]
         protected ActionHandler _ActionHandler;
 
+        // The blackboard is the "mind" of the AI, where values get recorded for
+        // sensors to update, and for turns and action plans to use
+        protected Dictionary<string, Variant> _Blackboard = new Dictionary<string, Variant>();
+
         public override void Init()
         {
             base.Init();
-            // TODO: Initialize action plans and sensors
+            // TODO: Initialize
+            var provider = InjectionProvider.GetProvider(this);
+            // Duplicate turn plans (recursively)
+            _TurnPlans = _TurnPlans.Duplicate(true);
+            // Initialize turn plans and inject depdencies
+            foreach (var turnPlan in _TurnPlans)
+            {
+                provider.InjectObject(turnPlan);
+                turnPlan.Init(_Blackboard, _ActionHandler.Actions);
+                foreach (var plan in turnPlan.ActionPlans)
+                {
+                    provider.InjectObject(plan);
+                }
+            }
         }
 
-        public Command Think()
+        public void ResetPlanner()
         {
-            return new ConditionalCommand(
-                // Return early if we're not active
-                () => Entity.IsInArena() && Entity.IsActive(),
-                // Check sensors to update agent state and blackboard
-                new SeriesCommand(
-                    GetSensors()
-                        .Select(sensor => new ActionCommand(sensor.Sense))
-                        .ToArray()
-                )
-            );
+            // Reset all turn plans
+            foreach (var turnPlan in _TurnPlans) turnPlan.ResetTurnPlan();
+        }
+
+        public void Think()
+        {
+            // Ignore if entity is not active
+            if (!Entity.IsInArena() || !Entity.IsActive()) return;
+            // Update sensors
+            foreach (var sensor in GetSensors()) sensor.Sense(_Blackboard);
         }
 
         public Command Act()
         {
             // Sort remaining actions by priority
-            var highestPriorityPlan = _ActionPlans
+            var highestPriorityPlan = _TurnPlans
                 .Where(a => a.IsValid())
                 .OrderByDescending(a => a.GetPriority())
                 .First();
 
-            // Perform action
-            return highestPriorityPlan.ExecuteAction();
+            // Execute next step of the turn plan
+            return GetCurrentPlan().ExecuteNextAction();
         }
 
         public bool CanStillAct()
@@ -61,15 +75,22 @@ namespace ShopIsDone.AI
             // Action handler check
             if (!_ActionHandler.HasAvailableActions()) return false;
 
-            // If any of our plans are valid, we can still act
-            var hasAnyValidPlans = _ActionPlans.Any(planner => planner.IsValid());
-            return hasAnyValidPlans;
+            // We can act if we have a valid turn plan
+            return _TurnPlans.Any(tp => tp.IsValid());
         }
 
-        private IEnumerable<Sensor> GetSensors()
+        private TurnPlan GetCurrentPlan()
         {
-            if (_Sensors == null) return new List<Sensor>();
-            return _Sensors.GetChildren().OfType<Sensor>();
+            // Sort plans by priority
+            return _TurnPlans
+                .Where(a => a.IsValid())
+                .OrderByDescending(a => a.GetPriority())
+                .First();
+        }
+
+        private GenericCollections.IEnumerable<Sensor> GetSensors()
+        {
+            return _SensorsNode.GetChildren().OfType<Sensor>();
         }
     }
 }

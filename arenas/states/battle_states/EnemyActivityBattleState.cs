@@ -27,22 +27,15 @@ namespace ShopIsDone.Arenas.Battles.States
         {
             base.OnStart(message);
 
-            //// Clear state
-            //_Customers.Clear();
-            //_CurrentCustomer = null;
-
-            //// Progress NPC spawning (in parallel)
-            //await AddToCommandManager(new ParallelCommand(
-            //    Arena.GetAllSpawnPoints()
-            //        .Select(spawnPoint => spawnPoint.GetComponent<EntitySpawnerComponent>().ProgressSpawner(Arena))
-            //        .ToArray()
-            //)).ExecuteAsTask();
-
             //// Refill enemy AP
             //await AddToCommandManager(_EnemyTurnSystem.RefillApToMax()).ExecuteAsTask();
 
             //// Resolve status effects
             //await AddToCommandManager(_EnemyTurnSystem.ResolveStatusEffects(Arena)).ExecuteAsTask();
+
+            //// Clear state
+            //_Customers.Clear();
+            //_CurrentCustomer = null;
 
             //// Set the units as a queue
             //_Customers = new Queue<ActionPlannerComponent>(

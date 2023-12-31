@@ -4,28 +4,34 @@ using ShopIsDone.Actions;
 using ShopIsDone.Core;
 using ShopIsDone.Tiles;
 using ShopIsDone.Utils.Commands;
-using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Pathfinding;
+using Godot.Collections;
 
 namespace ShopIsDone.AI
 {
     public partial class ActionPlan : Resource
     {
-        protected LevelEntity _Entity;
-        protected ActionHandler _ActionHandler;
+        [Export]
+        public string ActionId;
 
+        protected LevelEntity _Entity;
+        protected Dictionary<string, Variant> _Blackboard;
         protected ArenaAction _Action;
 
-        public void Init(ActionHandler actionHandler, ArenaAction action)
+        public void Init(ArenaAction action, Dictionary<string, Variant> blackboard)
         {
-            _ActionHandler = actionHandler;
             _Action = action;
+            _Entity = action.Entity;
+            _Blackboard = blackboard;
         }
 
         public virtual bool IsValid()
         {
+            // Just in case we weren't initialized properly
+            if (_Action == null) return false;
+
             // Otherwise check if the action is available in the first place
-            return _ActionHandler.IsActionAvailable(_Action);
+            return _Action.IsAvailable();
         }
 
         public virtual int GetPriority()

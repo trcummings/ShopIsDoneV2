@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TurnPlan" load_steps=6 format=3 uid="uid://dgdoi87t5014c"]
+
+[ext_resource type="Script" path="res://ai/TurnPlan.cs" id="1_2w0eb"]
+[ext_resource type="Resource" uid="uid://c0hqqbp4370g1" path="res://entities/puppet_customer/ai/intimidate_action_plan.tres" id="1_nyiew"]
+[ext_resource type="Resource" uid="uid://bbq37wckhesjn" path="res://entities/puppet_customer/ai/move_towards_goal_action_plan.tres" id="2_xl8iy"]
+[ext_resource type="Resource" uid="uid://d2ssm4uv76b0p" path="res://entities/puppet_customer/ai/bother_employee_action_plan.tres" id="3_yo01c"]
+[ext_resource type="Resource" uid="uid://ddpx507fj2uyv" path="res://entities/puppet_customer/ai/wait_and_end_turn_action_plan.tres" id="4_w38gu"]
+
+[resource]
+script = ExtResource("1_2w0eb")
+_ActionPlans = Array[Object]([ExtResource("1_nyiew"), ExtResource("2_xl8iy"), ExtResource("3_yo01c"), ExtResource("4_w38gu")])
