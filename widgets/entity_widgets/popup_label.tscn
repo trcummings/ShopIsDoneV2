@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://widgets/entity_widgets/PopupLabel.cs" id="1"]
+[ext_resource type="DynamicFont" path="res://fonts/VCR_OSD_MONO.tres" id="2"]
+
+[sub_resource type="Animation" id=1]
+resource_name = "PopUpDamage"
+tracks/0/type = "transform"
+tracks/0/path = NodePath("Label")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.6, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 )
+
+[node name="PopupLabel" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Label" type="Label3D" parent="."]
+unique_name_in_owner = true
+layers = 513
+pixel_size = 0.025
+billboard = 1
+text = "[1]"
+font = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+anims/PopUpDamage = SubResource( 1 )

@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="7_m2vvd"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="8_4sop1"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="9_6he0e"]
-[ext_resource type="Script" path="res://action_points/ActionPointHandler.cs" id="10_hfe28"]
+[ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="10_dsne4"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="11_5w0ou"]
 [ext_resource type="Resource" uid="uid://bfolorkindt4h" path="res://entities/puppet_customer/actions/bother_employee_action.tres" id="12_3ebgi"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="12_tm0l2"]
@@ -78,10 +78,7 @@ _TeamHandler = NodePath("../../TeamHandler")
 script = ExtResource("9_6he0e")
 Team = 1
 
-[node name="ActionPointHandler" type="Node" parent="."]
-script = ExtResource("10_hfe28")
-ActionPoints = 2
-MaxActionPoints = 2
+[node name="ActionPointHandler" parent="." instance=ExtResource("10_dsne4")]
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("11_5w0ou")

@@ -1,0 +1,149 @@
+[gd_scene load_steps=9 format=3 uid="uid://dx6r37l2dvf6v"]
+
+[ext_resource type="Texture2D" uid="uid://b3gnf0td2kokk" path="res://textures/Widgets/TalkingEffect/talking_effect.png" id="1"]
+[ext_resource type="Script" path="res://widgets/entity_widgets/TalkingEffect.cs" id="1_ytx0t"]
+
+[sub_resource type="ViewportTexture" id="2"]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="StandardMaterial3D" id="3"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("2")
+albedo_texture_force_srgb = true
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="4"]
+size = Vector2(4, 4)
+
+[sub_resource type="Animation" id="1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Center:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Left:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="5"]
+resource_name = "default"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Center:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 0, 1, 2, 3, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Left:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bx38l"]
+_data = {
+"RESET": SubResource("1"),
+"default": SubResource("5")
+}
+
+[node name="TalkingEffect" type="Node3D"]
+script = ExtResource("1_ytx0t")
+
+[node name="Viewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(600, 600)
+render_target_update_mode = 4
+
+[node name="Effect" type="Node2D" parent="Viewport"]
+position = Vector2(300, 300)
+
+[node name="Center" type="Sprite2D" parent="Viewport/Effect"]
+position = Vector2(1.57258, -19)
+texture = ExtResource("1")
+hframes = 5
+frame = 4
+
+[node name="Right" type="Sprite2D" parent="Viewport/Effect"]
+position = Vector2(29.5726, -7.00001)
+rotation = 0.397935
+texture = ExtResource("1")
+hframes = 5
+frame = 4
+
+[node name="Left" type="Sprite2D" parent="Viewport/Effect"]
+position = Vector2(-22.4274, -3.8147e-06)
+rotation = -0.488692
+texture = ExtResource("1")
+hframes = 5
+frame = 4
+
+[node name="MeshInstance" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+layers = 5
+material_override = SubResource("3")
+mesh = SubResource("4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+root_node = NodePath("../Viewport/Effect")
+libraries = {
+"": SubResource("AnimationLibrary_bx38l")
+}
+autoplay = "RESET"

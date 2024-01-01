@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwpnri8oiktxb"]
+
+[ext_resource type="Script" path="res://action_points/ActionPointHandler.cs" id="1_y8kp7"]
+[ext_resource type="AudioStream" uid="uid://dw71ua0qnx0pd" path="res://action_points/audio/Debt-Damage__damage_1.wav" id="2_rv6t5"]
+[ext_resource type="AudioStream" uid="uid://c8ddrtiicuhry" path="res://action_points/audio/AP-Drain_071_Unequip_01_leohpaz_free_ui_sfx.wav" id="3_p37ud"]
+[ext_resource type="AudioStream" uid="uid://c5termors3yay" path="res://action_points/audio/Evade-Debt_162845__beman87__whoosh-in-out-5.wav" id="4_og6rd"]
+[ext_resource type="AudioStream" uid="uid://brtbqkellf2et" path="res://action_points/audio/Grant-Excess-AP_070_Equip_10.wav" id="5_l26gv"]
+[ext_resource type="AudioStream" uid="uid://banllopsvmlf5" path="res://action_points/audio/Heal-Debt_051_use_item_01.wav" id="6_vj1qq"]
+
+[node name="ActionPointHandler" type="Node"]
+script = ExtResource("1_y8kp7")
+
+[node name="TakeDamageSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_rv6t5")
+bus = &"SFX"
+
+[node name="TakeDrainSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_p37ud")
+bus = &"SFX"
+
+[node name="EvadeSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_og6rd")
+bus = &"SFX"
+
+[node name="GrantExcessAp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_l26gv")
+bus = &"SFX"
+
+[node name="HealDebt" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_vj1qq")
+bus = &"SFX"
+
+[connection signal="EvadedDebtDamage" from="." to="EvadeSfx" method="play" unbinds=1]
+[connection signal="HealedDebt" from="." to="HealDebt" method="play" unbinds=1]
+[connection signal="ReceivedExcessAp" from="." to="GrantExcessAp" method="play" unbinds=1]
+[connection signal="TookApDrain" from="." to="TakeDrainSfx" method="play" unbinds=1]
+[connection signal="TookDebtDamage" from="." to="TakeDamageSfx" method="play" unbinds=1]
