@@ -212,6 +212,7 @@ shape = SubResource("BoxShape3D_gufqt")
 [node name="Sprite3D" type="Sprite3D" parent="EnterArenaArea"]
 transform = Transform3D(0.76722, 0, 0, 0, 1, 0, 0, 0, 2.33261, 2.08165e-12, 0.01, 2.08165e-12)
 axis = 1
+shaded = true
 texture = ExtResource("6_s8win")
 
 [node name="Entities" type="Node3D" parent="."]

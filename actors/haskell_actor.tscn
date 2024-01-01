@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=35 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_6jaxx"]
@@ -22,6 +22,7 @@
 [ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="18_64csj"]
 [ext_resource type="Script" path="res://entity_states/HurtEntityState.cs" id="18_brpwm"]
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="19_dsksq"]
+[ext_resource type="Script" path="res://entity_states/DoTaskEntityState.cs" id="19_qw4x1"]
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="19_vhxse"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="20_1bpch"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="21_k5t6c"]
@@ -31,6 +32,7 @@
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="22_odajy"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="23_sv0kt"]
 [ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="31_xx1gf"]
+[ext_resource type="Script" path="res://tasks/TaskHandler.cs" id="33_l4ov1"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
@@ -116,6 +118,11 @@ script = ExtResource("18_brpwm")
 ModelPath = NodePath("../../HaskellModel")
 Id = "hurt"
 
+[node name="DoTask" type="Node" parent="StateHandler"]
+script = ExtResource("19_qw4x1")
+ModelPath = NodePath("../../HaskellModel")
+Id = "do_task"
+
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
@@ -153,6 +160,11 @@ script = ExtResource("23_sv0kt")
 
 [node name="OutcomeHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("31_xx1gf")
+_ActionPointHandler = NodePath("../ActionPointHandler")
+
+[node name="TaskHandler" type="Node" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler")]
+script = ExtResource("33_l4ov1")
+_StateHandler = NodePath("../StateHandler")
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]

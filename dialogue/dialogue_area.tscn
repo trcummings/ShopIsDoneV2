@@ -21,4 +21,5 @@ shape = SubResource("BoxShape3D_ejctr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.02, 2.08165e-12)
 pixel_size = 0.005
 axis = 1
+shaded = true
 texture = ExtResource("2_2h3v3")
