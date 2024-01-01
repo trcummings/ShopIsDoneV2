@@ -31,10 +31,12 @@ shape = SubResource("BoxShape3D_p588p")
 
 [node name="UnitDetector" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+target_position = Vector3(2.08165e-12, 1, 2.08165e-12)
 collision_mask = 2
 
 [node name="ObstacleDetector" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+target_position = Vector3(2.08165e-12, 1, 2.08165e-12)
 collision_mask = 8
 collide_with_areas = true
 
