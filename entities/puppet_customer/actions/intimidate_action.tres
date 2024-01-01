@@ -16,6 +16,6 @@ Range = 0
 TargetDisposition = 0
 ActionType = 0
 IndicatorType = 0
-FollowEntity = false
+FollowEntity = true
 FocusEntity = false
 RotateToFaceEntity = false

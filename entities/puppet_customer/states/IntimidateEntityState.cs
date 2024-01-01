@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using ShopIsDone.EntityStates;
+using Godot.Collections;
 
 namespace ShopIsDone.Entities.PuppetCustomers.States
 {
@@ -9,7 +10,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.States
         [Export]
         public AudioStreamPlayer _IntimidatePlayer;
 
-        public override void Enter()
+        public override void Enter(Dictionary<string, Variant> message = null)
         {
             _IntimidatePlayer.Connect(
                 "finished",

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c84riwntsfpy5"]
+[gd_scene load_steps=31 format=3 uid="uid://c84riwntsfpy5"]
 
 [ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1_hv7oi"]
 [ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
@@ -25,6 +25,10 @@
 [ext_resource type="Script" path="res://ai/ActionPlanner.cs" id="18_ock78"]
 [ext_resource type="Resource" uid="uid://dgdoi87t5014c" path="res://entities/puppet_customer/ai/aggressive_turn_plan.tres" id="19_ynvcu"]
 [ext_resource type="Script" path="res://entities/puppet_customer/ai/sensors/NearestEmployeeSensor.cs" id="20_oymu8"]
+[ext_resource type="Script" path="res://entities/puppet_customer/states/BotherEntityState.cs" id="23_72o6q"]
+[ext_resource type="Script" path="res://entities/puppet_customer/CustomerOutcomeHandler.cs" id="26_vx53h"]
+[ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="27_fpgq0"]
+[ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="28_v08d8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0cyyf"]
 radius = 0.75
@@ -41,6 +45,7 @@ transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-
 shape = SubResource("CapsuleShape3D_0cyyf")
 
 [node name="CustomerType1Model" parent="." instance=ExtResource("2_5ehyc")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
 
 [node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
 script = ExtResource("3_v23cd")
@@ -109,6 +114,11 @@ Id = "intimidate"
 
 [node name="IntimidatePlayer" parent="StateHandler/Intimidate" instance=ExtResource("17_r0uob")]
 
+[node name="Bother" type="Node" parent="StateHandler" node_paths=PackedStringArray("_Model")]
+script = ExtResource("23_72o6q")
+_Model = NodePath("../../CustomerType1Model")
+Id = "bother"
+
 [node name="ActionPlanner" type="Node" parent="." node_paths=PackedStringArray("_SensorsNode", "_ActionHandler")]
 script = ExtResource("18_ock78")
 _TurnPlans = [ExtResource("19_ynvcu")]
@@ -119,5 +129,14 @@ _ActionHandler = NodePath("../ActionHandler")
 
 [node name="NearestEmployeeSensor" type="Node3D" parent="Sensors"]
 script = ExtResource("20_oymu8")
+
+[node name="OutcomeHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
+script = ExtResource("26_vx53h")
+_ActionPointHandler = NodePath("../ActionPointHandler")
+
+[node name="MicrogameHandler" type="Node" parent="."]
+script = ExtResource("27_fpgq0")
+MicrogameScene = ExtResource("28_v08d8")
+_OutcomeHandlerPath = NodePath("../OutcomeHandler")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="CustomerType1Model" method="SetFacingDir"]

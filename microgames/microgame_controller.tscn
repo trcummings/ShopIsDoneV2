@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxjmgjjk6kswe"]
+
+[ext_resource type="Script" path="res://microgames/MicrogameController.cs" id="1_rnwjl"]
+[ext_resource type="AudioStream" uid="uid://cdsfs4ioblf21" path="res://microgames/battle_start_attack.wav" id="2_f4v88"]
+[ext_resource type="AudioStream" uid="uid://dobvjsbf6wu86" path="res://microgames/battle_start_defend.wav" id="3_7nfcu"]
+
+[node name="MicrogameController" type="Node"]
+script = ExtResource("1_rnwjl")
+
+[node name="BattleStartPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_f4v88")
+bus = &"SFX"
+
+[node name="DefenseStartPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_7nfcu")
+bus = &"SFX"
+
+[connection signal="AttackStarted" from="." to="BattleStartPlayer" method="play"]
+[connection signal="DefenseStarted" from="." to="DefenseStartPlayer" method="play"]

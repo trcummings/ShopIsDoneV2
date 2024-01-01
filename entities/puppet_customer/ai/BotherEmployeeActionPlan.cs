@@ -1,12 +1,12 @@
 using Godot;
 using ShopIsDone.AI;
-using ShopIsDone.Arenas;
 using ShopIsDone.Utils.Commands;
 using System;
 using Godot.Collections;
 using ShopIsDone.Widgets;
 using ShopIsDone.Core;
 using System.Linq;
+using ActionConsts = ShopIsDone.Actions.Consts;
 
 namespace ShopIsDone.Entities.PuppetCustomers.AI
 {
@@ -61,7 +61,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                 new ActionCommand(() =>
                 {
                     CreateTileIndicators(
-                        new Array<Vector3>() { currentTile.TilemapPosition },
+                        new Array<Vector3>() { target.TilemapPosition },
                         TileIndicator.IndicatorColor.Red
                     );
                 }),
@@ -72,7 +72,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                 // Bother
                 _ActionService.ExecuteAction(_Action, new Dictionary<string, Variant>()
                 {
-                    { "Target", target }
+                    { ActionConsts.TARGET, target }
                 })
             );
         }

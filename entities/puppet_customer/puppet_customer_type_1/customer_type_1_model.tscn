@@ -427,6 +427,7 @@ script = ExtResource("1")
 LoopingAnimations = ["Travel", "Idle"]
 _AnimPlayer = NodePath("AnimationPlayer")
 _AnimationNameMap = {
+"bother": "Bother",
 "idle": "Idle",
 "take_hit": "TakeHit",
 "walk": "Travel"
