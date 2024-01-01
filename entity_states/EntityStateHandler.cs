@@ -1,9 +1,10 @@
 using System;
 using Godot;
-using System.Collections.Generic;
+using Godot.Collections;
 using ShopIsDone.Core;
 using System.Linq;
 using System.Threading.Tasks;
+using ShopIsDone.Utils.Commands;
 
 namespace ShopIsDone.EntityStates
 {
@@ -59,17 +60,27 @@ namespace ShopIsDone.EntityStates
             return _CurrentState.CanAct();
         }
 
-        public void ChangeState(string state)
+        public void ChangeState(string state, Dictionary<string, Variant> message = null)
         {
-            Task _ = ChangeStateAsync(state);
+            Task _ = ChangeStateAsync(state, message);
         }
 
-        public void PushState(string state)
+        public void PushState(string state, Dictionary<string, Variant> message = null)
         {
-            Task _ = PushStateAsync(state);
+            Task _ = PushStateAsync(state, message);
         }
 
-        public async Task ChangeStateAsync(string state)
+        public Command RunChangeState(string state, Dictionary<string, Variant> message = null)
+        {
+            return new AsyncCommand(() => ChangeStateAsync(state, message));
+        }
+
+        public Command RunPushState(string state, Dictionary<string, Variant> message = null)
+        {
+            return new AsyncCommand(() => PushStateAsync(state, message));
+        }
+
+        private async Task ChangeStateAsync(string state, Dictionary<string, Variant> message = null)
         {
             if (!_States.ContainsKey(state))
             {
@@ -94,7 +105,7 @@ namespace ShopIsDone.EntityStates
         }
 
         // Pushes a state on, enters, immediately exits
-        private async Task PushStateAsync(string state)
+        private async Task PushStateAsync(string state, Dictionary<string, Variant> message = null)
         {
             if (!_States.ContainsKey(state))
             {

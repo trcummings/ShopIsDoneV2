@@ -2,6 +2,7 @@
 using Godot;
 using System.Threading.Tasks;
 using ShopIsDone.Models;
+using Godot.Collections;
 
 namespace ShopIsDone.EntityStates
 {
@@ -17,7 +18,7 @@ namespace ShopIsDone.EntityStates
             _Model = GetNode<IModel>(ModelPath);
         }
 
-        public override void Enter()
+        public override void Enter(Dictionary<string, Variant> message = null)
         {
             Task _ = _Model.PerformAnimation("walk");
             base.Enter();

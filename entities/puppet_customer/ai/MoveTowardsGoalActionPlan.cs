@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using ShopIsDone.AI;
-using ShopIsDone.Arenas;
 using ShopIsDone.Tiles;
 using ShopIsDone.Utils.Commands;
 using Godot.Collections;
@@ -10,6 +9,7 @@ using ShopIsDone.Utils.Pathfinding;
 using ShopIsDone.Actions;
 using System.Linq;
 using ShopIsDone.Widgets;
+using ActionConsts = ShopIsDone.Actions.Consts;
 
 namespace ShopIsDone.Entities.PuppetCustomers.AI
 {
@@ -84,7 +84,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                 // Move
                 _ActionService.ExecuteAction(_Action, new Dictionary<string, Variant>()
                 {
-                    { MoveAction.MOVE_PATH_KEY, finalPath }
+                    { ActionConsts.MOVE_PATH, finalPath }
                 }),
                 // Hide indicators
                 new ActionCommand(ClearTileIndicators)

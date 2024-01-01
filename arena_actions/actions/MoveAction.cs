@@ -29,8 +29,6 @@ namespace ShopIsDone.Actions
         private TileMovementHandler _MovementHandler;
         private EntityStateHandler _StateHandler;
 
-        public const string MOVE_PATH_KEY = "MovePath";
-
         public override void Init(ActionHandler actionHandler)
         {
             base.Init(actionHandler);
@@ -54,7 +52,7 @@ namespace ShopIsDone.Actions
         public override Command Execute(Dictionary<string, Variant> message = null)
         {
             // Get the move path from the message
-            var movePath = (Array<Tile>)message[MOVE_PATH_KEY];
+            var movePath = (Array<Tile>)message[Consts.MOVE_PATH];
             var moveQueue = new SystemGeneric.Queue<Command>(_MovementHandler.GetMoveCommands(movePath.ToList()));
 
             return new SeriesCommand(
@@ -81,12 +79,7 @@ namespace ShopIsDone.Actions
                 // to a normal state
                 new ConditionalCommand(
                     () => _StateHandler.IsInState("move"),
-                    new AwaitSignalCommand(
-                        _StateHandler,
-                        nameof(_StateHandler.ChangedState),
-                        nameof(_StateHandler.ChangeState),
-                        "idle"
-                    )
+                    _StateHandler.RunChangeState("idle")
                 )
             );
         }
@@ -128,19 +121,8 @@ namespace ShopIsDone.Actions
                             // normal state
                             new SeriesCommand(
                                 // Idle
-                                new AwaitSignalCommand(
-                                    _StateHandler,
-                                    nameof(_StateHandler.ChangedState),
-                                    nameof(_StateHandler.ChangeState),
-                                    "idle"
-                                ),
-                                // Push alert state
-                                new AwaitSignalCommand(
-                                    _StateHandler,
-                                    nameof(_StateHandler.PushedState),
-                                    nameof(_StateHandler.PushState),
-                                    "alert"
-                                )
+                                _StateHandler.RunChangeState("idle"),
+                                _StateHandler.RunPushState("alert")
                             )
                         )
                     )

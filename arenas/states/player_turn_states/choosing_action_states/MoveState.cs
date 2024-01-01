@@ -5,10 +5,10 @@ using ShopIsDone.Tiles;
 using ShopIsDone.Widgets;
 using System.Collections.Generic;
 using GodotCollections = Godot.Collections;
-using ShopIsDone.Actions;
 using ShopIsDone.Utils.DependencyInjection;
 using System.Linq;
 using ShopIsDone.Utils;
+using ActionConsts = ShopIsDone.Actions.Consts;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
@@ -123,7 +123,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 EmitSignal(nameof(RunActionRequested), new GodotCollections.Dictionary<string, Variant>()
                 {
                     { Consts.ACTION_KEY, _Action },
-                    { MoveAction.MOVE_PATH_KEY, moveArray }
+                    { ActionConsts.MOVE_PATH, moveArray }
                 });
                 return;
             }

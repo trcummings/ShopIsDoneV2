@@ -27,12 +27,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
             return new SeriesCommand(
                 base.Execute(message),
                 // Push intimidate state
-                new AwaitSignalCommand(
-                    _StateHandler,
-                    nameof(_StateHandler.PushedState),
-                    nameof(_StateHandler.PushState),
-                    "intimidate"
-                )
+                _StateHandler.RunPushState("intimidate")
             );
         }
     }

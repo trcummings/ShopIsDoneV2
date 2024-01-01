@@ -1,6 +1,7 @@
 ﻿using System;
 using Godot;
 using ShopIsDone.Models;
+using Godot.Collections;
 
 namespace ShopIsDone.EntityStates.EmployeeStates
 {
@@ -16,7 +17,7 @@ namespace ShopIsDone.EntityStates.EmployeeStates
             _Model = GetNode<IModel>(ModelPath);
         }
 
-        public async override void Enter()
+        public async override void Enter(Dictionary<string, Variant> message = null)
         {
             await _Model.PerformAnimation("alert");
             base.Enter();

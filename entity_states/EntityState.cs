@@ -1,6 +1,7 @@
 ﻿using Godot;
 using System;
 using ShopIsDone.Core;
+using Godot.Collections;
 
 namespace ShopIsDone.EntityStates
 {
@@ -26,7 +27,7 @@ namespace ShopIsDone.EntityStates
             _StateHandler = stateHandler;
         }
 
-        public virtual void Enter()
+        public virtual void Enter(Dictionary<string, Variant> message = null)
         {
             CallDeferred("emit_signal", nameof(StateEntered));
         }
