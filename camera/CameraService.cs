@@ -78,7 +78,7 @@ namespace ShopIsDone.Cameras
 
         // Decorator command that saves whatever the prior target was and goes
         // back to it after a command is completed
-        public Command PanToTemporaryCameraTarget(Command next)
+        public Command PanToTemporaryCameraTarget(Node3D target, Command next)
         {
             Node3D oldCameraTarget = null;
             return new SeriesCommand(
@@ -87,6 +87,7 @@ namespace ShopIsDone.Cameras
                 {
                     oldCameraTarget = GetCameraTarget();
                 }),
+                SetCameraTarget(target),
                 new DeferredCommand(() => new SeriesCommand(
                     next,
                     // Set camera back to old target

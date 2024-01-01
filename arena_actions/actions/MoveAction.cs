@@ -18,9 +18,6 @@ namespace ShopIsDone.Actions
         public MoveSubAction MoveSubAction;
 
         [Inject]
-        private CameraService _CameraService;
-
-        [Inject]
         private TileManager _TileManager;
 
         [Inject]
@@ -59,16 +56,8 @@ namespace ShopIsDone.Actions
                 // Add the base execution command (mark the action as completed)
                 base.Execute(message),
 
-                // Set the camera to follow the pawn
-                _CameraService.SetCameraTarget(Entity),
-
                 // Change the pawn to a movement state
-                new AwaitSignalCommand(
-                    _StateHandler,
-                    nameof(_StateHandler.ChangedState),
-                    nameof(_StateHandler.ChangeState),
-                    "move"
-                ),
+                _StateHandler.RunChangeState("move"),
 
                 // Accumulate the movement action as a series of conditional commands
                 // that execute sub-movement actions which only continue if the unit

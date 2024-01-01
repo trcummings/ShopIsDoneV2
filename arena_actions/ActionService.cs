@@ -42,7 +42,7 @@ namespace ShopIsDone.Actions
         {
             return new IfElseCommand(
                 () => action.FollowEntity,
-                _CameraService.PanToTemporaryCameraTarget(next),
+                _CameraService.PanToTemporaryCameraTarget(action.Entity, next),
                 next
             );
         }
