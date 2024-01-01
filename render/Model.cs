@@ -63,7 +63,7 @@ namespace ShopIsDone.Models
             EmitSignal(nameof(AnimationEventFired), eventName);
         }
 
-        private string TransformAnimName(string rawActionName)
+        public string TransformAnimName(string rawActionName)
         {
             var animationName = rawActionName;
 
