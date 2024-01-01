@@ -76,6 +76,15 @@ namespace ShopIsDone.Cameras
             _IsometricCamera.SetYawToDir(facingDir);
         }
 
+        public Command RunRotateCameraTo(Vector3 facingDir, Command next)
+        {
+            return new SeriesCommand(
+                new ActionCommand(() => RotateCameraTo(facingDir)),
+                new WaitForCommand(this, 0.15f),
+                next
+            );
+        }
+
         // Decorator command that saves whatever the prior target was and goes
         // back to it after a command is completed
         public Command PanToTemporaryCameraTarget(Node3D target, Command next)

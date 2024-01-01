@@ -28,13 +28,28 @@ namespace ShopIsDone.Actions
         public Command ExecuteAction(ArenaAction action, Dictionary<string, Variant> message = null)
         {
             return new SeriesCommand(
+                // Apply camera effects for the action
                 ApplyCameraFollow(action,
-                    ApplyCameraZoom(action,
-                        action.Execute(message)
+                    ApplyRotateToFaceEntity(action,
+                        ApplyCameraZoom(action,
+                            action.Execute(message)
+                        )
                     )
                 ),
                 // Post action updates
                 new DeferredCommand(() => new ActionCommand(_TileManager.UpdateTiles))
+            );
+        }
+
+        private Command ApplyRotateToFaceEntity(ArenaAction action, Command next)
+        {
+            return new IfElseCommand(
+                () => action.RotateToFaceEntity,
+                _CameraService.RunRotateCameraTo(
+                    action.Entity.FacingDirection.Reflect(Vector3.Up),
+                    next
+                ),
+                next
             );
         }
 
