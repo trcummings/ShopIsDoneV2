@@ -9,14 +9,9 @@ namespace ShopIsDone.Arenas.ArenaScripts
     // This is kind of like a subclass sandbox for interacting with the world
     public partial class ArenaScript : Resource
     {
-        // Reference to the arena
-        protected Arena Arena;
-        private EntityManager _EntityManager;
-
-        public virtual void Init(Arena arena, EntityManager entityManager)
+        public virtual void Init()
         {
-            Arena = arena;
-            _EntityManager = entityManager;
+
         }
 
         public virtual Command ExecuteScript()
