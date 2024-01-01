@@ -5,10 +5,8 @@ using ShopIsDone.Tiles;
 using ShopIsDone.EntityStates;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
-using ShopIsDone.Cameras;
 using ShopIsDone.Utils.DependencyInjection;
 using SystemGeneric = System.Collections.Generic;
-using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Actions
 {
@@ -86,33 +84,26 @@ namespace ShopIsDone.Actions
             nextSubMove.Init(_ActionHandler);
             nextSubMove.NextMove = nextMovement;
 
-            // Get direction towards
-            var dirTowards = Entity.GetFacingDirTowards(nextMovement.FinalTile.TilemapPosition);
-
             // Induction step
             return new ConditionalCommand(
                 () => _StateHandler.IsInState("move"),
-                new SeriesCommand(
-                    // Face towards the next tile
-                    new ActionCommand(() => Entity.FacingDirection = dirTowards),
-                    // Run deferrred calculation on if we should continue or fail the move
-                    new DeferredCommand(() =>
-                        new IfElseCommand(
-                            // If the next tile is still available
-                            () => !_TileManager.IsTileOccupied(nextMovement.FinalTile),
-                            new SeriesCommand(
-                                // Execute the sub-movement action with the given command
-                                _ActionService.ExecuteAction(nextSubMove),
-                                // Recurse
-                                GenerateSubMovements(commands)
-                            ),
-                            // Otherwise, play interruption animation and change pawn back to a
-                            // normal state
-                            new SeriesCommand(
-                                // Idle
-                                _StateHandler.RunChangeState("idle"),
-                                _StateHandler.RunPushState("alert")
-                            )
+                // Run deferrred calculation on if we should continue or fail the move
+                new DeferredCommand(() =>
+                    new IfElseCommand(
+                        // If the next tile is still available
+                        () => !_TileManager.IsTileOccupied(nextMovement.FinalTile),
+                        new SeriesCommand(
+                            // Execute the sub-movement action with the given command
+                            _ActionService.ExecuteAction(nextSubMove),
+                            // Recurse
+                            GenerateSubMovements(commands)
+                        ),
+                        // Otherwise, play interruption animation and change pawn back to a
+                        // normal state
+                        new SeriesCommand(
+                            // Idle
+                            _StateHandler.RunChangeState("idle"),
+                            _StateHandler.RunPushState("alert")
                         )
                     )
                 )

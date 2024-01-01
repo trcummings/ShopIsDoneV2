@@ -88,12 +88,12 @@ namespace ShopIsDone.Tiles
                 // pawn passing through another pawn or not
                 .Aggregate(new List<List<(Tile, Tile)>>(), (acc, record) =>
                 {
-                    // Find out if we can pass through this tile
-                    var isPassThrough = _SkipTileStrategy.CanPassThroughUnitOnTile(record.Previous);
+                    // Find out if we must "pass through" this tile
+                    var mustPassThrough = _SkipTileStrategy.MustPassThroughTile(record.Previous);
 
                     // If the first tile is not a pass through tile, then create a
                     // new entry to map over
-                    if (!isPassThrough) acc.Add(new List<(Tile, Tile)>() { record });
+                    if (!mustPassThrough) acc.Add(new List<(Tile, Tile)>() { record });
                     // Otherwise, append the current entry to the previous one
                     else
                     {

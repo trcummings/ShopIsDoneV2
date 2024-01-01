@@ -26,6 +26,8 @@ namespace ShopIsDone.Utils.Extensions
             if (up != Vector3.Zero) spatial.LookAtFromPosition(position, target, up);
         }
 
+        // This takes a global destination point and converts it to a facing direction.
+        // Not to be used with tilemap positions
         public static Vector3 GetFacingDirTowards(this Node3D from, Vector3 destination)
         {
             var diff = ((destination - from.GlobalPosition) with { Y = 0 }).Normalized();

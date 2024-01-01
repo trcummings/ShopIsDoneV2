@@ -25,6 +25,17 @@ namespace ShopIsDone.Tiles
             return base.ShouldSkipTile(currentCandidate, currentNeighbor);
         }
 
+        public override bool MustPassThroughTile(Tile tile)
+        {
+            // If there's nothing on the tile, we don't need to "pass through"
+            if (!tile.HasUnitOnTile()) return false;
+
+            // If there's a unit on the tile and we're on the same team, we must
+            // "pass through" it (though depending on the move handler's settings,
+            // the given tile may not even be a candidate
+            return _TeamHandler.IsOnSameTeam(tile.UnitOnTile);
+        }
+
         protected virtual bool IsMovePathLongEnough(List<Tile> movePath)
         {
             // If we only have one tile (or less!) in our move set, false
@@ -37,7 +48,7 @@ namespace ShopIsDone.Tiles
             return heightDifference > 1;
         }
 
-        public override bool CanPassThroughUnitOnTile(Tile tile)
+        private bool CanPassThroughUnitOnTile(Tile tile)
         {
             // If no units on tile, we're clear
             if (tile.UnitOnTile == null) return true;

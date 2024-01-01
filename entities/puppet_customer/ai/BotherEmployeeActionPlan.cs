@@ -7,6 +7,7 @@ using ShopIsDone.Widgets;
 using ShopIsDone.Core;
 using System.Linq;
 using ActionConsts = ShopIsDone.Actions.Consts;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Entities.PuppetCustomers.AI
 {
@@ -65,6 +66,8 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                         TileIndicator.IndicatorColor.Red
                     );
                 }),
+                // Rotate towards target
+                new ActionCommand(() => _Entity.FacingDirection = _Entity.GetFacingDirTowards(target.GlobalPosition)),
                 // Wait another moment as if confirming
                 new WaitForCommand(_Entity, 0.5F),
                 // Hide indicators

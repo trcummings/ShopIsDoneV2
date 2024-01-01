@@ -18,7 +18,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                     if (_Blackboard.ContainsKey(Consts.TILE_TARGET))
                     {
                         var tileTarget = (Tile)_Blackboard[Consts.TILE_TARGET];
-                        _Entity.FacingDirection = _Entity.GetFacingDirTowards(tileTarget.TilemapPosition);
+                        _Entity.FacingDirection = _Entity.GetFacingDirTowards(tileTarget.GlobalPosition);
                     }
                 }),
                 _ActionService.ExecuteAction(_Action)

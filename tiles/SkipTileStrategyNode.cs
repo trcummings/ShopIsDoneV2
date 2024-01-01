@@ -12,9 +12,12 @@ namespace ShopIsDone.Tiles
             return new SimpleShouldSkipTileStrategy().ShouldSkipTile(currentCandidate, currentNeighbor);
         }
 
-        public virtual bool CanPassThroughUnitOnTile(Tile tile)
+        // This function means that movement through this tile must happen as a
+        // single consecutive movement because there is a unit on the given tile
+        // we are able to pass through
+        public virtual bool MustPassThroughTile(Tile tile)
         {
-            return true;
+            return false;
         }
     }
 }

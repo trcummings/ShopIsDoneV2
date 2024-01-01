@@ -72,6 +72,15 @@ namespace ShopIsDone.Core
             get { return _TilemapPositionHandler?.TilemapPosition ?? Vector3.Inf; }
         }
 
+        #region Dir Tool Export
+        [Export]
+        private DirEnum.Dir EditorFacingDir
+        {
+            get { return DirEnum.VectorToDir(FacingDirection); }
+            set { FacingDirection = DirEnum.DirToVector(value); }
+        }
+        #endregion
+
         public Vector3 FacingDirection
         {
             get { return _FacingDirectionHandler.FacingDirection; }
