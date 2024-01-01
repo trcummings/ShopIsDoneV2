@@ -1,4 +1,5 @@
 ﻿using Godot;
+using ShopIsDone.Actions;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using System;
@@ -6,8 +7,11 @@ using System.Collections.Generic;
 
 namespace ShopIsDone.Arenas.ArenaScripts
 {
-    public partial class ScriptQueueSystem : Node, IService
+    public partial class ScriptQueueService : Node, IService
     {
+        [Export]
+        public ActionService _ActionService;
+
         private Queue<ArenaScript> _PostActionCommands = new Queue<ArenaScript>();
         private bool _IsRunning = false;
 
@@ -43,6 +47,9 @@ namespace ShopIsDone.Arenas.ArenaScripts
                     return new SeriesCommand(
                         // Run the action
                         next.ExecuteScript(),
+                        // Run a "post-action" update, even though we didn't run
+                        // an action
+                        new DeferredCommand(_ActionService.PostActionUpdate),
                         // Then collect more queue items
                         new DeferredCommand(() => RunQueueHelper(scripts))
                     );

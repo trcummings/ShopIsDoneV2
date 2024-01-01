@@ -6,6 +6,8 @@ using Godot.Collections;
 using System;
 using ShopIsDone.Cameras;
 using ShopIsDone.Tiles;
+using ShopIsDone.Arenas;
+using ShopIsDone.Arenas.ArenaScripts;
 
 namespace ShopIsDone.Actions
 {
@@ -19,6 +21,12 @@ namespace ShopIsDone.Actions
 
         [Inject]
         private TileManager _TileManager;
+
+        [Export]
+        private ScriptQueueService _ScriptQueueService;
+
+        [Export]
+        private ArenaOutcomeService _OutcomeService;
 
         public void Init()
         {
@@ -37,7 +45,35 @@ namespace ShopIsDone.Actions
                     )
                 ),
                 // Post action updates
-                new DeferredCommand(() => new ActionCommand(_TileManager.UpdateTiles))
+                new DeferredCommand(PostActionUpdate)
+            );
+        }
+
+        public Command PostActionUpdate()
+        {
+            // Wrap the whole thing in a Win-Fail check so we interrupt further
+            // evaluation if the battle is over
+            return WinFailCheck(new DeferredCommand(() => new SeriesCommand(
+                // Update tiles
+                new DeferredCommand(() => new ActionCommand(_TileManager.UpdateTiles)),
+
+                // TODO: Process rules
+
+                // Run script queue
+                new DeferredCommand(_ScriptQueueService.RunQueue)
+            )));
+        }
+
+        private Command WinFailCheck(Command next)
+        {
+            return new IfElseCommand(
+                _OutcomeService.WasPlayerDefeated,
+                new ActionCommand(_OutcomeService.AdvanceToDefeatPhase),
+                new IfElseCommand(
+                    _OutcomeService.IsPlayerVictorious,
+                    new ActionCommand(_OutcomeService.AdvanceToVictoryPhase),
+                    next
+                )
             );
         }
 

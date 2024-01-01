@@ -12,13 +12,13 @@ namespace ShopIsDone.Arenas.Battles.States
         private BattlePhaseManager _PhaseManager;
 
         [Export]
-        private Arena _Arena;
-
-        [Export]
         private UnitTurnService _PlayerUnitTurnService;
 
         [Export]
         private UnitTurnService _EnemyUnitTurnService;
+
+        [Export]
+        private ArenaOutcomeService _OutcomeService;
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
@@ -31,12 +31,12 @@ namespace ShopIsDone.Arenas.Battles.States
                     _PlayerUnitTurnService.ResetActions();
                     _EnemyUnitTurnService.ResetActions();
                 }),
-                // Check if all player units have exited
+                // Check if player was victorious!
                 new IfElseCommand(
                     // Exit check
-                    _Arena.IsPlayerVictorious,
+                    _OutcomeService.IsPlayerVictorious,
                     //If so, end the arena!
-                    _Arena.AdvanceToVictoryPhase(),
+                    new ActionCommand(_OutcomeService.AdvanceToVictoryPhase),
                     // Otherwise, kick off the next turn
                     new ActionCommand(_PhaseManager.AdvanceToNextPhase)
                 )

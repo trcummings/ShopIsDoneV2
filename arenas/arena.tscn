@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=49 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -21,6 +21,8 @@
 [ext_resource type="Script" path="res://arenas/states/battle_states/UnitAIService.cs" id="7_fplic"]
 [ext_resource type="Script" path="res://arenas/states/FinishedState.cs" id="7_wmirh"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/EnemyActivityBattleState.cs" id="8_om56i"]
+[ext_resource type="Script" path="res://arenas/ScriptQueueService.cs" id="8_tmi38"]
+[ext_resource type="Script" path="res://arenas/ArenaOutcomeService.cs" id="9_i41lp"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/PrepPlayerTurnBattleState.cs" id="9_quvvh"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/PlayerTurnBattleState.cs" id="10_hv83v"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/ChoosingActionState.cs" id="14_rj6r3"]
@@ -51,13 +53,15 @@ size = Vector3(0.646393, 1, 6)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_esplx"]
 
-[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_EffortMeterService") groups=["arena"]]
+[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_EffortMeterService", "_ScriptQueueService", "_OutcomeService") groups=["arena"]]
 script = ExtResource("1_loukv")
 _ArenaStateMachine = NodePath("ArenaStateMachine")
 _TileManager = NodePath("Tiles")
 _ActionService = NodePath("Services/ActionService")
 _PlayerUnitService = NodePath("Services/PlayerUnitService")
 _EffortMeterService = NodePath("Services/EffortMeterService")
+_ScriptQueueService = NodePath("Services/ScriptQueueService")
+_OutcomeService = NodePath("Services/ArenaOutcomeService")
 metadata/_edit_lock_ = true
 
 [node name="Services" type="Node" parent="."]
@@ -65,8 +69,10 @@ metadata/_edit_lock_ = true
 [node name="TurnCounter" type="Node" parent="Services"]
 script = ExtResource("2_qt0kh")
 
-[node name="ActionService" type="Node" parent="Services"]
+[node name="ActionService" type="Node" parent="Services" node_paths=PackedStringArray("_ScriptQueueService", "_OutcomeService")]
 script = ExtResource("3_y84tj")
+_ScriptQueueService = NodePath("../ScriptQueueService")
+_OutcomeService = NodePath("../ArenaOutcomeService")
 
 [node name="PlayerUnitService" type="Node" parent="Services"]
 script = ExtResource("4_m7h52")
@@ -81,6 +87,13 @@ script = ExtResource("6_qjeqh")
 [node name="EnemyTurnUnitService" type="Node" parent="Services"]
 script = ExtResource("7_fplic")
 Team = 1
+
+[node name="ScriptQueueService" type="Node" parent="Services" node_paths=PackedStringArray("_ActionService")]
+script = ExtResource("8_tmi38")
+_ActionService = NodePath("../ActionService")
+
+[node name="ArenaOutcomeService" type="Node" parent="Services"]
+script = ExtResource("9_i41lp")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
@@ -108,12 +121,12 @@ _TurnsPanel = NodePath("../../../../UILayer/TurnsRemaining/CenterContainer/Panel
 _TurnCounter = NodePath("../../../../Services/TurnCounter")
 _PhaseManager = NodePath("../../BattlePhaseManager")
 
-[node name="CleanUp" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_Arena", "_PlayerUnitTurnService", "_EnemyUnitTurnService")]
+[node name="CleanUp" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_PlayerUnitTurnService", "_EnemyUnitTurnService", "_OutcomeService")]
 script = ExtResource("7_dwkpa")
 _PhaseManager = NodePath("../../BattlePhaseManager")
-_Arena = NodePath("../../../..")
 _PlayerUnitTurnService = NodePath("../../../../Services/PlayerTurnUnitService")
 _EnemyUnitTurnService = NodePath("../../../../Services/EnemyTurnUnitService")
+_OutcomeService = NodePath("../../../../Services/ArenaOutcomeService")
 
 [node name="EnemyActivity" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_EnemyTurnService")]
 script = ExtResource("8_om56i")
