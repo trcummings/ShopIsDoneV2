@@ -35,9 +35,8 @@ namespace ShopIsDone.Tiles
         public int BaseMove = 3;
 
         [Export]
-        // This has to do with the speed at which the actual unit moves in the
-        // movement animation
-        public double MovementSpeed = 10;
+        // How much time it takes for a unit to move between each tile
+        public double MoveToTileTime = 0.25f;
 
         [Export]
         public float MoveEffortMod = 0.6f; // (3 -> 5 ratio)
@@ -131,7 +130,6 @@ namespace ShopIsDone.Tiles
                         Entity = Entity,
                         InitialTile = firstTile,
                         FinalTile = lastTile,
-                        CommandProcessor = _CommandProcessor,
                         // Map the sub-movements to a series of commands
                         SeriesCommand = new SeriesCommand(
                             records.Select(record => GetMoveCommand(record.Item1, record.Item2)).ToArray()
@@ -156,7 +154,6 @@ namespace ShopIsDone.Tiles
                     Entity = Entity,
                     InitialTile = currentTile,
                     FinalTile = nextTile,
-                    CommandProcessor = _CommandProcessor,
                     SeriesCommand = new SeriesCommand(
                         // Set the pawn facing direction to the new direction
                         new ActionCommand(() => EmitSignal(nameof(TurnedToFaceDir), newFacingDir)),
@@ -167,7 +164,6 @@ namespace ShopIsDone.Tiles
                             Entity = Entity,
                             InitialTile = currentTile,
                             FinalTile = nextTile,
-                            CommandProcessor = _CommandProcessor
                         }
                     )
                 };
@@ -183,7 +179,6 @@ namespace ShopIsDone.Tiles
                     Entity = Entity,
                     InitialTile = currentTile,
                     FinalTile = nextTile,
-                    CommandProcessor = _CommandProcessor
                 };
             }
 
@@ -194,15 +189,12 @@ namespace ShopIsDone.Tiles
         }
 
         // Movement commands
-        public partial class PawnMoveCommand : Command, IPhysicsProcessableCommand
+        public partial class PawnMoveCommand : Command
         {
             public TileMovementHandler Movement;
             public LevelEntity Entity;
-            public CommandProcessor CommandProcessor;
             public Tile InitialTile;
             public Tile FinalTile;
-
-            public virtual void PhysicsProcess(double delta) { }
         }
 
         public partial class PawnMoveSeriesCommand : PawnMoveCommand
@@ -224,49 +216,20 @@ namespace ShopIsDone.Tiles
 
         private partial class MoveBetweenTilesCommand : PawnMoveCommand
         {
-            // Undo vars
-            private Vector3 _PrevGlobalTranslation;
-
             public override void Execute()
             {
-                // Set undo vars
-                _PrevGlobalTranslation = Entity.GlobalPosition;
+                var tween = Entity
+                    .GetTree()
+                    .CreateTween();
 
-                // Set the command to the process node
-                CommandProcessor.AddCommand(this);
-            }
-
-            public override void PhysicsProcess(double delta)
-            {
-                // Lerp towards the final position
-                Entity.GlobalPosition = Entity.GlobalPosition.Lerp(
-                    FinalTile.GlobalPosition,
-                    (float)(Movement.MovementSpeed * delta)
-                );
-
-                // Check if we're "close enough" (less than 0.05)
-                if (Entity.GlobalPosition.DistanceTo(FinalTile.GlobalPosition) < 0.05)
-                {
-                    // Set the exact position
-                    Entity.GlobalPosition = FinalTile.GlobalPosition;
-
-                    // remove the process command
-                    CommandProcessor.RemoveCommand(this);
-
-                    // Emit finished signal
-                    Finish();
-                }
+                tween.Finished += Finish;
+                tween.TweenProperty(Entity, "global_position", FinalTile.GlobalPosition, Movement.MoveToTileTime);
             }
         }
 
         private partial class JumpBetweenTilesCommand : PawnMoveCommand
         {
             public override void Execute()
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void PhysicsProcess(double delta)
             {
                 throw new NotImplementedException();
             }

@@ -91,9 +91,11 @@ namespace ShopIsDone.Actions
 
         private Command ApplyCameraFollow(ArenaAction action, Command next)
         {
-            return new IfElseCommand(
-                () => action.FollowEntity,
-                _CameraService.PanToTemporaryCameraTarget(action.Entity, next),
+            return new SeriesCommand(
+                new ConditionalCommand(
+                    () => action.FollowEntity,
+                    _CameraService.SetCameraTarget(action.Entity)
+                ),
                 next
             );
         }
