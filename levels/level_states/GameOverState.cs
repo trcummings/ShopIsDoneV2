@@ -6,8 +6,8 @@ using ShopIsDone.Pausing;
 
 namespace ShopIsDone.Levels.States
 {
-    public partial class ExitingState : State
-    {
+	public partial class GameOverState : State
+	{
         [Export]
         private PauseInputHandler _PauseInputHandler;
 
@@ -17,7 +17,8 @@ namespace ShopIsDone.Levels.States
 
             // Disable pausing
             _PauseInputHandler.IsActive = false;
+
+            // TODO: Active Game Over screen
         }
     }
 }
-

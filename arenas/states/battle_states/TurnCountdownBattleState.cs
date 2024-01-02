@@ -4,6 +4,8 @@ using Godot.Collections;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Arenas.Turns;
 using ShopIsDone.Utils.UI;
+using ArenaStateConsts = ShopIsDone.Arenas.States.Consts;
+using FinishedConsts = ShopIsDone.Arenas.States.Finished.Consts;
 
 namespace ShopIsDone.Arenas.Battles.States
 {
@@ -20,6 +22,9 @@ namespace ShopIsDone.Arenas.Battles.States
 
         [Export]
         private BattlePhaseManager _PhaseManager;
+
+        [Export]
+        private StateMachine _ArenaStateMachine;
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
@@ -62,7 +67,10 @@ namespace ShopIsDone.Arenas.Battles.States
                 _TurnCounter.IsOutOfTime,
 
                 // Go to out of time phase
-                new ActionCommand(_PhaseManager.AdvanceToNextPhase),
+                new ActionCommand(() => _ArenaStateMachine.ChangeState(ArenaStateConsts.FINISHED, new Dictionary<string, Variant>()
+                {
+                    { FinishedConsts.FINISHED_STATE_KEY, FinishedConsts.States.OUT_OF_TIME }
+                })),
 
                 // Otherwise, show remaining turn UI, then advance
                 // normally

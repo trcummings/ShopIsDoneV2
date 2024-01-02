@@ -9,6 +9,7 @@ using ShopIsDone.Cameras;
 using ShopIsDone.Widgets;
 using ShopIsDone.Utils;
 using ShopIsDone.Microgames;
+using ShopIsDone.Pausing;
 
 namespace ShopIsDone.Levels
 {
@@ -28,12 +29,14 @@ namespace ShopIsDone.Levels
         private InputXformer _InputXformer;
 
         [Export]
+        private PauseInputHandler _PauseInputHandler;
+
+        [Export]
         private ScreenshakeService _Screenshake;
 
         [Export]
         private DirectionalInputHelper _DirectionalInput;
 
-        // Widgets
         [Export]
         private FingerCursor _FingerCursor;
 
@@ -69,6 +72,7 @@ namespace ShopIsDone.Levels
             // Register all services (NB: We have to do this manually, unfortunately)
             _InjectionProvider.RegisterService(_CameraService);
             _InjectionProvider.RegisterService(_InputXformer);
+            _InjectionProvider.RegisterService(_PauseInputHandler);
             _InjectionProvider.RegisterService(_Screenshake);
             _InjectionProvider.RegisterService(_DirectionalInput);
             _InjectionProvider.RegisterService(_FingerCursor);
@@ -83,12 +87,12 @@ namespace ShopIsDone.Levels
         public void Init()
         {
             // Change state to initializing state
-            _LevelStateMachine.ChangeState(Consts.States.INITIALIZING_STATE);
+            _LevelStateMachine.ChangeState(Consts.States.INITIALIZING);
         }
 
         private void OnPlayerEnteredArena(EnterArenaArea area, Arena arena)
         {
-            _LevelStateMachine.ChangeState(Consts.States.ARENA_STATE, new Dictionary<string, Variant>()
+            _LevelStateMachine.ChangeState(Consts.States.ARENA, new Dictionary<string, Variant>()
             {
                 { Consts.States.ARENA_KEY, arena },
                 { Consts.States.ENTER_ARENA_AREA_KEY, area }

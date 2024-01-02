@@ -7,6 +7,7 @@ using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Actions;
 using ShopIsDone.Actions.Effort;
 using ShopIsDone.Arenas.ArenaScripts;
+using ArenaConsts = ShopIsDone.Arenas.States.Consts;
 
 namespace ShopIsDone.Arenas
 {
@@ -14,6 +15,12 @@ namespace ShopIsDone.Arenas
     // Injection Container, and to clean up when the Arena is finished
     public partial class Arena : Node3D
     {
+        [Signal]
+        public delegate void ArenaFinishedEventHandler();
+
+        [Signal]
+        public delegate void ArenaFailedEventHandler();
+
         [Export]
         public StateMachine _ArenaStateMachine;
 
@@ -79,7 +86,7 @@ namespace ShopIsDone.Arenas
             _TileManager.UpdateTiles();
 
             // Change state to initializing
-            _ArenaStateMachine.ChangeState("Initializing");
+            _ArenaStateMachine.ChangeState(ArenaConsts.INITIALIZING);
         }
 
         public void CleanUp()
@@ -91,6 +98,16 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.UnregisterService(_EffortMeterService);
             _InjectionProvider.UnregisterService(_ScriptQueueService);
             _InjectionProvider.UnregisterService(_OutcomeService);
+        }
+
+        public void FinishArena()
+        {
+            EmitSignal(nameof(ArenaFinished));
+        }
+
+        public void FailArena()
+        {
+            EmitSignal(nameof(ArenaFailed));
         }
     }
 }

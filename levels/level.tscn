@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=30 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_b2cin"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://levels/level_states/ExitingState.cs" id="6_50r3g"]
 [ext_resource type="PackedScene" uid="uid://bsmp1sdllx60e" path="res://pausing/pause_input_handler.tscn" id="6_urg1m"]
 [ext_resource type="Script" path="res://camera/CameraService.cs" id="7_5vsji"]
+[ext_resource type="Script" path="res://levels/level_states/GameOverState.cs" id="7_v30x6"]
 [ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="10_5oljb"]
 [ext_resource type="Script" path="res://camera/ScreenshakeService.cs" id="10_urica"]
 [ext_resource type="PackedScene" uid="uid://swb4777ufru4" path="res://widgets/tile_indicator/tile_indicator.tscn" id="10_xe6sp"]
@@ -34,12 +35,13 @@ polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Arr
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydnh5"]
 
-[node name="Level" type="Node3D" node_paths=PackedStringArray("_LevelStateMachine", "_CameraService", "_PlayerCameraService", "_InputXformer", "_Screenshake", "_DirectionalInput", "_FingerCursor", "_TileCursor", "_TileIndicator", "_MovePathWidget", "_FacingWidget", "_MicrogameController")]
+[node name="Level" type="Node3D" node_paths=PackedStringArray("_LevelStateMachine", "_CameraService", "_PlayerCameraService", "_InputXformer", "_PauseInputHandler", "_Screenshake", "_DirectionalInput", "_FingerCursor", "_TileCursor", "_TileIndicator", "_MovePathWidget", "_FacingWidget", "_MicrogameController")]
 script = ExtResource("1_uriqi")
 _LevelStateMachine = NodePath("LevelStateMachine")
 _CameraService = NodePath("Services/CameraService")
 _PlayerCameraService = NodePath("Services/PlayerCameraService")
 _InputXformer = NodePath("Services/InputXformer")
+_PauseInputHandler = NodePath("Services/PauseInputHandler")
 _Screenshake = NodePath("Services/ScreenshakeService")
 _DirectionalInput = NodePath("Services/DirectionalInputHelper")
 _FingerCursor = NodePath("World/Widgets/FingerCursor")
@@ -55,24 +57,31 @@ metadata/_edit_lock_ = true
 [node name="LevelStateMachine" type="Node" parent="."]
 script = ExtResource("2_b2cin")
 
-[node name="Initializing" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_DefaultSpawnPoint", "_Haskell")]
+[node name="Initializing" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_DefaultSpawnPoint", "_Haskell", "_PauseInputHandler")]
 script = ExtResource("3_v4svp")
 _DefaultSpawnPoint = NodePath("../../World/DefaultSpawnPoint")
 _Haskell = NodePath("../../World/PlayerUnits/HaskellActor")
+_PauseInputHandler = NodePath("../../Services/PauseInputHandler")
 
-[node name="FreeMove" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_CameraSystem", "_PlayerCameraService", "_Haskell", "_InputXformer")]
+[node name="FreeMove" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_CameraSystem", "_PlayerCameraService", "_Haskell", "_InputXformer", "_PauseInputHandler")]
 script = ExtResource("4_x3fct")
 _CameraSystem = NodePath("../../Services/CameraService")
 _PlayerCameraService = NodePath("../../Services/PlayerCameraService")
 _Haskell = NodePath("../../World/PlayerUnits/HaskellActor")
 _InputXformer = NodePath("../../Services/InputXformer")
+_PauseInputHandler = NodePath("../../Services/PauseInputHandler")
 
 [node name="Arena" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_Haskell")]
 script = ExtResource("5_01t8v")
 _Haskell = NodePath("../../World/PlayerUnits/HaskellActor")
 
-[node name="Exiting" type="Node" parent="LevelStateMachine"]
+[node name="Exiting" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_PauseInputHandler")]
 script = ExtResource("6_50r3g")
+_PauseInputHandler = NodePath("../../Services/PauseInputHandler")
+
+[node name="GameOver" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_PauseInputHandler")]
+script = ExtResource("7_v30x6")
+_PauseInputHandler = NodePath("../../Services/PauseInputHandler")
 
 [node name="Services" type="Node" parent="."]
 

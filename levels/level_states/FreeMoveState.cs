@@ -4,6 +4,7 @@ using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
 using ShopIsDone.Actors;
 using ShopIsDone.Cameras;
+using ShopIsDone.Pausing;
 
 namespace ShopIsDone.Levels.States
 {
@@ -22,6 +23,9 @@ namespace ShopIsDone.Levels.States
         private InputXformer _InputXformer;
         private PlayerActorInput _PlayerInput;
 
+        [Export]
+        private PauseInputHandler _PauseInputHandler;
+
         public override void _Ready()
         {
             base._Ready();
@@ -38,6 +42,9 @@ namespace ShopIsDone.Levels.States
             _Haskell.Init(_PlayerInput);
             // Start camera
             _PlayerCameraService.Activate();
+
+            // Allow pausing
+            _PauseInputHandler.IsActive = true;
 
             // Finish start hook
             base.OnStart(message);

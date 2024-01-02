@@ -1,9 +1,10 @@
 using Godot;
+using ShopIsDone.Utils.DependencyInjection;
 using System;
 
 namespace ShopIsDone.Pausing
 {
-    public partial class PauseInputHandler : Node
+    public partial class PauseInputHandler : Node, IService
     {
         [Signal]
         public delegate void GamePausedEventHandler();

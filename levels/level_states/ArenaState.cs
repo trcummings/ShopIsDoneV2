@@ -26,6 +26,8 @@ namespace ShopIsDone.Levels.States
             _Arena = (Arena)message.GetValueOrDefault(Consts.States.ARENA_KEY, default);
             // Initialize arena
             _Arena.Init(_Haskell);
+            _Arena.ArenaFinished += OnArenaFinished;
+            _Arena.ArenaFailed += OnGameOver;
 
             // Finish start hook
             base.OnStart(message);
@@ -35,10 +37,25 @@ namespace ShopIsDone.Levels.States
         {
             // Clean up arena
             _Arena.CleanUp();
+            _Arena.ArenaFinished -= OnArenaFinished;
+            _Arena.ArenaFailed -= OnGameOver;
+
+            base.OnExit(nextState);
+        }
+
+        private void OnArenaFinished()
+        {
             // Let player units free move again
             _Haskell.ExitArena();
 
-            base.OnExit(nextState);
+            // Change to free move state
+            ChangeState(Consts.States.FREE_MOVE);
+        }
+
+        private void OnGameOver()
+        {
+            // Change to game over state
+            ChangeState(Consts.States.GAME_OVER);
         }
     }
 }
