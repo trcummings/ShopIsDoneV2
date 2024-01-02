@@ -207,17 +207,20 @@ _OutcomeStateMachine = NodePath("OutcomeStateMachine")
 [node name="OutcomeStateMachine" type="Node" parent="ArenaStateMachine/Finished"]
 script = ExtResource("2_1igvu")
 
-[node name="OutOfTime" type="Node" parent="ArenaStateMachine/Finished/OutcomeStateMachine" node_paths=PackedStringArray("_Arena")]
+[node name="OutOfTime" type="Node" parent="ArenaStateMachine/Finished/OutcomeStateMachine" node_paths=PackedStringArray("_Arena", "_Tweener")]
 script = ExtResource("22_qh40g")
 _Arena = NodePath("../../../..")
+_Tweener = NodePath("../../../../UILayer/OutOfTimeUIContainer/ControlTweener")
 
-[node name="Victory" type="Node" parent="ArenaStateMachine/Finished/OutcomeStateMachine" node_paths=PackedStringArray("_Arena")]
+[node name="Victory" type="Node" parent="ArenaStateMachine/Finished/OutcomeStateMachine" node_paths=PackedStringArray("_Arena", "_Tweener")]
 script = ExtResource("23_2yhgl")
 _Arena = NodePath("../../../..")
+_Tweener = NodePath("../../../../UILayer/VictoryUIContainer/ControlTweener")
 
-[node name="Failure" type="Node" parent="ArenaStateMachine/Finished/OutcomeStateMachine" node_paths=PackedStringArray("_Arena")]
+[node name="Failure" type="Node" parent="ArenaStateMachine/Finished/OutcomeStateMachine" node_paths=PackedStringArray("_Arena", "_Tweener")]
 script = ExtResource("24_ych7k")
 _Arena = NodePath("../../../..")
+_Tweener = NodePath("../../../../UILayer/FailureUIContainer/ControlTweener")
 
 [node name="Tiles" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)

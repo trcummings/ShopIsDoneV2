@@ -101,7 +101,7 @@ vertical_alignment = 1
 layout_mode = 2
 theme = ExtResource("1_xgtdm")
 theme_override_font_sizes/font_size = 72
-text = "QUIESCENCE NOW UNTIL FOREVER"
+text = "QUIESCENCE UNTIL FOREVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 

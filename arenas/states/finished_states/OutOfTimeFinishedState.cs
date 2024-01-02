@@ -2,6 +2,7 @@ using Godot;
 using System;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
+using ShopIsDone.Utils.UI;
 
 namespace ShopIsDone.Arenas.States.Finished
 {
@@ -10,10 +11,18 @@ namespace ShopIsDone.Arenas.States.Finished
         [Export]
         private Arena _Arena;
 
-        public override void OnStart(Dictionary<string, Variant> message)
+        [Export]
+        private ControlTweener _Tweener;
+
+        public async override void OnStart(Dictionary<string, Variant> message)
         {
             base.OnStart(message);
-            // TODO: Out of Time screen
+
+            // Out of time UI
+            await _Tweener.TweenInAsync(0.5f);
+            await ToSignal(GetTree().CreateTimer(2f), "timeout");
+            await _Tweener.TweenOutAsync(0.5f);
+
             _Arena.FailArena();
         }
     }
