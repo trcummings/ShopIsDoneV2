@@ -19,8 +19,6 @@ namespace ShopIsDone.ActionPoints
 
         protected Command InflictDamage(ApDamagePayload payload)
         {
-            GD.Print((Positions)payload.Positioning);
-
             return new SeriesCommand(
                 // Inflict damage
                 new ActionCommand(() =>
@@ -40,15 +38,17 @@ namespace ShopIsDone.ActionPoints
                     // If we took no actual debt damage, emit
                     else EmitSignal(nameof(TookNoDamage));
                 }),
-                // Take hit animation
-                _StateHandler.RunChangeState("hurt"),
+                // Take hit animation (only if we took damage)
+                new ConditionalCommand(
+                    () => payload.TotalDebtDamage > 0,
+                    _StateHandler.RunChangeState("hurt")
+                ),
                 // Set facing direction
                 new ConditionalCommand(
                     () => payload.Positioning != Positions.Null,
                     new ActionCommand(() =>
                     {
                         // Calculate facing direction of source
-                        GD.PrintS(_StateHandler.Entity.GlobalPosition, payload.Source.GlobalPosition);
                         var targetFacingDir = _StateHandler.Entity.GetFacingDirTowards(payload.Source.GlobalPosition);
                         _StateHandler.Entity.FacingDirection = targetFacingDir;
                     })
