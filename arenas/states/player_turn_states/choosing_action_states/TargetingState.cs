@@ -11,6 +11,8 @@ using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Extensions;
 using System.Linq;
 using ShopIsDone.ActionPoints;
+using ActionConsts = ShopIsDone.Actions.Consts;
+using ShopIsDone.Utils.Positioning;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
@@ -147,12 +149,21 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 // Emit confirmation signal
                 EmitSignal(nameof(ConfirmedSelection));
 
+                // Get the positioning
+                Positions position = Positions.Null;
+                // If the target isn't us, and it's not a ranged attack
+                if (_Action.Range > 1 && target != _SelectedUnit)
+                {
+                    position = Positioning.GetPositioning(_SelectedUnit.FacingDirection, target.FacingDirection);
+                }
+
                 // Run the action
                 EmitSignal(nameof(RunActionRequested), new Dictionary<string, Variant>()
                 {
                     { Consts.ACTION_KEY, _Action },
-                    { "Target", target },
-                    { "TransferAmount", _TransferAmount }
+                    { ActionConsts.TARGET, target },
+                    { ActionConsts.TRANSFER_AMOUNT, _TransferAmount },
+                    { ActionConsts.POSITIONING, (int)position }
                 });
 
                 return;

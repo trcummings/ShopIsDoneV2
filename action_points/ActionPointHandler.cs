@@ -2,7 +2,9 @@ using System;
 using Godot;
 using Godot.Collections;
 using ShopIsDone.Core;
+using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Utils.Positioning;
 
 namespace ShopIsDone.ActionPoints
 {
@@ -25,22 +27,23 @@ namespace ShopIsDone.ActionPoints
         public delegate void SpentExcessApEventHandler(int amount);
 
         [Signal]
-        public delegate void TookDebtDamageEventHandler(int amount);
-
-        [Signal]
-        public delegate void TookDebtFromDirectionEventHandler(Vector3 source);
-
-        [Signal]
-        public delegate void TookApDrainEventHandler(int amount);
-
-        [Signal]
-        public delegate void EvadedDebtDamageEventHandler(Vector3 from);
-
-        [Signal]
         public delegate void MaxedOutDebtEventHandler();
 
-        [Signal]
-        public delegate void TookExternalDamageEventHandler(LevelEntity source, int amount);
+        [Export]
+        private NodePath _EvasionHandlerPath;
+        private IEvasionHandler _EvasionHandler;
+
+        [Export]
+        private NodePath _DrainHandlerPath;
+        private IDrainHandler _DrainHandler;
+
+        [Export]
+        private NodePath _DebtDamageHandlerPath;
+        private IDebtDamageHandler _DebtDamageHandler;
+
+        [Export]
+        private NodePath _DeathHandlerPath;
+        private IDeathHandler _DeathHandler;
 
         // Damage
         [Export]
@@ -61,13 +64,12 @@ namespace ShopIsDone.ActionPoints
         [Export]
         public int MaxActionPoints = 5;
 
-        // FIXME: Pull from a RNG singleton that loads in from a seed saved in the level data so there's no
-        // save scumming allowed 
-        private RandomNumberGenerator _RNG = new RandomNumberGenerator();
-
         public override void _Ready()
         {
-            _RNG.Randomize();
+            _EvasionHandler = GetNode<IEvasionHandler>(_EvasionHandlerPath);
+            _DrainHandler = GetNode<IDrainHandler>(_DrainHandlerPath);
+            _DebtDamageHandler = GetNode<IDebtDamageHandler>(_DebtDamageHandlerPath);
+            _DeathHandler = GetNode<IDeathHandler>(_DeathHandlerPath);
         }
 
         // Public API
@@ -81,7 +83,7 @@ namespace ShopIsDone.ActionPoints
             return ActionPointDebt >= MaxActionPoints;
         }
 
-        public virtual void TakeAPDamage(Dictionary<string, Variant> message = null)
+        public Command TakeAPDamage(Dictionary<string, Variant> message = null)
         {
             // Get source of damage
             var source = (LevelEntity)message.GetValueOrDefault(Consts.DAMAGE_SOURCE);
@@ -113,51 +115,37 @@ namespace ShopIsDone.ActionPoints
             // Track if we even have AP left to drain
             var hadNoAPLeftToDrain = ActionPoints == 0;
 
-            // Track any positioning weight to any debt damage we may take
-            // NB: Default value is 1 here because that's the max chance. getting hit
-            // is the default reaction, not evading
-            var positioningHitChance = (float)message.GetValueOrDefault(Consts.POSITIONING_HIT_CHANCE, 1f);
+            // Pull out positioning
+            var positioning = (Positions)(int)message.GetValueOrDefault(Consts.POSITIONING_HIT_CHANCE, (int)Positions.Null);
 
-            // If it's external damage, notify with a signal
-            if (source != Entity)
-            {
-                EmitSignal(nameof(TookExternalDamage), source, totalDebtDamage);
-            }
+            return new SeriesCommand(
+                // AP DRAIN
+                _DrainHandler.HandleDrain(this, receivedApDrain, !hadNoAPLeftToDrain, apAfterDrain),
 
-            // Even if we received 0 AP drain (perhaps due to a status / ability) we
-            // still want to give feedback / SFX
-            if (receivedApDrain)
-            {
-                ActionPoints = Mathf.Min(apAfterDrain, 0);
-                // But only if we weren't dry on AP to drain
-                if (!hadNoAPLeftToDrain) EmitSignal(nameof(TookApDrain), totalDrain);
-            }
-
-            // Handle evasion
-            // FIXME: Replace this with positioning
-            if (EvadedDamage(source, positioningHitChance))
-            {
-                var facingDir = source
-                    // Get the source facing dir
-                    .GetFacingDirTowards(Entity.GlobalPosition)
-                    // And reflect it around the Y axis
-                    .Reflect(Vector3.Up);
-                // Emit with the direction of the evasion
-                EmitSignal(nameof(EvadedDebtDamage), facingDir);
-            }
-            // Otherwise, if we took damage
-            else if (receivedDirectApDebt || totalDebtDamage > 0)
-            {
-                // Cap AP debt at max points
-                ActionPointDebt = Mathf.Min(debtAfterDamage, MaxActionPoints);
-                if (totalDebtDamage > 0) EmitSignal(nameof(TookDebtDamage), totalDebtDamage);
-
-                // Check for death
-                if (ActionPointDebt == MaxActionPoints)
-                {
-                    EmitSignal(nameof(MaxedOutDebt));
-                }
-            }
+                // DEBT DAMAGE
+                new IfElseCommand(
+                    // Evasion check
+                    () => _EvasionHandler.EvadedDamage(source, positioning),
+                    _EvasionHandler.HandleEvasion(source, positioning),
+                    // Otherwise, handle debt damage
+                    new ConditionalCommand(
+                        // If we took damage check
+                        () => receivedDirectApDebt || totalDebtDamage > 0,
+                        // Handle it
+                        new SeriesCommand(
+                            // Handle damage
+                            _DebtDamageHandler.HandleDebtDamage(this, receivedDirectApDebt, totalDebtDamage, debtAfterDamage),
+                            // Handle death (deferred so we can decide after
+                            // damage if we should die
+                            new DeferredCommand(() => new ConditionalCommand(
+                                () => ActionPointDebt == MaxActionPoints,
+                                // If we've maxed out AP debt, run death
+                                new DeferredCommand(_DeathHandler.Die)
+                            ))
+                        )
+                    )
+                )
+            );
         }
 
         public virtual void SpendAPOnAction(int amount)
@@ -215,22 +203,6 @@ namespace ShopIsDone.ActionPoints
                 ActionPointDebt = Mathf.Max(ActionPointDebt - amount, 0);
                 EmitSignal(nameof(HealedDebt), amount);
             }
-        }
-
-        // Evasion Check
-        private bool EvadedDamage(LevelEntity source, float positioningHitChance)
-        {
-            // If we're the source, no evasion check
-            if (source == Entity) return false;
-
-            // Get our dodge threshold from the positioning weight
-            var threshold = Mathf.Max(1f - positioningHitChance, 0f);
-
-            // Get a random float between 1 and 0
-            var randResult = _RNG.RandfRange(0.01f, 0.99f);
-
-            // If our threshold is greater than the result, it's a dodge
-            return threshold > randResult;
         }
     }
 }

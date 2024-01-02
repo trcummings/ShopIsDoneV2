@@ -8,6 +8,7 @@ using ShopIsDone.Core;
 using System.Linq;
 using ActionConsts = ShopIsDone.Actions.Consts;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Utils.Positioning;
 
 namespace ShopIsDone.Entities.PuppetCustomers.AI
 {
@@ -73,10 +74,12 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                 // Hide indicators
                 new ActionCommand(ClearTileIndicators),
                 // Bother
-                _ActionService.ExecuteAction(_Action, new Dictionary<string, Variant>()
+                new DeferredCommand(() => _ActionService.ExecuteAction(_Action, new Dictionary<string, Variant>()
                 {
-                    { ActionConsts.TARGET, target }
-                })
+                    { ActionConsts.TARGET, target },
+                    // Get positioning of action
+                    { ActionConsts.POSITIONING, (int)Positioning.GetPositioning(_Entity.FacingDirection, target.FacingDirection) }
+                }))
             );
         }
     }
