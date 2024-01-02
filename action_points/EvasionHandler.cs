@@ -8,8 +8,8 @@ namespace ShopIsDone.ActionPoints
 {
     public interface IEvasionHandler
     {
-        bool EvadedDamage(LevelEntity source, Positions position);
-        Command HandleEvasion(LevelEntity source, Positions position);
+        bool EvadedDamage(ApDamagePayload payload);
+        Command HandleEvasion(ApDamagePayload payload);
     }
 
     public partial class EvasionHandler : Node, IEvasionHandler
@@ -18,12 +18,12 @@ namespace ShopIsDone.ActionPoints
         public delegate void EvadedDebtDamageEventHandler();
 
         // NB: We can't dodge self-inflicted damage
-        public virtual bool EvadedDamage(LevelEntity source, Positions position = Positions.Null)
+        public virtual bool EvadedDamage(ApDamagePayload payload)
         {
             return false;
         }
 
-        public virtual Command HandleEvasion(LevelEntity source, Positions position = Positions.Null)
+        public virtual Command HandleEvasion(ApDamagePayload payload)
         {
             return new Command();
         }

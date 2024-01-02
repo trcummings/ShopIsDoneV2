@@ -70,9 +70,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
                 _MicrogameHandler.RunMicrogame(payload),
                 // Return to idle
                 new ParallelCommand(
-                    // Run bother animation
                     _StateHandler.RunChangeState("idle"),
-                    // Alert Target
                     targetStateHandler.RunChangeState("idle")
                 )
             );

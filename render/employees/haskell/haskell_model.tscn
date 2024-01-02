@@ -14,8 +14,12 @@ alpha_antialiasing_mode = 0
 albedo_texture = SubResource("2")
 billboard_mode = 2
 
-[node name="HaskellRenderManager" node_paths=PackedStringArray("_Sprite") instance=ExtResource("1_4yeif")]
+[node name="HaskellModel" node_paths=PackedStringArray("_Sprite") instance=ExtResource("1_4yeif")]
 _Sprite = NodePath("SubViewport/Haskell2D")
+_AnimationNameMap = {
+"die": "meltdown",
+"hurt": "take_hit"
+}
 
 [node name="Haskell2D" parent="SubViewport" index="0" instance=ExtResource("2_pfsvf")]
 position = Vector2(300, 300)

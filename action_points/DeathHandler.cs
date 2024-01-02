@@ -9,6 +9,7 @@ namespace ShopIsDone.ActionPoints
 		Command Die();
 	}
 
+	// Null implementation of interface
 	public partial class DeathHandler : Node, IDeathHandler
     {
 		public virtual Command Die()

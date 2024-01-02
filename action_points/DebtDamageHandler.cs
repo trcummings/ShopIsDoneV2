@@ -7,7 +7,7 @@ namespace ShopIsDone.ActionPoints
 {
     public interface IDebtDamageHandler
     {
-        Command HandleDebtDamage(ActionPointHandler apHandler, LevelEntity source, int totalDebtDamage, int debtAfterDamage);
+        Command HandleDebtDamage(ApDamagePayload payload);
     }
 
     // Null implementation of this handler
@@ -19,7 +19,7 @@ namespace ShopIsDone.ActionPoints
         [Signal]
         public delegate void TookNoDamageEventHandler();
 
-        public virtual Command HandleDebtDamage(ActionPointHandler apHandler, LevelEntity source, int totalDebtDamage, int debtAfterDamage)
+        public virtual Command HandleDebtDamage(ApDamagePayload payload)
         {
             return new Command();
         }

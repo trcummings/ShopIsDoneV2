@@ -69,9 +69,6 @@ script = ExtResource("4_oqqp8")
 _StateHandler = NodePath("../../StateHandler")
 
 [node name="HaskellModel" parent="." instance=ExtResource("1")]
-_AnimationNameMap = {
-"die": "meltdown"
-}
 
 [node name="ActorVelocity" type="Node" parent="."]
 script = ExtResource("3")

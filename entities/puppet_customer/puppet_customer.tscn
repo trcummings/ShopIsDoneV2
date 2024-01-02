@@ -48,13 +48,6 @@ shape = SubResource("CapsuleShape3D_0cyyf")
 
 [node name="CustomerType1Model" parent="." instance=ExtResource("2_5ehyc")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
-_AnimationNameMap = {
-"bother": "Bother",
-"die": "Die",
-"hurt": "TakeHit",
-"idle": "Idle",
-"walk": "Travel"
-}
 
 [node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
 script = ExtResource("3_v23cd")

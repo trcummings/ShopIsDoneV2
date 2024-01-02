@@ -6,15 +6,15 @@ namespace ShopIsDone.ActionPoints
 {
     public partial class BasicDrainHandler : DrainHandler
 	{
-        public override Command HandleDrain(ActionPointHandler apHandler, bool hadApLeftToDrain, int totalDrain, int apAfterDrain)
+        public override Command HandleDrain(ApDamagePayload payload)
         {
             return new SeriesCommand(
                 new ActionCommand(() =>
                 {
                     // Apply drain
-                    apHandler.ActionPoints = Mathf.Min(apAfterDrain, 0);
+                    payload.ApHandler.ActionPoints = Mathf.Min(payload.ApAfterDrain, 0);
                     // Emit
-                    if (hadApLeftToDrain) EmitSignal(nameof(TookApDrain), totalDrain);
+                    if (payload.HadApLeftToDrain) EmitSignal(nameof(TookApDrain), payload.TotalDrain);
                 }),
                 // Just wait a moment for the effects to complete because we don't
                 // have a dedicated state transition for drain

@@ -29,7 +29,7 @@ namespace ShopIsDone.EntityStates
 
         private void OnAnimationFinished(string animName)
         {
-            if (_Model.TransformAnimName(animName) == "do_task") base.Enter();
+            if (_Model.TransformAnimName("do_task") == animName) base.Enter();
         }
 
         public override bool IsInArena()

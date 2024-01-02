@@ -428,8 +428,9 @@ LoopingAnimations = ["Travel", "Idle"]
 _AnimPlayer = NodePath("AnimationPlayer")
 _AnimationNameMap = {
 "bother": "Bother",
+"die": "Die",
+"hurt": "TakeHit",
 "idle": "Idle",
-"take_hit": "TakeHit",
 "walk": "Travel"
 }
 

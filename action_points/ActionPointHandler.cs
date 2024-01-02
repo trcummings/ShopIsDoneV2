@@ -8,6 +8,22 @@ using ShopIsDone.Utils.Positioning;
 
 namespace ShopIsDone.ActionPoints
 {
+    public partial class ApDamagePayload : GodotObject
+    {
+        public ActionPointHandler ApHandler;
+        public LevelEntity Source;
+        public Positions Positioning;
+
+        // Drain
+        public bool HadApLeftToDrain;
+        public int TotalDrain;
+        public int ApAfterDrain;
+
+        // Debt
+        public int TotalDebtDamage;
+        public int DebtAfterDamage;
+    }
+
     // This is a component that handles damage, debt, guard, and death
     public partial class ActionPointHandler : NodeComponent
     {
@@ -118,19 +134,34 @@ namespace ShopIsDone.ActionPoints
             // Pull out positioning
             var positioning = (Positions)(int)message.GetValueOrDefault(Consts.POSITIONING_HIT_CHANCE, (int)Positions.Null);
 
+            // Create payload
+            var payload = new ApDamagePayload()
+            {
+                ApHandler = this,
+                Source = source,
+                Positioning = positioning,
+
+                HadApLeftToDrain = !hadNoAPLeftToDrain,
+                ApAfterDrain = apAfterDrain,
+                TotalDrain = totalDrain,
+
+                TotalDebtDamage = totalDebtDamage,
+                DebtAfterDamage = debtAfterDamage
+            };
+
             return new SeriesCommand(
                 // AP DRAIN
                 new ConditionalCommand(
                     // Did we actually receive any drain?
                     () => receivedApDrain,
-                    _DrainHandler.HandleDrain(this, !hadNoAPLeftToDrain, totalDrain, apAfterDrain)
+                    _DrainHandler.HandleDrain(payload)
                 ),
 
                 // DEBT DAMAGE
                 new IfElseCommand(
                     // Evasion check
-                    () => _EvasionHandler.EvadedDamage(source, positioning),
-                    _EvasionHandler.HandleEvasion(source, positioning),
+                    () => _EvasionHandler.EvadedDamage(payload),
+                    _EvasionHandler.HandleEvasion(payload),
                     // Otherwise, handle debt damage
                     new ConditionalCommand(
                         // If we took damage check
@@ -138,7 +169,7 @@ namespace ShopIsDone.ActionPoints
                         // Handle it
                         new SeriesCommand(
                             // Handle damage
-                            _DebtDamageHandler.HandleDebtDamage(this, source, totalDebtDamage, debtAfterDamage),
+                            _DebtDamageHandler.HandleDebtDamage(payload),
                             // Handle death (deferred so we can decide after
                             // damage if we should die
                             new DeferredCommand(() => new ConditionalCommand(
