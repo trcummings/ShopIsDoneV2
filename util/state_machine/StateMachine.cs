@@ -107,6 +107,11 @@ namespace ShopIsDone.Utils.StateMachine
                     return;
                 }
             }
+            // If we get to this point, there's a problem
+            if (GameManager.IsDebugMode() && Debug)
+            {
+                GD.PrintErr($"No state with {stateName} found in {Name}.ChangeState!");
+            }
         }
 
         // Helper methods

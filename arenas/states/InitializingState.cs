@@ -14,12 +14,13 @@ namespace ShopIsDone.Arenas.States
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
+            base.OnStart(message);
+
+            // Inject dependencies
             InjectionProvider.Inject(this);
 
             // Disable Pausing
             _PauseInputHandler.IsActive = false;
-
-            base.OnStart(message);
 
             // Go directly to running state
             ChangeState(Consts.RUNNING);

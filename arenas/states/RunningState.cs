@@ -18,12 +18,13 @@ namespace ShopIsDone.Arenas.States
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
+            base.OnStart(message);
+
+            // Inject dependencies
             InjectionProvider.Inject(this);
 
             // Enable Pausing
             _PauseInputHandler.IsActive = true;
-
-            base.OnStart(message);
 
             // TODO: Consume phase commands as they come in
 
