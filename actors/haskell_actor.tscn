@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=37 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_6jaxx"]
@@ -25,6 +25,8 @@
 [ext_resource type="Script" path="res://entity_states/DoTaskEntityState.cs" id="19_qw4x1"]
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="19_vhxse"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="20_1bpch"]
+[ext_resource type="Script" path="res://entity_states/DeadEntityState.cs" id="20_ejs60"]
+[ext_resource type="Script" path="res://action_points/EmployeeDebtDamageHandler.cs" id="21_4q2q7"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="21_k5t6c"]
 [ext_resource type="Script" path="res://tiles/UnitTileMoveValidator.cs" id="21_lkw5d"]
 [ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="22_4rv4k"]
@@ -67,6 +69,9 @@ script = ExtResource("4_oqqp8")
 _StateHandler = NodePath("../../StateHandler")
 
 [node name="HaskellModel" parent="." instance=ExtResource("1")]
+_AnimationNameMap = {
+"die": "meltdown"
+}
 
 [node name="ActorVelocity" type="Node" parent="."]
 script = ExtResource("3")
@@ -123,7 +128,20 @@ script = ExtResource("19_qw4x1")
 ModelPath = NodePath("../../HaskellModel")
 Id = "do_task"
 
+[node name="Dead" type="Node" parent="StateHandler"]
+script = ExtResource("20_ejs60")
+ModelPath = NodePath("../../HaskellModel")
+Id = "dead"
+
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
+
+[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_StateHandler")]
+script = ExtResource("21_4q2q7")
+_TaskHandler = NodePath("../../TaskHandler")
+_StateHandler = NodePath("../../StateHandler")
+
+[node name="DeathHandler" parent="ActionPointHandler" index="5" node_paths=PackedStringArray("_StateHandler")]
+_StateHandler = NodePath("../../StateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("16_87xgg")
@@ -171,3 +189,5 @@ _ActionPointHandler = NodePath("../ActionPointHandler")
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="HaskellModel" method="SetFacingDir"]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
+
+[editable path="ActionPointHandler"]

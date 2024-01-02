@@ -37,12 +37,12 @@ namespace ShopIsDone.Microgames.Outcomes
                         new ActionCommand(() => Entity.FacingDirection = enemyDir)
                     ),
                     // Deal damage to ourselves
-                    new ActionCommand(() => _ActionPointHandler.TakeAPDamage(new Dictionary<string, Variant>()
+                    _ActionPointHandler.TakeAPDamage(new Dictionary<string, Variant>()
                     {
                         { ApConsts.DAMAGE_SOURCE, source.Entity },
                         // If it's a win (for the player) pass along no damage
                         { ApConsts.DEBT_DAMAGE, outcome == Microgame.Outcomes.Win ? 0 : damage.Damage }
-                    }))
+                    })
                 )
             );
         }

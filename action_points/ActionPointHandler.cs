@@ -120,7 +120,11 @@ namespace ShopIsDone.ActionPoints
 
             return new SeriesCommand(
                 // AP DRAIN
-                _DrainHandler.HandleDrain(this, receivedApDrain, !hadNoAPLeftToDrain, apAfterDrain),
+                new ConditionalCommand(
+                    // Did we actually receive any drain?
+                    () => receivedApDrain,
+                    _DrainHandler.HandleDrain(this, !hadNoAPLeftToDrain, totalDrain, apAfterDrain)
+                ),
 
                 // DEBT DAMAGE
                 new IfElseCommand(
@@ -134,7 +138,7 @@ namespace ShopIsDone.ActionPoints
                         // Handle it
                         new SeriesCommand(
                             // Handle damage
-                            _DebtDamageHandler.HandleDebtDamage(this, receivedDirectApDebt, totalDebtDamage, debtAfterDamage),
+                            _DebtDamageHandler.HandleDebtDamage(this, source, totalDebtDamage, debtAfterDamage),
                             // Handle death (deferred so we can decide after
                             // damage if we should die
                             new DeferredCommand(() => new ConditionalCommand(

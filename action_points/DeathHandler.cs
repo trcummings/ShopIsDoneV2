@@ -6,7 +6,7 @@ namespace ShopIsDone.ActionPoints
 {
 	public interface IDeathHandler
 	{
-		public Command Die();
+		Command Die();
 	}
 
 	public partial class DeathHandler : Node, IDeathHandler

@@ -42,13 +42,13 @@ namespace ShopIsDone.Entities.PuppetCustomers
                                 new ActionCommand(() => Entity.FacingDirection = targetFacingDir)
                             ),
                             // Deal damage
-                            new ActionCommand(() => _ActionPointHandler.TakeAPDamage(new Dictionary<string, Variant>()
+                            _ActionPointHandler.TakeAPDamage(new Dictionary<string, Variant>()
                             {
                                 { ApConsts.DAMAGE_SOURCE, employee },
                                 // If the outcome is a win (for the player),
                                 // pass along full damage
                                 { ApConsts.DEBT_DAMAGE, outcome == Microgame.Outcomes.Win ? damage.Damage : 0 }
-                            }))
+                            })
                         )
                     );
                 }).ToArray()

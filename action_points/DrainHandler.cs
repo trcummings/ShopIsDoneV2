@@ -6,7 +6,7 @@ namespace ShopIsDone.ActionPoints
 {
     public interface IDrainHandler
     {
-        Command HandleDrain(ActionPointHandler apHandler, bool receivedDrain, bool hadApLeftToDrain, int apAfterDrain);
+        Command HandleDrain(ActionPointHandler apHandler, bool hadApLeftToDrain, int totalDrain, int apAfterDrain);
     }
 
     public partial class DrainHandler : Node, IDrainHandler
@@ -14,7 +14,7 @@ namespace ShopIsDone.ActionPoints
         [Signal]
         public delegate void TookApDrainEventHandler(int amount);
 
-        public virtual Command HandleDrain(ActionPointHandler apHandler, bool receivedDrain, bool hadApLeftToDrain, int apAfterDrain)
+        public virtual Command HandleDrain(ActionPointHandler apHandler, bool hadApLeftToDrain, int totalDrain, int apAfterDrain)
         {
             return new Command();
         }

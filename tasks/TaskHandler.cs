@@ -17,6 +17,7 @@ namespace ShopIsDone.Tasks
         [Export]
         private ActionPointHandler _ActionPointHandler;
 
+        public TaskComponent CurrentTask { get { return _CurrentTask; } }
         private TaskComponent _CurrentTask;
 
         public bool HasCurrentTask()

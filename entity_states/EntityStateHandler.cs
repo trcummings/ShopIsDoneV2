@@ -85,6 +85,7 @@ namespace ShopIsDone.EntityStates
             if (!_States.ContainsKey(state))
             {
                 GD.PrintErr($"No state named {state} in EntityStateHandler!");
+                CallDeferred(nameof(EmitSignal), nameof(ChangedState));
                 return;
             }
 
@@ -98,7 +99,7 @@ namespace ShopIsDone.EntityStates
 
             // Enter next state
             _CurrentState = newState;
-            _CurrentState.Enter();
+            _CurrentState.Enter(message);
             await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
 
             EmitSignal(nameof(ChangedState));
@@ -110,6 +111,7 @@ namespace ShopIsDone.EntityStates
             if (!_States.ContainsKey(state))
             {
                 GD.PrintErr($"No state named {state} in EntityStateHandler!");
+                CallDeferred(nameof(EmitSignal), nameof(PushedState));
                 return;
             }
 
@@ -121,7 +123,7 @@ namespace ShopIsDone.EntityStates
             await ToSignal(_CurrentState, nameof(_CurrentState.StateExited));
 
             // Push state on, enter then exit
-            pushState.Enter();
+            pushState.Enter(message);
             await ToSignal(pushState, nameof(_CurrentState.StateEntered));
             pushState.Exit();
             await ToSignal(pushState, nameof(_CurrentState.StateExited));

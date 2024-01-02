@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c84riwntsfpy5"]
+[gd_scene load_steps=32 format=3 uid="uid://c84riwntsfpy5"]
 
 [ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1_hv7oi"]
 [ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
@@ -26,6 +26,7 @@
 [ext_resource type="Resource" uid="uid://dgdoi87t5014c" path="res://entities/puppet_customer/ai/aggressive_turn_plan.tres" id="19_ynvcu"]
 [ext_resource type="Script" path="res://entities/puppet_customer/ai/sensors/NearestEmployeeSensor.cs" id="20_oymu8"]
 [ext_resource type="Script" path="res://entities/puppet_customer/states/BotherEntityState.cs" id="23_72o6q"]
+[ext_resource type="Script" path="res://entity_states/DeadEntityState.cs" id="24_p47uk"]
 [ext_resource type="Script" path="res://entities/puppet_customer/CustomerOutcomeHandler.cs" id="26_vx53h"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="27_fpgq0"]
 [ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="28_v08d8"]
@@ -47,6 +48,13 @@ shape = SubResource("CapsuleShape3D_0cyyf")
 
 [node name="CustomerType1Model" parent="." instance=ExtResource("2_5ehyc")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
+_AnimationNameMap = {
+"bother": "Bother",
+"die": "Die",
+"hurt": "TakeHit",
+"idle": "Idle",
+"walk": "Travel"
+}
 
 [node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
 script = ExtResource("3_v23cd")
@@ -80,6 +88,14 @@ script = ExtResource("9_6he0e")
 Team = 1
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("10_dsne4")]
+ActionPoints = 2
+MaxActionPoints = 2
+
+[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_StateHandler")]
+_StateHandler = NodePath("../../StateHandler")
+
+[node name="DeathHandler" parent="ActionPointHandler" index="5" node_paths=PackedStringArray("_StateHandler")]
+_StateHandler = NodePath("../../StateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("11_5w0ou")
@@ -117,6 +133,11 @@ script = ExtResource("23_72o6q")
 _Model = NodePath("../../CustomerType1Model")
 Id = "bother"
 
+[node name="Dead" type="Node" parent="StateHandler"]
+script = ExtResource("24_p47uk")
+ModelPath = NodePath("../../CustomerType1Model")
+Id = "dead"
+
 [node name="ActionPlanner" type="Node" parent="." node_paths=PackedStringArray("_SensorsNode", "_ActionHandler")]
 script = ExtResource("18_ock78")
 _TurnPlans = [ExtResource("19_ynvcu")]
@@ -139,3 +160,5 @@ _OutcomeHandlerPath = NodePath("../OutcomeHandler")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="CustomerType1Model" method="SetFacingDir"]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
+
+[editable path="ActionPointHandler"]
