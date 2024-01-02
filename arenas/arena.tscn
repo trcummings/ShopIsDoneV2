@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=52 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -52,6 +52,14 @@ size = Vector3(0.646393, 1, 6)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_esplx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_70icn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pry0t"]
+bg_color = Color(0.298039, 0.298039, 0.298039, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uec0k"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_EffortMeterService", "_ScriptQueueService", "_OutcomeService") groups=["arena"]]
 script = ExtResource("1_loukv")
@@ -155,12 +163,12 @@ script = ExtResource("3_q440h")
 [node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_EndPlayerTurnWidget") instance=ExtResource("15_hbm50")]
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 _PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
-_EndPlayerTurnWidget = NodePath("../../../../../../UILayer/CenterContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
+_EndPlayerTurnWidget = NodePath("../../../../../../UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
 
 [node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService")]
 script = ExtResource("17_4ddch")
 _PhaseManager = NodePath("../../../../BattlePhaseManager")
-_ConfirmEndTurnPopup = NodePath("../../../../../../UILayer/CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer2/ConfirmEndTurnPopup")
+_ConfirmEndTurnPopup = NodePath("../../../../../../UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer2/VBoxContainer2/ConfirmEndTurnPopup")
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 
 [node name="ChoosingAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionStateMachine", "_PlayerPawnUI")]
@@ -287,7 +295,7 @@ render_target_update_mode = 0
 [node name="PlayerPawnUIContainer" parent="UILayer" instance=ExtResource("35_gpbff")]
 visible = false
 
-[node name="CenterContainer" type="PanelContainer" parent="UILayer"]
+[node name="EndTurnUIContainer" type="PanelContainer" parent="UILayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -298,7 +306,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_xrpe1")
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/CenterContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/EndTurnUIContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 16
@@ -306,30 +314,30 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/CenterContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/EndTurnUIContainer/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="EndPlayerTurnUI" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("36_nf6kd")]
+[node name="EndPlayerTurnUI" parent="UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("36_nf6kd")]
 visible = false
 layout_mode = 2
 
-[node name="Control" type="Control" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/CenterContainer/MarginContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/EndTurnUIContainer/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer2"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer2"]
 layout_mode = 2
 alignment = 1
 
-[node name="ConfirmEndTurnPopup" parent="UILayer/CenterContainer/MarginContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource("38_1enao")]
+[node name="ConfirmEndTurnPopup" parent="UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource("38_1enao")]
 visible = false
 layout_mode = 2
 
@@ -386,3 +394,138 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
+
+[node name="OutOfTimeUIContainer" type="PanelContainer" parent="UILayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_70icn")
+
+[node name="ControlTweener" type="Node" parent="UILayer/OutOfTimeUIContainer" node_paths=PackedStringArray("_ControlToTween")]
+script = ExtResource("32_b7vkh")
+_ControlToTween = NodePath("..")
+InTransType = 10
+OutTransType = 10
+
+[node name="CenterContainer" type="CenterContainer" parent="UILayer/OutOfTimeUIContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/OutOfTimeUIContainer/CenterContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pry0t")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/OutOfTimeUIContainer/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Panel" type="Panel" parent="UILayer/OutOfTimeUIContainer/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uec0k")
+
+[node name="Label" type="Label" parent="UILayer/OutOfTimeUIContainer/CenterContainer/PanelContainer/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Out Of Time"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FailureUIContainer" type="PanelContainer" parent="UILayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_70icn")
+
+[node name="ControlTweener" type="Node" parent="UILayer/FailureUIContainer" node_paths=PackedStringArray("_ControlToTween")]
+script = ExtResource("32_b7vkh")
+_ControlToTween = NodePath("..")
+InTransType = 10
+OutTransType = 10
+
+[node name="CenterContainer" type="CenterContainer" parent="UILayer/FailureUIContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/FailureUIContainer/CenterContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pry0t")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/FailureUIContainer/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Panel" type="Panel" parent="UILayer/FailureUIContainer/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uec0k")
+
+[node name="Label" type="Label" parent="UILayer/FailureUIContainer/CenterContainer/PanelContainer/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Failure"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VictoryUIContainer" type="PanelContainer" parent="UILayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_70icn")
+
+[node name="ControlTweener" type="Node" parent="UILayer/VictoryUIContainer" node_paths=PackedStringArray("_ControlToTween")]
+script = ExtResource("32_b7vkh")
+_ControlToTween = NodePath("..")
+InTransType = 10
+OutTransType = 10
+
+[node name="CenterContainer" type="CenterContainer" parent="UILayer/VictoryUIContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/VictoryUIContainer/CenterContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pry0t")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/VictoryUIContainer/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Panel" type="Panel" parent="UILayer/VictoryUIContainer/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uec0k")
+
+[node name="Label" type="Label" parent="UILayer/VictoryUIContainer/CenterContainer/PanelContainer/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Victory"
+horizontal_alignment = 1
+vertical_alignment = 1

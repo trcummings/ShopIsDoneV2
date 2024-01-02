@@ -11,6 +11,15 @@ namespace ShopIsDone.Levels.States
         [Export]
         private PauseInputHandler _PauseInputHandler;
 
+        [Export]
+        private GameOverUI _GameOverUI;
+
+        public override void _Ready()
+        {
+            base._Ready();
+            _GameOverUI.SetProcess(false);
+        }
+
         public override void OnStart(Dictionary<string, Variant> message)
         {
             base.OnStart(message);
@@ -18,7 +27,20 @@ namespace ShopIsDone.Levels.States
             // Disable pausing
             _PauseInputHandler.IsActive = false;
 
-            // TODO: Active Game Over screen
+            // Activate Game over UI
+            // TODO: Connect to game over events
+            _GameOverUI.Show();
+            _GameOverUI.SetProcess(true);
+        }
+
+        public override void OnExit(string nextState)
+        {
+            // Deactivate Game over UI
+            // TODO: Disconnect from game over events
+            _GameOverUI.SetProcess(false);
+            _GameOverUI.Hide();
+
+            base.OnExit(nextState);
         }
     }
 }
