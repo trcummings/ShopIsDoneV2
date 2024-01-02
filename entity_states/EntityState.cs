@@ -6,7 +6,9 @@ using Godot.Collections;
 namespace ShopIsDone.EntityStates
 {
     // Entity states are EXCLUSIVE states that provide information about the entity's
-    // presence in the arena and availability and run actions on hooks
+    // presence in the arena and availability and run functions on hooks.
+    // Generally speaking, EntityState hooks only show animations or other visual
+    // flourishes
     public partial class EntityState : Node
     {
         [Signal]
@@ -17,6 +19,22 @@ namespace ShopIsDone.EntityStates
 
         [Export]
         public string Id;
+
+        [Export]
+        private bool _IsActive = true;
+        public bool IsActive
+        {
+            get { return GetIsActive(); }
+            private set { _IsActive = value; }
+        }
+
+        [Export]
+        private bool _IsInArena = true;
+        public bool IsInArena
+        {
+            get { return GetIsInArena(); }
+            private set { _IsInArena = value; }
+        }
 
         private LevelEntity _Entity;
         private EntityStateHandler _StateHandler;
@@ -37,16 +55,15 @@ namespace ShopIsDone.EntityStates
             CallDeferred("emit_signal", nameof(StateExited));
         }
 
-        // Default to false
-        public virtual bool IsInArena()
+        // Sandboxed methods
+        protected virtual bool GetIsInArena()
         {
-            return false;
+            return _IsInArena;
         }
 
-        // Default to false
-        public virtual bool CanAct()
+        protected virtual bool GetIsActive()
         {
-            return false;
+            return _IsActive;
         }
     }
 }

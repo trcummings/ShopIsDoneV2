@@ -5,6 +5,7 @@ using ShopIsDone.Core;
 using System.Linq;
 using System.Threading.Tasks;
 using ShopIsDone.Utils.Commands;
+using ShopIsDone.Game;
 
 namespace ShopIsDone.EntityStates
 {
@@ -18,6 +19,9 @@ namespace ShopIsDone.EntityStates
 
         [Export]
         public EntityState InitialState;
+
+        [Export]
+        public bool Debug = false;
 
         private EntityState _CurrentState;
 
@@ -52,12 +56,12 @@ namespace ShopIsDone.EntityStates
 
         public bool IsInArena()
         {
-            return _CurrentState.IsInArena();
+            return _CurrentState.IsInArena;
         }
 
         public bool IsActive()
         {
-            return _CurrentState.CanAct();
+            return _CurrentState.IsActive;
         }
 
         public void ChangeState(string state, Dictionary<string, Variant> message = null)
@@ -84,7 +88,7 @@ namespace ShopIsDone.EntityStates
         {
             if (!_States.ContainsKey(state))
             {
-                GD.PrintErr($"No state named {state} in EntityStateHandler!");
+                GD.PrintErr($"No state named {state} in {Entity.Id}'s EntityStateHandler!");
                 CallDeferred(nameof(EmitSignal), nameof(ChangedState));
                 return;
             }
@@ -93,12 +97,20 @@ namespace ShopIsDone.EntityStates
             var newState = _States[state];
 
             // Exit current state
+            if (Debug && GameManager.IsDebugMode())
+            {
+                GD.Print($"{Entity.Id}'s {Name}.ChangeStateAsync exiting {_CurrentState.Id} State");
+            }
             _CurrentState.Exit();
             await ToSignal(_CurrentState, nameof(_CurrentState.StateExited));
 
 
             // Enter next state
             _CurrentState = newState;
+            if (Debug && GameManager.IsDebugMode())
+            {
+                GD.Print($"{Entity.Id}'s {Name}.ChangeStateAsync entering {state} State");
+            }
             _CurrentState.Enter(message);
             await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
 
@@ -110,28 +122,47 @@ namespace ShopIsDone.EntityStates
         {
             if (!_States.ContainsKey(state))
             {
-                GD.PrintErr($"No state named {state} in EntityStateHandler!");
+                GD.PrintErr($"No state named {state} in {Entity.Id}'s EntityStateHandler!");
                 CallDeferred(nameof(EmitSignal), nameof(PushedState));
                 return;
             }
 
-            // Grab new state
-            var pushState = _States[state];
-
             // Exit current state
+            if (Debug && GameManager.IsDebugMode())
+            {
+                GD.Print($"{Entity.Id}'s {Name}.PushStateAsync exiting {_CurrentState.Id} State");
+            }
             _CurrentState.Exit();
             await ToSignal(_CurrentState, nameof(_CurrentState.StateExited));
 
-            // Push state on, enter then exit
+            // Grab push state
+            var pushState = _States[state];
+
+            // Enter pushed state
+            if (Debug && GameManager.IsDebugMode())
+            {
+                GD.Print($"{Entity.Id}'s {Name}.PushStateAsync push-entering {state} State");
+            }
             pushState.Enter(message);
             await ToSignal(pushState, nameof(_CurrentState.StateEntered));
+
+            // Exit pushed state
+            if (Debug && GameManager.IsDebugMode())
+            {
+                GD.Print($"{Entity.Id}'s {Name}.PushStateAsync push-exiting {state} State");
+            }
             pushState.Exit();
             await ToSignal(pushState, nameof(_CurrentState.StateExited));
 
             // Re-enter current state
+            if (Debug && GameManager.IsDebugMode())
+            {
+                GD.Print($"{Entity.Id}'s {Name}.PushStateAsync re-entering {_CurrentState.Id} State");
+            }
             _CurrentState.Enter();
             await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
 
+            // Emit
             EmitSignal(nameof(PushedState));
         }
     }

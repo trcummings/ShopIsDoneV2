@@ -21,16 +21,6 @@ namespace ShopIsDone.Models.IsometricModels
         [Export]
         protected IsometricSprite2D _Sprite;
 
-        [ExportGroup("Animation Mapping")]
-        [Export]
-        private bool _ForceAnimLowercase = false;
-
-        // This maps a normalized action name that we call in a state handler or
-        // through a script to a specific animation name that the model may have
-        // for that action
-        [Export]
-        private Dictionary<string, string> _AnimationNameMap = new Dictionary<string, string>();
-
         // State vars
         protected Vector3 _ViewedDir = Vec3.BackRight;
         protected Vector3 _FacingDir = Vector3.Left;
@@ -77,23 +67,10 @@ namespace ShopIsDone.Models.IsometricModels
             }
         }
 
-        public string TransformAnimName(string rawActionName)
-        {
-            var animationName = rawActionName;
-
-            // Map the given 
-            if (_AnimationNameMap.ContainsKey(rawActionName))
-            {
-                animationName = _AnimationNameMap[rawActionName];
-            }
-
-            return _ForceAnimLowercase ? animationName.ToLower() : animationName;
-        }
-
         public virtual async Task PerformAnimation(string animName, bool advance = false)
         {
             // Persist action name in state
-            _ActionName = TransformAnimName(animName);
+            _ActionName = animName;
 
             // Await action to finish
             await RunIsometricAnimation();

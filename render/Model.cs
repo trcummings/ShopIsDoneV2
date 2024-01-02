@@ -21,16 +21,6 @@ namespace ShopIsDone.Models
         [Export]
         protected AnimationPlayer _AnimPlayer;
 
-        [ExportGroup("Animation Mapping")]
-        [Export]
-        private bool _ForceAnimLowercase = false;
-
-        // This maps a normalized action name that we call in a state handler or
-        // through a script to a specific animation name that the model may have
-        // for that action
-        [Export]
-        private Dictionary<string, string> _AnimationNameMap = new Dictionary<string, string>();
-
         public override void _Ready()
         {
             // Connect to animation finished
@@ -63,24 +53,8 @@ namespace ShopIsDone.Models
             EmitSignal(nameof(AnimationEventFired), eventName);
         }
 
-        public string TransformAnimName(string rawActionName)
+        public virtual async Task PerformAnimation(string animName, bool advance = false)
         {
-            var animationName = rawActionName;
-
-            // Map the given 
-            if (_AnimationNameMap.ContainsKey(rawActionName))
-            {
-                animationName = _AnimationNameMap[rawActionName];
-            }
-
-            return _ForceAnimLowercase ? animationName.ToLower() : animationName;
-        }
-
-        public virtual async Task PerformAnimation(string actionName, bool advance = false)
-        {
-            // Transform animation name
-            var animName = TransformAnimName(actionName);
-
             // Save ourselves some output here, if it's the default call and we
             // don't have any animations, ignore it
             if (

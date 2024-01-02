@@ -19,16 +19,6 @@ namespace ShopIsDone.Entities.PuppetCustomers.States
             );
             _IntimidatePlayer.Play();
         }
-
-        public override bool IsInArena()
-        {
-            return true;
-        }
-
-        public override bool CanAct()
-        {
-            return true;
-        }
     }
 }
 
