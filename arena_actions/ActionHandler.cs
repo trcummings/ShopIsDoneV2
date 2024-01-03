@@ -54,6 +54,11 @@ namespace ShopIsDone.Actions
             }
         }
 
+        public void PayForAction(string id)
+        {
+            _ActionPointHandler.SpendAPOnAction(GetTotalActionCost(id));
+        }
+
         public virtual bool IsActionAvailable(ArenaAction action)
         {
             // No action is available if turn was ended

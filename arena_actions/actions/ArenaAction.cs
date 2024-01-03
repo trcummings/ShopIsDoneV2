@@ -131,6 +131,7 @@ namespace ShopIsDone.Actions
         {
             return new ActionCommand(() =>
             {
+                _ActionHandler.PayForAction(Id);
                 _ActionHandler.SetActionUsed(Id);
                 if (EndsTurnAfterUse) _ActionHandler.EndTurn();
             });

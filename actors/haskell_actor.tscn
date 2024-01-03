@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=35 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_6jaxx"]
@@ -28,7 +28,10 @@
 [ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="22_f48js"]
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="22_odajy"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="23_sv0kt"]
+[ext_resource type="PackedScene" uid="uid://dx6r37l2dvf6v" path="res://widgets/entity_widgets/talking_effect.tscn" id="31_nnm70"]
 [ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="31_xx1gf"]
+[ext_resource type="PackedScene" uid="uid://c51x12itwmxoa" path="res://widgets/entity_widgets/alert_effect.tscn" id="32_gdm0m"]
+[ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="33_dnns8"]
 [ext_resource type="Script" path="res://tasks/TaskHandler.cs" id="33_l4ov1"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
@@ -186,9 +189,25 @@ script = ExtResource("33_l4ov1")
 _StateHandler = NodePath("../StateHandler")
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
+[node name="WidgetPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12)
+
+[node name="TalkingEffect" parent="WidgetPoint" instance=ExtResource("31_nnm70")]
+
+[node name="AlertEffect" parent="WidgetPoint" instance=ExtResource("32_gdm0m")]
+
+[node name="PopupLabel" parent="WidgetPoint" instance=ExtResource("33_dnns8")]
+
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="HaskellModel" method="SetFacingDir"]
+[connection signal="ReceivedExcessAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="RecoveredAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="SpentAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="SpentExcessAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="TookApDrain" from="ActionPointHandler/DrainHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="TookDebtDamage" from="ActionPointHandler/DebtDamageHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(1, 0, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="TookNoDamage" from="ActionPointHandler/DebtDamageHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [0, Color(1, 0, 0, 1), Color(0, 0, 0, 1)]]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
 
 [editable path="ActionPointHandler"]

@@ -189,7 +189,7 @@ namespace ShopIsDone.ActionPoints
             {
                 // Subtract the given amount by the pawn's current action points and zero check
                 ActionPoints = Mathf.Max(ActionPoints - amount, 0);
-                EmitSignal(nameof(SpentAp), amount);
+                EmitSignal(nameof(SpentAp), -amount);
             }
         }
 
@@ -226,7 +226,7 @@ namespace ShopIsDone.ActionPoints
             {
                 // Remove the excess amount and zero check
                 ActionPointExcess = Mathf.Max(ActionPointExcess - amount, 0);
-                EmitSignal(nameof(SpentExcessAp), amount);
+                EmitSignal(nameof(SpentExcessAp), -amount);
             }
         }
 
@@ -236,7 +236,7 @@ namespace ShopIsDone.ActionPoints
             {
                 // Zero out
                 ActionPointDebt = Mathf.Max(ActionPointDebt - amount, 0);
-                EmitSignal(nameof(HealedDebt), amount);
+                EmitSignal(nameof(HealedDebt), -amount);
             }
         }
     }

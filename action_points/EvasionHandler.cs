@@ -1,14 +1,13 @@
 ﻿using System;
 using Godot;
-using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
-using ShopIsDone.Utils.Positioning;
 
 namespace ShopIsDone.ActionPoints
 {
     public interface IEvasionHandler
     {
         bool EvadedDamage(ApDamagePayload payload);
+
         Command HandleEvasion(ApDamagePayload payload);
     }
 

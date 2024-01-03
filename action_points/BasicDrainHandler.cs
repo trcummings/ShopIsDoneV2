@@ -14,7 +14,10 @@ namespace ShopIsDone.ActionPoints
                     // Apply drain
                     payload.ApHandler.ActionPoints = Mathf.Min(payload.ApAfterDrain, 0);
                     // Emit
-                    if (payload.HadApLeftToDrain) EmitSignal(nameof(TookApDrain), payload.TotalDrain);
+                    if (payload.HadApLeftToDrain)
+                    {
+                        EmitSignal(nameof(TookApDrain), payload.TotalDrain);
+                    }
                 }),
                 // Just wait a moment for the effects to complete because we don't
                 // have a dedicated state transition for drain

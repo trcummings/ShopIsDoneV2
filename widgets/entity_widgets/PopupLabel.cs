@@ -22,12 +22,18 @@ namespace ShopIsDone.Widgets
             _Label.Hide();
         }
 
-        public void Popup(string text, Color? textColor = null, Color? outlineColor = null)
+        public void PopupNumber(int amount, Color textColor, Color outlineColor)
+        {
+            if (amount == 0) PopupText("0", textColor, outlineColor);
+            else PopupText(amount > 0 ? $"+{amount}" : $"{amount}", textColor, outlineColor);
+        }
+
+        public void PopupText(string text, Color textColor, Color outlineColor)
         {
             // Set the damage label properties
             _Label.Text = text;
-            _Label.Modulate = textColor ?? Colors.White;
-            _Label.OutlineModulate = outlineColor ?? Colors.Black;
+            _Label.Modulate = textColor;
+            _Label.OutlineModulate = outlineColor;
 
             // Show the label
             _Label.Show();
@@ -38,7 +44,7 @@ namespace ShopIsDone.Widgets
                 new Callable(this, nameof(OnAnimationFinished)),
                 (uint)ConnectFlags.OneShot
             );
-            _AnimationPlayer.Play("PopUpDamage");
+            _AnimationPlayer.Play("popup");
         }
 
         private void OnAnimationFinished(string _)

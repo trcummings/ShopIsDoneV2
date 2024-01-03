@@ -18,8 +18,7 @@ namespace ShopIsDone.Actions.Effort
         private ScreenshakeService _Screenshake;
 
         private ArenaAction _Action;
-        private ActionHandler _ActionHandler;
-        private ActionPointHandler _ActionPointHandler;
+        private int _InitialAp;
 
         public int EffortAmount
         {
@@ -39,8 +38,20 @@ namespace ShopIsDone.Actions.Effort
             // Connect
             _EffortMeter.Activated += () => _IsActive = true;
             _EffortMeter.Deactivated += () => _IsActive = false;
-            _EffortMeter.Incremented += () => UpdateEffort(1);
-            _EffortMeter.Decremented += () => UpdateEffort(-1);
+            _EffortMeter.Incremented += () =>
+            {
+                // Limit incrementing to the amount we have to spend
+                if (GetTotalCost() + 1 > _InitialAp)
+                {
+                    _EffortMeter.EmitSignal(nameof(_EffortMeter.InvalidSelection));
+                    return;
+                }
+                UpdateEffort(1);
+            };
+            _EffortMeter.Decremented += () =>
+            {
+                UpdateEffort(-1);
+            };
             _EffortMeter.InvalidSelection += () =>
             {
                 // A little bit of screenshake just on the x-axis on invalid
@@ -57,14 +68,25 @@ namespace ShopIsDone.Actions.Effort
 
             // Set vars
             _Action = action;
+            _InitialAp = initialAp;
 
             // Set effort
             // Get the action cost and the prior effort cost (maxed to the pawn's current AP)
             var actionCost = _Action.ActionCost;
             var effortCost = _Action.GetEffortSpent();
 
+            // Max available AP
+            var maxEffort = initialAp - actionCost;
+
+            // Cap effort if we've spent more than we have
+            if (effortCost > maxEffort)
+            {
+                _Action.SetEffort(maxEffort);
+                effortCost = _Action.GetEffortSpent();
+            }
+
             // Init the effort meter with the effort and the pawn's available AP
-            _EffortMeter.Init(effortCost, initialAp - actionCost);
+            _EffortMeter.Init(effortCost, maxEffort);
 
             // Emit initial total cost update
             EmitSignal(nameof(UpdatedTotalCost), actionCost + effortCost);
@@ -116,16 +138,21 @@ namespace ShopIsDone.Actions.Effort
             }
         }
 
+        private int GetTotalCost()
+        {
+            var actionCost = _Action.ActionCost;
+            var effortCost = _Action.GetEffortSpent();
+
+            return actionCost + effortCost;
+        }
+
         private void UpdateEffort(int dir)
         {
             // Set the new effort in the action
             _Action.SetEffort(_EffortMeter.CurrentIndex);
 
             // Update the cost diff
-            var actionCost = _Action.ActionCost;
-            var effortCost = _Action.GetEffortSpent();
-
-            EmitSignal(nameof(UpdatedTotalCost), actionCost + effortCost, dir);
+            EmitSignal(nameof(UpdatedTotalCost), GetTotalCost(), dir);
         }
     }
 }
