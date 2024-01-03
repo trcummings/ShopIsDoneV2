@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://o0kv402fowrx"
-path="res://.godot/imported/SupermarketVegetableDisplay.glb-628a49a569cf2bdddca828d7667fe8bf.scn"
+path="res://.godot/imported/vegetable_fridge.glb-3fca16e292f69519eb2665829fdd91cb.scn"
 
 [deps]
 
-source_file="res://Models/SupermarketVegetableDisplay/SupermarketVegetableDisplay.glb"
-dest_files=["res://.godot/imported/SupermarketVegetableDisplay.glb-628a49a569cf2bdddca828d7667fe8bf.scn"]
+source_file="res://entities/vegetable_fridge_task/vegetable_fridge.glb"
+dest_files=["res://.godot/imported/vegetable_fridge.glb-3fca16e292f69519eb2665829fdd91cb.scn"]
 
 [params]
 

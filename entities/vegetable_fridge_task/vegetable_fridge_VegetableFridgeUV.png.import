@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2uf7cssyh60r"
-path.s3tc="res://.godot/imported/SupermarketVegetableDisplay_VegetableFridgeUV.png-ca4e74cb2674cae2421422df65c89afc.s3tc.ctex"
+uid="uid://fc5mbk1l4jl0"
+path.s3tc="res://.godot/imported/vegetable_fridge_VegetableFridgeUV.png-c6a2e343a50fac73ca89e9e92bd07933.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://Models/SupermarketVegetableDisplay/SupermarketVegetableDisplay_VegetableFridgeUV.png"
-dest_files=["res://.godot/imported/SupermarketVegetableDisplay_VegetableFridgeUV.png-ca4e74cb2674cae2421422df65c89afc.s3tc.ctex"]
+source_file="res://entities/vegetable_fridge_task/vegetable_fridge_VegetableFridgeUV.png"
+dest_files=["res://.godot/imported/vegetable_fridge_VegetableFridgeUV.png-c6a2e343a50fac73ca89e9e92bd07933.s3tc.ctex"]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bc2apocravico"]
 
-[ext_resource type="PackedScene" uid="uid://o0kv402fowrx" path="res://Models/SupermarketVegetableDisplay/SupermarketVegetableDisplay.glb" id="1"]
+[ext_resource type="PackedScene" uid="uid://o0kv402fowrx" path="res://entities/vegetable_fridge_task/vegetable_fridge.glb" id="1"]
 [ext_resource type="Texture2D" uid="uid://po0f0piawy4s" path="res://Models/Environment/Props/vegetables.png" id="2"]
 
 [node name="Prop_VegetableFridge_" type="Node3D"]
