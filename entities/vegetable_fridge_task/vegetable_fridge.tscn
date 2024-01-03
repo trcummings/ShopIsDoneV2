@@ -1,0 +1,66 @@
+[gd_scene load_steps=11 format=3 uid="uid://xolev31q2oiu"]
+
+[ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1_q1jmx"]
+[ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="2_nms3t"]
+[ext_resource type="Script" path="res://tasks/TaskComponent.cs" id="2_xwva2"]
+[ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="3_1mvnr"]
+[ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="3_uf88g"]
+[ext_resource type="Script" path="res://tasks/TaskProgressHandler.cs" id="3_y75cw"]
+[ext_resource type="Script" path="res://tasks/TaskCompletionHandler.cs" id="4_1kkk2"]
+[ext_resource type="PackedScene" uid="uid://b2p7fh56ojclq" path="res://microgames/destroy_rotten_produce/destroy_rotten_produce_microgame.tscn" id="4_ofh1b"]
+[ext_resource type="PackedScene" uid="uid://cwxwa2f46orap" path="res://entities/vegetable_fridge_task/vegetable_fridge_model.tscn" id="7_8vs0j"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2nsqc"]
+size = Vector3(3.621, 2.7, 1.515)
+
+[node name="VegetableFridge" type="CharacterBody3D" groups=["entities"]]
+collision_layer = 9
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_q1jmx")
+Id = "vegetable_fridge"
+EntityName = "Vegetable Fridge"
+_TilemapPositionHandlerPath = NodePath("TilemapPositionHandler")
+_FacingDirectionHandlerPath = NodePath("FacingDirectionHandler")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.35, 2.08165e-12)
+shape = SubResource("BoxShape3D_2nsqc")
+
+[node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
+script = ExtResource("2_nms3t")
+FacingTarget = NodePath("..")
+
+[node name="TilemapPositionHandler" parent="." instance=ExtResource("3_1mvnr")]
+
+[node name="TaskComponent" type="Node" parent="." node_paths=PackedStringArray("_MicrogameHandler", "_TaskCompletionHandler")]
+script = ExtResource("2_xwva2")
+OperatorsAllowed = 2
+_MicrogameHandler = NodePath("../MicrogameHandler")
+_TaskCompletionHandler = NodePath("CompletionHandler")
+_TaskProgressHandlerPath = NodePath("ProgressHandler")
+
+[node name="ProgressHandler" type="Node" parent="TaskComponent"]
+script = ExtResource("3_y75cw")
+
+[node name="CompletionHandler" type="Node" parent="TaskComponent"]
+script = ExtResource("4_1kkk2")
+
+[node name="MicrogameHandler" type="Node" parent="."]
+script = ExtResource("3_uf88g")
+MicrogameScene = ExtResource("4_ofh1b")
+_OutcomeHandlerPath = NodePath("../TaskComponent")
+
+[node name="VegetableFridgeModel" parent="." instance=ExtResource("7_8vs0j")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -1, 2.08165e-12, 2.08189e-12)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="VegetableFridgeModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.35, 2.08165e-12)
+remote_path = NodePath("../../CollisionShape")
+use_global_coordinates = false
+
+[connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="VegetableFridgeModel" method="SetFacingDir"]

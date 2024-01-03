@@ -3,7 +3,7 @@ using ShopIsDone.Utils.Commands;
 
 namespace ShopIsDone.Tasks
 {
-    public interface IOnTaskProgressComponent
+    public interface ITaskProgressHandler
     {
         bool CanProgressTask(TaskComponent task);
 
@@ -12,7 +12,7 @@ namespace ShopIsDone.Tasks
         Command OnFailToProgress(TaskComponent task);
     }
 
-    public partial class OnTaskProgressComponent : Node, IOnTaskProgressComponent
+    public partial class TaskProgressHandler : Node, ITaskProgressHandler
     {
         [Signal]
         public delegate void TaskProgressFailedEventHandler();

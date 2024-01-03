@@ -73,11 +73,11 @@ namespace ShopIsDone.Tasks
 
         [Export]
         private NodePath _TaskProgressHandlerPath;
-        private IOnTaskProgressComponent _TaskProgressHandler;
+        private ITaskProgressHandler _TaskProgressHandler;
 
         public override void _Ready()
         {
-            _TaskProgressHandler = GetNode<IOnTaskProgressComponent>(_TaskProgressHandlerPath);
+            _TaskProgressHandler = GetNode<ITaskProgressHandler>(_TaskProgressHandlerPath);
         }
 
         public bool IsTaskComplete()
