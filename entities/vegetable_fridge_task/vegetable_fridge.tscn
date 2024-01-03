@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://xolev31q2oiu"]
+[gd_scene load_steps=13 format=3 uid="uid://xolev31q2oiu"]
 
 [ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1_q1jmx"]
 [ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="2_nms3t"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://tasks/TaskCompletionHandler.cs" id="4_1kkk2"]
 [ext_resource type="PackedScene" uid="uid://b2p7fh56ojclq" path="res://microgames/destroy_rotten_produce/destroy_rotten_produce_microgame.tscn" id="4_ofh1b"]
 [ext_resource type="PackedScene" uid="uid://cwxwa2f46orap" path="res://entities/vegetable_fridge_task/vegetable_fridge_model.tscn" id="7_8vs0j"]
+[ext_resource type="Script" path="res://tasks/SelectTaskHandler.cs" id="10_ncubc"]
+[ext_resource type="PackedScene" uid="uid://bemfdgy1p2a05" path="res://tasks/select_task_area.tscn" id="11_tjfnk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2nsqc"]
 size = Vector3(3.621, 2.7, 1.515)
@@ -39,6 +41,7 @@ FacingTarget = NodePath("..")
 
 [node name="TaskComponent" type="Node" parent="." node_paths=PackedStringArray("_MicrogameHandler", "_TaskCompletionHandler")]
 script = ExtResource("2_xwva2")
+TaskHealth = 2
 OperatorsAllowed = 2
 _MicrogameHandler = NodePath("../MicrogameHandler")
 _TaskCompletionHandler = NodePath("CompletionHandler")
@@ -62,5 +65,16 @@ transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -1, 2.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.35, 2.08165e-12)
 remote_path = NodePath("../../CollisionShape")
 use_global_coordinates = false
+
+[node name="SelectTaskHandler" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.01, 2.08165e-12)
+script = ExtResource("10_ncubc")
+
+[node name="SelectTaskArea" parent="SelectTaskHandler" instance=ExtResource("11_tjfnk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="SelectTaskArea2" parent="SelectTaskHandler" node_paths=PackedStringArray("_TileRayCast") instance=ExtResource("11_tjfnk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+_TileRayCast = NodePath("../SelectTaskArea/TileRayCast")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="VegetableFridgeModel" method="SetFacingDir"]
