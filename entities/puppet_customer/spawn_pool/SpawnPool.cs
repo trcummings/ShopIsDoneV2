@@ -3,6 +3,7 @@ using System;
 
 namespace ShopIsDone.Entities.PuppetCustomers
 {
+    [Tool]
     public partial class SpawnPool : MeshInstance3D
     {
         [Signal]

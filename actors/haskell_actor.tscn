@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=37 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_6jaxx"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="16_87xgg"]
 [ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="17_xmxqu"]
 [ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="18_64csj"]
+[ext_resource type="Script" path="res://action_points/BasicDeathHandler.cs" id="18_t6671"]
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="19_dsksq"]
 [ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://arena_actions/employee_actions/interrupt_task_action.tres" id="19_lonxh"]
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="19_vhxse"]
@@ -139,14 +140,16 @@ Id = "dead"
 _IsActive = false
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
+_DeathHandlerPath = NodePath("../DeathHandler")
 
 [node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_StateHandler")]
 script = ExtResource("21_4q2q7")
 _TaskHandler = NodePath("../../TaskHandler")
 _StateHandler = NodePath("../../StateHandler")
 
-[node name="DeathHandler" parent="ActionPointHandler" index="5" node_paths=PackedStringArray("_StateHandler")]
-_StateHandler = NodePath("../../StateHandler")
+[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
+script = ExtResource("18_t6671")
+_StateHandler = NodePath("../StateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("16_87xgg")

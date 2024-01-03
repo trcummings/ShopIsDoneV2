@@ -33,6 +33,11 @@ namespace ShopIsDone.Arenas
             });
         }
 
+        public bool WasOutcomeReached()
+        {
+            return IsPlayerVictorious() || WasPlayerDefeated();
+        }
+
         public bool IsPlayerVictorious()
         {
             return false;

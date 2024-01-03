@@ -23,6 +23,7 @@ namespace ShopIsDone.Utils.StateMachine
         public Array<State> Transitions = new Array<State>();
 
         // Internal vars
+        public bool HasBeenInitialized { get { return _HasBeenInitialized; } }
         private bool _HasBeenInitialized = false;
         private bool _OnUpdateHasFired = false;
 

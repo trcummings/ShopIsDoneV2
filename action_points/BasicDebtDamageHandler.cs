@@ -41,17 +41,19 @@ namespace ShopIsDone.ActionPoints
                 // Take hit animation (only if we took damage)
                 new ConditionalCommand(
                     () => payload.TotalDebtDamage > 0,
-                    _StateHandler.RunChangeState("hurt")
-                ),
-                // Set facing direction
-                new ConditionalCommand(
-                    () => payload.Positioning != Positions.Null,
-                    new ActionCommand(() =>
-                    {
-                        // Calculate facing direction of source
-                        var targetFacingDir = _StateHandler.Entity.GetFacingDirTowards(payload.Source.GlobalPosition);
-                        _StateHandler.Entity.FacingDirection = targetFacingDir;
-                    })
+                    new SeriesCommand(
+                        _StateHandler.RunChangeState("hurt"),
+                        // Set facing direction, if we're still alive
+                        new ConditionalCommand(
+                            () => !payload.ApHandler.IsMaxedOut() && payload.Positioning != Positions.Null,
+                            new ActionCommand(() =>
+                            {
+                                // Calculate facing direction of source
+                                var targetFacingDir = _StateHandler.Entity.GetFacingDirTowards(payload.Source.GlobalPosition);
+                                _StateHandler.Entity.FacingDirection = targetFacingDir;
+                            })
+                        )
+                    )
                 ),
                 // Return to idle
                 _StateHandler.RunChangeState("idle")

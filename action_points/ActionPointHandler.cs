@@ -20,6 +20,7 @@ namespace ShopIsDone.ActionPoints
         public int ApAfterDrain;
 
         // Debt
+        public bool IsDamageDirect;
         public int TotalDebtDamage;
         public int DebtAfterDamage;
     }
@@ -145,6 +146,7 @@ namespace ShopIsDone.ActionPoints
                 ApAfterDrain = apAfterDrain,
                 TotalDrain = totalDrain,
 
+                IsDamageDirect = receivedDirectApDebt,
                 TotalDebtDamage = totalDebtDamage,
                 DebtAfterDamage = debtAfterDamage
             };
@@ -163,21 +165,16 @@ namespace ShopIsDone.ActionPoints
                     () => _EvasionHandler.EvadedDamage(payload),
                     _EvasionHandler.HandleEvasion(payload),
                     // Otherwise, handle debt damage
-                    new ConditionalCommand(
-                        // If we took damage check
-                        () => receivedDirectApDebt || totalDebtDamage > 0,
-                        // Handle it
-                        new SeriesCommand(
-                            // Handle damage
-                            _DebtDamageHandler.HandleDebtDamage(payload),
-                            // Handle death (deferred so we can decide after
-                            // damage if we should die
-                            new DeferredCommand(() => new ConditionalCommand(
-                                () => ActionPointDebt == MaxActionPoints,
-                                // If we've maxed out AP debt, run death
-                                new DeferredCommand(_DeathHandler.Die)
-                            ))
-                        )
+                    new SeriesCommand(
+                        // Handle damage
+                        _DebtDamageHandler.HandleDebtDamage(payload),
+                        // Handle death (deferred so we can decide after
+                        // damage if we should die
+                        new DeferredCommand(() => new ConditionalCommand(
+                            () => ActionPointDebt == MaxActionPoints,
+                            // If we've maxed out AP debt, run death
+                            new DeferredCommand(_DeathHandler.Die)
+                        ))
                     )
                 )
             );

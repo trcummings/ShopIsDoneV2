@@ -68,12 +68,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
                     targetStateHandler.RunChangeState("alert")
                 ),
                 // Run employee microgame
-                _MicrogameHandler.RunMicrogame(payload),
-                // Return to idle
-                new ParallelCommand(
-                    _StateHandler.RunChangeState("idle"),
-                    targetStateHandler.RunChangeState("idle")
-                )
+                _MicrogameHandler.RunMicrogame(payload)
             );
         }
     }

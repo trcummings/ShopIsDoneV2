@@ -47,6 +47,8 @@ unique_name_in_owner = true
 layers = 513
 pixel_size = 0.025
 billboard = 1
+double_sided = false
+no_depth_test = true
 text = "[1]"
 font = ExtResource("2")
 

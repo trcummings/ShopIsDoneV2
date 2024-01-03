@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://tasks/SelectTaskArea.cs" id="2_vma4j"]
 
 [node name="SelectTaskArea" instance=ExtResource("1_ufymr")]
-collision_layer = 8
+collision_layer = 256
 script = ExtResource("2_vma4j")
 
 [node name="TileMesh" parent="." index="1"]

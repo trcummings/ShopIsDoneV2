@@ -26,12 +26,19 @@ namespace ShopIsDone.Arenas.Battles
         {
             // Do not process until we've been initialized
             SetProcess(false);
+            _BattleStateMachine.ChangeState("Idle");
         }
 
         public void Init()
         {
             // Start processing after we've been initialized
             SetProcess(true);
+        }
+
+        public void Stop()
+        {
+            SetProcess(false);
+            _BattleStateMachine.ChangeState("Idle");
         }
 
         public override void _Process(double _)

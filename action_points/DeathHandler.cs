@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 
 namespace ShopIsDone.ActionPoints
@@ -10,7 +11,7 @@ namespace ShopIsDone.ActionPoints
 	}
 
 	// Null implementation of interface
-	public partial class DeathHandler : Node, IDeathHandler
+	public partial class DeathHandler : NodeComponent, IDeathHandler
     {
 		public virtual Command Die()
 		{

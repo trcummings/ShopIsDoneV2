@@ -50,6 +50,9 @@ namespace ShopIsDone.Arenas.Battles.States
 
         private void RunQueue()
         {
+            // Only run the queue if this state has been initialized
+            if (!HasBeenInitialized) return;
+
             // As long as there's still customers that can act, run the queue
             if (_Customers.Count > 0 || (_CurrentCustomer != null && _CurrentCustomer.CanStillAct()))
             {
@@ -60,7 +63,7 @@ namespace ShopIsDone.Arenas.Battles.States
                 if (_CurrentCustomer == null) _CurrentCustomer = _Customers.Dequeue();
 
                 // If our current customer can still act, then act
-                if (_CurrentCustomer.CanStillAct())
+                if (_CurrentCustomer.CanStillAct() && _CurrentCustomer.Entity.IsActive())
                 {
                     // One shot connection to finish action execution
                     var command = _CurrentCustomer.Act();

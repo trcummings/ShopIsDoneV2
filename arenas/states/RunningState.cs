@@ -26,10 +26,16 @@ namespace ShopIsDone.Arenas.States
             // Enable Pausing
             _PauseInputHandler.IsActive = true;
 
-            // TODO: Consume phase commands as they come in
-
             // Start battle phase helper
             _PhaseManager.Init();
+        }
+
+        public override void OnExit(string nextState)
+        {
+            // Stop phase manager
+            _PhaseManager.Stop();
+
+            base.OnExit(nextState);
         }
     }
 }

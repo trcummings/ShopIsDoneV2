@@ -8,11 +8,10 @@ namespace ShopIsDone.ActionPoints
     public partial class BasicDeathHandler : DeathHandler
 	{
         [Export]
-        private EntityStateHandler _StateHandler;
+        protected EntityStateHandler _StateHandler;
 
         public override Command Die()
         {
-            // TODO: Inform the arena about a death
             return _StateHandler.RunChangeState("dead");
         }
     }

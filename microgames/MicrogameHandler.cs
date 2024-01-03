@@ -37,7 +37,7 @@ namespace ShopIsDone.Microgames
 
         public string GetMicrogamePrompt(MicrogamePayload payload)
         {
-            return GetMicrogame(payload).PromptText;
+            return GetMicrogame(payload).WidgetText;
         }
 
         private Microgame GetMicrogame(MicrogamePayload _)

@@ -43,6 +43,9 @@ namespace ShopIsDone.Arenas
         [Export]
         private ArenaOutcomeService _OutcomeService;
 
+        [Export]
+        private UnitDeathService _UnitDeathService;
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -60,10 +63,12 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.RegisterService(_EffortMeterService);
             _InjectionProvider.RegisterService(_ScriptQueueService);
             _InjectionProvider.RegisterService(_OutcomeService);
+            _InjectionProvider.RegisterService(_UnitDeathService);
 
             // Initialize services (with strict order)
             _TileManager.Init();
             _ActionService.Init();
+            _UnitDeathService.Init();
 
             // Move units into arena
             var placementTiles = GetTree()
@@ -98,6 +103,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.UnregisterService(_EffortMeterService);
             _InjectionProvider.UnregisterService(_ScriptQueueService);
             _InjectionProvider.UnregisterService(_OutcomeService);
+            _InjectionProvider.UnregisterService(_UnitDeathService);
         }
 
         public void FinishArena()
