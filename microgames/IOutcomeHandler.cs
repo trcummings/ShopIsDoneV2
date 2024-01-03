@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using ShopIsDone.Utils.Commands;
-using ShopIsDone.Utils.Positioning;
 using ShopIsDone.Core;
 
 namespace ShopIsDone.Microgames.Outcomes
@@ -18,12 +17,7 @@ namespace ShopIsDone.Microgames.Outcomes
 
     public interface IOutcomeHandler : IComponent
     {
-        Command HandleOutcome(
-            Microgame.Outcomes outcome,
-            IOutcomeHandler[] targets,
-            IOutcomeHandler source,
-            Positions position
-        );
+        Command HandleOutcome(MicrogamePayload payload);
 
         DamagePayload GetDamage();
     }

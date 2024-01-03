@@ -11,6 +11,7 @@ namespace ShopIsDone.Microgames
     public partial class MicrogamePayload : GodotObject
     {
         public Microgame Microgame;
+        public Microgame.Outcomes Outcome;
         public IOutcomeHandler[] Targets;
         public IOutcomeHandler Source;
         public Positions Position = Positions.Null;
@@ -36,23 +37,29 @@ namespace ShopIsDone.Microgames
             return new SeriesCommand(
                 new AsyncCommand(async () =>
                 {
+                    // Init battle signals
                     if (payload.IsPlayerAggressor) EmitSignal(nameof(AttackStarted));
                     else EmitSignal(nameof(DefenseStarted));
 
+                    // Run microgame
                     _MicrogameManager.RunMicrogame(payload.Microgame, payload.Message);
+
+                    // Pull outcome from result
                     var result = await ToSignal(_MicrogameManager, nameof(_MicrogameManager.MicrogameFinished));
                     outcome = (Microgame.Outcomes)(int)result[0];
+                    // Set outcome in payload
+                    payload.Outcome = outcome;
                 }),
-                new DeferredCommand(() => PostMicrogame(payload, outcome))
+                new DeferredCommand(() => PostMicrogame(payload))
             );
         }
 
-        private Command PostMicrogame(MicrogamePayload payload, Microgame.Outcomes outcome)
+        private Command PostMicrogame(MicrogamePayload payload)
         {
             return new SeriesCommand(
-                payload.Source.HandleOutcome(outcome, payload.Targets, payload.Source, payload.Position),
+                payload.Source.HandleOutcome(payload),
                 new DeferredCommand(() => new SeriesCommand(
-                    payload.Targets.Select(t => t.HandleOutcome(outcome, payload.Targets, payload.Source, payload.Position)).ToArray())
+                    payload.Targets.Select(t => t.HandleOutcome(payload)).ToArray())
                 )
             );
         }

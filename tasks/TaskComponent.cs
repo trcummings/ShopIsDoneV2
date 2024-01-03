@@ -147,18 +147,13 @@ namespace ShopIsDone.Tasks
             );
         }
 
-        public Command HandleOutcome(
-            Microgame.Outcomes outcome,
-            IOutcomeHandler[] targets,
-            IOutcomeHandler source,
-            Positions _ = Positions.Null
-        )
+        public Command HandleOutcome(MicrogamePayload payload)
         {
             return new IfElseCommand(
                 // Win check
-                () => outcome == Microgame.Outcomes.Win,
+                () => payload.Outcome == Microgame.Outcomes.Win,
                 // If the player wins, damage the task
-                RunTaskProgress(targets.Select(t => t.GetDamage().Damage).ToArray()),
+                RunTaskProgress(payload.Targets.Select(t => t.GetDamage().Damage).ToArray()),
                 // On Lose
                 new Command()
             );

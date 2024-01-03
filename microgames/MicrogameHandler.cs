@@ -4,6 +4,7 @@ using ShopIsDone.Core;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Microgames.Outcomes;
 using ShopIsDone.Utils.Commands;
+using Godot.Collections;
 
 namespace ShopIsDone.Microgames
 {

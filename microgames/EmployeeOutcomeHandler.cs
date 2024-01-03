@@ -2,7 +2,6 @@
 using ShopIsDone.ActionPoints;
 using Godot;
 using Godot.Collections;
-using ShopIsDone.Utils.Positioning;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using ApConsts = ShopIsDone.ActionPoints.Consts;
@@ -14,25 +13,27 @@ namespace ShopIsDone.Microgames.Outcomes
         [Export]
         private ActionPointHandler _ActionPointHandler;
 
-        public Command HandleOutcome(
-            Microgame.Outcomes outcome,
-            IOutcomeHandler[] _,
-            IOutcomeHandler source,
-            Positions position = Positions.Null
-        )
+        public Command HandleOutcome(MicrogamePayload payload)
         {
-            var damage = source.GetDamage();
+            var damage = payload.Source.GetDamage();
+
+            // Concat payload message to damage payload
+            var message = new Dictionary<string, Variant>()
+            {
+                { ApConsts.DAMAGE_SOURCE, payload.Source.Entity },
+                // If it's a win (for the player) pass along no damage
+                { ApConsts.DEBT_DAMAGE, payload.Outcome == Microgame.Outcomes.Win ? 0 : damage.Damage }
+            };
+            if (payload.Message != null)
+            {
+                foreach (var kv in payload.Message) message[kv.Key] = kv.Value;
+            }
 
             return new ConditionalCommand(
                 // Are we still active check
                 Entity.IsActive,
                 // Deal damage to ourselves
-                _ActionPointHandler.TakeAPDamage(new Dictionary<string, Variant>()
-                {
-                    { ApConsts.DAMAGE_SOURCE, source.Entity },
-                    // If it's a win (for the player) pass along no damage
-                    { ApConsts.DEBT_DAMAGE, outcome == Microgame.Outcomes.Win ? 0 : damage.Damage }
-                })
+                _ActionPointHandler.TakeAPDamage(message)
             );
         }
 

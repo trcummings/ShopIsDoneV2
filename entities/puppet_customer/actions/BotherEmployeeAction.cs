@@ -50,7 +50,8 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
             var payload = new MicrogamePayload()
             {
                 Targets = new[] { targetOutcomeHandler },
-                Position = Positioning.GetPositioning(Entity.FacingDirection, target.FacingDirection)
+                Position = Positioning.GetPositioning(Entity.FacingDirection, target.FacingDirection),
+                Message = message ?? new Dictionary<string, Variant>()
             };
 
             return new SeriesCommand(

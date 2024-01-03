@@ -132,7 +132,7 @@ namespace ShopIsDone.ActionPoints
             var hadNoAPLeftToDrain = ActionPoints == 0;
 
             // Pull out positioning
-            var positioning = (Positions)(int)message.GetValueOrDefault(Consts.POSITIONING_HIT_CHANCE, (int)Positions.Null);
+            var positioning = (Positions)(int)message.GetValueOrDefault(Consts.POSITIONING, (int)Positions.Null);
 
             // Create payload
             var payload = new ApDamagePayload()
