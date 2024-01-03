@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cvwykweh5xmw8"]
+
+[ext_resource type="Script" path="res://arena_actions/employee_actions/InterruptTaskAction.cs" id="1_3fulg"]
+
+[resource]
+script = ExtResource("1_3fulg")
+Id = "interrupt_task"
+ActionName = "Interrupt Task"
+EndsTurnAfterUse = false
+CanBeUsedMultipleTimes = true
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = false
+Range = 0
+TargetDisposition = 0
+ActionType = 0
+IndicatorType = 0
+FollowEntity = false
+FocusEntity = false
+RotateToFaceEntity = false
