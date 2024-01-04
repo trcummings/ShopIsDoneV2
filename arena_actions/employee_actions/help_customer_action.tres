@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://basxpcdqgypj5"]
+
+[ext_resource type="Script" path="res://arena_actions/employee_actions/HelpCustomerAction.cs" id="1_53vfm"]
+
+[resource]
+script = ExtResource("1_53vfm")
+Id = "help_customer"
+ActionName = "Help Customer"
+EndsTurnAfterUse = false
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = false
+Range = 1
+TargetDisposition = 2
+ActionType = 3
+IndicatorType = 2
+FollowEntity = true
+FocusEntity = true
+RotateToFaceEntity = true

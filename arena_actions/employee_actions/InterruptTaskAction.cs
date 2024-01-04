@@ -4,8 +4,9 @@ using ShopIsDone.Core;
 using ShopIsDone.Tasks;
 using ShopIsDone.Utils.Commands;
 using System;
+using ShopIsDone.Actions;
 
-namespace ShopIsDone.Actions
+namespace ShopIsDone.Employees.Actions
 {
 	public partial class InterruptTaskAction : ArenaAction
 	{

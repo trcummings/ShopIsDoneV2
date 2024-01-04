@@ -13,6 +13,7 @@ using System.Linq;
 using ShopIsDone.ActionPoints;
 using ActionConsts = ShopIsDone.Actions.Consts;
 using ShopIsDone.Utils.Positioning;
+using ShopIsDone.Cameras;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
@@ -43,6 +44,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         [Inject]
         private TileManager _TileManager;
 
+        [Inject]
+        private ScreenshakeService _Screenshake;
+
         // State Variables
         private Vector3 _InitialUnitFacingDir = Vector3.Zero;
         private Tile _InitialCursorTile;
@@ -50,6 +54,20 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         // Message vars
         private int _TransferAmount = 0;
+
+        public override void _Ready()
+        {
+            base._Ready();
+
+            ConfirmedInvalidSelection += () =>
+            {
+                // A little bit of screenshake just on the x-axis on invalid
+                _Screenshake.Shake(
+                    ScreenshakeHandler.ShakePayload.ShakeSizes.Mild,
+                    ScreenshakeHandler.ShakeAxis.XOnly
+                );
+            };
+        }
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
@@ -139,6 +157,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 // ours, emit an invalid signal
                 if (!_AvailableTiles.Contains(currentTile) || !_Action.ContainsValidTarget(currentTile))
                 {
+
                     EmitSignal(nameof(ConfirmedInvalidSelection));
                     return;
                 }

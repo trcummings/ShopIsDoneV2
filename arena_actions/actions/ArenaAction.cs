@@ -44,8 +44,7 @@ namespace ShopIsDone.Actions
         {
             Any,
             Friends,
-            Enemies,
-            Neutrals
+            Enemies
         }
 
         [ExportGroup("Widget")]
@@ -98,6 +97,31 @@ namespace ShopIsDone.Actions
          * target? */
         public virtual bool ContainsValidTarget(Tile tile)
         {
+            // Check if the tile is blocked or unoccupied
+            if (tile.HasObstacleOnTile || !tile.HasUnitOnTile()) return false;
+
+            // Get the unit on the tile
+            var unit = tile.UnitOnTile;
+
+            // If the unit is not active, then they're invalid
+            if (!unit.IsActive()) return false;
+
+            // If the unit doesn't have the required components, it's an invalid
+            // target
+            if (!TargetHasRequiredComponents(unit)) return false;
+
+            // Check disposition
+            var teamHandler = Entity.GetComponent<TeamHandler>();
+            if (TargetDisposition == DispositionTypes.Any) return true;
+            else if (TargetDisposition == DispositionTypes.Friends)
+            {
+                return teamHandler.IsOnSameTeam(unit);
+            }
+            else if (TargetDisposition == DispositionTypes.Enemies)
+            {
+                return !teamHandler.IsOnSameTeam(unit);
+            }
+
             return false;
         }
 

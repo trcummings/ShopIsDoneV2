@@ -1,8 +1,6 @@
 using System;
-using System.Threading.Tasks;
 using Godot;
 using ShopIsDone.EntityStates;
-using ShopIsDone.Models;
 using Godot.Collections;
 
 namespace ShopIsDone.Entities.PuppetCustomers.States

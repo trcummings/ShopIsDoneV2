@@ -16,6 +16,7 @@
 environment = ExtResource("2_2x2uj")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
+visible = false
 light_energy = 0.268
 
 [node name="OmniLight3D" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="0"]
@@ -46,7 +47,7 @@ data = {
 metadata/_edit_lock_ = true
 
 [node name="Customer" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="0" instance=ExtResource("7_xooi4")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7, 0, -3)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3, 0, -3)
 
 [node name="VegetableFridge" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="1" instance=ExtResource("8_5fhod")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 7)
