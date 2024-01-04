@@ -4,7 +4,7 @@ using System.Linq;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Models.IsometricModels;
 using ShopIsDone.Utils.DependencyInjection;
-using ShopIsDone.Actions;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Cameras
 {
@@ -13,15 +13,27 @@ namespace ShopIsDone.Cameras
         [Export]
         public IsometricCamera _IsometricCamera;
 
+        private Callable _CameraRotatedCallable;
+        private Callable _IsoSpriteAddedCallable;
+
+        public override void _Ready()
+        {
+            base._Ready();
+            _CameraRotatedCallable = new Callable(this, nameof(OnCameraRotated));
+            _IsoSpriteAddedCallable = new Callable(this, nameof(OnPotentialIsoSpriteAdded));
+        }
+
         public void Init()
         {
             // Connect to camera rotation event
-            _IsometricCamera.CameraRotated += OnCameraRotated;
+            _IsometricCamera.SafeConnect(nameof(_IsometricCamera.CameraRotated), _CameraRotatedCallable);
+
             // Initially send out camera rotation event to set all sprites correctly
             OnCameraRotated(_IsometricCamera.GetNormalizedForwardBasis());
+
             // When an isometric sprite gets added, make sure it gets initialized
             // with the proper viewing direction
-            GetTree().NodeAdded += OnPotentialIsoSpriteAdded;
+            GetTree().SafeConnect("node_added", _IsoSpriteAddedCallable);
         }
 
         public Vector3 GetBasisXformedDir(float horizontal, float vertical, float rotateBy = Mathf.Pi / 4)
