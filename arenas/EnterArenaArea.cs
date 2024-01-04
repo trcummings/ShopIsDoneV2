@@ -24,7 +24,7 @@ namespace ShopIsDone.Arenas
 
         private void OnBodyEntered(Node3D body)
         {
-            if (body is Haskell)
+            if (body is Actor)
             {
                 CallDeferred(nameof(Disable));
                 EmitSignal(nameof(EnteredArena), _Arena);

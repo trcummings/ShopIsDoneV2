@@ -18,11 +18,11 @@ namespace ShopIsDone.Levels
         [Export]
         private Node3D _DefaultSpawnPoint;
 
-        private Haskell _Haskell;
+        private Actor _Haskell;
 
         public void Init()
         {
-            _Haskell = _HaskellScene.Instantiate<Haskell>();
+            _Haskell = _HaskellScene.Instantiate<Actor>();
             AddChild(_Haskell);
 
             // Move unit to the default spawn point
