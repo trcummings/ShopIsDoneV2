@@ -45,6 +45,11 @@ namespace ShopIsDone.Tiles
             }
         }
 
+        public void CleanUp()
+        {
+            foreach (var tile in _TilesByPos.Values) tile.QueueFree();
+        }
+
         public void UpdateTiles()
         {
             foreach (var tile in _TilesByPos.Values) tile.Update();
