@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=10 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dvyl4d7ds1ji7" path="res://dialogue/dialogue_area.tscn" id="3_hk7sm"]
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="4_duy8r"]
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="5_arh5s"]
+[ext_resource type="Script" path="res://levels/test_level/conditions/CustomerSatisfiedCondition.cs" id="6_a2ot6"]
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="7_xooi4"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="8_5fhod"]
 
@@ -30,6 +31,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1546, -4.76835e-07, -1.313
 
 [node name="Arena" parent="World/NavigationRegion3D/Environment" index="4" instance=ExtResource("5_arh5s")]
 
+[node name="CustomerSatisfiedCondition" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ConditionsService" index="0" node_paths=PackedStringArray("Customer")]
+script = ExtResource("6_a2ot6")
+Customer = NodePath("../../../Entities/Customer")
+_Id = "customer_satisfied_condition"
+
 [node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../TileManager")
 
@@ -41,7 +47,6 @@ metadata/_edit_lock_ = true
 
 [node name="Customer" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="0" instance=ExtResource("7_xooi4")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7, 0, -3)
-EditorFacingDir = 1
 
 [node name="VegetableFridge" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="1" instance=ExtResource("8_5fhod")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 7)
