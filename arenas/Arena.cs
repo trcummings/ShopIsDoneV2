@@ -8,6 +8,7 @@ using ShopIsDone.Actions;
 using ShopIsDone.Actions.Effort;
 using ShopIsDone.Arenas.ArenaScripts;
 using ArenaConsts = ShopIsDone.Arenas.States.Consts;
+using ShopIsDone.Conditions;
 
 namespace ShopIsDone.Arenas
 {
@@ -46,6 +47,9 @@ namespace ShopIsDone.Arenas
         [Export]
         private UnitDeathService _UnitDeathService;
 
+        [Export]
+        private ConditionsService _ConditionsService;
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -64,11 +68,13 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.RegisterService(_ScriptQueueService);
             _InjectionProvider.RegisterService(_OutcomeService);
             _InjectionProvider.RegisterService(_UnitDeathService);
+            _InjectionProvider.RegisterService(_ConditionsService);
 
             // Initialize services (with strict order)
             _TileManager.Init();
             _ActionService.Init();
             _UnitDeathService.Init();
+            _ConditionsService.Init();
 
             // Move units into arena
             var placementTiles = GetTree()
@@ -104,6 +110,10 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.UnregisterService(_ScriptQueueService);
             _InjectionProvider.UnregisterService(_OutcomeService);
             _InjectionProvider.UnregisterService(_UnitDeathService);
+            _InjectionProvider.UnregisterService(_ConditionsService);
+
+            // Clean up tile manager tiles
+            _TileManager.CleanUp();
         }
 
         public void FinishArena()

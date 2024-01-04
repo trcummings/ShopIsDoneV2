@@ -6,6 +6,7 @@ using System.Linq;
 using Godot.Collections;
 using ArenaStateConsts = ShopIsDone.Arenas.States.Consts;
 using FinishedConsts = ShopIsDone.Arenas.States.Finished.Consts;
+using ShopIsDone.Conditions;
 
 namespace ShopIsDone.Arenas
 {
@@ -16,6 +17,9 @@ namespace ShopIsDone.Arenas
 
         [Export]
         private StateMachine _ArenaStateMachine;
+
+        [Export]
+        private ConditionsService _ConditionsService;
 
         public void AdvanceToVictoryPhase()
         {
@@ -40,7 +44,7 @@ namespace ShopIsDone.Arenas
 
         public bool IsPlayerVictorious()
         {
-            return false;
+            return _ConditionsService.AllConditionsComplete();
         }
 
         public bool WasPlayerDefeated()

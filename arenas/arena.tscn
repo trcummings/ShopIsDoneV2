@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=54 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" path="res://arenas/states/battle_states/PrepPlayerTurnBattleState.cs" id="9_quvvh"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/PlayerTurnBattleState.cs" id="10_hv83v"]
 [ext_resource type="Script" path="res://arenas/UnitDeathService.cs" id="10_y7i7b"]
+[ext_resource type="Script" path="res://conditions/ConditionsService.cs" id="11_jvwpy"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/ChoosingActionState.cs" id="14_rj6r3"]
 [ext_resource type="PackedScene" uid="uid://2ptpw2u53fdh" path="res://arenas/states/player_turn_states/choosing_unit_state.tscn" id="15_hbm50"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/EndingTurnState.cs" id="17_4ddch"]
@@ -62,7 +63,7 @@ bg_color = Color(0.298039, 0.298039, 0.298039, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uec0k"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_EffortMeterService", "_ScriptQueueService", "_OutcomeService", "_UnitDeathService") groups=["arena"]]
+[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_EffortMeterService", "_ScriptQueueService", "_OutcomeService", "_UnitDeathService", "_ConditionsService") groups=["arena"]]
 script = ExtResource("1_loukv")
 _ArenaStateMachine = NodePath("ArenaStateMachine")
 _TileManager = NodePath("Tiles")
@@ -72,6 +73,7 @@ _EffortMeterService = NodePath("Services/EffortMeterService")
 _ScriptQueueService = NodePath("Services/ScriptQueueService")
 _OutcomeService = NodePath("Services/ArenaOutcomeService")
 _UnitDeathService = NodePath("Services/UnitDeathService")
+_ConditionsService = NodePath("Services/ConditionsService")
 metadata/_edit_lock_ = true
 
 [node name="Services" type="Node" parent="."]
@@ -102,13 +104,17 @@ Team = 1
 script = ExtResource("8_tmi38")
 _ActionService = NodePath("../ActionService")
 
-[node name="ArenaOutcomeService" type="Node" parent="Services" node_paths=PackedStringArray("_PlayerUnitService", "_ArenaStateMachine")]
+[node name="ArenaOutcomeService" type="Node" parent="Services" node_paths=PackedStringArray("_PlayerUnitService", "_ArenaStateMachine", "_ConditionsService")]
 script = ExtResource("9_i41lp")
 _PlayerUnitService = NodePath("../PlayerUnitService")
 _ArenaStateMachine = NodePath("../../ArenaStateMachine")
+_ConditionsService = NodePath("../ConditionsService")
 
 [node name="UnitDeathService" type="Node" parent="Services"]
 script = ExtResource("10_y7i7b")
+
+[node name="ConditionsService" type="Node" parent="Services"]
+script = ExtResource("11_jvwpy")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
