@@ -4,6 +4,7 @@ using ShopIsDone.ActionPoints;
 using ShopIsDone.EntityStates;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.Tasks
 {
@@ -29,7 +30,7 @@ namespace ShopIsDone.Tasks
         {
             return new SeriesCommand(
                 // Change to DoingTask state
-                _StateHandler.RunChangeState("doing_task"),
+                _StateHandler.RunChangeState(StateConsts.Employees.DO_TASK),
                 // Wait a bit
                 new WaitForCommand(Entity, 0.25F),
                 // Register the task to the pawn state and vice versa
@@ -51,7 +52,7 @@ namespace ShopIsDone.Tasks
                     _CurrentTask = null;
                 }),
                 // Go back to normal state
-                _StateHandler.RunChangeState("idle"),
+                _StateHandler.RunChangeState(StateConsts.IDLE),
                 // Wait a moment for the result to have impact
                 new WaitForCommand(Entity, 0.25f)
             );
