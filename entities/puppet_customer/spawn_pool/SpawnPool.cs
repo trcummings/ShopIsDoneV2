@@ -32,13 +32,16 @@ namespace ShopIsDone.Entities.PuppetCustomers
         public void Disappear()
         {
             _AnimPlayer.Play("Disappear");
-            Hide();
         }
 
         private void OnAnimFinished(string animName)
         {
             if (animName == "Appear") EmitSignal(nameof(Appeared));
-            else if (animName == "Disappear") EmitSignal(nameof(Disappeared));
+            else if (animName == "Disappear")
+            {
+                EmitSignal(nameof(Disappeared));
+                Hide();
+            }
         }
     }
 }
