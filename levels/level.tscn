@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_b2cin"]
 [ext_resource type="Script" path="res://camera/InputXformer.cs" id="2_f8i2e"]
 [ext_resource type="PackedScene" uid="uid://b2efiom6qa6ym" path="res://camera/isometric_camera.tscn" id="2_s72y3"]
-[ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_53pcu"]
 [ext_resource type="PackedScene" uid="uid://df0fk08hmrihh" path="res://microgames/microgame_manager.tscn" id="3_fpukf"]
 [ext_resource type="Script" path="res://levels/level_states/InitializingState.cs" id="3_v4svp"]
 [ext_resource type="Script" path="res://levels/level_states/FreeMoveState.cs" id="4_x3fct"]
@@ -27,6 +26,7 @@
 [ext_resource type="Script" path="res://levels/PlayerCharacterManager.cs" id="17_qs4bj"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="20_qvdr3"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
+[ext_resource type="PackedScene" uid="uid://b7n2nvaxotrvp" path="res://actors/ricky_actor.tscn" id="24_2th8p"]
 [ext_resource type="PackedScene" uid="uid://ddwvyl3d8scbv" path="res://levels/level_states/game_over_ui.tscn" id="26_yq21p"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lbwya"]
@@ -151,7 +151,7 @@ current = true
 
 [node name="PlayerCharacterManager" type="Node3D" parent="World" node_paths=PackedStringArray("_DefaultSpawnPoint")]
 script = ExtResource("17_qs4bj")
-_HaskellScene = ExtResource("3_53pcu")
+_HaskellScene = ExtResource("24_2th8p")
 _DefaultSpawnPoint = NodePath("../DefaultSpawnPoint")
 metadata/_edit_lock_ = true
 

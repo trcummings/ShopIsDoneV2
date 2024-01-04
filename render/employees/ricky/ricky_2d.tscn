@@ -1,7 +1,8 @@
-[gd_scene load_steps=43 format=3 uid="uid://dlgw7l30auvan"]
+[gd_scene load_steps=44 format=3 uid="uid://dlgw7l30auvan"]
 
 [ext_resource type="Texture2D" uid="uid://cd31ju0o0kmay" path="res://textures/characters/ricky/ricky-skeleton.png" id="1"]
 [ext_resource type="Script" path="res://render/isometric_models/SkeletalIsometricSprite2D.cs" id="2"]
+[ext_resource type="Script" path="res://render/poly_fix.gd" id="3_4mmvh"]
 
 [sub_resource type="Animation" id="2"]
 length = 0.001
@@ -1754,6 +1755,23 @@ tracks/15/keys = {
 "update": 0,
 "values": [0.0, 0.0]
 }
+tracks/16/type = "method"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath(".")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.1, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": ["footstep"],
+"method": &"FireEvent"
+}, {
+"args": ["footttep"],
+"method": &"FireEvent"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k8c1m"]
 _data = {
@@ -2841,7 +2859,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/1/type = "value"
@@ -2853,7 +2871,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/2/type = "value"
@@ -2865,7 +2883,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/3/type = "value"
@@ -2877,7 +2895,7 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/4/type = "value"
@@ -2889,7 +2907,7 @@ tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/5/type = "value"
@@ -2901,7 +2919,7 @@ tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/6/type = "value"
@@ -2913,7 +2931,7 @@ tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [true]
 }
 tracks/7/type = "value"
@@ -2940,7 +2958,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/1/type = "value"
@@ -2952,7 +2970,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/2/type = "value"
@@ -2964,7 +2982,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [true]
 }
 tracks/3/type = "value"
@@ -2976,7 +2994,7 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/4/type = "value"
@@ -2988,7 +3006,7 @@ tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/5/type = "value"
@@ -3000,7 +3018,7 @@ tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/6/type = "value"
@@ -3012,7 +3030,7 @@ tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/7/type = "value"
@@ -3139,7 +3157,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/1/type = "value"
@@ -3151,7 +3169,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/2/type = "value"
@@ -3163,7 +3181,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/3/type = "value"
@@ -3175,7 +3193,7 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/4/type = "value"
@@ -3187,7 +3205,7 @@ tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/5/type = "value"
@@ -3199,7 +3217,7 @@ tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/6/type = "value"
@@ -3211,7 +3229,7 @@ tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/7/type = "value"
@@ -3239,7 +3257,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/1/type = "value"
@@ -3251,7 +3269,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/2/type = "value"
@@ -3263,7 +3281,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/3/type = "value"
@@ -3275,7 +3293,7 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/4/type = "value"
@@ -3287,7 +3305,7 @@ tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/5/type = "value"
@@ -3299,7 +3317,7 @@ tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [true]
 }
 tracks/6/type = "value"
@@ -3311,7 +3329,7 @@ tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/7/type = "value"
@@ -3339,7 +3357,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/1/type = "value"
@@ -3351,7 +3369,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.8, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [false, true, false]
 }
 tracks/2/type = "value"
@@ -3363,7 +3381,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.6, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [false, true, false]
 }
 tracks/3/type = "value"
@@ -3375,7 +3393,7 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [false, true, false]
 }
 tracks/4/type = "value"
@@ -3387,7 +3405,7 @@ tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [false, true, false]
 }
 tracks/5/type = "value"
@@ -3399,7 +3417,7 @@ tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
+"update": 1,
 "values": [true, false]
 }
 tracks/6/type = "value"
@@ -3411,7 +3429,7 @@ tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [false]
 }
 tracks/7/type = "value"
@@ -3611,6 +3629,7 @@ rest = Transform2D(1, 0, 0, 1, 0, -42)
 
 [node name="L_Shoulder" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest"]
 position = Vector2(-46, -49)
+scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, -46, -49)
 
 [node name="L_Arm" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest/L_Shoulder"]
@@ -3620,6 +3639,9 @@ rest = Transform2D(1, 0, 0, 1, -17, 44)
 [node name="L_Forearm" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest/L_Shoulder/L_Arm"]
 position = Vector2(-6, 55)
 rest = Transform2D(1, 0, 0, 1, -6, 55)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 90.0
 
 [node name="R_Shoulder" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest"]
 position = Vector2(45, -48)
@@ -3632,11 +3654,18 @@ rest = Transform2D(1, 0, 0, 1, 23, 53)
 [node name="R_Forearm" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest/R_Shoulder/R_Arm"]
 position = Vector2(7, 48)
 rest = Transform2D(1, 0, 0, 1, 7, 48)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 90.0
 
 [node name="Head" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest"]
 position = Vector2(0, -75)
 rotation = -1.56595
+scale = Vector2(0.999999, 0.999999)
 rest = Transform2D(0.0048415, -0.999988, 0.999988, 0.0048415, 0, -75)
+auto_calculate_length_and_angle = false
+length = 92.393
+bone_angle = 7.49401e-15
 
 [node name="Legs" type="Bone2D" parent="Model/Skeleton2D/Hip"]
 rotation = 1.5708
@@ -3645,6 +3674,9 @@ rest = Transform2D(-4.37114e-08, 1, -1, -4.37114e-08, 0, 0)
 [node name="Foot" type="Bone2D" parent="Model/Skeleton2D/Hip/Legs"]
 position = Vector2(105, -4.5897e-06)
 rest = Transform2D(1, 0, 0, 1, 105, -4.5897e-06)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
 
 [node name="Polygons" type="Node2D" parent="Model"]
 
@@ -3662,6 +3694,7 @@ uv = PackedVector2Array(250.255, 318.336, 228.862, 333.022, 232.513, 364.431, 27
 polygons = [PackedInt32Array(0, 1, 6), PackedInt32Array(1, 2, 6), PackedInt32Array(2, 3, 6), PackedInt32Array(5, 0, 6), PackedInt32Array(3, 4, 6), PackedInt32Array(4, 5, 6)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 1
+script = ExtResource("3_4mmvh")
 
 [node name="L_Arm" type="Polygon2D" parent="Model/Polygons/Front/L_Arm"]
 position = Vector2(-385, -248)
@@ -3672,6 +3705,7 @@ uv = PackedVector2Array(322.022, 227.15, 299.825, 249.796, 293.996, 275.132, 296
 polygons = [PackedInt32Array(0, 1, 8), PackedInt32Array(6, 7, 8), PackedInt32Array(7, 0, 8), PackedInt32Array(1, 2, 9), PackedInt32Array(8, 1, 9), PackedInt32Array(5, 6, 9), PackedInt32Array(6, 8, 9), PackedInt32Array(2, 3, 10), PackedInt32Array(9, 2, 10), PackedInt32Array(3, 4, 10), PackedInt32Array(4, 5, 10), PackedInt32Array(5, 9, 10)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(1, 0.5, 0, 0, 0, 0, 0.5, 1, 0.5, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0.5), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 3
+script = ExtResource("3_4mmvh")
 
 [node name="L_Shoulder" type="Polygon2D" parent="Model/Polygons/Front/L_Arm"]
 position = Vector2(-336, -209)
@@ -3682,6 +3716,7 @@ uv = PackedVector2Array(291.224, 160.97, 251.27, 203.695, 257.506, 217.783, 304.
 polygons = [PackedInt32Array(0, 1, 6), PackedInt32Array(1, 2, 6), PackedInt32Array(2, 3, 6), PackedInt32Array(3, 4, 6), PackedInt32Array(4, 5, 6), PackedInt32Array(5, 0, 6)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 1
+script = ExtResource("3_4mmvh")
 
 [node name="Legs" type="Node2D" parent="Model/Polygons/Front"]
 
@@ -3852,6 +3887,7 @@ uv = PackedVector2Array(254.125, 81.8396, 257.918, 115.633, 239.125, 130.805, 24
 polygons = [PackedInt32Array(1, 2, 3), PackedInt32Array(4, 5, 6), PackedInt32Array(0, 1, 9), PackedInt32Array(8, 0, 9), PackedInt32Array(6, 7, 9), PackedInt32Array(7, 8, 9), PackedInt32Array(1, 3, 10), PackedInt32Array(3, 4, 10), PackedInt32Array(9, 1, 10), PackedInt32Array(4, 6, 10), PackedInt32Array(6, 9, 10)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 2
+script = ExtResource("3_4mmvh")
 
 [node name="FaceSurprise" type="Polygon2D" parent="Model/Polygons/Front/Face"]
 visible = false
@@ -3863,6 +3899,7 @@ uv = PackedVector2Array(203.35, 5.483, 207.143, 39.2764, 188.35, 54.4484, 192.66
 polygons = [PackedInt32Array(1, 2, 3), PackedInt32Array(4, 5, 6), PackedInt32Array(0, 1, 9), PackedInt32Array(8, 0, 9), PackedInt32Array(6, 7, 9), PackedInt32Array(7, 8, 9), PackedInt32Array(1, 3, 10), PackedInt32Array(3, 4, 10), PackedInt32Array(9, 1, 10), PackedInt32Array(4, 6, 10), PackedInt32Array(6, 9, 10)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 2
+script = ExtResource("3_4mmvh")
 
 [node name="FaceHurt" type="Polygon2D" parent="Model/Polygons/Front/Face"]
 visible = false
@@ -3874,6 +3911,7 @@ uv = PackedVector2Array(532.42, 33.0024, 536.213, 66.7958, 517.42, 81.9678, 521.
 polygons = [PackedInt32Array(1, 2, 3), PackedInt32Array(4, 5, 6), PackedInt32Array(0, 1, 9), PackedInt32Array(8, 0, 9), PackedInt32Array(6, 7, 9), PackedInt32Array(7, 8, 9), PackedInt32Array(1, 3, 10), PackedInt32Array(3, 4, 10), PackedInt32Array(9, 1, 10), PackedInt32Array(4, 6, 10), PackedInt32Array(6, 9, 10)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 2
+script = ExtResource("3_4mmvh")
 
 [node name="FaceMeltdown" type="Polygon2D" parent="Model/Polygons/Front/Face"]
 visible = false
@@ -3885,6 +3923,7 @@ uv = PackedVector2Array(626.018, 15.6243, 629.811, 49.4177, 611.018, 64.5897, 61
 polygons = [PackedInt32Array(1, 2, 3), PackedInt32Array(4, 5, 6), PackedInt32Array(0, 1, 9), PackedInt32Array(8, 0, 9), PackedInt32Array(6, 7, 9), PackedInt32Array(7, 8, 9), PackedInt32Array(1, 3, 10), PackedInt32Array(3, 4, 10), PackedInt32Array(9, 1, 10), PackedInt32Array(4, 6, 10), PackedInt32Array(6, 9, 10)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 2
+script = ExtResource("3_4mmvh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Model/Polygons/Front/Face"]
 libraries = {
@@ -3902,6 +3941,7 @@ uv = PackedVector2Array(538.496, 239.369, 571.903, 228.085, 601.106, 249.988, 60
 polygons = [PackedInt32Array(1, 0, 7), PackedInt32Array(4, 3, 8), PackedInt32Array(5, 4, 8), PackedInt32Array(3, 2, 8), PackedInt32Array(6, 5, 8), PackedInt32Array(2, 1, 8), PackedInt32Array(1, 7, 8), PackedInt32Array(7, 6, 8)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0.5, 0.5, 0.5, 0, 0, 0, 0, 0.5, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 1
+script = ExtResource("3_4mmvh")
 
 [node name="R_Shoulder" type="Polygon2D" parent="Model/Polygons/Front/R_Arm"]
 position = Vector2(-475, -219)
@@ -3912,6 +3952,7 @@ uv = PackedVector2Array(495.575, 174.988, 492.699, 216.581, 513.053, 251.316, 53
 polygons = [PackedInt32Array(1, 2, 8), PackedInt32Array(2, 3, 8), PackedInt32Array(3, 4, 8), PackedInt32Array(0, 1, 8), PackedInt32Array(4, 5, 8), PackedInt32Array(5, 6, 8), PackedInt32Array(6, 7, 8), PackedInt32Array(7, 0, 8)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 1
+script = ExtResource("3_4mmvh")
 
 [node name="R_Hand" type="Polygon2D" parent="Model/Polygons/Front/R_Arm"]
 z_as_relative = false
@@ -3923,6 +3964,7 @@ uv = PackedVector2Array(548.673, 341.36, 548.673, 364.59, 568.805, 383.616, 609.
 polygons = [PackedInt32Array(0, 1, 7), PackedInt32Array(1, 2, 7), PackedInt32Array(2, 3, 7), PackedInt32Array(3, 4, 7), PackedInt32Array(6, 0, 7), PackedInt32Array(4, 5, 7), PackedInt32Array(5, 6, 7)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 1
+script = ExtResource("3_4mmvh")
 
 [node name="Back" type="Node2D" parent="Model/Polygons"]
 unique_name_in_owner = true
@@ -3940,6 +3982,7 @@ uv = PackedVector2Array(946.84, 329.82, 975.411, 327.439, 990.718, 343.766, 988.
 polygons = [PackedInt32Array(1, 0, 7), PackedInt32Array(2, 1, 7), PackedInt32Array(3, 2, 7), PackedInt32Array(4, 3, 7), PackedInt32Array(5, 4, 7), PackedInt32Array(0, 6, 7), PackedInt32Array(6, 5, 7)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0.5, 0.5, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 1
+script = ExtResource("3_4mmvh")
 
 [node name="R_Arm" type="Polygon2D" parent="Model/Polygons/Back/R_Arm"]
 position = Vector2(-857, -152)
@@ -3951,6 +3994,7 @@ uv = PackedVector2Array(871.33, 237.303, 899.901, 230.5, 909.425, 247.167, 916.2
 polygons = [PackedInt32Array(3, 2, 4), PackedInt32Array(1, 0, 10), PackedInt32Array(2, 1, 10), PackedInt32Array(0, 9, 10), PackedInt32Array(4, 2, 11), PackedInt32Array(5, 4, 11), PackedInt32Array(2, 10, 11), PackedInt32Array(9, 8, 11), PackedInt32Array(10, 9, 11), PackedInt32Array(6, 5, 12), PackedInt32Array(7, 6, 12), PackedInt32Array(8, 7, 12), PackedInt32Array(5, 11, 12), PackedInt32Array(11, 8, 12)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(1, 1, 0.5, 0.5, 0, 0, 0, 0, 0, 0.5, 0.5, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0.5, 0.5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 3
+script = ExtResource("3_4mmvh")
 
 [node name="R_Shoulder" type="Polygon2D" parent="Model/Polygons/Back/R_Arm"]
 position = Vector2(-918, -118)
@@ -3962,6 +4006,7 @@ uv = PackedVector2Array(944.119, 181.861, 928.473, 207.031, 927.112, 235.602, 93
 polygons = [PackedInt32Array(2, 3, 8), PackedInt32Array(3, 4, 8), PackedInt32Array(4, 5, 8), PackedInt32Array(0, 1, 8), PackedInt32Array(1, 2, 8), PackedInt32Array(5, 6, 8), PackedInt32Array(6, 7, 8), PackedInt32Array(7, 0, 8)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 1
+script = ExtResource("3_4mmvh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Model/Polygons/Back/R_Arm"]
 libraries = {
@@ -4123,6 +4168,7 @@ uv = PackedVector2Array(632.894, 353.289, 634.255, 377.439, 654.323, 390.364, 68
 polygons = [PackedInt32Array(0, 1, 8), PackedInt32Array(1, 2, 8), PackedInt32Array(3, 4, 8), PackedInt32Array(4, 5, 8), PackedInt32Array(5, 6, 8), PackedInt32Array(7, 0, 8), PackedInt32Array(2, 3, 8), PackedInt32Array(6, 7, 8)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 1
+script = ExtResource("3_4mmvh")
 
 [node name="L_Arm" type="Polygon2D" parent="Model/Polygons/Back/L_Arm"]
 position = Vector2(-735, -240)
@@ -4133,6 +4179,7 @@ uv = PackedVector2Array(662.486, 234.242, 682.894, 235.602, 708.065, 253.289, 70
 polygons = [PackedInt32Array(2, 1, 12), PackedInt32Array(3, 2, 12), PackedInt32Array(1, 0, 12), PackedInt32Array(0, 11, 12), PackedInt32Array(4, 3, 13), PackedInt32Array(3, 12, 13), PackedInt32Array(10, 9, 13), PackedInt32Array(11, 10, 13), PackedInt32Array(12, 11, 13), PackedInt32Array(8, 7, 14), PackedInt32Array(9, 8, 14), PackedInt32Array(5, 4, 14), PackedInt32Array(4, 13, 14), PackedInt32Array(6, 5, 14), PackedInt32Array(7, 6, 14), PackedInt32Array(13, 9, 14)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0, 0), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 3
+script = ExtResource("3_4mmvh")
 
 [node name="L_Shoulder" type="Polygon2D" parent="Model/Polygons/Back/L_Arm"]
 position = Vector2(-760, -217)
@@ -4143,6 +4190,7 @@ uv = PackedVector2Array(718.609, 173.698, 692.418, 183.221, 669.969, 214.854, 68
 polygons = [PackedInt32Array(1, 2, 7), PackedInt32Array(2, 3, 7), PackedInt32Array(0, 1, 7), PackedInt32Array(6, 0, 7), PackedInt32Array(3, 4, 7), PackedInt32Array(4, 5, 7), PackedInt32Array(5, 6, 7)]
 bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder", PackedFloat32Array(1, 1, 1, 1, 1, 0.5, 1, 1), "Hip/Chest/L_Shoulder/L_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/L_Shoulder/L_Arm/L_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/R_Shoulder/R_Arm/R_Forearm", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Chest/Head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0), "Hip/Legs/Foot", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)]
 internal_vertex_count = 1
+script = ExtResource("3_4mmvh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Model/Polygons/Back/L_Arm"]
 libraries = {

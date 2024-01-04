@@ -1713,7 +1713,7 @@ tracks/20/path = NodePath(".")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0.4, 0.8),
+"times": PackedFloat32Array(0.1, 0.6),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": ["footstep"],
@@ -3129,6 +3129,7 @@ rest = Transform2D(1, 0, 0, 1, 25, -38)
 
 [node name="R_Arm" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest/R_Shoulder"]
 position = Vector2(18, 40)
+scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, 18, 40)
 
 [node name="R_Forearm" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest/R_Shoulder/R_Arm"]
