@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://b7n2nvaxotrvp"]
+[gd_scene load_steps=42 format=3 uid="uid://b7n2nvaxotrvp"]
 
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_fe38l"]
 [ext_resource type="PackedScene" uid="uid://bfvclquu5ftth" path="res://render/employees/ricky/ricky_model.tscn" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="3_plocb"]
 [ext_resource type="Script" path="res://actors/ActorVelocity.cs" id="4"]
 [ext_resource type="Script" path="res://actors/states/FreeMoveActorState.cs" id="4_80sfp"]
+[ext_resource type="Script" path="res://actors/states/IdleActorState.cs" id="4_qed56"]
 [ext_resource type="Script" path="res://actors/ActorAnimator.cs" id="5"]
 [ext_resource type="Script" path="res://actors/states/InArenaActorState.cs" id="5_l5aer"]
 [ext_resource type="Script" path="res://actors/states/FollowLeaderActorState.cs" id="6_2a0rx"]
@@ -36,19 +37,18 @@
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="34_srxwc"]
 [ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="35_1n2q3"]
 [ext_resource type="PackedScene" uid="uid://dx6r37l2dvf6v" path="res://widgets/entity_widgets/talking_effect.tscn" id="36_n4xid"]
+[ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="37_5hku5"]
 [ext_resource type="PackedScene" uid="uid://c51x12itwmxoa" path="res://widgets/entity_widgets/alert_effect.tscn" id="37_o8x40"]
 [ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="38_wgaie"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
 
-[node name="RickyActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine", "_FreeMoveState", "_FollowLeaderState")]
-collision_layer = 3
+[node name="RickyActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine")]
+collision_layer = 2
 script = ExtResource("1_fe38l")
 _ActorAnimator = NodePath("ActorAnimator")
 _ActorStateMachine = NodePath("ActorStateMachine")
-_FreeMoveState = NodePath("ActorStateMachine/FreeMove")
-_FollowLeaderState = NodePath("ActorStateMachine/FollowLeader")
 Id = "ricky"
 EntityName = "Ricky"
 _TilemapPositionHandlerPath = NodePath("TilemapPositionHandler")
@@ -62,6 +62,9 @@ shape = SubResource("1")
 
 [node name="ActorStateMachine" type="Node" parent="."]
 script = ExtResource("3_plocb")
+
+[node name="Idle" type="Node" parent="ActorStateMachine"]
+script = ExtResource("4_qed56")
 
 [node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator")]
 script = ExtResource("4_80sfp")
@@ -101,6 +104,7 @@ one_shot = true
 script = ExtResource("4")
 
 [node name="ActorFloorIndicator" parent="." instance=ExtResource("10_q8dat")]
+visible = false
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
@@ -111,10 +115,13 @@ _MediumPlayer = NodePath("FootstepsTileMedium")
 _FastPlayer = NodePath("FootstepsTileFast")
 
 [node name="FootstepsTileFast" parent="FootstepController" instance=ExtResource("12_4mgdu")]
+volume_db = -3.365
 
 [node name="FootstepsTileMedium" parent="FootstepController" instance=ExtResource("13_hh1w3")]
+volume_db = -3.365
 
 [node name="FootstepsTileSlow" parent="FootstepController" instance=ExtResource("14_ol46m")]
+volume_db = -3.365
 
 [node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
 script = ExtResource("15_wwnse")
@@ -218,6 +225,9 @@ script = ExtResource("34_srxwc")
 script = ExtResource("35_1n2q3")
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
+[node name="DemeritHandler" type="Node" parent="."]
+script = ExtResource("37_5hku5")
+
 [node name="WidgetPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12)
 
@@ -237,5 +247,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12
 [connection signal="SpentExcessAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]]
 [connection signal="TookApDrain" from="ActionPointHandler/DrainHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
 [connection signal="TookDebtDamage" from="ActionPointHandler/DebtDamageHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(1, 0, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
 
 [editable path="ActionPointHandler"]

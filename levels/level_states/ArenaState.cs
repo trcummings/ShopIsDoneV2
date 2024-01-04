@@ -18,9 +18,6 @@ namespace ShopIsDone.Levels.States
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
-            // Ready units to enter the arena
-            _PlayerCharacterManager.EnterArena();
-
             // Pull arena from message
             _Arena = (Arena)message.GetValueOrDefault(Consts.States.ARENA_KEY, default);
             // Initialize arena
@@ -44,9 +41,6 @@ namespace ShopIsDone.Levels.States
 
         private void OnArenaFinished()
         {
-            // Have units exit the arena
-            _PlayerCharacterManager.ExitArena();
-
             // Change to free move state
             ChangeState(Consts.States.FREE_MOVE);
         }

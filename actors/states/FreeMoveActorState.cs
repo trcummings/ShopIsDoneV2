@@ -21,13 +21,12 @@ namespace ShopIsDone.Actors.States
 
         private IActorInput _ActorInput = new ActorInput();
 
-        public void Init(IActorInput actorInput)
-        {
-            _ActorInput = actorInput;
-        }
-
         public override void OnStart(Dictionary<string, Variant> message)
         {
+            // Get actor input from message
+            var input = (IActorInput)(GodotObject)message[Consts.INPUT_KEY];
+            _ActorInput = input;
+
             // Show floor indicator
             _ActorFloorIndicator.Show();
             base.OnStart(message);

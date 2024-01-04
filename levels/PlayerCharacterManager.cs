@@ -4,6 +4,7 @@ using ShopIsDone.Utils.DependencyInjection;
 using Godot.Collections;
 using System;
 using ShopIsDone.Core;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Levels
 {
@@ -13,47 +14,79 @@ namespace ShopIsDone.Levels
     public partial class PlayerCharacterManager : Node3D, IService
     {
         [Export]
-        private PackedScene _HaskellScene;
+        private PackedScene _LeaderScene;
+
+        [Export]
+        private Array<PackedScene> _FollowerScenes = new Array<PackedScene>();
 
         [Export]
         private Node3D _DefaultSpawnPoint;
 
-        private Actor _Haskell;
+        private Actor _Leader;
+        private Array<Actor> _Followers = new Array<Actor>();
 
         public void Init()
         {
-            _Haskell = _HaskellScene.Instantiate<Actor>();
-            AddChild(_Haskell);
+            // Create leader
+            _Leader = _LeaderScene.Instantiate<Actor>();
+            AddChild(_Leader);
 
-            // Move unit to the default spawn point
-            _Haskell.GlobalTransform = _DefaultSpawnPoint.GlobalTransform;
+            // Create followers
+            foreach (var scene in _FollowerScenes)
+            {
+                var follower = scene.Instantiate<Actor>();
+                AddChild(follower);
+                _Followers.Add(follower);
+            }
+
+            // Move leader to the default spawn point
+            _Leader.GlobalPosition = _DefaultSpawnPoint.GlobalPosition;
+            // Spawn followers nearby
+            for(int i = 0; i < _Followers.Count; i++)
+            {
+                var follower = _Followers[i];
+                follower.GlobalPosition = _DefaultSpawnPoint.GlobalPosition + (Vector3.Left * (i + 1));
+            }
+
+            // Idle them
+            Idle();
+        }
+
+        public void Idle()
+        {
+            // Idle each one
+            foreach (var unit in GetAllUnits()) unit.Idle();
         }
 
         public void EnterArena()
         {
-            _Haskell.Init(new ActorInput());
-            _Haskell.EnterArena();
+            // Have all units init and enter arena mode
+            foreach (var unit in GetAllUnits()) unit.EnterArena();
         }
 
-        public void ExitArena()
+        public void MoveFreely(PlayerActorInput input)
         {
-            _Haskell.ExitArena();
+            // Have each follower follow the previous person
+            foreach (var (prev, current) in GetAllUnits().WithPrevious())
+            {
+                if (prev == null) continue;
+                // Give the leader player input to let them move around freely
+                if (prev == _Leader) prev.MoveFreely(input);
+                // Make each unit follow the one in front of them
+                if (current != _Leader) current.FollowLeader(prev);
+            }
         }
 
-        public void SetLeaderPlayerInput(PlayerActorInput input)
+        public Array<Actor> GetAllUnits()
         {
-            // Give the leader player input to let them move around freely
-            _Haskell.Init(input);
-        }
-
-        public Array<LevelEntity> GetAllUnits()
-        {
-            return new Array<LevelEntity>() { _Haskell };
+            var units = new Array<Actor>() { _Leader };
+            units.AddRange(_Followers);
+            return units;
         }
 
         public LevelEntity GetLeader()
         {
-            return _Haskell;
+            return _Leader;
         }
     }
 }

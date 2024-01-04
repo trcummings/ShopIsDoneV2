@@ -15,17 +15,18 @@ namespace ShopIsDone.Actors
         [Export]
         private StateMachine _ActorStateMachine;
 
-        [Export]
-        private FreeMoveActorState _FreeMoveState;
-
-        [Export]
-        private FollowLeaderActorState _FollowLeaderState;
-
-        public void Init(IActorInput actorInput)
+        public void Idle()
         {
-            _FreeMoveState.Init(actorInput);
             _ActorAnimator.Init();
-            _ActorStateMachine.ChangeState(Consts.States.FREE_MOVE);
+            _ActorStateMachine.ChangeState(Consts.States.IDLE);
+        }
+
+        public void MoveFreely(IActorInput actorInput)
+        {
+            _ActorStateMachine.ChangeState(Consts.States.FREE_MOVE, new Dictionary<string, Variant>()
+            {
+                { Consts.INPUT_KEY, actorInput as GodotObject }
+            });
         }
 
         public void FollowLeader(Node3D leader)
@@ -39,11 +40,6 @@ namespace ShopIsDone.Actors
         public void EnterArena()
         {
             _ActorStateMachine.ChangeState(Consts.States.IN_ARENA);
-        }
-
-        public void ExitArena()
-        {
-            _ActorStateMachine.ChangeState(Consts.States.FREE_MOVE);
         }
     }
 }

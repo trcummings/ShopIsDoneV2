@@ -81,6 +81,7 @@ namespace ShopIsDone.Arenas
             _ConditionsService.Init();
 
             // Move units into arena
+            _PlayerCharacterManager.EnterArena();
             var allUnits = _PlayerCharacterManager.GetAllUnits();
             var placementTiles = GetTree()
                 .GetNodesInGroup("placement_tile")
@@ -96,9 +97,9 @@ namespace ShopIsDone.Arenas
             }
 
             // Add player units to player unit service
-            _PlayerUnitService.Init(allUnits.ToList());
+            _PlayerUnitService.Init(allUnits.ToList<LevelEntity>());
 
-            // Init all entities
+            // Init all entities under the arena
             var allEntities = GetTree()
                 .GetNodesInGroup("entities")
                 .OfType<LevelEntity>()
@@ -123,6 +124,9 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.UnregisterService(_OutcomeService);
             _InjectionProvider.UnregisterService(_UnitDeathService);
             _InjectionProvider.UnregisterService(_ConditionsService);
+
+            // Idle player units
+            _PlayerCharacterManager.Idle();
 
             // Clean up tile manager tiles
             _TileManager.CleanUp();

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=42 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_0yjha"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://actors/ActorVelocity.cs" id="3"]
 [ext_resource type="Script" path="res://actors/states/FreeMoveActorState.cs" id="3_f0qiv"]
 [ext_resource type="Script" path="res://actors/states/InArenaActorState.cs" id="4_oqqp8"]
+[ext_resource type="Script" path="res://actors/states/IdleActorState.cs" id="4_rbt7t"]
 [ext_resource type="Script" path="res://actors/ActorAnimator.cs" id="5"]
 [ext_resource type="Script" path="res://actors/states/FollowLeaderActorState.cs" id="5_dq058"]
 [ext_resource type="PackedScene" path="res://actors/actor_floor_indicator.tscn" id="7"]
@@ -43,13 +44,11 @@
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
 
-[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine", "_FreeMoveState", "_FollowLeaderState") groups=["entities"]]
-collision_layer = 3
+[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine") groups=["entities"]]
+collision_layer = 2
 script = ExtResource("1_0yjha")
 _ActorAnimator = NodePath("ActorAnimator")
 _ActorStateMachine = NodePath("ActorStateMachine")
-_FreeMoveState = NodePath("ActorStateMachine/FreeMove")
-_FollowLeaderState = NodePath("ActorStateMachine/FollowLeader")
 Id = "haskell"
 EntityName = "Haskell"
 _TilemapPositionHandlerPath = NodePath("TilemapPositionHandler")
@@ -63,6 +62,9 @@ shape = SubResource("1")
 
 [node name="ActorStateMachine" type="Node" parent="."]
 script = ExtResource("2_6jaxx")
+
+[node name="Idle" type="Node" parent="ActorStateMachine"]
+script = ExtResource("4_rbt7t")
 
 [node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator")]
 script = ExtResource("3_f0qiv")
@@ -102,6 +104,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="ActorFloorIndicator" parent="." instance=ExtResource("7")]
+visible = false
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
@@ -112,10 +115,13 @@ _MediumPlayer = NodePath("FootstepsTileMedium")
 _FastPlayer = NodePath("FootstepsTileFast")
 
 [node name="FootstepsTileFast" parent="FootstepController" instance=ExtResource("8_h2my1")]
+volume_db = -3.671
 
 [node name="FootstepsTileMedium" parent="FootstepController" instance=ExtResource("9_lim5r")]
+volume_db = -3.671
 
 [node name="FootstepsTileSlow" parent="FootstepController" instance=ExtResource("10_0nb28")]
+volume_db = -3.671
 
 [node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
 script = ExtResource("11_862jn")

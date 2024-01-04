@@ -28,6 +28,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
         [Inject]
         private TileManager _TileManager;
 
+        [Inject]
+        private ArenaOutcomeService _OutcomeService;
+
         public override async void OnStart(Dictionary<string, Variant> message = null)
         {
             base.OnStart(message);
@@ -49,6 +52,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
             var command = _ActionService.ExecuteAction(action, message);
             command.CallDeferred(nameof(command.Execute));
             await ToSignal(command, "Finished");
+
+            // If an outcome was reached, do not continue any of this
+            if (_OutcomeService.WasOutcomeReached()) return;
 
             // Show the cursors
             _FingerCursor.Show();

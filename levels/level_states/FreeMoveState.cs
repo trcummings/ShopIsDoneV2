@@ -38,8 +38,8 @@ namespace ShopIsDone.Levels.States
             // Activate camera system
             _CameraSystem.Init();
             _CameraSystem.SetCameraTarget(_PlayerCharacterManager.GetLeader()).Execute();
-            // Give the character manager leader input control
-            _PlayerCharacterManager.SetLeaderPlayerInput(_PlayerInput);
+            // Allow characters to move freely
+            _PlayerCharacterManager.MoveFreely(_PlayerInput);
             // Start camera
             _PlayerCameraService.Activate();
 

@@ -1762,7 +1762,7 @@ tracks/16/path = NodePath(".")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0.1, 0.6),
+"times": PackedFloat32Array(0.25, 0.75),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": ["footstep"],
@@ -3618,6 +3618,7 @@ autoplay = "idle"
 
 [node name="Skeleton2D" type="Skeleton2D" parent="Model"]
 unique_name_in_owner = true
+visible = false
 
 [node name="Hip" type="Bone2D" parent="Model/Skeleton2D"]
 position = Vector2(0, 66)

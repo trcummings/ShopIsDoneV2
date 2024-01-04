@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=31 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_b2cin"]
@@ -26,7 +26,6 @@
 [ext_resource type="Script" path="res://levels/PlayerCharacterManager.cs" id="17_qs4bj"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="20_qvdr3"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
-[ext_resource type="PackedScene" uid="uid://b7n2nvaxotrvp" path="res://actors/ricky_actor.tscn" id="24_2th8p"]
 [ext_resource type="PackedScene" uid="uid://ddwvyl3d8scbv" path="res://levels/level_states/game_over_ui.tscn" id="26_yq21p"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lbwya"]
@@ -151,7 +150,6 @@ current = true
 
 [node name="PlayerCharacterManager" type="Node3D" parent="World" node_paths=PackedStringArray("_DefaultSpawnPoint")]
 script = ExtResource("17_qs4bj")
-_HaskellScene = ExtResource("24_2th8p")
 _DefaultSpawnPoint = NodePath("../DefaultSpawnPoint")
 metadata/_edit_lock_ = true
 
