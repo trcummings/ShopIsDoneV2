@@ -16,7 +16,6 @@
 environment = ExtResource("2_2x2uj")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
-visible = false
 light_energy = 0.268
 
 [node name="OmniLight3D" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="0"]
@@ -30,7 +29,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.37414, 2.16969, -2.28268)
 [node name="DialogueArea" parent="World/NavigationRegion3D/Environment" index="3" instance=ExtResource("3_hk7sm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1546, -4.76835e-07, -1.31345)
 
-[node name="Arena" parent="World/NavigationRegion3D/Environment" index="4" instance=ExtResource("5_arh5s")]
+[node name="Arena" parent="World/NavigationRegion3D/Environment" index="4" node_paths=PackedStringArray("_PlayerCharacterManager") instance=ExtResource("5_arh5s")]
+_PlayerCharacterManager = NodePath("../../../PlayerCharacterManager")
 
 [node name="CustomerSatisfiedCondition" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ConditionsService" index="0" node_paths=PackedStringArray("Customer")]
 script = ExtResource("6_a2ot6")
@@ -59,6 +59,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6855, 0, -0.636568)
 
 [editable path="World/IsometricCamera"]
-[editable path="World/PlayerUnits/HaskellActor"]
-[editable path="World/PlayerUnits/HaskellActor/ActionPointHandler"]
 [editable path="World/NavigationRegion3D/Environment/Arena"]

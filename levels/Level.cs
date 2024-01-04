@@ -15,12 +15,18 @@ namespace ShopIsDone.Levels
 {
     public partial class Level : Node
     {
+        [Signal]
+        public delegate void InitializedEventHandler();
+
         [Export]
         private StateMachine _LevelStateMachine;
 
         // Services
         [Export]
         private CameraService _CameraService;
+
+        [Export]
+        private PlayerCharacterManager _PlayerCharacterManager;
 
         [Export]
         private PlayerCameraService _PlayerCameraService;
@@ -62,15 +68,9 @@ namespace ShopIsDone.Levels
             // Ready nodes
             _InjectionProvider = InjectionProvider.GetProvider(this);
 
-            // Wire up arena entrances
-            var entrances = GetTree().GetNodesInGroup("arena_entrance").OfType<EnterArenaArea>();
-            foreach (var entrance in entrances)
-            {
-                entrance.EnteredArena += (arena) => OnPlayerEnteredArena(entrance, arena);
-            }
-
             // Register all services (NB: We have to do this manually, unfortunately)
             _InjectionProvider.RegisterService(_CameraService);
+            _InjectionProvider.RegisterService(_PlayerCharacterManager);
             _InjectionProvider.RegisterService(_InputXformer);
             _InjectionProvider.RegisterService(_PauseInputHandler);
             _InjectionProvider.RegisterService(_Screenshake);
@@ -84,10 +84,17 @@ namespace ShopIsDone.Levels
             _InjectionProvider.RegisterService(_MicrogameController);
         }
 
+        public const string ON_FINISHED_INIT = "OnFinishedInit";
+        public const string ON_PLAYER_ENTERED_ARENA = "OnPlayerEnteredArena";
+
         public void Init()
         {
             // Change state to initializing state
-            _LevelStateMachine.ChangeState(Consts.States.INITIALIZING);
+            _LevelStateMachine.ChangeState(Consts.States.INITIALIZING, new Dictionary<string, Variant>()
+            {
+                { ON_FINISHED_INIT, Callable.From(() => EmitSignal(nameof(Initialized))) },
+                { ON_PLAYER_ENTERED_ARENA, new Callable(this, nameof(OnPlayerEnteredArena)) }
+            });
         }
 
         private void OnPlayerEnteredArena(EnterArenaArea area, Arena arena)

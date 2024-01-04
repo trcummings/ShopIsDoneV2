@@ -9,6 +9,7 @@ using ShopIsDone.Actions.Effort;
 using ShopIsDone.Arenas.ArenaScripts;
 using ArenaConsts = ShopIsDone.Arenas.States.Consts;
 using ShopIsDone.Conditions;
+using ShopIsDone.Levels;
 
 namespace ShopIsDone.Arenas
 {
@@ -50,6 +51,9 @@ namespace ShopIsDone.Arenas
         [Export]
         private ConditionsService _ConditionsService;
 
+        [Export]
+        private PlayerCharacterManager _PlayerCharacterManager;
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -58,7 +62,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider = InjectionProvider.GetProvider(this);
         }
 
-        public void Init(LevelEntity playerUnit)
+        public void Init()
         {
             // Register services
             _InjectionProvider.RegisterService(_TileManager);
@@ -77,15 +81,23 @@ namespace ShopIsDone.Arenas
             _ConditionsService.Init();
 
             // Move units into arena
+            var allUnits = _PlayerCharacterManager.GetAllUnits();
             var placementTiles = GetTree()
                 .GetNodesInGroup("placement_tile")
                 .OfType<Tile>()
-                .Where(IsAncestorOf);
-            var placement = placementTiles.First();
-            playerUnit.GlobalPosition = placement.GlobalPosition;
+                .Where(IsAncestorOf)
+                .Take(allUnits.Count)
+                .ToArray();
+            for (int i = 0; i < placementTiles.Count(); i++)
+            {
+                var placement = placementTiles[i];
+                var unit = allUnits[i];
+                unit.GlobalPosition = placement.GlobalPosition;
+            }
 
-            // Add player unit to player unit service
-            _PlayerUnitService.Init(new System.Collections.Generic.List<LevelEntity>() { playerUnit });
+            // Add player units to player unit service
+            _PlayerUnitService.Init(allUnits.ToList());
+
             // Init all entities
             var allEntities = GetTree()
                 .GetNodesInGroup("entities")

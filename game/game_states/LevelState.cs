@@ -31,10 +31,9 @@ namespace ShopIsDone.Game.States
             _Level = (LevelOverride ?? levelScene).Instantiate<Level>();
             AddChild(_Level);
 
-            // TODO: Connect to level events
-
             // Init level
-            _Level.Init();
+            _Level.CallDeferred(nameof(_Level.Init));
+            await ToSignal(_Level, nameof(_Level.Initialized));
 
             // Fade out overlay
             _GlobalEvents.EmitSignal(nameof(_GlobalEvents.FadeOutRequested));

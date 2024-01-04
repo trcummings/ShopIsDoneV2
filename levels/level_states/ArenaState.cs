@@ -12,20 +12,19 @@ namespace ShopIsDone.Levels.States
     public partial class ArenaState : State
     {
         [Export]
-        private Haskell _Haskell;
+        private PlayerCharacterManager _PlayerCharacterManager;
 
         private Arena _Arena;
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
-            // Null out actor movement with dummy input
-            _Haskell.Init(new ActorInput());
-            _Haskell.EnterArena();
+            // Ready units to enter the arena
+            _PlayerCharacterManager.EnterArena();
 
             // Pull arena from message
             _Arena = (Arena)message.GetValueOrDefault(Consts.States.ARENA_KEY, default);
             // Initialize arena
-            _Arena.Init(_Haskell);
+            _Arena.Init();
             _Arena.ArenaFinished += OnArenaFinished;
             _Arena.ArenaFailed += OnGameOver;
 
@@ -45,8 +44,8 @@ namespace ShopIsDone.Levels.States
 
         private void OnArenaFinished()
         {
-            // Let player units free move again
-            _Haskell.ExitArena();
+            // Have units exit the arena
+            _PlayerCharacterManager.ExitArena();
 
             // Change to free move state
             ChangeState(Consts.States.FREE_MOVE);

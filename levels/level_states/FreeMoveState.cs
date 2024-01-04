@@ -17,7 +17,7 @@ namespace ShopIsDone.Levels.States
         private PlayerCameraService _PlayerCameraService;
 
         [Export]
-        private Haskell _Haskell;
+        private PlayerCharacterManager _PlayerCharacterManager;
 
         [Export]
         private InputXformer _InputXformer;
@@ -37,9 +37,9 @@ namespace ShopIsDone.Levels.States
         {
             // Activate camera system
             _CameraSystem.Init();
-            _CameraSystem.SetCameraTarget(_Haskell).Execute();
-            // Start actor
-            _Haskell.Init(_PlayerInput);
+            _CameraSystem.SetCameraTarget(_PlayerCharacterManager.GetLeader()).Execute();
+            // Give the character manager leader input control
+            _PlayerCharacterManager.SetLeaderPlayerInput(_PlayerInput);
             // Start camera
             _PlayerCameraService.Activate();
 
