@@ -4,6 +4,7 @@ using ShopIsDone.EntityStates;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.Positioning;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.ActionPoints
 {
@@ -42,7 +43,7 @@ namespace ShopIsDone.ActionPoints
                 new ConditionalCommand(
                     () => payload.TotalDebtDamage > 0,
                     new SeriesCommand(
-                        _StateHandler.RunChangeState("hurt"),
+                        _StateHandler.RunChangeState(StateConsts.HURT),
                         // Set facing direction, if we're still alive
                         new ConditionalCommand(
                             () => !payload.ApHandler.IsMaxedOut() && payload.Positioning != Positions.Null,
@@ -56,7 +57,7 @@ namespace ShopIsDone.ActionPoints
                     )
                 ),
                 // Return to idle
-                _StateHandler.RunChangeState("idle")
+                _StateHandler.RunChangeState(StateConsts.IDLE)
             );
         }
     }

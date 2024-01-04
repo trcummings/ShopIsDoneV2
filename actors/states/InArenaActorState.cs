@@ -3,6 +3,7 @@ using Godot;
 using Godot.Collections;
 using ShopIsDone.EntityStates;
 using ShopIsDone.Utils.StateMachine;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.Actors.States
 {
@@ -13,7 +14,7 @@ namespace ShopIsDone.Actors.States
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
-            _StateHandler.ChangeState("idle");
+            _StateHandler.ChangeState(StateConsts.IDLE);
             base.OnStart(message);
         }
 

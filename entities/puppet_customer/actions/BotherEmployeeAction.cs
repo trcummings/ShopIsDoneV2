@@ -10,6 +10,7 @@ using ShopIsDone.Utils.Positioning;
 using Godot.Collections;
 using ActionConsts = ShopIsDone.Actions.Consts;
 using ShopIsDone.Entities.PuppetCustomers.States;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.Entities.PuppetCustomers.Actions
 {
@@ -60,12 +61,12 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
                 // Simultaneous bother / alert
                 new ParallelCommand(
                     // Run bother animation
-                    _StateHandler.RunChangeState("bother", new Dictionary<string, Variant>
+                    _StateHandler.RunChangeState(StateConsts.Customers.BOTHER, new Dictionary<string, Variant>
                     {
                         { BotherEntityState.PROMPT_TEXT, _MicrogameHandler.GetMicrogamePrompt(payload) }
                     }),
                     // Alert Target
-                    targetStateHandler.RunChangeState("alert")
+                    targetStateHandler.RunChangeState(StateConsts.ALERT)
                 ),
                 // Run employee microgame
                 _MicrogameHandler.RunMicrogame(payload)

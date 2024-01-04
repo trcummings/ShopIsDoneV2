@@ -2,6 +2,7 @@
 using Godot;
 using ShopIsDone.EntityStates;
 using ShopIsDone.Models;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.Actors
 {
@@ -37,13 +38,13 @@ namespace ShopIsDone.Actors
         {
             // Update animations based on velocity
             var isMoving = velocity.Length() > 0.001;
-            if (isMoving && _StateHandler.IsInState("idle"))
+            if (isMoving && _StateHandler.IsInState(StateConsts.IDLE))
             {
-                _StateHandler.ChangeState("move");
+                _StateHandler.ChangeState(StateConsts.MOVE);
             }
-            else if (!isMoving && _StateHandler.IsInState("move"))
+            else if (!isMoving && _StateHandler.IsInState(StateConsts.MOVE))
             {
-                _StateHandler.ChangeState("idle");
+                _StateHandler.ChangeState(StateConsts.IDLE);
             }
 
             // Update facing direction based on input

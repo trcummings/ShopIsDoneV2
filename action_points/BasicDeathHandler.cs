@@ -2,6 +2,7 @@
 using Godot;
 using ShopIsDone.EntityStates;
 using ShopIsDone.Utils.Commands;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.ActionPoints
 {
@@ -12,7 +13,7 @@ namespace ShopIsDone.ActionPoints
 
         public override Command Die()
         {
-            return _StateHandler.RunChangeState("dead");
+            return _StateHandler.RunChangeState(StateConsts.DEAD);
         }
     }
 }

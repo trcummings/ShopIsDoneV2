@@ -7,6 +7,7 @@ using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using SystemGeneric = System.Collections.Generic;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.Actions
 {
@@ -41,7 +42,7 @@ namespace ShopIsDone.Actions
         // Visible in menu if we're in the idle state, as most actions are
         public override bool IsVisibleInMenu()
         {
-            return _StateHandler.IsInState("idle");
+            return _StateHandler.IsInState(StateConsts.IDLE);
         }
 
         public override Command Execute(Dictionary<string, Variant> message = null)
@@ -55,7 +56,7 @@ namespace ShopIsDone.Actions
                 base.Execute(message),
 
                 // Change the pawn to a movement state
-                _StateHandler.RunChangeState("move"),
+                _StateHandler.RunChangeState(StateConsts.MOVE),
 
                 // Accumulate the movement action as a series of conditional commands
                 // that execute sub-movement actions which only continue if the unit
@@ -63,10 +64,10 @@ namespace ShopIsDone.Actions
                 GenerateSubMovements(moveQueue),
 
                 // At the end, if the pawn is still in a movement state, return it
-                // to a normal state
+                // to an idle state
                 new ConditionalCommand(
-                    () => _StateHandler.IsInState("move"),
-                    _StateHandler.RunChangeState("idle")
+                    () => _StateHandler.IsInState(StateConsts.MOVE),
+                    _StateHandler.RunChangeState(StateConsts.IDLE)
                 )
             );
         }
@@ -86,7 +87,7 @@ namespace ShopIsDone.Actions
 
             // Induction step
             return new ConditionalCommand(
-                () => _StateHandler.IsInState("move"),
+                () => _StateHandler.IsInState(StateConsts.MOVE),
                 // Run deferrred calculation on if we should continue or fail the move
                 new DeferredCommand(() =>
                     new IfElseCommand(
@@ -102,8 +103,8 @@ namespace ShopIsDone.Actions
                         // normal state
                         new SeriesCommand(
                             // Idle
-                            _StateHandler.RunChangeState("idle"),
-                            _StateHandler.RunPushState("alert")
+                            _StateHandler.RunChangeState(StateConsts.IDLE),
+                            _StateHandler.RunPushState(StateConsts.ALERT)
                         )
                     )
                 )
