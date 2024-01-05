@@ -5,6 +5,7 @@ using Godot.Collections;
 using ShopIsDone.Pausing;
 using ShopIsDone.Arenas;
 using System.Linq;
+using ShopIsDone.Interactables;
 
 namespace ShopIsDone.Levels.States
 {
@@ -31,6 +32,10 @@ namespace ShopIsDone.Levels.States
             {
                 entrance.EnteredArena += (arena) => onPlayerEnteredArena.Call(entrance, arena);
             }
+
+            // Wire up interactables
+            var interactables = GetTree().GetNodesInGroup("interactables").OfType<Interactable>();
+            foreach (var interactable in interactables) interactable.Init();
 
             // Disable pausing
             _PauseInputHandler.IsActive = false;

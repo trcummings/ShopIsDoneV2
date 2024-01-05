@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://b7n2nvaxotrvp"]
+[gd_scene load_steps=44 format=3 uid="uid://b7n2nvaxotrvp"]
 
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_fe38l"]
 [ext_resource type="PackedScene" uid="uid://bfvclquu5ftth" path="res://render/employees/ricky/ricky_model.tscn" id="2"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://actors/states/FollowLeaderActorState.cs" id="6_2a0rx"]
 [ext_resource type="PackedScene" path="res://actors/actor_floor_indicator.tscn" id="10_q8dat"]
 [ext_resource type="Script" path="res://audio/footsteps/FootstepsController.cs" id="11_o450y"]
+[ext_resource type="Script" path="res://actors/interactables/InteractableHandler.cs" id="11_pa4dk"]
 [ext_resource type="PackedScene" uid="uid://ccauejj4i4k3v" path="res://audio/footsteps/tile/footsteps_tile_fast.tscn" id="12_4mgdu"]
 [ext_resource type="PackedScene" uid="uid://cmq4kldjoormo" path="res://audio/footsteps/tile/footsteps_tile_medium.tscn" id="13_hh1w3"]
 [ext_resource type="PackedScene" uid="uid://2ae2lvic7v6g" path="res://audio/footsteps/tile/footsteps_tile_slow.tscn" id="14_ol46m"]
@@ -44,6 +45,8 @@
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_itspn"]
+
 [node name="RickyActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine")]
 collision_layer = 2
 script = ExtResource("1_fe38l")
@@ -66,12 +69,13 @@ script = ExtResource("3_plocb")
 [node name="Idle" type="Node" parent="ActorStateMachine"]
 script = ExtResource("4_qed56")
 
-[node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator")]
+[node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_InteractableHandler")]
 script = ExtResource("4_80sfp")
 _Body = NodePath("../..")
 _ActorAnimator = NodePath("../../ActorAnimator")
 _ActorVelocity = NodePath("../../ActorVelocity")
 _ActorFloorIndicator = NodePath("../../ActorFloorIndicator")
+_InteractableHandler = NodePath("../../InteractableHandler")
 
 [node name="InArena" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("5_l5aer")
@@ -103,8 +107,21 @@ one_shot = true
 [node name="ActorVelocity" type="Node" parent="."]
 script = ExtResource("4")
 
+[node name="InteractableHandler" type="Node" parent="." node_paths=PackedStringArray("_InteractableDetector")]
+script = ExtResource("11_pa4dk")
+_InteractableDetector = NodePath("../ActorFloorIndicator/Pivot/InteractableArea")
+
 [node name="ActorFloorIndicator" parent="." instance=ExtResource("10_q8dat")]
 visible = false
+
+[node name="InteractableArea" type="Area3D" parent="ActorFloorIndicator/Pivot" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, -1)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ActorFloorIndicator/Pivot/InteractableArea"]
+shape = SubResource("CylinderShape3D_itspn")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
@@ -249,4 +266,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12
 [connection signal="TookDebtDamage" from="ActionPointHandler/DebtDamageHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(1, 0, 0, 1), Color(0, 0, 0, 1)]]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
 
+[editable path="ActorFloorIndicator"]
 [editable path="ActionPointHandler"]

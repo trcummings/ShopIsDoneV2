@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=13 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
@@ -11,16 +11,17 @@
 [ext_resource type="Script" path="res://levels/test_level/conditions/CustomerSatisfiedCondition.cs" id="6_a2ot6"]
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="7_xooi4"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="8_5fhod"]
+[ext_resource type="PackedScene" uid="uid://cp5wcgt8xqki" path="res://actors/interactables/test_interactable.tscn" id="12_e68ac"]
 
 [node name="Level" instance=ExtResource("1_egns7")]
 
 [node name="WorldEnvironment" parent="." index="0"]
 environment = ExtResource("2_2x2uj")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
-light_energy = 0.268
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="1"]
+transform = Transform3D(0.866025, -0.482963, 0.12941, 0, 0.258819, 0.965926, -0.5, -0.836516, 0.224144, 0, 12, 50)
 
-[node name="PlayerCharacterManager" parent="World" index="2"]
+[node name="PlayerCharacterManager" parent="World" index="3"]
 _LeaderScene = ExtResource("3_xxrhr")
 _FollowerScenes = [ExtResource("4_qbaqy")]
 
@@ -61,7 +62,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 7)
 [node name="OmniLight3D3" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1, 0)
 
-[node name="DefaultSpawnPoint" parent="World" index="4"]
+[node name="TestInteractable" parent="World/NavigationRegion3D/Environment" index="6" instance=ExtResource("12_e68ac")]
+transform = Transform3D(0.707107, 1.60554e-24, 0.707107, 3.48787e-16, 1, -3.48787e-16, -0.707107, 4.93259e-16, 0.707107, 16, 1, 6)
+
+[node name="DefaultSpawnPoint" parent="World" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6855, 0, -0.636568)
 
 [editable path="World/IsometricCamera"]
