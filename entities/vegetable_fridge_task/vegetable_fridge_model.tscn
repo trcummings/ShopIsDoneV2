@@ -24,6 +24,8 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 2.08165e-12, 2.08165e-1
 
 [node name="Sprite3D" type="Sprite3D" parent="Pivot"]
 transform = Transform3D(1.054, -3.09724e-16, 3.38573e-16, 3.56856e-16, 0.695033, 0.240228, -4.55934e-16, -0.172003, 0.970716, 2.08165e-12, 1.614, 0.381)
+transparent = false
+alpha_cut = 1
 texture = ExtResource("3_i43dc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

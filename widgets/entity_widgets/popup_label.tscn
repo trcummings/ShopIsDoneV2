@@ -48,6 +48,7 @@ layers = 513
 pixel_size = 0.025
 billboard = 1
 double_sided = false
+alpha_cut = 1
 render_priority = 1
 outline_render_priority = 0
 text = "[1]"

@@ -5,7 +5,6 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_mkvf3"]
 
 [node name="TestInteractable" type="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 4
 collision_mask = 0
 monitoring = false
@@ -21,6 +20,9 @@ visible = false
 billboard = 1
 double_sided = false
 no_depth_test = true
+alpha_cut = 1
+render_priority = 1
+outline_render_priority = 0
 text = "Interact
 "
 
