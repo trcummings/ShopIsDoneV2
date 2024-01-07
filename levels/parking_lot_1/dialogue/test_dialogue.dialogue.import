@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_11"
+type="Resource"
+uid="uid://bklp7spvcrugi"
+path="res://.godot/imported/test_dialogue.dialogue-e0f7e16b14dc58d7e16642c2b43e3d8e.tres"
+
+[deps]
+
+source_file="res://levels/parking_lot_1/dialogue/test_dialogue.dialogue"
+dest_files=["res://.godot/imported/test_dialogue.dialogue-e0f7e16b14dc58d7e16642c2b43e3d8e.tres"]
+
+[params]
+
+defaults=true

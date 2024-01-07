@@ -66,8 +66,9 @@ shape = SubResource("1")
 [node name="ActorStateMachine" type="Node" parent="."]
 script = ExtResource("3_plocb")
 
-[node name="Idle" type="Node" parent="ActorStateMachine"]
+[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("4_qed56")
+_StateHandler = NodePath(".")
 
 [node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_InteractableHandler")]
 script = ExtResource("4_80sfp")

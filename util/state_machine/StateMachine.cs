@@ -20,11 +20,11 @@ namespace ShopIsDone.Utils.StateMachine
         public bool Debug = false;
 
         // State vars
-        public string CurrentState;
-        public string LastState;
-
-        // Reference to state object
-        protected State _State = null;
+        public string CurrentState { get { return _CurrentState?.Name ?? ""; } }
+        protected State _CurrentState = null;
+        private Dictionary<string, Variant> _CurrentStateMessage = new Dictionary<string, Variant>();
+        private State _LastState = null;
+        private Dictionary<string, Variant> _LastStateMessage = new Dictionary<string, Variant>();
 
         public Array<State> States { get { return _States; } }
         private Array<State> _States = new Array<State>();
@@ -39,6 +39,8 @@ namespace ShopIsDone.Utils.StateMachine
             foreach (State _state in GetChildren().OfType<State>().ToList())
             {
                 _States.Add(_state);
+                // Give state reference to state machine
+                _state.Init(this);
                 // Connect to state change requests
                 _state.StateChangeRequested += ChangeState;
             }
@@ -51,48 +53,53 @@ namespace ShopIsDone.Utils.StateMachine
             return state;
         }
 
+        public (string, Dictionary<string, Variant>) GetLastStateProps()
+        {
+            return (_LastState?.Name ?? "", _LastStateMessage);
+        }
+
         // Input hooks
         public override void _Input(InputEvent @event)
         {
-            if (_State == null || !_State.CanRunHooks) return;
+            if (_CurrentState == null || !_CurrentState.CanRunHooks) return;
 
-            _State.OnInput(@event);
+            _CurrentState.OnInput(@event);
         }
 
         public override void _UnhandledInput(InputEvent @event)
         {
-            if (_State == null || !_State.CanRunHooks) return;
+            if (_CurrentState == null || !_CurrentState.CanRunHooks) return;
 
-            _State.OnUnhandledInput(@event);
+            _CurrentState.OnUnhandledInput(@event);
         }
 
 
         // Process hooks
         public override void _Process(double delta)
         {
-            if (_State == null || !_State.CanRunHooks) return;
+            if (_CurrentState == null || !_CurrentState.CanRunHooks) return;
 
-            _State.UpdateState(delta);
+            _CurrentState.UpdateState(delta);
         }
 
         public override void _PhysicsProcess(double delta)
         {
-            if (_State == null || !_State.CanRunHooks) return;
+            if (_CurrentState == null || !_CurrentState.CanRunHooks) return;
 
-            _State.PhysicsUpdateState(delta);
+            _CurrentState.PhysicsUpdateState(delta);
         }
 
         public void ChangeState(string stateName, Dictionary<string, Variant> message = null)
         {
             if (GameManager.IsDebugMode() && Debug) GD.Print($"{Name}.ChangeState called with {stateName}");
             // If we have a previous state, test state change restrictions
-            if (_State != null)
+            if (_CurrentState != null)
             {
                 // Ignore if it's the same state we were in before
-                if (!AllowTransitionsIntoSameState && _State.Name == stateName) return;
+                if (!AllowTransitionsIntoSameState && _CurrentState.Name == stateName) return;
 
                 // Check transitions
-                var invalidTransition = !_State.Transitions.Any((State candidate) => stateName == candidate.Name);
+                var invalidTransition = !_CurrentState.Transitions.Any((State candidate) => stateName == candidate.Name);
 
                 if (!IgnoreTransitionRestrictions && invalidTransition) return;
             }
@@ -125,22 +132,22 @@ namespace ShopIsDone.Utils.StateMachine
             }
 
             // If we have a previous state, run its OnExit callback
-            if (_State != null)
+            if (_CurrentState != null)
             {
                 // Connect to state's StateExited signal
                 // NB: Because we can enter and exit the same states, check for
                 // an existing connection
-                if (!_State.IsConnected(nameof(_State.StateExited), _AfterExitCallable))
+                if (!_CurrentState.IsConnected(nameof(_CurrentState.StateExited), _AfterExitCallable))
                 {
                     // Set bound callable to disconnect from afterwards
                     _AfterExitCallable = Callable.From(() => OnAfterExit(nextState, message));
                     // Connect to bound callable
-                    _State.Connect(nameof(_State.StateExited), _AfterExitCallable);
+                    _CurrentState.Connect(nameof(_CurrentState.StateExited), _AfterExitCallable);
                 }
 
                 // Run state's OnExit hook with the name of the next state
-                if (GameManager.IsDebugMode() && Debug) GD.Print($"{Name} exiting {_State.Name}");
-                _State.OnExit(nextState.Name);
+                if (GameManager.IsDebugMode() && Debug) GD.Print($"{Name} exiting {_CurrentState.Name}");
+                _CurrentState.OnExit(nextState.Name);
             }
             // Otherwise, skip directly to the after exit function
             else OnAfterExit(nextState, message);
@@ -149,38 +156,40 @@ namespace ShopIsDone.Utils.StateMachine
         private void OnAfterExit(State nextState, Dictionary<string, Variant> message = null)
         {
             // Disconnect if connected
-            if (_State?.IsConnected(nameof(_State.StateExited), _AfterExitCallable) ?? false)
+            if (_CurrentState?.IsConnected(nameof(_CurrentState.StateExited), _AfterExitCallable) ?? false)
             {
-                _State.Disconnect(nameof(_State.StateExited), _AfterExitCallable);
+                _CurrentState.Disconnect(nameof(_CurrentState.StateExited), _AfterExitCallable);
             }
 
             // Update the state tracking vars
-            CurrentState = nextState.Name;
-            _State = nextState;
+            _LastState = _CurrentState;
+            _LastStateMessage = _CurrentStateMessage;
+            _CurrentStateMessage = message;
+            _CurrentState = nextState;
 
             // Connect to state's StateEntered signal
             // NB: Because we can enter and exit the same states, check for
             // an existing connection
-            if (!_State.IsConnected(nameof(_State.StateStarted), _AfterStartCallable))
+            if (!_CurrentState.IsConnected(nameof(_CurrentState.StateStarted), _AfterStartCallable))
             {
-                _State.Connect(nameof(_State.StateStarted), _AfterStartCallable);
+                _CurrentState.Connect(nameof(_CurrentState.StateStarted), _AfterStartCallable);
             }
 
             // Start the next state
-            if (GameManager.IsDebugMode() && Debug) GD.Print($"{Name} entering {_State.Name}");
-            _State.OnStart(message);
+            if (GameManager.IsDebugMode() && Debug) GD.Print($"{Name} entering {_CurrentState.Name}");
+            _CurrentState.OnStart(message);
         }
 
         private void OnAfterStart()
         {
             // Disconnect from started event
-            if (_State.IsConnected(nameof(_State.StateStarted), _AfterStartCallable))
+            if (_CurrentState.IsConnected(nameof(_CurrentState.StateStarted), _AfterStartCallable))
             {
-                _State.Disconnect(nameof(_State.StateStarted), _AfterStartCallable);
+                _CurrentState.Disconnect(nameof(_CurrentState.StateStarted), _AfterStartCallable);
             }
 
             // Run state update function
-            _State.OnUpdate();
+            _CurrentState.OnUpdate();
         }
     }
 }

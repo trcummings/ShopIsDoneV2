@@ -67,8 +67,9 @@ shape = SubResource("1")
 [node name="ActorStateMachine" type="Node" parent="."]
 script = ExtResource("2_6jaxx")
 
-[node name="Idle" type="Node" parent="ActorStateMachine"]
+[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("4_rbt7t")
+_StateHandler = NodePath("../../StateHandler")
 
 [node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_InteractableHandler")]
 script = ExtResource("3_f0qiv")
@@ -253,8 +254,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12
 [node name="AlertEffect" parent="WidgetPoint" instance=ExtResource("32_gdm0m")]
 
 [node name="PopupLabel" parent="WidgetPoint" instance=ExtResource("33_dnns8")]
-
-[node name="Node" type="Node" parent="."]
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]

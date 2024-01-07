@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://bx0clnsygo7im"]
 
 [ext_resource type="Script" path="res://game/GameManager.cs" id="1_ej1mk"]
-[ext_resource type="PackedScene" uid="uid://c71hl7eo13nse" path="res://levels/test_level/test_level.tscn" id="2_fk64l"]
+[ext_resource type="PackedScene" uid="uid://xh2e5s84nxyv" path="res://levels/parking_lot_1/parking_lot_1_level.tscn" id="2_u5xte"]
 [ext_resource type="PackedScene" uid="uid://2vctcxi0tgnn" path="res://debug_display/debug_display.tscn" id="3_vdqti"]
 [ext_resource type="Script" path="res://game/game_states/InitialLoadState.cs" id="4_3nogo"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="4_kjt3r"]
@@ -15,7 +15,7 @@
 process_mode = 3
 script = ExtResource("1_ej1mk")
 OverrideModeAfterLoad = 2
-InitialLevel = ExtResource("2_fk64l")
+InitialLevel = ExtResource("2_u5xte")
 
 [node name="GameStateMachine" type="Node" parent="."]
 unique_name_in_owner = true

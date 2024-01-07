@@ -17,11 +17,6 @@ namespace ShopIsDone.Actors.States
             _StateHandler.ChangeState(StateConsts.IDLE);
             base.OnStart(message);
         }
-
-        public override void OnExit(string nextState)
-        {
-            base.OnExit(nextState);
-        }
     }
 }
 

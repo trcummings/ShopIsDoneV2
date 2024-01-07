@@ -27,10 +27,19 @@ namespace ShopIsDone.Utils.StateMachine
         private bool _HasBeenInitialized = false;
         private bool _OnUpdateHasFired = false;
 
+        // State machine
+        private StateMachine _StateMachine;
+
         // Used by state machine
         public bool CanRunHooks
         {
             get { return _HasBeenInitialized && _OnUpdateHasFired; }
+        }
+
+        // Only used to give the state reference to the state machine
+        public void Init(StateMachine stateMachine)
+        {
+            _StateMachine = stateMachine;
         }
 
         // Enter hook. Only called once
@@ -80,9 +89,15 @@ namespace ShopIsDone.Utils.StateMachine
             EmitSignal(nameof(StateExited));
         }
 
-        public void ChangeState(string stateName, Dictionary<string, Variant> message = null)
+        // Sandboxed methods
+        protected void ChangeState(string stateName, Dictionary<string, Variant> message = null)
         {
             EmitSignal(SignalName.StateChangeRequested, stateName, message);
+        }
+
+        protected (string, Dictionary<string, Variant>) GetLastStateProps()
+        {
+            return _StateMachine.GetLastStateProps();
         }
     }
 }

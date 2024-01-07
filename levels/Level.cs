@@ -61,6 +61,9 @@ namespace ShopIsDone.Levels
         [Export]
         private MicrogameController _MicrogameController;
 
+        [Export]
+        private CutsceneService _CutsceneService;
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -82,6 +85,7 @@ namespace ShopIsDone.Levels
             _InjectionProvider.RegisterService(_FacingWidget);
             _InjectionProvider.RegisterService(_PlayerCameraService);
             _InjectionProvider.RegisterService(_MicrogameController);
+            _InjectionProvider.RegisterService(_CutsceneService);
         }
 
         public const string ON_FINISHED_INIT = "OnFinishedInit";

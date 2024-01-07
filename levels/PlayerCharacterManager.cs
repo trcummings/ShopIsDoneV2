@@ -5,6 +5,7 @@ using Godot.Collections;
 using System;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Extensions;
+using System.Linq;
 
 namespace ShopIsDone.Levels
 {
@@ -21,6 +22,8 @@ namespace ShopIsDone.Levels
 
         [Export]
         private Node3D _DefaultSpawnPoint;
+
+        private int _LeaderLayer = 10;
 
         private Actor _Leader;
         private Array<Actor> _Followers = new Array<Actor>();
@@ -48,8 +51,17 @@ namespace ShopIsDone.Levels
                 follower.GlobalPosition = _DefaultSpawnPoint.GlobalPosition + (Vector3.Left * (i + 1));
             }
 
+            // Set leader layer
+            SetLeaderLayer();
+
             // Idle them
             Idle();
+        }
+
+        private void SetLeaderLayer()
+        {
+            _Leader.SetCollisionLayerValue(_LeaderLayer, true);
+            foreach (var follower in _Followers) follower.SetCollisionLayerValue(_LeaderLayer, false);
         }
 
         public void Idle()
@@ -66,8 +78,18 @@ namespace ShopIsDone.Levels
 
         public void MoveFreely(PlayerActorInput input)
         {
-            // Have each follower follow the previous person
-            foreach (var (prev, current) in GetAllUnits().WithPrevious())
+            // Get all units
+            var units = GetAllUnits();
+
+            // If there's only one unit, that one is the leader
+            if (units.Count == 1)
+            {
+                units.First().MoveFreely(input);
+                return;
+            }
+
+            // Otherwise, have each unit follow the previous person
+            foreach (var (prev, current) in units.WithPrevious())
             {
                 if (prev == null) continue;
                 // Give the leader player input to let them move around freely

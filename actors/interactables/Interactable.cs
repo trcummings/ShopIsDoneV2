@@ -43,12 +43,12 @@ namespace ShopIsDone.Interactables
             EmitSignal(nameof(InteractableUnhovered));
         }
 
-        public void StartInteraction()
+        public virtual void StartInteraction()
         {
             EmitSignal(nameof(InteractionBegan));
         }
 
-        public void FinishInteraction()
+        public virtual void FinishInteraction()
         {
             EmitSignal(nameof(InteractionFinished));
         }
