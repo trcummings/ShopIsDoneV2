@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=17 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
@@ -12,16 +12,34 @@
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="7_xooi4"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="8_5fhod"]
 [ext_resource type="PackedScene" uid="uid://cp5wcgt8xqki" path="res://actors/interactables/test_interactable.tscn" id="12_e68ac"]
+[ext_resource type="Shader" path="res://levels/test_level/ntsc.gdshader" id="16_2hx3x"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6h0ou"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_coiw1"]
+seamless = true
+noise = SubResource("FastNoiseLite_6h0ou")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7nwg3"]
+shader = ExtResource("16_2hx3x")
+shader_parameter/blur_amount = 0.415
+shader_parameter/signal_quality = 0.023
+shader_parameter/bottom_strenth = 0.587
+shader_parameter/grain_tex = SubResource("NoiseTexture2D_coiw1")
 
 [node name="Level" instance=ExtResource("1_egns7")]
 
 [node name="WorldEnvironment" parent="." index="0"]
 environment = ExtResource("2_2x2uj")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="1"]
-transform = Transform3D(0.866025, -0.482963, 0.12941, 0, 0.258819, 0.965926, -0.5, -0.836516, 0.224144, 0, 12, 50)
+[node name="IsometricCamera" parent="World" index="1"]
+transform = Transform3D(0.707107, -0.353553, 0.612372, 3.02058e-16, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 0, 0, 0)
 
-[node name="PlayerCharacterManager" parent="World" index="3"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
+layers = 0
+light_cull_mask = 4293918976
+
+[node name="PlayerCharacterManager" parent="World" index="2"]
 _LeaderScene = ExtResource("3_xxrhr")
 _FollowerScenes = [ExtResource("4_qbaqy")]
 
@@ -65,8 +83,48 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1, 0)
 [node name="TestInteractable" parent="World/NavigationRegion3D/Environment" index="6" instance=ExtResource("12_e68ac")]
 transform = Transform3D(0.707107, 1.60554e-24, 0.707107, 3.48787e-16, 1, -3.48787e-16, -0.707107, 4.93259e-16, 0.707107, 16, 1, 6)
 
-[node name="DefaultSpawnPoint" parent="World" index="5"]
+[node name="DefaultSpawnPoint" parent="World" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6855, 0, -0.636568)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="5"]
+transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 2.08165e-12, 11, 2.08165e-12)
+light_energy = 0.089
+light_cull_mask = 4294967039
+
+[node name="PostProcessing" type="CanvasLayer" parent="." index="5"]
+layer = 32
+follow_viewport_enabled = true
+
+[node name="Effects" type="Control" parent="PostProcessing" index="0"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="PostProcessing/Effects" index="0"]
+position = Vector2(960, 540)
+scale = Vector2(9.6, 5.4)
+copy_mode = 2
+
+[node name="NTSC" type="ColorRect" parent="PostProcessing/Effects/BackBufferCopy3" index="0"]
+material = SubResource("ShaderMaterial_7nwg3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = -99.9999
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UILayer" parent="." index="6"]
+layer = 64
+
+[node name="LevelPauseMenu" parent="." index="7"]
+layer = 128
 
 [editable path="World/IsometricCamera"]
 [editable path="World/NavigationRegion3D/Environment/Arena"]

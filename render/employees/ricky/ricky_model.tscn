@@ -21,4 +21,5 @@ _Sprite = NodePath("SubViewport/Ricky2D")
 position = Vector2(300, 300)
 
 [node name="MeshInstance3D" parent="." index="2"]
+layers = 257
 material_override = SubResource("StandardMaterial3D_bxpnl")

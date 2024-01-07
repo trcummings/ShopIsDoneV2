@@ -4,7 +4,7 @@ render_mode unshaded;
 uniform float uv_scale : hint_range(1, 256) = 1;
 uniform float chunk_size : hint_range(1, 100) = 1;
 uniform sampler2D depth_texture : hint_depth_texture;
-uniform sampler2D screen_texture : hint_screen_texture;
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
 uniform float zNear = 0.05;
 uniform float zFar = 100;
 uniform float color_depth : hint_range(0.0, 255.0) = 100.0;
