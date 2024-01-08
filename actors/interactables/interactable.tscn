@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp5wcgt8xqki"]
+
+[ext_resource type="Script" path="res://actors/interactables/Interactable.cs" id="1_yejl8"]
+
+[node name="Interactable" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_yejl8")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, -2.50326e-08, 0, 1, 0, -2.50326e-08, 0, 1, 0, 0, 0)
+
+[node name="Label3D" type="Label3D" parent="."]
+visible = false
+billboard = 1
+double_sided = false
+no_depth_test = true
+text = "Interact
+"
+
+[connection signal="InteractableHovered" from="." to="Label3D" method="show"]
+[connection signal="InteractableUnhovered" from="." to="Label3D" method="hide"]

@@ -1,6 +1,7 @@
 using Godot;
 using ShopIsDone.Utils.DependencyInjection;
 using System;
+using ShopIsDone.Interactables.Interactions;
 
 namespace ShopIsDone.Interactables
 {
@@ -21,7 +22,13 @@ namespace ShopIsDone.Interactables
         public delegate void InteractionFinishedEventHandler();
 
         [Export]
-        public string Prompt = "Interact";
+        private bool _IsOneShot = false;
+
+        [Export]
+        private Interaction _Interaction;
+
+        [Export]
+        private string _Prompt = "Interact";
 
         // State
         private bool _IsHovered = false;
@@ -46,11 +53,33 @@ namespace ShopIsDone.Interactables
         public virtual void StartInteraction()
         {
             EmitSignal(nameof(InteractionBegan));
+
+            // Unhover for the duration of the interaction
+            Unhover();
+
+            // Disable if one shot
+            if (_IsOneShot) Disable();
+
+            // Run interaction
+            if (_Interaction != null)
+            {
+                _Interaction.Connect(
+                    nameof(_Interaction.Finished),
+                    Callable.From(FinishInteraction),
+                    (uint)ConnectFlags.OneShot
+                );
+                _Interaction.Execute();
+            }
+            // If we don't have one just defer a finish call
+            else CallDeferred(nameof(FinishInteraction));
         }
 
-        public virtual void FinishInteraction()
+        private void FinishInteraction()
         {
             EmitSignal(nameof(InteractionFinished));
+
+            // If it's not a one shot, show the hover again
+            if (!_IsOneShot) Hover();
         }
 
         public void Disable()

@@ -8,12 +8,6 @@ namespace ShopIsDone.Interactables
     public partial class InteractableHandler : Node
     {
         [Signal]
-        public delegate void InteractableHoveredEventHandler(string prompt);
-
-        [Signal]
-        public delegate void InteractableUnhoveredEventHandler();
-
-        [Signal]
         public delegate void InteractionBeganEventHandler();
 
         [Signal]
@@ -45,6 +39,19 @@ namespace ShopIsDone.Interactables
         public void Interact()
         {
             if (_CurrentInteractable == null) return;
+
+            // Connect to interactable events
+            _CurrentInteractable.Connect(
+                nameof(_CurrentInteractable.InteractionBegan),
+                _BeginInteraction,
+                (uint)ConnectFlags.OneShot
+            );
+            _CurrentInteractable.Connect(
+                nameof(_CurrentInteractable.InteractionFinished),
+                _FinishInteraction,
+                (uint)ConnectFlags.OneShot
+            );
+
             _CurrentInteractable.StartInteraction();
         }
 
@@ -64,10 +71,7 @@ namespace ShopIsDone.Interactables
             {
                 // Set current interactable
                 _CurrentInteractable = interactable;
-                // Connect to interactable
-                interactable.Connect(nameof(interactable.InteractionBegan), _BeginInteraction);
-                interactable.Connect(nameof(interactable.InteractionFinished), _FinishInteraction);
-                EmitSignal(nameof(InteractableHovered));
+                // Hover interactable
                 interactable.Hover();
             }
         }
@@ -78,10 +82,7 @@ namespace ShopIsDone.Interactables
             {
                 // If our current interactable exited, null it out
                 if (_CurrentInteractable == interactable) _CurrentInteractable = null;
-                // Disconnect from interactable
-                interactable.Disconnect(nameof(interactable.InteractionBegan), _BeginInteraction);
-                interactable.Disconnect(nameof(interactable.InteractionFinished), _FinishInteraction);
-                EmitSignal(nameof(InteractableUnhovered));
+                // Unhover the interactable
                 interactable.Unhover();
             }
         }
