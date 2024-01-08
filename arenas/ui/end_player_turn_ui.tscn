@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgrl3b7hwon66"]
+
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="1_buw5j"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="2_ujfpt"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="3_kmogf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2csdq"]
+
+[node name="EndPlayerTurnUI" type="PanelContainer"]
+offset_right = 200.0
+offset_bottom = 60.0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2csdq")
+
+[node name="BackgroundPanel" parent="." instance=ExtResource("1_buw5j")]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="BackgroundPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundPanel/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Label" type="Label" parent="BackgroundPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ujfpt")
+theme_type_variation = &"LabelDark"
+text = "End Turn?"
+
+[node name="ActionIcon" type="TextureRect" parent="BackgroundPanel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("3_kmogf")
+action_name = &"end_player_turn"
+joypad_model = 2

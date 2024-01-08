@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ddpx507fj2uyv"]
+
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/WaitAndEndTurnActionPlan.cs" id="1_cy7tl"]
+
+[resource]
+script = ExtResource("1_cy7tl")
+ActionId = "wait"

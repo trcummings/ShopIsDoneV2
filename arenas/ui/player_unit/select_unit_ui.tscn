@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://owvl5qshyl5r"]
+
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="1"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="4"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="5"]
+
+[node name="SelectUnitUI" type="Control"]
+custom_minimum_size = Vector2(225, 60)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1695.0
+offset_bottom = -1020.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BackgroundPanel" parent="." instance=ExtResource("1")]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="BackgroundPanel"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundPanel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Label" type="Label" parent="BackgroundPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme = ExtResource("4")
+theme_type_variation = &"LabelDark"
+text = "Select Unit"
+vertical_alignment = 1
+
+[node name="ActionIcon" type="TextureRect" parent="BackgroundPanel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("5")
+action_name = &"ui_accept"
+joypad_model = 2

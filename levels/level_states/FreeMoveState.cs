@@ -4,26 +4,27 @@ using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
 using ShopIsDone.Actors;
 using ShopIsDone.Cameras;
+using ShopIsDone.Pausing;
 
 namespace ShopIsDone.Levels.States
 {
     public partial class FreeMoveState : State
     {
-        [Signal]
-        public delegate void CameraRotatedEventHandler();
+        [Export]
+        private CameraService _CameraSystem;
 
         [Export]
-        private CameraSystem _CameraSystem;
+        private PlayerCameraService _PlayerCameraService;
 
         [Export]
-        private IsometricCamera _Camera;
-
-        [Export]
-        private Haskell _Haskell;
+        private PlayerCharacterManager _PlayerCharacterManager;
 
         [Export]
         private InputXformer _InputXformer;
         private PlayerActorInput _PlayerInput;
+
+        [Export]
+        private PauseInputHandler _PauseInputHandler;
 
         public override void _Ready()
         {
@@ -36,29 +37,23 @@ namespace ShopIsDone.Levels.States
         {
             // Activate camera system
             _CameraSystem.Init();
-            _CameraSystem.SetCameraTarget(_Haskell).Execute();
-            // Start actor
-            _Haskell.Init(_PlayerInput);
+            _CameraSystem.SetCameraTarget(_PlayerCharacterManager.GetLeader()).Execute();
+            // Allow characters to move freely
+            _PlayerCharacterManager.MoveFreely(_PlayerInput);
+            // Start camera
+            _PlayerCameraService.Activate();
+
+            // Allow pausing
+            _PauseInputHandler.IsActive = true;
 
             // Finish start hook
             base.OnStart(message);
         }
 
-        public override void UpdateState(double delta)
+        public override void OnExit(string nextState)
         {
-            base.UpdateState(delta);
-
-            // Handle camera rotation
-            if (Input.IsActionJustPressed("rotate_camera_left"))
-            {
-                _Camera.RotateLeft();
-                EmitSignal(nameof(CameraRotated));
-            }
-            if (Input.IsActionJustPressed("rotate_camera_right"))
-            {
-                _Camera.RotateRight();
-                EmitSignal(nameof(CameraRotated));
-            }
+            _PlayerCameraService.Deactivate();
+            base.OnExit(nextState);
         }
     }
 }

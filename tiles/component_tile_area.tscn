@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dydhq3kqv6ksd"]
+
+[ext_resource type="Script" path="res://tiles/ComponentTileArea.cs" id="1_0sssw"]
+
+[sub_resource type="BoxShape3D" id="1"]
+size = Vector3(1.8, 0.2, 1.8)
+
+[sub_resource type="QuadMesh" id="2"]
+size = Vector2(1.9, 1.9)
+center_offset = Vector3(0, 0, 0.01)
+
+[node name="ComponentTileArea" type="Area3D" node_paths=PackedStringArray("_TileRayCast")]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_0sssw")
+_TileRayCast = NodePath("TileRayCast")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("1")
+
+[node name="TileMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("2")
+
+[node name="TileRayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+collision_mask = 128

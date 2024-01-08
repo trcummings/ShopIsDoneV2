@@ -1,43 +1,271 @@
-[gd_scene load_steps=11 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=44 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
-[ext_resource type="PackedScene" uid="uid://q7vt4gyur1aa" path="res://actors/base_actor.tscn" id="2"]
+[ext_resource type="Script" path="res://actors/Actor.cs" id="1_0yjha"]
+[ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_6jaxx"]
 [ext_resource type="Script" path="res://actors/ActorVelocity.cs" id="3"]
+[ext_resource type="Script" path="res://actors/states/FreeMoveActorState.cs" id="3_f0qiv"]
+[ext_resource type="Script" path="res://actors/states/InArenaActorState.cs" id="4_oqqp8"]
+[ext_resource type="Script" path="res://actors/states/IdleActorState.cs" id="4_rbt7t"]
 [ext_resource type="Script" path="res://actors/ActorAnimator.cs" id="5"]
-[ext_resource type="Script" path="res://actors/Haskell.cs" id="6"]
+[ext_resource type="Script" path="res://actors/states/FollowLeaderActorState.cs" id="5_dq058"]
 [ext_resource type="PackedScene" path="res://actors/actor_floor_indicator.tscn" id="7"]
 [ext_resource type="Script" path="res://audio/footsteps/FootstepsController.cs" id="7_5g5gq"]
+[ext_resource type="Script" path="res://actors/ActorPathfinder.cs" id="8_exart"]
 [ext_resource type="PackedScene" uid="uid://ccauejj4i4k3v" path="res://audio/footsteps/tile/footsteps_tile_fast.tscn" id="8_h2my1"]
 [ext_resource type="PackedScene" uid="uid://cmq4kldjoormo" path="res://audio/footsteps/tile/footsteps_tile_medium.tscn" id="9_lim5r"]
 [ext_resource type="PackedScene" uid="uid://2ae2lvic7v6g" path="res://audio/footsteps/tile/footsteps_tile_slow.tscn" id="10_0nb28"]
+[ext_resource type="Script" path="res://actors/interactables/InteractableHandler.cs" id="11_7ska3"]
+[ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="11_862jn"]
+[ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="11_uh075"]
+[ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="15_7e1m5"]
+[ext_resource type="Script" path="res://entity_states/employee_states/HelpCustomerEntityState.cs" id="16_5ve4v"]
+[ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="16_87xgg"]
+[ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="17_xmxqu"]
+[ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="18_64csj"]
+[ext_resource type="Script" path="res://action_points/BasicDeathHandler.cs" id="18_t6671"]
+[ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="19_dsksq"]
+[ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://arena_actions/employee_actions/interrupt_task_action.tres" id="19_lonxh"]
+[ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="19_vhxse"]
+[ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="20_1bpch"]
+[ext_resource type="Script" path="res://action_points/EmployeeDebtDamageHandler.cs" id="21_4q2q7"]
+[ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="21_k5t6c"]
+[ext_resource type="Script" path="res://tiles/UnitTileMoveValidator.cs" id="21_lkw5d"]
+[ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="22_4rv4k"]
+[ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="22_f48js"]
+[ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="22_odajy"]
+[ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="23_sv0kt"]
+[ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://arena_actions/employee_actions/help_customer_action.tres" id="24_xn5yg"]
+[ext_resource type="PackedScene" uid="uid://dx6r37l2dvf6v" path="res://widgets/entity_widgets/talking_effect.tscn" id="31_nnm70"]
+[ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="31_xx1gf"]
+[ext_resource type="PackedScene" uid="uid://c51x12itwmxoa" path="res://widgets/entity_widgets/alert_effect.tscn" id="32_gdm0m"]
+[ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="33_dnns8"]
+[ext_resource type="Script" path="res://tasks/TaskHandler.cs" id="33_l4ov1"]
 
-[node name="HaskellActor" node_paths=PackedStringArray("_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator") instance=ExtResource("2")]
-script = ExtResource("6")
+[sub_resource type="CapsuleShape3D" id="1"]
+radius = 0.75
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vda16"]
+radius = 0.75
+
+[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine") groups=["entities"]]
+collision_layer = 2
+script = ExtResource("1_0yjha")
 _ActorAnimator = NodePath("ActorAnimator")
-_ActorVelocity = NodePath("ActorVelocity")
-_ActorFloorIndicator = NodePath("ActorFloorIndicator")
+_ActorStateMachine = NodePath("ActorStateMachine")
+Id = "haskell"
+EntityName = "Haskell"
+_TilemapPositionHandlerPath = NodePath("TilemapPositionHandler")
+_FacingDirectionHandlerPath = NodePath("FacingDirectionHandler")
 
-[node name="HaskellModel" parent="." index="1" instance=ExtResource("1")]
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 1, 2.08165e-12)
+shape = SubResource("1")
 
-[node name="ActorVelocity" type="Node" parent="." index="2"]
+[node name="HaskellModel" parent="." instance=ExtResource("1")]
+
+[node name="ActorStateMachine" type="Node" parent="."]
+script = ExtResource("2_6jaxx")
+
+[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
+script = ExtResource("4_rbt7t")
+_StateHandler = NodePath("../../StateHandler")
+
+[node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_InteractableHandler")]
+script = ExtResource("3_f0qiv")
+_Body = NodePath("../..")
+_ActorAnimator = NodePath("../../ActorAnimator")
+_ActorVelocity = NodePath("../../ActorVelocity")
+_ActorFloorIndicator = NodePath("../../ActorFloorIndicator")
+_InteractableHandler = NodePath("../../InteractableHandler")
+
+[node name="InArena" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
+script = ExtResource("4_oqqp8")
+_StateHandler = NodePath("../../StateHandler")
+
+[node name="FollowLeader" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorPathfinder")]
+script = ExtResource("5_dq058")
+_Body = NodePath("../..")
+_ActorAnimator = NodePath("../../ActorAnimator")
+_ActorVelocity = NodePath("../../ActorVelocity")
+_ActorPathfinder = NodePath("../../ActorPathfinder")
+
+[node name="ActorVelocity" type="Node" parent="."]
 script = ExtResource("3")
 
-[node name="ActorAnimator" type="Node" parent="." index="3"]
+[node name="ActorAnimator" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("5")
 ModelPath = NodePath("../HaskellModel")
+_StateHandler = NodePath("../StateHandler")
 
-[node name="ActorFloorIndicator" parent="." index="4" instance=ExtResource("7")]
+[node name="ActorPathfinder" type="Node" parent="." node_paths=PackedStringArray("_Body", "NavigationAgent", "_VelocityComponent", "_IntervalTimer")]
+script = ExtResource("8_exart")
+_Body = NodePath("..")
+NavigationAgent = NodePath("../NavigationAgent3D")
+_VelocityComponent = NodePath("../ActorVelocity")
+_IntervalTimer = NodePath("Timer")
 
-[node name="FootstepController" type="Node" parent="." index="5" node_paths=PackedStringArray("_SlowPlayer", "_MediumPlayer", "_FastPlayer")]
+[node name="Timer" type="Timer" parent="ActorPathfinder"]
+wait_time = 0.5
+one_shot = true
+
+[node name="InteractableHandler" type="Node" parent="." node_paths=PackedStringArray("_InteractableDetector")]
+script = ExtResource("11_7ska3")
+_InteractableDetector = NodePath("../ActorFloorIndicator/Pivot/InteractableArea")
+
+[node name="ActorFloorIndicator" parent="." instance=ExtResource("7")]
+
+[node name="InteractableArea" type="Area3D" parent="ActorFloorIndicator/Pivot" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, -0.75)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ActorFloorIndicator/Pivot/InteractableArea"]
+shape = SubResource("CylinderShape3D_vda16")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="FootstepController" type="Node" parent="." node_paths=PackedStringArray("_SlowPlayer", "_MediumPlayer", "_FastPlayer")]
 script = ExtResource("7_5g5gq")
 _SlowPlayer = NodePath("FootstepsTileSlow")
 _MediumPlayer = NodePath("FootstepsTileMedium")
 _FastPlayer = NodePath("FootstepsTileFast")
 
-[node name="FootstepsTileFast" parent="FootstepController" index="0" instance=ExtResource("8_h2my1")]
+[node name="FootstepsTileFast" parent="FootstepController" instance=ExtResource("8_h2my1")]
+volume_db = -3.671
 
-[node name="FootstepsTileMedium" parent="FootstepController" index="1" instance=ExtResource("9_lim5r")]
+[node name="FootstepsTileMedium" parent="FootstepController" instance=ExtResource("9_lim5r")]
+volume_db = -3.671
 
-[node name="FootstepsTileSlow" parent="FootstepController" index="2" instance=ExtResource("10_0nb28")]
+[node name="FootstepsTileSlow" parent="FootstepController" instance=ExtResource("10_0nb28")]
+volume_db = -3.671
+
+[node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
+script = ExtResource("11_862jn")
+FacingTarget = NodePath("..")
+
+[node name="TilemapPositionHandler" parent="." instance=ExtResource("21_k5t6c")]
+
+[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("11_uh075")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateHandler"]
+script = ExtResource("15_7e1m5")
+_ModelPath = NodePath("../../HaskellModel")
+_WaitForEnterAnimToFinish = false
+_EnterAnimName = "idle"
+Id = "idle"
+
+[node name="Move" type="Node" parent="StateHandler"]
+script = ExtResource("15_7e1m5")
+_ModelPath = NodePath("../../HaskellModel")
+_WaitForEnterAnimToFinish = false
+_EnterAnimName = "walk"
+Id = "move"
+
+[node name="Alert" type="Node" parent="StateHandler"]
+script = ExtResource("15_7e1m5")
+_ModelPath = NodePath("../../HaskellModel")
+_EnterAnimName = "alert"
+Id = "alert"
+
+[node name="Hurt" type="Node" parent="StateHandler"]
+script = ExtResource("15_7e1m5")
+_ModelPath = NodePath("../../HaskellModel")
+_EnterAnimName = "take_hit"
+Id = "hurt"
+
+[node name="DoTask" type="Node" parent="StateHandler"]
+script = ExtResource("15_7e1m5")
+_ModelPath = NodePath("../../HaskellModel")
+_EnterAnimName = "do_task"
+Id = "do_task"
+
+[node name="Dead" type="Node" parent="StateHandler"]
+script = ExtResource("15_7e1m5")
+_ModelPath = NodePath("../../HaskellModel")
+_EnterAnimName = "meltdown"
+Id = "dead"
+_IsActive = false
+
+[node name="HelpCustomer" type="Node" parent="StateHandler"]
+script = ExtResource("16_5ve4v")
+Id = "help_customer"
+
+[node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
+_DeathHandlerPath = NodePath("../DeathHandler")
+
+[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_StateHandler")]
+script = ExtResource("21_4q2q7")
+_TaskHandler = NodePath("../../TaskHandler")
+_StateHandler = NodePath("../../StateHandler")
+
+[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
+script = ExtResource("18_t6671")
+_StateHandler = NodePath("../StateHandler")
+
+[node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
+script = ExtResource("16_87xgg")
+Actions = [ExtResource("19_lonxh"), ExtResource("17_xmxqu"), ExtResource("18_64csj"), ExtResource("24_xn5yg"), ExtResource("22_odajy")]
+_ActionPointHandler = NodePath("../ActionPointHandler")
+
+[node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_CommandProcessor", "_MoveValidator", "_SkipTileStrategy")]
+script = ExtResource("19_dsksq")
+_Body = NodePath("..")
+_CommandProcessor = NodePath("CommandProcessor")
+_MoveValidator = NodePath("TileMoveValidator")
+_SkipTileStrategy = NodePath("ShouldSkipTileStrategy")
+CanPassThroughAllies = true
+
+[node name="CommandProcessor" type="Node" parent="TileMovementHandler"]
+script = ExtResource("20_1bpch")
+
+[node name="TileMoveValidator" type="Node" parent="TileMovementHandler" node_paths=PackedStringArray("_TileMovementHandler")]
+script = ExtResource("21_lkw5d")
+_TileMovementHandler = NodePath("..")
+
+[node name="ShouldSkipTileStrategy" type="Node" parent="TileMovementHandler" node_paths=PackedStringArray("_TileMoveHandler", "_TeamHandler")]
+script = ExtResource("22_4rv4k")
+_TileMoveHandler = NodePath("..")
+_TeamHandler = NodePath("../../TeamHandler")
+
+[node name="DemeritHandler" type="Node" parent="."]
+script = ExtResource("22_f48js")
+
+[node name="TeamHandler" type="Node" parent="."]
+script = ExtResource("23_sv0kt")
+
+[node name="OutcomeHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
+script = ExtResource("31_xx1gf")
+_ActionPointHandler = NodePath("../ActionPointHandler")
+
+[node name="TaskHandler" type="Node" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler")]
+script = ExtResource("33_l4ov1")
+_StateHandler = NodePath("../StateHandler")
+_ActionPointHandler = NodePath("../ActionPointHandler")
+
+[node name="WidgetPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12)
+
+[node name="TalkingEffect" parent="WidgetPoint" instance=ExtResource("31_nnm70")]
+
+[node name="AlertEffect" parent="WidgetPoint" instance=ExtResource("32_gdm0m")]
+
+[node name="PopupLabel" parent="WidgetPoint" instance=ExtResource("33_dnns8")]
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
+[connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]
+[connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="HaskellModel" method="SetFacingDir"]
+[connection signal="RequestedPromptText" from="StateHandler/HelpCustomer" to="WidgetPoint/PopupLabel" method="PopupText" binds= [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="ReceivedExcessAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="RecoveredAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="SpentAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="SpentExcessAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="TookApDrain" from="ActionPointHandler/DrainHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="TookDebtDamage" from="ActionPointHandler/DebtDamageHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(1, 0, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
+
+[editable path="ActorFloorIndicator"]
+[editable path="ActionPointHandler"]

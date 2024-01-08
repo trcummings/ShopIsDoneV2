@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bx0clnsygo7im"]
+[gd_scene load_steps=11 format=3 uid="uid://bx0clnsygo7im"]
 
 [ext_resource type="Script" path="res://game/GameManager.cs" id="1_ej1mk"]
-[ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_gcynx"]
-[ext_resource type="PackedScene" uid="uid://xh2e5s84nxyv" path="res://levels/parking_lot_1/parking_lot_1_level.tscn" id="2_ukknu"]
+[ext_resource type="PackedScene" uid="uid://xh2e5s84nxyv" path="res://levels/parking_lot_1/parking_lot_1_level.tscn" id="2_u5xte"]
 [ext_resource type="PackedScene" uid="uid://2vctcxi0tgnn" path="res://debug_display/debug_display.tscn" id="3_vdqti"]
 [ext_resource type="Script" path="res://game/game_states/InitialLoadState.cs" id="4_3nogo"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="4_kjt3r"]
@@ -16,11 +15,7 @@
 process_mode = 3
 script = ExtResource("1_ej1mk")
 OverrideModeAfterLoad = 2
-InitialLevel = ExtResource("2_ukknu")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-unique_name_in_owner = true
-environment = ExtResource("2_gcynx")
+InitialLevel = ExtResource("2_u5xte")
 
 [node name="GameStateMachine" type="Node" parent="."]
 unique_name_in_owner = true
@@ -36,11 +31,9 @@ script = ExtResource("5_8eg8s")
 [node name="MainMenu" type="Node" parent="GameStateMachine"]
 script = ExtResource("6_awquy")
 TitleScreenScene = ExtResource("7_yill8")
-MainMenuEnvironment = ExtResource("2_gcynx")
 
 [node name="Level" type="Node" parent="GameStateMachine"]
 script = ExtResource("8_k0lyi")
-LevelEnvironment = ExtResource("2_gcynx")
 
 [node name="BreakRoom" type="Node" parent="GameStateMachine"]
 script = ExtResource("5_8eg8s")

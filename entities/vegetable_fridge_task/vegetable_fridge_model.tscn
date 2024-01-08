@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwxwa2f46orap"]
+
+[ext_resource type="Script" path="res://render/Model.cs" id="1_eod5j"]
+[ext_resource type="PackedScene" uid="uid://o0kv402fowrx" path="res://entities/vegetable_fridge_task/vegetable_fridge.glb" id="2_8qbo3"]
+[ext_resource type="Texture2D" uid="uid://nacgji826jgc" path="res://entities/vegetable_fridge_task/vegetables.png" id="3_i43dc"]
+
+[sub_resource type="Animation" id="Animation_ulmlj"]
+resource_name = "RESET"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ek5x5"]
+_data = {
+"RESET": SubResource("Animation_ulmlj")
+}
+
+[node name="VegetableFridgeModel" type="Node3D" node_paths=PackedStringArray("_AnimPlayer")]
+script = ExtResource("1_eod5j")
+LoopingAnimations = []
+_AnimPlayer = NodePath("AnimationPlayer")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="vegetable_fridge" parent="Pivot" instance=ExtResource("2_8qbo3")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 2.08165e-12, 2.08165e-12, -0.7)
+
+[node name="Sprite3D" type="Sprite3D" parent="Pivot"]
+transform = Transform3D(1.054, -3.09724e-16, 3.38573e-16, 3.56856e-16, 0.695033, 0.240228, -4.55934e-16, -0.172003, 0.970716, 2.08165e-12, 1.614, 0.381)
+transparent = false
+alpha_cut = 1
+texture = ExtResource("3_i43dc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ek5x5")
+}

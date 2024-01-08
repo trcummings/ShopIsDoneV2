@@ -19,6 +19,7 @@ size = Vector2(4, 4)
 
 [node name="EmployeeRenderModel" type="Node3D" groups=["isometric_sprite", "renderable"]]
 script = ExtResource("1")
+_ForceAnimLowercase = true
 
 [node name="SubViewport" type="SubViewport" parent="."]
 disable_3d = true

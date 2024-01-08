@@ -1,14 +1,16 @@
 [gd_scene load_steps=5 format=3 uid="uid://7jutumxuh5ii"]
 
 [ext_resource type="PackedScene" uid="uid://cvky7xhrr3ygf" path="res://render/employees/employee_isometric_model.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://render/employees/jessica/jessica_2d.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://c3erap73t1tjq" path="res://render/employees/jessica/jessica_2d.tscn" id="2"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ww8c2"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tppg"]
 resource_local_to_scene = true
-transparency = 1
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
 albedo_texture = SubResource("ViewportTexture_ww8c2")
 billboard_mode = 2
 
@@ -17,7 +19,6 @@ _Sprite = NodePath("SubViewport/Jessica2D")
 
 [node name="Jessica2D" parent="SubViewport" index="0" instance=ExtResource("2")]
 position = Vector2(300, 300)
-LoopingAnimations = ["walk", "idle", "do_task"]
 
 [node name="MeshInstance3D" parent="." index="2"]
 material_override = SubResource("StandardMaterial3D_0tppg")

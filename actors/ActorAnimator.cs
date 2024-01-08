@@ -1,14 +1,22 @@
 ﻿using System;
 using Godot;
+using ShopIsDone.EntityStates;
 using ShopIsDone.Models;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.Actors
 {
 	public partial class ActorAnimator : Node
 	{
+        [Signal]
+        public delegate void FacingDirUpdatedEventHandler(Vector3 facingDir);
+
         [Export]
         private NodePath ModelPath;
         private IModel _Model;
+
+        [Export]
+        private EntityStateHandler _StateHandler;
 
         private const float NORM_VAL = 0.7071067811865475244f;
         private Vector3 _BackRightNorm = new Vector3(NORM_VAL, 0, NORM_VAL);
@@ -29,13 +37,14 @@ namespace ShopIsDone.Actors
         public void UpdateAnimations(Vector3 velocity)
         {
             // Update animations based on velocity
-            if (velocity.Length() > 0.001)
+            var isMoving = velocity.Length() > 0.001;
+            if (isMoving && _StateHandler.IsInState(StateConsts.IDLE))
             {
-                _Model.PerformAnimation("walk", false);
+                _StateHandler.ChangeState(StateConsts.MOVE);
             }
-            else
+            else if (!isMoving && _StateHandler.IsInState(StateConsts.MOVE))
             {
-                _Model.PerformAnimation("idle", false);
+                _StateHandler.ChangeState(StateConsts.IDLE);
             }
 
             // Update facing direction based on input
@@ -52,19 +61,19 @@ namespace ShopIsDone.Actors
                 // Update facing dir based on normed value
                 if (normed == _BackRightNorm)
                 {
-                    _Model.SetFacingDir(Vector3.Back);
+                    EmitSignal(nameof(FacingDirUpdated), Vector3.Back);
                 }
                 else if (normed == _BackLeftNorm)
                 {
-                    _Model.SetFacingDir(Vector3.Right);
+                    EmitSignal(nameof(FacingDirUpdated), Vector3.Right);
                 }
                 else if (normed == _FrontLeftNorm)
                 {
-                    _Model.SetFacingDir(Vector3.Forward);
+                    EmitSignal(nameof(FacingDirUpdated), Vector3.Forward);
                 }
                 else if (normed == _FrontRightNorm)
                 {
-                    _Model.SetFacingDir(Vector3.Left);
+                    EmitSignal(nameof(FacingDirUpdated), Vector3.Left);
                 }
             }
             else if (rounded == Vector3.Zero)
@@ -74,7 +83,7 @@ namespace ShopIsDone.Actors
             // Otherwise update
             else
             {
-                _Model.SetFacingDir(rounded);
+                EmitSignal(nameof(FacingDirUpdated), rounded);
             }
         }
     }

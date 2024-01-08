@@ -1,0 +1,81 @@
+[gd_scene load_steps=7 format=3 uid="uid://k1cfuob2nivk"]
+
+[ext_resource type="Texture2D" uid="uid://d2j6c5so2rxbe" path="res://tiles/tile/transparent_vignette.png" id="2"]
+[ext_resource type="Material" uid="uid://cvaabxibt83nh" path="res://tiles/tile/grid_overlay.material" id="3_2ytb8"]
+[ext_resource type="Script" path="res://tiles/tile/Tile.cs" id="6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p588p"]
+size = Vector3(2, 1, 2)
+
+[sub_resource type="QuadMesh" id="2"]
+material = ExtResource("3_2ytb8")
+size = Vector2(2, 2)
+
+[sub_resource type="BoxShape3D" id="6"]
+size = Vector3(1.38, 0.2, 1.38)
+
+[node name="Tile" type="StaticBody3D" node_paths=PackedStringArray("_North", "_South", "_East", "_West", "_UnitDetector", "_ObstacleDetector") groups=["tile"]]
+collision_layer = 128
+collision_mask = 0
+script = ExtResource("6")
+_North = NodePath("Neighbors/North")
+_South = NodePath("Neighbors/South")
+_East = NodePath("Neighbors/East")
+_West = NodePath("Neighbors/West")
+_UnitDetector = NodePath("UnitDetector")
+_ObstacleDetector = NodePath("ObstacleDetector")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -0.5, 2.08165e-12)
+shape = SubResource("BoxShape3D_p588p")
+
+[node name="UnitDetector" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+target_position = Vector3(2.08165e-12, 1, 2.08165e-12)
+collision_mask = 2
+
+[node name="ObstacleDetector" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+target_position = Vector3(2.08165e-12, 1, 2.08165e-12)
+collision_mask = 8
+collide_with_areas = true
+
+[node name="VignetteOverlay" type="Sprite3D" parent="."]
+transform = Transform3D(0.195, 0, 0, 0, -8.52372e-09, 0.195, 0, -0.195, -8.52372e-09, 0, 0.005, 0)
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("2")
+
+[node name="GridOverlay" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+layers = 2
+mesh = SubResource("2")
+
+[node name="Neighbors" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="South" type="RayCast3D" parent="Neighbors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2)
+collision_mask = 128
+
+[node name="North" type="RayCast3D" parent="Neighbors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, -2)
+collision_mask = 128
+
+[node name="East" type="RayCast3D" parent="Neighbors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 2.08165e-12)
+collision_mask = 128
+
+[node name="West" type="RayCast3D" parent="Neighbors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 2.08165e-12)
+collision_mask = 128
+
+[node name="LightDetector" type="Node3D" parent="."]
+
+[node name="LightDetectorArea" type="Area3D" parent="LightDetector"]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape" type="CollisionShape3D" parent="LightDetector/LightDetectorArea"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+shape = SubResource("6")

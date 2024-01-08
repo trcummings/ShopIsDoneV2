@@ -25,6 +25,11 @@ namespace ShopIsDone.Utils.Commands
 
         public override void Execute()
         {
+            // If true, run the IF command
+            if (Conditional()) _ChosenCommand = IfCommand;
+            // Otherwise, run the ELSE command
+            else _ChosenCommand = ElseCommand;
+
             _ChosenCommand.Finished += OnSubCommandFinished;
 
             // HACK: This runs some kind of effect that forces the connections to stay

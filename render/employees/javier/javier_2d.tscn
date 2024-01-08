@@ -2388,12 +2388,13 @@ _data = {
 "do_task": SubResource("24")
 }
 
-[node name="Javier2D" type="Node2D" node_paths=PackedStringArray("_FrontView", "_BackView", "_Skeleton")]
+[node name="Javier2D" type="Node2D" node_paths=PackedStringArray("_FrontView", "_BackView", "_Skeleton", "_AnimPlayer")]
 script = ExtResource("2")
 _FrontView = NodePath("Model/Polygons/Front")
 _BackView = NodePath("Model/Polygons/Back")
 _Skeleton = NodePath("Model/Skeleton2D")
 LoopingAnimations = ["walk", "idle", "do_task"]
+_AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -2441,6 +2442,7 @@ rest = Transform2D(1, 0, 0, 1, 11, 55)
 [node name="Head" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest"]
 position = Vector2(0, -75)
 rotation = -1.56595
+scale = Vector2(1, 1)
 rest = Transform2D(0.0048415, -0.999988, 0.999988, 0.0048415, 0, -75)
 
 [node name="Legs" type="Bone2D" parent="Model/Skeleton2D/Hip"]

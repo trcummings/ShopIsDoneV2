@@ -1,0 +1,23 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cup25aeyo3fel"]
+
+[ext_resource type="Script" path="res://arena_actions/actions/MoveAction.cs" id="1_0k5a4"]
+[ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="1_k8pgg"]
+
+[resource]
+script = ExtResource("1_0k5a4")
+MoveSubAction = ExtResource("1_k8pgg")
+Id = "move"
+ActionName = "Move"
+EndsTurnAfterUse = false
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = true
+CanTargetSelf = false
+Range = 0
+TargetDisposition = 0
+ActionType = 1
+IndicatorType = 0
+FollowEntity = true
+FocusEntity = false
+RotateToFaceEntity = false

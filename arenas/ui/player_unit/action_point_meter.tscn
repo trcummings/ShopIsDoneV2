@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjo12066q8cua"]
+
+[ext_resource type="Script" path="res://arenas/ui/player_unit/ActionPointMeter.cs" id="1"]
+[ext_resource type="PackedScene" uid="uid://c7vca6ydo632e" path="res://arenas/ui/player_unit/action_point_bulb.tscn" id="2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_782bw"]
+
+[sub_resource type="Animation" id="1"]
+resource_name = "strobe"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DiffContainer:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.6),
+"transitions": PackedFloat32Array(-2, -2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1qkt4"]
+_data = {
+"strobe": SubResource("1")
+}
+
+[node name="ActionPointMeter" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_782bw")
+script = ExtResource("1")
+ActionPointBulbScene = ExtResource("2")
+
+[node name="BaseContainer" type="HFlowContainer" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.913859)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+alignment = 1
+
+[node name="DiffContainer" type="HFlowContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1qkt4")
+}
+autoplay = "strobe"

@@ -2209,6 +2209,23 @@ tracks/25/keys = {
 "update": 0,
 "values": [0.0, 0.0]
 }
+tracks/26/type = "method"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath(".")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0.25, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": ["footstep"],
+"method": &"FireEvent"
+}, {
+"args": ["footstep"],
+"method": &"FireEvent"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cq1gb"]
 _data = {
@@ -2254,10 +2271,10 @@ tracks/2/path = NodePath("LeftShoulder:z_index")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": []
+"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_11efn"]
@@ -3451,12 +3468,13 @@ _data = {
 "RESET": SubResource("17")
 }
 
-[node name="Jessica2D" type="Node2D" node_paths=PackedStringArray("_FrontView", "_BackView", "_Skeleton")]
+[node name="Jessica2D" type="Node2D" node_paths=PackedStringArray("_FrontView", "_BackView", "_Skeleton", "_AnimPlayer")]
 script = ExtResource("2")
 _FrontView = NodePath("Model/Polygons/Front")
 _BackView = NodePath("Model/Polygons/Back")
 _Skeleton = NodePath("Model/Skeleton2D")
 LoopingAnimations = ["walk", "idle", "do_task"]
+_AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -3495,6 +3513,9 @@ rest = Transform2D(1, 0, 0, 1, -11, 38)
 [node name="L_Forearm" type="Bone2D" parent="Model/Skeleton2D/Legs/Hip/Chest/L_Shoulder/L_Arm"]
 position = Vector2(-12, 60)
 rest = Transform2D(1, 0, 0, 1, -12, 60)
+auto_calculate_length_and_angle = false
+length = 1.0
+bone_angle = 110.118
 
 [node name="R_Shoulder" type="Bone2D" parent="Model/Skeleton2D/Legs/Hip/Chest"]
 position = Vector2(32, -38)
@@ -3507,6 +3528,9 @@ rest = Transform2D(1, 0, 0, 1, -1, 37)
 [node name="R_Forearm" type="Bone2D" parent="Model/Skeleton2D/Legs/Hip/Chest/R_Shoulder/R_Arm"]
 position = Vector2(-11, 64)
 rest = Transform2D(1, 0, 0, 1, -11, 64)
+auto_calculate_length_and_angle = false
+length = 1.0
+bone_angle = 101.647
 
 [node name="Head" type="Bone2D" parent="Model/Skeleton2D/Legs/Hip/Chest"]
 position = Vector2(-2, -71)
@@ -3524,6 +3548,9 @@ rest = Transform2D(1, 0, 0, 1, -57.8055, 40.2806)
 [node name="PonytailTip" type="Bone2D" parent="Model/Skeleton2D/Legs/Hip/Chest/Head/HeadTip/Ponytail"]
 position = Vector2(-70.8393, 33.3437)
 rest = Transform2D(1, 0, 0, 1, -70.8393, 33.3437)
+auto_calculate_length_and_angle = false
+length = 1.0
+bone_angle = 0.0
 
 [node name="Polygons" type="Node2D" parent="Model"]
 

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c0hqqbp4370g1"]
+
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/IntimidateActionPlan.cs" id="1_tbvrx"]
+
+[resource]
+script = ExtResource("1_tbvrx")
+ActionId = "intimidate"

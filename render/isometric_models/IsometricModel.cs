@@ -1,12 +1,14 @@
 ﻿using Godot;
 using System;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Godot.Collections;
 using ShopIsDone.Utils;
 
 namespace ShopIsDone.Models.IsometricModels
 {
+    [Tool]
     public partial class IsometricModel : Node3D, IModel, IIsometricViewable
     {
         [Signal]

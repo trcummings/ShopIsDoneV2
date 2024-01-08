@@ -1,0 +1,171 @@
+[gd_scene load_steps=31 format=3 uid="uid://c84riwntsfpy5"]
+
+[ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1_hv7oi"]
+[ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
+[ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="3_v23cd"]
+[ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="4_1yuwc"]
+[ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="5_ucuxg"]
+[ext_resource type="Script" path="res://tiles/UnitTileMoveValidator.cs" id="6_37vlg"]
+[ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="7_m2vvd"]
+[ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="8_4sop1"]
+[ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="9_6he0e"]
+[ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="10_dsne4"]
+[ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="11_5w0ou"]
+[ext_resource type="Script" path="res://entities/puppet_customer/CustomerDeathHandler.cs" id="11_51akd"]
+[ext_resource type="Resource" uid="uid://bfolorkindt4h" path="res://entities/puppet_customer/actions/bother_employee_action.tres" id="12_3ebgi"]
+[ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="12_tm0l2"]
+[ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="13_k6cqb"]
+[ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="14_ejwco"]
+[ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="14_u6t0o"]
+[ext_resource type="Resource" uid="uid://bqh5iqllvqmhp" path="res://entities/puppet_customer/actions/intimidate_action.tres" id="15_v7snx"]
+[ext_resource type="Script" path="res://entities/puppet_customer/states/IntimidateEntityState.cs" id="16_6jv6x"]
+[ext_resource type="PackedScene" uid="uid://hj3hfw66ke8t" path="res://entities/puppet_customer/states/audio/intimidate_player.tscn" id="17_r0uob"]
+[ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="18_e7js2"]
+[ext_resource type="Script" path="res://ai/ActionPlanner.cs" id="18_ock78"]
+[ext_resource type="Resource" uid="uid://dgdoi87t5014c" path="res://entities/puppet_customer/ai/aggressive_turn_plan.tres" id="19_ynvcu"]
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/sensors/NearestEmployeeSensor.cs" id="20_oymu8"]
+[ext_resource type="Script" path="res://entities/puppet_customer/states/BotherEntityState.cs" id="23_72o6q"]
+[ext_resource type="Script" path="res://entities/puppet_customer/CustomerOutcomeHandler.cs" id="26_vx53h"]
+[ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="27_fpgq0"]
+[ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="28_arvyn"]
+[ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="28_v08d8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0cyyf"]
+radius = 0.75
+
+[node name="Customer" type="CharacterBody3D" groups=["entities"]]
+collision_layer = 3
+script = ExtResource("1_hv7oi")
+Id = "puppet_customer_type_1"
+EntityName = "Puppet Customer"
+_TilemapPositionHandlerPath = NodePath("TilemapPositionHandler")
+_FacingDirectionHandlerPath = NodePath("FacingDirectionHandler")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 1, 2.08165e-12)
+shape = SubResource("CapsuleShape3D_0cyyf")
+
+[node name="CustomerType1Model" parent="." instance=ExtResource("2_5ehyc")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
+
+[node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
+script = ExtResource("3_v23cd")
+FacingTarget = NodePath("..")
+
+[node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_CommandProcessor", "_MoveValidator", "_SkipTileStrategy")]
+script = ExtResource("4_1yuwc")
+_Body = NodePath("..")
+_CommandProcessor = NodePath("CommandProcessor")
+_MoveValidator = NodePath("TileMoveValidator")
+_SkipTileStrategy = NodePath("ShouldSkipTileStrategy")
+BaseMove = 4
+CanSeeInTheDark = true
+
+[node name="CommandProcessor" type="Node" parent="TileMovementHandler"]
+script = ExtResource("5_ucuxg")
+
+[node name="TileMoveValidator" type="Node" parent="TileMovementHandler" node_paths=PackedStringArray("_TileMovementHandler")]
+script = ExtResource("6_37vlg")
+_TileMovementHandler = NodePath("..")
+
+[node name="ShouldSkipTileStrategy" type="Node" parent="TileMovementHandler" node_paths=PackedStringArray("_TileMoveHandler", "_TeamHandler")]
+script = ExtResource("7_m2vvd")
+_TileMoveHandler = NodePath("..")
+_TeamHandler = NodePath("../../TeamHandler")
+
+[node name="TilemapPositionHandler" parent="." instance=ExtResource("8_4sop1")]
+
+[node name="TeamHandler" type="Node" parent="."]
+script = ExtResource("9_6he0e")
+Team = 1
+
+[node name="ActionPointHandler" parent="." instance=ExtResource("10_dsne4")]
+_DeathHandlerPath = NodePath("../DeathHandler")
+ActionPoints = 2
+MaxActionPoints = 2
+
+[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_StateHandler")]
+_StateHandler = NodePath("../../StateHandler")
+
+[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_StateHandler")]
+script = ExtResource("11_51akd")
+_Body = NodePath("..")
+_StateHandler = NodePath("../StateHandler")
+
+[node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
+script = ExtResource("11_5w0ou")
+Actions = [ExtResource("12_3ebgi"), ExtResource("13_k6cqb"), ExtResource("14_ejwco"), ExtResource("14_u6t0o"), ExtResource("15_v7snx")]
+_ActionPointHandler = NodePath("../ActionPointHandler")
+
+[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("12_tm0l2")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateHandler"]
+script = ExtResource("18_e7js2")
+_ModelPath = NodePath("../../CustomerType1Model")
+_WaitForEnterAnimToFinish = false
+_EnterAnimName = "Idle"
+Id = "idle"
+
+[node name="Move" type="Node" parent="StateHandler"]
+script = ExtResource("18_e7js2")
+_ModelPath = NodePath("../../CustomerType1Model")
+_WaitForEnterAnimToFinish = false
+_EnterAnimName = "Travel"
+Id = "move"
+
+[node name="Hurt" type="Node" parent="StateHandler"]
+script = ExtResource("18_e7js2")
+_ModelPath = NodePath("../../CustomerType1Model")
+_EnterAnimName = "TakeHit"
+Id = "hurt"
+
+[node name="Intimidate" type="Node" parent="StateHandler" node_paths=PackedStringArray("_IntimidatePlayer")]
+script = ExtResource("16_6jv6x")
+_IntimidatePlayer = NodePath("IntimidatePlayer")
+Id = "intimidate"
+
+[node name="IntimidatePlayer" parent="StateHandler/Intimidate" instance=ExtResource("17_r0uob")]
+
+[node name="Bother" type="Node" parent="StateHandler"]
+script = ExtResource("23_72o6q")
+_ModelPath = NodePath("../../CustomerType1Model")
+_EnterAnimName = "Bother"
+Id = "bother"
+
+[node name="Dead" type="Node" parent="StateHandler"]
+script = ExtResource("18_e7js2")
+_ModelPath = NodePath("../../CustomerType1Model")
+_EnterAnimName = "Die"
+Id = "dead"
+_IsActive = false
+
+[node name="ActionPlanner" type="Node" parent="." node_paths=PackedStringArray("_SensorsNode", "_ActionHandler")]
+script = ExtResource("18_ock78")
+_TurnPlans = [ExtResource("19_ynvcu")]
+_SensorsNode = NodePath("../Sensors")
+_ActionHandler = NodePath("../ActionHandler")
+
+[node name="Sensors" type="Node3D" parent="."]
+
+[node name="NearestEmployeeSensor" type="Node3D" parent="Sensors"]
+script = ExtResource("20_oymu8")
+
+[node name="OutcomeHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
+script = ExtResource("26_vx53h")
+_ActionPointHandler = NodePath("../ActionPointHandler")
+
+[node name="MicrogameHandler" type="Node" parent="."]
+script = ExtResource("27_fpgq0")
+MicrogameScene = ExtResource("28_v08d8")
+_OutcomeHandlerPath = NodePath("../OutcomeHandler")
+
+[node name="PopupLabel" parent="." instance=ExtResource("28_arvyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.5, 2.08165e-12)
+
+[connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="CustomerType1Model" method="SetFacingDir"]
+[connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
+[connection signal="RequestedPromptText" from="StateHandler/Bother" to="PopupLabel" method="PopupText" binds= [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]]
+
+[editable path="ActionPointHandler"]

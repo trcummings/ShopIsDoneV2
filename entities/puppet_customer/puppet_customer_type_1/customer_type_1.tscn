@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvdfc0lj1ihi1"]
+
+[ext_resource type="PackedScene" uid="uid://doxkx7cka6r4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1.glb" id="1"]
+
+[node name="CustomerType1" type="Node3D"]
+
+[node name="CustomerType1" parent="." instance=ExtResource("1")]
+
+[editable path="CustomerType1"]

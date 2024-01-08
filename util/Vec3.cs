@@ -12,6 +12,9 @@ namespace ShopIsDone.Utils
     /// </remarks>
     public static partial class Vec3
     {
+        // A point very far off the tilemap
+        public static Vector3 FarOffPoint = new Vector3(1000000, 1000000, 1000000);
+
         public static readonly Vector3 Zero = new Vector3(0, 0, 0);
         public static readonly Vector3 One = new Vector3(1, 1, 1);
         public static readonly Vector3 Right = new Vector3(1, 0, 0);

@@ -12,6 +12,9 @@ namespace ShopIsDone.Models
         [Signal]
         public delegate void AnimationFinishedEventHandler(string animName);
 
+        [Signal]
+        public delegate void AnimationEventFiredEventHandler(string eventName);
+
         [Export]
         public Array<string> LoopingAnimations;
 
@@ -43,6 +46,11 @@ namespace ShopIsDone.Models
         {
             // Rotate the model
             LookAt(GlobalPosition - facingDir, Vector3.Up);
+        }
+
+        private void FireEvent(string eventName)
+        {
+            EmitSignal(nameof(AnimationEventFired), eventName);
         }
 
         public virtual async Task PerformAnimation(string animName, bool advance = false)

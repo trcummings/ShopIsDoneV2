@@ -1,0 +1,159 @@
+[gd_scene load_steps=12 format=3 uid="uid://ddwvyl3d8scbv"]
+
+[ext_resource type="Script" path="res://levels/level_states/GameOverUI.cs" id="1_kr2ox"]
+[ext_resource type="Material" uid="uid://dfkfjp2nob3up" path="res://levels/level_states/game_over_distort.material" id="1_slb6w"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="1_xgtdm"]
+[ext_resource type="Texture2D" uid="uid://ydwihrnssol0" path="res://levels/level_states/canyon_wall.png" id="2_0audu"]
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="2_qpmi5"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="3_4cwg0"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="4_6u6gj"]
+[ext_resource type="PackedScene" uid="uid://dqrhke68klwx2" path="res://audio/ui/ui_invalid_player.tscn" id="5_b11p7"]
+[ext_resource type="Material" uid="uid://da4jscnqulqmd" path="res://levels/level_states/scrolling_texture.material" id="6_fcdan"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_te0v6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5xei"]
+bg_color = Color(0, 0, 0, 0.811765)
+
+[node name="GameOverUI" type="CanvasLayer" node_paths=PackedStringArray("_RestartFromCheckpoint", "_RestartLevel", "_QuitToTitle", "_QuitGame", "_Container")]
+script = ExtResource("1_kr2ox")
+_RestartFromCheckpoint = NodePath("PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/VBoxContainer/RestartFromCheckpoint")
+_RestartLevel = NodePath("PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/VBoxContainer/RestartLevel")
+_QuitToTitle = NodePath("PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/VBoxContainer/QuitToTitle")
+_QuitGame = NodePath("PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/VBoxContainer/QuitGame")
+_Container = NodePath("PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/VBoxContainer")
+
+[node name="Sfx" type="Node" parent="."]
+
+[node name="UISelectPlayer" parent="Sfx" instance=ExtResource("2_qpmi5")]
+
+[node name="UIConfirmPlayer" parent="Sfx" instance=ExtResource("3_4cwg0")]
+
+[node name="UICancelPlayer" parent="Sfx" instance=ExtResource("4_6u6gj")]
+
+[node name="UIInvalidPlayer" parent="Sfx" instance=ExtResource("5_b11p7")]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_te0v6")
+
+[node name="ScrollingScreen" type="TextureRect" parent="PanelContainer"]
+texture_repeat = 2
+material = ExtResource("6_fcdan")
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_0audu")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="PanelContainer/ScrollingScreen"]
+position = Vector2(2.08165e-12, 2.08165e-12)
+rect = Rect2(2.08165e-12, 2.08165e-12, 1920, 1080)
+
+[node name="TextureRect" type="ColorRect" parent="PanelContainer/ScrollingScreen/BackBufferCopy"]
+material = ExtResource("1_slb6w")
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="BoxContainer" type="AspectRatioContainer" parent="PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/BoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_j5xei")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/BoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Title" type="VBoxContainer" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/Title"]
+layout_mode = 2
+theme = ExtResource("1_xgtdm")
+theme_override_font_sizes/font_size = 72
+text = "ALL STRINGS SEVERED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/Title"]
+layout_mode = 2
+theme = ExtResource("1_xgtdm")
+theme_override_font_sizes/font_size = 72
+text = "SPECTRAL LINK UNTETHERED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/Title"]
+layout_mode = 2
+theme = ExtResource("1_xgtdm")
+theme_override_font_sizes/font_size = 72
+text = "QUIESCENCE UNTIL FOREVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/Title"]
+layout_mode = 2
+theme = ExtResource("1_xgtdm")
+theme_override_font_sizes/font_size = 72
+text = "YOU DIDN'T MAKE A SOUND"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+mouse_filter = 2
+alignment = 1
+
+[node name="RestartFromCheckpoint" type="Button" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+focus_next = NodePath("../RestartLevel")
+focus_previous = NodePath("../QuitGame")
+theme = ExtResource("1_xgtdm")
+disabled = true
+text = "Restart From Checkpoint"
+
+[node name="RestartLevel" type="Button" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+focus_next = NodePath("../QuitToTitle")
+focus_previous = NodePath("../RestartFromCheckpoint")
+theme = ExtResource("1_xgtdm")
+text = "Restart Level"
+
+[node name="QuitToTitle" type="Button" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+focus_next = NodePath("../QuitGame")
+focus_previous = NodePath("../RestartLevel")
+theme = ExtResource("1_xgtdm")
+text = "Quit To Title"
+
+[node name="QuitGame" type="Button" parent="PanelContainer/BoxContainer/PanelContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+focus_next = NodePath("../RestartFromCheckpoint")
+focus_previous = NodePath("../QuitToTitle")
+theme = ExtResource("1_xgtdm")
+text = "Quit Game"
+
+[connection signal="Canceled" from="." to="Sfx/UICancelPlayer" method="play"]
+[connection signal="ChangedSelection" from="." to="Sfx/UISelectPlayer" method="play"]
+[connection signal="Confirmed" from="." to="Sfx/UIConfirmPlayer" method="play"]
+[connection signal="InvalidConfirm" from="." to="Sfx/UIInvalidPlayer" method="play"]

@@ -2,8 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Camera;
-using static Camera.ScreenshakeHandler;
+using ShopIsDone.Cameras;
+using static ShopIsDone.Cameras.ScreenshakeHandler;
 using Utils.Extensions;
 
 namespace ShopIsDone.Microgames.DestroyRottenProduce

@@ -8,7 +8,7 @@ namespace ShopIsDone.Microgames
 	public partial class MicrogameManager : Node
 	{
         [Signal]
-        public delegate void MicrogameFinishedRunningEventHandler();
+        public delegate void MicrogameFinishedEventHandler(int outcome);
 
         [Export]
         private Control _Background;
@@ -84,7 +84,7 @@ namespace ShopIsDone.Microgames
             _Microgame.QueueFree();
             _Microgame = null;
 
-            EmitSignal(nameof(MicrogameFinishedRunning));
+            EmitSignal(nameof(MicrogameFinished), (int)outcome);
 		}
 
 		private async Task<Microgame.Outcomes> StartMicrogame()

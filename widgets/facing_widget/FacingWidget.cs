@@ -1,10 +1,11 @@
 using Godot;
+using ShopIsDone.Utils.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
 namespace ShopIsDone.Widgets
 {
-    public partial class FacingWidget : Node3D
+    public partial class FacingWidget : Node3D, IService
     {
         // Nodes
         private Sprite3D _RightSphere;

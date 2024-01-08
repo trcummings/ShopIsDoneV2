@@ -1,0 +1,625 @@
+[gd_scene load_steps=15 format=3 uid="uid://ovynrpipvul4"]
+
+[ext_resource type="Script" path="res://render/Model.cs" id="1"]
+[ext_resource type="PackedScene" uid="uid://cvdfc0lj1ihi1" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://dbjphuhttkveg" path="res://entities/puppet_customer/spawn_pool/spawn_pool.tscn" id="4"]
+
+[sub_resource type="Animation" id="8"]
+resource_name = "Bother"
+length = 1.6
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CustomerType1/CustomerType1/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("Bother"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CustomerType1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpawnPool:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="2"]
+resource_name = "CreateSpawnPool"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpawnPool:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnPool")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Appear"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CustomerType1:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="1"]
+resource_name = "Die"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpawnPool:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CustomerType1/CustomerType1/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["SpawnIn", -1],
+"method": &"play_backwards"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpawnPool")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Disappear"
+}]
+}
+tracks/3/type = "position_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CustomerType1")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 2, 1, 2.08165e-12, -2, 2.08165e-12)
+
+[sub_resource type="Animation" id="3"]
+resource_name = "Emerge"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpawnPool:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "animation"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CustomerType1/CustomerType1/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": PackedStringArray("SpawnIn"),
+"times": PackedFloat32Array(0.7)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CustomerType1:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "position_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CustomerType1")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 2.08165e-12, -2, 2.08165e-12, 1.9, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="6"]
+resource_name = "Idle"
+length = 2.6
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CustomerType1/CustomerType1/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("Idle-"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnPool:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CustomerType1:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="10"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpawnPool:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CustomerType1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CustomerType1")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[sub_resource type="Animation" id="9"]
+resource_name = "TakeHit"
+length = 0.7
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CustomerType1/CustomerType1/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("TakeHit"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CustomerType1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpawnPool:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="7"]
+resource_name = "Travel"
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CustomerType1/CustomerType1/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("Travel"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnPool:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CustomerType1:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="11"]
+resource_name = "Vomit"
+length = 1.65
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CustomerType1/CustomerType1/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("Vomit"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnPool:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CustomerType1:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="5"]
+resource_name = "hidden"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpawnPool:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CustomerType1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q0xw6"]
+_data = {
+"Bother": SubResource("8"),
+"CreateSpawnPool": SubResource("2"),
+"Die": SubResource("1"),
+"Emerge": SubResource("3"),
+"Idle": SubResource("6"),
+"RESET": SubResource("10"),
+"TakeHit": SubResource("9"),
+"Travel": SubResource("7"),
+"Vomit": SubResource("11"),
+"hidden": SubResource("5")
+}
+
+[node name="CustomerType1Model" type="Node3D" node_paths=PackedStringArray("_AnimPlayer") groups=["renderable"]]
+script = ExtResource("1")
+LoopingAnimations = ["Travel", "Idle"]
+_AnimPlayer = NodePath("AnimationPlayer")
+
+[node name="SpawnPool" parent="." instance=ExtResource("4")]
+transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 1, 0, -3, -4.37114e-08, 0, 0.05, 0)
+visible = false
+layers = 33
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q0xw6")
+}
+autoplay = "Idle"
+
+[node name="CustomerType1" parent="." instance=ExtResource("3")]
+transform = Transform3D(0.75, -2.6159e-16, 2.6159e-16, 2.6159e-16, 0.75, -2.6159e-16, -2.6159e-16, 2.6159e-16, 0.75, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[node name="Skeleton3D" parent="CustomerType1/CustomerType1/rig" index="0"]
+bones/1/rotation = Quaternion(0.747352, 0, 0, 0.664428)
+bones/1/scale = Vector3(0.996556, 1.00692, 0.996556)
+bones/2/rotation = Quaternion(-0.0585035, 0, 0, 0.998287)
+bones/2/scale = Vector3(1.00346, 0.993265, 1.00332)
+bones/3/rotation = Quaternion(-0.0882554, 0, 0, 0.996098)
+bones/4/rotation = Quaternion(0.409502, -2.32561e-07, -1.12682e-07, 0.912309)
+bones/6/rotation = Quaternion(-0.101843, -8.40479e-14, -2.42812e-08, 0.994801)
+bones/7/rotation = Quaternion(0.0112725, -1.68753e-14, 2.68757e-09, 0.999936)
+bones/8/rotation = Quaternion(0.201738, 1.16758e-07, 7.2147e-08, 0.97944)
+bones/9/rotation = Quaternion(-0.134396, -1.04767e-07, -3.89909e-08, 0.990928)
+bones/10/rotation = Quaternion(-0.0540194, -1.14197e-08, -2.4299e-08, 0.99854)
+bones/12/position = Vector3(0, 0.270345, 0.0318684)
+bones/12/rotation = Quaternion(0.000135389, 0, 0, 1)
+bones/13/rotation = Quaternion(-0.0882554, 0, 0, 0.996098)
+bones/18/rotation = Quaternion(0.747352, 0, 0, 0.664428)
+bones/18/scale = Vector3(0.996556, 1.00692, 0.996556)
+bones/19/rotation = Quaternion(-0.0585035, 0, 0, 0.998287)
+bones/19/scale = Vector3(1.00346, 0.993265, 1.00332)
+bones/20/rotation = Quaternion(-0.0882554, 0, 0, 0.996098)
+bones/21/position = Vector3(0.446005, -0.176212, 0.897093)
+bones/21/rotation = Quaternion(-0.00977959, 0.70848, 0.616686, -0.343015)
+bones/21/scale = Vector3(1, 38.8375, 1)
+bones/22/position = Vector3(-0.446005, -0.176212, 0.897093)
+bones/22/rotation = Quaternion(0.0097796, 0.70848, 0.616686, 0.343015)
+bones/22/scale = Vector3(1, 38.8374, 1)
+bones/23/position = Vector3(0.376114, -0.267693, 0.432876)
+bones/23/rotation = Quaternion(0.867638, -0.346617, 0.341221, -0.103098)
+bones/23/scale = Vector3(1, 19.3033, 1)
+bones/24/position = Vector3(-0.376114, -0.267693, 0.432876)
+bones/24/rotation = Quaternion(0.867638, 0.346617, -0.341221, -0.103099)
+bones/24/scale = Vector3(1, 19.3033, 1)
+bones/25/position = Vector3(-2.05668e-10, 0.653401, -0.0425609)
+bones/25/rotation = Quaternion(-0.766667, 0, 0, 0.642045)
+bones/39/rotation = Quaternion(0.591721, 0.00718076, -0.360486, 0.721017)
+bones/39/scale = Vector3(0.961819, 0.961819, 0.961819)
+bones/40/rotation = Quaternion(0.564155, 1.10865e-07, -1.13678e-07, 0.825669)
+bones/40/scale = Vector3(0.985043, 0.985043, 0.985043)
+bones/41/rotation = Quaternion(-0.558338, 0.200448, 0.0295539, 0.804491)
+bones/41/scale = Vector3(1.05548, 1.05548, 1.05548)
+bones/42/position = Vector3(-2.08101e-06, 0.0856527, -2.08689e-05)
+bones/46/scale = Vector3(1.05548, 1.05548, 1.05548)
+bones/48/rotation = Quaternion(-6.5119e-08, 0.110404, 3.96174e-08, 0.993887)
+bones/48/scale = Vector3(1.05548, 1.05548, 1.05548)
+bones/50/scale = Vector3(1.0397, 1.0397, 1.0397)
+bones/51/rotation = Quaternion(3.23063e-07, 0.384875, 1.78786e-08, 0.922969)
+bones/51/scale = Vector3(1.0397, 1.0397, 1.0397)
+bones/53/rotation = Quaternion(0.591721, -0.00718019, 0.360486, 0.721016)
+bones/53/scale = Vector3(0.961819, 0.961819, 0.961819)
+bones/54/rotation = Quaternion(0.564155, -1.4407e-07, 8.53273e-08, 0.825669)
+bones/54/scale = Vector3(0.985043, 0.985043, 0.985043)
+bones/55/rotation = Quaternion(-0.558338, -0.200448, -0.0295537, 0.804491)
+bones/55/scale = Vector3(1.05548, 1.05548, 1.05548)
+bones/56/position = Vector3(2.07659e-06, 0.0856527, -2.07669e-05)
+bones/60/scale = Vector3(1.05548, 1.05548, 1.05548)
+bones/62/rotation = Quaternion(-7.52115e-08, -0.110403, -1.42601e-07, 0.993887)
+bones/62/scale = Vector3(1.05548, 1.05548, 1.05548)
+bones/64/scale = Vector3(1.0397, 1.0397, 1.0397)
+bones/65/rotation = Quaternion(7.53319e-09, -0.384875, -6.33549e-08, 0.922969)
+bones/65/scale = Vector3(1.0397, 1.0397, 1.0397)
+bones/75/rotation = Quaternion(-0.738799, 0.0790535, -0.336136, 0.57874)
+bones/76/rotation = Quaternion(-0.188051, -0.606901, -0.150691, 0.757364)
+bones/76/scale = Vector3(0.961819, 0.961819, 0.961819)
+bones/77/rotation = Quaternion(0.564155, 1.22683e-07, -1.34847e-07, 0.825669)
+bones/77/scale = Vector3(0.985043, 0.985043, 0.985043)
+bones/78/rotation = Quaternion(0.682741, 0.479997, 0.118104, 0.53807)
+bones/80/rotation = Quaternion(0.682741, 0.479997, 0.118104, 0.53807)
+bones/80/scale = Vector3(1.01966, 0.96182, 1.01965)
+bones/81/rotation = Quaternion(1.57683e-07, -0.317779, -1.47754e-07, 0.948165)
+bones/82/rotation = Quaternion(0.521114, -0.313579, 0.215522, 0.763975)
+bones/82/scale = Vector3(1.00756, 0.936742, 1.06035)
+bones/83/rotation = Quaternion(-2.70496e-07, 0.368476, 7.33651e-07, 0.929637)
+bones/84/rotation = Quaternion(-0.527795, -0.11453, -0.183061, 0.821464)
+bones/84/scale = Vector3(0.976181, 0.984963, 1.04205)
+bones/85/rotation = Quaternion(-0.141032, 0.960648, -0.236756, -0.0348191)
+bones/85/scale = Vector3(0.999866, 1.0002, 0.999941)
+bones/94/rotation = Quaternion(-0.738799, -0.0790535, 0.336136, 0.57874)
+bones/95/rotation = Quaternion(-0.188051, 0.606901, 0.150691, 0.757364)
+bones/95/scale = Vector3(0.961819, 0.961819, 0.961819)
+bones/96/rotation = Quaternion(0.564155, -1.5865e-07, 7.79256e-08, 0.825669)
+bones/96/scale = Vector3(0.985043, 0.985043, 0.985043)
+bones/97/rotation = Quaternion(0.682741, -0.479996, -0.118105, 0.53807)
+bones/99/rotation = Quaternion(0.682741, -0.479997, -0.118105, 0.53807)
+bones/99/scale = Vector3(1.01966, 0.961819, 1.01966)
+bones/100/rotation = Quaternion(1.61434e-07, 0.317779, 1.46472e-07, 0.948165)
+bones/101/rotation = Quaternion(0.521114, 0.313579, -0.215522, 0.763976)
+bones/101/scale = Vector3(1.00756, 0.936743, 1.06034)
+bones/102/rotation = Quaternion(1.48352e-07, -0.368476, -8.71247e-07, 0.929637)
+bones/103/rotation = Quaternion(-0.527796, 0.114534, 0.18306, 0.821464)
+bones/103/scale = Vector3(0.976183, 0.984961, 1.04205)
+bones/104/rotation = Quaternion(0.141033, 0.960648, -0.236755, 0.0348227)
+bones/104/scale = Vector3(0.999865, 1.0002, 0.999941)
+bones/109/rotation = Quaternion(0.688808, 8.642e-08, 8.21123e-08, 0.724944)
+bones/110/rotation = Quaternion(0.101843, 3.87876e-14, 2.42812e-08, 0.994801)
+bones/114/rotation = Quaternion(0.696936, 8.54889e-08, 8.30812e-08, 0.717133)
+bones/115/rotation = Quaternion(0.201738, 1.16758e-07, 7.2147e-08, 0.97944)
+bones/116/rotation = Quaternion(-0.134396, -1.04767e-07, -3.89909e-08, 0.990928)
+bones/117/rotation = Quaternion(-0.0540194, -1.14197e-08, -2.4299e-08, 0.99854)
+bones/118/rotation = Quaternion(0.38644, -0.000382249, -0.000160069, 0.922315)
+bones/118/scale = Vector3(1, 1, 0.999999)
+bones/119/rotation = Quaternion(0.369887, -0.00121801, -0.000791418, 0.929076)
+bones/119/scale = Vector3(1.04782, 0.910807, 1.04782)
+bones/120/rotation = Quaternion(0.149779, -0.00157948, -0.000750999, 0.988718)
+bones/120/scale = Vector3(0.939981, 1.11977, 0.953021)
+bones/123/rotation = Quaternion(0.38644, -0.000382249, -0.000160069, 0.922315)
+bones/123/scale = Vector3(1, 1, 0.999999)
+bones/124/rotation = Quaternion(0.369887, -0.00121801, -0.000791418, 0.929076)
+bones/124/scale = Vector3(1.04782, 0.910807, 1.04782)
+bones/125/rotation = Quaternion(0.149779, -0.00157948, -0.000750999, 0.988718)
+bones/125/scale = Vector3(0.939981, 1.11977, 0.953021)
+bones/126/position = Vector3(-1.19065e-07, 0.0747379, 0.498698)
+bones/128/position = Vector3(6.67108e-10, 1.47468e-07, -1.65315e-07)
+bones/130/position = Vector3(-0.000100703, -0.128415, -0.12151)
+bones/131/rotation = Quaternion(-0.696936, -8.54889e-08, -8.30812e-08, 0.717133)
+bones/132/rotation = Quaternion(0.77284, 1.51301e-07, 1.95802e-07, 0.634601)
+bones/133/rotation = Quaternion(-0.77284, -1.51301e-07, -1.95802e-07, 0.634601)
+bones/137/rotation = Quaternion(-5.3551e-08, 6.04239e-14, -6.4615e-14, 1)
+bones/142/rotation = Quaternion(0.116522, 0.635204, -0.628297, 0.433799)
+bones/142/scale = Vector3(0.985695, 0.985696, 0.985695)
+bones/143/rotation = Quaternion(0.168931, -2.63123e-08, 1.34668e-09, 0.985628)
+bones/143/scale = Vector3(0.987683, 0.987683, 0.987683)
+bones/144/rotation = Quaternion(-0.427086, 0.709071, -0.199113, 0.524567)
+bones/144/scale = Vector3(1.02716, 1.02716, 1.02716)
+bones/147/scale = Vector3(1.02716, 1.02716, 1.02716)
+bones/149/rotation = Quaternion(-3.66428e-07, 0.421716, -2.65735e-07, 0.906728)
+bones/149/scale = Vector3(1.02716, 1.02716, 1.02716)
+bones/151/scale = Vector3(1.01451, 1.01451, 1.01451)
+bones/152/rotation = Quaternion(1.83764e-07, 0.39647, -3.35945e-07, 0.918048)
+bones/152/scale = Vector3(1.01451, 1.01451, 1.01451)
+bones/161/rotation = Quaternion(0.86028, 0.337872, -0.240167, -0.296783)
+bones/162/rotation = Quaternion(-0.0405198, -0.722911, -0.0425485, 0.688439)
+bones/162/scale = Vector3(0.985695, 0.985695, 0.985695)
+bones/163/rotation = Quaternion(0.168931, -2.92484e-08, -1.07864e-09, 0.985628)
+bones/163/scale = Vector3(0.987683, 0.987683, 0.987683)
+bones/164/rotation = Quaternion(0.535108, 0.752306, -0.349276, -0.160318)
+bones/166/rotation = Quaternion(0.535107, 0.752306, -0.349276, -0.160318)
+bones/166/scale = Vector3(1.00723, 0.985696, 1.00723)
+bones/167/rotation = Quaternion(8.2411e-07, -0.390772, 5.33986e-07, 0.920488)
+bones/168/rotation = Quaternion(0.155656, -0.390275, 0.065722, 0.905062)
+bones/168/scale = Vector3(1.00622, 0.985363, 1.00868)
+bones/169/rotation = Quaternion(4.70119e-07, 0.421427, -3.56925e-07, 0.906862)
+bones/170/rotation = Quaternion(-0.301917, 0.418304, -0.363118, 0.775895)
+bones/170/scale = Vector3(1.01372, 0.999371, 0.987823)
+bones/172/rotation = Quaternion(-0.116521, 0.635204, -0.628296, -0.433799)
+bones/172/scale = Vector3(0.985695, 0.985696, 0.985695)
+bones/173/rotation = Quaternion(0.168931, 1.05006e-07, -5.06522e-09, 0.985628)
+bones/173/scale = Vector3(0.987683, 0.987683, 0.987683)
+bones/174/rotation = Quaternion(-0.427086, -0.709071, 0.199113, 0.524567)
+bones/174/scale = Vector3(1.02716, 1.02716, 1.02716)
+bones/177/scale = Vector3(1.02716, 1.02716, 1.02716)
+bones/179/rotation = Quaternion(-1.10682e-06, -0.421716, 3.48961e-07, 0.906728)
+bones/179/scale = Vector3(1.02716, 1.02716, 1.02716)
+bones/181/scale = Vector3(1.01451, 1.01451, 1.01451)
+bones/182/rotation = Quaternion(3.7556e-07, -0.39647, -3.19572e-08, 0.918048)
+bones/182/scale = Vector3(1.01451, 1.01451, 1.01451)
+bones/191/rotation = Quaternion(0.86028, -0.337872, 0.240167, -0.296783)
+bones/192/rotation = Quaternion(-0.0405199, 0.722911, 0.0425487, 0.688439)
+bones/192/scale = Vector3(0.985695, 0.985695, 0.985695)
+bones/193/rotation = Quaternion(0.168931, 1.05644e-07, -4.93106e-09, 0.985628)
+bones/193/scale = Vector3(0.987683, 0.987683, 0.987683)
+bones/194/rotation = Quaternion(-0.535108, 0.752306, -0.349276, 0.160318)
+bones/196/rotation = Quaternion(-0.535108, 0.752306, -0.349276, 0.160318)
+bones/196/scale = Vector3(1.00723, 0.985698, 1.00723)
+bones/197/rotation = Quaternion(-3.17694e-07, 0.390772, 1.69791e-07, 0.920488)
+bones/198/rotation = Quaternion(0.155656, 0.390276, -0.0657218, 0.905062)
+bones/198/scale = Vector3(1.00622, 0.985366, 1.00868)
+bones/199/rotation = Quaternion(1.58396e-06, -0.421427, 6.92336e-07, 0.906862)
+bones/199/scale = Vector3(1, 0.999995, 1)
+bones/200/rotation = Quaternion(-0.301917, -0.418303, 0.363118, 0.775895)
+bones/200/scale = Vector3(1.01373, 0.999372, 0.987821)
+bones/211/position = Vector3(-0.406536, -0.411058, -0.234061)
+bones/211/rotation = Quaternion(0.762005, 0.621724, -0.0392632, -0.176825)
+bones/213/position = Vector3(0.864118, 1.79678, -0.0681991)
+bones/213/rotation = Quaternion(-0.766667, 9.20517e-09, 7.57304e-09, 0.642045)
+bones/216/position = Vector3(0.406536, -0.411058, -0.234061)
+bones/216/rotation = Quaternion(0.762005, -0.621724, 0.0392632, -0.176825)
+bones/218/position = Vector3(-0.864118, 1.79678, -0.0681991)
+bones/218/rotation = Quaternion(-0.766667, 1.68657e-08, 2.17208e-08, 0.642045)
+bones/221/position = Vector3(-0.169468, -0.240616, 0.123697)
+bones/232/position = Vector3(0.111217, 0.225669, 0.636)
+bones/232/rotation = Quaternion(-0.766667, -2.01757e-14, -1.00878e-14, 0.642045)
+bones/235/position = Vector3(0.169468, -0.240616, 0.123697)
+bones/246/position = Vector3(-0.111217, 0.225669, 0.636)
+bones/246/rotation = Quaternion(-0.766667, -2.01757e-14, -1.00878e-14, 0.642045)
+
+[node name="AnimationPlayer" parent="CustomerType1/CustomerType1" index="1"]
+autoplay = "Idle-"
+
+[node name="SpotLight" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -3.14315e-06, -1, 0, 1, -3.14315e-06, 0, 0, 0)
+spot_range = 1.834
+spot_attenuation = 0.307786
+spot_angle = 32.87
+spot_angle_attenuation = 0.707107
+
+[editable path="CustomerType1"]
+[editable path="CustomerType1/CustomerType1"]

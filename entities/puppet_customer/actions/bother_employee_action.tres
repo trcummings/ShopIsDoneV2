@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bfolorkindt4h"]
+
+[ext_resource type="Script" path="res://entities/puppet_customer/actions/BotherEmployeeAction.cs" id="1_ior4t"]
+
+[resource]
+script = ExtResource("1_ior4t")
+Id = "bother_employee"
+ActionName = "Bother Employee"
+EndsTurnAfterUse = false
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = false
+Range = 1
+TargetDisposition = 2
+ActionType = 3
+IndicatorType = 2
+FollowEntity = true
+FocusEntity = true
+RotateToFaceEntity = true

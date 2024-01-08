@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cikhvf3va63xe"]
+
+[ext_resource type="Script" path="res://arena_actions/actions/NullAction.cs" id="1_pk3rq"]
+
+[resource]
+script = ExtResource("1_pk3rq")
+Id = "null"
+ActionName = "Null Action"
+EndsTurnAfterUse = false
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+CanTargetSelf = false
+Range = 0
+ActionType = 0
+IndicatorType = 0
+FollowEntity = false
+FocusEntity = false

@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://dkgbq0y5ahht5"]
+
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/MenuState.cs" id="1_ae4w5"]
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="2_cni1v"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="3_6bwox"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="4_cjirs"]
+[ext_resource type="PackedScene" uid="uid://dqrhke68klwx2" path="res://audio/ui/ui_invalid_player.tscn" id="5_vl83w"]
+
+[node name="Menu" type="Node"]
+script = ExtResource("1_ae4w5")
+
+[node name="UISelectPlayer" parent="." instance=ExtResource("2_cni1v")]
+
+[node name="UICancelPlayer" parent="." instance=ExtResource("3_6bwox")]
+
+[node name="UIConfirmPlayer" parent="." instance=ExtResource("4_cjirs")]
+
+[node name="UIInvalidPlayer" parent="." instance=ExtResource("5_vl83w")]
+
+[connection signal="Canceled" from="." to="UICancelPlayer" method="play"]
+[connection signal="Confirmed" from="." to="UIConfirmPlayer" method="play"]
+[connection signal="Invalid" from="." to="UIInvalidPlayer" method="play"]
+[connection signal="Selected" from="." to="UISelectPlayer" method="play"]

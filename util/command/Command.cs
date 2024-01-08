@@ -13,7 +13,7 @@ namespace ShopIsDone.Utils.Commands
             // Finish MUST be called at the end of every single execution, async code
             // within or no. Here we make null commands call finish as deferred so
             // we don't hang if there's same frame evaluation going on
-            CallDeferred("Finish");
+            CallDeferred(nameof(Finish));
         }
 
         protected void Finish()
