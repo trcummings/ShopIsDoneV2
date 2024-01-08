@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://xolev31q2oiu"]
 
-[ext_resource type="Script" path="res://scenes/LevelEntity.cs" id="1_q1jmx"]
+[ext_resource type="Script" path="res://core/LevelEntity.cs" id="1_q1jmx"]
 [ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="2_nms3t"]
 [ext_resource type="Script" path="res://tasks/TaskComponent.cs" id="2_xwva2"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="3_1mvnr"]

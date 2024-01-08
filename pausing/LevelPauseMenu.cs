@@ -78,7 +78,7 @@ namespace ShopIsDone.Pausing
             _QuitWithoutSavingButton = GetNode<Button>("%QuitWithoutSavingButton");
             _QuitWithoutSavingButton.Pressed += () =>
             {
-                var globalEvents = GlobalEvents.GetGlobalEvents(this);
+                var globalEvents = Events.GetEvents(this);
                 globalEvents.EmitSignal(nameof(globalEvents.QuitGameRequested));
             };
 

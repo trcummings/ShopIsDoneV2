@@ -43,19 +43,26 @@ namespace ShopIsDone.Levels
             }
 
             // Move leader to the default spawn point
-            _Leader.GlobalPosition = _DefaultSpawnPoint.GlobalPosition;
-            // Spawn followers nearby
-            for(int i = 0; i < _Followers.Count; i++)
-            {
-                var follower = _Followers[i];
-                follower.GlobalPosition = _DefaultSpawnPoint.GlobalPosition + (Vector3.Left * (i + 1));
-            }
+            WarpGroupToPosition(_DefaultSpawnPoint.GlobalPosition);
 
             // Set leader layer
             SetLeaderLayer();
 
             // Idle them
             Idle();
+        }
+
+        /* NB: Position is GLOBAL */
+        public void WarpGroupToPosition(Vector3 position)
+        {
+            // Move leader to the given position
+            _Leader.GlobalPosition = position;
+            // Spawn followers nearby
+            for (int i = 0; i < _Followers.Count; i++)
+            {
+                var follower = _Followers[i];
+                follower.GlobalPosition = position + (Vector3.Left * (i + 1));
+            }
         }
 
         private void SetLeaderLayer()

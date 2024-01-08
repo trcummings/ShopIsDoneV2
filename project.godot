@@ -30,7 +30,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameSettingsManager="*res://game_settings/GameSettingsManager.cs"
-GlobalEvents="*res://global_events/GlobalEvents.cs"
+Events="*res://core/events.tscn"
 InjectionProvider="*res://util/dependency_injection/InjectionProvider.cs"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 

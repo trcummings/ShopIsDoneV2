@@ -152,14 +152,16 @@ metadata/_edit_lock_ = true
 [node name="Label3D" parent="World/NavigationRegion3D/Interactable" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09261, 1.75167, 0.32461)
 
-[node name="DoorInteraction" type="Node" parent="World/NavigationRegion3D/Interactable" index="2"]
+[node name="DoorInteraction" type="Node" parent="World/NavigationRegion3D/Interactable" index="2" node_paths=PackedStringArray("_WarpPoint")]
 script = ExtResource("14_ysv03")
+_WarpPoint = NodePath("../../Arena/DoorPoint")
 
 [node name="JessicaRenderManager" parent="World/NavigationRegion3D" index="3" instance=ExtResource("7_r8wa3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.72638, 0, -17.7406)
 
-[node name="Arena" parent="World/NavigationRegion3D" index="4" instance=ExtResource("17_6r5ye")]
+[node name="Arena" parent="World/NavigationRegion3D" index="4" node_paths=PackedStringArray("_PlayerCharacterManager") instance=ExtResource("17_6r5ye")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, -90)
+_PlayerCharacterManager = NodePath("../../PlayerCharacterManager")
 
 [node name="TurnCounter" parent="World/NavigationRegion3D/Arena/Services" index="0"]
 HasTurnCounter = false
@@ -185,12 +187,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
 
 [node name="screening_room" parent="World/NavigationRegion3D/Arena" index="6" instance=ExtResource("18_h332s")]
 
+[node name="FogVolume" type="FogVolume" parent="World/NavigationRegion3D/Arena/screening_room" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50473, 3.01313, 2.50418)
+size = Vector3(52.6849, 17.9807, 59.2808)
+material = SubResource("FogMaterial_g1l4w")
+
 [node name="TileManager" parent="World/NavigationRegion3D/Arena" index="7" instance=ExtResource("19_hvyr0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.99, -1)
 data = {
 "cells": PackedInt32Array(1, 2, 0, 1, 1, 0, 1, 0, 0, 1, 65535, 0, 1, 65534, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 65535, 2, 0, 65535, 1, 0, 65535, 0, 0, 65535, 65535, 0, 65535, 65534, 0)
 }
 metadata/_edit_lock_ = true
+
+[node name="DoorPoint" type="Node3D" parent="World/NavigationRegion3D/Arena" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 4)
 
 [node name="FogVolume" type="FogVolume" parent="World" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50473, 3.01313, 2.50418)

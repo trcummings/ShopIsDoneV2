@@ -1,9 +1,12 @@
 using Godot;
 
-public partial class GlobalEvents : Node
+// This is a singleton for events that can be called from anywhere in the
+// game
+[GlobalClass]
+public partial class Events : Node
 {
     // Fade to black
-	[Signal]
+    [Signal]
 	public delegate void FadeInRequestedEventHandler();
 
     [Signal]
@@ -24,8 +27,8 @@ public partial class GlobalEvents : Node
     public delegate void QuitGameRequestedEventHandler();
 
     // Static function to help get the singleton
-    public static GlobalEvents GetGlobalEvents(Node node)
+    public static Events GetEvents(Node node)
     {
-        return node.GetNode<GlobalEvents>("/root/GlobalEvents");
+        return node.GetNode<Events>("/root/Events");
     }
 }

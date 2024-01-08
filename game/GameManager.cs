@@ -31,7 +31,7 @@ namespace ShopIsDone.Game
         private ColorRect _BlackOverlay;
         private DebugDisplay _DebugDisplay;
         private GameSettingsManager _GameSettings;
-        private GlobalEvents _GlobalEvents;
+        private Events _Events;
 
         public override void _Ready()
         {
@@ -49,10 +49,10 @@ namespace ShopIsDone.Game
             _GameSettings.ShowDebugDisplayChanged += SetDebugDisplayVisibility;
 
             // Events
-            _GlobalEvents = GlobalEvents.GetGlobalEvents(this);
-            _GlobalEvents.FadeInRequested += () => _ = FadeInOverlay();
-            _GlobalEvents.FadeOutRequested += () => _ = FadeOutOverlay();
-            _GlobalEvents.QuitGameRequested += QuitGame;
+            _Events = Events.GetEvents(this);
+            _Events.FadeInRequested += () => _ = FadeInOverlay();
+            _Events.FadeOutRequested += () => _ = FadeOutOverlay();
+            _Events.QuitGameRequested += QuitGame;
 
             // Set GSM into settings load state
             _GSM.ChangeState(Consts.GameStates.INITIAL_LOAD, new Dictionary<string, Variant>()
@@ -99,7 +99,7 @@ namespace ShopIsDone.Game
             var tween = GetTree().CreateTween();
             tween.TweenProperty(_BlackOverlay, "color", new Color(0, 0, 0, 0), 0.5F);
             await ToSignal(tween, "finished");
-            _GlobalEvents.EmitSignal(nameof(_GlobalEvents.FadeOutFinished));
+            _Events.EmitSignal(nameof(_Events.FadeOutFinished));
         }
 
         public async Task FadeInOverlay()
@@ -107,7 +107,7 @@ namespace ShopIsDone.Game
             var tween = GetTree().CreateTween();
             tween.TweenProperty(_BlackOverlay, "color", Colors.Black, 0.5F);
             await ToSignal(tween, "finished");
-            _GlobalEvents.EmitSignal(nameof(_GlobalEvents.FadeInFinished));
+            _Events.EmitSignal(nameof(_Events.FadeInFinished));
         }
 
         public static Vector2 GetProjectViewportSize()

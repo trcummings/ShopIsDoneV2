@@ -14,12 +14,12 @@ namespace ShopIsDone.Game.States
 
         // Nodes
         private Level _Level;
-        private GlobalEvents _GlobalEvents;
+        private Events _Events;
 
         public override void _Ready()
         {
             base._Ready();
-            _GlobalEvents = GlobalEvents.GetGlobalEvents(this);
+            _Events = Events.GetEvents(this);
         }
 
         public async override void OnStart(Dictionary<string, Variant> message = null)
@@ -36,8 +36,8 @@ namespace ShopIsDone.Game.States
             await ToSignal(_Level, nameof(_Level.Initialized));
 
             // Fade out overlay
-            _GlobalEvents.EmitSignal(nameof(_GlobalEvents.FadeOutRequested));
-            await ToSignal(_GlobalEvents, nameof(_GlobalEvents.FadeOutFinished));
+            _Events.EmitSignal(nameof(_Events.FadeOutRequested));
+            await ToSignal(_Events, nameof(_Events.FadeOutFinished));
 
             base.OnStart(message);
         }
@@ -45,8 +45,8 @@ namespace ShopIsDone.Game.States
         public async override void OnExit(string nextState)
         {
             // Fade to black
-            _GlobalEvents.EmitSignal(nameof(_GlobalEvents.FadeInRequested));
-            await ToSignal(_GlobalEvents, nameof(_GlobalEvents.FadeInFinished));
+            _Events.EmitSignal(nameof(_Events.FadeInRequested));
+            await ToSignal(_Events, nameof(_Events.FadeInFinished));
 
             // Remove scene
             RemoveChild(_Level);
