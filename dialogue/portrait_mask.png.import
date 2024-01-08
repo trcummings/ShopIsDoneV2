@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://g87i16wnyo0a"
-path="res://.godot/imported/portrait_mask.png-750534e1e280a1f71a019408bbfe0023.ctex"
+path="res://.godot/imported/portrait_mask.png-59faf699ff1155372351d82a3159acd9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/Portraits/portrait_mask.png"
-dest_files=["res://.godot/imported/portrait_mask.png-750534e1e280a1f71a019408bbfe0023.ctex"]
+source_file="res://dialogue/portrait_mask.png"
+dest_files=["res://.godot/imported/portrait_mask.png-59faf699ff1155372351d82a3159acd9.ctex"]
 
 [params]
 

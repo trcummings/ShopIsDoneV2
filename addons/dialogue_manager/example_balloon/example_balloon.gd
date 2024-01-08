@@ -1,10 +1,13 @@
 extends CanvasLayer
 
 
-@onready var balloon: Panel = %Balloon
+@onready var balloon: Control = %Balloon
 @onready var character_label: RichTextLabel = %CharacterLabel
 @onready var dialogue_label: DialogueLabel = %DialogueLabel
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
+@onready var portrait : TextureRect = %Portrait
+
+@export var characters : Dictionary
 
 ## The dialogue resource
 var resource: DialogueResource
@@ -34,8 +37,24 @@ var dialogue_line: DialogueLine:
 
 		dialogue_line = next_dialogue_line
 
+		# Set up the character label
 		character_label.visible = not dialogue_line.character.is_empty()
 		character_label.text = tr(dialogue_line.character, "dialogue")
+		
+		# set up the portrait if we have a corresponding character
+		if characters.has(dialogue_line.character):
+			# pull the character data
+			var character : DialogueCharacter = characters[dialogue_line.character]
+			# if any of our tags corresponds to a character portrait name, pull 
+			# that portrait
+			var portrait_name = character.default_portrait
+			for tag in dialogue_line.tags:
+				if character.portraits.has(tag): 
+					portrait_name = tag
+			# grab that portrait texture and set it to the portrait node
+			portrait.texture = character.portraits[portrait_name]
+		
+		# set up the typing noise
 
 		dialogue_label.hide()
 		dialogue_label.dialogue_line = dialogue_line

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="DialogueCharacter" load_steps=6 format=3 uid="uid://glos50b3o6qn"]
+
+[ext_resource type="Script" path="res://dialogue/dialogue_character.gd" id="1_52k7u"]
+[ext_resource type="Texture2D" uid="uid://rcxdpyrmiil0" path="res://dialogue/jessica/jessica_portrait_neutral.png" id="1_an4mh"]
+[ext_resource type="Texture2D" uid="uid://cnjqtsyv01ht4" path="res://dialogue/jessica/jessica_portrait_scared.png" id="2_w3gtf"]
+[ext_resource type="AudioStream" uid="uid://c5rufonlgb7h3" path="res://dialogue/jessica/jessica_text_noise.wav" id="3_sssyq"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0qvhx"]
+random_pitch = 1.1
+random_volume_offset_db = 0.24
+streams_count = 1
+stream_0/stream = ExtResource("3_sssyq")
+stream_0/weight = 1.0
+
+[resource]
+script = ExtResource("1_52k7u")
+default_portrait = "neutral"
+portraits = {
+"neutral": ExtResource("1_an4mh"),
+"scared": ExtResource("2_w3gtf")
+}
+custom_info = {}
+text_noise = SubResource("AudioStreamRandomizer_0qvhx")
