@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqui73itu0huj"]
+
+[ext_resource type="PackedScene" uid="uid://dkq5bufmahwqe" path="res://levels/parking_lot_1/screening_computer/screening_computer.glb" id="1_hkbq0"]
+[ext_resource type="PackedScene" uid="uid://cgd5un6h63nu2" path="res://Models/GodRayCube/GodRayCube.tscn" id="2_gwpkd"]
+[ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_Counter_08_.tscn" id="3_f0cva"]
+[ext_resource type="Material" path="res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material" id="4_acesu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ui8ob"]
+albedo_color = Color(0, 0, 0, 1)
+metallic = 0.44
+roughness = 0.7
+
+[node name="ScreeningComputerModel" type="Node3D"]
+
+[node name="computer" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2.08165e-12, 0.75, -0.125)
+
+[node name="screening_computer" parent="computer" instance=ExtResource("1_hkbq0")]
+
+[node name="Screen" parent="computer/screening_computer" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ui8ob")
+
+[node name="GodRayCube" parent="computer" instance=ExtResource("2_gwpkd")]
+transform = Transform3D(0.744189, 0, 0, 0, -2.13055e-08, -0.776053, 0, 0.487414, -3.39224e-08, 0, 1.76615, 1.17628)
+
+[node name="Prop_Counter_08_" parent="." instance=ExtResource("3_f0cva")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="SI_Prop_Counter_08" parent="Prop_Counter_08_/SI_Prop_Counter_08/RootNode" index="0"]
+surface_material_override/0 = ExtResource("4_acesu")
+
+[editable path="computer/screening_computer"]
+[editable path="Prop_Counter_08_"]
+[editable path="Prop_Counter_08_/SI_Prop_Counter_08"]

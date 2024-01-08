@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://xh2e5s84nxyv"]
+[gd_scene load_steps=30 format=3 uid="uid://xh2e5s84nxyv"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_qcbwj"]
 [ext_resource type="Environment" uid="uid://crxt7yqtqh2oa" path="res://environments/foggy_world.tres" id="2_ornuu"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://csp1qcwdjly14" path="res://levels/parking_lot_1/light_pole/light_pole.tscn" id="3_bkfwe"]
 [ext_resource type="AudioStream" uid="uid://n4qsvpb3svkh" path="res://levels/parking_lot_1/ROOM-TONE--404378__eskimoneil__parking-lot-grove-mall.wav" id="4_id0w3"]
 [ext_resource type="PackedScene" uid="uid://do3k55e4n3g6m" path="res://levels/parking_lot_1/bollard/bollard.tscn" id="4_sfbcs"]
+[ext_resource type="Script" path="res://actors/interactables/trigger_zone_enabler.gd" id="7_3b8y3"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/CutsceneInteraction.cs" id="7_33d1e"]
 [ext_resource type="PackedScene" uid="uid://7jutumxuh5ii" path="res://render/employees/jessica/jessica_model.tscn" id="7_r8wa3"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/ComposedInteraction.cs" id="8_nm0vf"]
@@ -14,6 +15,13 @@
 [ext_resource type="Resource" uid="uid://bklp7spvcrugi" path="res://levels/parking_lot_1/dialogue/test_dialogue.dialogue" id="9_8wx2t"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/PanCameraToInteraction.cs" id="11_5ocy2"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/WaitForInteraction.cs" id="12_8l11t"]
+[ext_resource type="PackedScene" uid="uid://cp5wcgt8xqki" path="res://actors/interactables/interactable.tscn" id="13_vldx2"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/DoorInteraction.cs" id="14_ysv03"]
+[ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="17_6r5ye"]
+[ext_resource type="PackedScene" uid="uid://d3edvxooy0nm3" path="res://exit/exit_model.tscn" id="18_6xsbf"]
+[ext_resource type="PackedScene" uid="uid://0h58pk4shxpt" path="res://levels/parking_lot_1/screening_room/screening_room.glb" id="18_h332s"]
+[ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="19_hvyr0"]
+[ext_resource type="PackedScene" uid="uid://dqui73itu0huj" path="res://levels/parking_lot_1/screening_computer/screening_computer_model.tscn" id="21_uij4w"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_7hfsd"]
 vertices = PackedVector3Array(-5.75, 0.266768, -37.25, -5.25, 0.266768, -37.5, -5.25, 0.266768, -39.5, -39.5, 0.266768, -39.5, -39.5, 0.266768, -20.5, -5.75, 0.266768, -20.25, -5.75, 0.266768, -37.25, -39.5, 0.266768, -39.5, -5.25, 0.266768, -37.5, 7.25, 0.266768, -37.5, 7.25, 0.266768, -39.5, -5.25, 0.266768, -39.5, 7.25, 0.266768, -39.5, 7.25, 0.266768, -37.5, 7.75, 0.266768, -37.25, 39.5, 0.266768, -39.5, 7.75, 0.266768, -37.25, 7.75, 0.266768, -20.75, 39.5, 0.266768, -20.5, 39.5, 0.266768, -39.5, -5, 5.26677, -19.75, -2, 7.26677, -19.75, -1.75, 7.26677, -24.5, -5, 5.26677, -36.75, 4, 7.26677, -24.5, 4.25, 7.26677, -19.75, 7.25, 5.26677, -19.75, 7.25, 5.26677, -36.75, -5, 5.26677, -36.75, -1.75, 7.26677, -24.5, 4, 7.26677, -24.5, 7.25, 5.26677, -36.75, 1.80556, 8.76677, -36.75, 0.444443, 8.76677, -36.75, 1.125, 9.26677, -24.5, -4.25, 0.266768, -20.5, -2, 0.266768, -20.5, -1.75, 0.266768, -24.25, -4.25, 0.266768, -36, 4, 0.266768, -24.25, 4.25, 0.266768, -20.5, 6.5, 0.266768, -20.5, 6.5, 0.266768, -36, -4.25, 0.266768, -36, -1.75, 0.266768, -24.25, 4, 0.266768, -24.25, 6.5, 0.266768, -36, -0.75, 0.266768, -23, -0.75, 0.266768, -20.25, 3, 0.266768, -20.25, 3, 0.266768, -23, 3, 8.01677, -23, 1.5, 9.01677, -23, 1.5, 8.76677, -22.5, 3, 8.01677, -19.75, 0.75, 8.76677, -22.5, 0.75, 9.01677, -23, -0.75, 8.01677, -23, -0.75, 8.01677, -19.75, -0.75, 8.01677, -19.75, 3, 8.01677, -19.75, 1.5, 8.76677, -22.5, 0.75, 8.76677, -22.5, 0.5, 8.76677, -19.75, -4, 0.266768, -15, -3.25, 0.266768, -15.25, -3.25, 0.266768, -17, -4.25, 0.266768, -17.25, -5.5, 0.266768, -9.75, -5.5, 0.266768, -10.25, -5.75, 0.266768, -20.25, -39.5, 0.266768, -20.5, -39.5, 0.266768, -9.75, -4.25, 0.266768, -18, -2, 0.266768, -18.25, -2, 0.266768, -19, -5.5, 0.266768, -19, -5.5, 0.266768, -10.25, -5.5, 0.266768, -19, -5.75, 0.266768, -20.25, -4.25, 0.266768, -17.25, -4.25, 0.266768, -18, -5.5, 0.266768, -19, -4, 0.266768, -14, -4, 0.266768, -15, -4.25, 0.266768, -17.25, -5.5, 0.266768, -19, -5.5, 0.266768, -10.25, -4.75, 0.266768, -10.5, 7.5, 0.266768, -19, 4.25, 0.266768, -19, 4.25, 0.266768, -18.25, 4.75, 0.266768, -15.25, 5.75, 0.266768, -15, 7.5, 0.266768, -19, 7.25, 0.266768, -10.5, 7.5, 0.266768, -9.75, 39.5, 0.266768, -9.75, 39.5, 0.266768, -20.5, 7.75, 0.266768, -20.75, 5.75, 0.266768, -14, 6.5, 0.266768, -10.5, 7.25, 0.266768, -10.5, 7.5, 0.266768, -19, 5.75, 0.266768, -15, -3.25, 0.266768, -17, -3.25, 0.266768, -15.25, -2.5, 0.266768, -15, 0.75, 0.266768, -17, 3, 0.266768, -17.75, 1, 0.266768, -18, 0.75, 0.266768, -17, 4.75, 0.266768, -15.25, 4.25, 0.266768, -18.25, 3, 0.266768, -17.75, 4.25, 0.266768, -15, 6.25, 0.266768, -1.75, 6.5, 0.266768, -9, 6, 0.266768, -9.25, 2.75, 0.266768, -1.75, -4, 0.266768, -14, -4.75, 0.266768, -10.5, -4.25, 0.266768, -10.25, 6, 0.266768, -10.25, 6.5, 0.266768, -10.5, 5.75, 0.266768, -14, 2.5, 0.266768, -1.25, 2.75, 0.266768, -1.75, 6, 0.266768, -9.25, 4.25, 0.266768, -14, -2.5, 0.266768, -14, -4.25, 0.266768, -9.5, 4.25, 0.266768, -14, 4.25, 0.266768, -15, 3, 0.266768, -17.75, 0.75, 0.266768, -17, -2.5, 0.266768, -15, -2.5, 0.266768, -14, -2.5, 0.266768, -14, -4, 0.266768, -14, -4.25, 0.266768, -10.25, -4.25, 0.266768, -9.5, 6, 0.266768, -10.25, 5.75, 0.266768, -14, 4.25, 0.266768, -14, 6, 0.266768, -9.25, -5.5, 0.266768, -0.25, -5, 0.266768, -0.75, -5, 0.266768, -9, -5.5, 0.266768, -9.75, -39.5, 0.266768, -9.75, -39.5, 0.266768, -0.25, 7.5, 0.266768, 0.5, 6.75, 0.266768, 1.25, 7, 0.266768, 2.75, 10.75, 0.266768, 2.75, 7.5, 0.266768, -9.75, 7.25, 0.266768, -9, 6.75, 0.266768, -1.75, 10.75, 0.266768, 2.75, 39.5, 0.266768, 4.25, 39.5, 0.266768, -9.75, 7.5, 0.266768, -0.5, 7.5, 0.266768, 0.5, 10.75, 0.266768, 2.75, 6.75, 0.266768, -1.75, 7.5, 0.266768, -0.5, 10.75, 0.266768, 2.75, 6.5, 0.266768, -9, 6.25, 0.266768, -1.75, 6.75, 0.266768, -1.75, 7.25, 0.266768, -9, 10.75, 0.266768, 2.75, 11, 0.266768, 4.25, 39.5, 0.266768, 4.25, -4.25, 0.266768, 0, 2.5, 0.266768, 0, 2.5, 0.266768, -1.25, -4.5, 0.266768, -0.75, -5, 0.266768, -0.75, -4.5, 0.266768, -0.75, 2.5, 0.266768, -1.25, -4.25, 0.266768, -9.5, -5, 0.266768, -9, 3.5, 1.26677, -0.75, 3.5, 1.26677, 0.25, 4, 1.26677, 0.25, 4, 1.26677, -0.75, -5.5, 0.266768, 7.5, -5, 0.266768, 6.75, -5, 0.266768, 0.5, -5.5, 0.266768, -0.25, -39.5, 0.266768, -0.25, -39.5, 0.266768, 7.5, 7, 0.266768, 7, 7.25, 0.266768, 5.75, 6.5, 0.266768, 5.5, 6.25, 0.266768, 7, -5, 0.266768, 0.5, -5, 0.266768, 6.75, -4.5, 0.266768, 6.75, -4.25, 0.266768, 0, 6.5, 0.266768, 3, 7, 0.266768, 2.75, 6.75, 0.266768, 1.25, 2.75, 0.266768, 1.25, 6, 0.266768, 7.75, 6.25, 0.266768, 7, 6.5, 0.266768, 5.5, 6.5, 0.266768, 3, 6, 0.266768, 7.75, 6.5, 0.266768, 3, 2.75, 0.266768, 1.25, -4.25, 0.266768, 0, -4.5, 0.266768, 6.75, -4.25, 0.266768, 7.5, 2.75, 0.266768, 1.25, 2.5, 0.266768, 0, -4.25, 0.266768, 0, 7.75, 2.01677, 4, 7.75, 2.01677, 4.5, 8.75, 2.01677, 4.5, 8.75, 2.01677, 4, 7.25, 0.266768, 5.75, 7, 0.266768, 7, 7.5, 0.266768, 7.25, 10.75, 0.266768, 5.75, 39.5, 0.266768, 4.25, 10.75, 0.266768, 5.75, 7.5, 0.266768, 8, 6.75, 0.266768, 39.5, 39.5, 0.266768, 39.5, 10.75, 0.266768, 5.75, 7.5, 0.266768, 7.25, 7.5, 0.266768, 8, 39.5, 0.266768, 4.25, 11, 0.266768, 4.25, 10.75, 0.266768, 5.75, 7.5, 0.266768, 8, 6.75, 0.266768, 8.25, 6.75, 0.266768, 39.5, -5, 0.266768, 39.5, -5, 0.266768, 8.25, -5.5, 0.266768, 7.5, -39.5, 0.266768, 7.5, -39.5, 0.266768, 39.5, 6, 0.266768, 7.75, -4.25, 0.266768, 7.5, -4.5, 0.266768, 8.25, -5, 0.266768, 39.5, 6.75, 0.266768, 39.5, 6.75, 0.266768, 8.25, -4.5, 0.266768, 8.25, -5, 0.266768, 8.25, -5, 0.266768, 39.5)
@@ -21,6 +29,12 @@ polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Arr
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mbsut"]
 size = Vector3(7.87079, 3.6875, 4.37817)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y1gtw"]
+size = Vector3(2.97083, 2.09412, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u4mnd"]
+size = Vector3(12.1935, 1, 20.2972)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tt51n"]
 
@@ -92,6 +106,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.326082, 0, -14.5582)
 collision_layer = 0
 collision_mask = 512
 monitorable = false
+script = ExtResource("7_3b8y3")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
@@ -122,8 +137,60 @@ script = ExtResource("8_sl0ca")
 _DialogueStartFrom = "main_convo"
 _DialogueResource = ExtResource("9_8wx2t")
 
-[node name="JessicaRenderManager" parent="World/NavigationRegion3D" index="2" instance=ExtResource("7_r8wa3")]
+[node name="Interactable" parent="World/NavigationRegion3D" index="2" node_paths=PackedStringArray("_Interaction") instance=ExtResource("13_vldx2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.7633)
+_IsOneShot = true
+_Interaction = NodePath("DoorInteraction")
+_Prompt = "Enter"
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Interactable" index="0"]
+transform = Transform3D(1, 0, -2.50326e-08, 0, 1, 0, -2.50326e-08, 0, 1, 0.985413, 1.04266, 0)
+shape = SubResource("BoxShape3D_y1gtw")
+metadata/_edit_lock_ = true
+
+[node name="Label3D" parent="World/NavigationRegion3D/Interactable" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09261, 1.75167, 0.32461)
+
+[node name="DoorInteraction" type="Node" parent="World/NavigationRegion3D/Interactable" index="2"]
+script = ExtResource("14_ysv03")
+
+[node name="JessicaRenderManager" parent="World/NavigationRegion3D" index="3" instance=ExtResource("7_r8wa3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.72638, 0, -17.7406)
+
+[node name="Arena" parent="World/NavigationRegion3D" index="4" instance=ExtResource("17_6r5ye")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, -90)
+
+[node name="TurnCounter" parent="World/NavigationRegion3D/Arena/Services" index="0"]
+HasTurnCounter = false
+
+[node name="Tiles" parent="World/NavigationRegion3D/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
+_ArenaTilemap = NodePath("../TileManager")
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Arena/EnterArenaArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0410304, 0.5, 0.0111694)
+shape = SubResource("BoxShape3D_u4mnd")
+
+[node name="ExitModel" parent="World/NavigationRegion3D/Arena/Entities" index="0" instance=ExtResource("18_6xsbf")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.01, 0, 4)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="World/NavigationRegion3D/Arena/Entities" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
+
+[node name="ScreeningComputerModel" parent="World/NavigationRegion3D/Arena/Entities" index="2" instance=ExtResource("21_uij4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4)
+
+[node name="JessicaRenderManager" parent="World/NavigationRegion3D/Arena/Entities" index="3" instance=ExtResource("7_r8wa3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
+
+[node name="screening_room" parent="World/NavigationRegion3D/Arena" index="6" instance=ExtResource("18_h332s")]
+
+[node name="TileManager" parent="World/NavigationRegion3D/Arena" index="7" instance=ExtResource("19_hvyr0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.99, -1)
+data = {
+"cells": PackedInt32Array(1, 2, 0, 1, 1, 0, 1, 0, 0, 1, 65535, 0, 1, 65534, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 65535, 2, 0, 65535, 1, 0, 65535, 0, 0, 65535, 65535, 0, 65535, 65534, 0)
+}
+metadata/_edit_lock_ = true
 
 [node name="FogVolume" type="FogVolume" parent="World" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50473, 3.01313, 2.50418)
@@ -132,13 +199,15 @@ material = SubResource("FogMaterial_g1l4w")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="6"]
 transform = Transform3D(0.671608, 0.606754, -0.425197, -0.221229, 0.711934, 0.666489, 0.707107, -0.353553, 0.612372, 0, 0, 0)
-visible = false
 
 [node name="Ambience" type="AudioStreamPlayer" parent="." index="5"]
 stream = ExtResource("4_id0w3")
 autoplay = true
 bus = &"SFX"
 
+[connection signal="body_entered" from="World/NavigationRegion3D/TriggerZone" to="World/NavigationRegion3D/TriggerZone" method="disable_monitoring" unbinds=1]
 [connection signal="body_entered" from="World/NavigationRegion3D/TriggerZone" to="World/NavigationRegion3D/TriggerZone/CutsceneInteraction" method="Execute" flags=6 unbinds=1]
 
 [editable path="World/IsometricCamera"]
+[editable path="World/NavigationRegion3D/Interactable"]
+[editable path="World/NavigationRegion3D/Arena"]
