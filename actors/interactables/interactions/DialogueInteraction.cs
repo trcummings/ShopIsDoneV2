@@ -1,6 +1,7 @@
 ﻿using System;
 using DialogueManagerRuntime;
 using Godot;
+using Godot.Collections;
 
 namespace ShopIsDone.Interactables.Interactions
 {
@@ -29,6 +30,23 @@ namespace ShopIsDone.Interactables.Interactions
 
             // Emit finished
             Finish();
+        }
+
+        public override string[] _GetConfigurationWarnings()
+        {
+            if (_DialogueResource == null)
+            {
+                return new string[] { "Needs Dialogue resource!" };
+            }
+            else if (string.IsNullOrEmpty(_DialogueStartFrom))
+            {
+                return new string[] { "Needs title for Dialogue resource to start from!" };
+            }
+            if (!((Dictionary)_DialogueResource.Get("titles")).ContainsKey(_DialogueStartFrom))
+            {
+                return new string[] { $"No dialogue title {_DialogueStartFrom} given in Dialogue resource {_DialogueResource.ResourcePath}!" };
+            }
+            return base._GetConfigurationWarnings();
         }
     }
 }
