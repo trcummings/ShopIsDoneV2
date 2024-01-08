@@ -6,11 +6,9 @@ using ShopIsDone.Utils.DependencyInjection;
 namespace ShopIsDone.Interactables.Interactions
 {
     // This is a composed interaction that wraps around a cutscene
-    public partial class CutsceneInteraction : Interaction
-	{
-        [Export]
-        private Interaction _DecoratedInteraction;
-
+    [Tool]
+    public partial class CutsceneInteraction : DecoratorInteraction
+    {
         [Inject]
         private CutsceneService _CutsceneService;
 

@@ -6,7 +6,8 @@ using System.Collections.Generic;
 namespace ShopIsDone.Interactables.Interactions
 {
     // A composed interaction gets all the interactions that are children of
-	// this interaction and runs them in series
+    // this interaction and runs them in series
+    [Tool]
     public partial class ComposedInteraction : Interaction
 	{
         private Queue<Interaction> _Interactions = new Queue<Interaction>();

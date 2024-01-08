@@ -3,6 +3,7 @@ using Godot;
 
 namespace ShopIsDone.Interactables.Interactions
 {
+	[Tool]
     public partial class Interaction : Node
 	{
 		[Signal]
