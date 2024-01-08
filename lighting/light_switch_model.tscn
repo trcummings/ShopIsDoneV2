@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=3 uid="uid://gwbqpdjmvvec"]
+
+[ext_resource type="Script" path="res://render/Model.cs" id="1_686ku"]
+[ext_resource type="Material" path="res://Materials/RegisterMaterial.material" id="1_xj6w1"]
+
+[sub_resource type="Animation" id="1"]
+resource_name = "FlipOff"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightSwitch/Handle:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 30), Vector3(0, 0, -30)]
+}
+
+[sub_resource type="Animation" id="2"]
+resource_name = "FlipOn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightSwitch/Handle:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -30), Vector3(0, 0, 30)]
+}
+
+[sub_resource type="Animation" id="3"]
+resource_name = "SetOff"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightSwitch/Handle:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -30)]
+}
+
+[sub_resource type="Animation" id="4"]
+resource_name = "SetOn"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightSwitch/Handle:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 30)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i2r8b"]
+_data = {
+"FlipOff": SubResource("1"),
+"FlipOn": SubResource("2"),
+"SetOff": SubResource("3"),
+"SetOn": SubResource("4")
+}
+
+[node name="LightSwitchModel" type="Node3D" node_paths=PackedStringArray("_AnimPlayer") groups=["renderable"]]
+script = ExtResource("1_686ku")
+_AnimPlayer = NodePath("AnimationPlayer")
+
+[node name="LightSwitch" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="SwitchBox" type="CSGBox3D" parent="LightSwitch"]
+size = Vector3(0.1, 0.25, 0.25)
+material = ExtResource("1_xj6w1")
+
+[node name="Handle" type="Node3D" parent="LightSwitch"]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -0.025, 0, 0)
+
+[node name="CSGBox" type="CSGBox3D" parent="LightSwitch/Handle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.125, 0, 0)
+size = Vector3(0.1, 0.05, 0.2)
+material = ExtResource("1_xj6w1")
+
+[node name="CSGCombiner" type="CSGCombiner3D" parent="LightSwitch/Handle/CSGBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.125, 0, 0)
+operation = 2
+
+[node name="CSGBox2" type="CSGBox3D" parent="LightSwitch/Handle/CSGBox/CSGCombiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.102848, 0, 0)
+size = Vector3(0.1, 0.1, 0.15)
+material = ExtResource("1_xj6w1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i2r8b")
+}

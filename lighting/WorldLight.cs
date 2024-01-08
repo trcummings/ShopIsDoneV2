@@ -8,6 +8,12 @@ namespace ShopIsDone.Lighting
     [Tool]
     public partial class WorldLight : Node3D
     {
+        [Signal]
+        public delegate void FlickeredOnEventHandler();
+
+        [Signal]
+        public delegate void FlickeredOffEventHandler();
+
         [Export]
         public bool UseLightRadiusAsVolume = true;
 
@@ -251,6 +257,8 @@ namespace ShopIsDone.Lighting
 
             // Turn self off
             TurnOff();
+
+            EmitSignal(nameof(FlickeredOff));
         }
 
         public async Task FlickerLightOn()
@@ -266,6 +274,8 @@ namespace ShopIsDone.Lighting
 
             // Set light energy back to 1
             LightEnergy = 1;
+
+            EmitSignal(nameof(FlickeredOn));
         }
     }
 }
