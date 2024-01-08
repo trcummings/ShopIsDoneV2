@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://xh2e5s84nxyv"]
+[gd_scene load_steps=20 format=3 uid="uid://xh2e5s84nxyv"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_qcbwj"]
 [ext_resource type="Environment" uid="uid://crxt7yqtqh2oa" path="res://environments/foggy_world.tres" id="2_ornuu"]
@@ -9,8 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://do3k55e4n3g6m" path="res://levels/parking_lot_1/bollard/bollard.tscn" id="4_sfbcs"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/CutsceneInteraction.cs" id="7_33d1e"]
 [ext_resource type="PackedScene" uid="uid://7jutumxuh5ii" path="res://render/employees/jessica/jessica_model.tscn" id="7_r8wa3"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/ComposedInteraction.cs" id="8_nm0vf"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/DialogueInteraction.cs" id="8_sl0ca"]
 [ext_resource type="Resource" uid="uid://bklp7spvcrugi" path="res://levels/parking_lot_1/dialogue/test_dialogue.dialogue" id="9_8wx2t"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/PanCameraToInteraction.cs" id="11_5ocy2"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/WaitForInteraction.cs" id="12_8l11t"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_7hfsd"]
 vertices = PackedVector3Array(-5.75, 0.266768, -37.25, -5.25, 0.266768, -37.5, -5.25, 0.266768, -39.5, -39.5, 0.266768, -39.5, -39.5, 0.266768, -20.5, -5.75, 0.266768, -20.25, -5.75, 0.266768, -37.25, -39.5, 0.266768, -39.5, -5.25, 0.266768, -37.5, 7.25, 0.266768, -37.5, 7.25, 0.266768, -39.5, -5.25, 0.266768, -39.5, 7.25, 0.266768, -39.5, 7.25, 0.266768, -37.5, 7.75, 0.266768, -37.25, 39.5, 0.266768, -39.5, 7.75, 0.266768, -37.25, 7.75, 0.266768, -20.75, 39.5, 0.266768, -20.5, 39.5, 0.266768, -39.5, -5, 5.26677, -19.75, -2, 7.26677, -19.75, -1.75, 7.26677, -24.5, -5, 5.26677, -36.75, 4, 7.26677, -24.5, 4.25, 7.26677, -19.75, 7.25, 5.26677, -19.75, 7.25, 5.26677, -36.75, -5, 5.26677, -36.75, -1.75, 7.26677, -24.5, 4, 7.26677, -24.5, 7.25, 5.26677, -36.75, 1.80556, 8.76677, -36.75, 0.444443, 8.76677, -36.75, 1.125, 9.26677, -24.5, -4.25, 0.266768, -20.5, -2, 0.266768, -20.5, -1.75, 0.266768, -24.25, -4.25, 0.266768, -36, 4, 0.266768, -24.25, 4.25, 0.266768, -20.5, 6.5, 0.266768, -20.5, 6.5, 0.266768, -36, -4.25, 0.266768, -36, -1.75, 0.266768, -24.25, 4, 0.266768, -24.25, 6.5, 0.266768, -36, -0.75, 0.266768, -23, -0.75, 0.266768, -20.25, 3, 0.266768, -20.25, 3, 0.266768, -23, 3, 8.01677, -23, 1.5, 9.01677, -23, 1.5, 8.76677, -22.5, 3, 8.01677, -19.75, 0.75, 8.76677, -22.5, 0.75, 9.01677, -23, -0.75, 8.01677, -23, -0.75, 8.01677, -19.75, -0.75, 8.01677, -19.75, 3, 8.01677, -19.75, 1.5, 8.76677, -22.5, 0.75, 8.76677, -22.5, 0.5, 8.76677, -19.75, -4, 0.266768, -15, -3.25, 0.266768, -15.25, -3.25, 0.266768, -17, -4.25, 0.266768, -17.25, -5.5, 0.266768, -9.75, -5.5, 0.266768, -10.25, -5.75, 0.266768, -20.25, -39.5, 0.266768, -20.5, -39.5, 0.266768, -9.75, -4.25, 0.266768, -18, -2, 0.266768, -18.25, -2, 0.266768, -19, -5.5, 0.266768, -19, -5.5, 0.266768, -10.25, -5.5, 0.266768, -19, -5.75, 0.266768, -20.25, -4.25, 0.266768, -17.25, -4.25, 0.266768, -18, -5.5, 0.266768, -19, -4, 0.266768, -14, -4, 0.266768, -15, -4.25, 0.266768, -17.25, -5.5, 0.266768, -19, -5.5, 0.266768, -10.25, -4.75, 0.266768, -10.5, 7.5, 0.266768, -19, 4.25, 0.266768, -19, 4.25, 0.266768, -18.25, 4.75, 0.266768, -15.25, 5.75, 0.266768, -15, 7.5, 0.266768, -19, 7.25, 0.266768, -10.5, 7.5, 0.266768, -9.75, 39.5, 0.266768, -9.75, 39.5, 0.266768, -20.5, 7.75, 0.266768, -20.75, 5.75, 0.266768, -14, 6.5, 0.266768, -10.5, 7.25, 0.266768, -10.5, 7.5, 0.266768, -19, 5.75, 0.266768, -15, -3.25, 0.266768, -17, -3.25, 0.266768, -15.25, -2.5, 0.266768, -15, 0.75, 0.266768, -17, 3, 0.266768, -17.75, 1, 0.266768, -18, 0.75, 0.266768, -17, 4.75, 0.266768, -15.25, 4.25, 0.266768, -18.25, 3, 0.266768, -17.75, 4.25, 0.266768, -15, 6.25, 0.266768, -1.75, 6.5, 0.266768, -9, 6, 0.266768, -9.25, 2.75, 0.266768, -1.75, -4, 0.266768, -14, -4.75, 0.266768, -10.5, -4.25, 0.266768, -10.25, 6, 0.266768, -10.25, 6.5, 0.266768, -10.5, 5.75, 0.266768, -14, 2.5, 0.266768, -1.25, 2.75, 0.266768, -1.75, 6, 0.266768, -9.25, 4.25, 0.266768, -14, -2.5, 0.266768, -14, -4.25, 0.266768, -9.5, 4.25, 0.266768, -14, 4.25, 0.266768, -15, 3, 0.266768, -17.75, 0.75, 0.266768, -17, -2.5, 0.266768, -15, -2.5, 0.266768, -14, -2.5, 0.266768, -14, -4, 0.266768, -14, -4.25, 0.266768, -10.25, -4.25, 0.266768, -9.5, 6, 0.266768, -10.25, 5.75, 0.266768, -14, 4.25, 0.266768, -14, 6, 0.266768, -9.25, -5.5, 0.266768, -0.25, -5, 0.266768, -0.75, -5, 0.266768, -9, -5.5, 0.266768, -9.75, -39.5, 0.266768, -9.75, -39.5, 0.266768, -0.25, 7.5, 0.266768, 0.5, 6.75, 0.266768, 1.25, 7, 0.266768, 2.75, 10.75, 0.266768, 2.75, 7.5, 0.266768, -9.75, 7.25, 0.266768, -9, 6.75, 0.266768, -1.75, 10.75, 0.266768, 2.75, 39.5, 0.266768, 4.25, 39.5, 0.266768, -9.75, 7.5, 0.266768, -0.5, 7.5, 0.266768, 0.5, 10.75, 0.266768, 2.75, 6.75, 0.266768, -1.75, 7.5, 0.266768, -0.5, 10.75, 0.266768, 2.75, 6.5, 0.266768, -9, 6.25, 0.266768, -1.75, 6.75, 0.266768, -1.75, 7.25, 0.266768, -9, 10.75, 0.266768, 2.75, 11, 0.266768, 4.25, 39.5, 0.266768, 4.25, -4.25, 0.266768, 0, 2.5, 0.266768, 0, 2.5, 0.266768, -1.25, -4.5, 0.266768, -0.75, -5, 0.266768, -0.75, -4.5, 0.266768, -0.75, 2.5, 0.266768, -1.25, -4.25, 0.266768, -9.5, -5, 0.266768, -9, 3.5, 1.26677, -0.75, 3.5, 1.26677, 0.25, 4, 1.26677, 0.25, 4, 1.26677, -0.75, -5.5, 0.266768, 7.5, -5, 0.266768, 6.75, -5, 0.266768, 0.5, -5.5, 0.266768, -0.25, -39.5, 0.266768, -0.25, -39.5, 0.266768, 7.5, 7, 0.266768, 7, 7.25, 0.266768, 5.75, 6.5, 0.266768, 5.5, 6.25, 0.266768, 7, -5, 0.266768, 0.5, -5, 0.266768, 6.75, -4.5, 0.266768, 6.75, -4.25, 0.266768, 0, 6.5, 0.266768, 3, 7, 0.266768, 2.75, 6.75, 0.266768, 1.25, 2.75, 0.266768, 1.25, 6, 0.266768, 7.75, 6.25, 0.266768, 7, 6.5, 0.266768, 5.5, 6.5, 0.266768, 3, 6, 0.266768, 7.75, 6.5, 0.266768, 3, 2.75, 0.266768, 1.25, -4.25, 0.266768, 0, -4.5, 0.266768, 6.75, -4.25, 0.266768, 7.5, 2.75, 0.266768, 1.25, 2.5, 0.266768, 0, -4.25, 0.266768, 0, 7.75, 2.01677, 4, 7.75, 2.01677, 4.5, 8.75, 2.01677, 4.5, 8.75, 2.01677, 4, 7.25, 0.266768, 5.75, 7, 0.266768, 7, 7.5, 0.266768, 7.25, 10.75, 0.266768, 5.75, 39.5, 0.266768, 4.25, 10.75, 0.266768, 5.75, 7.5, 0.266768, 8, 6.75, 0.266768, 39.5, 39.5, 0.266768, 39.5, 10.75, 0.266768, 5.75, 7.5, 0.266768, 7.25, 7.5, 0.266768, 8, 39.5, 0.266768, 4.25, 11, 0.266768, 4.25, 10.75, 0.266768, 5.75, 7.5, 0.266768, 8, 6.75, 0.266768, 8.25, 6.75, 0.266768, 39.5, -5, 0.266768, 39.5, -5, 0.266768, 8.25, -5.5, 0.266768, 7.5, -39.5, 0.266768, 7.5, -39.5, 0.266768, 39.5, 6, 0.266768, 7.75, -4.25, 0.266768, 7.5, -4.5, 0.266768, 8.25, -5, 0.266768, 39.5, 6.75, 0.266768, 39.5, 6.75, 0.266768, 8.25, -4.5, 0.266768, 8.25, -5, 0.266768, 8.25, -5, 0.266768, 39.5)
@@ -96,13 +99,27 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.571564, 1.84375, -1.93933)
 shape = SubResource("BoxShape3D_mbsut")
 
-[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone" index="1" node_paths=PackedStringArray("_DecoratedInteraction")]
+[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone" index="1"]
 script = ExtResource("7_33d1e")
-_DecoratedInteraction = NodePath("DialogueInteraction")
 
-[node name="DialogueInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction" index="0"]
+[node name="ComposedInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction" index="0"]
+script = ExtResource("8_nm0vf")
+
+[node name="DialogueInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction/ComposedInteraction" index="0"]
 script = ExtResource("8_sl0ca")
-_DialogueStartFrom = "start"
+_DialogueStartFrom = "greeting"
+_DialogueResource = ExtResource("9_8wx2t")
+
+[node name="PanCameraToInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction/ComposedInteraction" index="1" node_paths=PackedStringArray("_Target")]
+script = ExtResource("11_5ocy2")
+_Target = NodePath("../../../../JessicaRenderManager")
+
+[node name="WaitForInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction/ComposedInteraction" index="2"]
+script = ExtResource("12_8l11t")
+
+[node name="DialogueInteraction2" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction/ComposedInteraction" index="3"]
+script = ExtResource("8_sl0ca")
+_DialogueStartFrom = "main_convo"
 _DialogueResource = ExtResource("9_8wx2t")
 
 [node name="JessicaRenderManager" parent="World/NavigationRegion3D" index="2" instance=ExtResource("7_r8wa3")]

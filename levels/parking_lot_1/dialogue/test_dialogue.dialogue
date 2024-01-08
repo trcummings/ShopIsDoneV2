@@ -1,26 +1,28 @@
-~ start
-
+~ greeting
 Jessica: [#mood=happy] Haskell!
-#Jessica: [#mood=neutral] Management said we were getting a encorer.
-#Haskell: [#mood=neutral] Oh. Hi Jessica.
-#Haskell: [#mood=concerned] A what?
-#Jessica: [#mood=concerned] Oh, was it like um. Are you just here to shop?
-#Haskell: [#mood=neutral] No, I'm here for the full time job.
-#Jessica: [#mood=neutral] Cool. Didn't expect you to come back after like umm, seasonals were over.
-#Jessica: [#mood=frustrated] AGH!\n I said "like umm" again! Sorry.
-#Haskell: What are you sorry for?
-#Jessica: [#mood=neutral] Oh, no. I was apologizing to the store.
-#Haskell: [#mood=concerned] We're not in the store right now.
-#Jessica: Adam says that my one big blocker between me and management material is the way I talk.
-#Jessica: Like, how much I say "like umm".\nI normally can stop myself, but I say it a lot when I get nervous.
-#Jessica: It undermines my projection of authority,\nmakes me look like I don't have things locked in.
-#Jessica: It's really like umm... Hard to stop doing.
-#Jessica: [#mood=frustrated] AGH! Sorry! I did it again!
-#Haskell: [#mood=neutral] I don't think it undermines your projection of authority.
-#Jessica: [#mood=neutral] It especially does today. Because lucky you, I'm your temporary active manager for the duration of your screening!
-#Haskell: [#mood=concerned] Screening? I already worked here. It's been a few months but...
-#Jessica: Hey come on, this cig's cashed and the fog makes you sound like you're talking through soup.
-#Jessica: I'll fill you in later but let's go in and get your screening started.
-#Haskell: [#mood=concerned] Okay.
+=> END
+	
+~ main_convo
+Jessica: [#mood=neutral] Management said we were getting a encorer.
+Haskell: [#mood=neutral] Oh. Hi Jessica.
+Haskell: [#mood=concerned] A what?
+Jessica: [#mood=concerned] Oh, was it like um. Are you just here to shop?
+Haskell: [#mood=neutral] No, I'm here for the full time job.
+Jessica: [#mood=neutral] Cool. Didn't expect you to come back after like umm, seasonals were over.
+Jessica: [#mood=frustrated] AGH!\n I said "like umm" again! Sorry.
+Haskell: What are you sorry for?
+Jessica: [#mood=neutral] Oh, no. I was apologizing to the store.
+Haskell: [#mood=concerned] We're not in the store right now.
+Jessica: Adam says that my one big blocker between me and management material is the way I talk.
+Jessica: Like, how much I say "like umm".\nI normally can stop myself, but I say it a lot when I get nervous.
+Jessica: It undermines my projection of authority,\nmakes me look like I don't have things locked in.
+Jessica: It's really like umm... Hard to stop doing.
+Jessica: [#mood=frustrated] AGH! Sorry! I did it again!
+Haskell: [#mood=neutral] I don't think it undermines your projection of authority.
+Jessica: [#mood=neutral] It especially does today. Because lucky you, I'm your temporary active manager for the duration of your screening!
+Haskell: [#mood=concerned] Screening? I already worked here. It's been a few months but...
+Jessica: Hey come on, this cig's cashed and the fog makes you sound like you're talking through soup.
+Jessica: I'll fill you in later but let's go in and get your screening started.
+Haskell: [#mood=concerned] Okay.
 
 => END
