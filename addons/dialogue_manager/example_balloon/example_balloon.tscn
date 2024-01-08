@@ -273,5 +273,10 @@ response_template = NodePath("ResponseExample")
 layout_mode = 2
 text = "Response example"
 
+[node name="TextNoisePlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Dialogue"
+
+[connection signal="letter_typed" from="." to="TextNoisePlayer" method="play"]
+[connection signal="new_text_noise_set" from="." to="TextNoisePlayer" method="set_stream"]
 [connection signal="gui_input" from="Container/PositionContainer/Balloon" to="." method="_on_balloon_gui_input"]
 [connection signal="response_selected" from="Container/PositionContainer/ResponseOffsetContainer/ResponsesContainer/ResponsesMenu" to="." method="_on_responses_menu_response_selected"]

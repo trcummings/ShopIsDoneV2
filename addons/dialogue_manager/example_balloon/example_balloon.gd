@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal new_text_noise_set(stream: AudioStream)
+signal letter_typed
 
 @onready var balloon: Control = %Balloon
 @onready var character_label: RichTextLabel = %CharacterLabel
@@ -41,20 +43,36 @@ var dialogue_line: DialogueLine:
 		character_label.visible = not dialogue_line.character.is_empty()
 		character_label.text = tr(dialogue_line.character, "dialogue")
 		
-		# set up the portrait if we have a corresponding character
+		# Character related set up
 		if characters.has(dialogue_line.character):
-			# pull the character data
+			# Pull the character data
 			var character : DialogueCharacter = characters[dialogue_line.character]
-			# if any of our tags corresponds to a character portrait name, pull 
+			
+			# If any of our tags corresponds to a character portrait name, pull 
 			# that portrait
 			var portrait_name = character.default_portrait
 			for tag in dialogue_line.tags:
 				if character.portraits.has(tag): 
 					portrait_name = tag
-			# grab that portrait texture and set it to the portrait node
+			# Grab that portrait texture and set it to the portrait node
 			portrait.texture = character.portraits[portrait_name]
 		
-		# set up the typing noise
+			# Set up the typing noise
+			if character.text_noise != null:
+				new_text_noise_set.emit(character.text_noise)
+				if not letter_typed.is_connected(_on_letter_typed):
+					dialogue_label.spoke.connect(_on_letter_typed)
+			# Otherwise, null out the typing noise
+			else:
+				new_text_noise_set.emit(null)
+				if letter_typed.is_connected(_on_letter_typed):
+					dialogue_label.spoke.disconnect(_on_letter_typed)
+			
+		# Otherwise, null out the typing noise
+		else:
+			new_text_noise_set.emit(null)
+			if letter_typed.is_connected(_on_letter_typed):
+				dialogue_label.spoke.disconnect(_on_letter_typed)
 
 		dialogue_label.hide()
 		dialogue_label.dialogue_line = dialogue_line
@@ -86,6 +104,10 @@ var dialogue_line: DialogueLine:
 	get:
 		return dialogue_line
 
+func _on_letter_typed(_letter: String, letter_index: int, _speed: float):
+	# only emit on odd letters
+	if letter_index % 2 == 1:
+		letter_typed.emit()
 
 func _ready() -> void:
 	balloon.hide()
