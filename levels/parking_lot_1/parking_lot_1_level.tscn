@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://xh2e5s84nxyv"]
+[gd_scene load_steps=35 format=3 uid="uid://xh2e5s84nxyv"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_qcbwj"]
 [ext_resource type="Environment" uid="uid://crxt7yqtqh2oa" path="res://environments/foggy_world.tres" id="2_ornuu"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://d3edvxooy0nm3" path="res://exit/exit_model.tscn" id="18_6xsbf"]
 [ext_resource type="PackedScene" uid="uid://0h58pk4shxpt" path="res://levels/parking_lot_1/screening_room/screening_room.glb" id="18_h332s"]
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="19_hvyr0"]
+[ext_resource type="Script" path="res://levels/parking_lot_1/action_meddles/TestMeddle.cs" id="19_jue60"]
 [ext_resource type="PackedScene" uid="uid://j67ix6p68gsa" path="res://entities/light_switch/light_switch.tscn" id="21_2hf0b"]
 [ext_resource type="PackedScene" uid="uid://dwcnilmn6y5ge" path="res://levels/parking_lot_1/screening_computer/screening_computer.tscn" id="21_2o413"]
 [ext_resource type="PackedScene" uid="uid://vkdrv2wvhw46" path="res://levels/directional_point.tscn" id="24_7w5p4"]
@@ -174,6 +175,11 @@ HasTurnCounter = false
 script = ExtResource("18_3lau5")
 _Id = "never_complete"
 
+[node name="TestMeddle" type="Node" parent="World/NavigationRegion3D/Arena/Services/ActionMeddler" index="0" node_paths=PackedStringArray("_FinalPoint")]
+script = ExtResource("19_jue60")
+_FinalPoint = NodePath("../../../MoveToLightSwitchFinalPoint")
+IgnoreFlag = true
+
 [node name="Tiles" parent="World/NavigationRegion3D/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../TileManager")
 
@@ -212,7 +218,10 @@ data = {
 }
 metadata/_edit_lock_ = true
 
-[node name="DoorPoint" parent="World/NavigationRegion3D/Arena" index="8" instance=ExtResource("24_7w5p4")]
+[node name="MoveToLightSwitchFinalPoint" type="Node3D" parent="World/NavigationRegion3D/Arena" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.08165e-12, 4)
+
+[node name="DoorPoint" parent="World/NavigationRegion3D/Arena" index="9" instance=ExtResource("24_7w5p4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 4)
 
 [node name="Lights" type="Node3D" parent="World/NavigationRegion3D" index="5"]

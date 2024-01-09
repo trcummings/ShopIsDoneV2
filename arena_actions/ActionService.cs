@@ -41,18 +41,22 @@ namespace ShopIsDone.Actions
         {
             // Wrap in action meddler to interrupt any actions we want to meddle
             // with
-            return _ActionMeddler.MeddleWithAction(action, message, new SeriesCommand(
-                // Apply camera effects for the action
-                ApplyCameraFollow(action,
-                    ApplyRotateToFaceEntity(action,
-                        ApplyCameraZoom(action,
-                            action.Execute(message)
+            return _ActionMeddler.MeddleWithAction(
+                action,
+                message,
+                new DeferredCommand(() => new SeriesCommand(
+                    // Apply camera effects for the action
+                    ApplyCameraFollow(action,
+                        ApplyRotateToFaceEntity(action,
+                            ApplyCameraZoom(action,
+                                action.Execute(message)
+                            )
                         )
-                    )
-                ),
-                // Post action updates
-                new DeferredCommand(PostActionUpdate)
-            ));
+                    ),
+                    // Post action updates
+                    new DeferredCommand(PostActionUpdate)
+                ))
+            );
         }
 
         public Command PostActionUpdate()

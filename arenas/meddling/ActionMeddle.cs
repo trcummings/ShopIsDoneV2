@@ -20,12 +20,12 @@ namespace ShopIsDone.Arenas.Meddling
 		[Export]
 		public bool WhenFlagIs = false;
 
-		public bool ShouldMeddle(ArenaAction action, Dictionary<string, Variant> message)
+		public virtual bool ShouldMeddle(ArenaAction action, Dictionary<string, Variant> message)
 		{
 			return false;
 		}
 
-		public Command Meddle(ArenaAction action, Dictionary<string, Variant> message)
+		public virtual Command Meddle(ArenaAction action, Dictionary<string, Variant> message)
 		{
 			return new Command();
 		}
