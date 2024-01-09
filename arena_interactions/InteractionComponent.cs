@@ -13,6 +13,12 @@ namespace ShopIsDone.ArenaInteractions
 {
     public partial class InteractionComponent : Node3DComponent
     {
+        [Export]
+        public bool CanBeUsedMultipleTimesPerTurn = false;
+
+        [Export]
+        public bool EndsTurnAfterInteraction = false;
+
         // Strategy pattern for finishing interactions
         [Export]
         private InteractionFinishedHandler _InteractionFinishedHandler;

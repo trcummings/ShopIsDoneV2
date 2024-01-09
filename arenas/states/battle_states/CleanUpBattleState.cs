@@ -30,6 +30,9 @@ namespace ShopIsDone.Arenas.Battles.States
                     // Reset all units for the next turn
                     _PlayerUnitTurnService.ResetActions();
                     _EnemyUnitTurnService.ResetActions();
+                    // Reset all interactions for the next turn
+                    _PlayerUnitTurnService.ResetInteractions();
+                    _EnemyUnitTurnService.ResetInteractions();
                 }),
                 // Check if player was victorious!
                 new IfElseCommand(

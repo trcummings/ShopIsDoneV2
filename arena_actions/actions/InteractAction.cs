@@ -41,7 +41,7 @@ namespace ShopIsDone.Actions
 
             // If we don't have any interactions in range, we can't use this
             // action
-            return _InteractionHandler.GetInteractionsInRange().Count > 0;
+            return _InteractionHandler.HasAvailableInteractionsInRange();
         }
 
         // Visible in menu if we're in the idle state, as most actions are
@@ -55,8 +55,17 @@ namespace ShopIsDone.Actions
             // Get target interaction component
             var interaction = (InteractionComponent)message[ActionConsts.INTERACTION_KEY];
 
-            // Run the interaction
-            return interaction.RunInteraction(_InteractionHandler, message);
+            return new SeriesCommand(
+                new ActionCommand(() =>
+                {
+                    // If this interaction ends our turn, then end the turn
+                    if (interaction.EndsTurnAfterInteraction) _ActionHandler.EndTurn();
+                }),
+                // Set the interaction as used in the handler
+                new ActionCommand(() => _InteractionHandler.SetInteractionUsed(interaction)),
+                // Run the interaction
+                interaction.RunInteraction(_InteractionHandler, message)
+            );
         }
     }
 }

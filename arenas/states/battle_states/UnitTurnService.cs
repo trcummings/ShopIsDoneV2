@@ -7,6 +7,7 @@ using ShopIsDone.Actions;
 using ShopIsDone.ActionPoints;
 using static ShopIsDone.Actions.TeamHandler;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.ArenaInteractions;
 
 namespace ShopIsDone.Arenas
 {
@@ -51,6 +52,16 @@ namespace ShopIsDone.Arenas
         {
             var handlers = GetTurnEntities().Select(e => e.GetComponent<ActionPointHandler>());
             foreach (var handler in handlers) handler.RefillApToMax();
+        }
+
+        public void ResetInteractions()
+        {
+            var interacters = GetActiveTurnEntities().Where(e => e.HasComponent<UnitInteractionHandler>());
+            foreach (var interacter in interacters)
+            {
+                var handler = interacter.GetComponent<UnitInteractionHandler>();
+                handler.ResetInteractionState();
+            }
         }
 
         //public Command ResolveStatusEffects(Arena arena)
