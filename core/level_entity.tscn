@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://chfmobnl3wule"]
+
+[ext_resource type="Script" path="res://core/LevelEntity.cs" id="1_o447p"]
+[ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="2_ttjwl"]
+[ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="3_bfgks"]
+
+[node name="LevelEntity" type="CharacterBody3D" groups=["entities"]]
+script = ExtResource("1_o447p")
+_TilemapPositionHandlerPath = NodePath("TilemapPositionHandler")
+_FacingDirectionHandlerPath = NodePath("FacingDirectionHandler")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.35, 2.08165e-12)
+
+[node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
+script = ExtResource("2_ttjwl")
+FacingTarget = NodePath("..")
+
+[node name="TilemapPositionHandler" parent="." instance=ExtResource("3_bfgks")]
