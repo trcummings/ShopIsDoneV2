@@ -62,6 +62,8 @@ namespace ShopIsDone.ArenaInteractions
             foreach (var iTile in _InteractionTiles)
             {
                 iTile.Interaction = this;
+                // Hide them
+                iTile.Hide();
             }
         }
 
