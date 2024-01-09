@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=55 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -27,6 +27,7 @@
 [ext_resource type="Script" path="res://arenas/UnitDeathService.cs" id="10_y7i7b"]
 [ext_resource type="Script" path="res://conditions/ConditionsService.cs" id="11_jvwpy"]
 [ext_resource type="Script" path="res://arena_interactions/UnitInteractionService.cs" id="12_uorcu"]
+[ext_resource type="Script" path="res://arenas/meddling/ActionMeddler.cs" id="13_rb63x"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/ChoosingActionState.cs" id="14_rj6r3"]
 [ext_resource type="PackedScene" uid="uid://2ptpw2u53fdh" path="res://arenas/states/player_turn_states/choosing_unit_state.tscn" id="15_hbm50"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/EndingTurnState.cs" id="17_4ddch"]
@@ -80,10 +81,11 @@ metadata/_edit_lock_ = true
 [node name="TurnCounter" type="Node" parent="Services"]
 script = ExtResource("2_qt0kh")
 
-[node name="ActionService" type="Node" parent="Services" node_paths=PackedStringArray("_ScriptQueueService", "_OutcomeService")]
+[node name="ActionService" type="Node" parent="Services" node_paths=PackedStringArray("_ScriptQueueService", "_OutcomeService", "_ActionMeddler")]
 script = ExtResource("3_y84tj")
 _ScriptQueueService = NodePath("../ScriptQueueService")
 _OutcomeService = NodePath("../ArenaOutcomeService")
+_ActionMeddler = NodePath("../ActionMeddler")
 
 [node name="PlayerUnitService" type="Node" parent="Services"]
 script = ExtResource("4_m7h52")
@@ -117,6 +119,9 @@ script = ExtResource("11_jvwpy")
 
 [node name="UnitInteractionService" type="Node" parent="Services"]
 script = ExtResource("12_uorcu")
+
+[node name="ActionMeddler" type="Node" parent="Services"]
+script = ExtResource("13_rb63x")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")

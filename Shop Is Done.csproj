@@ -15,5 +15,6 @@
     <Folder Include="entities\puppet_customer\ai\sensors\" />
     <Folder Include="tasks\task_models\" />
     <Folder Include="actors\interactables\interactions\" />
+    <Folder Include="arenas\meddling\" />
   </ItemGroup>
 </Project>

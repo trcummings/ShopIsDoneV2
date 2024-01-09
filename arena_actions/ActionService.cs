@@ -8,6 +8,7 @@ using ShopIsDone.Cameras;
 using ShopIsDone.Tiles;
 using ShopIsDone.Arenas;
 using ShopIsDone.Arenas.ArenaScripts;
+using ShopIsDone.Arenas.Meddling;
 
 namespace ShopIsDone.Actions
 {
@@ -28,6 +29,9 @@ namespace ShopIsDone.Actions
         [Export]
         private ArenaOutcomeService _OutcomeService;
 
+        [Export]
+        private ActionMeddler _ActionMeddler;
+
         public void Init()
         {
             InjectionProvider.Inject(this);
@@ -35,7 +39,9 @@ namespace ShopIsDone.Actions
 
         public Command ExecuteAction(ArenaAction action, Dictionary<string, Variant> message = null)
         {
-            return new SeriesCommand(
+            // Wrap in action meddler to interrupt any actions we want to meddle
+            // with
+            return _ActionMeddler.MeddleWithAction(action, message, new SeriesCommand(
                 // Apply camera effects for the action
                 ApplyCameraFollow(action,
                     ApplyRotateToFaceEntity(action,
@@ -46,7 +52,7 @@ namespace ShopIsDone.Actions
                 ),
                 // Post action updates
                 new DeferredCommand(PostActionUpdate)
-            );
+            ));
         }
 
         public Command PostActionUpdate()
