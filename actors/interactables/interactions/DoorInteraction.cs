@@ -9,7 +9,7 @@ namespace ShopIsDone.Interactables.Interactions
 	public partial class DoorInteraction : Interaction
 	{
         [Export]
-        private Node3D _WarpPoint;
+        private DirectionalPoint _WarpPoint;
 
         [Inject]
         private PlayerCharacterManager _PlayerCharacterManager;
@@ -27,7 +27,7 @@ namespace ShopIsDone.Interactables.Interactions
             await ToSignal(events, nameof(events.FadeInFinished));
 
             // Warp the units to the warp point
-            _PlayerCharacterManager.WarpGroupToPosition(_WarpPoint.GlobalPosition);
+            _PlayerCharacterManager.WarpGroupToPosition(_WarpPoint.GlobalPosition, _WarpPoint.FacingDirection);
 
             // Request a fade out
             events.EmitSignal(nameof(events.FadeOutRequested));

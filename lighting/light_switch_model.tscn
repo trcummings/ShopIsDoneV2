@@ -80,7 +80,7 @@ script = ExtResource("1_686ku")
 _AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="LightSwitch" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(-4.37114e-08, 3.48787e-16, 1, 3.48787e-16, 1, -3.48787e-16, -1, 3.48787e-16, -4.37114e-08, 2.08165e-12, 1, 1)
 
 [node name="SwitchBox" type="CSGBox3D" parent="LightSwitch"]
 size = Vector3(0.1, 0.25, 0.25)

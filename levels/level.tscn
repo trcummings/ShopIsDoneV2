@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=34 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_b2cin"]
@@ -28,6 +28,7 @@
 [ext_resource type="Script" path="res://levels/CutsceneService.cs" id="18_jnqhh"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="20_qvdr3"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
+[ext_resource type="PackedScene" uid="uid://vkdrv2wvhw46" path="res://levels/directional_point.tscn" id="26_7pn1o"]
 [ext_resource type="PackedScene" uid="uid://ddwvyl3d8scbv" path="res://levels/level_states/game_over_ui.tscn" id="26_yq21p"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lbwya"]
@@ -173,7 +174,7 @@ metadata/_edit_lock_ = true
 [node name="Environment" type="Node3D" parent="World/NavigationRegion3D"]
 metadata/_edit_lock_ = true
 
-[node name="DefaultSpawnPoint" type="Node3D" parent="World"]
+[node name="DefaultSpawnPoint" parent="World" instance=ExtResource("26_7pn1o")]
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 process_mode = 1

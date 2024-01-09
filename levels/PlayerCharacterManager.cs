@@ -21,7 +21,7 @@ namespace ShopIsDone.Levels
         private Array<PackedScene> _FollowerScenes = new Array<PackedScene>();
 
         [Export]
-        private Node3D _DefaultSpawnPoint;
+        private DirectionalPoint _DefaultSpawnPoint;
 
         private int _LeaderLayer = 10;
 
@@ -43,7 +43,10 @@ namespace ShopIsDone.Levels
             }
 
             // Move leader to the default spawn point
-            WarpGroupToPosition(_DefaultSpawnPoint.GlobalPosition);
+            WarpGroupToPosition(
+                _DefaultSpawnPoint.GlobalPosition,
+                _DefaultSpawnPoint.FacingDirection
+            );
 
             // Set leader layer
             SetLeaderLayer();
@@ -53,15 +56,16 @@ namespace ShopIsDone.Levels
         }
 
         /* NB: Position is GLOBAL */
-        public void WarpGroupToPosition(Vector3 position)
+        public void WarpGroupToPosition(Vector3 position, Vector3 facingDir)
         {
             // Move leader to the given position
             _Leader.GlobalPosition = position;
+            _Leader.FacingDirection = facingDir;
             // Spawn followers nearby
             for (int i = 0; i < _Followers.Count; i++)
             {
                 var follower = _Followers[i];
-                follower.GlobalPosition = position + (Vector3.Left * (i + 1));
+                follower.GlobalPosition = position + (facingDir.Reflect(Vector3.Up) * (i + 1));
             }
         }
 

@@ -27,17 +27,19 @@ LoopingAnimations = []
 [node name="InteractionComponent" type="Node3D" parent="." index="4" node_paths=PackedStringArray("_InteractionFinishedHandler", "_InteractionSelector")]
 script = ExtResource("3_84wj1")
 _InteractionFinishedHandler = NodePath("InteractionFinishedHandler")
-_InteractionSelector = NodePath("../ArenaInteractionSelector")
+_InteractionSelector = NodePath("ArenaInteractionSelector")
 
 [node name="ArenaInteractionTile" parent="InteractionComponent" index="0" instance=ExtResource("4_etgtu")]
+metadata/_edit_lock_ = true
 
 [node name="InteractionFinishedHandler" type="Node" parent="InteractionComponent" index="1"]
 script = ExtResource("5_dpdf0")
 
-[node name="ArenaInteractionSelector" type="Node3D" parent="." index="5"]
+[node name="ArenaInteractionSelector" type="Node3D" parent="InteractionComponent" index="2"]
 script = ExtResource("5_cobj3")
+metadata/_edit_lock_ = true
 
-[node name="ArenaInteractionSelectorTile" parent="ArenaInteractionSelector" index="0" instance=ExtResource("6_qjbsy")]
+[node name="ArenaInteractionSelectorTile" parent="InteractionComponent/ArenaInteractionSelector" index="0" instance=ExtResource("6_qjbsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="ScreeningComputerModel" method="SetFacingDir"]
