@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bemfdgy1p2a05"]
 
 [ext_resource type="PackedScene" uid="uid://dydhq3kqv6ksd" path="res://tiles/component_tile_area.tscn" id="1_ufymr"]
-[ext_resource type="Material" uid="uid://0v7jguse7mc1" path="res://selectables/select_interactable.material" id="2_4rn5x"]
+[ext_resource type="Material" uid="uid://0v7jguse7mc1" path="res://arena_interactions/arena_interaction_selectors/arena_interaction_selector_tile.material" id="2_4rn5x"]
 [ext_resource type="Script" path="res://tasks/SelectTaskArea.cs" id="2_vma4j"]
 
 [node name="SelectTaskArea" instance=ExtResource("1_ufymr")]

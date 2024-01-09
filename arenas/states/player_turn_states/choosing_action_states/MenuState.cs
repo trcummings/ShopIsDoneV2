@@ -96,6 +96,13 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         private void OnConfirmSelection(ArenaAction action)
         {
+            // Create message
+            var message = new Dictionary<string, Variant>()
+            {
+                { Consts.ACTION_KEY, action },
+                { PlayerTurnConsts.SELECTED_UNIT_KEY, _SelectedUnit }
+            };
+
             // Change state based on action type
             switch (action.ActionType)
             {
@@ -107,31 +114,25 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
                 case ArenaAction.ActionTypes.Move:
                     {
-                        ChangeState(Consts.States.MOVE, new Dictionary<string, Variant>()
-                        {
-                            { Consts.ACTION_KEY, action },
-                            { PlayerTurnConsts.SELECTED_UNIT_KEY, _SelectedUnit }
-                        });
+                        ChangeState(Consts.States.MOVE, message);
                         break;
                     }
 
                 case ArenaAction.ActionTypes.Facing:
                     {
-                        ChangeState(Consts.States.FACING_DIRECTION, new Dictionary<string, Variant>()
-                        {
-                            { Consts.ACTION_KEY, action },
-                            { PlayerTurnConsts.SELECTED_UNIT_KEY, _SelectedUnit }
-                        });
+                        ChangeState(Consts.States.FACING_DIRECTION, message);
                         break;
                     }
 
                 case ArenaAction.ActionTypes.Target:
                     {
-                        ChangeState(Consts.States.TARGETING, new Dictionary<string, Variant>()
-                        {
-                            { Consts.ACTION_KEY, action },
-                            { PlayerTurnConsts.SELECTED_UNIT_KEY, _SelectedUnit }
-                        });
+                        ChangeState(Consts.States.TARGETING, message);
+                        break;
+                    }
+
+                case ArenaAction.ActionTypes.Interact:
+                    {
+                        ChangeState(Consts.States.INTERACT, message);
                         break;
                     }
             }

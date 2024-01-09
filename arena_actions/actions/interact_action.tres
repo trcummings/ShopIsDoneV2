@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dhfcjhk223e7o"]
+
+[ext_resource type="Script" path="res://arena_actions/actions/InteractAction.cs" id="1_f6qnw"]
+
+[resource]
+script = ExtResource("1_f6qnw")
+Id = "interact"
+ActionName = "Interact"
+EndsTurnAfterUse = false
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = false
+Range = 0
+TargetDisposition = 0
+ActionType = 4
+IndicatorType = 0
+FollowEntity = false
+FocusEntity = false
+RotateToFaceEntity = false

@@ -3,38 +3,31 @@ using ShopIsDone.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ShopIsDone.Core;
-using ShopIsDone.Utils.Commands;
 
-namespace ShopIsDone.Selectables
+namespace ShopIsDone.ArenaInteractions.Selectors
 {
     // This component associates our tile world map with entities that are
     // selectable by the player, and to help determine an entity's association
     // with any tiles nearby it
-    public partial class Selectable : Node3DComponent, IUpdateOnActionComponent
+    public partial class ArenaInteractionSelector : Node3D
     {
         // Selectable tiles that associate the entity to where it can be
         // selected on the board
-        protected List<SelectableTile> _SelectableTiles = new List<SelectableTile>();
+        protected List<ArenaInteractionSelectorTile> _SelectableTiles = new List<ArenaInteractionSelectorTile>();
 
         public override void _Ready()
         {
             base._Ready();
             // Ready selectable tiles
-            _SelectableTiles = GetChildren().OfType<SelectableTile>().ToList();
+            _SelectableTiles = GetChildren().OfType<ArenaInteractionSelectorTile>().ToList();
             // Hide em
             foreach (var tile in _SelectableTiles) tile.Hide();
         }
 
-        public override void Init()
+        public void Init(InteractionComponent interaction)
         {
             // Register tiles with interactables and the associated tile
-            SetSelectableInTiles();
-        }
-
-        public Command UpdateOnAction()
-        {
-            return new ActionCommand(SetSelectableInTiles);
+            SetSelectableInTiles(interaction);
         }
 
         public Tile GetClosestSelectableTile(Tile tile)
@@ -45,15 +38,19 @@ namespace ShopIsDone.Selectables
                 .FirstOrDefault();
         }
 
-        public List<SelectableTile> GetSelectableTiles()
+        public List<ArenaInteractionSelectorTile> GetSelectableTiles()
         {
             return _SelectableTiles;
         }
 
-        private void SetSelectableInTiles()
+        private void SetSelectableInTiles(InteractionComponent interaction)
         {
             // Register tiles with interaction and the associated tile
-            foreach (var tile in _SelectableTiles) tile.Selectable = this;
+            foreach (var tile in _SelectableTiles)
+            {
+                tile.Selectable = this;
+                tile.Interaction = interaction;
+            }
         }
     }
 }

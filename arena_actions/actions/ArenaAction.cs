@@ -55,7 +55,8 @@ namespace ShopIsDone.Actions
             Null,
             Move,
             Facing,
-            Target
+            Target,
+            Interact
         }
 
         [Export]
@@ -88,6 +89,7 @@ namespace ShopIsDone.Actions
             return false;
         }
 
+        // Is the action available for the unit to use?
         public virtual bool IsAvailable()
         {
             return _ActionHandler.IsActionAvailable(this);

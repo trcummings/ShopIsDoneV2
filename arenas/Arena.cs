@@ -10,6 +10,7 @@ using ShopIsDone.Arenas.ArenaScripts;
 using ArenaConsts = ShopIsDone.Arenas.States.Consts;
 using ShopIsDone.Conditions;
 using ShopIsDone.Levels;
+using ShopIsDone.ArenaInteractions;
 
 namespace ShopIsDone.Arenas
 {
@@ -52,6 +53,10 @@ namespace ShopIsDone.Arenas
         private ConditionsService _ConditionsService;
 
         [Export]
+        private UnitInteractionService _UnitInteractionService;
+
+        // Not a service, gets plugged in on import into a level scene
+        [Export]
         private PlayerCharacterManager _PlayerCharacterManager;
 
         private InjectionProvider _InjectionProvider;
@@ -73,6 +78,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.RegisterService(_OutcomeService);
             _InjectionProvider.RegisterService(_UnitDeathService);
             _InjectionProvider.RegisterService(_ConditionsService);
+            _InjectionProvider.RegisterService(_UnitInteractionService);
 
             // Initialize services (with strict order)
             _TileManager.Init();
@@ -124,6 +130,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.UnregisterService(_OutcomeService);
             _InjectionProvider.UnregisterService(_UnitDeathService);
             _InjectionProvider.UnregisterService(_ConditionsService);
+            _InjectionProvider.UnregisterService(_UnitInteractionService);
 
             // Idle player units
             _PlayerCharacterManager.Idle();

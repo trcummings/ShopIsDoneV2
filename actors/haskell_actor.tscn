@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=47 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_0yjha"]
@@ -36,17 +36,21 @@
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="22_odajy"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="23_sv0kt"]
 [ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://arena_actions/employee_actions/help_customer_action.tres" id="24_xn5yg"]
+[ext_resource type="Resource" uid="uid://dhfcjhk223e7o" path="res://arena_actions/actions/interact_action.tres" id="29_vnii4"]
 [ext_resource type="PackedScene" uid="uid://dx6r37l2dvf6v" path="res://widgets/entity_widgets/talking_effect.tscn" id="31_nnm70"]
 [ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="31_xx1gf"]
 [ext_resource type="PackedScene" uid="uid://c51x12itwmxoa" path="res://widgets/entity_widgets/alert_effect.tscn" id="32_gdm0m"]
 [ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="33_dnns8"]
 [ext_resource type="Script" path="res://tasks/TaskHandler.cs" id="33_l4ov1"]
+[ext_resource type="Script" path="res://arena_interactions/UnitInteractionHandler.cs" id="43_36cl6"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vda16"]
 radius = 0.75
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ln83t"]
 
 [node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine") groups=["entities"]]
 collision_layer = 2
@@ -208,7 +212,7 @@ _StateHandler = NodePath("../StateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("16_87xgg")
-Actions = [ExtResource("19_lonxh"), ExtResource("17_xmxqu"), ExtResource("18_64csj"), ExtResource("24_xn5yg"), ExtResource("22_odajy")]
+Actions = [ExtResource("19_lonxh"), ExtResource("17_xmxqu"), ExtResource("18_64csj"), ExtResource("29_vnii4"), ExtResource("24_xn5yg"), ExtResource("22_odajy")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_CommandProcessor", "_MoveValidator", "_SkipTileStrategy")]
@@ -254,6 +258,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12
 [node name="AlertEffect" parent="WidgetPoint" instance=ExtResource("32_gdm0m")]
 
 [node name="PopupLabel" parent="WidgetPoint" instance=ExtResource("33_dnns8")]
+
+[node name="UnitInteractionHandler" type="Node" parent="." node_paths=PackedStringArray("_InteractionDetector")]
+script = ExtResource("43_36cl6")
+_InteractionDetector = NodePath("../InteractionDetector")
+
+[node name="InteractionDetector" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2048
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionDetector"]
+shape = SubResource("BoxShape3D_ln83t")
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]

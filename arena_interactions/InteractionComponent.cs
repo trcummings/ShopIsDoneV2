@@ -6,6 +6,8 @@ using Godot.Collections;
 using System.Linq;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Tiles;
+using ShopIsDone.ArenaInteractions.Selectors;
 
 namespace ShopIsDone.ArenaInteractions
 {
@@ -14,6 +16,9 @@ namespace ShopIsDone.ArenaInteractions
         // Strategy pattern for finishing interactions
         [Export]
         private InteractionFinishedHandler _InteractionFinishedHandler;
+
+        [Export]
+        private ArenaInteractionSelector _InteractionSelector;
 
         // Tiles that that an interactor can stand and interact with the interaction on
         protected Array<InteractionTile> _InteractionTiles = new Array<InteractionTile>();
@@ -30,13 +35,18 @@ namespace ShopIsDone.ArenaInteractions
             base.Init();
             // Register tiles with interactables and the associated tile
             SetInteractionInTiles();
+            // Init interaction selector
+            _InteractionSelector.Init(this);
             // Init finished handler
             InjectionProvider.Inject(_InteractionFinishedHandler);
         }
 
-        public virtual Command UpdateOnAction()
+        public Tile GetClosestSelectableTile(Vector3 pos)
         {
-            return new ActionCommand(SetInteractionInTiles);
+            return _InteractionTiles
+                .OrderBy(iTile => iTile.GlobalPosition.DistanceTo(pos))
+                .Select(iTile => iTile.Tile)
+                .FirstOrDefault();
         }
 
         private void SetInteractionInTiles()

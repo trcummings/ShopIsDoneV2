@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://dwcnilmn6y5ge"]
+
+[ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_vgrg2"]
+[ext_resource type="PackedScene" uid="uid://dqui73itu0huj" path="res://levels/parking_lot_1/screening_computer/screening_computer_model.tscn" id="2_nne4g"]
+[ext_resource type="Script" path="res://arena_interactions/InteractionComponent.cs" id="3_84wj1"]
+[ext_resource type="PackedScene" uid="uid://c7g37xra1qp0j" path="res://arena_interactions/arena_interaction_tile.tscn" id="4_etgtu"]
+[ext_resource type="Script" path="res://arena_interactions/arena_interaction_selectors/ArenaInteractionSelector.cs" id="5_cobj3"]
+[ext_resource type="Script" path="res://arena_interactions/InteractionFinishedHandler.cs" id="5_dpdf0"]
+[ext_resource type="PackedScene" uid="uid://bf0c2bi4rpjye" path="res://arena_interactions/arena_interaction_selectors/arena_interaction_selector_tile.tscn" id="6_qjbsy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_delom"]
+size = Vector3(2.00366, 2.18701, 1.65137)
+
+[node name="ScreeningComputer" instance=ExtResource("1_vgrg2")]
+collision_layer = 9
+Id = "screening_computer"
+EntityName = "Screening Computer"
+
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00427246, 1.1189, -0.00439453)
+shape = SubResource("BoxShape3D_delom")
+
+[node name="ScreeningComputerModel" parent="." index="3" instance=ExtResource("2_nne4g")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
+LoopingAnimations = []
+
+[node name="InteractionComponent" type="Node3D" parent="." index="4" node_paths=PackedStringArray("_InteractionFinishedHandler", "_InteractionSelector")]
+script = ExtResource("3_84wj1")
+_InteractionFinishedHandler = NodePath("InteractionFinishedHandler")
+_InteractionSelector = NodePath("../ArenaInteractionSelector")
+
+[node name="ArenaInteractionTile" parent="InteractionComponent" index="0" instance=ExtResource("4_etgtu")]
+
+[node name="InteractionFinishedHandler" type="Node" parent="InteractionComponent" index="1"]
+script = ExtResource("5_dpdf0")
+
+[node name="ArenaInteractionSelector" type="Node3D" parent="." index="5"]
+script = ExtResource("5_cobj3")
+
+[node name="ArenaInteractionSelectorTile" parent="ArenaInteractionSelector" index="0" instance=ExtResource("6_qjbsy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="ScreeningComputerModel" method="SetFacingDir"]
