@@ -10,7 +10,6 @@ _TilemapPositionHandlerPath = NodePath("TilemapPositionHandler")
 _FacingDirectionHandlerPath = NodePath("FacingDirectionHandler")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.35, 2.08165e-12)
 
 [node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
 script = ExtResource("2_ttjwl")
