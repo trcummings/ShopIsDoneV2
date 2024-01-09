@@ -26,6 +26,7 @@ namespace ShopIsDone.ArenaInteractions
         public override void _Ready()
         {
             base._Ready();
+
             // Ready interaction tiles
             _InteractionTiles = GetChildren().OfType<InteractionTile>().ToGodotArray();
         }
@@ -63,14 +64,10 @@ namespace ShopIsDone.ArenaInteractions
             return _InteractionTiles;
         }
 
-        public virtual int GetInteractionApCost()
-        {
-            // Many interactions have no cost whatsoever
-            return 0;
-        }
-
-        public const string UNIT_KEY = "Unit";
-        public virtual Command RunInteraction(Dictionary<string, Variant> message = null)
+        public virtual Command RunInteraction(
+            UnitInteractionHandler handler,
+            Dictionary<string, Variant> message = null
+        )
         {
             // Finish the interaction
             return _InteractionFinishedHandler.FinishInteraction();

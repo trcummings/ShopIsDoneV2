@@ -6,6 +6,7 @@ using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using StateConsts = ShopIsDone.EntityStates.Consts;
 using ShopIsDone.ArenaInteractions;
+using ActionConsts = ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Consts;
 
 namespace ShopIsDone.Actions
 {
@@ -51,7 +52,11 @@ namespace ShopIsDone.Actions
 
         public override Command Execute(Dictionary<string, Variant> message = null)
         {
-            return new Command();
+            // Get target interaction component
+            var interaction = (InteractionComponent)message[ActionConsts.INTERACTION_KEY];
+
+            // Run the interaction
+            return interaction.RunInteraction(_InteractionHandler, message);
         }
     }
 }

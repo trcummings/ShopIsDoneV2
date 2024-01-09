@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://j67ix6p68gsa"]
+[gd_scene load_steps=10 format=3 uid="uid://j67ix6p68gsa"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_xyc83"]
 [ext_resource type="PackedScene" uid="uid://gwbqpdjmvvec" path="res://lighting/light_switch_model.tscn" id="2_83ns4"]
-[ext_resource type="Script" path="res://arena_interactions/InteractionComponent.cs" id="3_evk4y"]
+[ext_resource type="Script" path="res://lighting/LightSwitchInteractionComponent.cs" id="3_8gni3"]
 [ext_resource type="PackedScene" uid="uid://c7g37xra1qp0j" path="res://arena_interactions/arena_interaction_tile.tscn" id="4_qnhc6"]
 [ext_resource type="Script" path="res://arena_interactions/InteractionFinishedHandler.cs" id="5_pyy7n"]
 [ext_resource type="Script" path="res://arena_interactions/arena_interaction_selectors/ArenaInteractionSelector.cs" id="6_ppysp"]
 [ext_resource type="PackedScene" uid="uid://bf0c2bi4rpjye" path="res://arena_interactions/arena_interaction_selectors/arena_interaction_selector_tile.tscn" id="7_btiid"]
+[ext_resource type="PackedScene" uid="uid://0etwkb1a5vg7" path="res://lighting/light_switch_component.tscn" id="8_g78mi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wtkvf"]
 
@@ -32,8 +33,9 @@ metadata/_edit_lock_ = true
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
 LoopingAnimations = []
 
-[node name="InteractionComponent" type="Node3D" parent="." index="4" node_paths=PackedStringArray("_InteractionFinishedHandler", "_InteractionSelector")]
-script = ExtResource("3_evk4y")
+[node name="InteractionComponent" type="Node3D" parent="." index="4" node_paths=PackedStringArray("_LightSwitch", "_InteractionFinishedHandler", "_InteractionSelector")]
+script = ExtResource("3_8gni3")
+_LightSwitch = NodePath("../LightSwitchComponent")
 _InteractionFinishedHandler = NodePath("InteractionFinishedHandler")
 _InteractionSelector = NodePath("ArenaInteractionSelector")
 metadata/_edit_lock_ = true
@@ -49,5 +51,8 @@ metadata/_edit_lock_ = true
 
 [node name="ArenaInteractionSelectorTile" parent="InteractionComponent/ArenaInteractionSelector" index="0" instance=ExtResource("7_btiid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[node name="LightSwitchComponent" parent="." index="5" instance=ExtResource("8_g78mi")]
+_ModelPath = NodePath("../LightSwitchModel")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="LightSwitchModel" method="SetFacingDir"]

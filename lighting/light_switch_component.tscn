@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://0etwkb1a5vg7"]
+
+[ext_resource type="Script" path="res://lighting/LightSwitchComponent.cs" id="1_qlv73"]
+[ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="2_70tr7"]
+[ext_resource type="AudioStream" uid="uid://c0cejlcl4tele" path="res://lighting/LIGHT-CIRCUIT-BREAKER-49013__reidmangan__spotlight.wav" id="3_ci2x6"]
+
+[node name="LightSwitchComponent" type="Node3D" node_paths=PackedStringArray("_SwitchLight")]
+script = ExtResource("1_qlv73")
+_IsFlippedOn = true
+_SwitchLight = NodePath("WorldOmniLight")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="WorldOmniLight" parent="." instance=ExtResource("2_70tr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, -0.5)
+Radius = 1.0
+
+[node name="LightSwitchSfxPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ci2x6")
+bus = &"SFX"
+
+[connection signal="LightSwitchFlipped" from="." to="LightSwitchSfxPlayer" method="play"]

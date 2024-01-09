@@ -1,6 +1,7 @@
-[gd_scene load_steps=34 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=35 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
+[ext_resource type="Script" path="res://environments/EnvironmentManager.cs" id="2_4ygry"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_b2cin"]
 [ext_resource type="Script" path="res://camera/InputXformer.cs" id="2_f8i2e"]
 [ext_resource type="PackedScene" uid="uid://b2efiom6qa6ym" path="res://camera/isometric_camera.tscn" id="2_s72y3"]
@@ -59,6 +60,7 @@ _CutsceneService = NodePath("Services/CutsceneService")
 metadata/_edit_lock_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+script = ExtResource("2_4ygry")
 
 [node name="LevelStateMachine" type="Node" parent="."]
 script = ExtResource("2_b2cin")

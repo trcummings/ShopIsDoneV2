@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dwcnilmn6y5ge"]
+[gd_scene load_steps=10 format=3 uid="uid://dwcnilmn6y5ge"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_vgrg2"]
 [ext_resource type="PackedScene" uid="uid://dqui73itu0huj" path="res://levels/parking_lot_1/screening_computer/screening_computer_model.tscn" id="2_nne4g"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://arena_interactions/arena_interaction_selectors/ArenaInteractionSelector.cs" id="5_cobj3"]
 [ext_resource type="Script" path="res://arena_interactions/InteractionFinishedHandler.cs" id="5_dpdf0"]
 [ext_resource type="PackedScene" uid="uid://bf0c2bi4rpjye" path="res://arena_interactions/arena_interaction_selectors/arena_interaction_selector_tile.tscn" id="6_qjbsy"]
+[ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="8_pyfvy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_delom"]
 size = Vector3(2.00366, 2.18701, 1.65137)
@@ -41,5 +42,11 @@ metadata/_edit_lock_ = true
 
 [node name="ArenaInteractionSelectorTile" parent="InteractionComponent/ArenaInteractionSelector" index="0" instance=ExtResource("6_qjbsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="WorldOmniLight" parent="." index="5" instance=ExtResource("8_pyfvy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.5, -0.5)
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="ScreeningComputerModel" method="SetFacingDir"]

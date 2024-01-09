@@ -20,40 +20,46 @@ namespace ShopIsDone.Lighting
         [Export]
         public bool IsLit
         {
-            get { return _Light?.Visible ?? false; }
+            get { return _IsLit; }
             set {
+                _IsLit = value;
                 if (value) TurnOn();
                 else TurnOff();
             }
         }
+        private bool _IsLit = false;
 
         [Export]
         public float Radius
         {
-            get { return GetRadius(); }
+            get { return _Radius; }
             set { SetRadius(value); }
         }
+        private float _Radius = 2;
 
         [Export]
         public float LightEnergy
         {
-            get { return GetLightEnergy(); }
+            get { return _LightEnergy; }
             set { SetLightEnergy(value); }
         }
+        private float _LightEnergy = 1;
 
         [Export]
         public float LightAngle
         {
-            get { return GetLightAngle(); }
+            get { return _LightAngle; }
             set { SetLightAngle(value); }
         }
+        private float _LightAngle = 1;
 
         [Export]
         public Color LightColor
         {
-            get { return GetLightColor(); }
+            get { return _LightColor; }
             set { SetLightColor(value); }
         }
+        private Color _LightColor = Colors.White;
 
         private Area3D _LightArea;
         private CollisionShape3D _LightShape;
@@ -95,15 +101,10 @@ namespace ShopIsDone.Lighting
             SetRadius(Radius);
         }
 
-        protected virtual float GetRadius()
-        {
-            if (_Light is OmniLight3D omni) return omni.OmniRange;
-            else if (_Light is SpotLight3D spot) return spot.SpotRange;
-            return 0;
-        }
-
         protected virtual void SetRadius(float radius)
         {
+            _Radius = radius;
+
             if (_Light is OmniLight3D omni) omni.OmniRange = radius;
             else if (_Light is SpotLight3D spot) spot.SpotRange = radius;
 
@@ -156,25 +157,16 @@ namespace ShopIsDone.Lighting
             }
         }
 
-        protected float GetLightEnergy()
-        {
-            if (_Light == null) return 0;
-            return _Light.LightEnergy;
-        }
-
         protected void SetLightEnergy(float value)
         {
+            _LightEnergy = value;
             if (_Light == null) return;
             _Light.LightEnergy = value;
         }
 
-        protected Color GetLightColor()
-        {
-            return _Light?.LightColor ?? Colors.White;
-        }
-
         protected void SetLightColor(Color value)
         {
+            _LightColor = value;
             if (_Light == null) return;
             _Light.LightColor = value;
         }
@@ -186,14 +178,9 @@ namespace ShopIsDone.Lighting
             _LightVolumeMesh.Mesh = (Mesh)_LightVolumeMesh.Mesh.Duplicate();
         }
 
-        private float GetLightAngle()
-        {
-            if (_Light is SpotLight3D spot) return spot.SpotAngle;
-            return 0;
-        }
-
         private void SetLightAngle(float value)
         {
+            _LightAngle = value;
             if (_Light is SpotLight3D spot)
             {
                 spot.SpotAngle = value;
@@ -209,13 +196,13 @@ namespace ShopIsDone.Lighting
             // Show light
             _Light.Show();
 
-            // Show light volume
-            _LightVolumeMesh.Show();
+            // Show light volume (if we're not in the editor)
+            if (!Engine.IsEditorHint()) _LightVolumeMesh.Show();
 
             // Turn on collision
-            _LightArea.Monitorable = true;
-            _LightArea.Monitoring = true;
-            _LightShape.Disabled = false;
+            _LightArea.SetDeferred(nameof(_LightArea.Monitorable), true);
+            _LightArea.SetDeferred(nameof(_LightArea.Monitoring), true);
+            _LightShape.SetDeferred(nameof(_LightShape.Disabled), false);
         }
 
         public void TurnOff()
@@ -229,9 +216,9 @@ namespace ShopIsDone.Lighting
             _LightVolumeMesh.Hide();
 
             // Turn off collision
-            _LightArea.Monitorable = false;
-            _LightArea.Monitoring = false;
-            _LightShape.Disabled = true;
+            _LightArea.SetDeferred(nameof(_LightArea.Monitorable), false);
+            _LightArea.SetDeferred(nameof(_LightArea.Monitoring), false);
+            _LightShape.SetDeferred(nameof(_LightShape.Disabled), true);
         }
 
         public override void _Process(double delta)
@@ -256,6 +243,7 @@ namespace ShopIsDone.Lighting
             LightEnergy = 1;
 
             // Turn self off
+            _IsLit = false;
             TurnOff();
 
             EmitSignal(nameof(FlickeredOff));
@@ -264,6 +252,7 @@ namespace ShopIsDone.Lighting
         public async Task FlickerLightOn()
         {
             // Turn self off
+            _IsLit = true;
             TurnOn();
 
             // Play SFX

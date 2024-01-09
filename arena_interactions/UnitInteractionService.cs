@@ -156,7 +156,7 @@ namespace ShopIsDone.ArenaInteractions
             _FingerCursor.PointCursorAt(destination, destination + (Vector3.Up * 2));
 
             // Face the pawn towards the interaction
-            if (destination != _SelectedUnit.GlobalPosition)
+            if (destination.IsEqualApprox(_SelectedUnit.GlobalPosition))
             {
                 // Get the closest interaction tile
                 var closestTile = _SelectedInteraction.GetClosestSelectableTile(_SelectedUnit.GlobalPosition);
