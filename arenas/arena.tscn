@@ -62,7 +62,7 @@ bg_color = Color(0.298039, 0.298039, 0.298039, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uec0k"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_EffortMeterService", "_ScriptQueueService", "_OutcomeService", "_UnitDeathService", "_ConditionsService", "_UnitInteractionService") groups=["arena"]]
+[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_EffortMeterService", "_ScriptQueueService", "_OutcomeService", "_UnitDeathService", "_ConditionsService", "_UnitInteractionService", "_ActionMeddler") groups=["arena"]]
 script = ExtResource("1_loukv")
 _ArenaStateMachine = NodePath("ArenaStateMachine")
 _TileManager = NodePath("Tiles")
@@ -74,6 +74,7 @@ _OutcomeService = NodePath("Services/ArenaOutcomeService")
 _UnitDeathService = NodePath("Services/UnitDeathService")
 _ConditionsService = NodePath("Services/ConditionsService")
 _UnitInteractionService = NodePath("Services/UnitInteractionService")
+_ActionMeddler = NodePath("Services/ActionMeddler")
 metadata/_edit_lock_ = true
 
 [node name="Services" type="Node" parent="."]

@@ -11,6 +11,7 @@ using ArenaConsts = ShopIsDone.Arenas.States.Consts;
 using ShopIsDone.Conditions;
 using ShopIsDone.Levels;
 using ShopIsDone.ArenaInteractions;
+using ShopIsDone.Arenas.Meddling;
 
 namespace ShopIsDone.Arenas
 {
@@ -55,7 +56,10 @@ namespace ShopIsDone.Arenas
         [Export]
         private UnitInteractionService _UnitInteractionService;
 
-        // Not a service, gets plugged in on import into a level scene
+        // Not services
+        [Export]
+        private ActionMeddler _ActionMeddler;
+
         [Export]
         private PlayerCharacterManager _PlayerCharacterManager;
 
@@ -85,6 +89,7 @@ namespace ShopIsDone.Arenas
             _ActionService.Init();
             _UnitDeathService.Init();
             _ConditionsService.Init();
+            _ActionMeddler.Init();
 
             // Move units into arena
             _PlayerCharacterManager.EnterArena();

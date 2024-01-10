@@ -67,7 +67,7 @@ namespace ShopIsDone.Tiles
 
             // Create entry in tilemap so we can convert between tilemap
             // position and world position
-            _ArenaTilemap.SetCellItem(new Vector3I((int)tilePos.X, (int)tilePos.Y, (int)tilePos.Z), 1);
+            _ArenaTilemap.SetCellItem(tilePos.ToVec3i(), 1);
         }
 
         public void RemoveTile(Tile tile)
@@ -76,12 +76,24 @@ namespace ShopIsDone.Tiles
             // Remove from dictionary
             if (_TilesByPos.ContainsKey(tilePos)) _TilesByPos.Remove(tilePos);
             // Remove entry from tilemap
-            _ArenaTilemap.SetCellItem(new Vector3I((int)tilePos.X, (int)tilePos.Y, (int)tilePos.Z), (int)GridMap.InvalidCellItem);
+            _ArenaTilemap.SetCellItem(tilePos.ToVec3i(), (int)GridMap.InvalidCellItem);
         }
 
         public bool HasTileAtTilemapPos(Vector3 tilemapPosition)
         {
             return _TilesByPos.ContainsKey(tilemapPosition);
+        }
+
+        public bool HasTileAtGlobalPos(Vector3 globalPos)
+        {
+            var mapPos = _ArenaTilemap.LocalToMap(ToLocal(globalPos));
+            return _TilesByPos.ContainsKey(mapPos);
+        }
+
+        public Tile GetTileAtGlobalPos(Vector3 globalPos)
+        {
+            var mapPos = _ArenaTilemap.LocalToMap(ToLocal(globalPos));
+            return GetTileAtTilemapPos(mapPos);
         }
 
         public Tile GetTileAtTilemapPos(Vector3 tilemapPosition)

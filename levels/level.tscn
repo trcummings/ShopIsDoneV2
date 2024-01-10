@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=36 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://environments/EnvironmentManager.cs" id="2_4ygry"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://camera/CameraService.cs" id="7_5vsji"]
 [ext_resource type="Script" path="res://levels/level_states/GameOverState.cs" id="7_v30x6"]
 [ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="10_5oljb"]
+[ext_resource type="Script" path="res://levels/LevelData.cs" id="10_iufdb"]
 [ext_resource type="Script" path="res://camera/ScreenshakeService.cs" id="10_urica"]
 [ext_resource type="PackedScene" uid="uid://swb4777ufru4" path="res://widgets/tile_indicator/tile_indicator.tscn" id="10_xe6sp"]
 [ext_resource type="PackedScene" uid="uid://crqg03tk3cpdo" path="res://widgets/tile_cursor/tile_cursor.tscn" id="11_6qmyn"]
@@ -40,9 +41,10 @@ polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Arr
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydnh5"]
 
-[node name="Level" type="Node3D" node_paths=PackedStringArray("_LevelStateMachine", "_CameraService", "_PlayerCharacterManager", "_PlayerCameraService", "_InputXformer", "_PauseInputHandler", "_Screenshake", "_DirectionalInput", "_FingerCursor", "_TileCursor", "_TileIndicator", "_MovePathWidget", "_FacingWidget", "_MicrogameController", "_CutsceneService")]
+[node name="Level" type="Node3D" node_paths=PackedStringArray("_LevelStateMachine", "_LevelData", "_CameraService", "_PlayerCharacterManager", "_PlayerCameraService", "_InputXformer", "_PauseInputHandler", "_Screenshake", "_DirectionalInput", "_FingerCursor", "_TileCursor", "_TileIndicator", "_MovePathWidget", "_FacingWidget", "_MicrogameController", "_CutsceneService")]
 script = ExtResource("1_uriqi")
 _LevelStateMachine = NodePath("LevelStateMachine")
+_LevelData = NodePath("Services/LevelData")
 _CameraService = NodePath("Services/CameraService")
 _PlayerCharacterManager = NodePath("World/PlayerCharacterManager")
 _PlayerCameraService = NodePath("Services/PlayerCameraService")
@@ -98,6 +100,9 @@ _PauseInputHandler = NodePath("../../Services/PauseInputHandler")
 _GameOverUI = NodePath("../../UILayer/GameOverUI")
 
 [node name="Services" type="Node" parent="."]
+
+[node name="LevelData" type="Node" parent="Services"]
+script = ExtResource("10_iufdb")
 
 [node name="CameraService" type="Node" parent="Services" node_paths=PackedStringArray("_IsometricCamera")]
 script = ExtResource("7_5vsji")

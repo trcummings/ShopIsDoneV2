@@ -23,6 +23,9 @@ namespace ShopIsDone.Levels
 
         // Services
         [Export]
+        private LevelData _LevelData;
+
+        [Export]
         private CameraService _CameraService;
 
         [Export]
@@ -72,6 +75,7 @@ namespace ShopIsDone.Levels
             _InjectionProvider = InjectionProvider.GetProvider(this);
 
             // Register all services (NB: We have to do this manually, unfortunately)
+            _InjectionProvider.RegisterService(_LevelData);
             _InjectionProvider.RegisterService(_CameraService);
             _InjectionProvider.RegisterService(_PlayerCharacterManager);
             _InjectionProvider.RegisterService(_InputXformer);

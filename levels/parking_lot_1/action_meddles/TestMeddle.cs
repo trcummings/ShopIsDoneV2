@@ -4,7 +4,7 @@ using ShopIsDone.Actions;
 using ShopIsDone.Arenas.Meddling;
 using ShopIsDone.Tiles;
 using ShopIsDone.Utils.Commands;
-using System;
+using ShopIsDone.Utils.DependencyInjection;
 using System.Linq;
 using ActionConsts = ShopIsDone.Actions.Consts;
 
@@ -14,6 +14,9 @@ namespace ShopIsDone.Levels.IntroLevel
     {
         [Export]
         private Node3D _FinalPoint;
+
+        [Inject]
+        private TileManager _TileManager;
 
         public override bool ShouldMeddle(ArenaAction action, Dictionary<string, Variant> message)
         {
@@ -26,7 +29,8 @@ namespace ShopIsDone.Levels.IntroLevel
                 var lastTile = movePath.Last();
                 // If the last tile of the move path isn't equal to our designated final point,
                 // reject the action
-                if (!_FinalPoint.GlobalPosition.IsEqualApprox(lastTile.GlobalPosition)) return true;
+                var destinationTile = _TileManager.GetTileAtGlobalPos(_FinalPoint.GlobalPosition);
+                if (destinationTile != lastTile) return true;
                 // Otherwise it's valid
                 return false;
             }

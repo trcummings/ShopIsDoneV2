@@ -5,6 +5,7 @@ using ShopIsDone.Utils.Commands;
 using Godot.Collections;
 using System.Linq;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Arenas.Meddling
 {
@@ -13,6 +14,9 @@ namespace ShopIsDone.Arenas.Meddling
 	// kind of cutscene or alternative action instead.
 	public partial class ActionMeddler : Node
 	{
+		[Export]
+		private bool _IsActive = true;
+
 		private Array<ActionMeddle> _Meddles;
 
         public override void _Ready()
@@ -21,24 +25,25 @@ namespace ShopIsDone.Arenas.Meddling
 			_Meddles = GetChildren().OfType<ActionMeddle>().ToGodotArray();
         }
 
-        public Command MeddleWithAction(ArenaAction action, Dictionary<string, Variant> message, Command next)
+		public void Init()
 		{
-			return _Meddles
-				.ToList()
-                // Find the first meddle whose flag we can evaluate, and if it passes, meddle
-                .Find(meddle => CanMeddle(meddle) && meddle.ShouldMeddle(action, message))?
-				.Meddle(action, message)
-				// Otherwise, return the next command
-				?? next;
+			// Inject each meddle with its dependencies
+			foreach (var meddle in _Meddles) InjectionProvider.Inject(meddle);
 		}
 
-		private bool CanMeddle(ActionMeddle meddle)
+        public Command MeddleWithAction(ArenaAction action, Dictionary<string, Variant> message, Command next)
 		{
-			// IF we ignore the flag, then just return true
-			if (meddle.IgnoreFlag) return true;
-			// Otehrwise, calculate if the flag matches the arena state (or global state)
-			var flagMatches = true;
-			return flagMatches;
+			// Ignore if not active
+			if (!_IsActive) return next;
+
+            // Otherwise, find the first meddle whose flag we can evaluate, and
+			// if it passes, meddle
+            return _Meddles
+				.ToList()
+                .Find(meddle => meddle.CanMeddle() && meddle.ShouldMeddle(action, message))?
+				.Meddle(action, message)
+				// If no meddle applies, return the next command
+				?? next;
 		}
 	}
 }
