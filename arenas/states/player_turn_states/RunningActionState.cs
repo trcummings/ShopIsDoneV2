@@ -51,7 +51,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // Execute action through PTM
             var command = _ActionService.ExecuteAction(action, message);
             command.CallDeferred(nameof(command.Execute));
-            await ToSignal(command, "Finished");
+            await ToSignal(command, nameof(command.Finished));
 
             // If an outcome was reached, do not continue any of this
             if (_OutcomeService.WasOutcomeReached()) return;

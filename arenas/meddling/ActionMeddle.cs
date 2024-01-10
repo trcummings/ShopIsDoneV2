@@ -5,8 +5,6 @@ using Godot.Collections;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Levels;
-using ShopIsDone.Utils.ValueReferences;
-using System.Reflection;
 
 namespace ShopIsDone.Arenas.Meddling
 {
@@ -32,10 +30,10 @@ namespace ShopIsDone.Arenas.Meddling
             // IF we ignore the flag, then just return true
             if (_IgnoreFlag) return true;
 
-			// Otehrwise, calculate if the flag matches the arena state (or global state)
-			if (!_LevelData.Flags.ContainsKey(_FlagName)) return false;
-			// Does flag match our desired flag state?
-            return _LevelData.Flags[_FlagName] == _WhenFlagIs;
+			// Otherwise, does the flag match our desired state? (if the flag
+			// does not exist, default to the opposite of what we want to
+			// guarantee a failure)
+            return _LevelData.GetFlag(_FlagName, !_WhenFlagIs) == _WhenFlagIs;
         }
 
 		public virtual bool ShouldMeddle(ArenaAction action, Dictionary<string, Variant> message)

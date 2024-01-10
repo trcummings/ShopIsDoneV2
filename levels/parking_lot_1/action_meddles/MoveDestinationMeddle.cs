@@ -7,13 +7,17 @@ using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using System.Linq;
 using ActionConsts = ShopIsDone.Actions.Consts;
+using ShopIsDone.Interactables.Interactions;
 
 namespace ShopIsDone.Levels.IntroLevel
 {
-    public partial class TestMeddle : ActionMeddle
+    public partial class MoveDestinationMeddle : ActionMeddle
     {
         [Export]
         private Node3D _FinalPoint;
+
+        [Export]
+        private Interaction _Interaction;
 
         [Inject]
         private TileManager _TileManager;
@@ -45,10 +49,7 @@ namespace ShopIsDone.Levels.IntroLevel
 
         public override Command Meddle(ArenaAction action, Dictionary<string, Variant> message)
         {
-            return new ActionCommand(() =>
-            {
-                GD.Print("Action Denied");
-            });
+            return new InteractionCommand(_Interaction);
         }
     }
 }

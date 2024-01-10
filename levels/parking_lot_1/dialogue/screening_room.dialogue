@@ -1,0 +1,11 @@
+~ meddle_when_not_go_to_light
+
+Jessica: Hey! The light's right next to you. C'mon, it's dark in here.
+
+=> END
+
+~ went_to_light
+
+Jessica: Yeah, it's right there.\nGo ahead and INTERACT with it.
+
+=> END

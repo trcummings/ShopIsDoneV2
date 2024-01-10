@@ -1,5 +1,4 @@
 using Godot;
-using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using Godot.Collections;
@@ -15,7 +14,10 @@ namespace ShopIsDone.Actions
 	public partial class ActionService : Node, IService
     {
         [Signal]
-        public delegate void ActionFinishedEventHandler();
+        public delegate void ActionStartedEventHandler(ArenaAction action);
+
+        [Signal]
+        public delegate void ActionFinishedEventHandler(ArenaAction action);
 
         [Inject]
         private CameraService _CameraService;
@@ -31,6 +33,10 @@ namespace ShopIsDone.Actions
 
         [Export]
         private ActionMeddler _ActionMeddler;
+
+        // State
+        private ArenaAction _CurrentAction;
+        private Dictionary<string, Variant> _CurrentMessage;
 
         public void Init()
         {
@@ -49,7 +55,12 @@ namespace ShopIsDone.Actions
                     ApplyCameraFollow(action,
                         ApplyRotateToFaceEntity(action,
                             ApplyCameraZoom(action,
-                                action.Execute(message)
+                                // Set current action 
+                                SetCurrentAction(
+                                    action,
+                                    message,
+                                    action.Execute(message)
+                                )
                             )
                         )
                     ),
@@ -72,6 +83,55 @@ namespace ShopIsDone.Actions
                 // Run script queue
                 new DeferredCommand(_ScriptQueueService.RunQueue)
             )));
+        }
+
+        // Queries
+        public bool HasCurrentAction()
+        {
+            return _CurrentAction != null;
+        }
+
+        public ArenaAction GetCurrentAction()
+        {
+            return _CurrentAction;
+        }
+
+        // Utilities
+        private Command SetCurrentAction(ArenaAction action, Dictionary<string, Variant> message, Command actionCommand)
+        {
+            // Emit that the action has started
+            EmitSignal(nameof(ActionStarted), action);
+
+            // Connect to action command finished
+            actionCommand.Connect(
+                nameof(actionCommand.Finished),
+                Callable.From(() => {
+                    // Emit that the action is finished
+                    EmitSignal(nameof(ActionFinished), action);
+                }),
+                (uint)ConnectFlags.OneShot
+            );
+
+            // Set the action and message
+            _CurrentAction = action;
+            _CurrentMessage = message;
+
+            // IF not a sub action
+            if (action is not MoveSubAction)
+            {
+                // Connect to the current action finished with a cleanup function
+                actionCommand.Connect(
+                    nameof(actionCommand.Finished),
+                    Callable.From(() => {
+                        _CurrentAction = null;
+                        _CurrentMessage = null;
+                    }),
+                    (uint)ConnectFlags.OneShot
+                );
+            }
+
+            // Pass through
+            return actionCommand;
         }
 
         private Command WinFailCheck(Command next)

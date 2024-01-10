@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://w6qiju5m0t0h"]
+
+[ext_resource type="Script" path="res://trigger_areas/ImmediateTriggerArea.cs" id="1_j12so"]
+
+[node name="TriggerArea" type="Area3D"]
+collision_layer = 0
+collision_mask = 512
+monitorable = false
+script = ExtResource("1_j12so")
+metadata/_edit_group_ = true

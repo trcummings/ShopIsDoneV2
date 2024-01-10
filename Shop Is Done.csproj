@@ -16,6 +16,5 @@
     <Folder Include="tasks\task_models\" />
     <Folder Include="actors\interactables\interactions\" />
     <Folder Include="arenas\meddling\" />
-    <Folder Include="util\value_references\" />
   </ItemGroup>
 </Project>

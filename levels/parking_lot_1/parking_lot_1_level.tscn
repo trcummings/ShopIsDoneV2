@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://xh2e5s84nxyv"]
+[gd_scene load_steps=40 format=3 uid="uid://xh2e5s84nxyv"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_qcbwj"]
 [ext_resource type="Environment" uid="uid://crxt7yqtqh2oa" path="res://environments/foggy_world.tres" id="2_ornuu"]
@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://csp1qcwdjly14" path="res://levels/parking_lot_1/light_pole/light_pole.tscn" id="3_bkfwe"]
 [ext_resource type="AudioStream" uid="uid://n4qsvpb3svkh" path="res://levels/parking_lot_1/ROOM-TONE--404378__eskimoneil__parking-lot-grove-mall.wav" id="4_id0w3"]
 [ext_resource type="PackedScene" uid="uid://do3k55e4n3g6m" path="res://levels/parking_lot_1/bollard/bollard.tscn" id="4_sfbcs"]
-[ext_resource type="Script" path="res://actors/interactables/trigger_zone_enabler.gd" id="7_3b8y3"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/CutsceneInteraction.cs" id="7_33d1e"]
+[ext_resource type="PackedScene" uid="uid://w6qiju5m0t0h" path="res://trigger_areas/trigger_area.tscn" id="7_kw3o8"]
 [ext_resource type="PackedScene" uid="uid://7jutumxuh5ii" path="res://render/employees/jessica/jessica_model.tscn" id="7_r8wa3"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/ComposedInteraction.cs" id="8_nm0vf"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/DialogueInteraction.cs" id="8_sl0ca"]
@@ -22,10 +22,14 @@
 [ext_resource type="PackedScene" uid="uid://d3edvxooy0nm3" path="res://exit/exit_model.tscn" id="18_6xsbf"]
 [ext_resource type="PackedScene" uid="uid://0h58pk4shxpt" path="res://levels/parking_lot_1/screening_room/screening_room.glb" id="18_h332s"]
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="19_hvyr0"]
-[ext_resource type="Script" path="res://levels/parking_lot_1/action_meddles/TestMeddle.cs" id="19_jue60"]
+[ext_resource type="Script" path="res://levels/parking_lot_1/action_meddles/MoveDestinationMeddle.cs" id="19_jue60"]
 [ext_resource type="PackedScene" uid="uid://j67ix6p68gsa" path="res://entities/light_switch/light_switch.tscn" id="21_2hf0b"]
 [ext_resource type="PackedScene" uid="uid://dwcnilmn6y5ge" path="res://levels/parking_lot_1/screening_computer/screening_computer.tscn" id="21_2o413"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/ArenaScriptInteraction.cs" id="23_8dj07"]
+[ext_resource type="Script" path="res://trigger_areas/EntityTriggerArea.cs" id="23_l73o1"]
 [ext_resource type="PackedScene" uid="uid://vkdrv2wvhw46" path="res://levels/directional_point.tscn" id="24_7w5p4"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/SetFlagInteraction.cs" id="24_s4osj"]
+[ext_resource type="Resource" uid="uid://dd8f1idqdpc8g" path="res://levels/parking_lot_1/dialogue/screening_room.dialogue" id="25_6odrw"]
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="25_mwgm2"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_7hfsd"]
@@ -40,6 +44,8 @@ size = Vector3(2.97083, 2.09412, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u4mnd"]
 size = Vector3(12.1935, 1, 20.2972)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ylnsc"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tt51n"]
 
@@ -61,7 +67,7 @@ density_texture = SubResource("NoiseTexture3D_dprvk")
 environment = ExtResource("2_ornuu")
 
 [node name="LevelData" parent="Services" index="0"]
-Flags = {
+_Flags = {
 "has_finished_computer": false,
 "has_moved_to_computer": false,
 "has_moved_to_light": false,
@@ -114,38 +120,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2747, 0, -14.5346)
 [node name="Bollard2" parent="World/NavigationRegion3D/Environment" index="8" instance=ExtResource("4_sfbcs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.08837, 0, -14.5346)
 
-[node name="TriggerZone" type="Area3D" parent="World/NavigationRegion3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.326082, 0, -14.5582)
-collision_layer = 0
-collision_mask = 512
-monitorable = false
-script = ExtResource("7_3b8y3")
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
+[node name="FirstCutsceneTriggerArea" parent="World/NavigationRegion3D" index="1" instance=ExtResource("7_kw3o8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.326, 2.08165e-12, -14.558)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/TriggerZone" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/FirstCutsceneTriggerArea" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.571564, 1.84375, -1.93933)
 shape = SubResource("BoxShape3D_mbsut")
 
-[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone" index="1"]
+[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/FirstCutsceneTriggerArea" index="1"]
 script = ExtResource("7_33d1e")
 
-[node name="ComposedInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction" index="0"]
+[node name="ComposedInteraction" type="Node" parent="World/NavigationRegion3D/FirstCutsceneTriggerArea/CutsceneInteraction" index="0"]
 script = ExtResource("8_nm0vf")
 
-[node name="DialogueInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction/ComposedInteraction" index="0"]
+[node name="DialogueInteraction" type="Node" parent="World/NavigationRegion3D/FirstCutsceneTriggerArea/CutsceneInteraction/ComposedInteraction" index="0"]
 script = ExtResource("8_sl0ca")
 _DialogueStartFrom = "greeting"
 _DialogueResource = ExtResource("9_8wx2t")
 
-[node name="PanCameraToInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction/ComposedInteraction" index="1" node_paths=PackedStringArray("_Target")]
+[node name="PanCameraToInteraction" type="Node" parent="World/NavigationRegion3D/FirstCutsceneTriggerArea/CutsceneInteraction/ComposedInteraction" index="1" node_paths=PackedStringArray("_Target")]
 script = ExtResource("11_5ocy2")
 _Target = NodePath("../../../../JessicaRenderManager")
 
-[node name="WaitForInteraction" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction/ComposedInteraction" index="2"]
+[node name="WaitForInteraction" type="Node" parent="World/NavigationRegion3D/FirstCutsceneTriggerArea/CutsceneInteraction/ComposedInteraction" index="2"]
 script = ExtResource("12_8l11t")
 
-[node name="DialogueInteraction2" type="Node" parent="World/NavigationRegion3D/TriggerZone/CutsceneInteraction/ComposedInteraction" index="3"]
+[node name="DialogueInteraction2" type="Node" parent="World/NavigationRegion3D/FirstCutsceneTriggerArea/CutsceneInteraction/ComposedInteraction" index="3"]
 script = ExtResource("8_sl0ca")
 _DialogueStartFrom = "main_convo"
 _DialogueResource = ExtResource("9_8wx2t")
@@ -183,10 +183,16 @@ HasTurnCounter = false
 script = ExtResource("18_3lau5")
 _Id = "never_complete"
 
-[node name="TestMeddle" type="Node" parent="World/NavigationRegion3D/Arena/Services/ActionMeddler" index="0" node_paths=PackedStringArray("_FinalPoint")]
+[node name="MoveDestinationMeddle" type="Node" parent="World/NavigationRegion3D/Arena/Services/ActionMeddler" index="0" node_paths=PackedStringArray("_FinalPoint", "_Interaction")]
 script = ExtResource("19_jue60")
 _FinalPoint = NodePath("../../../MoveToLightSwitchFinalPoint")
+_Interaction = NodePath("DialogueInteraction")
 _FlagName = "has_moved_to_light"
+
+[node name="DialogueInteraction" type="Node" parent="World/NavigationRegion3D/Arena/Services/ActionMeddler/MoveDestinationMeddle" index="0"]
+script = ExtResource("8_sl0ca")
+_DialogueStartFrom = "meddle_when_not_go_to_light"
+_DialogueResource = ExtResource("25_6odrw")
 
 [node name="Tiles" parent="World/NavigationRegion3D/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../TileManager")
@@ -210,6 +216,29 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2, 0, 
 [node name="LightSwitchComponent" parent="World/NavigationRegion3D/Arena/Entities/LightSwitch" index="5" node_paths=PackedStringArray("_Lights")]
 _IsFlippedOn = false
 _Lights = [NodePath("../../../../Lights/WorldOmniLight"), NodePath("../../../../Lights/WorldOmniLight2"), NodePath("../../../../Lights/WorldOmniLight3")]
+
+[node name="EntityTriggerArea" parent="World/NavigationRegion3D/Arena/Entities" index="4" instance=ExtResource("7_kw3o8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.08165e-12, 4)
+collision_mask = 2
+script = ExtResource("23_l73o1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea" index="0"]
+shape = SubResource("BoxShape3D_ylnsc")
+
+[node name="ArenaScriptInteraction" type="Node" parent="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea" index="1"]
+script = ExtResource("23_8dj07")
+
+[node name="ComposedInteraction" type="Node" parent="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea/ArenaScriptInteraction" index="0"]
+script = ExtResource("8_nm0vf")
+
+[node name="SetFlagInteraction" type="Node" parent="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea/ArenaScriptInteraction/ComposedInteraction" index="0"]
+script = ExtResource("24_s4osj")
+_FlagName = "has_moved_to_light"
+
+[node name="DialogueInteraction" type="Node" parent="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea/ArenaScriptInteraction/ComposedInteraction" index="1"]
+script = ExtResource("8_sl0ca")
+_DialogueStartFrom = "went_to_light"
+_DialogueResource = ExtResource("25_6odrw")
 
 [node name="screening_room" parent="World/NavigationRegion3D/Arena" index="6" instance=ExtResource("18_h332s")]
 metadata/_edit_lock_ = true
@@ -266,8 +295,8 @@ stream = ExtResource("4_id0w3")
 autoplay = true
 bus = &"SFX"
 
-[connection signal="body_entered" from="World/NavigationRegion3D/TriggerZone" to="World/NavigationRegion3D/TriggerZone" method="disable_monitoring" unbinds=1]
-[connection signal="body_entered" from="World/NavigationRegion3D/TriggerZone" to="World/NavigationRegion3D/TriggerZone/CutsceneInteraction" method="Execute" flags=6 unbinds=1]
+[connection signal="AreaTriggered" from="World/NavigationRegion3D/FirstCutsceneTriggerArea" to="World/NavigationRegion3D/FirstCutsceneTriggerArea/CutsceneInteraction" method="Execute" flags=6]
+[connection signal="AreaTriggered" from="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea" to="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea/ArenaScriptInteraction" method="Execute" flags=6]
 
 [editable path="World/IsometricCamera"]
 [editable path="World/NavigationRegion3D/Interactable"]

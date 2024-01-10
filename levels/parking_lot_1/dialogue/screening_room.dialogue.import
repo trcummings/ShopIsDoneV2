@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_11"
+type="Resource"
+uid="uid://dd8f1idqdpc8g"
+path="res://.godot/imported/screening_room.dialogue-f037178794245f751a6bd0a8aff9ac84.tres"
+
+[deps]
+
+source_file="res://levels/parking_lot_1/dialogue/screening_room.dialogue"
+dest_files=["res://.godot/imported/screening_room.dialogue-f037178794245f751a6bd0a8aff9ac84.tres"]
+
+[params]
+
+defaults=true
