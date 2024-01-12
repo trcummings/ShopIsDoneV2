@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=18 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://levels/test_level/conditions/CustomerSatisfiedCondition.cs" id="6_a2ot6"]
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="7_xooi4"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="8_5fhod"]
+[ext_resource type="Script" path="res://levels/test_level/conditions/TaskCompletedCondition.cs" id="9_bxejf"]
 [ext_resource type="Shader" path="res://levels/test_level/ntsc.gdshader" id="16_2hx3x"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b3qhi"]
@@ -63,6 +64,11 @@ _PlayerCharacterManager = NodePath("../../../PlayerCharacterManager")
 script = ExtResource("6_a2ot6")
 Customer = NodePath("../../../Entities/Customer")
 _Id = "customer_satisfied_condition"
+
+[node name="TaskCompletedCondition" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ConditionsService" index="1" node_paths=PackedStringArray("Task")]
+script = ExtResource("9_bxejf")
+Task = NodePath("../../../Entities/VegetableFridge")
+_Id = "task_completed_condition"
 
 [node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../TileManager")
