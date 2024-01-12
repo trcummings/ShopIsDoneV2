@@ -74,6 +74,11 @@ _Flags = {
 "turned_light_on": false
 }
 
+[node name="Ambience" type="AudioStreamPlayer" parent="Audio" index="1"]
+stream = ExtResource("4_id0w3")
+autoplay = true
+bus = &"SFX"
+
 [node name="IsometricCamera" parent="World" index="1"]
 transform = Transform3D(0.707107, 0.353553, -0.612372, 3.02058e-16, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, 0, 0, 0)
 
@@ -278,9 +283,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -90)
 IsLit = false
 Radius = 5.0
 
-[node name="DefaultSpawnPoint" parent="World" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -86)
-
 [node name="FogVolume" type="FogVolume" parent="World" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50473, 3.01313, 2.50418)
 size = Vector3(52.6849, 17.9807, 59.2808)
@@ -289,11 +291,6 @@ material = SubResource("FogMaterial_g1l4w")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="6"]
 transform = Transform3D(0.671608, 0.606754, -0.425197, -0.221229, 0.711934, 0.666489, 0.707107, -0.353553, 0.612372, 0, 0, 0)
 visible = false
-
-[node name="Ambience" type="AudioStreamPlayer" parent="." index="5"]
-stream = ExtResource("4_id0w3")
-autoplay = true
-bus = &"SFX"
 
 [connection signal="AreaTriggered" from="World/NavigationRegion3D/FirstCutsceneTriggerArea" to="World/NavigationRegion3D/FirstCutsceneTriggerArea/CutsceneInteraction" method="Execute" flags=6]
 [connection signal="AreaTriggered" from="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea" to="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea/ArenaScriptInteraction" method="Execute" flags=6]
