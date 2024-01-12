@@ -52,7 +52,7 @@ horizontal_alignment = 1
 layout_mode = 2
 theme = ExtResource("3_7bqiu")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Units have remaining moves:"
+text = "Employees have remaining moves:"
 horizontal_alignment = 1
 
 [node name="UnitInfoContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]

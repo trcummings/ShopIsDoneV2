@@ -56,7 +56,8 @@ namespace ShopIsDone.Actions
             Move,
             Facing,
             Target,
-            Interact
+            Interact,
+            Task
         }
 
         [Export]

@@ -12,6 +12,7 @@ using ShopIsDone.Conditions;
 using ShopIsDone.Levels;
 using ShopIsDone.ArenaInteractions;
 using ShopIsDone.Arenas.Meddling;
+using ShopIsDone.Tasks;
 
 namespace ShopIsDone.Arenas
 {
@@ -56,6 +57,9 @@ namespace ShopIsDone.Arenas
         [Export]
         private UnitInteractionService _UnitInteractionService;
 
+        [Export]
+        private UnitTaskService _UnitTaskService;
+
         // Not services
         [Export]
         private ActionMeddler _ActionMeddler;
@@ -83,6 +87,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.RegisterService(_UnitDeathService);
             _InjectionProvider.RegisterService(_ConditionsService);
             _InjectionProvider.RegisterService(_UnitInteractionService);
+            _InjectionProvider.RegisterService(_UnitTaskService);
 
             // Initialize services (with strict order)
             _TileManager.Init();
@@ -136,6 +141,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.UnregisterService(_UnitDeathService);
             _InjectionProvider.UnregisterService(_ConditionsService);
             _InjectionProvider.UnregisterService(_UnitInteractionService);
+            _InjectionProvider.UnregisterService(_UnitTaskService);
 
             // Idle player units
             _PlayerCharacterManager.Idle();

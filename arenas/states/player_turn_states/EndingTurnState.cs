@@ -67,6 +67,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
             var endTurnInfo = _PlayerUnitService
                 .GetUnits()
                 .OrderBy(u => u.EntityName)
+                // Filter out those that don't have available actions
+                .Where(_PlayerUnitService.UnitHasAvailableActions)
+                // Map to values
                 .Select(u =>
                 (
                     u.EntityName,

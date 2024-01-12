@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bupxc6b5js2tr"]
+
+[ext_resource type="Script" path="res://arena_actions/employee_actions/StartTaskAction.cs" id="1_wgiks"]
+
+[resource]
+script = ExtResource("1_wgiks")
+Id = "start_task"
+ActionName = "Start Task"
+EndsTurnAfterUse = true
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = false
+Range = 0
+TargetDisposition = 0
+ActionType = 5
+IndicatorType = 0
+FollowEntity = false
+FocusEntity = false
+RotateToFaceEntity = false

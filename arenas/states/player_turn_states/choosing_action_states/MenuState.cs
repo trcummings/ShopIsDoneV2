@@ -108,7 +108,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             {
                 case ArenaAction.ActionTypes.Null:
                     {
-                        EmitSignal(nameof(RunActionRequested), action);
+                        EmitSignal(nameof(RunActionRequested), message);
                         break;
                     }
 
@@ -133,6 +133,12 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 case ArenaAction.ActionTypes.Interact:
                     {
                         ChangeState(Consts.States.INTERACT, message);
+                        break;
+                    }
+
+                case ArenaAction.ActionTypes.Task:
+                    {
+                        ChangeState(Consts.States.TASK, message);
                         break;
                     }
             }

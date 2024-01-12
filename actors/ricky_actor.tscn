@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://b7n2nvaxotrvp"]
+[gd_scene load_steps=45 format=3 uid="uid://b7n2nvaxotrvp"]
 
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_fe38l"]
 [ext_resource type="PackedScene" uid="uid://bfvclquu5ftth" path="res://render/employees/ricky/ricky_model.tscn" id="2"]
@@ -24,7 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="20_y8124"]
 [ext_resource type="Script" path="res://action_points/EmployeeDebtDamageHandler.cs" id="21_yami5"]
 [ext_resource type="Script" path="res://action_points/BasicDeathHandler.cs" id="22_qdagb"]
-[ext_resource type="Script" path="res://tasks/TaskHandler.cs" id="23_jmh0n"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="24_i5ygc"]
 [ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://arena_actions/employee_actions/interrupt_task_action.tres" id="25_urpeq"]
 [ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="26_wtwuy"]
@@ -41,6 +40,8 @@
 [ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="37_5hku5"]
 [ext_resource type="PackedScene" uid="uid://c51x12itwmxoa" path="res://widgets/entity_widgets/alert_effect.tscn" id="37_o8x40"]
 [ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="38_wgaie"]
+[ext_resource type="PackedScene" uid="uid://cd50jq54ec7cv" path="res://tasks/task_handler.tscn" id="41_2r2ga"]
+[ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="42_se0x0"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
@@ -68,7 +69,7 @@ script = ExtResource("3_plocb")
 
 [node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("4_qed56")
-_StateHandler = NodePath(".")
+_StateHandler = NodePath("../../StateHandler")
 
 [node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_InteractableHandler")]
 script = ExtResource("4_80sfp")
@@ -206,11 +207,6 @@ _StateHandler = NodePath("../../StateHandler")
 script = ExtResource("22_qdagb")
 _StateHandler = NodePath("../StateHandler")
 
-[node name="TaskHandler" type="Node" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler")]
-script = ExtResource("23_jmh0n")
-_StateHandler = NodePath("../StateHandler")
-_ActionPointHandler = NodePath("../ActionPointHandler")
-
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("24_i5ygc")
 Actions = [ExtResource("25_urpeq"), ExtResource("26_wtwuy"), ExtResource("27_qr0p6"), ExtResource("28_t1vry"), ExtResource("29_orafb")]
@@ -254,6 +250,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12
 [node name="AlertEffect" parent="WidgetPoint" instance=ExtResource("37_o8x40")]
 
 [node name="PopupLabel" parent="WidgetPoint" instance=ExtResource("38_wgaie")]
+
+[node name="TaskHandler" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler") instance=ExtResource("41_2r2ga")]
+_StateHandler = NodePath("../StateHandler")
+_ActionPointHandler = NodePath("../ActionPointHandler")
+
+[node name="UnitInteractionHandler" parent="." instance=ExtResource("42_se0x0")]
 
 [connection signal="Footstep" from="RickyModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]

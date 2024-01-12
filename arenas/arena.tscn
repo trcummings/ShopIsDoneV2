@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=57 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -26,7 +26,8 @@
 [ext_resource type="Script" path="res://arenas/states/battle_states/PlayerTurnBattleState.cs" id="10_hv83v"]
 [ext_resource type="Script" path="res://arenas/UnitDeathService.cs" id="10_y7i7b"]
 [ext_resource type="Script" path="res://conditions/ConditionsService.cs" id="11_jvwpy"]
-[ext_resource type="Script" path="res://arena_interactions/UnitInteractionService.cs" id="12_uorcu"]
+[ext_resource type="PackedScene" uid="uid://b4l5kgrgwaeep" path="res://arena_interactions/unit_interaction_service.tscn" id="12_i1lmg"]
+[ext_resource type="PackedScene" uid="uid://bd6cool0kn4p3" path="res://tasks/unit_task_service.tscn" id="13_dj0cl"]
 [ext_resource type="Script" path="res://arenas/meddling/ActionMeddler.cs" id="13_rb63x"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/ChoosingActionState.cs" id="14_rj6r3"]
 [ext_resource type="PackedScene" uid="uid://2ptpw2u53fdh" path="res://arenas/states/player_turn_states/choosing_unit_state.tscn" id="15_hbm50"]
@@ -43,6 +44,7 @@
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/InteractState.cs" id="29_22p7l"]
 [ext_resource type="Script" path="res://util/ControlTweener.cs" id="32_b7vkh"]
 [ext_resource type="PackedScene" uid="uid://dqw2sf0ivpiqj" path="res://arenas/turn_counter/turns_remaining_panel.tscn" id="33_otw68"]
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/TaskState.cs" id="33_pf6p2"]
 [ext_resource type="PackedScene" uid="uid://jemifixdagp1" path="res://arenas/ui/player_unit/player_unit_ui_container.tscn" id="35_gpbff"]
 [ext_resource type="PackedScene" uid="uid://bgrl3b7hwon66" path="res://arenas/ui/end_player_turn_ui.tscn" id="36_nf6kd"]
 [ext_resource type="PackedScene" uid="uid://fh6c0ylvm7qx" path="res://arenas/ui/confirm_end_turn_popup.tscn" id="38_1enao"]
@@ -62,7 +64,7 @@ bg_color = Color(0.298039, 0.298039, 0.298039, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uec0k"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_EffortMeterService", "_ScriptQueueService", "_OutcomeService", "_UnitDeathService", "_ConditionsService", "_UnitInteractionService", "_ActionMeddler") groups=["arena"]]
+[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_EffortMeterService", "_ScriptQueueService", "_OutcomeService", "_UnitDeathService", "_ConditionsService", "_UnitInteractionService", "_UnitTaskService", "_ActionMeddler") groups=["arena"]]
 script = ExtResource("1_loukv")
 _ArenaStateMachine = NodePath("ArenaStateMachine")
 _TileManager = NodePath("Tiles")
@@ -74,6 +76,7 @@ _OutcomeService = NodePath("Services/ArenaOutcomeService")
 _UnitDeathService = NodePath("Services/UnitDeathService")
 _ConditionsService = NodePath("Services/ConditionsService")
 _UnitInteractionService = NodePath("Services/UnitInteractionService")
+_UnitTaskService = NodePath("Services/UnitTaskService")
 _ActionMeddler = NodePath("Services/ActionMeddler")
 metadata/_edit_lock_ = true
 
@@ -118,8 +121,9 @@ script = ExtResource("10_y7i7b")
 [node name="ConditionsService" type="Node" parent="Services"]
 script = ExtResource("11_jvwpy")
 
-[node name="UnitInteractionService" type="Node" parent="Services"]
-script = ExtResource("12_uorcu")
+[node name="UnitInteractionService" parent="Services" instance=ExtResource("12_i1lmg")]
+
+[node name="UnitTaskService" parent="Services" instance=ExtResource("13_dj0cl")]
 
 [node name="ActionMeddler" type="Node" parent="Services"]
 script = ExtResource("13_rb63x")
@@ -217,6 +221,10 @@ _OptionsMenu = NodePath("../../../../../../../../UILayer/ActionMenuContainer/Mar
 [node name="Interact" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitInteractionService")]
 script = ExtResource("29_22p7l")
 _UnitInteractionService = NodePath("../../../../../../../../Services/UnitInteractionService")
+
+[node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService")]
+script = ExtResource("33_pf6p2")
+_UnitTaskService = NodePath("../../../../../../../../Services/UnitTaskService")
 
 [node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionService", "_PlayerUnitService")]
 script = ExtResource("19_3o4ep")

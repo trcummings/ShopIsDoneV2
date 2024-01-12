@@ -7,15 +7,15 @@ using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Widgets;
 using ShopIsDone.Utils.Extensions;
 
-namespace ShopIsDone.ArenaInteractions
+namespace ShopIsDone.Tasks
 {
-	public partial class UnitInteractionService : Node, IService
+    public partial class UnitTaskService : Node, IService
     {
         [Signal]
-        public delegate void SelectedInteractionEventHandler(InteractionComponent interaction);
+        public delegate void SelectedInteractionEventHandler(TaskComponent task);
 
         [Signal]
-        public delegate void ConfirmedInteractionEventHandler(InteractionComponent interaction);
+        public delegate void ConfirmedInteractionEventHandler(TaskComponent task);
 
         [Signal]
         public delegate void CanceledInteractionEventHandler();
@@ -29,8 +29,8 @@ namespace ShopIsDone.ArenaInteractions
         // State vars
         private Vector3 _InitialPawnFacing;
         private LevelEntity _SelectedUnit;
-        private Array<InteractionComponent> _Interactions = new Array<InteractionComponent>();
-        private InteractionComponent _SelectedInteraction;
+        private Array<TaskComponent> _Tasks = new Array<TaskComponent>();
+        private TaskComponent _SelectedTask;
 
         public override void _Ready()
         {
@@ -41,7 +41,7 @@ namespace ShopIsDone.ArenaInteractions
         }
 
         public void Activate(LevelEntity selectedUnit)
-		{
+        {
             // Inject
             InjectionProvider.Inject(this);
 
@@ -54,12 +54,12 @@ namespace ShopIsDone.ArenaInteractions
             // Get all interactions in range
             // NB: This should always be more than 0 because otherwise we couldn't
             // have gotten here
-            _Interactions = _SelectedUnit
-                .GetComponent<UnitInteractionHandler>()
-                .GetInteractionsInRange();
+            _Tasks = _SelectedUnit
+                .GetComponent<TaskHandler>()
+                .GetTasksInRange();
 
             // Select the first one
-            SelectInteractable(_Interactions.First());
+            SelectInteractable(_Tasks.First());
 
             // Allow processing
             SetProcess(true);
@@ -78,14 +78,14 @@ namespace ShopIsDone.ArenaInteractions
             if (Input.IsActionJustPressed("ui_accept"))
             {
                 // If the interaction is not available, emit invalid signal
-                if (!_SelectedInteraction.Entity.IsActive())
+                if (!_SelectedTask.Entity.IsActive())
                 {
                     EmitSignal(nameof(InvalidConfirmation));
                     return;
                 }
 
                 // Emit a confirmation signal
-                EmitSignal(nameof(ConfirmedInteraction), _SelectedInteraction);
+                EmitSignal(nameof(ConfirmedInteraction), _SelectedTask);
                 return;
             }
 
@@ -104,27 +104,27 @@ namespace ShopIsDone.ArenaInteractions
             if (Input.IsActionJustPressed("move_left"))
             {
                 // Get previous interactable in list
-                var selectedIdx = _Interactions.IndexOf(_SelectedInteraction);
-                var prevInteractable = _Interactions.SelectCircular(selectedIdx, -1);
+                var selectedIdx = _Tasks.IndexOf(_SelectedTask);
+                var prevInteractable = _Tasks.SelectCircular(selectedIdx, -1);
 
                 // If it's not the same as the previous interactable, select it
-                if (prevInteractable != _SelectedInteraction) SelectInteractable(prevInteractable);
+                if (prevInteractable != _SelectedTask) SelectInteractable(prevInteractable);
                 return;
             }
 
             if (Input.IsActionJustPressed("move_right"))
             {
                 // Get next interactable in list
-                var selectedIdx = _Interactions.IndexOf(_SelectedInteraction);
-                var nextInteractable = _Interactions.SelectCircular(selectedIdx, 1);
+                var selectedIdx = _Tasks.IndexOf(_SelectedTask);
+                var nextInteractable = _Tasks.SelectCircular(selectedIdx, 1);
 
                 // If it's not the same as the previous interactable, select it
-                if (nextInteractable != _SelectedInteraction) SelectInteractable(nextInteractable);
+                if (nextInteractable != _SelectedTask) SelectInteractable(nextInteractable);
                 return;
             }
         }
 
-        private void SelectInteractable(InteractionComponent interaction)
+        private void SelectInteractable(TaskComponent task)
         {
             //    // Cancel the current diff
             //    CancelApDiff();
@@ -132,7 +132,7 @@ namespace ShopIsDone.ArenaInteractions
             //    // Hide the current interactable UI
             //    _InteractableUIContainer.Hide();
             // Set the interactable as the selected interaction
-            _SelectedInteraction = interaction;
+            _SelectedTask = task;
             //    // Activate its relevant UI
             //    _InteractableUIContainer.SelectInteractable(_SelectedInteractable);
             //    // Show it
@@ -152,14 +152,14 @@ namespace ShopIsDone.ArenaInteractions
             //    else _CycleInteractionsUI.Hide();
 
             // Point the finger cursor at the interaction
-            var destination = _SelectedInteraction.Entity.GlobalPosition;
+            var destination = _SelectedTask.Entity.GlobalPosition;
             _FingerCursor.PointCursorAt(destination, destination + (Vector3.Up * 2));
 
             // Face the pawn towards the interaction
             if (destination.IsEqualApprox(_SelectedUnit.GlobalPosition))
             {
                 // Get the closest interaction tile
-                var closestTile = _SelectedInteraction.GetClosestSelectableTile(_SelectedUnit.GlobalPosition);
+                var closestTile = _SelectedTask.GetClosestTaskTile(_SelectedUnit.GlobalPosition);
                 _SelectedUnit.FacingDirection = _SelectedUnit.GetFacingDirTowards(closestTile.GlobalPosition);
             }
 

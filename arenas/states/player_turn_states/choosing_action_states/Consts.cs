@@ -7,6 +7,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
     {
         public const string ACTION_KEY = "Action";
         public const string INTERACTION_KEY = "Interaction";
+        public const string TASK_KEY = "Task";
 
         public static class States
         {
@@ -16,6 +17,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             public const string MOVE = "Move";
             public const string TARGETING = "Targeting";
             public const string INTERACT = "Interact";
+            public const string TASK = "Task";
         }
     }
 }
