@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd50jq54ec7cv"]
+
+[ext_resource type="Script" path="res://tasks/TaskHandler.cs" id="1_nincc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ln83t"]
+
+[node name="TaskHandler" type="Node3D" node_paths=PackedStringArray("_TaskDetector")]
+script = ExtResource("1_nincc")
+_TaskDetector = NodePath("TaskDetector")
+
+[node name="TaskDetector" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 8192
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TaskDetector"]
+shape = SubResource("BoxShape3D_ln83t")

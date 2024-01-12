@@ -3,7 +3,7 @@ using ShopIsDone.Tiles;
 
 namespace ShopIsDone.Tasks
 {
-	public partial class SelectTaskArea : ComponentTileArea
+	public partial class TaskSelectorTile : ComponentTileArea
     {
 		public TaskComponent Task;
 	}

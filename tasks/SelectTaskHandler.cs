@@ -15,13 +15,13 @@ namespace ShopIsDone.Tasks
 
         // Selectable tiles that associate the entity to where it can be
         // selected on the board
-        protected Array<SelectTaskArea> _SelectableTiles = new Array<SelectTaskArea>();
+        protected Array<TaskSelectorTile> _SelectableTiles = new Array<TaskSelectorTile>();
 
         public override void _Ready()
         {
             base._Ready();
             // Ready selectable tiles
-            _SelectableTiles = GetChildren().OfType<SelectTaskArea>().ToGodotArray();
+            _SelectableTiles = GetChildren().OfType<TaskSelectorTile>().ToGodotArray();
             // Hide em
             foreach (var tile in _SelectableTiles)
             {

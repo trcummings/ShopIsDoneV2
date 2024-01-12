@@ -7,6 +7,10 @@ using ShopIsDone.Utils.Positioning;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Microgames.Outcomes;
 using Godot.Collections;
+using ShopIsDone.Utils.Extensions;
+using ShopIsDone.ArenaInteractions;
+using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Tiles;
 
 namespace ShopIsDone.Tasks
 {
@@ -75,9 +79,45 @@ namespace ShopIsDone.Tasks
         private NodePath _TaskProgressHandlerPath;
         private ITaskProgressHandler _TaskProgressHandler;
 
+        [Export]
+        private SelectTaskHandler _SelectTaskHandler;
+
+        // Tiles that that an task handler can stand on and start a task on
+        protected Array<TaskTile> _TaskTiles = new Array<TaskTile>();
+
         public override void _Ready()
         {
             _TaskProgressHandler = GetNode<ITaskProgressHandler>(_TaskProgressHandlerPath);
+            // Ready interaction tiles
+            _TaskTiles = GetChildren().OfType<TaskTile>().ToGodotArray();
+        }
+
+        public override void Init()
+        {
+            base.Init();
+            // Register tiles with interactables and the associated tile
+            SetInteractionInTiles();
+            // Init finished handler
+            InjectionProvider.Inject(_TaskProgressHandler as Node);
+        }
+
+        public Tile GetClosestTaskTile(Vector3 pos)
+        {
+            return _TaskTiles
+                .OrderBy(iTile => iTile.GlobalPosition.DistanceTo(pos))
+                .Select(iTile => iTile.Tile)
+                .FirstOrDefault();
+        }
+
+        private void SetInteractionInTiles()
+        {
+            // Register tiles with interaction and the associated tile
+            foreach (var iTile in _TaskTiles)
+            {
+                iTile.Task = this;
+                // Hide them
+                iTile.Hide();
+            }
         }
 
         public bool IsTaskComplete()

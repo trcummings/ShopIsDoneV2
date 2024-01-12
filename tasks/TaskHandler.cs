@@ -5,6 +5,9 @@ using ShopIsDone.EntityStates;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using StateConsts = ShopIsDone.EntityStates.Consts;
+using Godot.Collections;
+using System.Linq;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Tasks
 {
@@ -17,6 +20,9 @@ namespace ShopIsDone.Tasks
 
         [Export]
         private ActionPointHandler _ActionPointHandler;
+
+        [Export]
+        private Area3D _TaskDetector;
 
         public TaskComponent CurrentTask { get { return _CurrentTask; } }
         private TaskComponent _CurrentTask;
@@ -71,6 +77,27 @@ namespace ShopIsDone.Tasks
         public void CommitAPToTask()
         {
             _ActionPointHandler.SpendAPOnAction(_CurrentTask.APCostPerTurn);
+        }
+
+        public bool HasAvailableTasksInRange()
+        {
+            return _TaskDetector
+                .GetOverlappingAreas()
+                .OfType<TaskSelectorTile>()
+                .Select(tile => tile.Task)
+                .Where(task => task.Entity.IsInArena())
+                .Count() > 0;
+        }
+
+        // Interaction
+        public Array<TaskComponent> GetTasksInRange()
+        {
+            return _TaskDetector
+                .GetOverlappingAreas()
+                .OfType<TaskSelectorTile>()
+                .Select(tile => tile.Task)
+                .Where(task => task.Entity.IsInArena())
+                .ToGodotArray();
         }
     }
 }

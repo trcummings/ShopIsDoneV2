@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=46 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_0yjha"]
@@ -41,16 +41,14 @@
 [ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="31_xx1gf"]
 [ext_resource type="PackedScene" uid="uid://c51x12itwmxoa" path="res://widgets/entity_widgets/alert_effect.tscn" id="32_gdm0m"]
 [ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="33_dnns8"]
-[ext_resource type="Script" path="res://tasks/TaskHandler.cs" id="33_l4ov1"]
-[ext_resource type="Script" path="res://arena_interactions/UnitInteractionHandler.cs" id="43_36cl6"]
+[ext_resource type="PackedScene" uid="uid://cd50jq54ec7cv" path="res://tasks/task_handler.tscn" id="39_7it71"]
+[ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="43_h3he4"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vda16"]
 radius = 0.75
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ln83t"]
 
 [node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine") groups=["entities"]]
 collision_layer = 2
@@ -201,9 +199,8 @@ Id = "help_customer"
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
 _DeathHandlerPath = NodePath("../DeathHandler")
 
-[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_StateHandler")]
+[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("21_4q2q7")
-_TaskHandler = NodePath("../../TaskHandler")
 _StateHandler = NodePath("../../StateHandler")
 
 [node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
@@ -245,8 +242,7 @@ script = ExtResource("23_sv0kt")
 script = ExtResource("31_xx1gf")
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
-[node name="TaskHandler" type="Node" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler")]
-script = ExtResource("33_l4ov1")
+[node name="TaskHandler" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler") instance=ExtResource("39_7it71")]
 _StateHandler = NodePath("../StateHandler")
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
@@ -259,17 +255,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12
 
 [node name="PopupLabel" parent="WidgetPoint" instance=ExtResource("33_dnns8")]
 
-[node name="UnitInteractionHandler" type="Node" parent="." node_paths=PackedStringArray("_InteractionDetector")]
-script = ExtResource("43_36cl6")
-_InteractionDetector = NodePath("../InteractionDetector")
-
-[node name="InteractionDetector" type="Area3D" parent="."]
-collision_layer = 0
-collision_mask = 2048
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionDetector"]
-shape = SubResource("BoxShape3D_ln83t")
+[node name="UnitInteractionHandler" parent="." instance=ExtResource("43_h3he4")]
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]
