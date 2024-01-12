@@ -112,7 +112,7 @@ namespace ShopIsDone.Microgames.DestroyRottenProduce
                     var item = produce[idx];
                     var pos = new Vector2(
                         (j * columnWidth) + halfColumnWidth,
-                        (i * rowHeight) + halfRowHeight
+                        (i * rowHeight) + halfRowHeight + 20
                     );
                     var deg = GD.Randi() % 360;
                     var node = item.Instantiate<BaseProduceItem>();

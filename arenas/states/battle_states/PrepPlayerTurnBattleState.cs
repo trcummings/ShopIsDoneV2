@@ -2,6 +2,8 @@ using Godot;
 using System;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
+using ShopIsDone.Utils.Commands;
+using ShopIsDone.Tasks;
 
 namespace ShopIsDone.Arenas.Battles.States
 {
@@ -13,21 +15,31 @@ namespace ShopIsDone.Arenas.Battles.States
         [Export]
         private UnitTurnService _PlayerUnitTurnService;
 
+        [Export]
+        private TaskService _TaskService;
+
         public override void OnStart(Dictionary<string, Variant> message)
         {
             base.OnStart(message);
 
-            // Update silhouettes
+            var command = new SeriesCommand(
+                // Update silhouettes
 
-            // Refill AP
-            _PlayerUnitTurnService.RefillApToMax();
+                // Refill AP
+                new ActionCommand(_PlayerUnitTurnService.RefillApToMax),
 
-            // Resolve status effects
+                // Resolve status effects
 
-            // Resolve in progress tasks
-
-            // Advance
-            _PhaseManager.AdvanceToNextPhase();
+                // Resolve in progress tasks
+                _TaskService.ResolveInProgressTasks()
+            );
+            // Advance on finished
+            command.Connect(
+                nameof(command.Finished),
+                Callable.From(_PhaseManager.AdvanceToNextPhase),
+                (uint)ConnectFlags.OneShot
+            );
+            command.Execute();
         }
     }
 }

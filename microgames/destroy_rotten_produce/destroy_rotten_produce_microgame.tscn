@@ -2,19 +2,19 @@
 
 [ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://e8gmag0f10wp" path="res://microgames/destroy_rotten_produce/produce_background_pixel.png" id="2"]
-[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/fresh_cabbage.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://j6xx7ks0o4xn" path="res://microgames/destroy_rotten_produce/Produce/fresh_cabbage.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://dpka8jkrj017q" path="res://microgames/destroy_rotten_produce/produce_barrel.png" id="4"]
 [ext_resource type="Script" path="res://microgames/destroy_rotten_produce/DestroyRottenProduceMicrogame.cs" id="5"]
-[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/rotten_cabbage.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/fist.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://bp0c12huld7rg" path="res://microgames/destroy_rotten_produce/Produce/rotten_cabbage.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="8"]
 [ext_resource type="AudioStream" uid="uid://dral5g4c2pqf0" path="res://microgames/common/audio/PUNCH--wariowareclone--punch.wav" id="9"]
 [ext_resource type="Material" uid="uid://gk8cijbp58pc" path="res://microgames/destroy_rotten_produce/fisheye.material" id="9_q11g8"]
 [ext_resource type="AudioStream" uid="uid://b5bcj4km1327f" path="res://microgames/common/audio/WHIFF__353048__deleted_user_6479820__g_whiff_3.mp3" id="10"]
-[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/fresh_broccoli.tscn" id="11"]
-[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/rotten_broccoli.tscn" id="12"]
-[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/rotten_potato.tscn" id="13"]
-[ext_resource type="PackedScene" path="res://microgames/destroy_rotten_produce/Produce/fresh_potato.tscn" id="14"]
+[ext_resource type="PackedScene" uid="uid://cga8ghava7l75" path="res://microgames/destroy_rotten_produce/Produce/fresh_broccoli.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://cc1vhjr67ukaa" path="res://microgames/destroy_rotten_produce/Produce/rotten_broccoli.tscn" id="12"]
+[ext_resource type="PackedScene" uid="uid://dheyoh0brlgj1" path="res://microgames/destroy_rotten_produce/reticule_fist.tscn" id="12_847xf"]
+[ext_resource type="PackedScene" uid="uid://bnlvwgobmqtv7" path="res://microgames/destroy_rotten_produce/Produce/rotten_potato.tscn" id="13"]
+[ext_resource type="PackedScene" uid="uid://dpcy6vbekukq2" path="res://microgames/destroy_rotten_produce/Produce/fresh_potato.tscn" id="14"]
 [ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="15"]
 
 [sub_resource type="RectangleShape2D" id="1"]
@@ -130,7 +130,8 @@ hframes = 2
 vframes = 3
 frame = 1
 
-[node name="ReticuleFist" parent="World" index="2" instance=ExtResource("7")]
+[node name="ReticuleFist" parent="World" index="2" instance=ExtResource("12_847xf")]
+unique_name_in_owner = true
 position = Vector2(470, 470)
 
 [node name="BottomCorner" type="Marker2D" parent="World" index="3"]

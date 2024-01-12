@@ -40,6 +40,9 @@ namespace ShopIsDone.Arenas
         private PlayerUnitService _PlayerUnitService;
 
         [Export]
+        private TaskService _TaskService;
+
+        [Export]
         private EffortMeterService _EffortMeterService;
 
         [Export]
@@ -81,6 +84,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.RegisterService(_TileManager);
             _InjectionProvider.RegisterService(_ActionService);
             _InjectionProvider.RegisterService(_PlayerUnitService);
+            _InjectionProvider.RegisterService(_TaskService);
             _InjectionProvider.RegisterService(_EffortMeterService);
             _InjectionProvider.RegisterService(_ScriptQueueService);
             _InjectionProvider.RegisterService(_OutcomeService);
@@ -92,6 +96,7 @@ namespace ShopIsDone.Arenas
             // Initialize services (with strict order)
             _TileManager.Init();
             _ActionService.Init();
+            _TaskService.Init();
             _UnitDeathService.Init();
             _ConditionsService.Init();
             _ActionMeddler.Init();
@@ -135,6 +140,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider.UnregisterService(_TileManager);
             _InjectionProvider.UnregisterService(_ActionService);
             _InjectionProvider.UnregisterService(_PlayerUnitService);
+            _InjectionProvider.UnregisterService(_TaskService);
             _InjectionProvider.UnregisterService(_EffortMeterService);
             _InjectionProvider.UnregisterService(_ScriptQueueService);
             _InjectionProvider.UnregisterService(_OutcomeService);

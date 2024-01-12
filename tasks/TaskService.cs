@@ -11,9 +11,6 @@ namespace ShopIsDone.Tasks
 {
     public partial class TaskService : Node, IService
     {
-        [Export]
-        public NodePath CameraSystemPath;
-
         [Inject]
         private CameraService _CameraService;
 
@@ -25,7 +22,11 @@ namespace ShopIsDone.Tasks
         public Command ResolveInProgressTasks()
         {
             // Resolve or progress all currently ongoing tasks
-            return new SeriesCommand(GetInProgressTasks().Select(ResolveInProgressTask).ToArray());
+            return new SeriesCommand(
+                GetInProgressTasks()
+                    .Select(ResolveInProgressTask)
+                    .ToArray()
+            );
         }
 
         // Private
@@ -47,7 +48,7 @@ namespace ShopIsDone.Tasks
                 // Center the camera on the first operator
                 new DeferredCommand(() =>
                 {
-                    Node3D firstOperator = (task.Operators[0]?.Entity) as Node3D;
+                    Node3D firstOperator = task.Operators[0]?.Entity;
 
                     return new ConditionalCommand(
                         () => firstOperator != null,
