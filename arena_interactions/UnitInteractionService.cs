@@ -155,11 +155,10 @@ namespace ShopIsDone.ArenaInteractions
             var destination = _SelectedInteraction.Entity.GlobalPosition;
             _FingerCursor.PointCursorAt(destination, destination + (Vector3.Up * 2));
 
-            // Face the pawn towards the interaction
-            if (destination.IsEqualApprox(_SelectedUnit.GlobalPosition))
+            // Face the pawn towards the interaction, if we're not on the same tile
+            var closestTile = _SelectedInteraction.GetClosestInteractionTile(_SelectedUnit.GlobalPosition);
+            if (closestTile.TilemapPosition != _SelectedUnit.TilemapPosition)
             {
-                // Get the closest interaction tile
-                var closestTile = _SelectedInteraction.GetClosestSelectableTile(_SelectedUnit.GlobalPosition);
                 _SelectedUnit.FacingDirection = _SelectedUnit.GetFacingDirTowards(closestTile.GlobalPosition);
             }
 

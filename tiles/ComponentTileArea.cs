@@ -7,8 +7,12 @@ namespace ShopIsDone.Tiles
     // as well as be associated with a specific tile underneath them
     public partial class ComponentTileArea : Area3D
     {
-        [Export]
         private RayCast3D _TileRayCast;
+
+        public override void _Ready()
+        {
+            _TileRayCast = GetNode<RayCast3D>("%TileRayCast");
+        }
 
         // The tile below this node
         public Tile Tile { get { return GetTile(); } }

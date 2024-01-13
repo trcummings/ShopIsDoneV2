@@ -155,11 +155,10 @@ namespace ShopIsDone.Tasks
             var destination = _SelectedTask.Entity.GlobalPosition;
             _FingerCursor.PointCursorAt(destination, destination + (Vector3.Up * 2));
 
-            // Face the pawn towards the interaction
-            if (destination.IsEqualApprox(_SelectedUnit.GlobalPosition))
+            // Face the pawn towards the task, if we're not on the same tile
+            var closestTile = _SelectedTask.GetClosestTaskTile(_SelectedUnit.GlobalPosition);
+            if (closestTile.TilemapPosition != _SelectedUnit.TilemapPosition)
             {
-                // Get the closest interaction tile
-                var closestTile = _SelectedTask.GetClosestTaskTile(_SelectedUnit.GlobalPosition);
                 _SelectedUnit.FacingDirection = _SelectedUnit.GetFacingDirTowards(closestTile.GlobalPosition);
             }
 

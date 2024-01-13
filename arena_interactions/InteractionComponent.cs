@@ -48,7 +48,7 @@ namespace ShopIsDone.ArenaInteractions
             InjectionProvider.Inject(_InteractionFinishedHandler);
         }
 
-        public Tile GetClosestSelectableTile(Vector3 pos)
+        public Tile GetClosestInteractionTile(Vector3 pos)
         {
             return _InteractionTiles
                 .OrderBy(iTile => iTile.GlobalPosition.DistanceTo(pos))

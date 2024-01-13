@@ -11,6 +11,7 @@ using ShopIsDone.Utils.Extensions;
 using ShopIsDone.ArenaInteractions;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Tiles;
+using ShopIsDone.Widgets;
 
 namespace ShopIsDone.Tasks
 {
@@ -24,7 +25,10 @@ namespace ShopIsDone.Tasks
         public delegate void TaskFinishedEventHandler();
 
         [Signal]
-        public delegate void TaskHealthDamagedEventHandler(int amount, int current, int total);
+        public delegate void TaskHealthInitializedEventHandler(int current, int total, float percent);
+
+        [Signal]
+        public delegate void TaskHealthDamagedEventHandler(int amount, int current, int total, float percent);
 
         [Signal]
         public delegate void TaskProgressBeganEventHandler(float duration);
@@ -80,6 +84,9 @@ namespace ShopIsDone.Tasks
         private ITaskProgressHandler _TaskProgressHandler;
 
         [Export]
+        private ProgressBar3D _ProgressBar3D;
+
+        [Export]
         private SelectTaskHandler _SelectTaskHandler;
 
         // Tiles that that an task handler can stand on and start a task on
@@ -90,15 +97,20 @@ namespace ShopIsDone.Tasks
             _TaskProgressHandler = GetNode<ITaskProgressHandler>(_TaskProgressHandlerPath);
             // Ready interaction tiles
             _TaskTiles = GetChildren().OfType<TaskTile>().ToGodotArray();
+            foreach (var tile in _TaskTiles) tile.Hide();
         }
 
         public override void Init()
         {
             base.Init();
-            // Register tiles with interactables and the associated tile
-            SetInteractionInTiles();
+            // Register tiles with task
+            foreach (var iTile in _TaskTiles)  iTile.Task = this;
             // Init finished handler
             InjectionProvider.Inject(_TaskProgressHandler as Node);
+            // Init task health
+            var percent = TaskHealth / (float)MaxTaskHealth * 100;
+            _ProgressBar3D.BarValue = percent;
+            EmitSignal(nameof(TaskHealthInitialized), TaskHealth, MaxTaskHealth, percent);
         }
 
         public Tile GetClosestTaskTile(Vector3 pos)
@@ -107,17 +119,6 @@ namespace ShopIsDone.Tasks
                 .OrderBy(iTile => iTile.GlobalPosition.DistanceTo(pos))
                 .Select(iTile => iTile.Tile)
                 .FirstOrDefault();
-        }
-
-        private void SetInteractionInTiles()
-        {
-            // Register tiles with interaction and the associated tile
-            foreach (var iTile in _TaskTiles)
-            {
-                iTile.Task = this;
-                // Hide them
-                iTile.Hide();
-            }
         }
 
         public bool IsTaskComplete()
@@ -250,7 +251,9 @@ namespace ShopIsDone.Tasks
                 TaskHealth = Mathf.Max(TaskHealth - amount, 0);
 
                 // Emit Signal with damage amount
-                EmitSignal(nameof(TaskHealthDamaged), amount, TaskHealth, MaxTaskHealth);
+                var percent = TaskHealth / (float)MaxTaskHealth * 100;
+                _ProgressBar3D.TweenValue(percent);
+                EmitSignal(nameof(TaskHealthDamaged), amount, TaskHealth, MaxTaskHealth, percent);
             });
         }
 

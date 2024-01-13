@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://xolev31q2oiu"]
+[gd_scene load_steps=14 format=3 uid="uid://xolev31q2oiu"]
 
 [ext_resource type="Script" path="res://tasks/TaskComponent.cs" id="2_xwva2"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="3_uf88g"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://tasks/TaskCompletionHandler.cs" id="4_1kkk2"]
 [ext_resource type="PackedScene" uid="uid://b2p7fh56ojclq" path="res://microgames/destroy_rotten_produce/destroy_rotten_produce_microgame.tscn" id="4_ofh1b"]
 [ext_resource type="PackedScene" uid="uid://cwxwa2f46orap" path="res://entities/vegetable_fridge_task/vegetable_fridge_model.tscn" id="7_8vs0j"]
+[ext_resource type="PackedScene" uid="uid://pocsbafwls6i" path="res://widgets/progress_bar_3d/progress_bar_3d.tscn" id="8_vkmmd"]
+[ext_resource type="PackedScene" uid="uid://0elak5oinr0k" path="res://tasks/task_damage_player.tscn" id="9_c8x2q"]
 [ext_resource type="Script" path="res://tasks/SelectTaskHandler.cs" id="10_ncubc"]
 [ext_resource type="PackedScene" uid="uid://bemfdgy1p2a05" path="res://tasks/task_selector_tile.tscn" id="11_tjfnk"]
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="12"]
@@ -22,6 +24,7 @@ axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
+slide_on_ceiling = false
 Id = "vegetable_fridge"
 EntityName = "Vegetable Fridge"
 
@@ -29,20 +32,22 @@ EntityName = "Vegetable Fridge"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.35, 2.08165e-12)
 shape = SubResource("BoxShape3D_2nsqc")
 
-[node name="TaskComponent" type="Node3D" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler", "_TaskCompletionHandler", "_SelectTaskHandler")]
+[node name="TaskComponent" type="Node3D" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler", "_TaskCompletionHandler", "_ProgressBar3D", "_SelectTaskHandler")]
 script = ExtResource("2_xwva2")
 TaskHealth = 2
 OperatorsAllowed = 2
 _MicrogameHandler = NodePath("../MicrogameHandler")
 _TaskCompletionHandler = NodePath("CompletionHandler")
 _TaskProgressHandlerPath = NodePath("ProgressHandler")
+_ProgressBar3D = NodePath("ProgressBar3D")
 _SelectTaskHandler = NodePath("SelectTaskHandler")
 
 [node name="TaskTile" parent="TaskComponent" index="0" instance=ExtResource("3_yoyso")]
+monitoring = true
 
-[node name="TaskTile2" parent="TaskComponent" index="1" node_paths=PackedStringArray("_TileRayCast") instance=ExtResource("3_yoyso")]
+[node name="TaskTile2" parent="TaskComponent" index="1" instance=ExtResource("3_yoyso")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
-_TileRayCast = NodePath("../TaskTile/TileRayCast")
+monitoring = true
 
 [node name="ProgressHandler" type="Node" parent="TaskComponent" index="2"]
 script = ExtResource("3_y75cw")
@@ -57,12 +62,14 @@ _Task = NodePath("..")
 
 [node name="TaskSelectorTile" parent="TaskComponent/SelectTaskHandler" index="0" instance=ExtResource("11_tjfnk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-monitoring = false
 
-[node name="TaskSelectorTile2" parent="TaskComponent/SelectTaskHandler" index="1" node_paths=PackedStringArray("_TileRayCast") instance=ExtResource("11_tjfnk")]
+[node name="TaskSelectorTile2" parent="TaskComponent/SelectTaskHandler" index="1" instance=ExtResource("11_tjfnk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
-monitoring = false
-_TileRayCast = NodePath("../TaskSelectorTile/TileRayCast")
+
+[node name="ProgressBar3D" parent="TaskComponent" index="5" instance=ExtResource("8_vkmmd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0)
+
+[node name="TaskDamagePlayer" parent="TaskComponent" index="6" instance=ExtResource("9_c8x2q")]
 
 [node name="MicrogameHandler" type="Node" parent="." index="4"]
 script = ExtResource("3_uf88g")
@@ -78,3 +85,6 @@ remote_path = NodePath("../../CollisionShape")
 use_global_coordinates = false
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="VegetableFridgeModel" method="SetFacingDir"]
+[connection signal="TaskHealthDamaged" from="TaskComponent" to="TaskComponent/TaskDamagePlayer" method="play" unbinds=4]
+[connection signal="TaskProgressBegan" from="TaskComponent" to="TaskComponent/ProgressBar3D" method="FadeIn"]
+[connection signal="TaskProgressEnded" from="TaskComponent" to="TaskComponent/ProgressBar3D" method="FadeOut"]

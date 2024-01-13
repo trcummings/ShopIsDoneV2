@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://actors/interactables/InteractableHandler.cs" id="11_7ska3"]
 [ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="11_862jn"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="11_uh075"]
+[ext_resource type="PackedScene" uid="uid://bfkpwxhh1pcdn" path="res://actors/interactables/interactable_detector.tscn" id="13_vx5xu"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="15_7e1m5"]
 [ext_resource type="Script" path="res://entity_states/employee_states/HelpCustomerEntityState.cs" id="16_5ve4v"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="16_87xgg"]
@@ -46,9 +47,6 @@
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="43_h3he4"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
-radius = 0.75
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_vda16"]
 radius = 0.75
 
 [node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine") groups=["entities"]]
@@ -114,18 +112,11 @@ one_shot = true
 
 [node name="InteractableHandler" type="Node" parent="." node_paths=PackedStringArray("_InteractableDetector")]
 script = ExtResource("11_7ska3")
-_InteractableDetector = NodePath("../ActorFloorIndicator/Pivot/InteractableArea")
+_InteractableDetector = NodePath("../ActorFloorIndicator/Pivot/InteractableDetector")
 
 [node name="ActorFloorIndicator" parent="." instance=ExtResource("7")]
 
-[node name="InteractableArea" type="Area3D" parent="ActorFloorIndicator/Pivot" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, -0.75)
-collision_layer = 0
-collision_mask = 4
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ActorFloorIndicator/Pivot/InteractableArea"]
-shape = SubResource("CylinderShape3D_vda16")
+[node name="InteractableDetector" parent="ActorFloorIndicator/Pivot" index="1" instance=ExtResource("13_vx5xu")]
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 

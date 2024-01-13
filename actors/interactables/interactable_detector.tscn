@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfkpwxhh1pcdn"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vda16"]
+radius = 0.75
+
+[node name="InteractableDetector" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, -0.75)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_vda16")
