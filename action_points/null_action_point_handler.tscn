@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsxne3olmt1ol"]
+
+[ext_resource type="Script" path="res://action_points/ActionPointHandler.cs" id="1_yqjhi"]
+[ext_resource type="Script" path="res://action_points/null_handlers/EvasionHandler.cs" id="2_0sfh5"]
+[ext_resource type="Script" path="res://action_points/null_handlers/DrainHandler.cs" id="3_561al"]
+[ext_resource type="Script" path="res://action_points/null_handlers/DebtDamageHandler.cs" id="4_pe1j4"]
+[ext_resource type="Script" path="res://action_points/null_handlers/DeathHandler.cs" id="5_822yk"]
+
+[node name="NullActionPointHandler" type="Node"]
+script = ExtResource("1_yqjhi")
+_EvasionHandlerPath = NodePath("EvasionHandler")
+_DrainHandlerPath = NodePath("DrainHandler")
+_DebtDamageHandlerPath = NodePath("DebtDamageHandler")
+_DeathHandlerPath = NodePath("DeathHandler")
+
+[node name="EvasionHandler" type="Node" parent="."]
+script = ExtResource("2_0sfh5")
+
+[node name="DrainHandler" type="Node" parent="."]
+script = ExtResource("3_561al")
+
+[node name="DebtDamageHandler" type="Node" parent="."]
+script = ExtResource("4_pe1j4")
+
+[node name="DeathHandler" type="Node" parent="."]
+script = ExtResource("5_822yk")

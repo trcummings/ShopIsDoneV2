@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4ioplxcvprpo"]
+[gd_scene load_steps=8 format=3 uid="uid://b4ioplxcvprpo"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_8jbph"]
 [ext_resource type="PackedScene" uid="uid://bbx7tkqlpdpv7" path="res://entities/behind_spirit/behind_spirit_model.tscn" id="2_voxxa"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="3_w83lb"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="4_qg682"]
+[ext_resource type="PackedScene" uid="uid://bsxne3olmt1ol" path="res://action_points/null_action_point_handler.tscn" id="5_e1om4"]
+[ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="6_mvuig"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2m1rl"]
 radius = 0.75
@@ -16,8 +18,9 @@ shape = SubResource("CapsuleShape3D_2m1rl")
 
 [node name="BehindSpiritModel" parent="." index="3" instance=ExtResource("2_voxxa")]
 
-[node name="StateHandler" type="Node" parent="." index="4"]
+[node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState")]
 script = ExtResource("3_w83lb")
+InitialState = NodePath("Lurking")
 
 [node name="Idle" type="Node" parent="StateHandler" index="0"]
 script = ExtResource("4_qg682")
@@ -45,5 +48,11 @@ _WaitForEnterAnimToFinish = false
 _EnterAnimName = "Lurking"
 Id = "lurking"
 _IsInArena = false
+
+[node name="NullActionPointHandler" parent="." index="5" instance=ExtResource("5_e1om4")]
+
+[node name="ActionHandler" type="Node" parent="." index="6" node_paths=PackedStringArray("_ActionPointHandler")]
+script = ExtResource("6_mvuig")
+_ActionPointHandler = NodePath("../NullActionPointHandler")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="BehindSpiritModel" method="SetFacingDir"]
