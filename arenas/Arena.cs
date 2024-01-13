@@ -78,7 +78,7 @@ namespace ShopIsDone.Arenas
             _InjectionProvider = InjectionProvider.GetProvider(this);
         }
 
-        public void Init()
+        public async void Init()
         {
             // Register services
             _InjectionProvider.RegisterService(_TileManager);
@@ -119,6 +119,11 @@ namespace ShopIsDone.Arenas
 
             // Add player units to player unit service
             _PlayerUnitService.Init(allUnits.ToList<LevelEntity>());
+
+            // Update all tiles
+            _TileManager.UpdateTiles();
+
+            await ToSignal(GetTree(), "process_frame");
 
             // Init all entities under the arena
             var allEntities = GetTree()
