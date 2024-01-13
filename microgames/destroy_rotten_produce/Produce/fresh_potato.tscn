@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://b2y1raynl2n07" path="res://microgames/destroy_rotten_produce/rotten_produce_sheet.png" id="2"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
-radius = 8.0
-height = 16.0
+radius = 52.0
+height = 140.0
 
 [sub_resource type="AtlasTexture" id="2"]
 atlas = ExtResource("2")
