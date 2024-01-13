@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://b7n2nvaxotrvp"]
+[gd_scene load_steps=47 format=3 uid="uid://b7n2nvaxotrvp"]
 
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_fe38l"]
 [ext_resource type="PackedScene" uid="uid://bfvclquu5ftth" path="res://render/employees/ricky/ricky_model.tscn" id="2"]
@@ -33,6 +33,7 @@
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="29_orafb"]
 [ext_resource type="Resource" uid="uid://bupxc6b5js2tr" path="res://arena_actions/employee_actions/start_task_action.tres" id="29_ykbnf"]
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="30_fjo4i"]
+[ext_resource type="Resource" uid="uid://dhfcjhk223e7o" path="res://arena_actions/actions/interact_action.tres" id="31_763qf"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="31_gb6an"]
 [ext_resource type="Script" path="res://tiles/UnitTileMoveValidator.cs" id="32_1voga"]
 [ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="33_3xyj5"]
@@ -48,7 +49,7 @@
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.75
 
-[node name="RickyActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine")]
+[node name="RickyActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine") groups=["entities"]]
 collision_layer = 2
 script = ExtResource("1_fe38l")
 _ActorAnimator = NodePath("ActorAnimator")
@@ -202,7 +203,7 @@ _StateHandler = NodePath("../StateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("24_i5ygc")
-Actions = [ExtResource("25_urpeq"), ExtResource("26_wtwuy"), ExtResource("27_qr0p6"), ExtResource("29_ykbnf"), ExtResource("28_t1vry"), ExtResource("29_orafb")]
+Actions = [ExtResource("25_urpeq"), ExtResource("26_wtwuy"), ExtResource("27_qr0p6"), ExtResource("29_ykbnf"), ExtResource("31_763qf"), ExtResource("28_t1vry"), ExtResource("29_orafb")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_CommandProcessor", "_MoveValidator", "_SkipTileStrategy")]
