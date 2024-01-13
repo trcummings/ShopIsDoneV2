@@ -183,6 +183,7 @@ Id = "hurt"
 [node name="DoTask" type="Node" parent="StateHandler"]
 script = ExtResource("15_7e1m5")
 _ModelPath = NodePath("../../HaskellModel")
+_WaitForEnterAnimToFinish = false
 _EnterAnimName = "do_task"
 Id = "do_task"
 
