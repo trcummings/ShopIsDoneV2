@@ -26,6 +26,8 @@ namespace ShopIsDone.Models.IsometricModels
         [Export]
         protected AnimationPlayer _AnimPlayer;
 
+        private string _PrevAnimation;
+
         public override void _Ready()
         {
             base._Ready();
@@ -41,8 +43,21 @@ namespace ShopIsDone.Models.IsometricModels
         public async virtual void PlayAnimation(string animName)
         {
             // Main animation player
-            if (_AnimPlayer.HasAnimation(animName) && _AnimPlayer.CurrentAnimation != animName)
+            if (
+                _AnimPlayer.HasAnimation(animName) &&
+                !string.IsNullOrEmpty(animName) &&
+                _AnimPlayer.CurrentAnimation != animName &&
+                // HACK: This stops non-looping animations from playing over and
+                // over again each time the view direction changes. However, if
+                // we want to play the same animation over and over again, and
+                // it's not in the looping animations, this will preclude that.
+                // An alternate approach is to simply define a new animation that
+                // can be safely looped in every view direction and add it to
+                // whatever state the entity will be in
+                (LoopingAnimations.Contains(animName) || animName != _PrevAnimation)
+            )
             {
+                _PrevAnimation = animName;
                 _AnimPlayer.Play(animName);
             }
             else
