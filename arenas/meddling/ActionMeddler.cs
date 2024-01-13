@@ -36,7 +36,7 @@ namespace ShopIsDone.Arenas.Meddling
 			// Ignore if not active
 			if (!_IsActive) return next;
 
-            // Otherwise, find the first meddle whose flag we can evaluate, and
+			// Otherwise, find the first meddle whose flag we can evaluate, and
 			// if it passes, meddle
             return _Meddles
 				.ToList()

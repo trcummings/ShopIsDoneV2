@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4ioplxcvprpo"]
+[gd_scene load_steps=12 format=3 uid="uid://b4ioplxcvprpo"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_8jbph"]
 [ext_resource type="PackedScene" uid="uid://bbx7tkqlpdpv7" path="res://entities/behind_spirit/behind_spirit_model.tscn" id="2_voxxa"]
@@ -6,11 +6,19 @@
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="4_qg682"]
 [ext_resource type="PackedScene" uid="uid://bsxne3olmt1ol" path="res://action_points/null_action_point_handler.tscn" id="5_e1om4"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="6_mvuig"]
+[ext_resource type="Resource" uid="uid://d3neuyug6j7hf" path="res://entities/behind_spirit/lurking_strike_action.tres" id="7_363o1"]
+[ext_resource type="Script" path="res://entities/behind_spirit/BehindSpiritOutcomeHandler.cs" id="7_p5epq"]
+[ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="8_hos8a"]
+[ext_resource type="PackedScene" uid="uid://cqh47hj66pqly" path="res://microgames/check_in_back/check_in_back_microgame.tscn" id="10_rjhkd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2m1rl"]
 radius = 0.75
 
 [node name="BehindSpirit" instance=ExtResource("1_8jbph")]
+collision_layer = 0
+collision_mask = 0
+Id = "behind_spirit"
+EntityName = "Ushirogami"
 
 [node name="CollisionShape" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
@@ -53,6 +61,15 @@ _IsInArena = false
 
 [node name="ActionHandler" type="Node" parent="." index="6" node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("6_mvuig")
+Actions = [ExtResource("7_363o1")]
 _ActionPointHandler = NodePath("../NullActionPointHandler")
+
+[node name="OutcomeHandler" type="Node" parent="." index="7"]
+script = ExtResource("7_p5epq")
+
+[node name="MicrogameHandler" type="Node" parent="." index="8"]
+script = ExtResource("8_hos8a")
+MicrogameScene = ExtResource("10_rjhkd")
+_OutcomeHandlerPath = NodePath("../OutcomeHandler")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="BehindSpiritModel" method="SetFacingDir"]
