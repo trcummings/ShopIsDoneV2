@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4ioplxcvprpo"]
+
+[ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_8jbph"]
+[ext_resource type="PackedScene" uid="uid://bbx7tkqlpdpv7" path="res://entities/behind_spirit/behind_spirit_model.tscn" id="2_voxxa"]
+[ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="3_w83lb"]
+[ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="4_qg682"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2m1rl"]
+radius = 0.75
+
+[node name="BehindSpirit" instance=ExtResource("1_8jbph")]
+
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
+shape = SubResource("CapsuleShape3D_2m1rl")
+
+[node name="BehindSpiritModel" parent="." index="3" instance=ExtResource("2_voxxa")]
+
+[node name="StateHandler" type="Node" parent="." index="4"]
+script = ExtResource("3_w83lb")
+
+[node name="Idle" type="Node" parent="StateHandler" index="0"]
+script = ExtResource("4_qg682")
+_ModelPath = NodePath("../../BehindSpiritModel")
+_WaitForEnterAnimToFinish = false
+_EnterAnimName = "Idle"
+Id = "idle"
+
+[node name="Emerge" type="Node" parent="StateHandler" index="1"]
+script = ExtResource("4_qg682")
+_ModelPath = NodePath("../../BehindSpiritModel")
+_EnterAnimName = "Emerge"
+Id = "emerge"
+
+[node name="Sink" type="Node" parent="StateHandler" index="2"]
+script = ExtResource("4_qg682")
+_ModelPath = NodePath("../../BehindSpiritModel")
+_EnterAnimName = "Sink"
+Id = "sink"
+
+[node name="Lurking" type="Node" parent="StateHandler" index="3"]
+script = ExtResource("4_qg682")
+_ModelPath = NodePath("../../BehindSpiritModel")
+_WaitForEnterAnimToFinish = false
+_EnterAnimName = "Lurking"
+Id = "lurking"
+_IsInArena = false
+
+[connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="BehindSpiritModel" method="SetFacingDir"]

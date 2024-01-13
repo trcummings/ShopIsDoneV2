@@ -12,14 +12,13 @@ namespace ShopIsDone.Entities.PuppetCustomers
         [Signal]
         public delegate void DisappearedEventHandler();
 
-        // Nodes
-        [Export]
         private AnimationPlayer _AnimPlayer;
 
         public override void _Ready()
         {
             // Initially hide
             Hide();
+            _AnimPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
             _AnimPlayer.Connect("animation_finished", new Callable(this, nameof(OnAnimFinished)));
         }
 
