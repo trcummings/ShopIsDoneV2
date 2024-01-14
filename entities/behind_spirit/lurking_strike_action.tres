@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://d3neuyug6j7hf"]
+
+[ext_resource type="Script" path="res://entities/behind_spirit/LurkingStrikeAction.cs" id="1_1pgl1"]
+
+[resource]
+script = ExtResource("1_1pgl1")
+Id = "lurking_strike"
+ActionName = "Lurking Strike"
+EndsTurnAfterUse = false
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = false
+Range = 0
+TargetDisposition = 2
+ActionType = 0
+IndicatorType = 0
+FollowEntity = true
+FocusEntity = true
+RotateToFaceEntity = true

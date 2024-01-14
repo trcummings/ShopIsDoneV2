@@ -106,6 +106,11 @@ namespace ShopIsDone.Cameras
             _Camera.VOffset = offset.Y;
         }
 
+        public void MakeCurrent()
+        {
+            _Camera.MakeCurrent();
+        }
+
         public (Vector3, Vector3) GetCameraVectors()
         {
             // Get camera forward vector from basis with a vertical 0 component

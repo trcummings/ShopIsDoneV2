@@ -8,6 +8,7 @@ using ShopIsDone.ActionPoints;
 using static ShopIsDone.Actions.TeamHandler;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.ArenaInteractions;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Arenas
 {
@@ -29,8 +30,8 @@ namespace ShopIsDone.Arenas
                 .Where(e => e.HasComponent<ActionHandler>())
                 .Where(e => e.HasComponent<ActionPointHandler>())
                 //.Where(e => e.HasComponent<StatusEffectHandler>())
-                // Make sure it's in the arena
-                .Where(e => e.IsInArena())
+                // Make sure it's active
+                .Where(e => e.IsActive())
                 // Make sure it's enabled
                 .Where(e => e.Enabled);
         }

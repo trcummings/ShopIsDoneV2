@@ -12,21 +12,18 @@ namespace ShopIsDone.Entities.PuppetCustomers
         [Signal]
         public delegate void DisappearedEventHandler();
 
-        // Nodes
-        [Export]
         private AnimationPlayer _AnimPlayer;
 
         public override void _Ready()
         {
             // Initially hide
-            Hide();
+            _AnimPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
             _AnimPlayer.Connect("animation_finished", new Callable(this, nameof(OnAnimFinished)));
         }
 
         public void Appear()
         {
             _AnimPlayer.Play("Appear");
-            Show();
         }
 
         public void Disappear()
@@ -40,7 +37,6 @@ namespace ShopIsDone.Entities.PuppetCustomers
             else if (animName == "Disappear")
             {
                 EmitSignal(nameof(Disappeared));
-                Hide();
             }
         }
     }
