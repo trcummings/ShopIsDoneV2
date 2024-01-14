@@ -60,13 +60,21 @@ namespace ShopIsDone.Arenas.Battles.States
             RunQueue();
         }
 
+        private bool CurrentCustomerCanStillAct()
+        {
+            return
+                _CurrentCustomer != null &&
+                _CurrentCustomer.Entity.IsActive() &&
+                _CurrentCustomer.CanStillAct();
+        }
+
         private void RunQueue()
         {
             // Only run the queue if this state has been initialized
             if (!HasBeenInitialized) return;
 
             // As long as there's still customers that can act, run the queue
-            if (_Customers.Count > 0 || (_CurrentCustomer != null && _CurrentCustomer.CanStillAct()))
+            if (_Customers.Count > 0 || CurrentCustomerCanStillAct())
             {
                 // Have each unit Think at the beginning of each action loop
                 foreach (var customer in _Customers) customer.Think();
@@ -75,7 +83,7 @@ namespace ShopIsDone.Arenas.Battles.States
                 if (_CurrentCustomer == null) _CurrentCustomer = _Customers.Dequeue();
 
                 // If our current customer can still act, then act
-                if (_CurrentCustomer.CanStillAct() && _CurrentCustomer.Entity.IsActive())
+                if (CurrentCustomerCanStillAct())
                 {
                     // One shot connection to finish action execution
                     var command = _CurrentCustomer.Act();
