@@ -280,28 +280,30 @@ cull_mask = 1024
 script = ExtResource("9_rh341")
 
 [node name="ArmSprite" type="Sprite3D" parent="OutcomeHandler/RemoteTransform3D/CameraPivot" index="1"]
-transform = Transform3D(-1, 9.00087e-17, -8.74228e-08, -2.26267e-08, 0.965926, 0.258819, 8.44439e-08, 0.258819, -0.965926, -0.74, 1.14969, -0.426988)
+transform = Transform3D(-1, -9.04462e-16, -8.74228e-08, -2.26267e-08, 0.965926, 0.258819, 8.44439e-08, 0.258819, -0.965926, -0.74, 0.993592, 0.155569)
 visible = false
 layers = 1024
 double_sided = false
 alpha_cut = 1
 texture = ExtResource("11_g3vuh")
 hframes = 8
+frame = 7
 
 [node name="CSGBox3D" type="CSGBox3D" parent="OutcomeHandler/RemoteTransform3D" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.216816, 3.00592, 0.182007)
 visible = false
 layers = 1024
-size = Vector3(18.0286, 7.01184, 14.9827)
+size = Vector3(25, 10, 25)
 material = ExtResource("12_llha0")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="OutcomeHandler/RemoteTransform3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15752, -2.70468)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.24878, -2.70468)
 visible = false
 layers = 1024
-light_color = Color(0.470588, 0.0509804, 0.054902, 1)
+light_color = Color(0.580392, 0.172549, 0.141176, 1)
+light_energy = 16.0
 light_cull_mask = 4293919744
-omni_range = 10.0
+omni_range = 24.14
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="OutcomeHandler" index="1"]
 root_node = NodePath("../..")
