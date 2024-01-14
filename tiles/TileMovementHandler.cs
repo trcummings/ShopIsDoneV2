@@ -21,9 +21,6 @@ namespace ShopIsDone.Tiles
         private CharacterBody3D _Body;
 
         [Export]
-        public CommandProcessor _CommandProcessor;
-
-        [Export]
         public UnitTileMoveValidator _MoveValidator;
 
         [Export]

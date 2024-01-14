@@ -52,10 +52,9 @@ transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 
 script = ExtResource("3_v23cd")
 FacingTarget = NodePath("..")
 
-[node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_CommandProcessor", "_MoveValidator", "_SkipTileStrategy")]
+[node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_MoveValidator", "_SkipTileStrategy")]
 script = ExtResource("4_1yuwc")
 _Body = NodePath("..")
-_CommandProcessor = NodePath("CommandProcessor")
 _MoveValidator = NodePath("TileMoveValidator")
 _SkipTileStrategy = NodePath("ShouldSkipTileStrategy")
 BaseMove = 4

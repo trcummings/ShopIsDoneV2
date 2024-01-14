@@ -68,9 +68,10 @@ shape = SubResource("1")
 [node name="ActorStateMachine" type="Node" parent="."]
 script = ExtResource("2_6jaxx")
 
-[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
+[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler", "_FloorIndicator")]
 script = ExtResource("4_rbt7t")
 _StateHandler = NodePath("../../StateHandler")
+_FloorIndicator = NodePath("../../ActorFloorIndicator")
 
 [node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_InteractableHandler")]
 script = ExtResource("3_f0qiv")
@@ -206,10 +207,9 @@ script = ExtResource("16_87xgg")
 Actions = [ExtResource("19_lonxh"), ExtResource("17_xmxqu"), ExtResource("18_64csj"), ExtResource("29_ivj5r"), ExtResource("29_vnii4"), ExtResource("24_xn5yg"), ExtResource("22_odajy")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
-[node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_CommandProcessor", "_MoveValidator", "_SkipTileStrategy")]
+[node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_MoveValidator", "_SkipTileStrategy")]
 script = ExtResource("19_dsksq")
 _Body = NodePath("..")
-_CommandProcessor = NodePath("CommandProcessor")
 _MoveValidator = NodePath("TileMoveValidator")
 _SkipTileStrategy = NodePath("ShouldSkipTileStrategy")
 CanPassThroughAllies = true

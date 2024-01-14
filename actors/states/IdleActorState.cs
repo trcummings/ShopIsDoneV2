@@ -12,9 +12,18 @@ namespace ShopIsDone.Actors.States
         [Export]
         private EntityStateHandler _StateHandler;
 
+        [Export]
+        private ActorFloorIndicator _FloorIndicator;
+
         public override void OnStart(Dictionary<string, Variant> message)
         {
+            // Hide floor indicator
+            _FloorIndicator.Hide();
+
+            // Idle state handler
             _StateHandler.ChangeState(StateConsts.IDLE);
+
+            // Base start
             base.OnStart(message);
         }
     }
