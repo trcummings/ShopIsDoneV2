@@ -149,14 +149,16 @@ namespace ShopIsDone.Actions
 
         private Command ApplyRotateToFaceEntity(ArenaAction action, Command next)
         {
-            return new IfElseCommand(
+            // NB: Wrap in deferred call to calculate facing direction at execution
+            // time, not call time
+            return new DeferredCommand(() => new IfElseCommand(
                 () => action.RotateToFaceEntity,
                 _CameraService.RunRotateCameraTo(
-                    action.Entity.FacingDirection.Reflect(Vector3.Up),
+                    action.Entity.FacingDirection,
                     next
                 ),
                 next
-            );
+            ));
         }
 
         private Command ApplyCameraFollow(ArenaAction action, Command next)
