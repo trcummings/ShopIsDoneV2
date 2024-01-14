@@ -140,6 +140,7 @@ _ModelPath = NodePath("../../CustomerType1Model")
 _EnterAnimName = "Die"
 Id = "dead"
 _IsActive = false
+_IsInArena = false
 
 [node name="ActionPlanner" type="Node" parent="." node_paths=PackedStringArray("_SensorsNode", "_ActionHandler")]
 script = ExtResource("18_ock78")

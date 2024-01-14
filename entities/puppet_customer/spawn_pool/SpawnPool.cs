@@ -17,7 +17,6 @@ namespace ShopIsDone.Entities.PuppetCustomers
         public override void _Ready()
         {
             // Initially hide
-            Hide();
             _AnimPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
             _AnimPlayer.Connect("animation_finished", new Callable(this, nameof(OnAnimFinished)));
         }
@@ -25,7 +24,6 @@ namespace ShopIsDone.Entities.PuppetCustomers
         public void Appear()
         {
             _AnimPlayer.Play("Appear");
-            Show();
         }
 
         public void Disappear()
@@ -39,7 +37,6 @@ namespace ShopIsDone.Entities.PuppetCustomers
             else if (animName == "Disappear")
             {
                 EmitSignal(nameof(Disappeared));
-                Hide();
             }
         }
     }

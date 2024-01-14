@@ -36,6 +36,11 @@ namespace ShopIsDone.Cameras
             GetTree().SafeConnect("node_added", _IsoSpriteAddedCallable);
         }
 
+        public void MakeCurrent()
+        {
+            _IsometricCamera.MakeCurrent();
+        }
+
         public Vector3 GetBasisXformedDir(float horizontal, float vertical, float rotateBy = Mathf.Pi / 4)
         {
             return _IsometricCamera.GetBasisXformedDir(horizontal, vertical, rotateBy);

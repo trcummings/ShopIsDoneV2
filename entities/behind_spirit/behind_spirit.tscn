@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4ioplxcvprpo"]
+[gd_scene load_steps=21 format=3 uid="uid://b4ioplxcvprpo"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_8jbph"]
 [ext_resource type="PackedScene" uid="uid://bbx7tkqlpdpv7" path="res://entities/behind_spirit/behind_spirit_model.tscn" id="2_voxxa"]
@@ -9,10 +9,207 @@
 [ext_resource type="Resource" uid="uid://d3neuyug6j7hf" path="res://entities/behind_spirit/lurking_strike_action.tres" id="7_363o1"]
 [ext_resource type="Script" path="res://entities/behind_spirit/BehindSpiritOutcomeHandler.cs" id="7_p5epq"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="8_hos8a"]
+[ext_resource type="Script" path="res://camera/offset_camera_3d.gd" id="9_rh341"]
 [ext_resource type="PackedScene" uid="uid://cqh47hj66pqly" path="res://microgames/check_in_back/check_in_back_microgame.tscn" id="10_rjhkd"]
+[ext_resource type="Texture2D" uid="uid://k7c268won8b2" path="res://entities/behind_spirit/arm_animation.png" id="11_g3vuh"]
+[ext_resource type="Script" path="res://camera/ScreenshakeHandler.cs" id="12_a0dcs"]
+[ext_resource type="AudioStream" uid="uid://cvbbanvyfm1d7" path="res://entities/behind_spirit/HORROR_WHOOSH--245361__klankbeeld__horror-whoosh-003-140729_0313.wav" id="12_f5h7r"]
+[ext_resource type="Material" uid="uid://dnyflcrc6lpnr" path="res://Materials/GrowShadowOutline_NoDissolve.material" id="12_llha0"]
+[ext_resource type="AudioStream" uid="uid://dsw2ovvcdb75e" path="res://entities/behind_spirit/CRACK__70109__justinbw__crack-2.wav" id="13_ekc4u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2m1rl"]
 radius = 0.75
+
+[sub_resource type="Animation" id="Animation_anm75"]
+resource_name = "grab"
+length = 2.5
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OutcomeHandler/RemoteTransform3D/CameraPivot/ArmSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OutcomeHandler/RemoteTransform3D/CameraPivot/ArmSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.252398, 0.6, 0.95, 1.15, 1.25, 1.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("OutcomeHandler/CrackPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("13_ekc4u")
+}],
+"times": PackedFloat32Array(1.45)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("OutcomeHandler/RemoteTransform3D/CSGBox3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("OutcomeHandler/RemoteTransform3D/OmniLight3D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("OutcomeHandler/RemoteTransform3D/CameraPivot/Camera3D:fov")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [75.0, 100.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("OutcomeHandler/RemoteTransform3D/CameraPivot/Camera3D:position")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1.4, 1.625),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(2.08165e-12, 3, -3), Vector3(2.08165e-12, 3, -2), Vector3(2.08165e-12, 3, -1.5)]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("OutcomeHandler/ScreenshakeHandler")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.425),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [2, 0],
+"method": &"Shake"
+}]
+}
+tracks/8/type = "audio"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("OutcomeHandler/WhooshPlayer")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"clips": [{
+"end_offset": 10.6727,
+"start_offset": 0.4105,
+"stream": ExtResource("12_f5h7r")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/8/use_blend = true
+
+[sub_resource type="Animation" id="Animation_j57nb"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OutcomeHandler/RemoteTransform3D/CameraPivot/ArmSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OutcomeHandler/RemoteTransform3D/CSGBox3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("OutcomeHandler/RemoteTransform3D/OmniLight3D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("OutcomeHandler/RemoteTransform3D/CameraPivot/Camera3D:fov")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [75.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("OutcomeHandler/RemoteTransform3D/CameraPivot/Camera3D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.08165e-12, 3, -3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s1nkb"]
+_data = {
+"RESET": SubResource("Animation_j57nb"),
+"grab": SubResource("Animation_anm75")
+}
 
 [node name="BehindSpirit" instance=ExtResource("1_8jbph")]
 collision_layer = 0
@@ -64,8 +261,64 @@ script = ExtResource("6_mvuig")
 Actions = [ExtResource("7_363o1")]
 _ActionPointHandler = NodePath("../NullActionPointHandler")
 
-[node name="OutcomeHandler" type="Node" parent="." index="7"]
+[node name="OutcomeHandler" type="Node3D" parent="." index="7" node_paths=PackedStringArray("_Camera", "_AnimPlayer")]
 script = ExtResource("7_p5epq")
+_Camera = NodePath("RemoteTransform3D/CameraPivot/Camera3D")
+_AnimPlayer = NodePath("AnimationPlayer")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="OutcomeHandler" index="0"]
+remote_path = NodePath("../..")
+update_position = false
+update_scale = false
+
+[node name="CameraPivot" type="Node3D" parent="OutcomeHandler/RemoteTransform3D" index="0"]
+transform = Transform3D(-1, -2.26267e-08, 8.44439e-08, 3.36902e-16, 0.965926, 0.258819, -8.74228e-08, 0.258819, -0.965926, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="OutcomeHandler/RemoteTransform3D/CameraPivot" index="0"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.08165e-12, 3, -3)
+cull_mask = 1024
+script = ExtResource("9_rh341")
+
+[node name="ArmSprite" type="Sprite3D" parent="OutcomeHandler/RemoteTransform3D/CameraPivot" index="1"]
+transform = Transform3D(-1, 9.00087e-17, -8.74228e-08, -2.26267e-08, 0.965926, 0.258819, 8.44439e-08, 0.258819, -0.965926, -0.74, 1.14969, -0.426988)
+visible = false
+layers = 1024
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("11_g3vuh")
+hframes = 8
+
+[node name="CSGBox3D" type="CSGBox3D" parent="OutcomeHandler/RemoteTransform3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.216816, 3.00592, 0.182007)
+visible = false
+layers = 1024
+size = Vector3(18.0286, 7.01184, 14.9827)
+material = ExtResource("12_llha0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="OutcomeHandler/RemoteTransform3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15752, -2.70468)
+visible = false
+layers = 1024
+light_color = Color(0.470588, 0.0509804, 0.054902, 1)
+light_cull_mask = 4293919744
+omni_range = 10.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="OutcomeHandler" index="1"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_s1nkb")
+}
+autoplay = "RESET"
+
+[node name="CrackPlayer" type="AudioStreamPlayer" parent="OutcomeHandler" index="2"]
+bus = &"SFX"
+
+[node name="WhooshPlayer" type="AudioStreamPlayer" parent="OutcomeHandler" index="3"]
+pitch_scale = 4.0
+bus = &"SFX"
+
+[node name="ScreenshakeHandler" type="Node" parent="OutcomeHandler" index="4"]
+script = ExtResource("12_a0dcs")
 
 [node name="MicrogameHandler" type="Node" parent="." index="8"]
 script = ExtResource("8_hos8a")
@@ -73,3 +326,4 @@ MicrogameScene = ExtResource("10_rjhkd")
 _OutcomeHandlerPath = NodePath("../OutcomeHandler")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="BehindSpiritModel" method="SetFacingDir"]
+[connection signal="ShakeOffsetUpdated" from="OutcomeHandler/ScreenshakeHandler" to="OutcomeHandler/RemoteTransform3D/CameraPivot/Camera3D" method="set_offset"]

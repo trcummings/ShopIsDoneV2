@@ -7,7 +7,6 @@ using ShopIsDone.Core;
 using ShopIsDone.EntityStates;
 using ShopIsDone.Tiles;
 using ShopIsDone.Utils.Commands;
-using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.Positioning;
 using System;
@@ -53,7 +52,7 @@ namespace ShopIsDone.Entities.BehindSpirit
             // Warp to the back tile
             _BehindSpirit.GlobalPosition = target.BackTile.GlobalPosition;
             // Face towards the target
-            _BehindSpirit.FacingDirection = _BehindSpirit.GetFacingDirTowards(target.Unit.GlobalPosition);
+            _BehindSpirit.FacingDirection = target.Unit.FacingDirection;
             // Get lurking strike action
             var action = _ActionHandler.GetAction(Consts.Actions.LURKING_STRIKE);
 
