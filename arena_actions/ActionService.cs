@@ -8,6 +8,7 @@ using ShopIsDone.Tiles;
 using ShopIsDone.Arenas;
 using ShopIsDone.Arenas.ArenaScripts;
 using ShopIsDone.Arenas.Meddling;
+using ShopIsDone.Entities.ParallelHunters;
 
 namespace ShopIsDone.Actions
 {
@@ -34,6 +35,9 @@ namespace ShopIsDone.Actions
         [Export]
         private ActionMeddler _ActionMeddler;
 
+        [Export]
+        private ParallelHunterService _ParallelHunterService;
+
         // State
         private ArenaAction _CurrentAction;
         private Dictionary<string, Variant> _CurrentMessage;
@@ -55,11 +59,15 @@ namespace ShopIsDone.Actions
                     ApplyCameraFollow(action,
                         ApplyRotateToFaceEntity(action,
                             ApplyCameraZoom(action,
-                                // Set current action 
-                                SetCurrentAction(
+                                // Run parallel actions
+                                _ParallelHunterService.RunParallelMoves(
                                     action,
-                                    message,
-                                    action.Execute(message)
+                                    // Set current action 
+                                    SetCurrentAction(
+                                        action,
+                                        message,
+                                        action.Execute(message)
+                                    )
                                 )
                             )
                         )

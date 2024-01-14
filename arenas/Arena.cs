@@ -13,6 +13,7 @@ using ShopIsDone.Levels;
 using ShopIsDone.ArenaInteractions;
 using ShopIsDone.Arenas.Meddling;
 using ShopIsDone.Tasks;
+using ShopIsDone.Entities.ParallelHunters;
 
 namespace ShopIsDone.Arenas
 {
@@ -68,6 +69,9 @@ namespace ShopIsDone.Arenas
         private ActionMeddler _ActionMeddler;
 
         [Export]
+        private ParallelHunterService _ParallelHunterService;
+
+        [Export]
         private PlayerCharacterManager _PlayerCharacterManager;
 
         private InjectionProvider _InjectionProvider;
@@ -100,6 +104,7 @@ namespace ShopIsDone.Arenas
             _UnitDeathService.Init();
             _ConditionsService.Init();
             _ActionMeddler.Init();
+            _ParallelHunterService.Init();
 
             // Move units into arena
             _PlayerCharacterManager.EnterArena();
