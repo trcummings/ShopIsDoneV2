@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d13be7gotfffy" path="res://microgames/check_in_back/customer_request_item.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://hotaglrptkd7" path="res://microgames/check_in_back/circle_05.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://c4fouqouox5n1" path="res://microgames/common/white_square.png" id="7"]
-[ext_resource type="PackedScene" path="res://microgames/check_in_back/requested_item.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://dwavp0lk0k1xd" path="res://microgames/check_in_back/requested_item.tscn" id="8"]
 [ext_resource type="Script" path="res://microgames/check_in_back/CheckInBackMicrogame.cs" id="9"]
 [ext_resource type="PackedScene" path="res://microgames/common/reticule.tscn" id="10"]
 
@@ -140,6 +140,7 @@ shape = SubResource("5")
 light_mask = 2
 position = Vector2(133, 842)
 sprite_frames = SubResource("3")
+autoplay = "default"
 frame = 1
 
 [node name="Light2D" type="PointLight2D" parent="ViewportContainer/Viewport/World/Arena/CustomerRequest" index="2"]
