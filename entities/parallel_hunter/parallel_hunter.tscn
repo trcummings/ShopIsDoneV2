@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://dhlikovi5uhpe"]
+
+[ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_nd4pj"]
+[ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="2_5dvpn"]
+[ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="3_pwkj2"]
+[ext_resource type="Script" path="res://tiles/UnitTileMoveValidator.cs" id="4_g2p5y"]
+[ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="5_y2shq"]
+[ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="6_juyge"]
+[ext_resource type="Script" path="res://entities/parallel_hunter/ParallelMoveHandler.cs" id="7_c72fl"]
+[ext_resource type="PackedScene" uid="uid://cghjpgkxvj28f" path="res://entities/parallel_hunter/parallel_hunter_model.tscn" id="8_4gwoa"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifk3d"]
+radius = 0.75
+
+[node name="ParallelHunter" instance=ExtResource("1_nd4pj")]
+Id = "parallel_hunter"
+EntityName = "Hunter In The Dark"
+
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
+shape = SubResource("CapsuleShape3D_ifk3d")
+
+[node name="ParallelHunterModel" parent="." index="3" instance=ExtResource("8_4gwoa")]
+
+[node name="TileMovementHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("_Body", "_MoveValidator", "_SkipTileStrategy")]
+script = ExtResource("2_5dvpn")
+_Body = NodePath("..")
+_MoveValidator = NodePath("TileMoveValidator")
+_SkipTileStrategy = NodePath("ShouldSkipTileStrategy")
+BaseMove = 4
+CanSeeInTheDark = true
+
+[node name="CommandProcessor" type="Node" parent="TileMovementHandler" index="0"]
+script = ExtResource("3_pwkj2")
+
+[node name="TileMoveValidator" type="Node" parent="TileMovementHandler" index="1" node_paths=PackedStringArray("_TileMovementHandler")]
+script = ExtResource("4_g2p5y")
+_TileMovementHandler = NodePath("..")
+
+[node name="ShouldSkipTileStrategy" type="Node" parent="TileMovementHandler" index="2" node_paths=PackedStringArray("_TileMoveHandler", "_TeamHandler")]
+script = ExtResource("5_y2shq")
+_TileMoveHandler = NodePath("..")
+_TeamHandler = NodePath("../../TeamHandler")
+
+[node name="TeamHandler" type="Node" parent="." index="5"]
+script = ExtResource("6_juyge")
+Team = 1
+
+[node name="ParallelMoveHandler" type="Node" parent="." index="6" node_paths=PackedStringArray("_MoveHandler")]
+script = ExtResource("7_c72fl")
+_MoveHandler = NodePath("../TileMovementHandler")
+
+[connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="ParallelHunterModel" method="_on_facing_direction_handler_facing_direction_changed"]
+[connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
