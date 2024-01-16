@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://us2ngbqvbj8u"
-path.s3tc="res://.godot/imported/bayer16.png-b561e3cfe5bebd9ded2bff9af4a66ac7.s3tc.ctex"
+uid="uid://dloica6j2n4s5"
+path.s3tc="res://.godot/imported/auto_door_break_room_greybox_grey_grid.png-00a2ea75431da2aaf3bd9d75d2124c0c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://textures/bayer16.png"
-dest_files=["res://.godot/imported/bayer16.png-b561e3cfe5bebd9ded2bff9af4a66ac7.s3tc.ctex"]
+source_file="res://break_room/auto_door/auto_door_break_room_greybox_grey_grid.png"
+dest_files=["res://.godot/imported/auto_door_break_room_greybox_grey_grid.png-00a2ea75431da2aaf3bd9d75d2124c0c.s3tc.ctex"]
 
 [params]
 
@@ -22,7 +23,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=37 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://environments/EnvironmentManager.cs" id="2_4ygry"]
@@ -29,6 +29,7 @@
 [ext_resource type="Script" path="res://levels/PlayerCharacterManager.cs" id="17_qs4bj"]
 [ext_resource type="Script" path="res://levels/CutsceneService.cs" id="18_jnqhh"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="20_qvdr3"]
+[ext_resource type="Script" path="res://camera/WallXRayHelper.cs" id="21_28jhl"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
 [ext_resource type="PackedScene" uid="uid://vkdrv2wvhw46" path="res://levels/directional_point.tscn" id="26_7pn1o"]
 [ext_resource type="PackedScene" uid="uid://ddwvyl3d8scbv" path="res://levels/level_states/game_over_ui.tscn" id="26_yq21p"]
@@ -140,6 +141,11 @@ _MicrogameManager = NodePath("../../UILayer/MicrogameUIContainer/MicrogameManage
 [node name="CutsceneService" type="Node" parent="Services" node_paths=PackedStringArray("_LevelStateMachine")]
 script = ExtResource("18_jnqhh")
 _LevelStateMachine = NodePath("../../LevelStateMachine")
+
+[node name="WallXRayHelper" type="Node" parent="Services" node_paths=PackedStringArray("_CharacterManager", "_Camera")]
+script = ExtResource("21_28jhl")
+_CharacterManager = NodePath("../../World/PlayerCharacterManager")
+_Camera = NodePath("../../World/IsometricCamera/Camera")
 
 [node name="Audio" type="Node" parent="."]
 

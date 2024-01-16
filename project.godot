@@ -321,6 +321,7 @@ locale/translations_pot_files=PackedStringArray("res://levels/parking_lot_1/dial
 3d_physics/layer_2="pawns"
 3d_physics/layer_3="interactions"
 3d_physics/layer_4="tile_obstacles"
+3d_physics/layer_5="walls"
 3d_physics/layer_6="arena_lights"
 3d_physics/layer_7="trigger_zones"
 3d_physics/layer_8="tiles"
@@ -344,3 +345,14 @@ profiler/enabled=true
 [rendering]
 
 environment/default_environment="res://default_env.tres"
+
+[shader_globals]
+
+leader_pos={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+camera_to_leader_distance={
+"type": "float",
+"value": 0.0
+}

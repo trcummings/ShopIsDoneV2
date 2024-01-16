@@ -25,7 +25,9 @@ namespace ShopIsDone.Levels
 
         private int _LeaderLayer = 10;
 
+        public Actor Leader { get { return _Leader; } }
         private Actor _Leader;
+
         private Array<Actor> _Followers = new Array<Actor>();
 
         public void Init()
@@ -54,6 +56,8 @@ namespace ShopIsDone.Levels
             // Idle them
             Idle();
         }
+
+
 
         /* NB: Position is GLOBAL */
         public void WarpGroupToPosition(Vector3 position, Vector3 facingDir)

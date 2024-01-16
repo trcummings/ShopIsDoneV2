@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://dntwsip6ujfpw"]
+
+[ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_1gx3o"]
+[ext_resource type="PackedScene" uid="uid://hmcccjay3t4s" path="res://break_room/break_room.tscn" id="2_e4p3r"]
+[ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_xk3aj"]
+[ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_0p7hi"]
+[ext_resource type="PackedScene" uid="uid://b4xislti5cjys" path="res://break_room/auto_door/auto_door.tscn" id="5_1fm38"]
+[ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_CardboardBox_01_.tscn" id="5_qgiln"]
+
+[node name="BreakRoomLevel" instance=ExtResource("1_1gx3o")]
+
+[node name="WorldEnvironment" parent="." index="0"]
+environment = ExtResource("2_xk3aj")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
+
+[node name="PlayerCharacterManager" parent="World" index="2"]
+_LeaderScene = ExtResource("3_0p7hi")
+
+[node name="BreakRoom" parent="World/NavigationRegion3D/Environment" index="0" instance=ExtResource("2_e4p3r")]
+
+[node name="AutoDoor" parent="World/NavigationRegion3D/Environment" index="1" instance=ExtResource("5_1fm38")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.784, 2.08165e-12, 2.056)
+
+[node name="Prop_CardboardBox_01_" parent="." index="7" instance=ExtResource("5_qgiln")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -7.69352, 0.390628, 3.99884)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="8"]
+transform = Transform3D(1, 0, 0, 0, -0.136926, 0.990581, 0, -0.990581, -0.136926, -0.515489, 3.28732, 4.76837e-07)
+
+[editable path="World/IsometricCamera"]

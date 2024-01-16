@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4xislti5cjys"]
+
+[ext_resource type="PackedScene" uid="uid://cs2mui34xad60" path="res://break_room/auto_door/auto_door.gltf" id="1_0ttub"]
+[ext_resource type="Script" path="res://break_room/auto_door/AutoDoor.cs" id="1_q16ce"]
+[ext_resource type="Texture2D" uid="uid://d1ixaddt575bu" path="res://break_room/auto_door/bathroom_symbol.svg" id="2_778oa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x74ek"]
+size = Vector3(3.26962, 1.41187, 3.13012)
+
+[node name="AutoDoor" type="Area3D" node_paths=PackedStringArray("_Door")]
+collision_layer = 0
+collision_mask = 512
+monitorable = false
+script = ExtResource("1_q16ce")
+_Door = NodePath("auto_door")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.116959, 0.701782, 0.967846)
+shape = SubResource("BoxShape3D_x74ek")
+
+[node name="auto_door" parent="." instance=ExtResource("1_0ttub")]
+
+[node name="Sprite3D" type="Sprite3D" parent="auto_door"]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0.0133702, 2.55574, 1.04541)
+axis = 0
+texture = ExtResource("2_778oa")

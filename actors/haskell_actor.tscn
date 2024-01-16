@@ -120,6 +120,7 @@ _InteractableDetector = NodePath("../ActorFloorIndicator/Pivot/InteractableDetec
 [node name="InteractableDetector" parent="ActorFloorIndicator/Pivot" index="1" instance=ExtResource("13_vx5xu")]
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 2.0
 
 [node name="FootstepController" type="Node" parent="." node_paths=PackedStringArray("_SlowPlayer", "_MediumPlayer", "_FastPlayer")]
 script = ExtResource("7_5g5gq")

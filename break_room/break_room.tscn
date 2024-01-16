@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://hmcccjay3t4s"]
+
+[ext_resource type="PackedScene" uid="uid://8vhnro6noelc" path="res://break_room/break_room.gltf" id="1_u6cme"]
+
+[node name="BreakRoom" type="Node3D"]
+
+[node name="break_room" parent="." instance=ExtResource("1_u6cme")]
