@@ -30,12 +30,21 @@ namespace ShopIsDone.Interactables
         [Export]
         private string _Prompt = "Interact";
 
+        private Label3D _PromptLabel;
+
         // State
         private bool _IsHovered = false;
+
+        public override void _Ready()
+        {
+            base._Ready();
+            _PromptLabel = GetNode<Label3D>("%PromptLabel");
+        }
 
         public virtual void Init()
         {
             InjectionProvider.Inject(this);
+            _PromptLabel.Text = _Prompt;
         }
 
         public void Hover()
