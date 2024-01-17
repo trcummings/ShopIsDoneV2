@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://di8xtbhwb3667"
+path="res://.godot/imported/black_mannequin.obj-d7e6e7007cb11ffd8cdbc22fdbdc0015.mesh"
+
+[deps]
+
+files=["res://.godot/imported/black_mannequin.obj-d7e6e7007cb11ffd8cdbc22fdbdc0015.mesh"]
+
+source_file="res://Models/black_mannequin/black_mannequin.obj"
+dest_files=["res://.godot/imported/black_mannequin.obj-d7e6e7007cb11ffd8cdbc22fdbdc0015.mesh", "res://.godot/imported/black_mannequin.obj-d7e6e7007cb11ffd8cdbc22fdbdc0015.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

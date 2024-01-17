@@ -28,7 +28,7 @@ namespace ShopIsDone.Levels.States
                 (uint)ConnectFlags.OneShot
             );
 
-            // Disable pausing
+            // Enable pausing
             _PauseInputHandler.IsActive = true;
 
             // Idle the player characters

@@ -1,11 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://dntwsip6ujfpw"]
+[gd_scene load_steps=10 format=3 uid="uid://dntwsip6ujfpw"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_1gx3o"]
 [ext_resource type="PackedScene" uid="uid://hmcccjay3t4s" path="res://break_room/break_room.tscn" id="2_e4p3r"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_xk3aj"]
 [ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_0p7hi"]
 [ext_resource type="PackedScene" uid="uid://b4xislti5cjys" path="res://break_room/auto_door/auto_door.tscn" id="5_1fm38"]
-[ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_CardboardBox_01_.tscn" id="5_qgiln"]
+[ext_resource type="PackedScene" uid="uid://digrjqe4sy5ly" path="res://break_room/vending_machine/vending_machine.tscn" id="6_85xsv"]
+[ext_resource type="PackedScene" uid="uid://k4w17wpyi1d8" path="res://break_room/refrigerator/refrigerator.tscn" id="7_cceh2"]
+[ext_resource type="PackedScene" uid="uid://bjbrfagvcy28g" path="res://break_room/break_room_table/break_room_table.tscn" id="8_1klvc"]
+[ext_resource type="PackedScene" uid="uid://cqnhq10foijt" path="res://break_room/break_room_counter/break_room_counter.tscn" id="9_bru5q"]
 
 [node name="BreakRoomLevel" instance=ExtResource("1_1gx3o")]
 
@@ -18,14 +21,28 @@ environment = ExtResource("2_xk3aj")
 _LeaderScene = ExtResource("3_0p7hi")
 
 [node name="BreakRoom" parent="World/NavigationRegion3D/Environment" index="0" instance=ExtResource("2_e4p3r")]
+metadata/_edit_lock_ = true
 
 [node name="AutoDoor" parent="World/NavigationRegion3D/Environment" index="1" instance=ExtResource("5_1fm38")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.784, 2.08165e-12, 2.056)
+metadata/_edit_lock_ = true
 
-[node name="Prop_CardboardBox_01_" parent="." index="7" instance=ExtResource("5_qgiln")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -7.69352, 0.390628, 3.99884)
+[node name="VendingMachine" parent="World/NavigationRegion3D/Environment" index="2" instance=ExtResource("6_85xsv")]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 4.78181, 2.08165e-12, 5.38764)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="8"]
+[node name="Refrigerator" parent="World/NavigationRegion3D/Environment" index="3" instance=ExtResource("7_cceh2")]
+transform = Transform3D(-0.154003, 0, -0.98807, 0, 1, 0, 0.98807, 0, -0.154003, -0.699085, 0, 5.17545)
+
+[node name="BreakRoomTable" parent="World/NavigationRegion3D/Environment" index="4" instance=ExtResource("8_1klvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3809, 0, -1.06773)
+
+[node name="BreakRoomTable2" parent="World/NavigationRegion3D/Environment" index="5" instance=ExtResource("8_1klvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75277, 0, 2.16984)
+
+[node name="BreakRoomCounter" parent="World/NavigationRegion3D/Environment" index="6" instance=ExtResource("9_bru5q")]
+transform = Transform3D(-4.37114e-08, -3.48787e-16, -1, 3.48787e-16, 1, -3.48787e-16, 1, -3.48787e-16, -4.37114e-08, 2.04197, 0, 5.32847)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="7"]
 transform = Transform3D(1, 0, 0, 0, -0.136926, 0.990581, 0, -0.990581, -0.136926, -0.515489, 3.28732, 4.76837e-07)
 
 [editable path="World/IsometricCamera"]
