@@ -17,7 +17,7 @@ namespace ShopIsDone.Levels.States
         public override void _Ready()
         {
             base._Ready();
-            _GameOverUI.SetProcess(false);
+            _GameOverUI.Deactivate();
         }
 
         public override void OnStart(Dictionary<string, Variant> message)
@@ -29,16 +29,14 @@ namespace ShopIsDone.Levels.States
 
             // Activate Game over UI
             // TODO: Connect to game over events
-            _GameOverUI.Show();
-            _GameOverUI.SetProcess(true);
+            _GameOverUI.Activate();
         }
 
         public override void OnExit(string nextState)
         {
             // Deactivate Game over UI
             // TODO: Disconnect from game over events
-            _GameOverUI.SetProcess(false);
-            _GameOverUI.Hide();
+            _GameOverUI.Deactivate();
 
             base.OnExit(nextState);
         }

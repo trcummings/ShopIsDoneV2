@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://c44u4oanau75c"]
+
+[ext_resource type="Script" path="res://break_room/LevelSelect.cs" id="1_0u8a1"]
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="2_31epp"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="2_p8sly"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="3_0ivah"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="4_1qy3g"]
+[ext_resource type="PackedScene" uid="uid://dqrhke68klwx2" path="res://audio/ui/ui_invalid_player.tscn" id="5_b41t1"]
+
+[node name="LevelSelect" type="CanvasLayer"]
+follow_viewport_enabled = true
+script = ExtResource("1_0u8a1")
+
+[node name="Sfx" type="Node" parent="."]
+
+[node name="UISelectPlayer" parent="Sfx" instance=ExtResource("2_31epp")]
+
+[node name="UIConfirmPlayer" parent="Sfx" instance=ExtResource("3_0ivah")]
+
+[node name="UICancelPlayer" parent="Sfx" instance=ExtResource("4_1qy3g")]
+
+[node name="UIInvalidPlayer" parent="Sfx" instance=ExtResource("5_b41t1")]
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 24
+
+[node name="TitleLabel" type="Label" parent="AspectRatioContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_p8sly")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 144
+text = "Level Select"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="LevelButtons" type="VBoxContainer" parent="AspectRatioContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 24
+
+[node name="LevelButtonTemplate" type="Button" parent="AspectRatioContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(400, 100)
+layout_mode = 2
+theme = ExtResource("2_p8sly")
+theme_override_font_sizes/font_size = 72
+text = "[Level Name]"
+
+[connection signal="Canceled" from="." to="Sfx/UICancelPlayer" method="play"]
+[connection signal="ChangedSelection" from="." to="Sfx/UISelectPlayer" method="play"]
+[connection signal="Confirmed" from="." to="Sfx/UIConfirmPlayer" method="play"]
+[connection signal="InvalidConfirm" from="." to="Sfx/UIInvalidPlayer" method="play"]

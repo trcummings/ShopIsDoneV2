@@ -90,13 +90,17 @@ namespace ShopIsDone.Pausing
             // Initialize settings menu values
             _SettingsMenu.InitializeValues();
 
+            // Initially deactivate
+            base.Deactivate();
+
             // Set focus container to button container
             SetFocusContainer(_ButtonContainer);
+
         }
 
-        public void Activate()
+        public override void Activate()
         {
-            Show();
+            base.Activate();
             // Set focus on current focus container after visible
             SetFocusContainer(_FocusContainer);
             // Fade in
@@ -104,14 +108,13 @@ namespace ShopIsDone.Pausing
             SetProcess(true);
         }
 
-        public void Deactivate()
+        public override void Deactivate()
         {
-            Hide();
+            base.Deactivate();
             // If settings menu is visible, revert to base menu
             RevertToBaseMenu();
             // Fade out
             _BlurBackground.FadeOut();
-            SetProcess(false);
         }
 
         protected override void OnBackRequested()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dntwsip6ujfpw"]
+[gd_scene load_steps=25 format=3 uid="uid://dntwsip6ujfpw"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_1gx3o"]
 [ext_resource type="PackedScene" uid="uid://hmcccjay3t4s" path="res://break_room/break_room.tscn" id="2_e4p3r"]
@@ -10,6 +10,14 @@
 [ext_resource type="PackedScene" uid="uid://k4w17wpyi1d8" path="res://break_room/refrigerator/refrigerator.tscn" id="7_cceh2"]
 [ext_resource type="PackedScene" uid="uid://bjbrfagvcy28g" path="res://break_room/break_room_table/break_room_table.tscn" id="8_1klvc"]
 [ext_resource type="PackedScene" uid="uid://cqnhq10foijt" path="res://break_room/break_room_counter/break_room_counter.tscn" id="9_bru5q"]
+[ext_resource type="PackedScene" uid="uid://cp5wcgt8xqki" path="res://actors/interactables/interactable.tscn" id="11_bl51l"]
+[ext_resource type="PackedScene" uid="uid://dpr8t2r3eog3f" path="res://break_room/time_clock/time_clock_small.tscn" id="12_c7qpf"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/CutsceneInteraction.cs" id="13_tbfvh"]
+[ext_resource type="PackedScene" uid="uid://c44u4oanau75c" path="res://break_room/level_select.tscn" id="14_rbd72"]
+[ext_resource type="Script" path="res://break_room/arena_interactions/TimeClockInteraction.cs" id="14_wdvkh"]
+[ext_resource type="PackedScene" uid="uid://c71hl7eo13nse" path="res://levels/test_level/test_level.tscn" id="15_jamvo"]
+[ext_resource type="Script" path="res://break_room/LevelSelectItem.cs" id="16_jkjl2"]
+[ext_resource type="PackedScene" uid="uid://xh2e5s84nxyv" path="res://levels/parking_lot_1/parking_lot_1_level.tscn" id="17_cda50"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ln0yd"]
 vertices = PackedVector3Array(2, 0.446506, 4, 2, 0.446506, 3.5, 1.5, 0.446506, 3, -1.75, 0.446506, 3.75, 3.75, 0.446506, 1, 4, 0.446506, 0.25, 3, 0.446506, -0.25, 2.25, 0.446506, 0.75, 3, 0.446506, -1.75, 5.25, 0.446506, -5.25, -5.25, 0.446506, -5.25, -5.25, 0.446506, 5.25, -1.75, 0.446506, 3.75, 1.5, 0.446506, 1.25, 2.25, 0.446506, 0.75, 3, 0.446506, -0.25, 4, 0.446506, -2.5, 5.25, 0.446506, -2.25, 5.25, 0.446506, -5.25, 3, 0.446506, -1.75, 4, 0.446506, -2.5, 5.25, 0.446506, -5.25, 1.5, 0.446506, 1.25, 3, 0.446506, -0.25, 3, 0.446506, -1.75, -1.75, 0.446506, 3.75, -5.25, 0.446506, 5.25, -2.25, 0.446506, 5.25, -1.75, 0.446506, 3.75, -1.75, 0.446506, 3.75, 1.5, 0.446506, 3, 1.5, 0.446506, 1.25, 3.5, 0.446506, 3.5, 2, 0.446506, 3.5, 2, 0.446506, 4, 5.25, 0.446506, 4.25, 5.25, 0.446506, 0.25, 4, 0.446506, 0.25, 3.75, 0.446506, 1, 4, 0.446506, 3, 5.25, 0.446506, 4.25, 4, 0.446506, 3, 3.5, 0.446506, 3.5, 5.25, 0.446506, 4.25, -6.75, 0.446506, 5.25, -6.5, 0.446506, 3.5, -6.75, 0.446506, 0.75, -11.25, 0.446506, 0.75, -11.25, 0.446506, 5.25, -1, 2.94651, 4.75, -1, 2.69651, 5.25, -0.25, 2.69651, 5.25)
@@ -17,6 +25,22 @@ polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Arr
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_om8x8"]
 size = Vector3(18.2516, 5.74951, 12.4633)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gloqd"]
+size = Vector3(0.845505, 1.94626, 2.1355)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sslm7"]
+size = Vector3(0.846985, 1.93347, 2.1355)
+
+[sub_resource type="Resource" id="Resource_cuehh"]
+script = ExtResource("16_jkjl2")
+Label = "Test Level"
+LevelScene = ExtResource("15_jamvo")
+
+[sub_resource type="Resource" id="Resource_nw584"]
+script = ExtResource("16_jkjl2")
+Label = "Parking Lot"
+LevelScene = ExtResource("17_cda50")
 
 [node name="BreakRoomLevel" instance=ExtResource("1_1gx3o")]
 
@@ -60,7 +84,39 @@ transform = Transform3D(-4.37114e-08, -3.48787e-16, -1, 3.48787e-16, 1, -3.48787
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.92255, 2.37476, 0.0113831)
 shape = SubResource("BoxShape3D_om8x8")
 
+[node name="TimeClock" type="StaticBody3D" parent="World/NavigationRegion3D/Environment" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.33863, 0, -4.14505)
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Environment/TimeClock" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0713882, 0.46434, 0)
+shape = SubResource("BoxShape3D_gloqd")
+
+[node name="Interactable" parent="World/NavigationRegion3D/Environment/TimeClock" index="1" node_paths=PackedStringArray("_Interaction") instance=ExtResource("11_bl51l")]
+_Interaction = NodePath("CutsceneInteraction")
+_Prompt = "Level Select"
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Environment/TimeClock/Interactable" index="0"]
+transform = Transform3D(1, 0, -2.50326e-08, 0, 1, 0, -2.50326e-08, 0, 1, -0.0765076, 0.466736, -0.0147705)
+shape = SubResource("BoxShape3D_sslm7")
+
+[node name="TimeClockSmall" parent="World/NavigationRegion3D/Environment/TimeClock/Interactable" index="2" instance=ExtResource("12_c7qpf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.303662, 1.11843, -0.03685)
+
+[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/TimeClock/Interactable" index="3"]
+script = ExtResource("13_tbfvh")
+
+[node name="TimeClockInteraction" type="Node" parent="World/NavigationRegion3D/Environment/TimeClock/Interactable/CutsceneInteraction" index="0"]
+script = ExtResource("14_wdvkh")
+_LevelSelectPath = NodePath("../../../../../../../UILayer/LevelSelect")
+
+[node name="LevelSelect" parent="UILayer" index="0" instance=ExtResource("14_rbd72")]
+visible = false
+_Levels = [SubResource("Resource_cuehh"), SubResource("Resource_nw584")]
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="7"]
 transform = Transform3D(1, 0, 0, 0, -0.136926, 0.990581, 0, -0.990581, -0.136926, -0.515489, 3.28732, 4.76837e-07)
 
 [editable path="World/IsometricCamera"]
+[editable path="World/NavigationRegion3D/Environment/TimeClock/Interactable"]
