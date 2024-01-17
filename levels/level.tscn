@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://levels/level_states/ExitingState.cs" id="6_50r3g"]
 [ext_resource type="PackedScene" uid="uid://bsmp1sdllx60e" path="res://pausing/pause_input_handler.tscn" id="6_urg1m"]
 [ext_resource type="Script" path="res://camera/CameraService.cs" id="7_5vsji"]
+[ext_resource type="Script" path="res://levels/level_states/BreakRoomState.cs" id="7_jwbms"]
 [ext_resource type="Script" path="res://levels/level_states/GameOverState.cs" id="7_v30x6"]
 [ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="10_5oljb"]
 [ext_resource type="Script" path="res://levels/LevelData.cs" id="10_iufdb"]
@@ -35,10 +36,6 @@
 [ext_resource type="PackedScene" uid="uid://ddwvyl3d8scbv" path="res://levels/level_states/game_over_ui.tscn" id="26_yq21p"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lbwya"]
-
-[sub_resource type="NavigationMesh" id="NavigationMesh_rqdll"]
-vertices = PackedVector3Array(7.75, 0.5, -13.75, 5.75, 0.5, -13.75, 5.75, 0.5, -11.25, 7.75, 0.5, -13.75, 5.75, 0.5, -11.25, 11, 0.5, -11, 18.75, 0.5, -19.5, 11, 0.5, -11, 11, 0.5, -8.5, 12.75, 0.5, -3.5, 24.25, 0.5, -3.5, 24.25, 0.5, -12.25, 18.75, 0.5, -19.5, -19.5, 0.5, -9.75, -17.25, 0.5, -9.75, -17, 0.5, -11.25, -19.25, 0.5, -13.75, -17, 0.5, -11.25, 5.75, 0.5, -11.25, 5.75, 0.5, -13.75, -19.25, 0.5, -13.75, -16, 6, -9, 10, 6, -9, 10, 6, -10.25, -16.25, 6, -10.25, -15.75, 0.5, -9.25, 9.75, 0.5, -9.25, 9.75, 0.5, -10, -16, 0.5, -10, -19.5, 0.5, 9.5, -16.75, 0.5, 9.5, -16.5, 0.5, 8.25, -16.75, 0.5, -8, -17.25, 0.5, -9.75, -19.5, 0.5, -9.75, 9.5, 0.5, 4.5, 9.5, 0.5, 3.25, 9.25, 0.5, -3, 9.5, 0.5, -4.5, 10.5, 0.5, -5.25, 9.75, 0.5, -8, 9.5, 0.5, 8.25, 10.5, 0.5, 5.5, 9.5, 0.5, 4.5, 10.25, 0.5, 2.25, 11.25, 0.5, 2.25, 11, 0.5, -2, 9.75, 0.5, -2.25, 9.5, 0.5, 8.25, 9.5, 0.5, 4.5, 9.25, 0.5, -3, -16.75, 0.5, -8, -16.5, 0.5, 8.25, 9.25, 0.5, -3, 9.5, 0.5, -4.5, 9.75, 0.5, -8, -16.75, 0.5, -8, 10.25, 0.5, 2.25, 9.75, 0.5, -2.25, 9.25, 0.5, -3, 9.5, 0.5, 3.25, 10.75, 1.75, -3.25, 11.5, 1.75, -3.25, 11.25, 1.75, -4, 10.75, 1.75, -4, 12, 0.5, -2, 11, 0.5, -2, 11.25, 0.5, 2.25, 12.75, 0.5, 2.75, 12.75, 0.5, -3.5, 12.75, 0.5, -2.75, 13, 0.5, 4.25, 24, 0.5, 4.75, 24.25, 0.5, -3.5, 12.75, 0.5, -2.75, 12, 0.5, -2, 12.75, 0.5, 2.75, 13, 0.5, 4.25, 10.75, 1.75, 3.75, 11.5, 1.75, 4.25, 11.5, 1.75, 3.5, 13, 0.5, 4.25, 12.5, 0.75, 4.5, 11.25, 0.5, 7.75, 11.5, 0.5, 11.25, 11, 0.5, 11.5, 15, 0.5, 15.75, 17.25, 0.5, 14.25, 13, 0.5, 4.25, 11.25, 0.5, 7.75, 11.5, 0.5, 11.25, 17.25, 0.5, 14.25, 22, 0.5, 9.5, 24, 0.5, 4.75, -15.5, 6, 10.5, 10.5, 6, 10.5, 10.5, 6, 9.25, -15.75, 6, 9.25, -16.25, 0.5, 11.5, -16.75, 0.5, 9.5, -19.5, 0.5, 9.5, -19.5, 0.5, 19.5, 13.25, 0.5, 17.25, 15, 0.5, 15.75, 11, 0.5, 11.5, -16.25, 0.5, 11.5, -19.5, 0.5, 19.5, 7.5, 0.5, 19.5, -15.25, 0.5, 9.5, -15.25, 0.5, 10.25, 10.25, 0.5, 10.25, 10.25, 0.5, 9.5)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(8, 7, 9), PackedInt32Array(9, 7, 10), PackedInt32Array(10, 7, 11), PackedInt32Array(11, 7, 12), PackedInt32Array(14, 13, 15), PackedInt32Array(15, 13, 16), PackedInt32Array(18, 17, 19), PackedInt32Array(19, 17, 20), PackedInt32Array(22, 21, 23), PackedInt32Array(23, 21, 24), PackedInt32Array(26, 25, 27), PackedInt32Array(27, 25, 28), PackedInt32Array(30, 29, 31), PackedInt32Array(31, 29, 32), PackedInt32Array(32, 29, 33), PackedInt32Array(33, 29, 34), PackedInt32Array(37, 36, 35), PackedInt32Array(38, 40, 39), PackedInt32Array(43, 42, 41), PackedInt32Array(45, 44, 46), PackedInt32Array(46, 44, 47), PackedInt32Array(49, 48, 50), PackedInt32Array(50, 48, 52), PackedInt32Array(50, 52, 51), PackedInt32Array(54, 53, 55), PackedInt32Array(55, 53, 56), PackedInt32Array(58, 57, 59), PackedInt32Array(59, 57, 60), PackedInt32Array(64, 63, 61), PackedInt32Array(61, 63, 62), PackedInt32Array(66, 65, 67), PackedInt32Array(67, 65, 68), PackedInt32Array(70, 69, 71), PackedInt32Array(71, 69, 72), PackedInt32Array(72, 69, 73), PackedInt32Array(75, 74, 76), PackedInt32Array(76, 74, 77), PackedInt32Array(80, 79, 78), PackedInt32Array(83, 82, 81), PackedInt32Array(85, 84, 86), PackedInt32Array(86, 84, 87), PackedInt32Array(89, 88, 90), PackedInt32Array(90, 88, 91), PackedInt32Array(91, 88, 92), PackedInt32Array(92, 88, 93), PackedInt32Array(95, 94, 96), PackedInt32Array(96, 94, 97), PackedInt32Array(99, 98, 100), PackedInt32Array(100, 98, 101), PackedInt32Array(103, 102, 104), PackedInt32Array(104, 102, 107), PackedInt32Array(104, 107, 105), PackedInt32Array(105, 107, 106), PackedInt32Array(111, 110, 108), PackedInt32Array(108, 110, 109)]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydnh5"]
 
@@ -79,9 +76,17 @@ _PlayerCharacterManager = NodePath("../../World/PlayerCharacterManager")
 _PauseInputHandler = NodePath("../../Services/PauseInputHandler")
 _CutsceneService = NodePath("../../Services/CutsceneService")
 
-[node name="FreeMove" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_CameraSystem", "_PlayerCameraService", "_PlayerCharacterManager", "_InputXformer", "_PauseInputHandler")]
+[node name="FreeMove" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_CameraService", "_PlayerCameraService", "_PlayerCharacterManager", "_InputXformer", "_PauseInputHandler")]
 script = ExtResource("4_x3fct")
-_CameraSystem = NodePath("../../Services/CameraService")
+_CameraService = NodePath("../../Services/CameraService")
+_PlayerCameraService = NodePath("../../Services/PlayerCameraService")
+_PlayerCharacterManager = NodePath("../../World/PlayerCharacterManager")
+_InputXformer = NodePath("../../Services/InputXformer")
+_PauseInputHandler = NodePath("../../Services/PauseInputHandler")
+
+[node name="BreakRoom" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_CameraService", "_PlayerCameraService", "_PlayerCharacterManager", "_InputXformer", "_PauseInputHandler")]
+script = ExtResource("7_jwbms")
+_CameraService = NodePath("../../Services/CameraService")
 _PlayerCameraService = NodePath("../../Services/PlayerCameraService")
 _PlayerCharacterManager = NodePath("../../World/PlayerCharacterManager")
 _InputXformer = NodePath("../../Services/InputXformer")
@@ -181,7 +186,6 @@ _DefaultSpawnPoint = NodePath("../DefaultSpawnPoint")
 metadata/_edit_lock_ = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="World"]
-navigation_mesh = SubResource("NavigationMesh_rqdll")
 metadata/_edit_lock_ = true
 
 [node name="Environment" type="Node3D" parent="World/NavigationRegion3D"]

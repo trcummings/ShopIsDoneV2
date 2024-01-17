@@ -15,10 +15,16 @@ namespace ShopIsDone.Actors
         [Export]
         private StateMachine _ActorStateMachine;
 
-        public void Idle()
+        public void Idle(string defaultAnimation = null)
         {
             _ActorAnimator.Init();
-            _ActorStateMachine.ChangeState(Consts.States.IDLE);
+
+            var message = new Dictionary<string, Variant>();
+            if (!string.IsNullOrEmpty(defaultAnimation))
+            {
+                message[Consts.ANIMATION_KEY] = defaultAnimation;
+            }
+            _ActorStateMachine.ChangeState(Consts.States.IDLE, message);
         }
 
         public void MoveFreely(IActorInput actorInput)

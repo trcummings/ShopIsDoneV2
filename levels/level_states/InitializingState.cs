@@ -33,6 +33,16 @@ namespace ShopIsDone.Levels.States
                 entrance.EnteredArena += (arena) => onPlayerEnteredArena.Call(entrance, arena);
             }
 
+            // Wire up break room entranecs
+            var breakRooms = GetTree().GetNodesInGroup("break_room").OfType<Area3D>();
+            foreach (var breakRoom in breakRooms)
+            {
+                breakRoom.BodyEntered += (Node3D _) =>
+                {
+                    ChangeState(Consts.States.BREAK_ROOM);
+                };
+            }
+
             // Wire up interactables
             var interactables = GetTree().GetNodesInGroup("interactables").OfType<Interactable>();
             foreach (var interactable in interactables) interactable.Init();
@@ -46,7 +56,8 @@ namespace ShopIsDone.Levels.States
             // Finish initialization (to raise the curtain)
             onFinishedInit.Call();
 
-            // Go to the free move state for now
+            // TODO: Pick next initial state based on some hitherto unknown
+            // factor
             ChangeState(Consts.States.FREE_MOVE);
         }
     }

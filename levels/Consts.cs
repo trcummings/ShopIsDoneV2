@@ -12,6 +12,7 @@ namespace ShopIsDone.Levels
 			public const string CUTSCENE = "Cutscene";
             public const string EXITING = "Exiting";
 			public const string GAME_OVER = "GameOver";
+			public const string BREAK_ROOM = "BreakRoom";
 
             public const string ENTER_ARENA_AREA_KEY = "enter_arena_area";
             public const string ARENA_KEY = "arena";

@@ -2,14 +2,19 @@ using Godot;
 using System;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
+using ShopIsDone.Pausing;
+using ShopIsDone.Utils;
 using ShopIsDone.Actors;
 using ShopIsDone.Cameras;
-using ShopIsDone.Pausing;
 
 namespace ShopIsDone.Levels.States
 {
-    public partial class FreeMoveState : State
-    {
+    // When we enter a break room, we want to hide all followers of the leader,
+    // and let the break room display the break room positions of the other
+    // characters. In order to do this, we will idle the followers, hide them, and
+    // then move them off screen
+	public partial class BreakRoomState : State
+	{
         [Export]
         private CameraService _CameraService;
 
@@ -35,6 +40,9 @@ namespace ShopIsDone.Levels.States
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
+            // Enable pausing
+            _PauseInputHandler.IsActive = true;
+
             // Activate camera service
             _CameraService.Init();
             _CameraService.SetCameraTarget(_PlayerCharacterManager.Leader).Execute();
@@ -43,18 +51,26 @@ namespace ShopIsDone.Levels.States
             // Start camera
             _PlayerCameraService.Activate();
 
-            // Allow pausing
-            _PauseInputHandler.IsActive = true;
+            // Have leader move freely
+            _PlayerCharacterManager.MoveFreely(_PlayerInput);
+            // Idle the followers
+            foreach (var follower in _PlayerCharacterManager.Followers) follower.Idle();
+            // Place the followers in a far off position
+            _PlayerCharacterManager.PlaceFollowers(Vec3.FarOffPoint, Vector3.Forward);
 
-            // Finish start hook
+            // Finish the start hook
             base.OnStart(message);
         }
 
         public override void OnExit(string nextState)
         {
+            // Place the followers back near the leader
+            var leader = _PlayerCharacterManager.Leader;
+            _PlayerCharacterManager.PlaceFollowers(leader.GlobalPosition, leader.FacingDirection);
+
+            // Deactivate camera service
             _PlayerCameraService.Deactivate();
             base.OnExit(nextState);
         }
     }
 }
-

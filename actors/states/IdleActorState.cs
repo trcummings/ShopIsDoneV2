@@ -4,6 +4,7 @@ using Godot.Collections;
 using ShopIsDone.EntityStates;
 using ShopIsDone.Utils.StateMachine;
 using StateConsts = ShopIsDone.EntityStates.Consts;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Actors.States
 {
@@ -17,11 +18,14 @@ namespace ShopIsDone.Actors.States
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
+            // Pull default animation out of message
+            var anim = (string)message.GetValueOrDefault(Consts.ANIMATION_KEY, StateConsts.IDLE);
+
             // Hide floor indicator
             _FloorIndicator.Hide();
 
             // Idle state handler
-            _StateHandler.ChangeState(StateConsts.IDLE);
+            _StateHandler.ChangeState(anim);
 
             // Base start
             base.OnStart(message);
