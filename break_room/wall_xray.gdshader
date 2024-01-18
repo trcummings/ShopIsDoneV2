@@ -3,6 +3,7 @@ shader_type spatial;
 uniform sampler2D albedo : source_color;
 global uniform vec3 leader_pos;
 global uniform float camera_to_leader_distance;
+global uniform float camera_zoom;
 
 float sd_vertical_capsule( vec3 pos, float height, float radius )
 {
@@ -52,7 +53,8 @@ void fragment() {
 		vec3 view_leader = (VIEW_MATRIX * vec4(leader_pos, 1.0)).xyz;
 		vec3 clip_leader = (PROJECTION_MATRIX * vec4(view_leader, 1.0)).xyz;
 		vec3 clip_point = (PROJECTION_MATRIX * vec4(VERTEX, 1.0)).xyz;
-		float clip_sdf = sd_vertical_capsule(clip_leader - clip_point, 0.225, 0.1);
+		float zoom_mod = 1. / camera_zoom;
+		float clip_sdf = sd_vertical_capsule(clip_leader - clip_point, 0.225 * zoom_mod, 0.1 * zoom_mod);
 		
 		if (clip_sdf <= 0.)
 		{
