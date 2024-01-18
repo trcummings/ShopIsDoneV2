@@ -5,11 +5,9 @@ using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.BreakRoom.ArenaInteractions
 {
-    [Tool]
     public partial class TimeClockInteraction : Interaction
     {
         [Export]
-        private NodePath _LevelSelectPath;
         private LevelSelect _LevelSelect;
 
         private Callable _OnLevelChange;
@@ -18,8 +16,6 @@ namespace ShopIsDone.BreakRoom.ArenaInteractions
         public override void _Ready()
         {
             base._Ready();
-            // Throws an insanely annoying error trying to get this in the editor
-            if (!Engine.IsEditorHint()) _LevelSelect = GetNode<LevelSelect>(_LevelSelectPath);
             _OnLevelChange = new Callable(this, nameof(OnLevelChangeRequested));
             _OnCancel = Callable.From(Finish);
         }

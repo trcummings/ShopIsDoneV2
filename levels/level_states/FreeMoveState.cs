@@ -40,6 +40,10 @@ namespace ShopIsDone.Levels.States
             _CameraService.SetCameraTarget(_PlayerCharacterManager.Leader).Execute();
             // Allow characters to move freely
             _PlayerCharacterManager.MoveFreely(_PlayerInput);
+            // Place the followers back near the leader
+            var leader = _PlayerCharacterManager.Leader;
+            _PlayerCharacterManager.PlaceFollowers(leader.GlobalPosition, leader.FacingDirection);
+
             // Start camera
             _PlayerCameraService.Activate();
 

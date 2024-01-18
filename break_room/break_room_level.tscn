@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dntwsip6ujfpw"]
+[gd_scene load_steps=26 format=3 uid="uid://dntwsip6ujfpw"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_1gx3o"]
 [ext_resource type="PackedScene" uid="uid://hmcccjay3t4s" path="res://break_room/break_room.tscn" id="2_e4p3r"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://c44u4oanau75c" path="res://break_room/level_select.tscn" id="14_rbd72"]
 [ext_resource type="Script" path="res://break_room/arena_interactions/TimeClockInteraction.cs" id="14_wdvkh"]
 [ext_resource type="PackedScene" uid="uid://c71hl7eo13nse" path="res://levels/test_level/test_level.tscn" id="15_jamvo"]
+[ext_resource type="PackedScene" uid="uid://cn3822f3jvvpc" path="res://break_room/bathroom/toilet/toilet.tscn" id="15_w0bwm"]
 [ext_resource type="Script" path="res://break_room/LevelSelectItem.cs" id="16_jkjl2"]
 [ext_resource type="PackedScene" uid="uid://xh2e5s84nxyv" path="res://levels/parking_lot_1/parking_lot_1_level.tscn" id="17_cda50"]
 
@@ -107,9 +108,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.303662, 1.11843, -0.03685)
 [node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/TimeClock/Interactable" index="3"]
 script = ExtResource("13_tbfvh")
 
-[node name="TimeClockInteraction" type="Node" parent="World/NavigationRegion3D/Environment/TimeClock/Interactable/CutsceneInteraction" index="0"]
+[node name="TimeClockInteraction" type="Node" parent="World/NavigationRegion3D/Environment/TimeClock/Interactable/CutsceneInteraction" index="0" node_paths=PackedStringArray("_LevelSelect")]
 script = ExtResource("14_wdvkh")
-_LevelSelectPath = NodePath("../../../../../../../UILayer/LevelSelect")
+_LevelSelect = NodePath("../../../../../../../UILayer/LevelSelect")
+
+[node name="Toilet" parent="World/NavigationRegion3D/Environment" index="9" instance=ExtResource("15_w0bwm")]
+transform = Transform3D(-4.37114e-08, -3.48787e-16, -1, 3.48787e-16, 1, -3.48787e-16, 1, -3.48787e-16, -4.37114e-08, -11.5, 2.08165e-12, 3)
 
 [node name="LevelSelect" parent="UILayer" index="0" instance=ExtResource("14_rbd72")]
 visible = false
