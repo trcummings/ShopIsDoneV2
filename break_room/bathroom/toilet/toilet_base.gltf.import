@@ -34,6 +34,10 @@ _subresources={
 "Outline": {
 "use_external/enabled": true,
 "use_external/path": "res://Materials/toon_outline.material"
+},
+"Water": {
+"use_external/enabled": true,
+"use_external/path": "res://break_room/bathroom/toilet/Water.tres"
 }
 }
 }

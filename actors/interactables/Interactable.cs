@@ -39,12 +39,12 @@ namespace ShopIsDone.Interactables
         {
             base._Ready();
             _PromptLabel = GetNode<Label3D>("%PromptLabel");
+            _PromptLabel.Text = _Prompt;
         }
 
         public virtual void Init()
         {
             InjectionProvider.Inject(this);
-            _PromptLabel.Text = _Prompt;
         }
 
         public void Hover()

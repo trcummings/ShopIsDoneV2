@@ -31,6 +31,14 @@ animation/remove_immutable_tracks=true
 import_script/path="res://gltf_pipeline/gltf_importer.gd"
 _subresources={
 "materials": {
+"BathroomFloor": {
+"use_external/enabled": true,
+"use_external/path": "res://break_room/bathroom/bathroom_floor.material"
+},
+"BathroomWall": {
+"use_external/enabled": true,
+"use_external/path": "res://break_room/bathroom/bathroom_wall_xray.material"
+},
 "Floor": {
 "use_external/enabled": true,
 "use_external/path": "res://break_room/floor.tres"

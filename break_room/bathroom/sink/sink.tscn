@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dljqt7t2n3frm"]
+
+[ext_resource type="PackedScene" uid="uid://cyeychryrgbva" path="res://break_room/bathroom/sink/sink.gltf" id="1_wqwms"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g40hb"]
+size = Vector3(1.29016, 2.58002, 0.80957)
+
+[node name="Sink" type="StaticBody3D"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10352e-05, 1.28702, -0.189941)
+shape = SubResource("BoxShape3D_g40hb")
+
+[node name="sink" parent="." instance=ExtResource("1_wqwms")]
+
+[editable path="sink"]

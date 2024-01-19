@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv1qb7rfv1mnh"]
+
+[ext_resource type="PackedScene" uid="uid://dmwux726t0mva" path="res://break_room/bathroom/urinal_divider/urinal_divider.gltf" id="1_5qsoq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e72yy"]
+size = Vector3(0.0498047, 1.70016, 1.35553)
+
+[node name="UrinalDivider" type="StaticBody3D"]
+
+[node name="urinal_divider" parent="." instance=ExtResource("1_5qsoq")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000488281, 1.17525, -0.672442)
+shape = SubResource("BoxShape3D_e72yy")

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4lpeefm2fnrb"]
+
+[ext_resource type="PackedScene" uid="uid://dutxx72ka14ga" path="res://break_room/bathroom/urinal/urinal.gltf" id="1_xpgqh"]
+[ext_resource type="Texture2D" uid="uid://d00n2ar485i7p" path="res://break_room/bathroom/toilet_textures.png" id="2_rocxr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d5frn"]
+size = Vector3(0.769287, 2.54889, 0.682587)
+
+[node name="Urinal" type="StaticBody3D"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000610352, 1.27255, 0.193771)
+shape = SubResource("BoxShape3D_d5frn")
+
+[node name="urinal" parent="." instance=ExtResource("1_xpgqh")]
+
+[node name="ToiletPipes" type="Sprite3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 2.1039, -0.0658926)
+alpha_cut = 1
+texture = ExtResource("2_rocxr")
+hframes = 2
+frame = 1

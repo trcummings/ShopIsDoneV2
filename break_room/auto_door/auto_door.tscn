@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://c57h47gdnbwgu" path="res://break_room/auto_door/DOOR-CLOSE__625614__alexanderdanner__cruise-ship-state-room-bathroom-door-exterior-mono-01.wav" id="5_bqlph"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x74ek"]
-size = Vector3(3.26962, 1.41187, 3.13012)
+size = Vector3(2.19002, 1.41187, 1.71991)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lhi1r"]
 streams_count = 1
@@ -27,7 +27,7 @@ script = ExtResource("1_q16ce")
 _Door = NodePath("door/Door")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.116959, 0.701782, 0.967846)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0800133, 0.701782, 0.876628)
 shape = SubResource("BoxShape3D_x74ek")
 
 [node name="door" parent="." instance=ExtResource("2_ieyo5")]
