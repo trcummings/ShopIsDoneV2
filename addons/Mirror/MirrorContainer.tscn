@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://btxnouaksygg5"]
+
+[ext_resource type="Shader" path="res://addons/Mirror/Mirror.gdshader" id="1_ax8xn"]
+[ext_resource type="Texture2D" uid="uid://us2ngbqvbj8u" path="res://textures/bayer16.png" id="2_01x2f"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_43k2c"]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2b7tl"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_ax8xn")
+shader_parameter/tint = Color(0.9, 0.97, 0.94, 1)
+shader_parameter/distort_strength = null
+shader_parameter/mirror_tex = SubResource("ViewportTexture_43k2c")
+shader_parameter/distort_tex = ExtResource("2_01x2f")
+
+[sub_resource type="QuadMesh" id="11"]
+material = SubResource("ShaderMaterial_2b7tl")
+size = Vector2(2, 2)
+
+[node name="MirrorContainer" type="Node3D"]
+
+[node name="Viewport" type="SubViewport" parent="."]
+size = Vector2i(100, 100)
+
+[node name="Camera" type="Camera3D" parent="Viewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 1.2, 8.49)
+keep_aspect = 0
+cull_mask = 1
+projection = 2
+current = true
+size = 3.0
+frustum_offset = Vector2(-0.4, -1.2)
+near = 8.5
+far = 10000.0
+
+[node name="MeshInstance" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 2.38419e-07, 0, 1, 0, -2.38419e-07, 0, 1, 0, 0, 0)
+layers = 4
+mesh = SubResource("11")
