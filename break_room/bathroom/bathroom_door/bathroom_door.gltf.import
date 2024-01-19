@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bkoaqnpd3ygai"
-path="res://.godot/imported/door.gltf-be8357a7b003ffc85186ac83fde49ddb.scn"
+uid="uid://c1y1l37dg1hoa"
+path="res://.godot/imported/bathroom_door.gltf-09176bdb95523387b24bba1ee1b46155.scn"
 
 [deps]
 
-source_file="res://break_room/auto_door/door.gltf"
-dest_files=["res://.godot/imported/door.gltf-be8357a7b003ffc85186ac83fde49ddb.scn"]
+source_file="res://break_room/bathroom/bathroom_door/bathroom_door.gltf"
+dest_files=["res://.godot/imported/bathroom_door.gltf-09176bdb95523387b24bba1ee1b46155.scn"]
 
 [params]
 
@@ -31,9 +31,13 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "materials": {
-"Wall": {
+"Door": {
 "use_external/enabled": true,
-"use_external/path": "res://break_room/auto_door/two_sided_wall_x_ray.material"
+"use_external/path": "res://break_room/bathroom/bathroom_door/two_sided_wall_x_ray.material"
+},
+"DoorFrame": {
+"use_external/enabled": true,
+"use_external/path": "res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material"
 }
 }
 }

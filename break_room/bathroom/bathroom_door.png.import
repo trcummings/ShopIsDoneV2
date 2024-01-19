@@ -2,18 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dloica6j2n4s5"
-path.s3tc="res://.godot/imported/auto_door_break_room_greybox_grey_grid.png-00a2ea75431da2aaf3bd9d75d2124c0c.s3tc.ctex"
+uid="uid://yiuhe0q3k6ui"
+path.s3tc="res://.godot/imported/bathroom_door.png-0ffa8d4a7b22433fa86e2fbac37d3878.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 
-source_file="res://break_room/auto_door/auto_door_break_room_greybox_grey_grid.png"
-dest_files=["res://.godot/imported/auto_door_break_room_greybox_grey_grid.png-00a2ea75431da2aaf3bd9d75d2124c0c.s3tc.ctex"]
+source_file="res://break_room/bathroom/bathroom_door.png"
+dest_files=["res://.godot/imported/bathroom_door.png-0ffa8d4a7b22433fa86e2fbac37d3878.s3tc.ctex"]
 
 [params]
 

@@ -1,8 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://b4xislti5cjys"]
+[gd_scene load_steps=7 format=3 uid="uid://b4xislti5cjys"]
 
 [ext_resource type="Script" path="res://break_room/auto_door/AutoDoor.cs" id="1_q16ce"]
-[ext_resource type="Texture2D" uid="uid://d1ixaddt575bu" path="res://break_room/auto_door/bathroom_symbol.svg" id="2_778oa"]
-[ext_resource type="PackedScene" uid="uid://bkoaqnpd3ygai" path="res://break_room/auto_door/door.gltf" id="2_ieyo5"]
 [ext_resource type="AudioStream" uid="uid://p0th7ipnffnm" path="res://break_room/auto_door/DOOR-OPEN__625614__alexanderdanner__cruise-ship-state-room-bathroom-door-exterior-mono-01.wav" id="4_xccrv"]
 [ext_resource type="AudioStream" uid="uid://c57h47gdnbwgu" path="res://break_room/auto_door/DOOR-CLOSE__625614__alexanderdanner__cruise-ship-state-room-bathroom-door-exterior-mono-01.wav" id="5_bqlph"]
 
@@ -19,25 +17,15 @@ streams_count = 1
 stream_0/stream = ExtResource("5_bqlph")
 stream_0/weight = 1.0
 
-[node name="AutoDoor" type="Area3D" node_paths=PackedStringArray("_Door")]
+[node name="AutoDoor" type="Area3D"]
 collision_layer = 0
 collision_mask = 512
 monitorable = false
 script = ExtResource("1_q16ce")
-_Door = NodePath("door/Door")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0800133, 0.701782, 0.876628)
 shape = SubResource("BoxShape3D_x74ek")
-
-[node name="door" parent="." instance=ExtResource("2_ieyo5")]
-
-[node name="Sprite3D" type="Sprite3D" parent="door/Door" index="0"]
-transform = Transform3D(0.125, 0, 0, 0, 0.156331, 0, 0, 0, 0.15235, 0.0105875, 2.46875, 1.02264)
-axis = 0
-double_sided = false
-alpha_cut = 1
-texture = ExtResource("2_778oa")
 
 [node name="DoorOpenPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_lhi1r")
@@ -49,5 +37,3 @@ bus = &"SFX"
 
 [connection signal="DoorClosed" from="." to="DoorClosePlayer" method="play"]
 [connection signal="DoorOpened" from="." to="DoorOpenPlayer" method="play"]
-
-[editable path="door"]
