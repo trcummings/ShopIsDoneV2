@@ -10,6 +10,7 @@ namespace ShopIsDone.BreakRoom.ArenaInteractions
         [Export]
         private LevelSelect _LevelSelect;
 
+        private Events _Events;
         private Callable _OnLevelChange;
         private Callable _OnCancel;
 
@@ -32,7 +33,8 @@ namespace ShopIsDone.BreakRoom.ArenaInteractions
 
         private void OnLevelChangeRequested(PackedScene level)
         {
-            // TODO: Change level here
+            var events = Events.GetEvents(this);
+            events.EmitSignal(nameof(events.LevelChangeRequested), level);
 
             Finish();
         }

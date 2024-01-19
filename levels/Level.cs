@@ -92,6 +92,32 @@ namespace ShopIsDone.Levels
             _InjectionProvider.RegisterService(_CutsceneService);
         }
 
+        public void CleanUp()
+        {
+            // Go to exiting state if we weren't already in there
+            if (_LevelStateMachine.CurrentState != Consts.States.EXITING)
+            {
+                _LevelStateMachine.ChangeState(Consts.States.EXITING);
+            }
+
+            // Unregister all services
+            _InjectionProvider.UnregisterService(_LevelData);
+            _InjectionProvider.UnregisterService(_CameraService);
+            _InjectionProvider.UnregisterService(_PlayerCharacterManager);
+            _InjectionProvider.UnregisterService(_InputXformer);
+            _InjectionProvider.UnregisterService(_PauseInputHandler);
+            _InjectionProvider.UnregisterService(_Screenshake);
+            _InjectionProvider.UnregisterService(_DirectionalInput);
+            _InjectionProvider.UnregisterService(_FingerCursor);
+            _InjectionProvider.UnregisterService(_TileCursor);
+            _InjectionProvider.UnregisterService(_TileIndicator);
+            _InjectionProvider.UnregisterService(_MovePathWidget);
+            _InjectionProvider.UnregisterService(_FacingWidget);
+            _InjectionProvider.UnregisterService(_PlayerCameraService);
+            _InjectionProvider.UnregisterService(_MicrogameController);
+            _InjectionProvider.UnregisterService(_CutsceneService);
+        }
+
         public const string ON_FINISHED_INIT = "OnFinishedInit";
         public const string ON_PLAYER_ENTERED_ARENA = "OnPlayerEnteredArena";
 
