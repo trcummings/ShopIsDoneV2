@@ -1,0 +1,146 @@
+[gd_scene load_steps=12 format=3 uid="uid://kxhd2aa43gxp"]
+
+[ext_resource type="Script" path="res://widgets/clown_arm/ClownArmWidget.cs" id="1_0gsk5"]
+[ext_resource type="PackedScene" uid="uid://k4300tt6673u" path="res://Models/ClownArm/ClownArmModel.tscn" id="2_hqif7"]
+[ext_resource type="AudioStream" uid="uid://qqhwmjp1fhli" path="res://widgets/clown_arm/arm_descend_puppet_grab.wav" id="3_nmrp2"]
+[ext_resource type="AudioStream" uid="uid://bw5pk7rprm0s7" path="res://widgets/clown_arm/puppet_clench.wav" id="4_bf1wn"]
+
+[sub_resource type="Animation" id="1"]
+resource_name = "Ascend"
+length = 1.5
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClownArmModel")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 2.08165e-12, -1, 2.08165e-12, 1.5, 1, 2.08165e-12, 10, 2.08165e-12)
+
+[sub_resource type="Animation" id="2"]
+resource_name = "Descend"
+length = 2.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClownArmModel/ClownArm/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("SpreadHand"),
+"times": PackedFloat32Array(0.2)
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ClownArmModel")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 2.08165e-12, 10, 2.08165e-12, 1.7, 1, 2.08165e-12, -1.5, 2.08165e-12, 1.9, 1, 2.08165e-12, -1, 2.08165e-12)
+
+[sub_resource type="Animation" id="4"]
+resource_name = "GrabPawn"
+length = 0.5
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClownArmModel/ClownArm/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("CloseHand"),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="3"]
+resource_name = "Idle"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClownArmModel/ClownArm/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ClownArmModel")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3dnwd"]
+_data = {
+"Ascend": SubResource("1"),
+"Descend": SubResource("2"),
+"GrabPawn": SubResource("4"),
+"Idle": SubResource("3")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l1cg6"]
+streams_count = 1
+stream_0/stream = ExtResource("3_nmrp2")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0ibgr"]
+streams_count = 1
+stream_0/stream = ExtResource("4_bf1wn")
+stream_0/weight = 1.0
+
+[node name="ClownArmWidget" type="Node3D"]
+script = ExtResource("1_0gsk5")
+GrabPointPath = NodePath("ClownArmModel/ClownArm/Armature/Skeleton3D/BoneAttachment3D/GrabPoint")
+
+[node name="ClownArmModel" parent="." instance=ExtResource("2_hqif7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.08165e-12, 10, 2.08165e-12)
+
+[node name="Skeleton3D" parent="ClownArmModel/ClownArm/Armature" index="0"]
+bones/3/rotation = Quaternion(0.00280622, 9.40395e-38, 0.171634, 0.985157)
+bones/4/rotation = Quaternion(0.657585, -0.362839, -0.313954, 0.580829)
+bones/5/rotation = Quaternion(0.758248, 0.00667716, 0.00574102, 0.651907)
+bones/6/rotation = Quaternion(0.572195, -7.09748e-11, 1.58983e-08, 0.820118)
+bones/7/rotation = Quaternion(0.358552, 0.0407134, 0.0156548, 0.93249)
+bones/8/rotation = Quaternion(0.684725, 2.30019e-08, 1.53346e-08, 0.728801)
+bones/9/rotation = Quaternion(0.631288, 0.0257337, 0.0209662, 0.774838)
+bones/10/rotation = Quaternion(0.56987, 0.00747164, 0.00518189, 0.821684)
+bones/11/rotation = Quaternion(0.264612, -1.20718e-10, -5.52605e-15, 0.964355)
+bones/12/rotation = Quaternion(0.608727, -0.0674748, -0.052072, 0.788788)
+bones/13/rotation = Quaternion(0.535282, -0.0314539, -0.0199521, 0.843852)
+bones/14/rotation = Quaternion(0.207717, -4.76044e-09, 2.09459e-08, 0.978189)
+bones/15/rotation = Quaternion(0.628288, -0.067636, -0.0549681, 0.773084)
+bones/16/rotation = Quaternion(0.56973, -0.0358314, -0.0248749, 0.820674)
+bones/17/rotation = Quaternion(0.314247, -1.47153e-09, 1.96204e-09, 0.949341)
+bones/19/position = Vector3(-0.525286, -0.918027, -2.83541)
+bones/20/position = Vector3(-0.506526, -1.08137, -3.24685)
+bones/21/position = Vector3(-0.321318, -1.40023, -3.18383)
+bones/22/position = Vector3(0.0321016, -1.08137, -3.12581)
+bones/23/position = Vector3(-0.0633628, -0.616154, -3.21145)
+bones/24/position = Vector3(-0.615344, -0.0100608, -2.33972)
+
+[node name="BoneAttachment3D" parent="ClownArmModel/ClownArm/Armature/Skeleton3D" index="1"]
+transform = Transform3D(-0.000963326, -0.00552912, -0.999984, -0.338173, -0.941068, 0.00552913, -0.941084, 0.338173, -0.000963241, 5.58121e-28, -7.98196, 1.28802e-07)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_3dnwd")
+}
+autoplay = "Idle"
+
+[node name="DescendPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_l1cg6")
+bus = &"SFX"
+
+[node name="ClenchPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_0ibgr")
+bus = &"SFX"
+
+[connection signal="HandClenched" from="." to="ClenchPlayer" method="play"]
+[connection signal="HandDescend" from="." to="DescendPlayer" method="play"]
+
+[editable path="ClownArmModel"]
+[editable path="ClownArmModel/ClownArm"]
