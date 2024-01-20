@@ -37,7 +37,7 @@ _subresources={
 },
 "DoorFrame": {
 "use_external/enabled": true,
-"use_external/path": "res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material"
+"use_external/path": "res://Materials/xray_palette_asset.material"
 }
 }
 }

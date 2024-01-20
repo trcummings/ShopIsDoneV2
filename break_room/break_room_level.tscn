@@ -165,6 +165,9 @@ _Prompt = "Inspect"
 transform = Transform3D(1, 4.02216e-24, -2.50326e-08, -4.70889e-24, 1, 0, -2.50326e-08, 0, 1, 0, 0.902435, 0)
 shape = SubResource("BoxShape3D_ywndn")
 
+[node name="PromptLabel" parent="World/NavigationRegion3D/Environment/Bathroom/Urinal/Interactable" index="1"]
+transform = Transform3D(1, 4.02216e-24, 0, 4.02215e-24, 1, 0, 0, 0, 1, -0.456101, 1.12784, 0.292229)
+
 [node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/Bathroom/Urinal/Interactable" index="2"]
 script = ExtResource("13_tbfvh")
 
