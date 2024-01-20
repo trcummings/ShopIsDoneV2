@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjbrfagvcy28g"]
+
+[ext_resource type="PackedScene" uid="uid://bgk8v5q1hac" path="res://break_room/break_room_table/break_room_table.gltf" id="1_8vovi"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_o550m"]
+height = 0.913693
+radius = 0.738155
+
+[node name="BreakRoomTable" type="StaticBody3D"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.445569, 0)
+shape = SubResource("CylinderShape3D_o550m")
+
+[node name="break_room_table" parent="." instance=ExtResource("1_8vovi")]

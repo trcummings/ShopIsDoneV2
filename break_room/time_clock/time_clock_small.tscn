@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpr8t2r3eog3f"]
+
+[ext_resource type="PackedScene" uid="uid://cld16wk8q1520" path="res://break_room/time_clock/time_clock_small.gltf" id="1_p1470"]
+
+[node name="TimeClockSmall" type="Node3D"]
+
+[node name="time_clock_small" parent="." instance=ExtResource("1_p1470")]

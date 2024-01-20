@@ -6,6 +6,7 @@ using System;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Extensions;
 using System.Linq;
+using ShopIsDone.Utils.Positioning;
 
 namespace ShopIsDone.Levels
 {
@@ -25,7 +26,10 @@ namespace ShopIsDone.Levels
 
         private int _LeaderLayer = 10;
 
+        public Actor Leader { get { return _Leader; } }
         private Actor _Leader;
+
+        public Array<Actor> Followers { get { return _Followers; } }
         private Array<Actor> _Followers = new Array<Actor>();
 
         public void Init()
@@ -55,12 +59,20 @@ namespace ShopIsDone.Levels
             Idle();
         }
 
+
+
         /* NB: Position is GLOBAL */
         public void WarpGroupToPosition(Vector3 position, Vector3 facingDir)
         {
             // Move leader to the given position
             _Leader.GlobalPosition = position;
             _Leader.FacingDirection = facingDir;
+            // Spawn followers nearby
+            PlaceFollowers(position, facingDir);
+        }
+
+        public void PlaceFollowers(Vector3 position, Vector3 facingDir)
+        {
             // Spawn followers nearby
             for (int i = 0; i < _Followers.Count; i++)
             {

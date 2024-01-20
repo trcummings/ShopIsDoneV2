@@ -11,7 +11,7 @@ namespace ShopIsDone.Levels.States
     public partial class FreeMoveState : State
     {
         [Export]
-        private CameraService _CameraSystem;
+        private CameraService _CameraService;
 
         [Export]
         private PlayerCameraService _PlayerCameraService;
@@ -35,11 +35,15 @@ namespace ShopIsDone.Levels.States
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
-            // Activate camera system
-            _CameraSystem.Init();
-            _CameraSystem.SetCameraTarget(_PlayerCharacterManager.GetLeader()).Execute();
+            // Activate camera service
+            _CameraService.Init();
+            _CameraService.SetCameraTarget(_PlayerCharacterManager.Leader).Execute();
             // Allow characters to move freely
             _PlayerCharacterManager.MoveFreely(_PlayerInput);
+            // Place the followers back near the leader
+            var leader = _PlayerCharacterManager.Leader;
+            _PlayerCharacterManager.PlaceFollowers(leader.GlobalPosition, leader.FacingDirection);
+
             // Start camera
             _PlayerCameraService.Activate();
 

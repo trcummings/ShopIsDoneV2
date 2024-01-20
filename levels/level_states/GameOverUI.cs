@@ -40,6 +40,9 @@ namespace ShopIsDone.Levels
             _RestartLevel.Pressed += () => EmitSignal(nameof(RequestedRestartLevel));
             _QuitToTitle.Pressed += () => EmitSignal(nameof(RequestedQuitToTitle));
             _QuitGame.Pressed += () => EmitSignal(nameof(RequestedQuitGame));
+
+            // Initially deactivate
+            base.Deactivate();
         }
     }
 }

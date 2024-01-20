@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://h8tgbnv7m8wk"]
+
+[ext_resource type="PackedScene" uid="uid://b4xislti5cjys" path="res://break_room/auto_door/auto_door.tscn" id="1_qsueh"]
+[ext_resource type="PackedScene" uid="uid://c1y1l37dg1hoa" path="res://break_room/bathroom/bathroom_door/bathroom_door.gltf" id="2_bticr"]
+
+[node name="BathroomDoor" node_paths=PackedStringArray("_Door") instance=ExtResource("1_qsueh")]
+_Door = NodePath("bathroom_door/Door")
+
+[node name="bathroom_door" parent="." index="3" instance=ExtResource("2_bticr")]
+
+[editable path="bathroom_door"]

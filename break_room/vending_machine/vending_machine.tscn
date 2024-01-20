@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://digrjqe4sy5ly"]
+
+[ext_resource type="PackedScene" uid="uid://cm2oxgk6onbar" path="res://AssetPacks/SimpleShopInteriors/_Models/Props/SI_Prop_Vending_Machine.fbx" id="1_ag7ba"]
+[ext_resource type="Material" path="res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material" id="2_obe5g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8l30t"]
+size = Vector3(1.63989, 2.64722, 0.880249)
+
+[node name="VendingMachine" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00891113, 1.35559, -0.0022583)
+shape = SubResource("BoxShape3D_8l30t")
+
+[node name="SI_Prop_Vending_Machine" parent="." instance=ExtResource("1_ag7ba")]
+transform = Transform3D(80, 0, 0, 0, 80, 0, 0, 0, 80, 0, 0, 0)
+
+[node name="SI_Prop_Vending_Machine" parent="SI_Prop_Vending_Machine/RootNode" index="0"]
+surface_material_override/0 = ExtResource("2_obe5g")
+
+[editable path="SI_Prop_Vending_Machine"]

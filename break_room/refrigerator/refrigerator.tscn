@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://k4w17wpyi1d8"]
+
+[ext_resource type="PackedScene" uid="uid://d0q4autljk354" path="res://break_room/refrigerator/refrigerator.gltf" id="1_hqujh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_52sgv"]
+size = Vector3(1.26738, 2.47406, 1.56256)
+
+[node name="Refrigerator" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0726242, 1.19738, -0.00576782)
+shape = SubResource("BoxShape3D_52sgv")
+
+[node name="refrigerator" parent="." instance=ExtResource("1_hqujh")]

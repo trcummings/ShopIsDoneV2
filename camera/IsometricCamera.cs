@@ -98,6 +98,9 @@ namespace ShopIsDone.Cameras
                 clone.VOffset = _Camera.VOffset;
                 _Zoom.SyncClone(clone);
             }
+
+            // Set global camera zoom shader
+            RenderingServer.GlobalShaderParameterSet("camera_zoom", _Zoom.ZoomAmount);
         }
 
         public void SetOffset(Vector2 offset)

@@ -12,6 +12,8 @@ namespace ShopIsDone.Cameras.Zooms
         [Export]
         protected Camera3D _Camera;
 
+        public float ZoomAmount { get { return GetZoom(); } }
+
         public virtual void UpdateZoom(double delta)
         {
 

@@ -20,6 +20,18 @@ namespace ShopIsDone.UI
         // State
         protected Control _FocusContainer;
 
+        public virtual void Activate()
+        {
+            Show();
+            SetProcess(true);
+        }
+
+        public virtual void Deactivate()
+        {
+            Hide();
+            SetProcess(false);
+        }
+
         protected void SetFocusContainer(Control focusContainer)
         {
             // Set focus container

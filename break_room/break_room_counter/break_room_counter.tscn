@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqnhq10foijt"]
+
+[ext_resource type="PackedScene" uid="uid://blsdai2vu61eg" path="res://break_room/break_room_counter/break_room_counter.gltf" id="1_f74ua"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a5jmv"]
+size = Vector3(1.04443, 0.953766, 2.94592)
+
+[node name="BreakRoomCounter" type="StaticBody3D"]
+
+[node name="break_room_counter" parent="." instance=ExtResource("1_f74ua")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0703949, 0.457957, 0.0300903)
+shape = SubResource("BoxShape3D_a5jmv")

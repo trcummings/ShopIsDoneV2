@@ -33,6 +33,19 @@ namespace ShopIsDone.Cameras
                 _Camera.RotateRight();
                 EmitSignal(nameof(CameraRotated));
             }
+
+            if (Input.IsActionPressed("zoom_camera")) ZoomCameraIn();
+            else ZoomCameraOut();
+        }
+
+        public void ZoomCameraIn()
+        {
+            _Camera.SetZoom(0.5f);
+        }
+
+        public void ZoomCameraOut()
+        {
+            _Camera.SetZoom(1);
         }
 
         public void Activate()

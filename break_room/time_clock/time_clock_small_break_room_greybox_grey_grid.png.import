@@ -1,0 +1,36 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://djsbqu7ucbf3d"
+path.s3tc="res://.godot/imported/time_clock_small_break_room_greybox_grey_grid.png-c5f6d22114f3d2b5b6b40f4016d15377.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={}
+
+[deps]
+
+source_file="res://break_room/time_clock/time_clock_small_break_room_greybox_grey_grid.png"
+dest_files=["res://.godot/imported/time_clock_small_break_room_greybox_grey_grid.png-c5f6d22114f3d2b5b6b40f4016d15377.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

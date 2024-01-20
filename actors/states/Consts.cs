@@ -6,6 +6,7 @@ namespace ShopIsDone.Actors.States
 	{
 		public const string LEADER_KEY = "Leader";
 		public const string INPUT_KEY = "ActorInput";
+		public const string ANIMATION_KEY = "AnimationKey";
 
 		public static class States
 		{

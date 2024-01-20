@@ -1,0 +1,214 @@
+[gd_scene load_steps=36 format=3 uid="uid://dntwsip6ujfpw"]
+
+[ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_1gx3o"]
+[ext_resource type="PackedScene" uid="uid://hmcccjay3t4s" path="res://break_room/break_room.tscn" id="2_e4p3r"]
+[ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_xk3aj"]
+[ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_0p7hi"]
+[ext_resource type="PackedScene" uid="uid://b7n2nvaxotrvp" path="res://actors/ricky_actor.tscn" id="4_ieyoc"]
+[ext_resource type="PackedScene" uid="uid://h8tgbnv7m8wk" path="res://break_room/bathroom/bathroom_door/bathroom_door.tscn" id="6_4oxqx"]
+[ext_resource type="PackedScene" uid="uid://digrjqe4sy5ly" path="res://break_room/vending_machine/vending_machine.tscn" id="6_85xsv"]
+[ext_resource type="PackedScene" uid="uid://k4w17wpyi1d8" path="res://break_room/refrigerator/refrigerator.tscn" id="7_cceh2"]
+[ext_resource type="PackedScene" uid="uid://bjbrfagvcy28g" path="res://break_room/break_room_table/break_room_table.tscn" id="8_1klvc"]
+[ext_resource type="PackedScene" uid="uid://cqnhq10foijt" path="res://break_room/break_room_counter/break_room_counter.tscn" id="9_bru5q"]
+[ext_resource type="PackedScene" uid="uid://cp5wcgt8xqki" path="res://actors/interactables/interactable.tscn" id="11_bl51l"]
+[ext_resource type="PackedScene" uid="uid://dpr8t2r3eog3f" path="res://break_room/time_clock/time_clock_small.tscn" id="12_c7qpf"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/CutsceneInteraction.cs" id="13_tbfvh"]
+[ext_resource type="PackedScene" uid="uid://c44u4oanau75c" path="res://break_room/level_select.tscn" id="14_rbd72"]
+[ext_resource type="Script" path="res://break_room/arena_interactions/TimeClockInteraction.cs" id="14_wdvkh"]
+[ext_resource type="PackedScene" uid="uid://c71hl7eo13nse" path="res://levels/test_level/test_level.tscn" id="15_jamvo"]
+[ext_resource type="PackedScene" uid="uid://cn3822f3jvvpc" path="res://break_room/bathroom/toilet/toilet.tscn" id="15_w0bwm"]
+[ext_resource type="Script" path="res://break_room/LevelSelectItem.cs" id="16_jkjl2"]
+[ext_resource type="PackedScene" uid="uid://dljqt7t2n3frm" path="res://break_room/bathroom/sink/sink.tscn" id="16_sna8x"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/Interaction.cs" id="16_wr8qh"]
+[ext_resource type="PackedScene" uid="uid://b4lpeefm2fnrb" path="res://break_room/bathroom/urinal/urinal.tscn" id="16_ysda3"]
+[ext_resource type="PackedScene" uid="uid://xh2e5s84nxyv" path="res://levels/parking_lot_1/parking_lot_1_level.tscn" id="17_cda50"]
+[ext_resource type="PackedScene" uid="uid://cv1qb7rfv1mnh" path="res://break_room/bathroom/urinal_divider/urinal_divider.tscn" id="18_4nfln"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/DialogueInteraction.cs" id="19_ixlwk"]
+[ext_resource type="Texture2D" uid="uid://cbgs156e2ur7o" path="res://break_room/bathroom/grate.png" id="19_kdr0g"]
+[ext_resource type="Resource" uid="uid://co5p2n130pw1s" path="res://dialogue/common_dialogue/common_dialogue.dialogue" id="20_rhac2"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_ln0yd"]
+vertices = PackedVector3Array(2, 0.446506, 4, 2, 0.446506, 3.5, 1.5, 0.446506, 3, -1.75, 0.446506, 3.75, 3.75, 0.446506, 1, 4, 0.446506, 0.25, 3, 0.446506, -0.25, 2.25, 0.446506, 0.75, -4.75, 0.446506, -2.75, -1.75, 0.446506, 3.75, 3, 0.446506, -1.75, 5.25, 0.446506, -5.25, -4.75, 0.446506, -5.25, 1.5, 0.446506, 1.25, 2.25, 0.446506, 0.75, 3, 0.446506, -0.25, 4, 0.446506, -2.5, 5.25, 0.446506, -2.25, 5.25, 0.446506, -5.25, 3, 0.446506, -1.75, 4, 0.446506, -2.5, 5.25, 0.446506, -5.25, 1.5, 0.446506, 1.25, 3, 0.446506, -0.25, 3, 0.446506, -1.75, -1.75, 0.446506, 3.75, -5.25, 0.446506, 5.25, -2.25, 0.446506, 5.25, -1.75, 0.446506, 3.75, -4.75, 0.446506, -2.75, -5.25, 0.446506, -2.5, -1.75, 0.446506, 3.75, 1.5, 0.446506, 3, 1.5, 0.446506, 1.25, 3.5, 0.446506, 3.5, 2, 0.446506, 3.5, 2, 0.446506, 4, 5.25, 0.446506, 4.25, 5.25, 0.446506, 0.25, 4, 0.446506, 0.25, 3.75, 0.446506, 1, 4, 0.446506, 3, 5.25, 0.446506, 4.25, 4, 0.446506, 3, 3.5, 0.446506, 3.5, 5.25, 0.446506, 4.25, -9.25, 0.446506, 4, -9, 0.446506, 5.25, -8.5, 0.446506, 4.5, -9.25, 0.446506, 3.25, -10.25, 0.446506, 3.25, -10.5, 0.446506, 2.25, -11.25, 0.446506, 2.25, -11.25, 0.446506, 4.5, -8.5, 0.446506, 4.5, -6.75, 0.446506, 4.5, -6.5, 0.446506, 3.5, -6.75, 0.446506, 0.75, -9, 0.446506, 0.75, -9.25, 0.446506, 3.25, -10.25, 0.446506, 3.25, -11.25, 0.446506, 4.5, -9.25, 0.446506, 4, -9.25, 0.446506, 3.25, -1, 2.94651, 4.75, -1, 2.69651, 5.25, -0.25, 2.69651, 5.25)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(8, 12, 9), PackedInt32Array(9, 12, 10), PackedInt32Array(10, 12, 11), PackedInt32Array(15, 14, 13), PackedInt32Array(18, 17, 16), PackedInt32Array(21, 20, 19), PackedInt32Array(23, 22, 24), PackedInt32Array(24, 22, 25), PackedInt32Array(27, 26, 28), PackedInt32Array(28, 26, 30), PackedInt32Array(28, 30, 29), PackedInt32Array(32, 31, 33), PackedInt32Array(35, 34, 36), PackedInt32Array(36, 34, 37), PackedInt32Array(39, 38, 40), PackedInt32Array(40, 38, 41), PackedInt32Array(41, 38, 42), PackedInt32Array(45, 44, 43), PackedInt32Array(47, 46, 48), PackedInt32Array(48, 46, 49), PackedInt32Array(51, 50, 52), PackedInt32Array(52, 50, 53), PackedInt32Array(55, 54, 56), PackedInt32Array(56, 54, 59), PackedInt32Array(56, 59, 58), PackedInt32Array(56, 58, 57), PackedInt32Array(63, 62, 60), PackedInt32Array(60, 62, 61), PackedInt32Array(66, 65, 64)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gloqd"]
+size = Vector3(0.845505, 1.94626, 2.1355)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sslm7"]
+size = Vector3(0.846985, 1.93347, 2.1355)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_om8x8"]
+size = Vector3(18.2516, 5.74951, 12.4633)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0olva"]
+size = Vector3(1.16919, 1.72559, 1.79736)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ywndn"]
+size = Vector3(1, 1.79498, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_au8jt"]
+size = Vector3(6.00092, 5.5332, 6.05725)
+
+[sub_resource type="Resource" id="Resource_cuehh"]
+script = ExtResource("16_jkjl2")
+Label = "Test Level"
+LevelScene = ExtResource("15_jamvo")
+
+[sub_resource type="Resource" id="Resource_nw584"]
+script = ExtResource("16_jkjl2")
+Label = "Parking Lot"
+LevelScene = ExtResource("17_cda50")
+
+[node name="BreakRoomLevel" instance=ExtResource("1_1gx3o")]
+
+[node name="WorldEnvironment" parent="." index="0"]
+environment = ExtResource("2_xk3aj")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
+
+[node name="PlayerCharacterManager" parent="World" index="2"]
+_LeaderScene = ExtResource("3_0p7hi")
+_FollowerScenes = [ExtResource("4_ieyoc")]
+
+[node name="NavigationRegion3D" parent="World" index="3"]
+navigation_mesh = SubResource("NavigationMesh_ln0yd")
+
+[node name="BreakRoom" parent="World/NavigationRegion3D/Environment" index="0" instance=ExtResource("2_e4p3r")]
+metadata/_edit_lock_ = true
+
+[node name="MainBreakRoom" type="Node3D" parent="World/NavigationRegion3D/Environment" index="1"]
+
+[node name="VendingMachine" parent="World/NavigationRegion3D/Environment/MainBreakRoom" index="0" instance=ExtResource("6_85xsv")]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 4.78181, 2.08165e-12, 5.38764)
+
+[node name="Refrigerator" parent="World/NavigationRegion3D/Environment/MainBreakRoom" index="1" instance=ExtResource("7_cceh2")]
+transform = Transform3D(-0.154003, 0, -0.98807, 0, 1, 0, 0.98807, 0, -0.154003, -0.699085, 0, 5.17545)
+
+[node name="BreakRoomTable" parent="World/NavigationRegion3D/Environment/MainBreakRoom" index="2" instance=ExtResource("8_1klvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3809, 0, -1.06773)
+
+[node name="BreakRoomTable2" parent="World/NavigationRegion3D/Environment/MainBreakRoom" index="3" instance=ExtResource("8_1klvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75277, 0, 2.16984)
+
+[node name="BreakRoomCounter" parent="World/NavigationRegion3D/Environment/MainBreakRoom" index="4" instance=ExtResource("9_bru5q")]
+transform = Transform3D(-4.37114e-08, -3.48787e-16, -1, 3.48787e-16, 1, -3.48787e-16, 1, -3.48787e-16, -4.37114e-08, 2.04197, 0, 5.32847)
+
+[node name="TimeClock" type="StaticBody3D" parent="World/NavigationRegion3D/Environment/MainBreakRoom" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.33863, 0, -4.14505)
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0713882, 0.46434, 0)
+shape = SubResource("BoxShape3D_gloqd")
+
+[node name="Interactable" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock" index="1" node_paths=PackedStringArray("_Interaction") instance=ExtResource("11_bl51l")]
+_Interaction = NodePath("CutsceneInteraction")
+_Prompt = "Level Select"
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable" index="0"]
+transform = Transform3D(1, 0, -2.50326e-08, 0, 1, 0, -2.50326e-08, 0, 1, -0.0765076, 0.466736, -0.0147705)
+shape = SubResource("BoxShape3D_sslm7")
+
+[node name="TimeClockSmall" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable" index="2" instance=ExtResource("12_c7qpf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.303662, 1.11843, -0.03685)
+
+[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable" index="3"]
+script = ExtResource("13_tbfvh")
+
+[node name="TimeClockInteraction" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable/CutsceneInteraction" index="0" node_paths=PackedStringArray("_LevelSelect")]
+script = ExtResource("14_wdvkh")
+_LevelSelect = NodePath("../../../../../../../../UILayer/LevelSelect")
+
+[node name="BathroomDoor" parent="World/NavigationRegion3D/Environment" index="2" instance=ExtResource("6_4oxqx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.87482, 2.08165e-12, 2.09491)
+
+[node name="BreakRoomArea" type="Area3D" parent="World/NavigationRegion3D/Environment" index="3" groups=["break_room"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Environment/BreakRoomArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.92255, 2.37476, 0.0113831)
+shape = SubResource("BoxShape3D_om8x8")
+
+[node name="Bathroom" type="Node3D" parent="World/NavigationRegion3D/Environment" index="4"]
+
+[node name="Toilet" parent="World/NavigationRegion3D/Environment/Bathroom" index="0" instance=ExtResource("15_w0bwm")]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, -10.9782, 2.08165e-12, 0.291724)
+
+[node name="Interactable" parent="World/NavigationRegion3D/Environment/Bathroom/Toilet" index="4" node_paths=PackedStringArray("_Interaction") instance=ExtResource("11_bl51l")]
+_Interaction = NodePath("CutsceneInteraction")
+_Prompt = "Save Game?"
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Environment/Bathroom/Toilet/Interactable" index="0"]
+transform = Transform3D(1, 4.02216e-24, -2.50326e-08, -4.70889e-24, 1, 0, -2.50326e-08, 0, 1, 0.0274658, 0.362793, -0.398682)
+shape = SubResource("BoxShape3D_0olva")
+
+[node name="PromptLabel" parent="World/NavigationRegion3D/Environment/Bathroom/Toilet/Interactable" index="1"]
+transform = Transform3D(1, 4.02216e-24, 0, 4.02215e-24, 1, 0, 0, 0, 1, -0.0513926, 0.981125, -0.984938)
+
+[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/Bathroom/Toilet/Interactable" index="2"]
+script = ExtResource("13_tbfvh")
+
+[node name="NullInteraction" type="Node" parent="World/NavigationRegion3D/Environment/Bathroom/Toilet/Interactable/CutsceneInteraction" index="0"]
+script = ExtResource("16_wr8qh")
+
+[node name="Sink" parent="World/NavigationRegion3D/Environment/Bathroom" index="1" instance=ExtResource("16_sna8x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5895, 0, 5.70018)
+
+[node name="Urinal" parent="World/NavigationRegion3D/Environment/Bathroom" index="2" instance=ExtResource("16_ysda3")]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, -10.733, 0, 5.73585)
+
+[node name="Interactable" parent="World/NavigationRegion3D/Environment/Bathroom/Urinal" index="3" node_paths=PackedStringArray("_Interaction") instance=ExtResource("11_bl51l")]
+_Interaction = NodePath("CutsceneInteraction")
+_Prompt = "Inspect"
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Environment/Bathroom/Urinal/Interactable" index="0"]
+transform = Transform3D(1, 4.02216e-24, -2.50326e-08, -4.70889e-24, 1, 0, -2.50326e-08, 0, 1, 0, 0.902435, 0)
+shape = SubResource("BoxShape3D_ywndn")
+
+[node name="PromptLabel" parent="World/NavigationRegion3D/Environment/Bathroom/Urinal/Interactable" index="1"]
+transform = Transform3D(1, 4.02216e-24, 0, 4.02215e-24, 1, 0, 0, 0, 1, -0.456101, 1.12784, 0.292229)
+
+[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/Bathroom/Urinal/Interactable" index="2"]
+script = ExtResource("13_tbfvh")
+
+[node name="DialogueInteraction" type="Node" parent="World/NavigationRegion3D/Environment/Bathroom/Urinal/Interactable/CutsceneInteraction" index="0"]
+script = ExtResource("19_ixlwk")
+_DialogueStartFrom = "urinal"
+_DialogueResource = ExtResource("20_rhac2")
+
+[node name="UrinalDivider" parent="World/NavigationRegion3D/Environment/Bathroom" index="3" instance=ExtResource("18_4nfln")]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, -9.60668, 0, 5.86179)
+
+[node name="UrinalDivider2" parent="World/NavigationRegion3D/Environment/Bathroom" index="4" instance=ExtResource("18_4nfln")]
+transform = Transform3D(-1.85, 6.45256e-16, -2.79342e-07, 6.45256e-16, 1.85, -6.45256e-16, 2.79342e-07, -6.45256e-16, -1.85, -9.7291, -0.322304, 0.0652251)
+
+[node name="Sprite3D" type="Sprite3D" parent="World/NavigationRegion3D/Environment/Bathroom" index="5"]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -9, 0.001, 3)
+axis = 1
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("19_kdr0g")
+
+[node name="BathroomArea" type="Area3D" parent="World/NavigationRegion3D/Environment/Bathroom" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2.08165e-12, 3)
+collision_layer = 0
+collision_mask = 512
+monitorable = false
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Environment/Bathroom/BathroomArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0210876, 2.2666, 0.0388794)
+shape = SubResource("BoxShape3D_au8jt")
+
+[node name="LevelSelect" parent="UILayer" index="0" instance=ExtResource("14_rbd72")]
+visible = false
+_Levels = [SubResource("Resource_cuehh"), SubResource("Resource_nw584")]
+
+[node name="DebugDirectionalLight" type="DirectionalLight3D" parent="." index="7"]
+transform = Transform3D(0.896533, -0.0606551, 0.438805, -0.442977, -0.122759, 0.888089, 7.78726e-17, -0.990581, -0.136926, -0.515489, 3.28732, 4.76837e-07)
+
+[editable path="World/IsometricCamera"]
+[editable path="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable"]
+[editable path="World/NavigationRegion3D/Environment/Bathroom/Toilet/Interactable"]
+[editable path="World/NavigationRegion3D/Environment/Bathroom/Urinal/Interactable"]

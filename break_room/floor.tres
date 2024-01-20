@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://duaydnpjdbeji"]
+
+[ext_resource type="Texture2D" uid="uid://yeirbymr3it3" path="res://break_room/break_room_greybox_grey_grid.png" id="1_p1cgl"]
+
+[resource]
+resource_name = "Floor"
+albedo_texture = ExtResource("1_p1cgl")
+roughness = 0.5

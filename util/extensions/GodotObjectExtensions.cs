@@ -9,6 +9,14 @@ namespace ShopIsDone.Utils.Extensions
         {
             if (!obj.IsConnected(signalName, callable)) obj.Connect(signalName, callable, flags);
         }
+
+        public static void SafeDisconnect(this GodotObject obj, string signalName, Callable callable)
+        {
+            if (obj.IsConnected(signalName, callable))
+            {
+                obj.Disconnect(signalName, callable);
+            }
+        }
     }
 }
 

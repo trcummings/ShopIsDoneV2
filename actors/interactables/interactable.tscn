@@ -12,7 +12,8 @@ metadata/_edit_group_ = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, -2.50326e-08, 0, 1, 0, -2.50326e-08, 0, 1, 0, 0, 0)
 
-[node name="Label3D" type="Label3D" parent="."]
+[node name="PromptLabel" type="Label3D" parent="."]
+unique_name_in_owner = true
 visible = false
 billboard = 1
 double_sided = false
@@ -20,5 +21,5 @@ no_depth_test = true
 text = "Interact
 "
 
-[connection signal="InteractableHovered" from="." to="Label3D" method="show"]
-[connection signal="InteractableUnhovered" from="." to="Label3D" method="hide"]
+[connection signal="InteractableHovered" from="." to="PromptLabel" method="show"]
+[connection signal="InteractableUnhovered" from="." to="PromptLabel" method="hide"]

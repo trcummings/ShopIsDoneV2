@@ -26,6 +26,10 @@ public partial class Events : Node
     [Signal]
     public delegate void QuitGameRequestedEventHandler();
 
+    // Change level
+    [Signal]
+    public delegate void LevelChangeRequestedEventHandler(PackedScene level);
+
     // Static function to help get the singleton
     public static Events GetEvents(Node node)
     {

@@ -17,7 +17,7 @@ namespace ShopIsDone.Interactables.Interactions
             CallDeferred(nameof(Finish));
         }
 
-		protected void Finish()
+		protected virtual void Finish()
 		{
             EmitSignal(nameof(Finished));
         }
