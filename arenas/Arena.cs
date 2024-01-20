@@ -4,16 +4,8 @@ using ShopIsDone.Core;
 using System.Linq;
 using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.Utils.DependencyInjection;
-using ShopIsDone.Actions;
-using ShopIsDone.Actions.Effort;
-using ShopIsDone.Arenas.ArenaScripts;
 using ArenaConsts = ShopIsDone.Arenas.States.Consts;
-using ShopIsDone.Conditions;
 using ShopIsDone.Levels;
-using ShopIsDone.ArenaInteractions;
-using ShopIsDone.Arenas.Meddling;
-using ShopIsDone.Tasks;
-using ShopIsDone.Entities.ParallelHunters;
 
 namespace ShopIsDone.Arenas
 {
@@ -30,81 +22,29 @@ namespace ShopIsDone.Arenas
         [Export]
         public StateMachine _ArenaStateMachine;
 
-        // Services
         [Export]
         private TileManager _TileManager;
 
         [Export]
-        private ActionService _ActionService;
-
-        [Export]
         private PlayerUnitService _PlayerUnitService;
 
-        [Export]
-        private TaskService _TaskService;
-
-        [Export]
-        private EffortMeterService _EffortMeterService;
-
-        [Export]
-        private ScriptQueueService _ScriptQueueService;
-
-        [Export]
-        private ArenaOutcomeService _OutcomeService;
-
-        [Export]
-        private UnitDeathService _UnitDeathService;
-
-        [Export]
-        private ConditionsService _ConditionsService;
-
-        [Export]
-        private UnitInteractionService _UnitInteractionService;
-
-        [Export]
-        private UnitTaskService _UnitTaskService;
-
-        // Not services
-        [Export]
-        private ActionMeddler _ActionMeddler;
-
-        [Export]
-        private ParallelHunterService _ParallelHunterService;
-
+        // NB: Technically a service, but it lives under Level
         [Export]
         private PlayerCharacterManager _PlayerCharacterManager;
 
-        private InjectionProvider _InjectionProvider;
+        // Services
+        private ServicesContainer _Services;
 
         public override void _Ready()
         {
             base._Ready();
-            _InjectionProvider = InjectionProvider.GetProvider(this);
+            _Services = GetNode<ServicesContainer>("%Services");
         }
 
         public async void Init()
         {
-            // Register services
-            _InjectionProvider.RegisterService(_TileManager);
-            _InjectionProvider.RegisterService(_ActionService);
-            _InjectionProvider.RegisterService(_PlayerUnitService);
-            _InjectionProvider.RegisterService(_TaskService);
-            _InjectionProvider.RegisterService(_EffortMeterService);
-            _InjectionProvider.RegisterService(_ScriptQueueService);
-            _InjectionProvider.RegisterService(_OutcomeService);
-            _InjectionProvider.RegisterService(_UnitDeathService);
-            _InjectionProvider.RegisterService(_ConditionsService);
-            _InjectionProvider.RegisterService(_UnitInteractionService);
-            _InjectionProvider.RegisterService(_UnitTaskService);
-
-            // Initialize services (with strict order)
-            _TileManager.Init();
-            _ActionService.Init();
-            _TaskService.Init();
-            _UnitDeathService.Init();
-            _ConditionsService.Init();
-            _ActionMeddler.Init();
-            _ParallelHunterService.Init();
+            _Services.RegisterServices();
+            _Services.InitServices();
 
             // Move units into arena
             _PlayerCharacterManager.EnterArena();
@@ -147,17 +87,7 @@ namespace ShopIsDone.Arenas
         public void CleanUp()
         {
             // Unregister services
-            _InjectionProvider.UnregisterService(_TileManager);
-            _InjectionProvider.UnregisterService(_ActionService);
-            _InjectionProvider.UnregisterService(_PlayerUnitService);
-            _InjectionProvider.UnregisterService(_TaskService);
-            _InjectionProvider.UnregisterService(_EffortMeterService);
-            _InjectionProvider.UnregisterService(_ScriptQueueService);
-            _InjectionProvider.UnregisterService(_OutcomeService);
-            _InjectionProvider.UnregisterService(_UnitDeathService);
-            _InjectionProvider.UnregisterService(_ConditionsService);
-            _InjectionProvider.UnregisterService(_UnitInteractionService);
-            _InjectionProvider.UnregisterService(_UnitTaskService);
+            _Services.UnregisterServices();
 
             // Idle player units
             _PlayerCharacterManager.Idle();

@@ -6,14 +6,15 @@ using Godot.Collections;
 using System.Linq;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Utils;
 
 namespace ShopIsDone.Arenas.Meddling
 {
 	// This is a arena utility which observes actions as they come in, and
 	// matches them against conditions to see if it should intervene and run some
 	// kind of cutscene or alternative action instead.
-	public partial class ActionMeddler : Node
-	{
+	public partial class ActionMeddler : Node, IService, IInitializable
+    {
 		[Export]
 		private bool _IsActive = true;
 

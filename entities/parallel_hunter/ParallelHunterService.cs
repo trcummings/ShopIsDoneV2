@@ -7,10 +7,11 @@ using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using Godot.Collections;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Utils;
 
 namespace ShopIsDone.Entities.ParallelHunters
 {
-    public partial class ParallelHunterService : Node, IService
+    public partial class ParallelHunterService : Node, IService, IInitializable
     {
         [Export]
         private bool _IsActive = false;

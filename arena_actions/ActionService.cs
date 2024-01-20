@@ -9,10 +9,11 @@ using ShopIsDone.Arenas;
 using ShopIsDone.Arenas.ArenaScripts;
 using ShopIsDone.Arenas.Meddling;
 using ShopIsDone.Entities.ParallelHunters;
+using ShopIsDone.Utils;
 
 namespace ShopIsDone.Actions
 {
-	public partial class ActionService : Node, IService
+	public partial class ActionService : Node, IService, IInitializable
     {
         [Signal]
         public delegate void ActionStartedEventHandler(ArenaAction action);

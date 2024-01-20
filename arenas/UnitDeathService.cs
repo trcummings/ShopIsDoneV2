@@ -10,7 +10,7 @@ namespace ShopIsDone.Arenas
 {
     // This is for removing units on death safely from the arena without freeing
     // their memory
-    public partial class UnitDeathService : Node, IService
+    public partial class UnitDeathService : Node, IService, IInitializable
     {
         [Inject]
         private TileManager _TileManager;

@@ -1,8 +1,9 @@
-[gd_scene load_steps=60 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=61 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
 [ext_resource type="Script" path="res://arenas/turn_counter/TurnCounter.cs" id="2_qt0kh"]
+[ext_resource type="Script" path="res://util/dependency_injection/ServicesContainer.cs" id="2_tsep3"]
 [ext_resource type="Script" path="res://util/state_machine/State.cs" id="3_q440h"]
 [ext_resource type="Script" path="res://arenas/states/InitializingState.cs" id="3_s3t2k"]
 [ext_resource type="Script" path="res://arena_actions/ActionService.cs" id="3_y84tj"]
@@ -67,25 +68,17 @@ bg_color = Color(0.298039, 0.298039, 0.298039, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uec0k"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_ActionService", "_PlayerUnitService", "_TaskService", "_EffortMeterService", "_ScriptQueueService", "_OutcomeService", "_UnitDeathService", "_ConditionsService", "_UnitInteractionService", "_UnitTaskService", "_ActionMeddler", "_ParallelHunterService") groups=["arena"]]
+[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_PlayerUnitService") groups=["arena"]]
 script = ExtResource("1_loukv")
 _ArenaStateMachine = NodePath("ArenaStateMachine")
 _TileManager = NodePath("Tiles")
-_ActionService = NodePath("Services/ActionService")
 _PlayerUnitService = NodePath("Services/PlayerUnitService")
-_TaskService = NodePath("Services/TaskService")
-_EffortMeterService = NodePath("Services/EffortMeterService")
-_ScriptQueueService = NodePath("Services/ScriptQueueService")
-_OutcomeService = NodePath("Services/ArenaOutcomeService")
-_UnitDeathService = NodePath("Services/UnitDeathService")
-_ConditionsService = NodePath("Services/ConditionsService")
-_UnitInteractionService = NodePath("Services/UnitInteractionService")
-_UnitTaskService = NodePath("Services/UnitTaskService")
-_ActionMeddler = NodePath("Services/ActionMeddler")
-_ParallelHunterService = NodePath("Services/ParallelHunterService")
 metadata/_edit_lock_ = true
 
 [node name="Services" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_tsep3")
+_ExtraServices = [NodePath("../Tiles")]
 
 [node name="TurnCounter" type="Node" parent="Services"]
 script = ExtResource("2_qt0kh")

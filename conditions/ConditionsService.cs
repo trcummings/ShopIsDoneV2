@@ -4,10 +4,11 @@ using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Extensions;
 using Godot.Collections;
 using System.Linq;
+using ShopIsDone.Utils;
 
 namespace ShopIsDone.Conditions
 {
-    public partial class ConditionsService : Node, IService
+    public partial class ConditionsService : Node, IService, IInitializable
     {
         private Array<Condition> _Conditions = new Array<Condition>();
 

@@ -4,10 +4,11 @@ using Godot.Collections;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Utils;
 
 namespace ShopIsDone.Tiles
 {
-	public partial class TileManager : Node3D, IService
+	public partial class TileManager : Node3D, IService, IInitializable
     {
         [Export]
         private GridMap _ArenaTilemap;

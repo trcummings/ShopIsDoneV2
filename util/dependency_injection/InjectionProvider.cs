@@ -23,16 +23,16 @@ namespace ShopIsDone.Utils.DependencyInjection
             GetProvider(node).InjectObject(node);
         }
 
-        public void RegisterService<TService>(TService service)
-            where TService : IService
+        public void RegisterService(IService service)
         {
-            _Services.Add(typeof(TService), service);
+            var type = service.GetType();
+            _Services.Add(type, service);
         }
 
-        public void UnregisterService<TService>(TService _)
-            where TService : IService
+        public void UnregisterService(IService service)
         {
-            _Services.Remove(typeof(TService));
+            var type = service.GetType();
+            _Services.Remove(type);
         }
 
         private object Resolve(Type serviceType)

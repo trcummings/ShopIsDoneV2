@@ -1,15 +1,9 @@
 using Godot;
 using System;
 using ShopIsDone.Arenas;
-using System.Linq;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
 using ShopIsDone.Utils.DependencyInjection;
-using ShopIsDone.Cameras;
-using ShopIsDone.Widgets;
-using ShopIsDone.Utils;
-using ShopIsDone.Microgames;
-using ShopIsDone.Pausing;
 
 namespace ShopIsDone.Levels
 {
@@ -22,74 +16,16 @@ namespace ShopIsDone.Levels
         private StateMachine _LevelStateMachine;
 
         // Services
-        [Export]
-        private LevelData _LevelData;
-
-        [Export]
-        private CameraService _CameraService;
-
-        [Export]
-        private PlayerCharacterManager _PlayerCharacterManager;
-
-        [Export]
-        private PlayerCameraService _PlayerCameraService;
-
-        [Export]
-        private InputXformer _InputXformer;
-
-        [Export]
-        private PauseInputHandler _PauseInputHandler;
-
-        [Export]
-        private ScreenshakeService _Screenshake;
-
-        [Export]
-        private DirectionalInputHelper _DirectionalInput;
-
-        [Export]
-        private FingerCursor _FingerCursor;
-
-        [Export]
-        private TileCursor _TileCursor;
-
-        [Export]
-        private TileIndicator _TileIndicator;
-
-        [Export]
-        private MovePathWidget _MovePathWidget;
-
-        [Export]
-        private FacingWidget _FacingWidget;
-
-        [Export]
-        private MicrogameController _MicrogameController;
-
-        [Export]
-        private CutsceneService _CutsceneService;
-
-        private InjectionProvider _InjectionProvider;
+        private ServicesContainer _Services;
 
         public override void _Ready()
         {
+            base._Ready();
             // Ready nodes
-            _InjectionProvider = InjectionProvider.GetProvider(this);
+            _Services = GetNode<ServicesContainer>("%Services");
 
-            // Register all services (NB: We have to do this manually, unfortunately)
-            _InjectionProvider.RegisterService(_LevelData);
-            _InjectionProvider.RegisterService(_CameraService);
-            _InjectionProvider.RegisterService(_PlayerCharacterManager);
-            _InjectionProvider.RegisterService(_InputXformer);
-            _InjectionProvider.RegisterService(_PauseInputHandler);
-            _InjectionProvider.RegisterService(_Screenshake);
-            _InjectionProvider.RegisterService(_DirectionalInput);
-            _InjectionProvider.RegisterService(_FingerCursor);
-            _InjectionProvider.RegisterService(_TileCursor);
-            _InjectionProvider.RegisterService(_TileIndicator);
-            _InjectionProvider.RegisterService(_MovePathWidget);
-            _InjectionProvider.RegisterService(_FacingWidget);
-            _InjectionProvider.RegisterService(_PlayerCameraService);
-            _InjectionProvider.RegisterService(_MicrogameController);
-            _InjectionProvider.RegisterService(_CutsceneService);
+            // Register all services
+            _Services.RegisterServices();
         }
 
         public void CleanUp()
@@ -101,21 +37,7 @@ namespace ShopIsDone.Levels
             }
 
             // Unregister all services
-            _InjectionProvider.UnregisterService(_LevelData);
-            _InjectionProvider.UnregisterService(_CameraService);
-            _InjectionProvider.UnregisterService(_PlayerCharacterManager);
-            _InjectionProvider.UnregisterService(_InputXformer);
-            _InjectionProvider.UnregisterService(_PauseInputHandler);
-            _InjectionProvider.UnregisterService(_Screenshake);
-            _InjectionProvider.UnregisterService(_DirectionalInput);
-            _InjectionProvider.UnregisterService(_FingerCursor);
-            _InjectionProvider.UnregisterService(_TileCursor);
-            _InjectionProvider.UnregisterService(_TileIndicator);
-            _InjectionProvider.UnregisterService(_MovePathWidget);
-            _InjectionProvider.UnregisterService(_FacingWidget);
-            _InjectionProvider.UnregisterService(_PlayerCameraService);
-            _InjectionProvider.UnregisterService(_MicrogameController);
-            _InjectionProvider.UnregisterService(_CutsceneService);
+            _Services.UnregisterServices();
         }
 
         public const string ON_FINISHED_INIT = "OnFinishedInit";

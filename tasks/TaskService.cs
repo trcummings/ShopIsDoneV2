@@ -4,12 +4,13 @@ using System.Linq;
 using Godot;
 using ShopIsDone.Cameras;
 using ShopIsDone.Core;
+using ShopIsDone.Utils;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Tasks
 {
-    public partial class TaskService : Node, IService
+    public partial class TaskService : Node, IService, IInitializable
     {
         [Inject]
         private CameraService _CameraService;
