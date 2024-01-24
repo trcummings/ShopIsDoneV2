@@ -20,7 +20,6 @@ namespace ShopIsDone.Levels.States
             _PauseInputHandler.IsActive = false;
 
             // Idle the player characters
-            GD.Print("Idling!");
             _PlayerCharacterManager.Idle();
 
             // TODO: Pause any other actors

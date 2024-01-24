@@ -49,6 +49,9 @@ namespace ShopIsDone.Interactables
 
         public void Hover()
         {
+            // Ignore if disabled
+            if (!Monitorable) return;
+
             _IsHovered = true;
             EmitSignal(nameof(InteractableHovered));
         }
