@@ -47,7 +47,6 @@
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="43_h3he4"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
-radius = 0.75
 
 [node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine") groups=["entities"]]
 collision_layer = 2

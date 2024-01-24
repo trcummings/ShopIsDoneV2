@@ -28,7 +28,11 @@ namespace ShopIsDone.Tiles
 
         public void Init()
         {
+            // Clear tiles dictionary
             _TilesByPos.Clear();
+
+            // Map over each used cell in the tilemap dictionary and create a
+            // tile at that position
             foreach (var cell in _ArenaTilemap.GetUsedCells())
             {
                 var cellItem = _ArenaTilemap.GetCellItem(cell);
@@ -48,12 +52,19 @@ namespace ShopIsDone.Tiles
 
         public void CleanUp()
         {
-            foreach (var tile in _TilesByPos.Values) tile.QueueFree();
+            foreach (var tile in _TilesByPos.Values)
+            {
+                tile.QueueFree();
+            }
+            _TilesByPos.Clear();
         }
 
         public void UpdateTiles()
         {
-            foreach (var tile in _TilesByPos.Values) tile.Update();
+            foreach (var tile in _TilesByPos.Values)
+            {
+                tile.Update();
+            }
         }
 
         public Vector3 TilePosToGlobalPos(Vector3 pos)

@@ -1,0 +1,222 @@
+[gd_scene load_steps=23 format=3 uid="uid://cxhlniuwyyuxf"]
+
+[ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_m71d5"]
+[ext_resource type="Material" uid="uid://c0krox5teicdh" path="res://Materials/greybox_materials/greybox_floor.material" id="2_rx5kt"]
+[ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="2_xajjm"]
+[ext_resource type="Material" uid="uid://cmc7v4l3wrnb8" path="res://Materials/greybox_materials/greybox_wall.material" id="4_7el7f"]
+[ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="5_ywf1i"]
+[ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="6_37muu"]
+[ext_resource type="PackedScene" uid="uid://d3edvxooy0nm3" path="res://exit/exit_model.tscn" id="7_aenl5"]
+[ext_resource type="PackedScene" uid="uid://cp5wcgt8xqki" path="res://actors/interactables/interactable.tscn" id="8_h8c1v"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/CutsceneInteraction.cs" id="9_clpbj"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/DialogueResponseInteraction.cs" id="10_8nt1p"]
+[ext_resource type="Resource" uid="uid://co5p2n130pw1s" path="res://dialogue/common_dialogue/common_dialogue.dialogue" id="11_4p0ym"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/ComposedInteraction.cs" id="12_dv4fl"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/ChangeLevelInteraction.cs" id="12_rgdh7"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/ChangeInteractableEnabledInteraction.cs" id="13_nhfwy"]
+[ext_resource type="PackedScene" uid="uid://dntwsip6ujfpw" path="res://break_room/break_room_level.tscn" id="13_vgify"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/FinishCutsceneInteraction.cs" id="16_sxopx"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_4mxmh"]
+vertices = PackedVector3Array(-19.5, 0, -19.5, -19.5, 0, 19.5, 19.5, 0, 19.5, 19.5, 0, -19.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="QuadMesh" id="QuadMesh_t0dyc"]
+size = Vector2(40, 40)
+orientation = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_nlkug"]
+size = Vector2(40, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x8hqc"]
+size = Vector3(1, 1, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_itbya"]
+size = Vector3(2, 1, 19)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gimbt"]
+size = Vector3(1.05945, 1.90543, 1)
+
+[node name="TestLevel2" instance=ExtResource("1_m71d5")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
+
+[node name="PlayerCharacterManager" parent="World" index="2"]
+_LeaderScene = ExtResource("2_xajjm")
+
+[node name="NavigationRegion3D" parent="World" index="3"]
+navigation_mesh = SubResource("NavigationMesh_4mxmh")
+
+[node name="Floor" type="CSGMesh3D" parent="World/NavigationRegion3D/Environment" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("QuadMesh_t0dyc")
+material = ExtResource("2_rx5kt")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="World/NavigationRegion3D/Environment" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2, 2.08165e-12)
+use_collision = true
+collision_mask = 0
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="World/NavigationRegion3D/Environment/CSGCombiner3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, -2)
+use_collision = true
+collision_mask = 0
+size = Vector3(2, 4, 6)
+material = ExtResource("4_7el7f")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="World/NavigationRegion3D/Environment/CSGCombiner3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 0, -21)
+use_collision = true
+collision_mask = 0
+size = Vector3(3, 4, 6)
+material = ExtResource("4_7el7f")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="World/NavigationRegion3D/Environment/CSGCombiner3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.08165e-12, -1)
+use_collision = true
+collision_mask = 0
+size = Vector3(14, 4, 4)
+material = ExtResource("4_7el7f")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="World/NavigationRegion3D/Environment/CSGCombiner3D" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
+use_collision = true
+collision_mask = 0
+size = Vector3(2, 4, 10)
+material = ExtResource("4_7el7f")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="World/NavigationRegion3D/Environment/CSGCombiner3D" index="4"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.5, 0, -6.55692e-08)
+use_collision = true
+collision_mask = 0
+size = Vector3(2, 4, 19)
+material = ExtResource("4_7el7f")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="World/NavigationRegion3D/Environment/CSGCombiner3D" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 0, -7)
+use_collision = true
+collision_mask = 0
+size = Vector3(2, 4, 13)
+material = ExtResource("4_7el7f")
+
+[node name="Walls" type="CSGCombiner3D" parent="World/NavigationRegion3D/Environment" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2, 2.08165e-12)
+use_collision = true
+collision_mask = 0
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Wall" type="CSGMesh3D" parent="World/NavigationRegion3D/Environment/Walls" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("QuadMesh_nlkug")
+material = ExtResource("4_7el7f")
+
+[node name="Wall4" type="CSGMesh3D" parent="World/NavigationRegion3D/Environment/Walls" index="1"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 20)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("QuadMesh_nlkug")
+material = ExtResource("4_7el7f")
+
+[node name="Wall2" type="CSGMesh3D" parent="World/NavigationRegion3D/Environment/Walls" index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 20, 0, 0)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("QuadMesh_nlkug")
+material = ExtResource("4_7el7f")
+
+[node name="Wall3" type="CSGMesh3D" parent="World/NavigationRegion3D/Environment/Walls" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 0, 0)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("QuadMesh_nlkug")
+material = ExtResource("4_7el7f")
+
+[node name="Arena1" parent="World/NavigationRegion3D/Environment" index="3" node_paths=PackedStringArray("_PlayerCharacterManager") instance=ExtResource("5_ywf1i")]
+_PlayerCharacterManager = NodePath("../../../PlayerCharacterManager")
+
+[node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena1" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
+_ArenaTilemap = NodePath("../../TileManager")
+
+[node name="EnterArenaArea" parent="World/NavigationRegion3D/Environment/Arena1" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -8)
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Environment/Arena1/EnterArenaArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08165e-12, 0)
+shape = SubResource("BoxShape3D_x8hqc")
+
+[node name="TileManager" parent="World/NavigationRegion3D/Environment" index="4" instance=ExtResource("6_37muu")]
+visible = false
+data = {
+"cells": PackedInt32Array(65534, 65528, 0, 65534, 65529, 0, 65534, 65530, 0, 65534, 65531, 1, 65534, 65532, 1, 65534, 65533, 0, 65535, 65534, 0, 0, 65534, 0, 1, 65534, 0, 2, 65534, 0, 3, 65534, 0, 4, 65534, 0, 4, 65533, 0, 4, 65532, 0, 4, 65531, 0, 4, 65530, 0, 4, 65529, 0, 4, 65528, 0, 3, 65528, 0, 2, 65528, 0, 1, 65528, 0, 0, 65528, 0, 65535, 65528, 0, 65535, 65529, 0, 65535, 65530, 0, 65535, 65531, 0, 65535, 65532, 0, 65535, 65533, 0, 0, 65533, 0, 1, 65533, 0, 2, 65533, 0, 3, 65533, 0, 3, 65532, 0, 3, 65531, 0, 3, 65530, 0, 3, 65529, 0, 2, 65529, 0, 1, 65529, 0, 0, 65529, 0, 0, 65530, 0, 0, 65531, 0, 0, 65532, 0, 1, 65532, 0, 2, 65532, 0, 2, 65531, 0, 2, 65530, 0, 1, 65530, 0, 1, 65531, 0, 4, 65527, 0, 3, 65527, 0, 2, 65527, 0, 1, 65527, 0, 0, 65527, 0, 65535, 65527, 0, 65534, 65527, 0, 65534, 65526, 0, 65535, 65526, 0, 0, 65526, 0, 1, 65526, 0, 2, 65526, 0, 3, 65526, 0, 4, 65526, 0, 65534, 65534, 0)
+}
+
+[node name="Arena2" parent="World/NavigationRegion3D/Environment" index="5" node_paths=PackedStringArray("_PlayerCharacterManager") instance=ExtResource("5_ywf1i")]
+_PlayerCharacterManager = NodePath("../../../PlayerCharacterManager")
+
+[node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena2" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
+_ArenaTilemap = NodePath("../../TileManager2")
+
+[node name="EnterArenaArea" parent="World/NavigationRegion3D/Environment/Arena2" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 8)
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Environment/Arena2/EnterArenaArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.176804, 0.5, 3)
+shape = SubResource("BoxShape3D_itbya")
+
+[node name="TileManager2" parent="World/NavigationRegion3D/Environment" index="6" instance=ExtResource("6_37muu")]
+data = {
+"cells": PackedInt32Array(4, 1, 0, 4, 2, 0, 4, 3, 1, 4, 4, 1, 4, 5, 0, 4, 6, 0, 3, 6, 0, 2, 6, 0, 1, 6, 0, 0, 6, 0, 0, 5, 0, 0, 4, 0, 0, 3, 0, 0, 2, 0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 3, 2, 0, 3, 3, 0, 3, 4, 0, 3, 5, 0, 1, 5, 0, 1, 4, 0, 1, 3, 0, 1, 2, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0)
+}
+
+[node name="ExitModel" parent="World/NavigationRegion3D/Environment" index="7" instance=ExtResource("7_aenl5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.99, 0, -9)
+
+[node name="Interactable" parent="World/NavigationRegion3D/Environment/ExitModel" index="3" node_paths=PackedStringArray("_Interaction") instance=ExtResource("8_h8c1v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+_Interaction = NodePath("CutsceneInteraction")
+_Prompt = "Exit?"
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Environment/ExitModel/Interactable" index="0"]
+transform = Transform3D(1, 0, -2.50326e-08, 0, 1, 0, -2.50326e-08, 0, 1, -0.950794, -1.00084, 0)
+shape = SubResource("BoxShape3D_gimbt")
+metadata/_edit_lock_ = true
+
+[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/ExitModel/Interactable" index="2"]
+script = ExtResource("9_clpbj")
+_RevertCutsceneStateOnFinish = false
+
+[node name="DialogueResponseInteraction" type="Node" parent="World/NavigationRegion3D/Environment/ExitModel/Interactable/CutsceneInteraction" index="0" node_paths=PackedStringArray("_OnYesInteraction", "_OnNoInteraction")]
+script = ExtResource("10_8nt1p")
+_DialogueStartFrom = "exit"
+_DialogueResource = ExtResource("11_4p0ym")
+_OnYesInteraction = NodePath("ComposedInteraction")
+_OnNoInteraction = NodePath("FinishCutsceneInteraction")
+
+[node name="ComposedInteraction" type="Node" parent="World/NavigationRegion3D/Environment/ExitModel/Interactable/CutsceneInteraction/DialogueResponseInteraction" index="0"]
+script = ExtResource("12_dv4fl")
+
+[node name="ChangeInteractableEnabledInteraction" type="Node" parent="World/NavigationRegion3D/Environment/ExitModel/Interactable/CutsceneInteraction/DialogueResponseInteraction/ComposedInteraction" index="0"]
+script = ExtResource("13_nhfwy")
+_InteractablePath = NodePath("../../../..")
+
+[node name="ChangeLevelInteraction" type="Node" parent="World/NavigationRegion3D/Environment/ExitModel/Interactable/CutsceneInteraction/DialogueResponseInteraction/ComposedInteraction" index="1"]
+script = ExtResource("12_rgdh7")
+_ToLevel = ExtResource("13_vgify")
+
+[node name="FinishCutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/ExitModel/Interactable/CutsceneInteraction/DialogueResponseInteraction" index="1"]
+script = ExtResource("16_sxopx")
+
+[node name="DefaultSpawnPoint" parent="World" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 2.08165e-12, -14)
+
+[editable path="World/IsometricCamera"]
+[editable path="World/NavigationRegion3D/Environment/Arena1"]
+[editable path="World/NavigationRegion3D/Environment/Arena2"]
+[editable path="World/NavigationRegion3D/Environment/ExitModel/Interactable"]
