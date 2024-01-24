@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://d3edvxooy0nm3"]
 
-[ext_resource type="Material" path="res://exit/ExitDoor.material" id="1_442ua"]
+[ext_resource type="Material" path="res://exit/exit_door.material" id="1_442ua"]
 [ext_resource type="PackedScene" uid="uid://cojwv587ghlem" path="res://exit/exit_door_light.tscn" id="2_jreyl"]
 
 [sub_resource type="QuadMesh" id="2"]
