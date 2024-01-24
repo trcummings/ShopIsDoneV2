@@ -4,7 +4,7 @@ Haskell: I know it's a little strange, but I really prefer to sit down on the to
 
 ~ exit
 Exit to break room?
-- [#confirm]Yes
 - No
+- [#confirm]Yes
 do wait(0.4)
 => END

@@ -172,4 +172,6 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
 	response_confirmed.emit(response)
+	# Immediately hide the responses menu, otherwise we get lag
+	responses_menu.hide()
 	next(response.next_id)

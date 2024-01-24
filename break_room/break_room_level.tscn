@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dntwsip6ujfpw"]
+[gd_scene load_steps=39 format=3 uid="uid://dntwsip6ujfpw"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_1gx3o"]
 [ext_resource type="PackedScene" uid="uid://hmcccjay3t4s" path="res://break_room/break_room.tscn" id="2_e4p3r"]
@@ -12,7 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://cqnhq10foijt" path="res://break_room/break_room_counter/break_room_counter.tscn" id="9_bru5q"]
 [ext_resource type="PackedScene" uid="uid://cp5wcgt8xqki" path="res://actors/interactables/interactable.tscn" id="11_bl51l"]
 [ext_resource type="PackedScene" uid="uid://dpr8t2r3eog3f" path="res://break_room/time_clock/time_clock_small.tscn" id="12_c7qpf"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/ComposedInteraction.cs" id="13_k0m6x"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/CutsceneInteraction.cs" id="13_tbfvh"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/FinishCutsceneInteraction.cs" id="14_8ecod"]
+[ext_resource type="Script" path="res://actors/interactables/interactions/ChangeInteractableEnabledInteraction.cs" id="14_qmq3o"]
 [ext_resource type="PackedScene" uid="uid://c44u4oanau75c" path="res://break_room/level_select.tscn" id="14_rbd72"]
 [ext_resource type="Script" path="res://break_room/arena_interactions/TimeClockInteraction.cs" id="14_wdvkh"]
 [ext_resource type="PackedScene" uid="uid://c71hl7eo13nse" path="res://levels/test_level/test_level.tscn" id="15_jamvo"]
@@ -103,7 +106,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0713882, 0.46434, 0)
 shape = SubResource("BoxShape3D_gloqd")
 
 [node name="Interactable" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock" index="1" node_paths=PackedStringArray("_Interaction") instance=ExtResource("11_bl51l")]
-_Interaction = NodePath("CutsceneInteraction")
+_Interaction = NodePath("Cutscene")
 _Prompt = "Level Select"
 
 [node name="CollisionShape3D" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable" index="0"]
@@ -113,12 +116,32 @@ shape = SubResource("BoxShape3D_sslm7")
 [node name="TimeClockSmall" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable" index="2" instance=ExtResource("12_c7qpf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.303662, 1.11843, -0.03685)
 
-[node name="CutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable" index="3"]
+[node name="Cutscene" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable" index="3"]
 script = ExtResource("13_tbfvh")
+_RevertCutsceneStateOnFinish = false
 
-[node name="TimeClockInteraction" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable/CutsceneInteraction" index="0" node_paths=PackedStringArray("_LevelSelect")]
+[node name="Compose" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable/Cutscene" index="0"]
+script = ExtResource("13_k0m6x")
+
+[node name="DisableInteractable" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable/Cutscene/Compose" index="0"]
+script = ExtResource("14_qmq3o")
+_InteractablePath = NodePath("../../..")
+
+[node name="TimeClock" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable/Cutscene/Compose" index="1" node_paths=PackedStringArray("_OnCancelInteraction")]
 script = ExtResource("14_wdvkh")
-_LevelSelect = NodePath("../../../../../../../../UILayer/LevelSelect")
+_LevelSelectPath = NodePath("../../../../../../../../../UILayer/LevelSelect")
+_OnCancelInteraction = NodePath("Compose")
+
+[node name="Compose" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable/Cutscene/Compose/TimeClock" index="0"]
+script = ExtResource("13_k0m6x")
+
+[node name="FinishCutscene" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable/Cutscene/Compose/TimeClock/Compose" index="0"]
+script = ExtResource("14_8ecod")
+
+[node name="EnableInteractable" type="Node" parent="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable/Cutscene/Compose/TimeClock/Compose" index="1"]
+script = ExtResource("14_qmq3o")
+_ToEnabledState = true
+_InteractablePath = NodePath("../../../../..")
 
 [node name="BathroomDoor" parent="World/NavigationRegion3D/Environment" index="2" instance=ExtResource("6_4oxqx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.87482, 2.08165e-12, 2.09491)
