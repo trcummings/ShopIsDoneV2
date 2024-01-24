@@ -25,21 +25,6 @@ namespace ShopIsDone.Actors.States
 
         private IActorInput _ActorInput = new ActorInput();
 
-        public override void _Ready()
-        {
-            base._Ready();
-
-            // Connect to interactable handler
-            _InteractableHandler.InteractionBegan += () => ChangeState(Consts.States.IDLE);
-            _InteractableHandler.InteractionFinished += () =>
-            {
-                ChangeState(Consts.States.FREE_MOVE, new Dictionary<string, Variant>()
-                {
-                    { Consts.INPUT_KEY, (GodotObject)_ActorInput }
-                });
-            };
-        }
-
         public override void OnStart(Dictionary<string, Variant> message)
         {
             // Get actor input from message

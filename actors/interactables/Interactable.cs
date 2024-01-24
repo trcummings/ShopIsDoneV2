@@ -94,7 +94,6 @@ namespace ShopIsDone.Interactables
         public void Disable()
         {
             SetDeferred("monitorable", false);
-            SetDeferred("monitoring", false);
             // If we're hovered, unhover
             if (_IsHovered) Unhover();
         }
@@ -102,7 +101,6 @@ namespace ShopIsDone.Interactables
         public void Enable()
         {
             SetDeferred("monitorable", true);
-            SetDeferred("monitoring", true);
         }
     }
 }

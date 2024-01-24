@@ -58,12 +58,14 @@ namespace ShopIsDone.Game.States
 
         private async Task CleanUpLevel()
         {
+            // Run clean up
+            _Level.CleanUp();
+
             // Fade to black
             _Events.EmitSignal(nameof(_Events.FadeInRequested));
             await ToSignal(_Events, nameof(_Events.FadeInFinished));
 
             // Remove scene
-            _Level.CleanUp();
             RemoveChild(_Level);
             _Level.QueueFree();
         }

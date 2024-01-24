@@ -83,8 +83,9 @@ _PauseInputHandler = NodePath("../../Services/PauseInputHandler")
 script = ExtResource("5_01t8v")
 _PlayerCharacterManager = NodePath("../../World/PlayerCharacterManager")
 
-[node name="Exiting" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_PauseInputHandler")]
+[node name="Exiting" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_PlayerCharacterManager", "_PauseInputHandler")]
 script = ExtResource("6_50r3g")
+_PlayerCharacterManager = NodePath("../../World/PlayerCharacterManager")
 _PauseInputHandler = NodePath("../../Services/PauseInputHandler")
 
 [node name="GameOver" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_PauseInputHandler", "_GameOverUI")]

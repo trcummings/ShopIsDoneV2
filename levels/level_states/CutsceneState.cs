@@ -3,6 +3,7 @@ using System;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
 using ShopIsDone.Pausing;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Levels.States
 {
@@ -19,15 +20,14 @@ namespace ShopIsDone.Levels.States
         [Export]
         private CutsceneService _CutsceneService;
 
+        public override void _Ready()
+        {
+            base._Ready();
+            _CutsceneService.CutsceneFinished += OnCutsceneFinished;
+        }
+
         public override void OnStart(Dictionary<string, Variant> message)
         {
-            // First connect to cutscene finishing
-            _CutsceneService.Connect(
-                nameof(_CutsceneService.CutsceneFinished),
-                Callable.From(OnCutsceneFinished),
-                (uint)ConnectFlags.OneShot
-            );
-
             // Enable pausing
             _PauseInputHandler.IsActive = true;
 

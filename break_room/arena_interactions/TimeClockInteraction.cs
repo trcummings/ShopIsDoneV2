@@ -10,7 +10,6 @@ namespace ShopIsDone.BreakRoom.ArenaInteractions
         [Export]
         private LevelSelect _LevelSelect;
 
-        private Events _Events;
         private Callable _OnLevelChange;
         private Callable _OnCancel;
 
