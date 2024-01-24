@@ -1,4 +1,4 @@
-## A response to a line of dialogue, usualy attached to a [code]DialogueLine[/code].
+## A response to a line of dialogue, usually attached to a [code]DialogueLine[/code].
 class_name DialogueResponse extends RefCounted
 
 

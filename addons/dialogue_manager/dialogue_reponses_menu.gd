@@ -6,6 +6,7 @@ class_name DialogueResponsesMenu extends VBoxContainer
 
 ## Emitted when a response is selected.
 signal response_selected(response: DialogueResponse)
+signal selected_response_changed
 
 
 ## Optionally specify a control to duplicate for each response
@@ -17,13 +18,26 @@ var _responses: Array = []
 
 func _ready() -> void:
 	visibility_changed.connect(func():
+		var focus_event = get_viewport().gui_focus_changed
+		
 		if visible and get_menu_items().size() > 0:
+			# Grab focus of menu items
 			get_menu_items()[0].grab_focus()
+			# Connect to selection event
+			if not focus_event.is_connected(_on_focus_changed):
+				focus_event.connect(_on_focus_changed)
+		
+		if not visible:
+			# Disconnect from gui focus event
+			if focus_event.is_connected(_on_focus_changed):
+				focus_event.disconnect(_on_focus_changed)
 	)
 
 	if is_instance_valid(response_template):
 		response_template.hide()
 
+func _on_focus_changed(_node):
+	selected_response_changed.emit()
 
 ## Set the list of responses to show.
 func set_responses(next_responses: Array) -> void:

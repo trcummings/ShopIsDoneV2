@@ -37,7 +37,9 @@ namespace ShopIsDone.Interactables.Interactions
             _CutsceneService.FinishCutscene();
 
             // Finish this interaction
-            Finish();
+            // NB: Deferred just in case there was any input during the last
+            // frame
+            CallDeferred(nameof(Finish));
         }
     }
 }

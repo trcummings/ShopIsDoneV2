@@ -2,13 +2,17 @@ extends CanvasLayer
 
 signal new_text_noise_set(stream: AudioStream)
 signal letter_typed
+signal response_confirmed(response: DialogueResponse)
 
 @onready var balloon: Control = %Balloon
 @onready var character_label: RichTextLabel = %CharacterLabel
 @onready var dialogue_label: DialogueLabel = %DialogueLabel
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
 @onready var portrait : TextureRect = %Portrait
+@onready var name_container : Control = %NameContainer
+@onready var portrait_container : Control = %PortraitContainer
 
+@export var default_text_noise : AudioStream
 @export var characters : Dictionary
 
 ## The dialogue resource
@@ -40,7 +44,10 @@ var dialogue_line: DialogueLine:
 		dialogue_line = next_dialogue_line
 
 		# Set up the character label
-		character_label.visible = not dialogue_line.character.is_empty()
+		var character_not_empty = not dialogue_line.character.is_empty()
+		character_label.visible = character_not_empty
+		name_container.visible = character_not_empty
+		portrait_container.visible = character_not_empty
 		character_label.text = tr(dialogue_line.character, "dialogue")
 		
 		# Character related set up
@@ -68,11 +75,11 @@ var dialogue_line: DialogueLine:
 				if letter_typed.is_connected(_on_letter_typed):
 					dialogue_label.spoke.disconnect(_on_letter_typed)
 			
-		# Otherwise, null out the typing noise
+		# Otherwise, default the typing noise
 		else:
-			new_text_noise_set.emit(null)
-			if letter_typed.is_connected(_on_letter_typed):
-				dialogue_label.spoke.disconnect(_on_letter_typed)
+			new_text_noise_set.emit(default_text_noise)
+			if not letter_typed.is_connected(_on_letter_typed):
+				dialogue_label.spoke.connect(_on_letter_typed)
 
 		dialogue_label.hide()
 		dialogue_label.dialogue_line = dialogue_line
@@ -113,11 +120,9 @@ func _ready() -> void:
 	balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
-
 func _unhandled_input(_event: InputEvent) -> void:
 	# Only the balloon is allowed to handle input while it's showing
 	get_viewport().set_input_as_handled()
-
 
 ## Start some dialogue
 func start(dialogue_resource: DialogueResource, title: String, extra_game_states: Array = []) -> void:
@@ -160,9 +165,11 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == 1:
 		next(dialogue_line.next_id)
+		
 	elif event.is_action_pressed("ui_accept") and get_viewport().gui_get_focus_owner() == balloon:
 		next(dialogue_line.next_id)
 
 
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
+	response_confirmed.emit(response)
 	next(response.next_id)
