@@ -4,6 +4,7 @@ using Godot;
 namespace ShopIsDone.Interactables.Interactions
 {
 	[Tool]
+	[GlobalClass]
     public partial class Interaction : Node
 	{
 		[Signal]

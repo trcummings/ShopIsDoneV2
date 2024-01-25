@@ -40,6 +40,9 @@ namespace ShopIsDone.Actions
         // Public API
         public override void Init()
         {
+            // Clear all
+            _ActionStates.Clear();
+
             // Duplicate actions
             Actions = Actions.Select(action => (ArenaAction)action.Duplicate()).ToGodotArray();
             // Initialize with pawn

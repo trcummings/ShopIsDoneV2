@@ -9,14 +9,22 @@ namespace ShopIsDone.Levels.States
     public partial class ExitingState : State
     {
         [Export]
+        private PlayerCharacterManager _PlayerCharacterManager;
+
+        [Export]
         private PauseInputHandler _PauseInputHandler;
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
-            base.OnStart(message);
-
             // Disable pausing
             _PauseInputHandler.IsActive = false;
+
+            // Idle the player characters
+            _PlayerCharacterManager.Idle();
+
+            // TODO: Pause any other actors
+
+            base.OnStart(message);
         }
     }
 }

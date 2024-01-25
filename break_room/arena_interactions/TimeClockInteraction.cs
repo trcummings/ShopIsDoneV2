@@ -5,20 +5,29 @@ using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.BreakRoom.ArenaInteractions
 {
+    [Tool]
     public partial class TimeClockInteraction : Interaction
     {
         [Export]
+        private NodePath _LevelSelectPath;
         private LevelSelect _LevelSelect;
 
-        private Events _Events;
+        [Export]
+        private Interaction _OnCancelInteraction;
+
         private Callable _OnLevelChange;
         private Callable _OnCancel;
 
         public override void _Ready()
         {
             base._Ready();
+
+            // Ignore if in editor
+            if (Engine.IsEditorHint()) return;
+
+            _LevelSelect = GetNode<LevelSelect>(_LevelSelectPath);
             _OnLevelChange = new Callable(this, nameof(OnLevelChangeRequested));
-            _OnCancel = Callable.From(Finish);
+            _OnCancel = Callable.From(OnCancel);
         }
 
         public override void Execute()
@@ -33,10 +42,35 @@ namespace ShopIsDone.BreakRoom.ArenaInteractions
 
         private void OnLevelChangeRequested(PackedScene level)
         {
+            CleanUp();
+
+            // Emit level change event
             var events = Events.GetEvents(this);
             events.EmitSignal(nameof(events.LevelChangeRequested), level);
 
+            // Finish
             Finish();
+        }
+
+        private void OnCancel()
+        {
+            CleanUp();
+
+            // Run on cancel interaction
+            _OnCancelInteraction.Connect(
+                nameof(_OnCancelInteraction.Finished),
+                Callable.From(Finish),
+                (uint)ConnectFlags.OneShot
+            );
+            _OnCancelInteraction.Execute();
+        }
+
+        private void CleanUp()
+        {
+            // Clean up connections and deactivate level select
+            _LevelSelect.SafeDisconnect(nameof(_LevelSelect.LevelChangeRequested), _OnLevelChange);
+            _LevelSelect.SafeDisconnect(nameof(_LevelSelect.Canceled), _OnCancel);
+            _LevelSelect.Deactivate();
         }
 
         protected override void Finish()
@@ -48,6 +82,15 @@ namespace ShopIsDone.BreakRoom.ArenaInteractions
 
             // Base finish
             base.Finish();
+        }
+
+        public override string[] _GetConfigurationWarnings()
+        {
+            if (_OnCancelInteraction == null)
+            {
+                return new string[] { "Needs On Cancel Interaction!" };
+            }
+            return base._GetConfigurationWarnings();
         }
     }
 }

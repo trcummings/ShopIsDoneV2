@@ -9,6 +9,13 @@ namespace ShopIsDone.Interactables.Interactions
     [Tool]
     public partial class CutsceneInteraction : DecoratorInteraction
     {
+        // When we start a cutscene, we go to the level's Cutscene state, but we
+        // may not always want to go directly back to what we were doing before.
+        // Disabling this allows you to manually go to a different state later,
+        // e.g. if you want to change levels
+        [Export]
+        private bool _RevertCutsceneStateOnFinish = true;
+
         [Inject]
         private CutsceneService _CutsceneService;
 
@@ -34,10 +41,12 @@ namespace ShopIsDone.Interactables.Interactions
         private void OnDecoratedInteractionFinished()
         {
             // Finish the cutscene
-            _CutsceneService.FinishCutscene();
+            if (_RevertCutsceneStateOnFinish) _CutsceneService.FinishCutscene();
 
             // Finish this interaction
-            Finish();
+            // NB: Deferred just in case there was any input during the last
+            // frame
+            CallDeferred(nameof(Finish));
         }
     }
 }

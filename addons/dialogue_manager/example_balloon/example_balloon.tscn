@@ -1,15 +1,25 @@
-[gd_scene load_steps=22 format=3 uid="uid://73jm5qjy52vq"]
+[gd_scene load_steps=26 format=3 uid="uid://73jm5qjy52vq"]
 
 [ext_resource type="Script" path="res://addons/dialogue_manager/example_balloon/example_balloon.gd" id="1_4u26j"]
 [ext_resource type="Resource" uid="uid://bgs3tggpbi41l" path="res://dialogue/haskell/haskell_character.tres" id="2_467ai"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_a8ve6"]
 [ext_resource type="Texture2D" uid="uid://ds7nkfkpmcxyl" path="res://textures/Portraits/blue_background.png" id="2_es4ps"]
+[ext_resource type="AudioStream" uid="uid://bvlxk7p4qspmw" path="res://dialogue/DEFAULT-DIALOGUE-NOISE__271318__kd_jack__scratch-in-cardboard-or-wood-aiff.wav" id="2_vvq4d"]
 [ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_reponses_menu.gd" id="3_72ixx"]
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="3_u6yfl"]
 [ext_resource type="Resource" uid="uid://glos50b3o6qn" path="res://dialogue/jessica/jessica_character.tres" id="3_ytr2x"]
 [ext_resource type="Texture2D" uid="uid://du8nwh7w0c74b" path="res://ui/nine_path_border_transparent.png" id="4_nbl7w"]
 [ext_resource type="Material" uid="uid://dvasgdrqk35iu" path="res://dialogue/dialogue_portrait_mask.material" id="5_hro8g"]
 [ext_resource type="Script" path="res://ui/offset_container.gd" id="8_x32gh"]
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="11_qpetx"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="12_duf1y"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7c671"]
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("2_vvq4d")
+stream_0/weight = 1.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5xwhe"]
 
@@ -85,6 +95,7 @@ Panel/styles/panel = SubResource("StyleBoxFlat_uy0d5")
 [node name="ExampleBalloon" type="CanvasLayer"]
 layer = 100
 script = ExtResource("1_4u26j")
+default_text_noise = SubResource("AudioStreamRandomizer_7c671")
 characters = {
 "Haskell": ExtResource("2_467ai"),
 "Jessica": ExtResource("3_ytr2x")
@@ -108,12 +119,14 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_jovc5")
 [node name="Balloon" type="PanelContainer" parent="Container/PositionContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 0
 size_flags_vertical = 8
 theme = SubResource("Theme_qq3yp")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_bg3py")
 
 [node name="Dialogue" type="MarginContainer" parent="Container/PositionContainer/Balloon"]
 layout_mode = 2
+size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -126,6 +139,7 @@ size_flags_vertical = 8
 theme_override_constants/separation = 8
 
 [node name="PortraitContainer" type="PanelContainer" parent="Container/PositionContainer/Balloon/Dialogue/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0mxfh")
@@ -188,7 +202,7 @@ patch_margin_bottom = 47
 [node name="TextBoxContainer" type="MarginContainer" parent="Container/PositionContainer/Balloon/Dialogue/HBoxContainer"]
 custom_minimum_size = Vector2(400, 2.08165e-12)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -199,6 +213,7 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="NameContainer" type="PanelContainer" parent="Container/PositionContainer/Balloon/Dialogue/HBoxContainer/TextBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_cxv00")
@@ -215,7 +230,6 @@ theme_override_constants/margin_bottom = 16
 
 [node name="CharacterLabel" type="RichTextLabel" parent="Container/PositionContainer/Balloon/Dialogue/HBoxContainer/TextBoxContainer/VBoxContainer/NameContainer/MarginContainer"]
 unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 2
 mouse_filter = 1
 theme_override_colors/default_color = Color(0, 0, 0, 1)
@@ -226,8 +240,9 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="TextContainer" type="PanelContainer" parent="Container/PositionContainer/Balloon/Dialogue/HBoxContainer/TextBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 215)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 10
 theme_override_styles/panel = SubResource("StyleBoxEmpty_gx0pc")
 
 [node name="BorderedUIWindow" parent="Container/PositionContainer/Balloon/Dialogue/HBoxContainer/TextBoxContainer/VBoxContainer/TextContainer" instance=ExtResource("3_u6yfl")]
@@ -263,7 +278,9 @@ theme_override_constants/margin_bottom = 24
 
 [node name="ResponsesMenu" type="VBoxContainer" parent="Container/PositionContainer/ResponseOffsetContainer/ResponsesContainer" node_paths=PackedStringArray("response_template")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 2.08165e-12)
 layout_mode = 2
+size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_constants/separation = 2
 script = ExtResource("3_72ixx")
@@ -276,7 +293,13 @@ text = "Response example"
 [node name="TextNoisePlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Dialogue"
 
+[node name="UISelectPlayer" parent="." instance=ExtResource("11_qpetx")]
+
+[node name="UIConfirmPlayer" parent="." instance=ExtResource("12_duf1y")]
+
 [connection signal="letter_typed" from="." to="TextNoisePlayer" method="play"]
 [connection signal="new_text_noise_set" from="." to="TextNoisePlayer" method="set_stream"]
+[connection signal="response_confirmed" from="." to="UIConfirmPlayer" method="play" unbinds=1]
 [connection signal="gui_input" from="Container/PositionContainer/Balloon" to="." method="_on_balloon_gui_input"]
 [connection signal="response_selected" from="Container/PositionContainer/ResponseOffsetContainer/ResponsesContainer/ResponsesMenu" to="." method="_on_responses_menu_response_selected"]
+[connection signal="selected_response_changed" from="Container/PositionContainer/ResponseOffsetContainer/ResponsesContainer/ResponsesMenu" to="UISelectPlayer" method="play"]

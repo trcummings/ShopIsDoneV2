@@ -49,6 +49,9 @@ namespace ShopIsDone.Interactables
 
         public void Hover()
         {
+            // Ignore if disabled
+            if (!Monitorable) return;
+
             _IsHovered = true;
             EmitSignal(nameof(InteractableHovered));
         }
@@ -94,7 +97,6 @@ namespace ShopIsDone.Interactables
         public void Disable()
         {
             SetDeferred("monitorable", false);
-            SetDeferred("monitoring", false);
             // If we're hovered, unhover
             if (_IsHovered) Unhover();
         }
@@ -102,7 +104,6 @@ namespace ShopIsDone.Interactables
         public void Enable()
         {
             SetDeferred("monitorable", true);
-            SetDeferred("monitoring", true);
         }
     }
 }

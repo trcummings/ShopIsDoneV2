@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://cojwv587ghlem"]
 
 [ext_resource type="Script" path="res://exit/ExitDoorLight.cs" id="1"]
-[ext_resource type="Material" path="res://exit/UnlockedDoorLight.material" id="2"]
-[ext_resource type="Material" path="res://exit/LockedDoorLight.material" id="3"]
+[ext_resource type="Material" path="res://exit/unlocked_door_light.material" id="2"]
+[ext_resource type="Material" path="res://exit/locked_door_light.material" id="3"]
 [ext_resource type="Texture2D" uid="uid://bi01t4k7swh2c" path="res://textures/test_door.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://b6i4sqv1o6ke7" path="res://textures/test_exit_door.png" id="5"]
 
