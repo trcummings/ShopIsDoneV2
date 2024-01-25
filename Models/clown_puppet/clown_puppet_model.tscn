@@ -1,0 +1,185 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlk4igjt1ir5x"]
+
+[ext_resource type="PackedScene" uid="uid://dn5cltxpon5dl" path="res://Models/clown_puppet/clown_puppet.gltf" id="1_xgqws"]
+[ext_resource type="Script" path="res://addons/wigglebone/wiggle_bone.gd" id="2_rt2d3"]
+[ext_resource type="Resource" uid="uid://d0n4gdo00henp" path="res://Models/clown_puppet/clown_puppet_wiggle_properties.tres" id="3_a4o7u"]
+[ext_resource type="Resource" uid="uid://dk2rpw1bc8fl7" path="res://Models/clown_puppet/clown_puppet_wiggle_properties_2.tres" id="4_x40rn"]
+
+[node name="ClownPuppetModel" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 0.01)
+
+[node name="clown_puppet" parent="." instance=ExtResource("1_xgqws")]
+
+[node name="Skeleton3D" parent="clown_puppet/Armature" index="0"]
+bones/0/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/2/rotation = Quaternion(0.707107, 0, 0, 0.707107)
+bones/3/rotation = Quaternion(0.0108676, 1.19202e-07, 1.29552e-09, 0.999941)
+bones/4/rotation = Quaternion(0.000757961, -7.10891e-15, 1.80712e-10, 1)
+bones/5/rotation = Quaternion(0.0618738, 3.55953e-15, 1.47519e-08, 0.998084)
+bones/6/rotation = Quaternion(-0.243834, 4.5791e-15, -5.81345e-08, 0.969817)
+bones/7/rotation = Quaternion(0.215214, 1.50066e-14, 5.13109e-08, 0.976567)
+bones/8/rotation = Quaternion(-0.0802063, 0.0112179, -0.227103, 0.970498)
+bones/9/rotation = Quaternion(-0.052296, -0.0516077, -0.700508, 0.709853)
+bones/10/rotation = Quaternion(-0.0561309, 0.00230962, -0.0410499, 0.997577)
+bones/11/rotation = Quaternion(0.112179, -2.85015e-07, -1.66327e-07, 0.993688)
+bones/12/rotation = Quaternion(-0.0561784, 6.85076e-05, 0.00121477, 0.99842)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(-0.0522962, 0.0516075, 0.700508, 0.709853)
+bones/14/rotation = Quaternion(-0.0561308, -0.00230963, 0.0410499, 0.997577)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/rotation = Quaternion(0.112179, 2.85651e-07, 1.71547e-07, 0.993688)
+bones/16/rotation = Quaternion(-0.0561784, -6.85068e-05, -0.00121477, 0.99842)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/rotation = Quaternion(0.700488, 1.1315e-05, 1.12731e-05, 0.713664)
+bones/18/rotation = Quaternion(-0.403659, -0.536969, -0.451075, 0.587584)
+bones/18/scale = Vector3(1, 1, 1)
+bones/19/rotation = Quaternion(0.595153, 0.462334, -0.514316, -0.409292)
+bones/19/scale = Vector3(1, 1, 1)
+bones/20/rotation = Quaternion(0.0525165, 0.0231763, -0.0208561, 0.998133)
+bones/21/rotation = Quaternion(-0.422792, -0.632317, 0.375096, 0.529835)
+bones/22/rotation = Quaternion(-0.113099, 0.695119, 0.183987, 0.685688)
+bones/23/rotation = Quaternion(-0.403659, 0.536969, 0.451075, 0.587584)
+bones/23/scale = Vector3(1, 1, 1)
+bones/24/rotation = Quaternion(0.595153, -0.462334, 0.514316, -0.409292)
+bones/24/scale = Vector3(1, 1, 1)
+bones/25/rotation = Quaternion(0.0525165, -0.0231763, 0.0208561, 0.998133)
+bones/26/rotation = Quaternion(-0.422792, 0.632317, -0.375096, 0.529835)
+bones/27/rotation = Quaternion(-0.113099, -0.695119, -0.183987, 0.685688)
+
+[node name="LeftArmIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="1"]
+process_priority = 1
+root_bone = &"lower_arm.L"
+tip_bone = &"wrist.L"
+interpolation = 0.644
+magnet = Vector3(0, 0, 25)
+target_node = NodePath("../../../../LeftHandHandle/LeftHandTarget")
+
+[node name="RightArmIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="2"]
+process_priority = 1
+root_bone = &"lower_arm.R"
+tip_bone = &"wrist.R"
+interpolation = 0.644
+use_magnet = true
+magnet = Vector3(0, 0, 25)
+target_node = NodePath("../../../../RightHandHandle/RightHandTarget")
+
+[node name="LeftFootIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="3"]
+process_priority = 1
+root_bone = &"foot.L"
+tip_bone = &"toe.L"
+interpolation = 0.644
+use_magnet = true
+magnet = Vector3(0, 0, 25)
+target_node = NodePath("../../../../LeftFootHandle/LeftFootTarget")
+
+[node name="RightFootIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="4"]
+process_priority = 1
+root_bone = &"shin.R"
+tip_bone = &"toe.R"
+interpolation = 0.644
+use_magnet = true
+magnet = Vector3(0, 0, 25)
+target_node = NodePath("../../../../RightFootHandle/RightFootTarget")
+
+[node name="HeadIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="5"]
+process_priority = 1
+root_bone = &"neck"
+tip_bone = &"head"
+interpolation = 0.644
+use_magnet = true
+magnet = Vector3(0, 0, 25)
+target_node = NodePath("../../../../HeadHandle/HeadTarget")
+
+[node name="LeftHandBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="6"]
+transform = Transform3D(-0.0665188, 0.997785, 7.80875e-07, -0.997785, -0.0665188, -5.33883e-08, 3.20716e-11, -7.87188e-07, 1, 0.51096, 0.880579, -1.35973e-07)
+bone_name = "wrist.L"
+bone_idx = 12
+
+[node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="7"]
+transform = Transform3D(-0.0665189, -0.997785, -7.21647e-07, 0.997785, -0.0665189, -5.76321e-08, 4.17227e-09, -6.36648e-07, 1, -0.51096, 0.880579, -1.06171e-07)
+bone_name = "wrist.R"
+bone_idx = 16
+
+[node name="LeftFootBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="8"]
+transform = Transform3D(0.0168325, 0.0980765, -0.995036, -0.906154, -0.419138, -0.0566414, -0.422613, 0.90261, 0.0818174, 0.153452, 0.0468811, -0.0275269)
+bone_name = "foot.L"
+bone_idx = 21
+
+[node name="RightFootBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="9"]
+transform = Transform3D(0.0168325, -0.0980765, 0.995036, 0.906154, -0.419138, -0.0566414, 0.422613, 0.90261, 0.0818174, -0.153452, 0.0468811, -0.0275269)
+bone_name = "foot.R"
+bone_idx = 26
+
+[node name="NeckBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="10"]
+transform = Transform3D(1, 1.42464e-12, 2.38418e-07, -8.07583e-08, 0.940887, 0.33872, -2.24324e-07, -0.33872, 0.940887, 6.54137e-13, 0.969229, -0.00879175)
+bone_name = "neck"
+bone_idx = 6
+
+[node name="NeckWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="11"]
+transform = Transform3D(1, 1.42464e-12, 2.38418e-07, -8.07583e-08, 0.940887, 0.33872, -2.24324e-07, -0.33872, 0.940887, 6.54137e-13, 0.969229, -0.00879175)
+bone_name = "neck"
+bone_idx = 6
+script = ExtResource("2_rt2d3")
+properties = ExtResource("3_a4o7u")
+
+[node name="HatWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="12"]
+transform = Transform3D(0.896597, 0.439006, 0.0582042, -0.442174, 0.894714, 0.0630037, -0.0244171, -0.0822253, 0.996314, 0.0400278, 1.27254, -0.0322453)
+bone_name = "hat"
+bone_idx = 8
+script = ExtResource("2_rt2d3")
+properties = ExtResource("3_a4o7u")
+
+[node name="PelvisWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="13"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 6.64639e-13, 6.64639e-13, 6.64639e-13)
+bone_name = "root"
+bone_idx = 0
+script = ExtResource("2_rt2d3")
+properties = ExtResource("4_x40rn")
+
+[node name="LArmWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="14"]
+transform = Transform3D(-0.0689462, 0.991323, 0.111912, -0.99762, -0.068511, -0.0077346, -2.57045e-07, -0.112179, 0.993688, 0.160266, 0.904816, -1.11759e-08)
+bone_name = "upper_arm.L"
+bone_idx = 10
+script = ExtResource("2_rt2d3")
+properties = ExtResource("3_a4o7u")
+const_force_global = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+const_force_local = Vector3(2.08165e-12, -9.8, 2.08165e-12)
+
+[node name="RArmWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="15"]
+transform = Transform3D(-0.0689464, -0.991323, -0.111912, 0.99762, -0.0685111, -0.00773462, 2.64496e-07, -0.112179, 0.993688, -0.160266, 0.904816, -2.23517e-08)
+bone_name = "upper_arm.R"
+bone_idx = 14
+script = ExtResource("2_rt2d3")
+properties = ExtResource("3_a4o7u")
+const_force_local = Vector3(2.08165e-12, -9.8, 2.08165e-12)
+
+[node name="LeftHandHandle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.573647, 0.880886, -0.0192296)
+
+[node name="LeftHandTarget" type="Marker3D" parent="LeftHandHandle"]
+transform = Transform3D(-0.94711, 0.0868978, -0.308921, -0.320911, -0.256463, 0.911725, -4.20783e-08, 0.96264, 0.270785, 0.111223, -0.00999993, 0)
+
+[node name="RightHandHandle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.669448, 0.875, -0.005)
+
+[node name="RightHandTarget" type="Marker3D" parent="RightHandHandle"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.175943, -0.00999999, 0.102728)
+
+[node name="LeftFootHandle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.145, 0.0744164, -0.0790939)
+
+[node name="LeftFootTarget" type="Marker3D" parent="LeftFootHandle"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.0647269, 0.201438)
+
+[node name="RightFootHandle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.154672, 0.0666173, -0.0315476)
+
+[node name="RightFootTarget" type="Marker3D" parent="RightFootHandle"]
+transform = Transform3D(1, 0, 0, 0, -0.728215, -0.685348, 0, 0.685348, -0.728215, -0.00909932, 0.000494301, 0.136577)
+
+[node name="HeadHandle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.984135, -0.0308714)
+
+[node name="HeadTarget" type="Marker3D" parent="HeadHandle"]
+
+[editable path="clown_puppet"]

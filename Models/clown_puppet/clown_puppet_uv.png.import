@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://w6cu5oixi2sj"
-path.s3tc="res://.godot/imported/clown_puppet_uv.png-b4cf571720f124bfbda17c89ae4dd4e2.s3tc.ctex"
+path.s3tc="res://.godot/imported/clown_puppet_uv.png-0b64bf54f9e7318b6a198611861fde6a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Models/ClownPuppet/clown_puppet_uv.png"
-dest_files=["res://.godot/imported/clown_puppet_uv.png-b4cf571720f124bfbda17c89ae4dd4e2.s3tc.ctex"]
+source_file="res://Models/clown_puppet/clown_puppet_uv.png"
+dest_files=["res://.godot/imported/clown_puppet_uv.png-0b64bf54f9e7318b6a198611861fde6a.s3tc.ctex"]
 
 [params]
 

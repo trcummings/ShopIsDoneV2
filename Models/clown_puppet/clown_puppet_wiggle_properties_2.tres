@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WiggleProperties" load_steps=2 format=3 uid="uid://dk2rpw1bc8fl7"]
+
+[ext_resource type="Script" path="res://addons/wigglebone/wiggle_properties.gd" id="1_cclkp"]
+
+[resource]
+script = ExtResource("1_cclkp")
+mode = 1
+stiffness = 0.06
+damping = 0.13
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+length = 0.47
+max_distance = 0.2
+max_degrees = 28.1

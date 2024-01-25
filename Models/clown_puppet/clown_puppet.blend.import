@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://taxp764smvvu"
-path="res://.godot/imported/ClownPuppet.blend-7638f955945389c519b68e82e1eb1513.scn"
+path="res://.godot/imported/clown_puppet.blend-2fc616efe4abc7ba378fb2ec344244a0.scn"
 
 [deps]
 
-source_file="res://Models/ClownPuppet/ClownPuppet.blend"
-dest_files=["res://.godot/imported/ClownPuppet.blend-7638f955945389c519b68e82e1eb1513.scn"]
+source_file="res://Models/clown_puppet/clown_puppet.blend"
+dest_files=["res://.godot/imported/clown_puppet.blend-2fc616efe4abc7ba378fb2ec344244a0.scn"]
 
 [params]
 
