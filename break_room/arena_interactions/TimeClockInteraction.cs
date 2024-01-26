@@ -2,6 +2,7 @@ using Godot;
 using System;
 using ShopIsDone.Interactables.Interactions;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Core.Data;
 
 namespace ShopIsDone.BreakRoom.ArenaInteractions
 {
@@ -40,13 +41,13 @@ namespace ShopIsDone.BreakRoom.ArenaInteractions
             _LevelSelect.Activate();
         }
 
-        private void OnLevelChangeRequested(PackedScene level)
+        private void OnLevelChangeRequested(string levelId)
         {
             CleanUp();
 
             // Emit level change event
             var events = Events.GetEvents(this);
-            events.EmitSignal(nameof(events.LevelChangeRequested), level);
+            events.RequestLevelChange(levelId);
 
             // Finish
             Finish();

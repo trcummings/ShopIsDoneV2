@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://dntwsip6ujfpw"]
+[gd_scene load_steps=34 format=3 uid="uid://dntwsip6ujfpw"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_1gx3o"]
 [ext_resource type="PackedScene" uid="uid://hmcccjay3t4s" path="res://break_room/break_room.tscn" id="2_e4p3r"]
@@ -18,13 +18,10 @@
 [ext_resource type="Script" path="res://actors/interactables/interactions/ChangeInteractableEnabledInteraction.cs" id="14_qmq3o"]
 [ext_resource type="PackedScene" uid="uid://c44u4oanau75c" path="res://break_room/level_select.tscn" id="14_rbd72"]
 [ext_resource type="Script" path="res://break_room/arena_interactions/TimeClockInteraction.cs" id="14_wdvkh"]
-[ext_resource type="PackedScene" uid="uid://c71hl7eo13nse" path="res://levels/test_level/test_level.tscn" id="15_jamvo"]
 [ext_resource type="PackedScene" uid="uid://cn3822f3jvvpc" path="res://break_room/bathroom/toilet/toilet.tscn" id="15_w0bwm"]
-[ext_resource type="Script" path="res://break_room/LevelSelectItem.cs" id="16_jkjl2"]
 [ext_resource type="PackedScene" uid="uid://dljqt7t2n3frm" path="res://break_room/bathroom/sink/sink.tscn" id="16_sna8x"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/Interaction.cs" id="16_wr8qh"]
 [ext_resource type="PackedScene" uid="uid://b4lpeefm2fnrb" path="res://break_room/bathroom/urinal/urinal.tscn" id="16_ysda3"]
-[ext_resource type="PackedScene" uid="uid://xh2e5s84nxyv" path="res://levels/parking_lot_1/parking_lot_1_level.tscn" id="17_cda50"]
 [ext_resource type="PackedScene" uid="uid://cv1qb7rfv1mnh" path="res://break_room/bathroom/urinal_divider/urinal_divider.tscn" id="18_4nfln"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/DialogueInteraction.cs" id="19_ixlwk"]
 [ext_resource type="Texture2D" uid="uid://cbgs156e2ur7o" path="res://break_room/bathroom/grate.png" id="19_kdr0g"]
@@ -51,16 +48,6 @@ size = Vector3(1, 1.79498, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_au8jt"]
 size = Vector3(6.00092, 5.5332, 6.05725)
-
-[sub_resource type="Resource" id="Resource_cuehh"]
-script = ExtResource("16_jkjl2")
-Label = "Test Level"
-LevelScene = ExtResource("15_jamvo")
-
-[sub_resource type="Resource" id="Resource_nw584"]
-script = ExtResource("16_jkjl2")
-Label = "Parking Lot"
-LevelScene = ExtResource("17_cda50")
 
 [node name="BreakRoomLevel" instance=ExtResource("1_1gx3o")]
 
@@ -226,7 +213,6 @@ shape = SubResource("BoxShape3D_au8jt")
 
 [node name="LevelSelect" parent="UILayer" index="0" instance=ExtResource("14_rbd72")]
 visible = false
-_Levels = [SubResource("Resource_cuehh"), SubResource("Resource_nw584")]
 
 [node name="DebugDirectionalLight" type="DirectionalLight3D" parent="." index="7"]
 transform = Transform3D(0.896533, -0.0606551, 0.438805, -0.442977, -0.122759, 0.888089, 7.78726e-17, -0.990581, -0.136926, -0.515489, 3.28732, 4.76837e-07)

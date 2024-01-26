@@ -19,7 +19,6 @@ namespace ShopIsDone.Game
 			public const string VANITY_CARD = "VanityCard";
             public const string MAIN_MENU = "MainMenu";
             public const string LEVEL = "Level";
-            public const string BREAK_ROOM = "BreakRoom";
         }
 	}
 }

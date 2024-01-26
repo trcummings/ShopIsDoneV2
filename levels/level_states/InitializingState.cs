@@ -9,6 +9,13 @@ using ShopIsDone.Interactables;
 
 namespace ShopIsDone.Levels.States
 {
+    public partial class SaveLevelData : GodotObject
+    {
+        public bool IsInArena;
+        public NodePath CurrentArena;
+
+    }
+
     public partial class InitializingState : State
     {
         [Export]
@@ -49,6 +56,12 @@ namespace ShopIsDone.Levels.States
 
             // Disable pausing
             _PauseInputHandler.IsActive = false;
+
+            // TODO: Load in data
+
+            // Load arenas
+            var arenas = GetTree().GetNodesInGroup("arena").OfType<Arena>();
+
 
             // Finish the start hook
             base.OnStart(message);

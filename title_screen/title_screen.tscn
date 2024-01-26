@@ -73,17 +73,17 @@ _data = {
 "idle": SubResource("7")
 }
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_gqnjk"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_3phw8"]
 resource_local_to_scene = true
-metadata/creation_stamp = 157803188693946
+metadata/creation_stamp = 68924829965001
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_b2aek"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_feppv"]
 resource_local_to_scene = true
-metadata/creation_stamp = 157803222207456
+metadata/creation_stamp = 68924863519437
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_ii784"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_m56fn"]
 resource_local_to_scene = true
-metadata/creation_stamp = 157803255799746
+metadata/creation_stamp = 68924897073855
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("3")
@@ -170,7 +170,7 @@ transform = Transform3D(-0.0689464, -0.991323, -0.111912, 0.99762, -0.0685111, -
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0999976, 3.20003, -0.160006)
 material_override = ExtResource("8_vvi6j")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_gqnjk")
+mesh = SubResource("ImmediateMesh_3phw8")
 script = ExtResource("9_n03u7")
 AttachEnd = NodePath("../ClownPuppetModel/RightHandHandle")
 RopeLength = 2.0
@@ -178,33 +178,33 @@ RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="TitleScreenClownPuppet/RightRope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -3.2, 0.16)
-aabb = AABB(-0.577723, -2.32918, -0.003179, 0.587091, 2.33071, 0.161973)
+aabb = AABB(-0.577726, -2.32917, -0.00318689, 0.58709, 2.3307, 0.161986)
 
 [node name="LeftRope" type="MeshInstance3D" parent="TitleScreenClownPuppet" node_paths=PackedStringArray("AttachEnd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.100001, 3.20003, -0.160003)
 material_override = ExtResource("8_vvi6j")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_b2aek")
+mesh = SubResource("ImmediateMesh_feppv")
 script = ExtResource("9_n03u7")
 AttachEnd = NodePath("../ClownPuppetModel/LeftHandHandle")
 RopeLength = 2.0
 RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="TitleScreenClownPuppet/LeftRope"]
-aabb = AABB(-0.00954355, -2.32292, -0.00272171, 0.491823, 2.32416, 0.146839)
+aabb = AABB(-0.00953615, -2.3229, -0.0027417, 0.491823, 2.32415, 0.146871)
 
 [node name="HeadRope" type="MeshInstance3D" parent="TitleScreenClownPuppet" node_paths=PackedStringArray("AttachEnd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.82859e-06, 3.20003, -0.620004)
 material_override = ExtResource("8_vvi6j")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_ii784")
+mesh = SubResource("ImmediateMesh_m56fn")
 script = ExtResource("9_n03u7")
 AttachEnd = NodePath("../ClownPuppetModel/HeadHandle")
 RopeLength = 1.5
 RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="TitleScreenClownPuppet/HeadRope"]
-aabb = AABB(-0.0100038, -2.21589, -8.67938e-09, 0.0200138, 2.2159, 0.589133)
+aabb = AABB(-0.0100038, -2.2159, -8.67893e-09, 0.0200138, 2.21591, 0.589133)
 
 [node name="TextOverlayContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -263,18 +263,10 @@ layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
 
-[node name="LevelEditorButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-focus_next = NodePath("../ContinueButton")
-focus_previous = NodePath("../QuitGameButton")
-text = "Level Editor"
-
 [node name="ContinueButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_next = NodePath("../NewGameButton")
-focus_previous = NodePath("../LevelEditorButton")
 disabled = true
 text = "Continue"
 
@@ -296,7 +288,6 @@ text = "Settings"
 [node name="QuitGameButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-focus_next = NodePath("../LevelEditorButton")
 focus_previous = NodePath("../SettingsButton")
 text = "Quit Game"
 

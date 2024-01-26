@@ -5,22 +5,25 @@ using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.Levels;
 using ShopIsDone.Utils.Extensions;
 using System.Threading.Tasks;
+using ShopIsDone.Core.Data;
 
 namespace ShopIsDone.Game.States
 {
     public partial class LevelState : State
     {
         [Export]
-        public PackedScene LevelOverride;
+        public string LevelOverride;
 
         // Nodes
         private Level _Level;
         private Events _Events;
+        private LevelDb _LevelDb;
 
         public override void _Ready()
         {
             base._Ready();
             _Events = Events.GetEvents(this);
+            _LevelDb = LevelDb.GetLevelDb(this);
 
             // Connect to level change requested
             _Events.LevelChangeRequested += OnLevelChangeRequested;
@@ -29,8 +32,9 @@ namespace ShopIsDone.Game.States
         public async override void OnStart(Dictionary<string, Variant> message = null)
         {
             // Pull the initial level from the message
-            var levelScene = (PackedScene)message.GetValueOrDefault(Consts.LEVEL_KEY);
-            await InitLevel(LevelOverride ?? levelScene);
+            var levelId = (string)message.GetValueOrDefault(Consts.LEVEL_KEY);
+            if (string.IsNullOrEmpty(levelId)) levelId = LevelOverride;
+            await InitLevel(levelId);
 
             base.OnStart(message);
         }
@@ -41,8 +45,13 @@ namespace ShopIsDone.Game.States
             base.OnExit(nextState);
         }
 
-        private async Task InitLevel(PackedScene levelScene)
+        private async Task InitLevel(string levelId)
         {
+            // Load level scene
+            // TODO: Put loading screen up until this is done
+            var levelData = _LevelDb.Levels[levelId];
+            var levelScene = GD.Load<PackedScene>(levelData.LevelScenePath);
+
             // Ready scene
             _Level = levelScene.Instantiate<Level>();
             AddChild(_Level);
@@ -70,10 +79,10 @@ namespace ShopIsDone.Game.States
             _Level.QueueFree();
         }
 
-        private async void OnLevelChangeRequested(PackedScene levelScene)
+        private async void OnLevelChangeRequested(string levelId)
         {
             await CleanUpLevel();
-            await InitLevel(levelScene);
+            await InitLevel(levelId);
         }
     }
 }

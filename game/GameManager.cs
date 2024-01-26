@@ -15,15 +15,14 @@ namespace ShopIsDone.Game
         public int OverrideModeAfterLoad = 1;
 
         [Export]
-        public PackedScene InitialLevel;
+        public string InitialLevelId;
 
         // Enum for what game mode should be picked
         public enum InitialGameState
         {
             VanityCard = 0,
             MainMenu = 1,
-            Level = 2,
-            BreakRoom = 3
+            Level = 2
         }
 
         // Nodes
@@ -58,7 +57,7 @@ namespace ShopIsDone.Game
             _GSM.ChangeState(Consts.GameStates.INITIAL_LOAD, new Dictionary<string, Variant>()
             {
                 { Consts.OVERRIDE_GAME_STATE, OverrideModeAfterLoad },
-                { Consts.INITIAL_LEVEL, InitialLevel ?? default(Variant) }
+                { Consts.INITIAL_LEVEL, InitialLevelId }
             });
         }
 

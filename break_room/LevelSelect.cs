@@ -2,6 +2,7 @@ using Godot;
 using System;
 using Godot.Collections;
 using ShopIsDone.UI;
+using ShopIsDone.Core.Data;
 
 namespace ShopIsDone.BreakRoom
 {
@@ -10,27 +11,26 @@ namespace ShopIsDone.BreakRoom
         [Signal]
         public delegate void LevelChangeRequestedEventHandler(PackedScene level);
 
-        [Export]
-        private Array<LevelSelectItem> _Levels = new Array<LevelSelectItem>();
-
         private Button _LevelButtonTemplate;
         private Control _LevelButtons;
+        private LevelDb _LevelDb;
 
         public override void _Ready()
         {
             base._Ready();
             _LevelButtonTemplate = GetNode<Button>("%LevelButtonTemplate");
             _LevelButtons = GetNode<Control>("%LevelButtons");
+            _LevelDb = LevelDb.GetLevelDb(this);
 
             // Create buttons and connect to them
-            foreach (var levelItem in _Levels)
+            foreach (var levelItem in _LevelDb.GetLevels())
             {
                 var button = (Button)_LevelButtonTemplate.Duplicate();
                 button.Text = levelItem.Label;
                 button.Show();
                 button.Pressed += () =>
                 {
-                    EmitSignal(nameof(LevelChangeRequested), levelItem.LevelScene);
+                    EmitSignal(nameof(LevelChangeRequested), levelItem.Id);
                 };
                 _LevelButtons.AddChild(button);
             }

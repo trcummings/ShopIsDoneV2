@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://bx0clnsygo7im"]
+[gd_scene load_steps=10 format=3 uid="uid://bx0clnsygo7im"]
 
 [ext_resource type="Script" path="res://game/GameManager.cs" id="1_ej1mk"]
-[ext_resource type="PackedScene" uid="uid://cxhlniuwyyuxf" path="res://levels/test_level_2/test_level_2.tscn" id="2_tqepv"]
 [ext_resource type="PackedScene" uid="uid://2vctcxi0tgnn" path="res://debug_display/debug_display.tscn" id="3_vdqti"]
 [ext_resource type="Script" path="res://game/game_states/InitialLoadState.cs" id="4_3nogo"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="4_kjt3r"]
@@ -15,7 +14,7 @@
 process_mode = 3
 script = ExtResource("1_ej1mk")
 OverrideModeAfterLoad = 2
-InitialLevel = ExtResource("2_tqepv")
+InitialLevelId = "break_room_level"
 
 [node name="GameStateMachine" type="Node" parent="."]
 unique_name_in_owner = true
@@ -34,9 +33,6 @@ TitleScreenScene = ExtResource("7_yill8")
 
 [node name="Level" type="Node" parent="GameStateMachine"]
 script = ExtResource("8_k0lyi")
-
-[node name="BreakRoom" type="Node" parent="GameStateMachine"]
-script = ExtResource("5_8eg8s")
 
 [node name="ShaderCache" parent="." instance=ExtResource("10_xnonk")]
 

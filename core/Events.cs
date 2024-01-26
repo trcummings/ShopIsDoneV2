@@ -1,7 +1,9 @@
 using Godot;
+using ShopIsDone.Core.Data;
 
 // This is a singleton for events that can be called from anywhere in the
 // game
+[Tool]
 [GlobalClass]
 public partial class Events : Node
 {
@@ -28,11 +30,17 @@ public partial class Events : Node
 
     // Change level
     [Signal]
-    public delegate void LevelChangeRequestedEventHandler(PackedScene level);
+    public delegate void LevelChangeRequestedEventHandler(string levelId);
 
     // Static function to help get the singleton
     public static Events GetEvents(Node node)
     {
         return node.GetNode<Events>("/root/Events");
+    }
+
+    // API methods
+    public void RequestLevelChange(string levelId)
+    {
+        EmitSignal(nameof(LevelChangeRequested), levelId);
     }
 }

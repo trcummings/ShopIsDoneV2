@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmahkabaogex0"]
+
+[ext_resource type="Script" path="res://core/data/LevelDb.cs" id="1_qrhrn"]
+[ext_resource type="Script" path="res://core/data/LevelDbItem.cs" id="2_ppeyr"]
+
+[sub_resource type="Resource" id="Resource_sukpv"]
+script = ExtResource("2_ppeyr")
+Id = "break_room_level"
+Label = "Break Room"
+LevelScenePath = "res://break_room/break_room_level.tscn"
+
+[sub_resource type="Resource" id="Resource_jkuqg"]
+script = ExtResource("2_ppeyr")
+Id = "test_level_1"
+Label = "Test Level 1"
+LevelScenePath = "res://levels/test_level/test_level.tscn"
+
+[sub_resource type="Resource" id="Resource_6k5gf"]
+script = ExtResource("2_ppeyr")
+Id = "test_level_2"
+Label = "Test Level 2"
+LevelScenePath = "res://levels/test_level_2/test_level_2.tscn"
+
+[node name="LevelDb" type="Node"]
+script = ExtResource("1_qrhrn")
+Levels = {
+"break_room_level": SubResource("Resource_sukpv"),
+"test_level_1": SubResource("Resource_jkuqg"),
+"test_level_2": SubResource("Resource_6k5gf")
+}

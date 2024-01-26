@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cxhlniuwyyuxf"]
+[gd_scene load_steps=22 format=3 uid="uid://cxhlniuwyyuxf"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_m71d5"]
 [ext_resource type="Material" uid="uid://c0krox5teicdh" path="res://Materials/greybox_materials/greybox_floor.material" id="2_rx5kt"]
@@ -14,7 +14,6 @@
 [ext_resource type="Script" path="res://actors/interactables/interactions/ComposedInteraction.cs" id="12_dv4fl"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/ChangeLevelInteraction.cs" id="12_rgdh7"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/ChangeInteractableEnabledInteraction.cs" id="13_nhfwy"]
-[ext_resource type="PackedScene" uid="uid://dntwsip6ujfpw" path="res://break_room/break_room_level.tscn" id="13_vgify"]
 [ext_resource type="Script" path="res://actors/interactables/interactions/FinishCutsceneInteraction.cs" id="16_sxopx"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_4mxmh"]
@@ -208,7 +207,7 @@ _InteractablePath = NodePath("../../../..")
 
 [node name="ChangeLevelInteraction" type="Node" parent="World/NavigationRegion3D/Environment/ExitModel/Interactable/CutsceneInteraction/DialogueResponseInteraction/ComposedInteraction" index="1"]
 script = ExtResource("12_rgdh7")
-_ToLevel = ExtResource("13_vgify")
+_ToLevel = "break_room_level"
 
 [node name="FinishCutsceneInteraction" type="Node" parent="World/NavigationRegion3D/Environment/ExitModel/Interactable/CutsceneInteraction/DialogueResponseInteraction" index="1"]
 script = ExtResource("16_sxopx")

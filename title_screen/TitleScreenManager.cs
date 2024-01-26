@@ -2,13 +2,14 @@ using Godot;
 using ShopIsDone.GameSettings;
 using System;
 using ShopIsDone.UI;
+using ShopIsDone.Core.Data;
 
 namespace ShopIsDone.TitleScreen
 {
     public partial class TitleScreenManager : FocusMenu
     {
         [Signal]
-        public delegate void LevelEditorRequestedEventHandler();
+        public delegate void NewGameRequestedEventHandler();
 
         [Signal]
         public delegate void ContinueRequestedEventHandler();
@@ -16,9 +17,11 @@ namespace ShopIsDone.TitleScreen
         [Signal]
         public delegate void QuitGameRequestedEventHandler();
 
+        [Export]
+        private LevelDb _LevelDb;
+
         // Nodes
         private Control _ButtonContainer;
-        private Button _LevelEditorButton;
         private Button _ContinueButton;
         private Button _NewGameButton;
         private Button _SettingsButton;
@@ -31,14 +34,13 @@ namespace ShopIsDone.TitleScreen
         {
             // Ready nodes
             _ButtonContainer = GetNode<Control>("%ButtonContainer");
-            _LevelEditorButton = GetNode<Button>("%LevelEditorButton");
             _ContinueButton = GetNode<Button>("%ContinueButton");
             _NewGameButton = GetNode<Button>("%NewGameButton");
             _SettingsButton = GetNode<Button>("%SettingsButton");
             _QuitGameButton = GetNode<Button>("%QuitGameButton");
 
             // Connect to button events
-            _LevelEditorButton.Pressed += OnLevelEditorPressed;
+            _NewGameButton.Pressed += OnNewGamePressed;
             _ContinueButton.Pressed += OnContinuePressed;
             _QuitGameButton.Pressed += OnQuitGamePressed;
             _SettingsButton.Pressed += OnSettingsPressed;
@@ -63,9 +65,9 @@ namespace ShopIsDone.TitleScreen
             _SettingsMenu.InitializeValues();
         }
 
-        private void OnLevelEditorPressed()
+        private void OnNewGamePressed()
         {
-            EmitSignal(nameof(LevelEditorRequested));
+            EmitSignal(nameof(NewGameRequested));
         }
 
         private void OnContinuePressed()

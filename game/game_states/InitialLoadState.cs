@@ -66,12 +66,12 @@ namespace ShopIsDone.Game.States
                 case GameManager.InitialGameState.Level:
                     {
                         // Pull the initial level from the message
-                        var initialLevel = message.GetValueOrDefault(Consts.INITIAL_LEVEL);
+                        var initialLevel = (string)message.GetValueOrDefault(Consts.INITIAL_LEVEL);
                         // If we don't have an arena data file path, error out,
                         // and go to the main menu instead
-                        if (initialLevel.Equals(default(Variant)))
+                        if (string.IsNullOrEmpty(initialLevel))
                         {
-                            GD.PrintErr("Not given Level! Rerouting to Main Menu");
+                            GD.PrintErr("Not given initial level id! Rerouting to Main Menu");
                             ChangeState(Consts.GameStates.MAIN_MENU);
                         }
 
@@ -80,13 +80,6 @@ namespace ShopIsDone.Game.States
                         {
                             { Consts.LEVEL_KEY, initialLevel }
                         });
-                        return;
-                    }
-
-                case GameManager.InitialGameState.BreakRoom:
-                    {
-                        // Go to the break room
-                        ChangeState(Consts.GameStates.BREAK_ROOM);
                         return;
                     }
             }

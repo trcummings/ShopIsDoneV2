@@ -28,7 +28,7 @@ namespace ShopIsDone.Game.States
             AddChild(_TitleScreen);
 
             // Connect to title screen events
-            _TitleScreen.LevelEditorRequested += OnLevelEditorRequested;
+            _TitleScreen.NewGameRequested += OnNewGameRequested;
             _TitleScreen.ContinueRequested += OnContinueGameRequested;
             _TitleScreen.QuitGameRequested += () => _Events.EmitSignal(nameof(_Events.QuitGameRequested));
 
@@ -55,7 +55,7 @@ namespace ShopIsDone.Game.States
             base.OnExit(nextState);
         }
 
-        private void OnLevelEditorRequested()
+        private void OnNewGameRequested()
         {
 
         }
