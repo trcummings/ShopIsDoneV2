@@ -17,6 +17,7 @@ shape = SubResource("BoxShape3D_d5frn")
 
 [node name="ToiletPipes" type="Sprite3D" parent="."]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 2.1039, -0.0658926)
+shaded = true
 alpha_cut = 1
 texture = ExtResource("2_rocxr")
 hframes = 2

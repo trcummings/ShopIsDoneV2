@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="7_xooi4"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="8_5fhod"]
 [ext_resource type="Script" path="res://levels/test_level/conditions/TaskCompletedCondition.cs" id="9_bxejf"]
-[ext_resource type="Texture2D" uid="uid://bsf743nafvrlm" path="res://textures/screenshot_example.png" id="13_f8oim"]
+[ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="13_hfsdd"]
 [ext_resource type="Shader" path="res://levels/test_level/ntsc.gdshader" id="16_2hx3x"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_n5n74"]
@@ -24,7 +24,7 @@ size = Vector3(0.646393, 1, 6)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_6h0ou"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_coiw1"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v2388"]
 seamless = true
 noise = SubResource("FastNoiseLite_6h0ou")
 
@@ -33,7 +33,7 @@ shader = ExtResource("16_2hx3x")
 shader_parameter/blur_amount = 0.415
 shader_parameter/signal_quality = 0.023
 shader_parameter/bottom_strenth = 0.587
-shader_parameter/grain_tex = SubResource("NoiseTexture2D_coiw1")
+shader_parameter/grain_tex = SubResource("NoiseTexture2D_v2388")
 
 [node name="Level" instance=ExtResource("1_egns7")]
 
@@ -113,29 +113,22 @@ transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08,
 light_energy = 0.089
 light_cull_mask = 4294967039
 
-[node name="PostProcessing" type="CanvasLayer" parent="." index="5"]
-layer = 32
-follow_viewport_enabled = true
+[node name="Camera" parent="World/GridSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 3.02058e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
-[node name="Effects" type="Control" parent="PostProcessing" index="0"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Camera" parent="World/LightSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 3.02058e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
-[node name="EffectsTest" type="TextureRect" parent="PostProcessing/Effects" index="0"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("13_f8oim")
+[node name="Camera" parent="World/WidgetsSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 3.02058e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
-[node name="BackBufferCopy3" type="BackBufferCopy" parent="PostProcessing/Effects" index="1"]
+[node name="Lights" type="Node3D" parent="World" index="9"]
+
+[node name="WorldOmniLight" parent="World/Lights" index="0" instance=ExtResource("13_hfsdd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 2, 0)
+Radius = 8.0
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="PostProcessing/Effects" index="3"]
 position = Vector2(960, 540)
 scale = Vector2(9.6, 5.4)
 copy_mode = 2

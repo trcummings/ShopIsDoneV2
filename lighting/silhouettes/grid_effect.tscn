@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://5tltus61wl40"]
+
+[ext_resource type="Material" uid="uid://bkdye4q4y84a7" path="res://lighting/silhouettes/grid_effect.material" id="1_1ounl"]
+[ext_resource type="Script" path="res://lighting/silhouettes/GridEffect.cs" id="2_6656o"]
+
+[node name="GridEffect" type="ColorRect"]
+material = ExtResource("1_1ounl")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_6656o")

@@ -1,10 +1,12 @@
-[gd_scene load_steps=34 format=3 uid="uid://dntwsip6ujfpw"]
+[gd_scene load_steps=36 format=3 uid="uid://dntwsip6ujfpw"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_1gx3o"]
 [ext_resource type="PackedScene" uid="uid://hmcccjay3t4s" path="res://break_room/break_room.tscn" id="2_e4p3r"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_xk3aj"]
 [ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_0p7hi"]
+[ext_resource type="PackedScene" uid="uid://doh8801kqoyku" path="res://lighting/world_spot_light.tscn" id="3_lvihu"]
 [ext_resource type="PackedScene" uid="uid://b7n2nvaxotrvp" path="res://actors/ricky_actor.tscn" id="4_ieyoc"]
+[ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="4_jw0am"]
 [ext_resource type="PackedScene" uid="uid://h8tgbnv7m8wk" path="res://break_room/bathroom/bathroom_door/bathroom_door.tscn" id="6_4oxqx"]
 [ext_resource type="PackedScene" uid="uid://digrjqe4sy5ly" path="res://break_room/vending_machine/vending_machine.tscn" id="6_85xsv"]
 [ext_resource type="PackedScene" uid="uid://k4w17wpyi1d8" path="res://break_room/refrigerator/refrigerator.tscn" id="7_cceh2"]
@@ -54,13 +56,48 @@ size = Vector3(6.00092, 5.5332, 6.05725)
 [node name="WorldEnvironment" parent="." index="0"]
 environment = ExtResource("2_xk3aj")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
+[node name="Lights" type="Node3D" parent="World" index="0"]
 
-[node name="PlayerCharacterManager" parent="World" index="2"]
+[node name="WorldSpotLight" parent="World/Lights" index="0" instance=ExtResource("3_lvihu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45136, 0)
+Radius = 5.0
+LightAngle = 45.0
+
+[node name="WorldOmniLight" parent="World/Lights" index="1" instance=ExtResource("4_jw0am")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07837, 2.32174, 1.98266)
+Radius = 5.0
+
+[node name="WorldOmniLight2" parent="World/Lights" index="2" instance=ExtResource("4_jw0am")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.18182, 2.32174, -4.15709)
+Radius = 5.0
+
+[node name="WorldOmniLight4" parent="World/Lights" index="3" instance=ExtResource("4_jw0am")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.44117, 3.00819, 4.3382)
+Radius = 5.0
+
+[node name="WorldOmniLight5" parent="World/Lights" index="4" instance=ExtResource("4_jw0am")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.55021, 3.00819, -3.58641)
+Radius = 5.0
+
+[node name="WorldOmniLight3" parent="World/Lights" index="5" instance=ExtResource("4_jw0am")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.65574, 3.58005, 3.34053)
+Radius = 5.0
+
+[node name="WorldSpotLight2" parent="World/Lights" index="6" instance=ExtResource("3_lvihu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.16707, 1.44685, 1.77609)
+Radius = 5.0
+LightColor = Color(1, 1, 1, 1)
+
+[node name="WorldSpotLight3" parent="World/Lights" index="7" instance=ExtResource("3_lvihu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3385, 1.44685, 1.77609)
+Radius = 5.0
+LightColor = Color(1, 1, 1, 1)
+
+[node name="PlayerCharacterManager" parent="World" index="3"]
 _LeaderScene = ExtResource("3_0p7hi")
 _FollowerScenes = [ExtResource("4_ieyoc")]
 
-[node name="NavigationRegion3D" parent="World" index="3"]
+[node name="NavigationRegion3D" parent="World" index="4"]
 navigation_mesh = SubResource("NavigationMesh_ln0yd")
 
 [node name="BreakRoom" parent="World/NavigationRegion3D/Environment" index="0" instance=ExtResource("2_e4p3r")]
@@ -192,9 +229,10 @@ transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-
 [node name="UrinalDivider2" parent="World/NavigationRegion3D/Environment/Bathroom" index="4" instance=ExtResource("18_4nfln")]
 transform = Transform3D(-1.85, 6.45256e-16, -2.79342e-07, 6.45256e-16, 1.85, -6.45256e-16, 2.79342e-07, -6.45256e-16, -1.85, -9.7291, -0.322304, 0.0652251)
 
-[node name="Sprite3D" type="Sprite3D" parent="World/NavigationRegion3D/Environment/Bathroom" index="5"]
+[node name="Drain" type="Sprite3D" parent="World/NavigationRegion3D/Environment/Bathroom" index="5"]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -9, 0.001, 3)
 axis = 1
+shaded = true
 double_sided = false
 alpha_cut = 1
 texture = ExtResource("19_kdr0g")
@@ -212,10 +250,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0210876, 2.2666, 0.0388794
 shape = SubResource("BoxShape3D_au8jt")
 
 [node name="LevelSelect" parent="UILayer" index="0" instance=ExtResource("14_rbd72")]
+layer = 70
 visible = false
+
+[node name="GameOverUI" parent="UILayer" index="3"]
+layer = 80
 
 [node name="DebugDirectionalLight" type="DirectionalLight3D" parent="." index="7"]
 transform = Transform3D(0.896533, -0.0606551, 0.438805, -0.442977, -0.122759, 0.888089, 7.78726e-17, -0.990581, -0.136926, -0.515489, 3.28732, 4.76837e-07)
+visible = false
 
 [editable path="World/IsometricCamera"]
 [editable path="World/NavigationRegion3D/Environment/MainBreakRoom/TimeClock/Interactable"]

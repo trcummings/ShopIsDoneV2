@@ -37,7 +37,7 @@ script = ExtResource("8_k0lyi")
 [node name="ShaderCache" parent="." instance=ExtResource("10_xnonk")]
 
 [node name="OverlayLayer" type="CanvasLayer" parent="."]
-layer = 16
+layer = 127
 follow_viewport_enabled = true
 
 [node name="BlackOverlay" type="ColorRect" parent="OverlayLayer"]

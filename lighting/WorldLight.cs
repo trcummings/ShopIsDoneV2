@@ -61,6 +61,21 @@ namespace ShopIsDone.Lighting
         }
         private Color _LightColor = Colors.White;
 
+        // Debug only for editor
+        [Export]
+        public bool DebugViewVolume
+        {
+            get { return _DebugViewVolume; }
+            set
+            {
+                if (!Engine.IsEditorHint() || _LightVolumeMesh == null) return;
+                _DebugViewVolume = value;
+                if (value) _LightVolumeMesh.Show();
+                else _LightVolumeMesh.Hide();
+            }
+        }
+        private bool _DebugViewVolume = false;
+
         private Area3D _LightArea;
         private CollisionShape3D _LightShape;
         private MeshInstance3D _LightVolumeMesh;
@@ -91,8 +106,11 @@ namespace ShopIsDone.Lighting
             _LightFlickerSfx = GetNode<AudioStreamPlayer>("%LightFlickerSfxPlayer");
 
             // Hide light mesh if we're in the editor, otherwise show it
-            if (Engine.IsEditorHint()) _LightVolumeMesh.Hide();
+            if (Engine.IsEditorHint() && !_DebugViewVolume) _LightVolumeMesh.Hide();
             else _LightVolumeMesh.Show();
+
+            // Set light color
+            _Light.LightColor = _LightColor;
 
             // Duplicate meshes
             if (UseLightRadiusAsVolume) DuplicateMeshes();
