@@ -4,15 +4,15 @@ using Godot;
 
 namespace ShopIsDone.Models
 {
-	public interface IModel
-	{
+    public interface IModel
+    {
         void SetFacingDir(Vector3 facingDir);
 
         void Init();
 
         string GetDefaultAnimationName();
 
-        Task PerformAnimation(string animName, bool advance = false);
+        Task PerformAnimation(string animName);
 
         void Show();
 

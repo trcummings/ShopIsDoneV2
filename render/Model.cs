@@ -53,7 +53,7 @@ namespace ShopIsDone.Models
             EmitSignal(nameof(AnimationEventFired), eventName);
         }
 
-        public virtual async Task PerformAnimation(string animName, bool advance = false)
+        public virtual async Task PerformAnimation(string animName)
         {
             // Save ourselves some output here, if it's the default call and we
             // don't have any animations, ignore it
@@ -72,14 +72,8 @@ namespace ShopIsDone.Models
                 // Play normally
                 _AnimPlayer.Play(animName);
 
-                // If no advance, wait for it to finish
-                if (!advance) await ToSignal(_AnimPlayer, "animation_finished");
-                // Otherwise, advance the animation position to the end
-                else
-                {
-                    _AnimPlayer.Advance(_AnimPlayer.CurrentAnimationLength);
-                    await ToSignal(GetTree(), "process_frame");
-                }
+                // Wait for it to finish
+                await ToSignal(_AnimPlayer, "animation_finished");
             }
             // Otherwise, error case
             else

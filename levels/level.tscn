@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=43 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://environments/EnvironmentManager.cs" id="2_4ygry"]
@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://crqg03tk3cpdo" path="res://widgets/tile_cursor/tile_cursor.tscn" id="11_6qmyn"]
 [ext_resource type="Script" path="res://camera/ScreenshakeHandler.cs" id="11_nb1sm"]
 [ext_resource type="Script" path="res://util/dependency_injection/ServicesContainer.cs" id="11_v0osm"]
-[ext_resource type="PackedScene" uid="uid://clxx8lr4tixdi" path="res://widgets/facing_widget/FacingWidget.tscn" id="12_vtx7j"]
+[ext_resource type="PackedScene" uid="uid://clxx8lr4tixdi" path="res://widgets/facing_widget/facing_widget.tscn" id="12_vtx7j"]
 [ext_resource type="Script" path="res://util/DirectionalInputHelper.cs" id="12_xguo8"]
 [ext_resource type="Script" path="res://camera/PlayerCameraService.cs" id="13_pish1"]
 [ext_resource type="PackedScene" uid="uid://bx37eiog04urf" path="res://widgets/finger_cursor/finger_cursor.tscn" id="14_vwmfj"]
@@ -36,6 +36,10 @@
 [ext_resource type="PackedScene" uid="uid://vkdrv2wvhw46" path="res://levels/directional_point.tscn" id="26_7pn1o"]
 [ext_resource type="PackedScene" uid="uid://ddwvyl3d8scbv" path="res://levels/level_states/game_over_ui.tscn" id="26_yq21p"]
 [ext_resource type="PackedScene" uid="uid://kxhd2aa43gxp" path="res://widgets/clown_arm/clown_arm_widget.tscn" id="29_pvwuo"]
+[ext_resource type="Texture2D" uid="uid://bsf743nafvrlm" path="res://textures/screenshot_example.png" id="33_7umqv"]
+[ext_resource type="PackedScene" uid="uid://5tltus61wl40" path="res://lighting/silhouettes/grid_effect.tscn" id="34_4u7va"]
+[ext_resource type="Material" uid="uid://dhddd5g0tswbc" path="res://lighting/silhouettes/shadow_distortion.material" id="34_52nk5"]
+[ext_resource type="Material" uid="uid://dax0bf76hj7s7" path="res://lighting/silhouettes/shadow_outline.material" id="35_j1o0a"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lbwya"]
 
@@ -174,6 +178,20 @@ visible = false
 [node name="Camera" parent="World/IsometricCamera" index="0"]
 current = true
 
+[node name="CharacterIlluminator" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
+layers = 256
+light_energy = 0.2
+light_cull_mask = 4293918976
+
+[node name="GridRemoteTransform" type="RemoteTransform3D" parent="World/IsometricCamera/Camera" index="1"]
+remote_path = NodePath("../../../GridSubViewport/Pivot/Camera")
+
+[node name="LightsRemoteTransform" type="RemoteTransform3D" parent="World/IsometricCamera/Camera" index="2"]
+remote_path = NodePath("../../../LightSubViewport/Pivot/Camera")
+
+[node name="WidgetsRemoteTransform" type="RemoteTransform3D" parent="World/IsometricCamera/Camera" index="3"]
+remote_path = NodePath("../../../WidgetsSubViewport/Pivot/Camera")
+
 [node name="PlayerCharacterManager" type="Node3D" parent="World" node_paths=PackedStringArray("_DefaultSpawnPoint")]
 script = ExtResource("17_qs4bj")
 _DefaultSpawnPoint = NodePath("../DefaultSpawnPoint")
@@ -187,8 +205,114 @@ metadata/_edit_lock_ = true
 
 [node name="DefaultSpawnPoint" parent="World" instance=ExtResource("26_7pn1o")]
 
+[node name="GridSubViewport" type="SubViewport" parent="World"]
+transparent_bg = true
+size = Vector2i(1920, 1080)
+
+[node name="Pivot" type="Node3D" parent="World/GridSubViewport"]
+
+[node name="Camera" type="Camera3D" parent="World/GridSubViewport/Pivot" groups=["camera_clone"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+cull_mask = 2
+projection = 1
+current = true
+size = 15.0
+
+[node name="LightSubViewport" type="SubViewport" parent="World"]
+transparent_bg = true
+size = Vector2i(1920, 1080)
+
+[node name="Pivot" type="Node3D" parent="World/LightSubViewport"]
+
+[node name="Camera" type="Camera3D" parent="World/LightSubViewport/Pivot" groups=["camera_clone"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+cull_mask = 8
+projection = 1
+current = true
+size = 15.0
+
+[node name="WidgetsSubViewport" type="SubViewport" parent="World"]
+transparent_bg = true
+size = Vector2i(1920, 1080)
+
+[node name="Pivot" type="Node3D" parent="World/WidgetsSubViewport"]
+
+[node name="Camera" type="Camera3D" parent="World/WidgetsSubViewport/Pivot" groups=["camera_clone"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+cull_mask = 4
+projection = 1
+current = true
+size = 15.0
+
+[node name="PostProcessing" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Effects" type="Control" parent="PostProcessing"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="EffectsTest" type="TextureRect" parent="PostProcessing/Effects"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("33_7umqv")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="PostProcessing/Effects"]
+copy_mode = 2
+
+[node name="Distortion" type="SubViewportContainer" parent="PostProcessing/Effects"]
+material = ExtResource("34_52nk5")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport2" type="SubViewport" parent="PostProcessing/Effects/Distortion"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="ShadowOutline" type="SubViewportContainer" parent="PostProcessing/Effects/Distortion/SubViewport2"]
+material = ExtResource("35_j1o0a")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SubViewport" type="SubViewport" parent="PostProcessing/Effects/Distortion/SubViewport2/ShadowOutline"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="GridEffect" parent="PostProcessing/Effects/Distortion/SubViewport2/ShadowOutline/SubViewport" node_paths=PackedStringArray("_TileCursor", "_Camera", "_GridSubViewport", "_LightSubViewport", "_WidgetsViewport") instance=ExtResource("34_4u7va")]
+modulate = Color(1, 1, 1, 0)
+_TileCursor = NodePath("../../../../../../../World/Widgets/TileCursor")
+_Camera = NodePath("../../../../../../../World/IsometricCamera/Camera")
+_GridSubViewport = NodePath("../../../../../../../World/GridSubViewport")
+_LightSubViewport = NodePath("../../../../../../../World/LightSubViewport")
+_WidgetsViewport = NodePath("../../../../../../../World/WidgetsSubViewport")
+
 [node name="UILayer" type="CanvasLayer" parent="."]
 process_mode = 1
+layer = 64
+follow_viewport_enabled = true
 
 [node name="MicrogameUIContainer" type="PanelContainer" parent="UILayer"]
 anchors_preset = 15
@@ -205,12 +329,17 @@ layout_mode = 2
 _FrameContainer = NodePath("..")
 
 [node name="BlurBackground" parent="UILayer" instance=ExtResource("20_qvdr3")]
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="GameOverUI" parent="UILayer" instance=ExtResource("26_yq21p")]
 visible = false
 
 [node name="LevelPauseMenu" parent="." node_paths=PackedStringArray("_BlurBackground") instance=ExtResource("21_u1g8v")]
+layer = 96
 visible = false
+follow_viewport_enabled = true
 _BlurBackground = NodePath("../UILayer/BlurBackground")
 
 [connection signal="GamePaused" from="Services/PauseInputHandler" to="LevelPauseMenu" method="Activate"]

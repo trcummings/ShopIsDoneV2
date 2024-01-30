@@ -2,6 +2,7 @@ using Godot;
 using System;
 using Godot.Collections;
 using ShopIsDone.Core;
+using ShopIsDone.Lighting;
 
 namespace ShopIsDone.Tiles
 {
@@ -29,6 +30,8 @@ namespace ShopIsDone.Tiles
         [Export]
         private RayCast3D _ObstacleDetector;
 
+        [Export]
+        private LightDetector _LightDetector;
 
         public bool HasObstacleOnTile { get { return _HasObstacleOnTile; } }
         private bool _HasObstacleOnTile;
@@ -92,8 +95,7 @@ namespace ShopIsDone.Tiles
 
         public bool IsLit()
         {
-            // FIXME: Integrate light detector
-            return true;
+            return _LightDetector.IsLit();
         }
 
         private void UpdateUnitOnTile()

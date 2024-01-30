@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://k1cfuob2nivk"]
+[gd_scene load_steps=8 format=3 uid="uid://k1cfuob2nivk"]
 
 [ext_resource type="Texture2D" uid="uid://d2j6c5so2rxbe" path="res://tiles/tile/transparent_vignette.png" id="2"]
 [ext_resource type="Material" uid="uid://cvaabxibt83nh" path="res://tiles/tile/grid_overlay.material" id="3_2ytb8"]
+[ext_resource type="Script" path="res://lighting/LightDetector.cs" id="4_jgok7"]
 [ext_resource type="Script" path="res://tiles/tile/Tile.cs" id="6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p588p"]
@@ -14,7 +15,7 @@ size = Vector2(2, 2)
 [sub_resource type="BoxShape3D" id="6"]
 size = Vector3(1.38, 0.2, 1.38)
 
-[node name="Tile" type="StaticBody3D" node_paths=PackedStringArray("_North", "_South", "_East", "_West", "_UnitDetector", "_ObstacleDetector") groups=["tile"]]
+[node name="Tile" type="StaticBody3D" node_paths=PackedStringArray("_North", "_South", "_East", "_West", "_UnitDetector", "_ObstacleDetector", "_LightDetector") groups=["tile"]]
 collision_layer = 128
 collision_mask = 0
 script = ExtResource("6")
@@ -24,6 +25,7 @@ _East = NodePath("Neighbors/East")
 _West = NodePath("Neighbors/West")
 _UnitDetector = NodePath("UnitDetector")
 _ObstacleDetector = NodePath("ObstacleDetector")
+_LightDetector = NodePath("LightDetector")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -0.5, 2.08165e-12)
@@ -71,6 +73,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 2.08165e-12)
 collision_mask = 128
 
 [node name="LightDetector" type="Node3D" parent="."]
+script = ExtResource("4_jgok7")
 
 [node name="LightDetectorArea" type="Area3D" parent="LightDetector"]
 collision_layer = 0

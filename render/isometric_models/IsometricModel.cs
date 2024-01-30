@@ -1,9 +1,6 @@
 ﻿using Godot;
 using System;
-//using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Godot.Collections;
 using ShopIsDone.Utils;
 
 namespace ShopIsDone.Models.IsometricModels
@@ -67,7 +64,7 @@ namespace ShopIsDone.Models.IsometricModels
             }
         }
 
-        public virtual async Task PerformAnimation(string animName, bool advance = false)
+        public virtual async Task PerformAnimation(string animName)
         {
             // Persist action name in state
             _ActionName = animName;

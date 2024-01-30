@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c84riwntsfpy5"]
+[gd_scene load_steps=34 format=3 uid="uid://c84riwntsfpy5"]
 
 [ext_resource type="Script" path="res://core/LevelEntity.cs" id="1_hv7oi"]
 [ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
@@ -29,6 +29,9 @@
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="27_fpgq0"]
 [ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="28_arvyn"]
 [ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="28_v08d8"]
+[ext_resource type="Script" path="res://lighting/LightDetector.cs" id="30_tades"]
+[ext_resource type="PackedScene" uid="uid://br2e0jnd08ebo" path="res://lighting/light_detector_area.tscn" id="31_kfuq5"]
+[ext_resource type="Script" path="res://lighting/LightDetectorComponent.cs" id="32_0u2uw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0cyyf"]
 radius = 0.75
@@ -163,6 +166,15 @@ _OutcomeHandlerPath = NodePath("../OutcomeHandler")
 
 [node name="PopupLabel" parent="." instance=ExtResource("28_arvyn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.5, 2.08165e-12)
+
+[node name="LightDetector" type="Node3D" parent="."]
+script = ExtResource("30_tades")
+
+[node name="LightDetectorArea" parent="LightDetector" instance=ExtResource("31_kfuq5")]
+
+[node name="LightDetectorComponent" type="Node" parent="." node_paths=PackedStringArray("Detector")]
+script = ExtResource("32_0u2uw")
+Detector = NodePath("../LightDetector")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="CustomerType1Model" method="SetFacingDir"]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]

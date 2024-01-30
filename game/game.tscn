@@ -14,7 +14,7 @@
 process_mode = 3
 script = ExtResource("1_ej1mk")
 OverrideModeAfterLoad = 2
-InitialLevelId = "break_room_level"
+InitialLevelId = "test_level_1"
 
 [node name="GameStateMachine" type="Node" parent="."]
 unique_name_in_owner = true
@@ -37,7 +37,7 @@ script = ExtResource("8_k0lyi")
 [node name="ShaderCache" parent="." instance=ExtResource("10_xnonk")]
 
 [node name="OverlayLayer" type="CanvasLayer" parent="."]
-layer = 16
+layer = 127
 follow_viewport_enabled = true
 
 [node name="BlackOverlay" type="ColorRect" parent="OverlayLayer"]

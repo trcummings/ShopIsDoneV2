@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://c03r17klsdybr"]
+
+[ext_resource type="Script" path="res://lighting/WorldLight.cs" id="1_27bq8"]
+
+[node name="NullWorldLight" type="Node3D"]
+editor_description = "This is a special \"null\" implementation of a world light that doesn't actually light an area, just provides the light volume and collider"
+script = ExtResource("1_27bq8")
+UseLightRadiusAsVolume = false
+IsLit = true
+
+[node name="LightArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 32
+collision_mask = 32
+
+[node name="LightShape" type="CollisionShape3D" parent="LightArea"]
+unique_name_in_owner = true
+
+[node name="LightVolumeMesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+visible = false
+layers = 8
