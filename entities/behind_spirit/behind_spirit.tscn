@@ -1,8 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://b4ioplxcvprpo"]
+[gd_scene load_steps=25 format=3 uid="uid://b4ioplxcvprpo"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_8jbph"]
 [ext_resource type="PackedScene" uid="uid://bbx7tkqlpdpv7" path="res://entities/behind_spirit/behind_spirit_model.tscn" id="2_voxxa"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="3_w83lb"]
+[ext_resource type="Material" uid="uid://cnfmg14t6cmu5" path="res://lighting/light_chroma_key.material" id="3_wgxpx"]
+[ext_resource type="Script" path="res://util/hide_in_editor.gd" id="4_nyxgh"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="4_qg682"]
 [ext_resource type="PackedScene" uid="uid://bsxne3olmt1ol" path="res://action_points/null_action_point_handler.tscn" id="5_e1om4"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="6_mvuig"]
@@ -19,6 +21,14 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2m1rl"]
 radius = 0.75
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dq6bg"]
+material = ExtResource("3_wgxpx")
+radius = 1.5
+height = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_35ymu"]
+size = Vector3(25, 10, 25)
 
 [sub_resource type="Animation" id="Animation_j57nb"]
 resource_name = "RESET"
@@ -223,6 +233,25 @@ shape = SubResource("CapsuleShape3D_2m1rl")
 
 [node name="BehindSpiritModel" parent="." index="3" instance=ExtResource("2_voxxa")]
 
+[node name="Base" parent="BehindSpiritModel/behind_spirit/Armature/Skeleton3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33234e-13, 1.33234e-13, 1.33234e-13)
+
+[node name="Spine1" parent="BehindSpiritModel/behind_spirit/Armature/Skeleton3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.66468e-13, 1, 2.66468e-13)
+
+[node name="Spine2" parent="BehindSpiritModel/behind_spirit/Armature/Skeleton3D" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.99702e-13, 1.70988, 3.99702e-13)
+
+[node name="Head" parent="BehindSpiritModel/behind_spirit/Armature/Skeleton3D" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.32937e-13, 2.3742, 5.32937e-13)
+
+[node name="LightVolumeMesh" type="MeshInstance3D" parent="BehindSpiritModel/behind_spirit" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2, 2.08165e-12)
+visible = false
+layers = 8
+mesh = SubResource("CapsuleMesh_dq6bg")
+script = ExtResource("4_nyxgh")
+
 [node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState")]
 script = ExtResource("3_w83lb")
 InitialState = NodePath("Lurking")
@@ -296,6 +325,12 @@ layers = 1024
 size = Vector3(25, 10, 25)
 material = ExtResource("12_llha0")
 
+[node name="LightVolumeMesh" type="MeshInstance3D" parent="OutcomeHandler/RemoteTransform3D/CSGBox3D" index="0"]
+visible = false
+layers = 8
+mesh = SubResource("BoxMesh_35ymu")
+script = ExtResource("4_nyxgh")
+
 [node name="OmniLight3D" type="OmniLight3D" parent="OutcomeHandler/RemoteTransform3D" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.24878, -2.70468)
 visible = false
@@ -329,3 +364,6 @@ _OutcomeHandlerPath = NodePath("../OutcomeHandler")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="BehindSpiritModel" method="SetFacingDir"]
 [connection signal="ShakeOffsetUpdated" from="OutcomeHandler/ScreenshakeHandler" to="OutcomeHandler/RemoteTransform3D/CameraPivot/Camera3D" method="set_offset"]
+
+[editable path="BehindSpiritModel"]
+[editable path="BehindSpiritModel/behind_spirit"]

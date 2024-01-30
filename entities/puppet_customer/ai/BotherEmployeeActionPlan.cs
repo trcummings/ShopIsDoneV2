@@ -55,7 +55,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                     );
                 }),
                 // Wait a moment, as if deciding
-                new WaitForCommand(_Entity, 0.25F),
+                WaitFor(0.25F),
                 // Briefly hide the indicators
                 new ActionCommand(ClearTileIndicators),
                 new WaitIdleFrameCommand(_Entity),
@@ -70,7 +70,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                 // Rotate towards target
                 new ActionCommand(() => _Entity.FacingDirection = _Entity.GetFacingDirTowards(target.GlobalPosition)),
                 // Wait another moment as if confirming
-                new WaitForCommand(_Entity, 0.5F),
+                WaitFor(0.5F),
                 // Hide indicators
                 new ActionCommand(ClearTileIndicators),
                 // Bother

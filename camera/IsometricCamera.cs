@@ -3,6 +3,8 @@ using System;
 using System.Linq;
 using ShopIsDone.Utils;
 using ShopIsDone.Cameras.Zooms;
+using ShopIsDone.Core;
+using ShopIsDone.Lighting;
 
 namespace ShopIsDone.Cameras
 {
@@ -261,21 +263,20 @@ namespace ShopIsDone.Cameras
 
         private bool IsTargetVisible()
         {
-            //// If it doesn't have a "IsLit" method, assume that it's visible
-            //if (!Target.HasMethod("IsLit"))
-            //{
-            //    // Unless it's an entity with a light detector component
-            //    if (Target is LevelEntity entity && entity.HasComponent<LightDetectorComponent>())
-            //    {
-            //        return entity.GetComponent<LightDetectorComponent>().IsLit();
-            //    }
+            // If it doesn't have a "IsLit" method, assume that it's visible
+            if (!Target.HasMethod("IsLit"))
+            {
+                // Unless it's an entity with a light detector component
+                if (Target is LevelEntity entity && entity.HasComponent<LightDetectorComponent>())
+                {
+                    return entity.GetComponent<LightDetectorComponent>().Detector.IsLit();
+                }
 
-            //    // Otherwise, assume it's visible
-            //    return true;
-            //}
-            //// But if it does, use that to judge
-            //return (bool)Target.Call("IsLit");
-            return true;
+                // Otherwise, assume it's visible
+                return true;
+            }
+            // But if it does, use that to judge
+            return (bool)Target.Call("IsLit");
         }
     }
 }

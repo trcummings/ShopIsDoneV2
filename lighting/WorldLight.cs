@@ -103,14 +103,14 @@ namespace ShopIsDone.Lighting
             _LightArea = GetNode<Area3D>("%LightArea");
             _LightShape = GetNode<CollisionShape3D>("%LightShape");
             _LightVolumeMesh = GetNode<MeshInstance3D>("%LightVolumeMesh");
-            _LightFlickerSfx = GetNode<AudioStreamPlayer>("%LightFlickerSfxPlayer");
+            _LightFlickerSfx = GetNodeOrNull<AudioStreamPlayer>("%LightFlickerSfxPlayer");
 
             // Hide light mesh if we're in the editor, otherwise show it
             if (Engine.IsEditorHint() && !_DebugViewVolume) _LightVolumeMesh.Hide();
             else _LightVolumeMesh.Show();
 
             // Set light color
-            _Light.LightColor = _LightColor;
+            if (_Light != null) _Light.LightColor = _LightColor;
 
             // Duplicate meshes
             if (UseLightRadiusAsVolume) DuplicateMeshes();
@@ -251,11 +251,14 @@ namespace ShopIsDone.Lighting
 
         public async Task FlickerLightOff()
         {
-            // Play SFX
-            _LightFlickerSfx.Play();
+            if (_LightFlickerSfx != null)
+            {
+                // Play SFX
+                _LightFlickerSfx.Play();
 
-            // Await both
-            await ToSignal(_LightFlickerSfx, "finished");
+                // Await sfx
+                await ToSignal(_LightFlickerSfx, "finished");
+            }
 
             // Set light energy back to 1
             LightEnergy = 1;
@@ -273,11 +276,14 @@ namespace ShopIsDone.Lighting
             _IsLit = true;
             TurnOn();
 
-            // Play SFX
-            _LightFlickerSfx.Play();
+            if (_LightFlickerSfx != null)
+            {
+                // Play SFX
+                _LightFlickerSfx.Play();
 
-            // Await both
-            await ToSignal(_LightFlickerSfx, "finished");
+                // Await sfx
+                await ToSignal(_LightFlickerSfx, "finished");
+            }
 
             // Set light energy back to 1
             LightEnergy = 1;

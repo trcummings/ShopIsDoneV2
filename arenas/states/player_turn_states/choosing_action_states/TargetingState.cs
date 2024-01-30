@@ -92,8 +92,14 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Get the allowed tiles based on the range
             _AvailableTiles = new MoveGenerator()
                 .GetAvailableMoves(originTile, canTargetSelf, range)
-                // Filter tiles out with obstacles on them
+                // Filter tiles out with obstacles on them or lit tiles
                 .Where(tile => !tile.HasObstacleOnTile)
+                // Filter out tiles that aren't visible but are more than 1
+                // square away (we can always target stuff right next to us)
+                .Where(tile => !(
+                    tile.TilemapPosition.DistanceTo(_SelectedUnit.TilemapPosition) > 1 &&
+                    !tile.IsLit()
+                ))
                 .ToList();
 
             // Perist the tile cursor's initial position

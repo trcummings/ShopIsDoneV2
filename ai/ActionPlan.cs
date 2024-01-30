@@ -11,6 +11,7 @@ using static ShopIsDone.Widgets.TileIndicator;
 using SystemGenerics = System.Collections.Generic;
 using ShopIsDone.Widgets;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Lighting;
 
 namespace ShopIsDone.AI
 {
@@ -32,11 +33,18 @@ namespace ShopIsDone.AI
         [Inject]
         protected TileIndicator _TileIndicator;
 
+        private LightDetector _LightDetector;
+
         public virtual void Init(ArenaAction action, Dictionary<string, Variant> blackboard)
         {
             _Action = action;
             _Entity = action.Entity;
             _Blackboard = blackboard;
+
+            if (_Entity.HasComponent<LightDetectorComponent>())
+            {
+                _LightDetector = _Entity.GetComponent<LightDetectorComponent>().Detector;
+            }
         }
 
         public virtual bool IsValid()
@@ -89,12 +97,35 @@ namespace ShopIsDone.AI
 
         protected void CreateTileIndicators(SystemGenerics.IEnumerable<Vector3> tiles, IndicatorColor color)
         {
-            _TileIndicator.CreateIndicators(tiles.Select(_TileManager.TilePosToGlobalPos), color);
+            // Do not show any if we're not lit
+            if (!IsLit()) return;
+
+            // Filter out unlit tiles
+            var allTiles = tiles
+                .Select(_TileManager.GetTileAtTilemapPos)
+                .Where(tile => tile.IsLit())
+                .Select(tile => tile.GlobalPosition);
+
+            _TileIndicator.CreateIndicators(allTiles, color);
         }
 
         protected void ClearTileIndicators()
         {
             _TileIndicator.ClearIndicators();
+        }
+
+        protected bool IsLit()
+        {
+            return _LightDetector?.IsLit() ?? true;
+        }
+
+        protected Command WaitFor(float timeout)
+        {
+            return new ConditionalCommand(
+                // If pawn is not lit, don't wait, just skip forward
+                IsLit,
+                new WaitForCommand(_Entity, timeout)
+            );
         }
     }
 }

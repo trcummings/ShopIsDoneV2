@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://crqg03tk3cpdo" path="res://widgets/tile_cursor/tile_cursor.tscn" id="11_6qmyn"]
 [ext_resource type="Script" path="res://camera/ScreenshakeHandler.cs" id="11_nb1sm"]
 [ext_resource type="Script" path="res://util/dependency_injection/ServicesContainer.cs" id="11_v0osm"]
-[ext_resource type="PackedScene" uid="uid://clxx8lr4tixdi" path="res://widgets/facing_widget/FacingWidget.tscn" id="12_vtx7j"]
+[ext_resource type="PackedScene" uid="uid://clxx8lr4tixdi" path="res://widgets/facing_widget/facing_widget.tscn" id="12_vtx7j"]
 [ext_resource type="Script" path="res://util/DirectionalInputHelper.cs" id="12_xguo8"]
 [ext_resource type="Script" path="res://camera/PlayerCameraService.cs" id="13_pish1"]
 [ext_resource type="PackedScene" uid="uid://bx37eiog04urf" path="res://widgets/finger_cursor/finger_cursor.tscn" id="14_vwmfj"]

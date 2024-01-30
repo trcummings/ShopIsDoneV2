@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ShopIsDone.Core;
 
 namespace ShopIsDone.Lighting
 {
@@ -17,10 +16,28 @@ namespace ShopIsDone.Lighting
         // Tiles that detect light
         protected List<Area3D> _LightDetectorAreas = new List<Area3D>();
 
+        private bool _WasLit = false;
+
         public override void _Ready()
         {
             // Ready nodes
             _LightDetectorAreas = GetChildren().OfType<Area3D>().ToList();
+        }
+
+        public override void _Process(double delta)
+        {
+            var currentIsLit = IsLit();
+
+            if (currentIsLit && !_WasLit)
+            {
+                EmitSignal(nameof(LightEntered));
+            }
+            else if (!currentIsLit && _WasLit)
+            {
+                EmitSignal(nameof(LightExited));
+            }
+
+            _WasLit = currentIsLit;
         }
 
         public bool IsLit()

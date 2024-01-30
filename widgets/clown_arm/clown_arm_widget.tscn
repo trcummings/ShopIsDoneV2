@@ -121,6 +121,9 @@ bones/22/position = Vector3(0.0321016, -1.08137, -3.12581)
 bones/23/position = Vector3(-0.0633628, -0.616154, -3.21145)
 bones/24/position = Vector3(-0.615344, -0.0100608, -2.33972)
 
+[node name="Hand" parent="ClownArmModel/ClownArm/Armature/Skeleton3D" index="0"]
+layers = 5
+
 [node name="BoneAttachment3D" parent="ClownArmModel/ClownArm/Armature/Skeleton3D" index="1"]
 transform = Transform3D(-0.000963326, -0.00552912, -0.999984, -0.338173, -0.941068, 0.00552913, -0.941084, 0.338173, -0.000963241, 5.58121e-28, -7.98196, 1.28802e-07)
 
