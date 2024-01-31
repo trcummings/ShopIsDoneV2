@@ -174,8 +174,10 @@ visible = false
 visible = false
 
 [node name="IsometricCamera" parent="World" instance=ExtResource("2_s72y3")]
+transform = Transform3D(0.707107, -0.353553, 0.612372, 3.02058e-16, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 0, 0, 0)
 
 [node name="Camera" parent="World/IsometricCamera" index="0"]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 0, 0, 50)
 current = true
 
 [node name="CharacterIlluminator" type="DirectionalLight3D" parent="World/IsometricCamera/Camera" index="0"]
@@ -212,7 +214,7 @@ size = Vector2i(1920, 1080)
 [node name="Pivot" type="Node3D" parent="World/GridSubViewport"]
 
 [node name="Camera" type="Camera3D" parent="World/GridSubViewport/Pivot" groups=["camera_clone"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 cull_mask = 2
 projection = 1
 current = true
@@ -225,7 +227,7 @@ size = Vector2i(1920, 1080)
 [node name="Pivot" type="Node3D" parent="World/LightSubViewport"]
 
 [node name="Camera" type="Camera3D" parent="World/LightSubViewport/Pivot" groups=["camera_clone"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 cull_mask = 8
 projection = 1
 current = true
@@ -238,7 +240,7 @@ size = Vector2i(1920, 1080)
 [node name="Pivot" type="Node3D" parent="World/WidgetsSubViewport"]
 
 [node name="Camera" type="Camera3D" parent="World/WidgetsSubViewport/Pivot" groups=["camera_clone"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 cull_mask = 4
 projection = 1
 current = true

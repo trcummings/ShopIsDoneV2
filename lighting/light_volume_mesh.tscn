@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://co5soj88cs137"]
+
+[ext_resource type="Script" path="res://util/hide_in_editor.gd" id="1_3piba"]
+[ext_resource type="Material" uid="uid://cnfmg14t6cmu5" path="res://lighting/light_chroma_key.material" id="1_5dpo5"]
+
+[node name="LightVolumeMesh" type="MeshInstance3D"]
+visible = false
+layers = 8
+material_override = ExtResource("1_5dpo5")
+script = ExtResource("1_3piba")

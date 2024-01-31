@@ -170,12 +170,14 @@ _TurnCounter = NodePath("../../../../Services/TurnCounter")
 _PhaseManager = NodePath("../../BattlePhaseManager")
 _ArenaStateMachine = NodePath("../../..")
 
-[node name="CleanUp" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_PlayerUnitTurnService", "_EnemyUnitTurnService", "_OutcomeService")]
+[node name="CleanUp" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_PlayerUnitTurnService", "_EnemyUnitTurnService", "_OutcomeService", "_Arena", "_ActionService")]
 script = ExtResource("7_dwkpa")
 _PhaseManager = NodePath("../../BattlePhaseManager")
 _PlayerUnitTurnService = NodePath("../../../../Services/PlayerTurnUnitService")
 _EnemyUnitTurnService = NodePath("../../../../Services/EnemyTurnUnitService")
 _OutcomeService = NodePath("../../../../Services/ArenaOutcomeService")
+_Arena = NodePath("../../../..")
+_ActionService = NodePath("../../../../Services/ActionService")
 
 [node name="EnemyActivity" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_EnemyTurnService", "_BehindSpiritService")]
 script = ExtResource("8_om56i")

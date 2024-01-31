@@ -17,4 +17,9 @@ namespace ShopIsDone.Core
     {
         Command UpdateOnAction();
     }
+
+    public interface IOnCleanupComponent : IComponent
+    {
+        Command OnCleanup();
+    }
 }

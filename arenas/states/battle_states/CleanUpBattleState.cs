@@ -3,6 +3,10 @@ using Godot;
 using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.Utils.Commands;
 using Godot.Collections;
+using System.Linq;
+using ShopIsDone.Core;
+using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Actions;
 
 namespace ShopIsDone.Arenas.Battles.States
 {
@@ -19,6 +23,12 @@ namespace ShopIsDone.Arenas.Battles.States
 
         [Export]
         private ArenaOutcomeService _OutcomeService;
+
+        [Export]
+        private Arena _Arena;
+
+        [Export]
+        private ActionService _ActionService;
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
@@ -42,7 +52,19 @@ namespace ShopIsDone.Arenas.Battles.States
                     new ActionCommand(_OutcomeService.AdvanceToVictoryPhase),
                     // Otherwise, kick off the next turn
                     new ActionCommand(_PhaseManager.AdvanceToNextPhase)
-                )
+                ),
+                // Clean up for all entities
+                new SeriesCommand(
+                    GetTree()
+                        .GetNodesInGroup("entities")
+                        .OfType<LevelEntity>()
+                        .Where(e => e.IsGreaterThan(_Arena))
+                        .Select(e => e.OnCleanUp())
+                        .ToArray()
+                ),
+                new WaitIdleFrameCommand(this),
+                // Update arena
+                _ActionService.PostActionUpdate()
             ).Execute();
         }
     }

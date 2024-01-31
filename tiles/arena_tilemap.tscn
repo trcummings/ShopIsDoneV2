@@ -2,7 +2,7 @@
 
 [ext_resource type="MeshLibrary" uid="uid://bwefv47l4buq4" path="res://tiles/arena_tiles.meshlib" id="1_khmpn"]
 
-[node name="TileManager" type="GridMap"]
+[node name="ArenaTilemap" type="GridMap"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -0.99, 2.08165e-12)
 mesh_library = ExtResource("1_khmpn")
 collision_layer = 0
