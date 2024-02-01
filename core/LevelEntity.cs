@@ -191,6 +191,16 @@ namespace ShopIsDone.Core
             );
         }
 
+        public virtual Command OnCleanUp()
+        {
+            return new SeriesCommand(
+                _Components
+                    .OfType<IOnCleanupComponent>()
+                    .Select(c => new DeferredCommand(c.OnCleanup))
+                    .ToArray()
+            );
+        }
+
         // In arena / available
         private SystemCollections.List<IEntityActiveHandler> _ActiveHandlers;
         public virtual bool IsInArena()

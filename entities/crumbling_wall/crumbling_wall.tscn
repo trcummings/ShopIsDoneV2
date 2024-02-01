@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://gsbjma62xq0a"]
+
+[ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_wgr67"]
+[ext_resource type="Script" path="res://entities/crumbling_wall/CrumblingObstacle.cs" id="2_uavbw"]
+[ext_resource type="PackedScene" uid="uid://c8dy2dx2jjaya" path="res://entities/crumbling_wall/crumbling_wall.gltf" id="3_cbgul"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8gqf5"]
+size = Vector3(2.01318, 2.00488, 0.522339)
+
+[node name="CrumblingWall" instance=ExtResource("1_wgr67")]
+collision_layer = 9
+collision_mask = 0
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+Id = "crumbling_wall"
+
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00170898, 0.996582, -0.00860596)
+shape = SubResource("BoxShape3D_8gqf5")
+
+[node name="CrumblingObstacle" type="Node" parent="." index="3" node_paths=PackedStringArray("_Collider", "_AnimPlayer")]
+script = ExtResource("2_uavbw")
+_Collider = NodePath("../CollisionShape")
+_AnimPlayer = NodePath("../crumbling_wall/AnimationPlayer")
+
+[node name="crumbling_wall" parent="." index="4" instance=ExtResource("3_cbgul")]
+
+[node name="AnimationPlayer" parent="crumbling_wall" index="1"]
+autoplay = "default"
+speed_scale = 2.0
+
+[editable path="crumbling_wall"]

@@ -17,5 +17,6 @@
     <Folder Include="actors\interactables\interactions\" />
     <Folder Include="arenas\meddling\" />
     <Folder Include="lighting\silhouettes\" />
+    <Folder Include="entities\crumbling_obstacle\" />
   </ItemGroup>
 </Project>

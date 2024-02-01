@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://vl8fwugptaiu"]
+
+[ext_resource type="Material" uid="uid://sa6db0vykkm6" path="res://Materials/greybox_materials/placeholder.material" id="1_3aati"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c1d6l"]
+size = Vector3(2, 2, 2)
+
+[node name="GreyboxObstacle" type="StaticBody3D"]
+collision_layer = 9
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
+shape = SubResource("BoxShape3D_c1d6l")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
+size = Vector3(2, 2, 2)
+material = ExtResource("1_3aati")

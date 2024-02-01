@@ -25,14 +25,12 @@ namespace ShopIsDone.Utils.Commands
             _DeferredCommand = DeferredCommandFunc.Invoke();
 
             // Execute the deferred command
-            _DeferredCommand.Finished += OnDeferredCommandFinished;
+            _DeferredCommand.Connect(
+                nameof(_DeferredCommand.Finished),
+                Callable.From(Finish),
+                (uint)ConnectFlags.OneShot
+            );
             _DeferredCommand.Execute();
-        }
-
-        private void OnDeferredCommandFinished()
-        {
-            _DeferredCommand.Finished -= OnDeferredCommandFinished;
-            Finish();
         }
 
         public static Command DeferredSeries(params Command[] commands)
