@@ -244,15 +244,6 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0210876, 2.2666, 0.0388794)
 shape = SubResource("BoxShape3D_au8jt")
 
-[node name="Camera" parent="World/GridSubViewport/Pivot" index="0"]
-transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
-
-[node name="Camera" parent="World/LightSubViewport/Pivot" index="0"]
-transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
-
-[node name="Camera" parent="World/WidgetsSubViewport/Pivot" index="0"]
-transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
-
 [node name="LevelSelect" parent="UILayer" index="0" instance=ExtResource("14_rbd72")]
 layer = 70
 visible = false

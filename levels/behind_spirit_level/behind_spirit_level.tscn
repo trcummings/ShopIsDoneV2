@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d4nepq7sgff1e"]
+[gd_scene load_steps=18 format=3 uid="uid://d4nepq7sgff1e"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_o4eht"]
 [ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="2_l7xxw"]
@@ -7,14 +7,18 @@
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="3_24lob"]
 [ext_resource type="PackedScene" uid="uid://vl8fwugptaiu" path="res://props/greybox_obstacle.tscn" id="4_ee6df"]
 [ext_resource type="Script" path="res://conditions/Condition.cs" id="4_hpll3"]
+[ext_resource type="PackedScene" uid="uid://b7n2nvaxotrvp" path="res://actors/ricky_actor.tscn" id="4_tyy6j"]
 [ext_resource type="PackedScene" uid="uid://jkux55wmccut" path="res://entities/rotator_tile/rotator_tile.tscn" id="7_o43nq"]
+[ext_resource type="PackedScene" uid="uid://b4ioplxcvprpo" path="res://entities/behind_spirit/behind_spirit.tscn" id="8_43qkk"]
 [ext_resource type="Material" uid="uid://c0krox5teicdh" path="res://Materials/greybox_materials/greybox_floor.material" id="8_bbwlg"]
 [ext_resource type="PackedScene" uid="uid://co5soj88cs137" path="res://lighting/light_volume_mesh.tscn" id="9_vspky"]
 [ext_resource type="PackedScene" uid="uid://gsbjma62xq0a" path="res://entities/crumbling_wall/crumbling_wall.tscn" id="10_8dl5n"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_mwo67"]
-vertices = PackedVector3Array(2, 0.5, -2.5, 2, 0.5, -5.5, 1.5, 0.5, -5.75, -0.5, 0.5, -2.25, -0.5, 0.5, -2.25, -3.75, 0.5, -5.5, -5.5, 0.5, -5.5, -5.5, 0.5, 2.5, -0.5, 0.5, 2.5, 1.5, 0.5, -5.75, 1.5, 0.5, -7.5, -3.5, 0.5, -7.5, -3.75, 0.5, -5.5, -0.5, 0.5, -2.25, 2, 0.5, -5.5, 2, 0.5, -2.5, 2.75, 0.5, -2.25, 5.5, 0.5, -5.5, 2.75, 0.5, -2.25, 2.75, 0.5, 2.75, 5.5, 0.5, 3, 5.5, 0.5, -5.5, 0.5, 2.5, -1.5, 0.5, 2.5, 3.5, 1.5, 2.5, 3.5, 1.5, 2.5, -1.5, 0.75, 0.5, -1.25, 0.75, 0.5, -0.5, 1.5, 0.5, -0.5, 1.5, 0.5, -1.25, 0.75, 0.5, 0.75, 0.75, 0.5, 1.5, 1.5, 0.5, 1.5, 1.5, 0.5, 0.75, 5.5, 0.5, 3, 2.75, 0.5, 2.75, 2.75, 0.5, 4.25, 5.5, 0.5, 3, 2.75, 0.5, 4.25, 2.25, 0.5, 4.75, 5.5, 0.5, 15.5, -0.25, 0.5, 4.75, -0.5, 0.5, 2.5, -5.5, 0.5, 2.5, -5.5, 0.5, 15.5, 5.5, 0.5, 15.5, 2.25, 0.5, 4.75, -0.25, 0.5, 4.75, -5.5, 0.5, 15.5, 0.75, 0.5, 2.75, 0.75, 0.5, 3.5, 1.5, 0.5, 3.5, 1.5, 0.5, 2.75)
-polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 8), PackedInt32Array(6, 8, 7), PackedInt32Array(9, 13, 10), PackedInt32Array(10, 13, 12), PackedInt32Array(10, 12, 11), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 17), PackedInt32Array(19, 18, 20), PackedInt32Array(20, 18, 21), PackedInt32Array(25, 24, 22), PackedInt32Array(22, 24, 23), PackedInt32Array(29, 28, 26), PackedInt32Array(26, 28, 27), PackedInt32Array(33, 32, 30), PackedInt32Array(30, 32, 31), PackedInt32Array(36, 35, 34), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 40), PackedInt32Array(42, 41, 43), PackedInt32Array(43, 41, 44), PackedInt32Array(46, 45, 47), PackedInt32Array(47, 45, 48), PackedInt32Array(52, 51, 49), PackedInt32Array(49, 51, 50)]
+vertices = PackedVector3Array(-0.5, 0.5, -2.25, 1, 0.5, -2.5, 1, 0.5, -19.5, -19.5, 0.5, -19.5, -19.5, 0.5, -0.25, -19.5, 0.5, -0.25, -0.5, 0.5, -0.25, -0.5, 0.5, -2.25, 2.5, 0.5, -2.5, 2.75, 0.5, -0.75, 19.5, 0.5, -1, 19.5, 0.5, -19.5, 1, 0.5, -19.5, 1, 0.5, -19.5, 1, 0.5, -2.5, 2.5, 0.5, -2.5, 0.5, 2.5, -1.5, 0.5, 2.5, 3.75, 1.75, 2.5, 3.75, 1.75, 2.5, -1.5, 0.75, 0.5, -1.25, 0.75, 0.5, -0.5, 1.5, 0.5, -0.5, 1.5, 0.5, -1.25, 2.75, 0.5, -0.75, 2.75, 0.5, 2.75, 19.5, 0.5, 3, 19.5, 0.5, -1, -19.5, 0.5, 2.5, -0.5, 0.5, 2.5, -0.5, 0.5, -0.25, -19.5, 0.5, -0.25, 0.75, 0.5, 0.75, 0.75, 0.5, 1.5, 1.5, 0.5, 1.5, 1.5, 0.5, 0.75, 1, 0.5, 19.5, 1, 0.5, 4.75, -0.5, 0.5, 4.5, -19.5, 0.5, 2.5, -19.5, 0.5, 19.5, -0.5, 0.5, 4.5, -0.5, 0.5, 2.5, -19.5, 0.5, 2.5, 0.75, 0.5, 2.75, 0.75, 0.5, 3.5, 1.5, 0.5, 3.5, 1.5, 0.5, 2.75, 2.25, 0.5, 4.75, 1, 0.5, 4.75, 1, 0.5, 19.5, 2.75, 0.5, 4.25, 2.25, 0.5, 4.75, 1, 0.5, 19.5, 19.5, 0.5, 19.5, 19.5, 0.5, 3, 19.5, 0.5, 3, 2.75, 0.5, 2.75, 2.75, 0.5, 4.25)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(7, 6, 5), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 12), PackedInt32Array(15, 14, 13), PackedInt32Array(19, 18, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(23, 22, 20), PackedInt32Array(20, 22, 21), PackedInt32Array(24, 27, 25), PackedInt32Array(25, 27, 26), PackedInt32Array(31, 30, 28), PackedInt32Array(28, 30, 29), PackedInt32Array(35, 34, 32), PackedInt32Array(32, 34, 33), PackedInt32Array(37, 36, 38), PackedInt32Array(38, 36, 40), PackedInt32Array(38, 40, 39), PackedInt32Array(43, 42, 41), PackedInt32Array(47, 46, 44), PackedInt32Array(44, 46, 45), PackedInt32Array(50, 49, 48), PackedInt32Array(52, 51, 53), PackedInt32Array(53, 51, 54), PackedInt32Array(54, 51, 55), PackedInt32Array(58, 57, 56)]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 4294901761
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j52fl"]
 size = Vector3(6, 1, 1)
@@ -27,11 +31,12 @@ orientation = 1
 
 [node name="Level" instance=ExtResource("1_o4eht")]
 
-[node name="WorldEnvironment" parent="." index="0"]
+[node name="WorldEnvironment" parent="." index="1"]
 environment = ExtResource("2_lxc5q")
 
 [node name="PlayerCharacterManager" parent="World" index="2"]
 _LeaderScene = ExtResource("2_l7xxw")
+_FollowerScenes = [ExtResource("4_tyy6j")]
 
 [node name="NavigationRegion3D" parent="World" index="3"]
 navigation_mesh = SubResource("NavigationMesh_mwo67")
@@ -41,6 +46,10 @@ _PlayerCharacterManager = NodePath("../../../PlayerCharacterManager")
 
 [node name="Node" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ConditionsService" index="0"]
 script = ExtResource("4_hpll3")
+
+[node name="BehindSpiritService" parent="World/NavigationRegion3D/Environment/Arena/Services" index="14" node_paths=PackedStringArray("_BehindSpirit")]
+IsActive = true
+_BehindSpirit = NodePath("../../Entities/BehindSpirit")
 
 [node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../../ArenaTilemap")
@@ -53,15 +62,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.176804, 0.5, 0)
 shape = SubResource("BoxShape3D_j52fl")
 
 [node name="CrumblingWall" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="0" instance=ExtResource("10_8dl5n")]
-transform = Transform3D(1, -3.48787e-16, 0, 3.48787e-16, 1, -3.48787e-16, 1.21652e-31, 3.48787e-16, 1, -3, 0, -1)
+transform = Transform3D(1.19249e-08, -3.48787e-16, -1, 3.48787e-16, 1, -3.48787e-16, 1, -3.48787e-16, 1.19249e-08, -3, 0, -1)
+EditorFacingDir = 2
 
 [node name="CrumblingWall2" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="1" instance=ExtResource("10_8dl5n")]
-transform = Transform3D(1, -3.48787e-16, 0, 3.48787e-16, 1, -3.48787e-16, 1.21652e-31, 3.48787e-16, 1, -3, 2.08165e-12, 1)
+transform = Transform3D(1.19249e-08, -3.48787e-16, -1, 3.48787e-16, 1, -3.48787e-16, 1, -3.48787e-16, 1.19249e-08, -3, 2.08165e-12, 1)
 Id = "crumbling_wall_1"
+EditorFacingDir = 2
 
 [node name="RotatorTile" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="2" instance=ExtResource("7_o43nq")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, -5)
 EditorFacingDir = 3
+
+[node name="BehindSpirit" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="3" instance=ExtResource("8_43qkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.97294, 0, 0)
 
 [node name="ArenaTilemap" parent="World/NavigationRegion3D/Environment" index="1" instance=ExtResource("3_24lob")]
 data = {
@@ -93,15 +107,6 @@ mesh = SubResource("BoxMesh_2ro4w")
 [node name="DefaultSpawnPoint" parent="World" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.08165e-12, -7)
 EditorFacingDir = 1
-
-[node name="Camera" parent="World/GridSubViewport/Pivot" index="0"]
-transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
-
-[node name="Camera" parent="World/LightSubViewport/Pivot" index="0"]
-transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
-
-[node name="Camera" parent="World/WidgetsSubViewport/Pivot" index="0"]
-transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="8"]
 transform = Transform3D(0.866025, 0.5, 2.18557e-08, 0, -4.37114e-08, 1, 0.5, -0.866025, -3.78552e-08, 0, 4, 0)
