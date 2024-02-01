@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 namespace ShopIsDone.Interactables
 {
@@ -16,6 +17,9 @@ namespace ShopIsDone.Interactables
         [Export]
         private Area3D _InteractableDetector;
 
+        [Export]
+        private RayCast3D _WallRaycast;
+
         private Interactable _CurrentInteractable;
         private Callable _BeginInteraction;
         private Callable _FinishInteraction;
@@ -30,10 +34,6 @@ namespace ShopIsDone.Interactables
 
             // Initially deactivate
             Deactivate();
-
-            // Connect to detector events
-            _InteractableDetector.AreaEntered += OnInteractableEntered;
-            _InteractableDetector.AreaExited += OnInteractableExited;
         }
 
         public void Interact()
@@ -57,33 +57,43 @@ namespace ShopIsDone.Interactables
 
         public void Activate()
         {
+            _WallRaycast.Enabled = true;
             _InteractableDetector.SetDeferred("monitoring", true);
+            SetPhysicsProcess(true);
+            _CurrentInteractable?.Hover();
         }
 
         public void Deactivate()
         {
+            _WallRaycast.Enabled = false;
             _InteractableDetector.SetDeferred("monitoring", false);
+            SetPhysicsProcess(false);
+            _CurrentInteractable?.Unhover();
         }
 
-        private void OnInteractableEntered(Area3D body)
+        public override void _PhysicsProcess(double _)
         {
-            if (body is Interactable interactable)
+            // Null out interactable if colliding
+            if (_WallRaycast.IsColliding() && _CurrentInteractable != null)
             {
-                // Set current interactable
-                _CurrentInteractable = interactable;
-                // Hover interactable
-                interactable.Hover();
+                _CurrentInteractable.Unhover();
+                _CurrentInteractable = null;
             }
-        }
 
-        private void OnInteractableExited(Area3D body)
-        {
-            if (body is Interactable interactable)
+            // Get the overlapping interactable
+            var interactable = _InteractableDetector
+                .GetOverlappingAreas()
+                .OfType<Interactable>()
+                .FirstOrDefault();
+
+            // If we have an interactable, set the interactable
+            if (interactable != null)
             {
-                // If our current interactable exited, null it out
-                if (_CurrentInteractable == interactable) _CurrentInteractable = null;
-                // Unhover the interactable
-                interactable.Unhover();
+                // Could be null, so null check the function call
+                _CurrentInteractable?.Unhover();
+                // Set and hover
+                _CurrentInteractable = interactable;
+                _CurrentInteractable.Hover();
             }
         }
     }
