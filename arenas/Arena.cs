@@ -74,7 +74,7 @@ namespace ShopIsDone.Arenas
             var allEntities = GetTree()
                 .GetNodesInGroup("entities")
                 .OfType<LevelEntity>()
-                .Where(e => e.IsGreaterThan(this));
+                .Where(IsAncestorOf);
             foreach (var entity in allEntities) entity.Init();
 
             // Update all tiles
