@@ -77,8 +77,12 @@ namespace ShopIsDone.Core
         private DirEnum.Dir EditorFacingDir
         {
             get { return DirEnum.VectorToDir(FacingDirection); }
-            set { FacingDirection = DirEnum.DirToVector(value); }
+            set {
+                _EditorFacingDir = DirEnum.DirToVector(value);
+                FacingDirection = DirEnum.DirToVector(value);
+            }
         }
+        private Vector3 _EditorFacingDir = Vector3.Forward;
         #endregion
 
         public Vector3 FacingDirection
@@ -123,6 +127,7 @@ namespace ShopIsDone.Core
             base._Ready();
             _TilemapPositionHandler = GetNode<TilemapPositionHandler>(_TilemapPositionHandlerPath);
             _FacingDirectionHandler = GetNode<FacingDirectionHandler>(_FacingDirectionHandlerPath);
+            _FacingDirectionHandler.FacingDirection = _EditorFacingDir;
 
             // Connect to enabled/disabled hooks
             EntityEnabled += OnEnabled;

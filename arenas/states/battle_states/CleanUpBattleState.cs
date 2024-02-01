@@ -58,7 +58,7 @@ namespace ShopIsDone.Arenas.Battles.States
                     GetTree()
                         .GetNodesInGroup("entities")
                         .OfType<LevelEntity>()
-                        .Where(e => e.IsGreaterThan(_Arena))
+                        .Where(_Arena.IsAncestorOf)
                         .Select(e => e.OnCleanUp())
                         .ToArray()
                 ),

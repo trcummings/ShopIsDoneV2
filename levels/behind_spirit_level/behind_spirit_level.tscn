@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d4nepq7sgff1e"]
+[gd_scene load_steps=16 format=3 uid="uid://d4nepq7sgff1e"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_o4eht"]
 [ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="2_l7xxw"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="3_24lob"]
 [ext_resource type="PackedScene" uid="uid://vl8fwugptaiu" path="res://props/greybox_obstacle.tscn" id="4_ee6df"]
 [ext_resource type="Script" path="res://conditions/Condition.cs" id="4_hpll3"]
+[ext_resource type="PackedScene" uid="uid://jkux55wmccut" path="res://entities/rotator_tile/rotator_tile.tscn" id="7_o43nq"]
 [ext_resource type="Material" uid="uid://c0krox5teicdh" path="res://Materials/greybox_materials/greybox_floor.material" id="8_bbwlg"]
 [ext_resource type="PackedScene" uid="uid://co5soj88cs137" path="res://lighting/light_volume_mesh.tscn" id="9_vspky"]
 [ext_resource type="PackedScene" uid="uid://gsbjma62xq0a" path="res://entities/crumbling_wall/crumbling_wall.tscn" id="10_8dl5n"]
@@ -51,6 +52,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -7)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.176804, 0.5, 0)
 shape = SubResource("BoxShape3D_j52fl")
 
+[node name="CrumblingWall" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="0" instance=ExtResource("10_8dl5n")]
+transform = Transform3D(1, -3.48787e-16, 0, 3.48787e-16, 1, -3.48787e-16, 1.21652e-31, 3.48787e-16, 1, -3, 0, -1)
+
+[node name="CrumblingWall2" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="1" instance=ExtResource("10_8dl5n")]
+transform = Transform3D(1, -3.48787e-16, 0, 3.48787e-16, 1, -3.48787e-16, 1.21652e-31, 3.48787e-16, 1, -3, 2.08165e-12, 1)
+Id = "crumbling_wall_1"
+
+[node name="RotatorTile" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="2" instance=ExtResource("7_o43nq")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, -5)
+EditorFacingDir = 3
+
 [node name="ArenaTilemap" parent="World/NavigationRegion3D/Environment" index="1" instance=ExtResource("3_24lob")]
 data = {
 "cells": PackedInt32Array(0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 65535, 6, 0, 65535, 5, 0, 65535, 4, 0, 65535, 3, 0, 65535, 2, 0, 65535, 1, 0, 65535, 65534, 0, 65535, 65535, 0, 65535, 0, 0, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 0, 65534, 5, 0, 65534, 6, 0, 1, 6, 0, 1, 5, 0, 1, 4, 0, 1, 3, 0, 1, 2, 0, 1, 1, 0, 1, 0, 0, 1, 65535, 0, 1, 65534, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 0, 65533, 5, 0, 65533, 6, 0, 1, 7, 0, 0, 7, 0, 65535, 7, 0, 65534, 7, 0, 65533, 7, 0, 65533, 65533, 0, 65534, 65533, 0, 65535, 65533, 0, 0, 65533, 0, 1, 65533, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 65535, 65532, 1, 0, 65532, 1, 65534, 65532, 1)
@@ -78,16 +90,18 @@ metadata/_edit_group_ = true
 transform = Transform3D(12.9, 0, 0, 0, 12.9, 0, 0, 0, 27.09, 0, -1, 2)
 mesh = SubResource("BoxMesh_2ro4w")
 
-[node name="CrumblingWall" parent="World/NavigationRegion3D/Environment" index="7" instance=ExtResource("10_8dl5n")]
-transform = Transform3D(-4.37114e-08, 3.48787e-16, 1, 3.48787e-16, 1, -3.48787e-16, -1, 3.48787e-16, -4.37114e-08, -3, 0, -1)
-
-[node name="CrumblingWall2" parent="World/NavigationRegion3D/Environment" index="8" instance=ExtResource("10_8dl5n")]
-transform = Transform3D(-4.37114e-08, 3.48787e-16, 1, 3.48787e-16, 1, -3.48787e-16, -1, 3.48787e-16, -4.37114e-08, -3, 2.08165e-12, 1)
-Id = "crumbling_wall_1"
-
 [node name="DefaultSpawnPoint" parent="World" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.08165e-12, -7)
 EditorFacingDir = 1
+
+[node name="Camera" parent="World/GridSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/LightSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/WidgetsSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="8"]
 transform = Transform3D(0.866025, 0.5, 2.18557e-08, 0, -4.37114e-08, 1, 0.5, -0.866025, -3.78552e-08, 0, 4, 0)

@@ -41,9 +41,6 @@ shader_parameter/grain_tex = SubResource("NoiseTexture2D_v2388")
 [node name="WorldEnvironment" parent="." index="0"]
 environment = ExtResource("2_2x2uj")
 
-[node name="IsometricCamera" parent="World" index="1"]
-transform = Transform3D(0.707107, -0.353553, 0.612372, 3.02058e-16, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 0, 0, 0)
-
 [node name="PlayerCharacterManager" parent="World" index="2"]
 _LeaderScene = ExtResource("3_xxrhr")
 _FollowerScenes = [ExtResource("4_qbaqy")]
@@ -91,7 +88,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
 shape = SubResource("BoxShape3D_b3qhi")
 
 [node name="Customer" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="0" instance=ExtResource("7_xooi4")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3, 0, -3)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3, 0, -3)
+EditorFacingDir = 3
 
 [node name="VegetableFridge" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="1" instance=ExtResource("8_5fhod")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 7)
@@ -112,13 +110,13 @@ light_energy = 0.089
 light_cull_mask = 4294967039
 
 [node name="Camera" parent="World/GridSubViewport/Pivot" index="0"]
-transform = Transform3D(0.707107, -0.353553, 0.612373, 3.02058e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
 [node name="Camera" parent="World/LightSubViewport/Pivot" index="0"]
-transform = Transform3D(0.707107, -0.353553, 0.612373, 3.02058e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
 [node name="Camera" parent="World/WidgetsSubViewport/Pivot" index="0"]
-transform = Transform3D(0.707107, -0.353553, 0.612373, 3.02058e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
 [node name="Lights" type="Node3D" parent="World" index="9"]
 
