@@ -41,70 +41,16 @@ namespace ShopIsDone.Arenas.Battles.States
             // Refill enemy AP
             _EnemyTurnService.RefillApToMax();
 
-            // Reset AI
-            _EnemyTurnService.ResetAI();
-
             // Resolve status effects
             //_EnemyTurnSystem.ResolveStatusEffects();
 
-            // Clear state
-            _Customers.Clear();
-            _CurrentCustomer = null;
-
-            // Set the units as a queue
-            _Customers = new SystemGenerics.Queue<ActionPlanner>(
-                _EnemyTurnService.GetAllUnitAI()
+            // Run enemy AI
+            _EnemyTurnService.Connect(
+                nameof(_EnemyTurnService.FinishedRunningAI),
+                new Callable(_PhaseManager, nameof(_PhaseManager.AdvanceToNextPhase)),
+                (uint)ConnectFlags.OneShot
             );
-
-            // Run the queue
-            RunQueue();
-        }
-
-        private bool CurrentCustomerCanStillAct()
-        {
-            return
-                _CurrentCustomer != null &&
-                _CurrentCustomer.Entity.IsActive() &&
-                _CurrentCustomer.CanStillAct();
-        }
-
-        private void RunQueue()
-        {
-            // Only run the queue if this state has been initialized
-            if (!HasBeenInitialized) return;
-
-            // As long as there's still customers that can act, run the queue
-            if (_Customers.Count > 0 || CurrentCustomerCanStillAct())
-            {
-                // Have each unit Think at the beginning of each action loop
-                foreach (var customer in _Customers) customer.Think();
-
-                // Set current customer at beginning of while loop
-                if (_CurrentCustomer == null) _CurrentCustomer = _Customers.Dequeue();
-
-                // If our current customer can still act, then act
-                if (CurrentCustomerCanStillAct())
-                {
-                    // One shot connection to finish action execution
-                    var command = _CurrentCustomer.Act();
-                    command.Connect(
-                        nameof(command.Finished),
-                        new Callable(this, nameof(RunQueue)),
-                        (uint)ConnectFlags.OneShot
-                    );
-                    command.Execute();
-
-                    return;
-                }
-                // Otherwise, null out the current customer and loop
-                else
-                {
-                    _CurrentCustomer = null;
-                    RunQueue();
-                }
-            }
-            // Otherwise, end the turn
-            else _PhaseManager.AdvanceToNextPhase();
+            _EnemyTurnService.RunAI();
         }
     }
 }
