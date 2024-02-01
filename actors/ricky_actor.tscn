@@ -120,13 +120,28 @@ one_shot = true
 [node name="ActorVelocity" type="Node" parent="."]
 script = ExtResource("4")
 
-[node name="InteractableHandler" type="Node" parent="." node_paths=PackedStringArray("_InteractableDetector")]
+[node name="InteractableHandler" type="Node" parent="." node_paths=PackedStringArray("_InteractableDetector", "_WallRaycast")]
 script = ExtResource("11_pa4dk")
-_InteractableDetector = NodePath("../ActorFloorIndicator/Pivot/InteractableDetector")
+_InteractableDetector = NodePath("../InteractableDetector")
+_WallRaycast = NodePath("../InteractableWallRaycast")
+
+[node name="InteractableDetector" parent="." instance=ExtResource("13_s3bqk")]
+
+[node name="InteractableWallRaycast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.5, 2.08165e-12)
+target_position = Vector3(2.08165e-12, 2.08165e-12, -2)
 
 [node name="ActorFloorIndicator" parent="." instance=ExtResource("10_q8dat")]
 
-[node name="InteractableDetector" parent="ActorFloorIndicator/Pivot" index="1" instance=ExtResource("13_s3bqk")]
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="ActorFloorIndicator/Pivot" index="1"]
+remote_path = NodePath("../../../InteractableWallRaycast")
+update_position = false
+update_scale = false
+
+[node name="RemoteTransform3D2" type="RemoteTransform3D" parent="ActorFloorIndicator/Pivot" index="2"]
+remote_path = NodePath("../../../InteractableDetector")
+update_position = false
+update_scale = false
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 target_desired_distance = 2.0
