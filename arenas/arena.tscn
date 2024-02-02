@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=64 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -38,6 +38,7 @@
 [ext_resource type="Script" path="res://entities/parallel_hunter/ParallelHunterService.cs" id="17_5uer7"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/RunningActionState.cs" id="19_3o4ep"]
 [ext_resource type="PackedScene" uid="uid://dkgbq0y5ahht5" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/menu_state.tscn" id="19_pommw"]
+[ext_resource type="Script" path="res://clown_timer/ClownTimer.cs" id="19_rppqo"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/MoreInfoState.cs" id="20_por72"]
 [ext_resource type="PackedScene" uid="uid://d4f3h0uwl480d" path="res://arenas/states/player_turn_states/choosing_action_states/facing_direction_state.tscn" id="20_ycbal"]
 [ext_resource type="PackedScene" uid="uid://dmawm142xfh0t" path="res://arenas/states/player_turn_states/choosing_action_states/move_state.tscn" id="21_6pg1j"]
@@ -55,6 +56,7 @@
 [ext_resource type="PackedScene" uid="uid://daffdkouahgqp" path="res://arenas/ui/player_unit/player_unit_ui.tscn" id="38_qf0ro"]
 [ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/options_menu.tscn" id="39_yls7l"]
 [ext_resource type="PackedScene" uid="uid://cvfjwqjfca0rm" path="res://arena_actions/effort_meter/effort_meter.tscn" id="40_ho46i"]
+[ext_resource type="PackedScene" uid="uid://cqq6dmqdsuqoe" path="res://clown_timer/clown_clock.tscn" id="57_n517i"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
@@ -67,6 +69,8 @@ bg_color = Color(0.298039, 0.298039, 0.298039, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uec0k"]
 bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t11pk"]
 
 [node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_PlayerUnitService") groups=["arena"]]
 script = ExtResource("1_loukv")
@@ -139,6 +143,15 @@ _ActionService = NodePath("../ActionService")
 
 [node name="ParallelHunterService" type="Node" parent="Services"]
 script = ExtResource("17_5uer7")
+
+[node name="ClownTimerService" type="Node" parent="Services" node_paths=PackedStringArray("_ActionService", "_PhaseManager", "_PlayerTurnState", "_PlayerTurnStateMachine", "_WhitelistedPlayerTurnStates")]
+script = ExtResource("19_rppqo")
+_IsActive = true
+_ActionService = NodePath("../ActionService")
+_PhaseManager = NodePath("../../ArenaStateMachine/Running/BattlePhaseManager")
+_PlayerTurnState = NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn")
+_PlayerTurnStateMachine = NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine")
+_WhitelistedPlayerTurnStates = [NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingUnit"), NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/EndingTurn"), NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction")]
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
@@ -574,3 +587,27 @@ grow_vertical = 2
 text = "Victory"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ClownTimerUIContainer" type="MarginContainer" parent="UILayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Panel" type="Panel" parent="UILayer/ClownTimerUIContainer"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxEmpty_t11pk")
+
+[node name="ClownClock" parent="UILayer/ClownTimerUIContainer/Panel" instance=ExtResource("57_n517i")]
+position = Vector2(150, 150)
+scale = Vector2(0.3, 0.3)
+
+[connection signal="ClownTimerUpdate" from="Services/ClownTimerService" to="UILayer/ClownTimerUIContainer/Panel/ClownClock" method="TickClock"]
