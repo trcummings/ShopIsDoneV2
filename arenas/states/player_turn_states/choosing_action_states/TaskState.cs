@@ -1,5 +1,6 @@
 ﻿using Godot;
 using Godot.Collections;
+using ShopIsDone.ArenaInteractions;
 using ShopIsDone.Tasks;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
@@ -21,6 +22,10 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         public override void OnExit(string nextState)
         {
+            // If next state is "Idle" then we probably got interrupted, reset
+            // the service
+            if (nextState == Consts.States.IDLE) _UnitTaskService.Reset();
+
             // Clean up unit interaction service
             _UnitTaskService.ConfirmedInteraction -= OnConfirmTask;
             _UnitTaskService.CanceledInteraction -= OnCancel;

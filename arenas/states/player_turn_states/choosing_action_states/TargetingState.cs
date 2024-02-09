@@ -249,6 +249,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Hide and reset widgets
             _TileCursor.Hide();
+            _TileCursor.MoveCursorTo(_InitialCursorTile);
             _TileIndicatorWidget.ClearIndicators();
 
             // Clear diff

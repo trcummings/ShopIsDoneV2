@@ -12,6 +12,7 @@ using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Arenas.UI;
 using ShopIsDone.Actions;
 using ShopIsDone.Utils;
+using ShopIsDone.Tiles.UI;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -39,7 +40,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         //private InteractableUIContainer _InteractableUIContainer;
 
-        //private TileUIContainer _TileUIContainer;
+        [Export]
+        private TileHoverUI _TileHoverUI;
 
         [Export]
         private Control _EndPlayerTurnWidget;
@@ -96,8 +98,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
             // Initialize PawnUIContainer with all units in the arena and show it
             _PawnUIContainer.Init(_PlayerUnitService.GetUnits());
-            //SelectTile(_LastSelectedTile);
             _PawnUIContainer.Show();
+            OnCursorHoveredTile(_LastSelectedTile);
 
             // Show the "End turn" UI
             _EndPlayerTurnWidget.Show();
@@ -237,11 +239,15 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // Hide player pawn UI
             _PawnUIContainer.Hide();
 
+            // Hide cursors
+            _TileCursor.Hide();
+            _FingerCursor.Hide();
+
             //    // Hide Interactable Container UI
             //    _InteractableUIContainer.Hide();
 
-            //    // Hide tile UI
-            //    _TileUIContainer.Hide();
+            // Hide tile UI
+            _TileHoverUI.Hide();
 
             //    // Hide and clear indicator widget
             //    _TileIndicatorWidget.ClearIndicators();
@@ -275,29 +281,33 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _LastSelectedTile = tile;
 
             // Select the tile to show information about that tile
-            //SelectTile(_LastSelectedTile);
+            SelectTile(_LastSelectedTile);
 
             // Emit signal
             EmitSignal(nameof(MovedCursor));
         }
 
-        //private void SelectTile(Tile tile)
-        //{
-        //    // If tile is not lit, we can't get more info about it, so hide/show
-        //    var lightDetector = tile.GetComponent<LightDetectorComponent>();
-        //    if (lightDetector.IsLit()) _MoreInfoUI.Show();
-        //    else _MoreInfoUI.Hide();
+        private void SelectTile(Tile tile)
+        {
+            // Handle tile
+            if (!_TileHoverUI.Visible) _TileHoverUI.Show();
+            _TileHoverUI.SelectTile(tile);
 
-        //    // Select Player Pawn UI if there's an active unit on the tile
-        //    _PawnUIContainer.SelectPawnElement(GetActiveUnitOnTile(tile));
+            //    // If tile is not lit, we can't get more info about it, so hide/show
+            //    var lightDetector = tile.GetComponent<LightDetectorComponent>();
+            //    if (lightDetector.IsLit()) _MoreInfoUI.Show();
+            //    else _MoreInfoUI.Hide();
 
-        //    // Handle interactable hover case
-        //    SelectInteractable(tile);
+            //    // Select Player Pawn UI if there's an active unit on the tile
+            //    _PawnUIContainer.SelectPawnElement(GetActiveUnitOnTile(tile));
 
-        //    // Handle tile
-        //    if (!_TileUIContainer.Visible) _TileUIContainer.Show();
-        //    _TileUIContainer.SelectTile(tile);
-        //}
+            //    // Handle interactable hover case
+            //    SelectInteractable(tile);
+
+            //    // Handle tile
+            //    if (!_TileUIContainer.Visible) _TileUIContainer.Show();
+            //    _TileUIContainer.SelectTile(tile);
+        }
 
         private void OnAttemptedInvalidMove()
         {
@@ -463,4 +473,4 @@ namespace ShopIsDone.Arenas.PlayerTurn
         //        .ToList();
         //}
     }
-    }
+}

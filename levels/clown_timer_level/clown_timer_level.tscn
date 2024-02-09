@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bpflihl6nibp4"]
+[gd_scene load_steps=18 format=3 uid="uid://bpflihl6nibp4"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_57ms1"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_ok2ai"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://conditions/Condition.cs" id="6_wmv6b"]
 [ext_resource type="Script" path="res://levels/clown_timer_level/TestInterrupter.cs" id="7_w3am5"]
 [ext_resource type="PackedScene" uid="uid://jadfcxx6tjq6" path="res://levels/clown_timer_level/turn_interrupter.tscn" id="8_3qt66"]
+[ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="9_7y2sw"]
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="10_ejdgf"]
 [ext_resource type="PackedScene" uid="uid://vl8fwugptaiu" path="res://props/greybox_obstacle.tscn" id="11_es0k3"]
 [ext_resource type="Material" uid="uid://c0krox5teicdh" path="res://Materials/greybox_materials/greybox_floor.material" id="12_fbuyx"]
@@ -67,6 +68,10 @@ shape = SubResource("BoxShape3D_j52fl")
 
 [node name="TurnInterrupter" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="0" instance=ExtResource("8_3qt66")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 7)
+
+[node name="VegetableFridge" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="1" instance=ExtResource("9_7y2sw")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, -3)
+EditorFacingDir = 2
 
 [node name="ClownTimerUIContainer" parent="World/NavigationRegion3D/Environment/Arena/UILayer" index="7"]
 visible = true

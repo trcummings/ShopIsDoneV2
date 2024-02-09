@@ -9,6 +9,7 @@ using ShopIsDone.Utils.DependencyInjection;
 using ActionConsts = ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Consts;
 using ShopIsDone.Arenas.PlayerTurn.ChoosingActions;
 using System.Linq;
+using ShopIsDone.Widgets;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -22,6 +23,13 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         [Inject]
         private TileManager _TileManager;
+
+        // Widgets
+        [Inject]
+        private FingerCursor _FingerCursor;
+
+        [Inject]
+        private TileCursor _TileCursor;
 
         // State Variables
         private LevelEntity _SelectedUnit;
@@ -56,6 +64,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _PlayerPawnUI.SelectPawnUI(true);
             _PlayerPawnUI.Show();
 
+            // Show cursors
+            _TileCursor.Show();
+            _FingerCursor.Show();
+
             // base start
             base.OnStart(message);
 
@@ -80,6 +92,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
             // Hide the Player Pawn UI
             _PlayerPawnUI.Hide();
+
+            // Hide cursors
+            _TileCursor.Hide();
+            _FingerCursor.Hide();
 
             base.OnExit(nextState);
         }

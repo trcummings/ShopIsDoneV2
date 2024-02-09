@@ -75,6 +75,7 @@ namespace ShopIsDone.Arenas.Battles.States
 
         public void Resume()
         {
+            // Resume previous state
             var (prevState, prevMessage) = _PlayerTurnStateMachine.GetLastStateProps();
             _PlayerTurnStateMachine.ChangeState(prevState, prevMessage);
         }

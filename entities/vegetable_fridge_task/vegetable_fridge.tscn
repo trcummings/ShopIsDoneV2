@@ -29,10 +29,14 @@ Id = "vegetable_fridge"
 EntityName = "Vegetable Fridge"
 
 [node name="CollisionShape" parent="." index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.35, 2.08165e-12)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 1, 1.35, 1.50996e-07)
 shape = SubResource("BoxShape3D_2nsqc")
 
+[node name="FacingDirectionHandler" parent="." index="1"]
+_UpdateFacingTarget = false
+
 [node name="TaskComponent" type="Node3D" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler", "_TaskCompletionHandler", "_ProgressBar3D", "_SelectTaskHandler")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 2.1684e-19, 4.16329e-12, -2.1684e-19)
 script = ExtResource("2_xwva2")
 TaskHealth = 2
 OperatorsAllowed = 2
@@ -77,12 +81,15 @@ MicrogameScene = ExtResource("4_ofh1b")
 _OutcomeHandlerPath = NodePath("../TaskComponent")
 
 [node name="VegetableFridgeModel" parent="." index="5" instance=ExtResource("7_8vs0j")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -1, 2.08165e-12, 2.08189e-12)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="VegetableFridgeModel" index="2"]
+[node name="CollisionRotator" type="RemoteTransform3D" parent="VegetableFridgeModel" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.35, 2.08165e-12)
 remote_path = NodePath("../../CollisionShape")
-use_global_coordinates = false
+
+[node name="TaskRotator" type="RemoteTransform3D" parent="VegetableFridgeModel" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+remote_path = NodePath("../../TaskComponent")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="VegetableFridgeModel" method="SetFacingDir"]
 [connection signal="TaskHealthDamaged" from="TaskComponent" to="TaskComponent/TaskDamagePlayer" method="play" unbinds=4]

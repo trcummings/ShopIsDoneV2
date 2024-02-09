@@ -21,6 +21,10 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         public override void OnExit(string nextState)
         {
+            // If next state is "Idle" then we probably got interrupted, reset
+            // the service
+            if (nextState == Consts.States.IDLE) _UnitInteractionService.Reset();
+
             // Clean up unit interaction service
             _UnitInteractionService.ConfirmedInteraction -= OnConfirmInteraction;
             _UnitInteractionService.CanceledInteraction -= OnCancel;
