@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://jadfcxx6tjq6"]
+
+[ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_en71m"]
+[ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="2_uy0ro"]
+[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="3_ati15"]
+[ext_resource type="PackedScene" uid="uid://bsxne3olmt1ol" path="res://action_points/null_action_point_handler.tscn" id="4_5sv02"]
+[ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="5_vgknu"]
+[ext_resource type="Texture2D" uid="uid://cyll45sq3k0kn" path="res://textures/test_character_portrait.png" id="6_5slyp"]
+[ext_resource type="Script" path="res://util/show_in_editor.gd" id="6_5upi6"]
+[ext_resource type="Resource" uid="uid://1mr50bjvhfxx" path="res://levels/clown_timer_level/test_interrupt_action.tres" id="6_bpm0x"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3bk4g"]
+
+[node name="TurnInterrupter" instance=ExtResource("1_en71m")]
+collision_layer = 0
+collision_mask = 0
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+Id = "turn_interrupter"
+
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.5, 2.08165e-12)
+shape = SubResource("BoxShape3D_3bk4g")
+
+[node name="StateHandler" type="Node" parent="." index="3" node_paths=PackedStringArray("InitialState")]
+script = ExtResource("2_uy0ro")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateHandler" index="0"]
+script = ExtResource("3_ati15")
+Id = "idle"
+
+[node name="NullActionPointHandler" parent="." index="4" instance=ExtResource("4_5sv02")]
+
+[node name="ActionHandler" type="Node" parent="." index="5" node_paths=PackedStringArray("_ActionPointHandler")]
+script = ExtResource("5_vgknu")
+Actions = [ExtResource("6_bpm0x")]
+_ActionPointHandler = NodePath("../NullActionPointHandler")
+
+[node name="Sprite3D" type="Sprite3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448031, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+alpha_cut = 1
+texture = ExtResource("6_5slyp")
+script = ExtResource("6_5upi6")

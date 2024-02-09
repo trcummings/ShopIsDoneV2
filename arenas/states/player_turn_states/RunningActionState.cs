@@ -48,7 +48,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _FingerCursor.Hide();
             _TileCursor.Hide();
 
-            // Execute action through PTM
+            // Execute action
             var command = _ActionService.ExecuteAction(action, message);
             command.CallDeferred(nameof(command.Execute));
             await ToSignal(command, nameof(command.Finished));
