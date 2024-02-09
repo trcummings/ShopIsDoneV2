@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8xyd8s0yod3u"]
+
+[ext_resource type="Script" path="res://tiles/tile_hover_ui/TileHoverUI.cs" id="1_17uux"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2_acxco"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="3_pciq0"]
+[ext_resource type="Texture2D" uid="uid://lcy8qojfo8xw" path="res://textures/EyeIcon/eye_icon.png" id="4_mndua"]
+
+[node name="TileHoverUI" type="Control"]
+custom_minimum_size = Vector2(225, 52)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 9
+mouse_filter = 2
+script = ExtResource("1_17uux")
+
+[node name="BorderedUIWindow" parent="." instance=ExtResource("2_acxco")]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="BorderedUIWindow"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BorderedUIWindow/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="BorderedUIWindow/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_pciq0")
+theme_type_variation = &"LabelDark"
+text = "Tile"
+
+[node name="TileCoordinates" type="Label" parent="BorderedUIWindow/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_pciq0")
+theme_type_variation = &"LabelDark"
+
+[node name="Spacer" type="Control" parent="BorderedUIWindow/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="EyeIconContainer" type="Control" parent="BorderedUIWindow/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="EyeIcon" type="Sprite2D" parent="BorderedUIWindow/MarginContainer/HBoxContainer/EyeIconContainer"]
+unique_name_in_owner = true
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("4_mndua")
+centered = false
+offset = Vector2(4, 8)
+hframes = 2

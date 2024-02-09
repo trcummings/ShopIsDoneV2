@@ -10,6 +10,9 @@ namespace ShopIsDone.Tiles
 	[Tool]
 	public partial class FacingDirectionHandler : NodeComponent
     {
+        [Export]
+        private bool _UpdateFacingTarget = true;
+
         [Signal]
         public delegate void FacingDirectionChangedEventHandler(Vector3 newDir);
 
@@ -42,15 +45,17 @@ namespace ShopIsDone.Tiles
             // Update the value
             _FacingDirection = dir;
 
-            // Rotate the facing target when the facing direction changes
-            if (FacingTarget == null) return;
+            // Emit the signal
+            EmitSignal(nameof(FacingDirectionChanged), dir);
+
+            // If no facing target, return early
+            if (FacingTarget == null || !_UpdateFacingTarget) return;
+
+            // Otherwise, rotate the facing target when the facing direction changes
             FacingTarget.GlobalRotation = FacingTarget.GlobalRotation with
             {
                 Y = Vec3.FacingDirToYRad(dir)
             };
-
-            // Emit the signal
-            EmitSignal(nameof(FacingDirectionChanged), dir);
         }
     }
 }

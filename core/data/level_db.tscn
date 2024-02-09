@@ -1,7 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmahkabaogex0"]
+[gd_scene load_steps=8 format=3 uid="uid://bmahkabaogex0"]
 
 [ext_resource type="Script" path="res://core/data/LevelDb.cs" id="1_qrhrn"]
 [ext_resource type="Script" path="res://core/data/LevelDbItem.cs" id="2_ppeyr"]
+
+[sub_resource type="Resource" id="Resource_ht0rr"]
+script = ExtResource("2_ppeyr")
+Id = "behind_spirit_level"
+Label = "Behind Spirit Level"
+LevelScenePath = "res://levels/behind_spirit_level/behind_spirit_level.tscn"
 
 [sub_resource type="Resource" id="Resource_sukpv"]
 script = ExtResource("2_ppeyr")
@@ -21,17 +27,18 @@ Id = "test_level_2"
 Label = "Test Level 2"
 LevelScenePath = "res://levels/test_level_2/test_level_2.tscn"
 
-[sub_resource type="Resource" id="Resource_ht0rr"]
+[sub_resource type="Resource" id="Resource_rhtnn"]
 script = ExtResource("2_ppeyr")
-Id = "behind_spirit_level"
-Label = "Behind Spirit Level"
-LevelScenePath = "res://levels/behind_spirit_level/behind_spirit_level.tscn"
+Id = "clown_timer_level"
+Label = "Clown Timer Level"
+LevelScenePath = "res://levels/clown_timer_level/clown_timer_level.tscn"
 
 [node name="LevelDb" type="Node"]
 script = ExtResource("1_qrhrn")
 Levels = {
 "behind_spirit_level": SubResource("Resource_ht0rr"),
 "break_room_level": SubResource("Resource_sukpv"),
+"clown_timer_level": SubResource("Resource_rhtnn"),
 "test_level_1": SubResource("Resource_jkuqg"),
 "test_level_2": SubResource("Resource_6k5gf")
 }

@@ -1,0 +1,125 @@
+[gd_scene load_steps=18 format=3 uid="uid://bpflihl6nibp4"]
+
+[ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_57ms1"]
+[ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_ok2ai"]
+[ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_81cu4"]
+[ext_resource type="PackedScene" uid="uid://b7n2nvaxotrvp" path="res://actors/ricky_actor.tscn" id="4_sp5hk"]
+[ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="5_8elnb"]
+[ext_resource type="Script" path="res://conditions/Condition.cs" id="6_wmv6b"]
+[ext_resource type="Script" path="res://levels/clown_timer_level/TestInterrupter.cs" id="7_w3am5"]
+[ext_resource type="PackedScene" uid="uid://jadfcxx6tjq6" path="res://levels/clown_timer_level/turn_interrupter.tscn" id="8_3qt66"]
+[ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="9_7y2sw"]
+[ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="10_ejdgf"]
+[ext_resource type="PackedScene" uid="uid://vl8fwugptaiu" path="res://props/greybox_obstacle.tscn" id="11_es0k3"]
+[ext_resource type="Material" uid="uid://c0krox5teicdh" path="res://Materials/greybox_materials/greybox_floor.material" id="12_fbuyx"]
+[ext_resource type="PackedScene" uid="uid://co5soj88cs137" path="res://lighting/light_volume_mesh.tscn" id="13_6enwr"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_mwo67"]
+vertices = PackedVector3Array(-0.5, 0.5, -2.25, 1, 0.5, -2.5, 1, 0.5, -19.5, -19.5, 0.5, -19.5, -19.5, 0.5, -0.25, -19.5, 0.5, -0.25, -0.5, 0.5, -0.25, -0.5, 0.5, -2.25, 2.5, 0.5, -2.5, 2.75, 0.5, -0.75, 19.5, 0.5, -1, 19.5, 0.5, -19.5, 1, 0.5, -19.5, 1, 0.5, -19.5, 1, 0.5, -2.5, 2.5, 0.5, -2.5, 0.5, 2.5, -1.5, 0.5, 2.5, 3.75, 1.75, 2.5, 3.75, 1.75, 2.5, -1.5, 0.75, 0.5, -1.25, 0.75, 0.5, -0.5, 1.5, 0.5, -0.5, 1.5, 0.5, -1.25, 2.75, 0.5, -0.75, 2.75, 0.5, 2.75, 19.5, 0.5, 3, 19.5, 0.5, -1, -19.5, 0.5, 2.5, -0.5, 0.5, 2.5, -0.5, 0.5, -0.25, -19.5, 0.5, -0.25, 0.75, 0.5, 0.75, 0.75, 0.5, 1.5, 1.5, 0.5, 1.5, 1.5, 0.5, 0.75, 1, 0.5, 19.5, 1, 0.5, 4.75, -0.5, 0.5, 4.5, -19.5, 0.5, 2.5, -19.5, 0.5, 19.5, -0.5, 0.5, 4.5, -0.5, 0.5, 2.5, -19.5, 0.5, 2.5, 0.75, 0.5, 2.75, 0.75, 0.5, 3.5, 1.5, 0.5, 3.5, 1.5, 0.5, 2.75, 2.25, 0.5, 4.75, 1, 0.5, 4.75, 1, 0.5, 19.5, 2.75, 0.5, 4.25, 2.25, 0.5, 4.75, 1, 0.5, 19.5, 19.5, 0.5, 19.5, 19.5, 0.5, 3, 19.5, 0.5, 3, 2.75, 0.5, 2.75, 2.75, 0.5, 4.25)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(7, 6, 5), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 12), PackedInt32Array(15, 14, 13), PackedInt32Array(19, 18, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(23, 22, 20), PackedInt32Array(20, 22, 21), PackedInt32Array(24, 27, 25), PackedInt32Array(25, 27, 26), PackedInt32Array(31, 30, 28), PackedInt32Array(28, 30, 29), PackedInt32Array(35, 34, 32), PackedInt32Array(32, 34, 33), PackedInt32Array(37, 36, 38), PackedInt32Array(38, 36, 40), PackedInt32Array(38, 40, 39), PackedInt32Array(43, 42, 41), PackedInt32Array(47, 46, 44), PackedInt32Array(44, 46, 45), PackedInt32Array(50, 49, 48), PackedInt32Array(52, 51, 53), PackedInt32Array(53, 51, 54), PackedInt32Array(54, 51, 55), PackedInt32Array(58, 57, 56)]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 4294901761
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j52fl"]
+size = Vector3(6, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_7xw71"]
+size = Vector2(40, 40)
+orientation = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_2ro4w"]
+
+[node name="Level" instance=ExtResource("1_57ms1")]
+
+[node name="WorldEnvironment" parent="." index="1"]
+environment = ExtResource("2_ok2ai")
+
+[node name="PlayerCharacterManager" parent="World" index="2"]
+_LeaderScene = ExtResource("3_81cu4")
+_FollowerScenes = [ExtResource("4_sp5hk")]
+
+[node name="NavigationRegion3D" parent="World" index="3"]
+navigation_mesh = SubResource("NavigationMesh_mwo67")
+
+[node name="Arena" parent="World/NavigationRegion3D/Environment" index="0" node_paths=PackedStringArray("_PlayerCharacterManager") instance=ExtResource("5_8elnb")]
+_PlayerCharacterManager = NodePath("../../../PlayerCharacterManager")
+
+[node name="Node" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ConditionsService" index="0"]
+script = ExtResource("6_wmv6b")
+
+[node name="ClownTimerService" parent="World/NavigationRegion3D/Environment/Arena/Services" index="16"]
+_IsActive = true
+
+[node name="TestInterrupter" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ClownTimerService" index="0" node_paths=PackedStringArray("_PlayerTurnBattleState", "_ActionService", "_TurnInterrupter")]
+script = ExtResource("7_w3am5")
+_PlayerTurnBattleState = NodePath("../../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn")
+_ActionService = NodePath("../../ActionService")
+_TurnInterrupter = NodePath("../../../Entities/TurnInterrupter")
+
+[node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
+_ArenaTilemap = NodePath("../../ArenaTilemap")
+
+[node name="EnterArenaArea" parent="World/NavigationRegion3D/Environment/Arena" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -7)
+
+[node name="CollisionShape3D" parent="World/NavigationRegion3D/Environment/Arena/EnterArenaArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.176804, 0.5, 0)
+shape = SubResource("BoxShape3D_j52fl")
+
+[node name="TurnInterrupter" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="0" instance=ExtResource("8_3qt66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 7)
+
+[node name="VegetableFridge" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="1" instance=ExtResource("9_7y2sw")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, -3)
+EditorFacingDir = 2
+
+[node name="ClownTimerUIContainer" parent="World/NavigationRegion3D/Environment/Arena/UILayer" index="7"]
+visible = true
+
+[node name="ArenaTilemap" parent="World/NavigationRegion3D/Environment" index="1" instance=ExtResource("10_ejdgf")]
+data = {
+"cells": PackedInt32Array(0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 65535, 6, 0, 65535, 5, 0, 65535, 4, 0, 65535, 3, 0, 65535, 2, 0, 65535, 1, 0, 65535, 65534, 0, 65535, 65535, 0, 65535, 0, 0, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65534, 4, 0, 65534, 5, 0, 65534, 6, 0, 1, 6, 0, 1, 5, 0, 1, 4, 0, 1, 3, 0, 1, 2, 0, 1, 1, 0, 1, 0, 0, 1, 65535, 0, 1, 65534, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 0, 65533, 4, 0, 65533, 5, 0, 65533, 6, 0, 1, 7, 0, 0, 7, 0, 65535, 7, 0, 65534, 7, 0, 65533, 7, 0, 65533, 65533, 0, 65534, 65533, 0, 65535, 65533, 0, 0, 65533, 0, 1, 65533, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 0, 2, 4, 0, 2, 5, 0, 2, 6, 0, 2, 7, 0, 65535, 65532, 1, 0, 65532, 1, 65534, 65532, 1)
+}
+
+[node name="greybox_obstacle_tscn" parent="World/NavigationRegion3D/Environment" index="2" instance=ExtResource("11_es0k3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 9.53674e-07, -1)
+
+[node name="greybox_obstacle_tscn2" parent="World/NavigationRegion3D/Environment" index="3" instance=ExtResource("11_es0k3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="greybox_obstacle_tscn3" parent="World/NavigationRegion3D/Environment" index="4" instance=ExtResource("11_es0k3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
+
+[node name="Floor" type="CSGMesh3D" parent="World/NavigationRegion3D/Environment" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("QuadMesh_7xw71")
+material = ExtResource("12_fbuyx")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="LightVolumeMesh" parent="World/NavigationRegion3D/Environment" index="6" instance=ExtResource("13_6enwr")]
+transform = Transform3D(12.9, 0, 0, 0, 12.9, 0, 0, 0, 27.09, 0, -1, 2)
+mesh = SubResource("BoxMesh_2ro4w")
+
+[node name="DefaultSpawnPoint" parent="World" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.08165e-12, -7)
+EditorFacingDir = 1
+
+[node name="Camera" parent="World/GridSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/LightSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/WidgetsSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="8"]
+transform = Transform3D(0.866025, 0.5, 2.18557e-08, 0, -4.37114e-08, 1, 0.5, -0.866025, -3.78552e-08, 0, 4, 0)
+
+[connection signal="ClownTimerUpdate" from="World/NavigationRegion3D/Environment/Arena/Services/ClownTimerService" to="World/NavigationRegion3D/Environment/Arena/Services/ClownTimerService/TestInterrupter" method="OnTimerTick"]
+
+[editable path="World/IsometricCamera"]
+[editable path="World/NavigationRegion3D/Environment/Arena"]

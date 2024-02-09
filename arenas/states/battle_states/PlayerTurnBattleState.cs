@@ -67,6 +67,19 @@ namespace ShopIsDone.Arenas.Battles.States
             });
         }
 
+        public void Interrupt()
+        {
+            // Turn state machine to idle
+            _PlayerTurnStateMachine.ChangeState(Consts.States.IDLE);
+        }
+
+        public void Resume()
+        {
+            // Resume previous state
+            var (prevState, prevMessage) = _PlayerTurnStateMachine.GetLastStateProps();
+            _PlayerTurnStateMachine.ChangeState(prevState, prevMessage);
+        }
+
         public override void OnExit(string nextState)
         {
             _PlayerTurnStateMachine.ChangeState(Consts.States.IDLE);

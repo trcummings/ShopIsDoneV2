@@ -70,6 +70,14 @@ namespace ShopIsDone.Tasks
             SetProcess(false);
         }
 
+        public void Reset()
+        {
+            // Reset unit facing
+            _SelectedUnit.FacingDirection = _InitialPawnFacing;
+            // Reset finger cursor position
+            _FingerCursor.WarpCursorTo(_SelectedUnit.GlobalPosition);
+        }
+
         public override void _Process(double delta)
         {
             base._Process(delta);
@@ -92,11 +100,9 @@ namespace ShopIsDone.Tasks
             // Revert / Go back
             if (Input.IsActionJustPressed("ui_cancel"))
             {
+                Reset();
                 // Otherwise, cancel signal
                 EmitSignal(nameof(CanceledInteraction));
-
-                // Reset unit facing
-                _SelectedUnit.FacingDirection = _InitialPawnFacing;
                 return;
             }
 

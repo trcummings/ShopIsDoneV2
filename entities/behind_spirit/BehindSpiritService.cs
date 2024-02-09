@@ -33,7 +33,6 @@ namespace ShopIsDone.Entities.BehindSpirit
         private ActionService _ActionService;
 
         private ActionHandler _ActionHandler;
-        private EntityStateHandler _StateHandler;
 
         public bool CanExecute()
         {
@@ -42,9 +41,8 @@ namespace ShopIsDone.Entities.BehindSpirit
 
         public Command Execute()
         {
-            // Make sure we have our components
+            // Make sure we have our component
             _ActionHandler = _BehindSpirit.GetComponent<ActionHandler>();
-            _StateHandler = _BehindSpirit.GetComponent<EntityStateHandler>();
 
             // Pick target
             var target = PickTarget(GetUnitsWithExposedBacks());

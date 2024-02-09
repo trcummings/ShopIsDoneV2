@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=66 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -57,6 +57,7 @@
 [ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/options_menu.tscn" id="39_yls7l"]
 [ext_resource type="PackedScene" uid="uid://cvfjwqjfca0rm" path="res://arena_actions/effort_meter/effort_meter.tscn" id="40_ho46i"]
 [ext_resource type="PackedScene" uid="uid://cqq6dmqdsuqoe" path="res://clown_timer/clown_clock.tscn" id="57_n517i"]
+[ext_resource type="PackedScene" uid="uid://c8xyd8s0yod3u" path="res://tiles/tile_hover_ui/tile_hover_ui.tscn" id="58_m7tmb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
@@ -71,6 +72,8 @@ bg_color = Color(0.298039, 0.298039, 0.298039, 1)
 bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t11pk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wt6n1"]
 
 [node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_PlayerUnitService") groups=["arena"]]
 script = ExtResource("1_loukv")
@@ -214,9 +217,10 @@ script = ExtResource("2_1igvu")
 [node name="Idle" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
 script = ExtResource("3_q440h")
 
-[node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_EndPlayerTurnWidget") instance=ExtResource("15_hbm50")]
+[node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_TileHoverUI", "_EndPlayerTurnWidget") instance=ExtResource("15_hbm50")]
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 _PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
+_TileHoverUI = NodePath("../../../../../../UILayer/PanelContainer/MarginContainer/TileHoverUI")
 _EndPlayerTurnWidget = NodePath("../../../../../../UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
 
 [node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService")]
@@ -609,5 +613,26 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_t11pk")
 [node name="ClownClock" parent="UILayer/ClownTimerUIContainer/Panel" instance=ExtResource("57_n517i")]
 position = Vector2(150, 150)
 scale = Vector2(0.3, 0.3)
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wt6n1")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="TileHoverUI" parent="UILayer/PanelContainer/MarginContainer" instance=ExtResource("58_m7tmb")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 
 [connection signal="ClownTimerUpdate" from="Services/ClownTimerService" to="UILayer/ClownTimerUIContainer/Panel/ClownClock" method="TickClock"]
