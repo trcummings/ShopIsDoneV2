@@ -266,14 +266,13 @@ namespace ShopIsDone.Arenas.PlayerTurn
             base.OnExit(nextState);
         }
 
-        //private Pawn GetActiveUnitOnTile(Tile tile)
-        //{
-        //    // Get active units that have remaining moves
-        //    var activeUnits = PTM.GetActivePlayerPawns()
-        //        .Where(pawn => pawn.GetComponent<ActionHandlerComponent>().HasAvailableActions());
+        private LevelEntity GetActiveUnitOnTile(Tile tile)
+        {
 
-        //    return activeUnits.Contains(tile.CurrentPawn) ? tile.CurrentPawn : null;
-        //}
+            // Get active units that have remaining moves
+            var activeUnits = _PlayerUnitService.GetActiveUnits();
+            return activeUnits.Contains(tile.UnitOnTile) ? tile.UnitOnTile : null;
+        }
 
         private void OnCursorHoveredTile(Tile tile)
         {
@@ -298,8 +297,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
             //    if (lightDetector.IsLit()) _MoreInfoUI.Show();
             //    else _MoreInfoUI.Hide();
 
-            //    // Select Player Pawn UI if there's an active unit on the tile
-            //    _PawnUIContainer.SelectPawnElement(GetActiveUnitOnTile(tile));
+            // Select Player Pawn UI if there's an active unit on the tile
+            _PawnUIContainer.SelectPawnElement(GetActiveUnitOnTile(tile));
 
             //    // Handle interactable hover case
             //    SelectInteractable(tile);
