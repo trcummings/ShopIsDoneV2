@@ -30,7 +30,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.9407e-08, 0.75, 5.96046e-08
 shape = SubResource("BoxShape3D_wu3g3")
 
 [node name="TaskComponent" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler") instance=ExtResource("2_sshc2")]
-TaskHealth = 1
+TaskHealth = 3
 MaxTaskHealth = 3
 OperatorsAllowed = 4
 _MicrogameHandler = NodePath("../MicrogameHandler")

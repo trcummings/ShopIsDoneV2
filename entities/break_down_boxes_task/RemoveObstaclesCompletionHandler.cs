@@ -9,11 +9,11 @@ namespace ShopIsDone.Entities.BreakDownBoxesTask
     {
         public override Command OnTaskCompleted(TaskComponent task)
         {
-            // Disable collision on entity
             return new SeriesCommand(
                 base.OnTaskCompleted(task),
                 new ActionCommand(() =>
                 {
+                    // Disable all shape owner collisions
                     var ids = task.Entity.GetShapeOwners();
                     foreach (var id in ids)
                     {

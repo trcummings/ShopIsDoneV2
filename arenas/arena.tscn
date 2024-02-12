@@ -206,11 +206,12 @@ _PhaseManager = NodePath("../../BattlePhaseManager")
 _EnemyTurnService = NodePath("../../../../Services/EnemyTurnUnitService")
 _BehindSpiritService = NodePath("../../../../Services/BehindSpiritService")
 
-[node name="PrepPlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_PlayerUnitTurnService", "_TaskService")]
+[node name="PrepPlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_PlayerUnitTurnService", "_TaskService", "_ActionService")]
 script = ExtResource("9_quvvh")
 _PhaseManager = NodePath("../../BattlePhaseManager")
 _PlayerUnitTurnService = NodePath("../../../../Services/PlayerTurnUnitService")
 _TaskService = NodePath("../../../../Services/TaskService")
+_ActionService = NodePath("../../../../Services/ActionService")
 
 [node name="PlayerTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PlayerTurnStateMachine", "_PlayerUnitService")]
 script = ExtResource("10_hv83v")
