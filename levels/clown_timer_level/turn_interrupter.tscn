@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://jadfcxx6tjq6"]
+[gd_scene load_steps=11 format=3 uid="uid://jadfcxx6tjq6"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_en71m"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="2_uy0ro"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cyll45sq3k0kn" path="res://textures/test_character_portrait.png" id="6_5slyp"]
 [ext_resource type="Script" path="res://util/show_in_editor.gd" id="6_5upi6"]
 [ext_resource type="Resource" uid="uid://1mr50bjvhfxx" path="res://levels/clown_timer_level/test_interrupt_action.tres" id="6_bpm0x"]
+[ext_resource type="Script" path="res://levels/clown_timer_level/TestInterrupter.cs" id="9_tem4b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3bk4g"]
 
@@ -49,3 +50,7 @@ no_depth_test = true
 alpha_cut = 1
 texture = ExtResource("6_5slyp")
 script = ExtResource("6_5upi6")
+
+[node name="TestInterrupter" type="Node" parent="." index="7" node_paths=PackedStringArray("_ActionHandler") groups=["clown_timer_tick"]]
+script = ExtResource("9_tem4b")
+_ActionHandler = NodePath("../ActionHandler")
