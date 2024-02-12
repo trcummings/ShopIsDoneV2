@@ -3,23 +3,30 @@ using Godot;
 using ShopIsDone.Actions;
 using ShopIsDone.Core;
 using ShopIsDone.Arenas.ClownTimer;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Levels.ClownTimerLevel
 {
-    public partial class TestInterrupter : Node, IClownTimerTick
+    public partial class TestInterrupter : NodeComponent, IClownTimerTick
     {
         [Export]
-        private TurnInterrupterService _TurnInterrupterService;
-
-        [Export]
-        private LevelEntity _TurnInterrupter;
+        private ActionHandler _ActionHandler;
 
         [Export]
         private double _TimerMax = 5;
 
+        [Inject]
+        private TurnInterrupterService _TurnInterrupterService;
+
+        // State
         private double _CurrentTimer = 0;
         private bool _IsRunning = false;
-        private ActionHandler _ActionHandler;
+
+        public override void Init()
+        {
+            base.Init();
+            InjectionProvider.Inject(this);
+        }
 
         public void StartClownTimer()
         {
@@ -30,7 +37,6 @@ namespace ShopIsDone.Levels.ClownTimerLevel
         {
             // Do nothing
         }
-
 
         public void ClownTimerTick(double delta)
         {
@@ -46,9 +52,6 @@ namespace ShopIsDone.Levels.ClownTimerLevel
                 // Set running and clear timer
                 _IsRunning = true;
                 _CurrentTimer = 0;
-
-                // Make sure we have our component
-                _ActionHandler = _TurnInterrupter.GetComponent<ActionHandler>();
 
                 // Get Interrupt action
                 var action = _ActionHandler.GetAction("interrupt");

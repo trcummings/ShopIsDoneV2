@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bpflihl6nibp4"]
+[gd_scene load_steps=18 format=3 uid="uid://bpflihl6nibp4"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_57ms1"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_ok2ai"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://b7n2nvaxotrvp" path="res://actors/ricky_actor.tscn" id="4_sp5hk"]
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="5_8elnb"]
 [ext_resource type="Script" path="res://conditions/Condition.cs" id="6_wmv6b"]
-[ext_resource type="Script" path="res://levels/clown_timer_level/TestInterrupter.cs" id="7_w3am5"]
 [ext_resource type="PackedScene" uid="uid://jadfcxx6tjq6" path="res://levels/clown_timer_level/turn_interrupter.tscn" id="8_3qt66"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="9_7y2sw"]
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="10_ejdgf"]
@@ -50,11 +49,6 @@ script = ExtResource("6_wmv6b")
 
 [node name="ClownTimerService" parent="World/NavigationRegion3D/Environment/Arena/Services" index="16"]
 _IsActive = true
-
-[node name="TestInterrupter" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services" index="18" node_paths=PackedStringArray("_TurnInterrupterService", "_TurnInterrupter") groups=["clown_timer_tick"]]
-script = ExtResource("7_w3am5")
-_TurnInterrupterService = NodePath("../TurnInterrupterService")
-_TurnInterrupter = NodePath("../../Entities/TurnInterrupter")
 
 [node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../../ArenaTilemap")
