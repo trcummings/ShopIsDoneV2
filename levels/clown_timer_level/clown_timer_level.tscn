@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bpflihl6nibp4"]
+[gd_scene load_steps=19 format=3 uid="uid://bpflihl6nibp4"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_57ms1"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_ok2ai"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://jadfcxx6tjq6" path="res://levels/clown_timer_level/turn_interrupter.tscn" id="8_3qt66"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="9_7y2sw"]
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="10_ejdgf"]
+[ext_resource type="PackedScene" uid="uid://byocujsdwxth6" path="res://levels/clown_timer_level/shadow_puppet/shadow_puppet.tscn" id="10_tqtg6"]
 [ext_resource type="PackedScene" uid="uid://vl8fwugptaiu" path="res://props/greybox_obstacle.tscn" id="11_es0k3"]
 [ext_resource type="Material" uid="uid://c0krox5teicdh" path="res://Materials/greybox_materials/greybox_floor.material" id="12_fbuyx"]
 [ext_resource type="PackedScene" uid="uid://co5soj88cs137" path="res://lighting/light_volume_mesh.tscn" id="13_6enwr"]
@@ -50,11 +51,10 @@ script = ExtResource("6_wmv6b")
 [node name="ClownTimerService" parent="World/NavigationRegion3D/Environment/Arena/Services" index="16"]
 _IsActive = true
 
-[node name="TestInterrupter" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ClownTimerService" index="0" node_paths=PackedStringArray("_PlayerTurnBattleState", "_ActionService", "_TurnInterrupter")]
+[node name="TestInterrupter" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services" index="18" node_paths=PackedStringArray("_TurnInterrupterService", "_TurnInterrupter") groups=["clown_timer_tick"]]
 script = ExtResource("7_w3am5")
-_PlayerTurnBattleState = NodePath("../../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn")
-_ActionService = NodePath("../../ActionService")
-_TurnInterrupter = NodePath("../../../Entities/TurnInterrupter")
+_TurnInterrupterService = NodePath("../TurnInterrupterService")
+_TurnInterrupter = NodePath("../../Entities/TurnInterrupter")
 
 [node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../../ArenaTilemap")
@@ -72,6 +72,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 7)
 [node name="VegetableFridge" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="1" instance=ExtResource("9_7y2sw")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, -3)
 EditorFacingDir = 2
+
+[node name="ShadowPuppet" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="2" instance=ExtResource("10_tqtg6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 3)
 
 [node name="ClownTimerUIContainer" parent="World/NavigationRegion3D/Environment/Arena/UILayer" index="7"]
 visible = true
@@ -118,8 +121,6 @@ transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="8"]
 transform = Transform3D(0.866025, 0.5, 2.18557e-08, 0, -4.37114e-08, 1, 0.5, -0.866025, -3.78552e-08, 0, 4, 0)
-
-[connection signal="ClownTimerUpdate" from="World/NavigationRegion3D/Environment/Arena/Services/ClownTimerService" to="World/NavigationRegion3D/Environment/Arena/Services/ClownTimerService/TestInterrupter" method="OnTimerTick"]
 
 [editable path="World/IsometricCamera"]
 [editable path="World/NavigationRegion3D/Environment/Arena"]

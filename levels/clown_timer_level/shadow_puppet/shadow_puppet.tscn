@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://byocujsdwxth6"]
+
+[ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_jw4f7"]
+[ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="2_04mwr"]
+[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="3_y0ai4"]
+[ext_resource type="PackedScene" uid="uid://bsxne3olmt1ol" path="res://action_points/null_action_point_handler.tscn" id="4_3islo"]
+[ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="5_fp3gb"]
+[ext_resource type="Texture2D" uid="uid://cyll45sq3k0kn" path="res://textures/test_character_portrait.png" id="6_lbkta"]
+[ext_resource type="Script" path="res://util/show_in_editor.gd" id="7_1444x"]
+[ext_resource type="Texture2D" uid="uid://6s4238slg6tk" path="res://textures/white_circle.png" id="8_tdhx6"]
+[ext_resource type="Script" path="res://levels/clown_timer_level/shadow_puppet/ShadowPuppetMovement.cs" id="9_m8dyh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8lg1k"]
+
+[node name="ShadowPuppet" instance=ExtResource("1_jw4f7")]
+collision_mask = 0
+Id = "shadow_puppet"
+EntityName = "Shadow Puppet"
+
+[node name="CollisionShape" parent="." index="0"]
+shape = SubResource("BoxShape3D_8lg1k")
+
+[node name="StateHandler" type="Node" parent="." index="3" node_paths=PackedStringArray("InitialState")]
+script = ExtResource("2_04mwr")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateHandler" index="0"]
+script = ExtResource("3_y0ai4")
+Id = "idle"
+
+[node name="NullActionPointHandler" parent="." index="4" instance=ExtResource("4_3islo")]
+
+[node name="ActionHandler" type="Node" parent="." index="5" node_paths=PackedStringArray("_ActionPointHandler")]
+script = ExtResource("5_fp3gb")
+_ActionPointHandler = NodePath("../NullActionPointHandler")
+
+[node name="EditorWidget" type="Sprite3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448031, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+alpha_cut = 1
+texture = ExtResource("6_lbkta")
+script = ExtResource("7_1444x")
+
+[node name="Shadow" type="Sprite3D" parent="." index="7" groups=["skip_silhouette"]]
+transform = Transform3D(2, -1.39515e-15, -6.09839e-23, 0, -8.74228e-08, 2, -1.39515e-15, -2, -8.74228e-08, 0, 0.03, 0)
+modulate = Color(0, 0, 0, 1)
+double_sided = false
+alpha_cut = 1
+texture = ExtResource("8_tdhx6")
+
+[node name="Label3D" type="Label3D" parent="Shadow" index="0"]
+transform = Transform3D(0.5, 0, -3.48787e-16, -3.48787e-16, -2.18557e-08, -0.5, -1.5246e-23, 0.5, -2.18557e-08, 0, -1.02722e-08, 0.235)
+billboard = 1
+double_sided = false
+no_depth_test = true
+text = "Text"
+
+[node name="ShadowPuppetMovement" type="Node" parent="." index="8" node_paths=PackedStringArray("_Label") groups=["clown_timer_tick", "clown_timer_tickable"]]
+script = ExtResource("9_m8dyh")
+_Label = NodePath("../Shadow/Label3D")

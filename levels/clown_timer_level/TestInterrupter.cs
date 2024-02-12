@@ -1,23 +1,15 @@
+using System;
 using Godot;
 using ShopIsDone.Actions;
-using ShopIsDone.Arenas.Battles.States;
 using ShopIsDone.Core;
-using System;
-using System.Threading.Tasks;
-using Godot.Collections;
+using ShopIsDone.Arenas.ClownTimer;
 
 namespace ShopIsDone.Levels.ClownTimerLevel
 {
-    public partial class TestInterrupter : Node
+    public partial class TestInterrupter : Node, IClownTimerTick
     {
-        [Signal]
-        public delegate void FinishedInterruptingEventHandler();
-
         [Export]
-        private PlayerTurnBattleState _PlayerTurnBattleState;
-
-        [Export]
-        private ActionService _ActionService;
+        private TurnInterrupterService _TurnInterrupterService;
 
         [Export]
         private LevelEntity _TurnInterrupter;
@@ -29,7 +21,18 @@ namespace ShopIsDone.Levels.ClownTimerLevel
         private bool _IsRunning = false;
         private ActionHandler _ActionHandler;
 
-        public void OnTimerTick(double delta)
+        public void StartClownTimer()
+        {
+            // Do nothing
+        }
+
+        public void StopClownTimer()
+        {
+            // Do nothing
+        }
+
+
+        public void ClownTimerTick(double delta)
         {
             // Ignore if running
             if (_IsRunning) return;
@@ -44,37 +47,22 @@ namespace ShopIsDone.Levels.ClownTimerLevel
                 _IsRunning = true;
                 _CurrentTimer = 0;
 
+                // Make sure we have our component
+                _ActionHandler = _TurnInterrupter.GetComponent<ActionHandler>();
+
+                // Get Interrupt action
+                var action = _ActionHandler.GetAction("interrupt");
+
                 // Oneshot connect to finished interrupting
-                Connect(
-                    nameof(FinishedInterrupting),
+                _TurnInterrupterService.Connect(
+                    nameof(_TurnInterrupterService.FinishedInterrupting),
                     Callable.From(() => _IsRunning = false),
                     (uint)ConnectFlags.OneShot
                 );
-                _ = RunInterrupter();
+
+                // Run action through interrupter
+                _ = _TurnInterrupterService.RunInterrupter(action);
             }
-        }
-
-        private async Task RunInterrupter()
-        {
-            // Make sure we have our component
-            _ActionHandler = _TurnInterrupter.GetComponent<ActionHandler>();
-
-            // Get action
-            var action = _ActionHandler.GetAction("interrupt");
-
-            // Interrupt the player's turn
-            _PlayerTurnBattleState.Interrupt();
-
-            // Run the action
-            var command = _ActionService.ExecuteAction(action, new Dictionary<string, Variant>());
-            command.CallDeferred(nameof(command.Execute));
-            await ToSignal(command, nameof(command.Finished));
-
-            // Resume the player's turn
-            _PlayerTurnBattleState.Resume();
-
-            // Finish
-            EmitSignal(nameof(FinishedInterrupting));
         }
     }
 }
