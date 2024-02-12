@@ -1,14 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://er3er52tffso"]
 
-[ext_resource path="res://AssetPacks/SimpleShopInteriors/_Models/Props/SI_Prop_CarboardBox_01.fbx" type="PackedScene" id=1]
-[ext_resource path="res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material" type="Material" id=2]
+[ext_resource type="PackedScene" uid="uid://c50y71xi0jrqs" path="res://AssetPacks/SimpleShopInteriors/_Models/Props/SI_Prop_CarboardBox_01.fbx" id="1"]
 
-[node name="Prop_CardboardBox_01_" type="Spatial"]
+[node name="Prop_CardboardBox_01_" type="Node3D"]
 
-[node name="SI_Prop_CarboardBox_01" parent="." instance=ExtResource( 1 )]
-transform = Transform( 50, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0 )
-
-[node name="SI_Prop_CarboardBox_01" parent="SI_Prop_CarboardBox_01/RootNode" index="0"]
-material/0 = ExtResource( 2 )
+[node name="SI_Prop_CarboardBox_01" parent="." instance=ExtResource("1")]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0)
 
 [editable path="SI_Prop_CarboardBox_01"]

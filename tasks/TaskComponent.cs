@@ -77,6 +77,7 @@ namespace ShopIsDone.Tasks
         private MicrogameHandler _MicrogameHandler;
 
         [Export]
+        private NodePath _TaskCompletionHandlerPath;
         private TaskCompletionHandler _TaskCompletionHandler;
 
         [Export]
@@ -95,6 +96,8 @@ namespace ShopIsDone.Tasks
         public override void _Ready()
         {
             _TaskProgressHandler = GetNode<ITaskProgressHandler>(_TaskProgressHandlerPath);
+            _TaskCompletionHandler = GetNode<TaskCompletionHandler>(_TaskCompletionHandlerPath);
+
             // Ready interaction tiles
             _TaskTiles = GetChildren().OfType<TaskTile>().ToGodotArray();
             foreach (var tile in _TaskTiles) tile.Hide();

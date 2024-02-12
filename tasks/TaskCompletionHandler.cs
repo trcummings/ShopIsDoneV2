@@ -6,7 +6,7 @@ namespace ShopIsDone.Tasks
 {
 	public partial class TaskCompletionHandler : Node
 	{
-        public Command OnTaskCompleted(TaskComponent _)
+        public virtual Command OnTaskCompleted(TaskComponent task)
         {
             return new Command();
         }

@@ -29,6 +29,17 @@ animation/fps=15
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
-_subresources={}
+_subresources={
+"materials": {
+"lambert1": {
+"use_external/enabled": true,
+"use_external/path": "res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material"
+},
+"lambert15": {
+"use_external/enabled": true,
+"use_external/path": "res://AssetPacks/SimpleShopInteriors/_Materials/SimpleShopInteriors.material"
+}
+}
+}
 gltf/naming_version=0
 gltf/embedded_image_handling=1
