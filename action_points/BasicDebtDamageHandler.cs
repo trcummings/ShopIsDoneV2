@@ -43,7 +43,7 @@ namespace ShopIsDone.ActionPoints
                 new ConditionalCommand(
                     () => payload.TotalDebtDamage > 0,
                     new SeriesCommand(
-                        _StateHandler.RunChangeState(StateConsts.HURT),
+                        _StateHandler.RunPushState(StateConsts.HURT),
                         // Set facing direction, if we're still alive
                         new ConditionalCommand(
                             () => !payload.ApHandler.IsMaxedOut() && payload.Positioning != Positions.Null,
@@ -55,9 +55,7 @@ namespace ShopIsDone.ActionPoints
                             })
                         )
                     )
-                ),
-                // Return to idle
-                _StateHandler.RunChangeState(StateConsts.IDLE)
+                )
             );
         }
     }

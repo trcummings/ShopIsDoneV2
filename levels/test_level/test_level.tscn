@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=22 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://levels/test_level/conditions/TaskCompletedCondition.cs" id="9_bxejf"]
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="13_hfsdd"]
 [ext_resource type="PackedScene" uid="uid://cgli0qeti2oyr" path="res://entities/break_down_boxes_task/break_down_boxes_task.tscn" id="13_y1rrm"]
+[ext_resource type="PackedScene" uid="uid://bal3hv6vds0yc" path="res://entities/wet_spot_task/wet_spot_task.tscn" id="14_ixrgw"]
 [ext_resource type="Shader" path="res://levels/test_level/ntsc.gdshader" id="16_2hx3x"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_n5n74"]
@@ -94,6 +95,9 @@ EditorFacingDir = 1
 
 [node name="BreakDownBoxesTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="2" instance=ExtResource("13_y1rrm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -3)
+
+[node name="WetSpotTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="3" instance=ExtResource("14_ixrgw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1, 0)
