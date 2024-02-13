@@ -1,0 +1,153 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjopkbd3a1gd4"]
+
+[ext_resource type="Script" path="res://render/Model.cs" id="1_n3tvu"]
+[ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_Counter.tscn" id="2_bcfvv"]
+[ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_SaleSign.tscn" id="3_xuy1p"]
+[ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_ShelfItem_02_.tscn" id="4_0853y"]
+
+[sub_resource type="Animation" id="1"]
+resource_name = "ProgressTask"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Prop_SaleSign:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(90, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 10), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Prop_SaleSign:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.06, 0.8), Vector3(0, 0.3, 0.6), Vector3(0, 0.55, 0.6), Vector3(0, 0.55, 0.6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShelfItems/FirstLayer:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShelfItems/SecondLayer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Prop_SaleSign:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.040182, 0.8), Vector3(0, 0.416342, 0.592122)]
+}
+
+[sub_resource type="Animation" id="2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Prop_SaleSign:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(90, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Prop_SaleSign:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.040182, 0.8)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o45ff"]
+_data = {
+"ProgressTask": SubResource("1"),
+"RESET": SubResource("2")
+}
+
+[node name="FixDisplayTaskModel" type="Node3D" node_paths=PackedStringArray("_AnimPlayer")]
+script = ExtResource("1_n3tvu")
+_AnimPlayer = NodePath("AnimationPlayer")
+
+[node name="Prop_Counter" parent="." instance=ExtResource("2_bcfvv")]
+
+[node name="Prop_SaleSign" parent="." instance=ExtResource("3_xuy1p")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.040182, 0.8)
+
+[node name="ShelfItems" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="FirstLayer" type="Node3D" parent="ShelfItems"]
+visible = false
+
+[node name="Prop_ShelfItem_02_" parent="ShelfItems/FirstLayer" instance=ExtResource("4_0853y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0.329)
+
+[node name="Prop_ShelfItem_02_3" parent="ShelfItems/FirstLayer" instance=ExtResource("4_0853y")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.275595, 0, 0.212453)
+
+[node name="Prop_ShelfItem_02_4" parent="ShelfItems/FirstLayer" instance=ExtResource("4_0853y")]
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0.186968, 0, -0.259074)
+
+[node name="Prop_ShelfItem_02_2" parent="ShelfItems/FirstLayer" instance=ExtResource("4_0853y")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.285406, 0, -0.137013)
+
+[node name="SecondLayer" type="Node3D" parent="ShelfItems"]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0, 0.3, 0)
+visible = false
+
+[node name="Prop_ShelfItem_02_" parent="ShelfItems/SecondLayer" instance=ExtResource("4_0853y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0.329)
+
+[node name="Prop_ShelfItem_02_3" parent="ShelfItems/SecondLayer" instance=ExtResource("4_0853y")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.275595, 0, 0.212453)
+
+[node name="Prop_ShelfItem_02_4" parent="ShelfItems/SecondLayer" instance=ExtResource("4_0853y")]
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0.186968, 0, -0.259074)
+
+[node name="Prop_ShelfItem_02_2" parent="ShelfItems/SecondLayer" instance=ExtResource("4_0853y")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.285406, 0, -0.137013)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_o45ff")
+}
+autoplay = "RESET"
