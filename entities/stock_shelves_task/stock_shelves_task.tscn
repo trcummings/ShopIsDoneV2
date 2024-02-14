@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://bou73723io7w1"]
+
+[ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_lauly"]
+[ext_resource type="PackedScene" uid="uid://cfyqrs06180rr" path="res://tasks/task_component.tscn" id="2_0yyud"]
+[ext_resource type="PackedScene" uid="uid://bemfdgy1p2a05" path="res://tasks/task_selector_tile.tscn" id="3_ug3kt"]
+[ext_resource type="PackedScene" uid="uid://b46xb2dilpr4v" path="res://tasks/task_tile.tscn" id="4_pnv6m"]
+[ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="5_4xk0f"]
+[ext_resource type="Script" path="res://tasks/task_models/AnimatedTaskModelHelper.cs" id="5_wi31c"]
+[ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="6_gal1p"]
+[ext_resource type="PackedScene" uid="uid://d4apl4ogrj486" path="res://entities/stock_shelves_task/stock_shelves_task_model.tscn" id="7_i3tky"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_33y7d"]
+size = Vector3(3.4, 2, 1.515)
+
+[node name="StockShelvesTask" instance=ExtResource("1_lauly")]
+collision_layer = 9
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+slide_on_ceiling = false
+Id = "stock_shelves"
+EntityName = "StockShelves"
+
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 1.05, 1, 7.55207e-09)
+shape = SubResource("BoxShape3D_33y7d")
+
+[node name="FacingDirectionHandler" parent="." index="1"]
+_UpdateFacingTarget = false
+
+[node name="TaskComponent" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler") instance=ExtResource("2_0yyud")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+TaskHealth = 2
+OperatorsAllowed = 2
+_MicrogameHandler = NodePath("../MicrogameHandler")
+
+[node name="TaskSelectorTile" parent="TaskComponent/SelectTaskHandler" index="0" instance=ExtResource("3_ug3kt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="TaskSelectorTile2" parent="TaskComponent/SelectTaskHandler" index="1" instance=ExtResource("3_ug3kt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="TaskSelectorTile3" parent="TaskComponent/SelectTaskHandler" index="2" instance=ExtResource("3_ug3kt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.03983e-07, 0, 2)
+
+[node name="TaskSelectorTile4" parent="TaskComponent/SelectTaskHandler" index="3" instance=ExtResource("3_ug3kt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+
+[node name="ProgressBar3D" parent="TaskComponent" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 2.08165e-12)
+
+[node name="TaskTile" parent="TaskComponent" index="5" instance=ExtResource("4_pnv6m")]
+monitoring = true
+
+[node name="TaskTile2" parent="TaskComponent" index="6" instance=ExtResource("4_pnv6m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+monitoring = true
+
+[node name="TaskModelHelper" parent="TaskComponent" index="7" node_paths=PackedStringArray("_AnimPlayer")]
+script = ExtResource("5_wi31c")
+_AnimPlayer = NodePath("../../StockShelvesTaskModel/AnimationPlayer")
+AnimName = "ProgressTask"
+
+[node name="MicrogameHandler" type="Node" parent="." index="4"]
+script = ExtResource("5_4xk0f")
+MicrogameScene = ExtResource("6_gal1p")
+_OutcomeHandlerPath = NodePath("../TaskComponent")
+
+[node name="StockShelvesTaskModel" parent="." index="5" instance=ExtResource("7_i3tky")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2.08165e-12, 2.08165e-12)
+
+[node name="CollisionRotator" type="RemoteTransform3D" parent="StockShelvesTaskModel" index="3"]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 1, 1.35, 1.50996e-07)
+remote_path = NodePath("../../CollisionShape")
+update_position = false
+
+[node name="TaskRotator" type="RemoteTransform3D" parent="StockShelvesTaskModel" index="4"]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 2.1684e-19, 4.1633e-12, -2.1684e-19)
+remote_path = NodePath("../../TaskComponent")
+update_position = false
+
+[editable path="TaskComponent"]
+[editable path="StockShelvesTaskModel"]

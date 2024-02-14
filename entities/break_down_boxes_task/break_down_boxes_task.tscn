@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b46xb2dilpr4v" path="res://tasks/task_tile.tscn" id="3_rmunw"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="4_ddvjj"]
 [ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="5_gtgg2"]
-[ext_resource type="Script" path="res://tasks/task_models/AnimatedTaskInteractableRender.cs" id="8_5tvib"]
+[ext_resource type="Script" path="res://tasks/task_models/AnimatedTaskModelHelper.cs" id="8_5tvib"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wu3g3"]
 size = Vector3(1.8, 1.5, 1.6)
@@ -50,25 +50,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3.01992e-07)
 [node name="TaskSelectorTile4" parent="TaskComponent/SelectTaskHandler" index="3" instance=ExtResource("3_da7s1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.01992e-07, 0, -2)
 
-[node name="ProgressBar3D" parent="TaskComponent" index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
-
 [node name="TaskTile" parent="TaskComponent" index="5" instance=ExtResource("3_rmunw")]
 
-[node name="TaskModelHelper" type="Node" parent="TaskComponent" index="6" node_paths=PackedStringArray("_AnimPlayer")]
+[node name="TaskModelHelper" parent="TaskComponent" index="6" node_paths=PackedStringArray("_AnimPlayer")]
 script = ExtResource("8_5tvib")
 _AnimPlayer = NodePath("../../BreakDownBoxesModel/AnimationPlayer")
 AnimName = "ProgressTask"
 
 [node name="BreakDownBoxesModel" parent="." index="4" instance=ExtResource("3_p7q2n")]
 
+[node name="Prop_CardboardBox_01_" parent="BreakDownBoxesModel/Boxes" index="0"]
+transform = Transform3D(1.93185, 0, 0.517638, 0, 2, 0, -0.517638, 0, 1.93185, -0.45, 0, 0.25)
+
+[node name="Prop_CardboardBox_01_2" parent="BreakDownBoxesModel/Boxes" index="1"]
+transform = Transform3D(1.93185, 0, -0.517638, 0, 2, 0, 0.517638, 0, 1.93185, 0.4, 0, -0.25)
+
+[node name="Prop_CardboardBox_02_" parent="BreakDownBoxesModel/Boxes" index="2"]
+transform = Transform3D(1, 0, -1.73205, 0, 2, 0, 1.73205, 0, 1, 0, 0.645, 0)
+
 [node name="MicrogameHandler" type="Node" parent="." index="5"]
 script = ExtResource("4_ddvjj")
 MicrogameScene = ExtResource("5_gtgg2")
 _OutcomeHandlerPath = NodePath("../TaskComponent")
-
-[connection signal="TaskHealthDamaged" from="TaskComponent" to="TaskComponent/TaskModelHelper" method="SetProgress"]
-[connection signal="TaskHealthInitialized" from="TaskComponent" to="TaskComponent/TaskModelHelper" method="Init"]
 
 [editable path="TaskComponent"]
 [editable path="BreakDownBoxesModel"]

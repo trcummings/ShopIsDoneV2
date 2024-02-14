@@ -1,4 +1,5 @@
 using Godot;
+using ShopIsDone.Utils.Extensions;
 using System;
 
 namespace ShopIsDone.Widgets
@@ -39,7 +40,7 @@ namespace ShopIsDone.Widgets
             _Label.Show();
 
             // Arc that number
-            _AnimationPlayer.Connect(
+            _AnimationPlayer.SafeConnect(
                 "animation_finished",
                 new Callable(this, nameof(OnAnimationFinished)),
                 (uint)ConnectFlags.OneShot

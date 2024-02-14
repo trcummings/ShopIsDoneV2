@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="5_8elnb"]
 [ext_resource type="Script" path="res://conditions/Condition.cs" id="6_wmv6b"]
 [ext_resource type="PackedScene" uid="uid://jadfcxx6tjq6" path="res://levels/clown_timer_level/turn_interrupter.tscn" id="8_3qt66"]
-[ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="9_7y2sw"]
+[ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge_task.tscn" id="9_7y2sw"]
 [ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="10_ejdgf"]
 [ext_resource type="PackedScene" uid="uid://byocujsdwxth6" path="res://levels/clown_timer_level/shadow_puppet/shadow_puppet.tscn" id="10_tqtg6"]
 [ext_resource type="PackedScene" uid="uid://vl8fwugptaiu" path="res://props/greybox_obstacle.tscn" id="11_es0k3"]

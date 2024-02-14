@@ -38,8 +38,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3.01992e-07)
 
 [node name="TaskTile" parent="TaskComponent" index="5" instance=ExtResource("5_7cpk5")]
 
-[node name="TaskModelHelper" type="Node" parent="TaskComponent" index="6"]
-
 [node name="MicrogameHandler" type="Node" parent="." index="4"]
 script = ExtResource("8_kgr0f")
 MicrogameScene = ExtResource("9_vlibf")
@@ -48,8 +46,5 @@ _OutcomeHandlerPath = NodePath("../TaskComponent")
 [node name="RegisterTaskModel" parent="." index="5" instance=ExtResource("7_rnbx4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
 LoopingAnimations = []
-
-[connection signal="TaskHealthDamaged" from="TaskComponent" to="TaskComponent/TaskModelHelper" method="SetProgress"]
-[connection signal="TaskHealthInitialized" from="TaskComponent" to="TaskComponent/TaskModelHelper" method="Init"]
 
 [editable path="TaskComponent"]

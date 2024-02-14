@@ -2,7 +2,7 @@ using Godot;
 
 namespace ShopIsDone.Tasks.TaskModels
 {
-    public partial class AnimatedTaskInteractableRender : TaskModelHelper
+    public partial class AnimatedTaskModelHelper : TaskModelHelper
     {
         [Export]
         private AnimationPlayer _AnimPlayer;

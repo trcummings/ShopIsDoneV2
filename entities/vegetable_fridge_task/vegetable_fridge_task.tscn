@@ -11,7 +11,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_2nsqc"]
 size = Vector3(3.621, 2.7, 1.515)
 
-[node name="VegetableFridge" instance=ExtResource("12")]
+[node name="VegetableFridgeTask" instance=ExtResource("12")]
 collision_layer = 9
 axis_lock_linear_x = true
 axis_lock_linear_y = true

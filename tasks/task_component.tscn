@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfyqrs06180rr"]
+[gd_scene load_steps=8 format=3 uid="uid://cfyqrs06180rr"]
 
 [ext_resource type="Script" path="res://tasks/TaskComponent.cs" id="1_2uvdb"]
 [ext_resource type="Script" path="res://tasks/TaskProgressHandler.cs" id="3_r1le4"]
 [ext_resource type="Script" path="res://tasks/TaskCompletionHandler.cs" id="4_w8v2a"]
 [ext_resource type="Script" path="res://tasks/SelectTaskHandler.cs" id="5_x2nsf"]
+[ext_resource type="Script" path="res://tasks/task_models/TaskModelHelper.cs" id="7_5r06b"]
 [ext_resource type="PackedScene" uid="uid://pocsbafwls6i" path="res://widgets/progress_bar_3d/progress_bar_3d.tscn" id="7_shrb0"]
 [ext_resource type="PackedScene" uid="uid://0elak5oinr0k" path="res://tasks/task_damage_player.tscn" id="8_imt4d"]
 
@@ -31,6 +32,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
 
 [node name="TaskDamagePlayer" parent="." instance=ExtResource("8_imt4d")]
 
+[node name="TaskModelHelper" type="Node" parent="."]
+script = ExtResource("7_5r06b")
+
+[connection signal="TaskHealthDamaged" from="." to="TaskModelHelper" method="SetProgress"]
 [connection signal="TaskHealthDamaged" from="." to="TaskDamagePlayer" method="play" unbinds=4]
+[connection signal="TaskHealthInitialized" from="." to="TaskModelHelper" method="Init"]
 [connection signal="TaskProgressBegan" from="." to="ProgressBar3D" method="FadeIn"]
 [connection signal="TaskProgressEnded" from="." to="ProgressBar3D" method="FadeOut"]

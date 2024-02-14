@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="5_arh5s"]
 [ext_resource type="Script" path="res://levels/test_level/conditions/CustomerSatisfiedCondition.cs" id="6_a2ot6"]
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="7_xooi4"]
-[ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge.tscn" id="8_5fhod"]
+[ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge_task.tscn" id="8_5fhod"]
 [ext_resource type="Script" path="res://levels/test_level/conditions/TaskCompletedCondition.cs" id="9_bxejf"]
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="13_hfsdd"]
 [ext_resource type="PackedScene" uid="uid://cgli0qeti2oyr" path="res://entities/break_down_boxes_task/break_down_boxes_task.tscn" id="13_y1rrm"]
@@ -101,12 +101,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -3)
 [node name="WetSpotTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="3" instance=ExtResource("14_ixrgw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
 
-[node name="FixDisplayTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="4" instance=ExtResource("15_nmno6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -1)
-
-[node name="RegisterTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="5" instance=ExtResource("16_k8qim")]
+[node name="RegisterTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="4" instance=ExtResource("16_k8qim")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7, 0, 3)
 EditorFacingDir = 1
+
+[node name="FixDisplayTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="5" instance=ExtResource("15_nmno6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -1)
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1, 0)
