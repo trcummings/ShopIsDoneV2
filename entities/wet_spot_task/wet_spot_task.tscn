@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bal3hv6vds0yc"]
+[gd_scene load_steps=10 format=3 uid="uid://bal3hv6vds0yc"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_57bpq"]
 [ext_resource type="PackedScene" uid="uid://cfyqrs06180rr" path="res://tasks/task_component.tscn" id="2_w8gyc"]
-[ext_resource type="Script" path="res://entities/break_down_boxes_task/RemoveObstaclesCompletionHandler.cs" id="3_vhk3v"]
 [ext_resource type="PackedScene" uid="uid://bemfdgy1p2a05" path="res://tasks/task_selector_tile.tscn" id="4_qyrr0"]
 [ext_resource type="PackedScene" uid="uid://b46xb2dilpr4v" path="res://tasks/task_tile.tscn" id="5_oa2a2"]
 [ext_resource type="Script" path="res://entities/wet_spot_task/WetSpotTaskModelHelper.cs" id="6_islsg"]
@@ -37,9 +36,6 @@ MaxTaskHealth = 3
 OperatorsAllowed = 4
 _MicrogameHandler = NodePath("../MicrogameHandler")
 
-[node name="CompletionHandler" parent="TaskComponent" index="1"]
-script = ExtResource("3_vhk3v")
-
 [node name="TaskSelectorTile" parent="TaskComponent/SelectTaskHandler" index="0" instance=ExtResource("4_qyrr0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3.01992e-07)
 
@@ -63,7 +59,7 @@ _WetFloorSign = NodePath("../../WetSpotTaskModel/WetFloorSign")
 [node name="WetSpotTaskModel" parent="." index="4" instance=ExtResource("7_ut8xl")]
 
 [node name="WetFloorSign" parent="WetSpotTaskModel" index="1"]
-transform = Transform3D(0.707107, 1.60554e-24, 0.707107, 3.48787e-16, 1, -3.48787e-16, -0.707107, 4.93259e-16, 0.707107, -0.6, 0, -0.6)
+transform = Transform3D(0.707107, -8.06184e-23, 0.707107, 3.48787e-16, 1, -3.48787e-16, -0.707107, 4.93259e-16, 0.707107, -0.6, 0, -0.6)
 
 [node name="MicrogameHandler" type="Node" parent="." index="5"]
 script = ExtResource("8_6h0yd")

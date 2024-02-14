@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://fjvoq3olr4fm"]
+
+[ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_n5srl"]
+[ext_resource type="PackedScene" uid="uid://cfyqrs06180rr" path="res://tasks/task_component.tscn" id="2_1btrr"]
+[ext_resource type="PackedScene" uid="uid://bemfdgy1p2a05" path="res://tasks/task_selector_tile.tscn" id="4_jahdx"]
+[ext_resource type="PackedScene" uid="uid://b46xb2dilpr4v" path="res://tasks/task_tile.tscn" id="5_7cpk5"]
+[ext_resource type="PackedScene" uid="uid://dh00op3fltlq5" path="res://entities/register_task/register_task_model.tscn" id="7_rnbx4"]
+[ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="8_kgr0f"]
+[ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="9_vlibf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xt5bs"]
+size = Vector3(1.8, 1.5, 1.6)
+
+[node name="RegisterTask" instance=ExtResource("1_n5srl")]
+collision_layer = 9
+collision_mask = 0
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+slide_on_ceiling = false
+Id = "register"
+EntityName = "Register"
+
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.9407e-08, 0.75, 5.96046e-08)
+shape = SubResource("BoxShape3D_xt5bs")
+
+[node name="TaskComponent" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler") instance=ExtResource("2_1btrr")]
+TaskHealth = 2
+MaxTaskHealth = 2
+_MicrogameHandler = NodePath("../MicrogameHandler")
+
+[node name="TaskSelectorTile" parent="TaskComponent/SelectTaskHandler" index="0" instance=ExtResource("4_jahdx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3.01992e-07)
+
+[node name="TaskTile" parent="TaskComponent" index="5" instance=ExtResource("5_7cpk5")]
+
+[node name="TaskModelHelper" type="Node" parent="TaskComponent" index="6"]
+
+[node name="MicrogameHandler" type="Node" parent="." index="4"]
+script = ExtResource("8_kgr0f")
+MicrogameScene = ExtResource("9_vlibf")
+_OutcomeHandlerPath = NodePath("../TaskComponent")
+
+[node name="RegisterTaskModel" parent="." index="5" instance=ExtResource("7_rnbx4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
+LoopingAnimations = []
+
+[connection signal="TaskHealthDamaged" from="TaskComponent" to="TaskComponent/TaskModelHelper" method="SetProgress"]
+[connection signal="TaskHealthInitialized" from="TaskComponent" to="TaskComponent/TaskModelHelper" method="Init"]
+
+[editable path="TaskComponent"]
