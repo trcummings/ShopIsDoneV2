@@ -9,9 +9,14 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         [Export]
         private UnitInteractionService _UnitInteractionService;
 
+        private bool _JustConfirmedInteraction = false;
+
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
             base.OnStart(message);
+
+            // Reset flag
+            _JustConfirmedInteraction = false;
 
             // Wire up unit interaction service
             _UnitInteractionService.ConfirmedInteraction += OnConfirmInteraction;
@@ -23,7 +28,13 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         {
             // If next state is "Idle" then we probably got interrupted, reset
             // the service
-            if (nextState == Consts.States.IDLE) _UnitInteractionService.Reset();
+            if (!_JustConfirmedInteraction && nextState == Consts.States.IDLE)
+            {
+                _UnitInteractionService.Reset();
+            }
+
+            // Reset flag
+            _JustConfirmedInteraction = false;
 
             // Clean up unit interaction service
             _UnitInteractionService.ConfirmedInteraction -= OnConfirmInteraction;
@@ -41,6 +52,10 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         private void OnConfirmInteraction(InteractionComponent interaction)
         {
+            // Set flag
+            _JustConfirmedInteraction = true;
+
+            // Emit
             EmitSignal(nameof(RunActionRequested), new Dictionary<string, Variant>()
             {
                 { Consts.ACTION_KEY, _Action },

@@ -4,6 +4,7 @@ using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Tasks;
+using ShopIsDone.Actions;
 
 namespace ShopIsDone.Arenas.Battles.States
 {
@@ -18,6 +19,9 @@ namespace ShopIsDone.Arenas.Battles.States
         [Export]
         private TaskService _TaskService;
 
+        [Export]
+        private ActionService _ActionService;
+
         public override void OnStart(Dictionary<string, Variant> message)
         {
             base.OnStart(message);
@@ -31,7 +35,10 @@ namespace ShopIsDone.Arenas.Battles.States
                 // Resolve status effects
 
                 // Resolve in progress tasks
-                _TaskService.ResolveInProgressTasks()
+                _TaskService.ResolveInProgressTasks(),
+
+                // Update arena
+                _ActionService.PostActionUpdate()
             );
             // Advance on finished
             command.Connect(

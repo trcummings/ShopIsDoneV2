@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://cfyqrs06180rr"]
+
+[ext_resource type="Script" path="res://tasks/TaskComponent.cs" id="1_2uvdb"]
+[ext_resource type="Script" path="res://tasks/TaskProgressHandler.cs" id="3_r1le4"]
+[ext_resource type="Script" path="res://tasks/TaskCompletionHandler.cs" id="4_w8v2a"]
+[ext_resource type="Script" path="res://tasks/SelectTaskHandler.cs" id="5_x2nsf"]
+[ext_resource type="PackedScene" uid="uid://pocsbafwls6i" path="res://widgets/progress_bar_3d/progress_bar_3d.tscn" id="7_shrb0"]
+[ext_resource type="PackedScene" uid="uid://0elak5oinr0k" path="res://tasks/task_damage_player.tscn" id="8_imt4d"]
+
+[node name="TaskComponent" type="Node3D" node_paths=PackedStringArray("_ProgressBar3D", "_SelectTaskHandler")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 2.1684e-19, 4.1633e-12, -2.1684e-19)
+script = ExtResource("1_2uvdb")
+_TaskCompletionHandlerPath = NodePath("CompletionHandler")
+_TaskProgressHandlerPath = NodePath("ProgressHandler")
+_ProgressBar3D = NodePath("ProgressBar3D")
+_SelectTaskHandler = NodePath("SelectTaskHandler")
+
+[node name="ProgressHandler" type="Node" parent="."]
+script = ExtResource("3_r1le4")
+
+[node name="CompletionHandler" type="Node" parent="."]
+script = ExtResource("4_w8v2a")
+
+[node name="SelectTaskHandler" type="Node3D" parent="." node_paths=PackedStringArray("_Task")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.01, 2.08165e-12)
+script = ExtResource("5_x2nsf")
+_Task = NodePath("..")
+
+[node name="ProgressBar3D" parent="." instance=ExtResource("7_shrb0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
+
+[node name="TaskDamagePlayer" parent="." instance=ExtResource("8_imt4d")]
+
+[connection signal="TaskHealthDamaged" from="." to="TaskDamagePlayer" method="play" unbinds=4]
+[connection signal="TaskProgressBegan" from="." to="ProgressBar3D" method="FadeIn"]
+[connection signal="TaskProgressEnded" from="." to="ProgressBar3D" method="FadeOut"]

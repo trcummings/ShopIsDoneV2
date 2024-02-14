@@ -18,14 +18,26 @@ namespace ShopIsDone.Tasks.TaskModels
             _AnimPlayer.Stop(false);
         }
 
-        // Advance player to percentage of its ProgressTask animation
-        public override void SetProgress(int amount, int current, int total)
+        public override void Init(int current, int total, float percent)
         {
             // Get animation
             var anim = _AnimPlayer.GetAnimation(AnimName);
 
             // Calculate amount to advance by based on percentage
-            var progressPercent = 1F - (current / (float)total);
+            var progressPercent = 1f - (current / (float)total);
+            var advanceTime = progressPercent * anim.Length;
+
+            // Advance the animation to percentage amount
+            _AnimPlayer.Seek(advanceTime, true);
+        }
+
+        public override void SetProgress(int amount, int current, int total, float percent)
+        {
+            // Get animation
+            var anim = _AnimPlayer.GetAnimation(AnimName);
+
+            // Calculate amount to advance by based on percentage
+            var progressPercent = 1f - (current / (float)total);
             var advanceTime = progressPercent * anim.Length;
 
             // Advance the animation to percentage amount
