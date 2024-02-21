@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7xlqty5qdnif"]
+
+[ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_emqd3"]
+[ext_resource type="PackedScene" uid="uid://dlk4igjt1ir5x" path="res://Models/clown_puppet/clown_puppet_model.tscn" id="2_gx4b6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4khx"]
+radius = 0.3
+height = 1.4
+
+[node name="ClownPuppet" instance=ExtResource("1_emqd3")]
+collision_layer = 2
+collision_mask = 0
+Id = "clown_puppet"
+EntityName = "Clown Puppet"
+
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("CapsuleShape3D_f4khx")
+
+[node name="ClownPuppetModel" parent="." index="3" instance=ExtResource("2_gx4b6")]

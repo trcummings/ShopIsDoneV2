@@ -10,6 +10,7 @@ using ShopIsDone.Arenas.ArenaScripts;
 using ShopIsDone.Arenas.Meddling;
 using ShopIsDone.Entities.ParallelHunters;
 using ShopIsDone.Utils;
+using ShopIsDone.ClownRules;
 
 namespace ShopIsDone.Actions
 {
@@ -38,6 +39,9 @@ namespace ShopIsDone.Actions
 
         [Export]
         private ParallelHunterService _ParallelHunterService;
+
+        [Export]
+        private ClownRulesService _ClownRulesService;
 
         // State
         private ArenaAction _CurrentAction;
@@ -87,7 +91,8 @@ namespace ShopIsDone.Actions
                 // Update tiles
                 new DeferredCommand(() => new ActionCommand(_TileManager.UpdateTiles)),
 
-                // TODO: Process rules
+                // Process rules
+                new DeferredCommand(() => _ClownRulesService.ProcessActionRules(_CurrentAction, _CurrentMessage)),
 
                 // Run script queue
                 new DeferredCommand(_ScriptQueueService.RunQueue)
@@ -132,8 +137,13 @@ namespace ShopIsDone.Actions
                 actionCommand.Connect(
                     nameof(actionCommand.Finished),
                     Callable.From(() => {
+                        // Clear out the current action / current message
                         _CurrentAction = null;
                         _CurrentMessage = null;
+
+                        // Run final action finished hook (only for synchronous
+                        // cleanup functions)
+                        OnActionFinished();
                     }),
                     (uint)ConnectFlags.OneShot
                 );
@@ -141,6 +151,11 @@ namespace ShopIsDone.Actions
 
             // Pass through
             return actionCommand;
+        }
+
+        private void OnActionFinished()
+        {
+            _ClownRulesService.ResetActionRules();
         }
 
         private Command WinFailCheck(Command next)

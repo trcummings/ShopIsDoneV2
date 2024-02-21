@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=68 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -43,6 +43,7 @@
 [ext_resource type="Script" path="res://clown_timer/TurnInterrupterService.cs" id="20_u3kfo"]
 [ext_resource type="PackedScene" uid="uid://d4f3h0uwl480d" path="res://arenas/states/player_turn_states/choosing_action_states/facing_direction_state.tscn" id="20_ycbal"]
 [ext_resource type="PackedScene" uid="uid://dmawm142xfh0t" path="res://arenas/states/player_turn_states/choosing_action_states/move_state.tscn" id="21_6pg1j"]
+[ext_resource type="Script" path="res://clown_rules/ClownRulesService.cs" id="21_etobo"]
 [ext_resource type="PackedScene" uid="uid://bswkvjqatmnba" path="res://arenas/states/player_turn_states/choosing_action_states/targeting_state.tscn" id="22_e5qdl"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/OutOfTimeFinishedState.cs" id="22_qh40g"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/VictoryFinishedState.cs" id="23_2yhgl"]
@@ -91,12 +92,13 @@ _ExtraServices = [NodePath("../Tiles")]
 [node name="TurnCounter" type="Node" parent="Services"]
 script = ExtResource("2_qt0kh")
 
-[node name="ActionService" type="Node" parent="Services" node_paths=PackedStringArray("_ScriptQueueService", "_OutcomeService", "_ActionMeddler", "_ParallelHunterService")]
+[node name="ActionService" type="Node" parent="Services" node_paths=PackedStringArray("_ScriptQueueService", "_OutcomeService", "_ActionMeddler", "_ParallelHunterService", "_ClownRulesService")]
 script = ExtResource("3_y84tj")
 _ScriptQueueService = NodePath("../ScriptQueueService")
 _OutcomeService = NodePath("../ArenaOutcomeService")
 _ActionMeddler = NodePath("../ActionMeddler")
 _ParallelHunterService = NodePath("../ParallelHunterService")
+_ClownRulesService = NodePath("../ClownRulesService")
 
 [node name="PlayerUnitService" type="Node" parent="Services"]
 script = ExtResource("4_m7h52")
@@ -160,6 +162,9 @@ _WhitelistedPlayerTurnStates = [NodePath("../../ArenaStateMachine/Running/Battle
 script = ExtResource("20_u3kfo")
 _PlayerTurnBattleState = NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn")
 _ActionService = NodePath("../ActionService")
+
+[node name="ClownRulesService" type="Node" parent="Services"]
+script = ExtResource("21_etobo")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")

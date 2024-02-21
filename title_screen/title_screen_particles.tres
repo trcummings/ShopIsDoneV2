@@ -1,0 +1,38 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=7 format=3 uid="uid://c5esb16gvlyeb"]
+
+[sub_resource type="Curve" id="Curve_rwaka"]
+_data = [Vector2(0.00503355, 0.0101897), 0.0, 0.0, 0, 0, Vector2(0.221477, 1), 0.0, 0.0, 0, 0, Vector2(0.756711, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_wkv5h"]
+curve = SubResource("Curve_rwaka")
+
+[sub_resource type="Gradient" id="Gradient_7yacw"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.327913, 0.655827, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2almg"]
+gradient = SubResource("Gradient_7yacw")
+
+[sub_resource type="Curve" id="Curve_rr2qs"]
+_data = [Vector2(0, 0), 0.0, 2.46835, 0, 1, Vector2(0.405128, 1), 0.0, 0.0, 0, 0, Vector2(0.810552, 0.991584), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.23406, 0.0, 1, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_vtjm6"]
+curve = SubResource("Curve_rr2qs")
+
+[resource]
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 3.0
+spread = 180.0
+gravity = Vector3(0.1, -0.25, -0.1)
+tangential_accel_min = 0.05
+tangential_accel_max = 0.1
+scale_min = 0.0
+scale_curve = SubResource("CurveTexture_vtjm6")
+color = Color(1, 1, 1, 0.270588)
+color_ramp = SubResource("GradientTexture1D_2almg")
+alpha_curve = SubResource("CurveTexture_wkv5h")
+turbulence_enabled = true
