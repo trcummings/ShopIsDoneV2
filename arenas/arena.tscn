@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=72 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -60,6 +60,9 @@
 [ext_resource type="PackedScene" uid="uid://cvfjwqjfca0rm" path="res://arena_actions/effort_meter/effort_meter.tscn" id="40_ho46i"]
 [ext_resource type="PackedScene" uid="uid://cqq6dmqdsuqoe" path="res://clown_timer/clown_clock.tscn" id="57_n517i"]
 [ext_resource type="PackedScene" uid="uid://c8xyd8s0yod3u" path="res://tiles/tile_hover_ui/tile_hover_ui.tscn" id="58_m7tmb"]
+[ext_resource type="PackedScene" uid="uid://cdce80truckjp" path="res://clown_rules/ui/rules_ui.tscn" id="61_0b8j6"]
+[ext_resource type="PackedScene" uid="uid://bvr1260jlynow" path="res://conditions/ui/conditions_remaining.tscn" id="62_ioot1"]
+[ext_resource type="PackedScene" uid="uid://brpya8arwjb2" path="res://clown_rules/ui/rules_list.tscn" id="63_x3x63"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
@@ -76,6 +79,8 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t11pk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wt6n1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ssca0"]
 
 [node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_PlayerUnitService") groups=["arena"]]
 script = ExtResource("1_loukv")
@@ -130,8 +135,9 @@ _ConditionsService = NodePath("../ConditionsService")
 [node name="UnitDeathService" type="Node" parent="Services"]
 script = ExtResource("10_y7i7b")
 
-[node name="ConditionsService" type="Node" parent="Services"]
+[node name="ConditionsService" type="Node" parent="Services" node_paths=PackedStringArray("_ConditionsRemaining")]
 script = ExtResource("11_jvwpy")
+_ConditionsRemaining = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContainer/ConditionsRemaining")
 
 [node name="UnitInteractionService" parent="Services" instance=ExtResource("12_i1lmg")]
 
@@ -163,8 +169,10 @@ script = ExtResource("20_u3kfo")
 _PlayerTurnBattleState = NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn")
 _ActionService = NodePath("../ActionService")
 
-[node name="ClownRulesService" type="Node" parent="Services"]
+[node name="ClownRulesService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesUI", "_RulesList")]
 script = ExtResource("21_etobo")
+_RulesUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContainer/RulesUI")
+_RulesList = NodePath("../../UILayer/RulesList")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
@@ -232,7 +240,7 @@ script = ExtResource("3_q440h")
 [node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_TileHoverUI", "_EndPlayerTurnWidget") instance=ExtResource("15_hbm50")]
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 _PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
-_TileHoverUI = NodePath("../../../../../../UILayer/PanelContainer/MarginContainer/TileHoverUI")
+_TileHoverUI = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/TileHoverUI")
 _EndPlayerTurnWidget = NodePath("../../../../../../UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
 
 [node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService")]
@@ -626,7 +634,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_t11pk")
 position = Vector2(150, 150)
 scale = Vector2(0.3, 0.3)
 
-[node name="PanelContainer" type="PanelContainer" parent="UILayer"]
+[node name="TileHoverUIContainer" type="PanelContainer" parent="UILayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -634,15 +642,51 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_wt6n1")
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TileHoverUIContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="TileHoverUI" parent="UILayer/PanelContainer/MarginContainer" instance=ExtResource("58_m7tmb")]
+[node name="TileHoverUI" parent="UILayer/TileHoverUIContainer/MarginContainer" instance=ExtResource("58_m7tmb")]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+
+[node name="RulesAndConditions" type="PanelContainer" parent="UILayer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 10
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ssca0")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/RulesAndConditions"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/RulesAndConditions/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RulesUI" parent="UILayer/RulesAndConditions/MarginContainer/VBoxContainer" instance=ExtResource("61_0b8j6")]
+visible = false
+layout_mode = 2
+
+[node name="ConditionsRemaining" parent="UILayer/RulesAndConditions/MarginContainer/VBoxContainer" instance=ExtResource("62_ioot1")]
+visible = false
+layout_mode = 2
+
+[node name="RulesList" parent="UILayer" instance=ExtResource("63_x3x63")]
+visible = false

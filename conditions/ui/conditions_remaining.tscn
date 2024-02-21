@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvr1260jlynow"]
+
+[ext_resource type="Script" path="res://conditions/ui/ConditionsUI.cs" id="1_0vgnk"]
+[ext_resource type="PackedScene" uid="uid://dpuwejxtufc3" path="res://conditions/ui/condition_ui_element.tscn" id="2_aidtu"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="3_khmik"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="4_rmcly"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1dw7w"]
+
+[node name="ConditionsRemaining" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 250)
+mouse_filter = 2
+script = ExtResource("1_0vgnk")
+ElementTemplate = ExtResource("2_aidtu")
+
+[node name="FullBG" parent="." instance=ExtResource("3_khmik")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1dw7w")
+
+[node name="TitleBG" parent="VBoxContainer/MarginContainer" instance=ExtResource("3_khmik")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ConditonsLabel" type="Label" parent="VBoxContainer/MarginContainer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("4_rmcly")
+theme_type_variation = &"LabelDark"
+text = "Conditions Remaining"
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Conditions" type="VBoxContainer" parent="VBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4hjmqf3pe7is"]
+
+[ext_resource type="RichTextEffect" path="res://addons/teeb.text_effects/resources/ColorMod.tres" id="2"]
+[ext_resource type="RichTextEffect" path="res://addons/teeb.text_effects/resources/Nervous.tres" id="3"]
+
+[node name="RuleListElement" type="RichTextLabel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+bbcode_enabled = true
+text = "[Rule Text]"
+custom_effects = [ExtResource("2"), ExtResource("3")]

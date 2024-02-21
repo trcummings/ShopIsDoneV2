@@ -6,7 +6,7 @@ using System;
 using Godot.Collections;
 using System.Linq;
 
-namespace ShopIsDone.ClownRules.ClownActionRules
+namespace ShopIsDone.ClownRules.ActionRules
 {
     public partial class MoveInLShapeActionRule : ClownActionRule
     {
