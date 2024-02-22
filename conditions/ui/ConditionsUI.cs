@@ -8,15 +8,15 @@ namespace ShopIsDone.Conditions.UI
 {
     public partial class ConditionsUI : Control
     {
-        [Export]
-        public NodePath AllTasksDoneTweenerPath;
+        //[Export]
+        //public NodePath AllTasksDoneTweenerPath;
 
         [Export]
         public PackedScene ElementTemplate;
 
         // Nodes
         private Control _ConditionElementsNode;
-        private ControlTweener _AllTasksDoneTweener;
+        //private ControlTweener _AllTasksDoneTweener;
 
         // State
         private Array<ConditionUIElement> _ConditionElements = new Array<ConditionUIElement>();
@@ -25,7 +25,7 @@ namespace ShopIsDone.Conditions.UI
         {
             // Ready nodes
             _ConditionElementsNode = GetNode<Control>("%Conditions");
-            _AllTasksDoneTweener = GetNode<ControlTweener>(AllTasksDoneTweenerPath);
+            //_AllTasksDoneTweener = GetNode<ControlTweener>(AllTasksDoneTweenerPath);
         }
 
         public void Init(Array<Condition> conditions)
@@ -52,12 +52,12 @@ namespace ShopIsDone.Conditions.UI
             }
         }
 
-        public async void OnAllConditionsComplete()
-        {
-            await _AllTasksDoneTweener.TweenInAsync(0.5f);
-            await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
-            await _AllTasksDoneTweener.TweenOutAsync(0.5f);
-        }
+        //public async void OnAllConditionsComplete()
+        //{
+        //    await _AllTasksDoneTweener.TweenInAsync(0.5f);
+        //    await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
+        //    await _AllTasksDoneTweener.TweenOutAsync(0.5f);
+        //}
 
         public void UpdateCondition(Condition condition)
         {

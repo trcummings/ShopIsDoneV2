@@ -14,7 +14,12 @@ namespace ShopIsDone.Actions
 
         public override Command Execute(Dictionary<string, Variant> message = null)
         {
-            return NextMove;
+            return NextMove ?? new Command();
+        }
+
+        public bool IsLastMove()
+        {
+            return NextMove == null;
         }
     }
 }

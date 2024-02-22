@@ -47,6 +47,15 @@ namespace ShopIsDone.Actions
         private ArenaAction _CurrentAction;
         private Dictionary<string, Variant> _CurrentMessage;
 
+        //public partial class ActionHistoryItem : GodotObject
+        //{
+        //    public ArenaAction Action;
+        //    public Dictionary<string, Variant> Message;
+        //}
+
+        //// For each turn
+        //private Array<ActionHistoryItem> _ActionHistory = new Array<ActionHistoryItem>();
+
         public void Init()
         {
             InjectionProvider.Inject(this);
@@ -130,6 +139,13 @@ namespace ShopIsDone.Actions
             _CurrentAction = action;
             _CurrentMessage = message;
 
+            //// Add it to the history
+            //_ActionHistory.Add(new ActionHistoryItem()
+            //{
+            //    Action = _CurrentAction,
+            //    Message = _CurrentMessage
+            //});
+
             // IF not a sub action
             if (action is not MoveSubAction)
             {
@@ -137,13 +153,13 @@ namespace ShopIsDone.Actions
                 actionCommand.Connect(
                     nameof(actionCommand.Finished),
                     Callable.From(() => {
-                        // Clear out the current action / current message
-                        _CurrentAction = null;
-                        _CurrentMessage = null;
-
                         // Run final action finished hook (only for synchronous
                         // cleanup functions)
                         OnActionFinished();
+
+                        // Clear out the current action / current message
+                        _CurrentAction = null;
+                        _CurrentMessage = null;
                     }),
                     (uint)ConnectFlags.OneShot
                 );

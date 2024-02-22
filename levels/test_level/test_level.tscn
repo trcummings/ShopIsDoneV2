@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=25 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="7_xooi4"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge_task.tscn" id="8_5fhod"]
 [ext_resource type="Script" path="res://levels/test_level/conditions/TaskCompletedCondition.cs" id="9_bxejf"]
+[ext_resource type="Script" path="res://clown_rules/action_rules/MoveInLShapeActionRule.cs" id="10_kmt7p"]
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="13_hfsdd"]
 [ext_resource type="PackedScene" uid="uid://cgli0qeti2oyr" path="res://entities/break_down_boxes_task/break_down_boxes_task.tscn" id="13_y1rrm"]
 [ext_resource type="PackedScene" uid="uid://bal3hv6vds0yc" path="res://entities/wet_spot_task/wet_spot_task.tscn" id="14_ixrgw"]
@@ -70,6 +71,9 @@ _Id = "customer_satisfied_condition"
 script = ExtResource("9_bxejf")
 Task = NodePath("../../../Entities/VegetableFridge")
 _Id = "task_completed_condition"
+
+[node name="MoveInLShapeActionRule" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ClownRulesService" index="0"]
+script = ExtResource("10_kmt7p")
 
 [node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../TileManager")

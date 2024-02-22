@@ -10,24 +10,29 @@ namespace ShopIsDone.ClownRules.ActionRules
 {
     public partial class MoveInLShapeActionRule : ClownActionRule
     {
+        private Array<Tile> _MovePath = new Array<Tile>();
+
         public override bool BrokeRule(ArenaAction action, Dictionary<string, Variant> message)
         {
+            // If it's not a move sub action, ignore it
+            if (action is not MoveSubAction moveSubAction) return false;
+
+            // If it's the last sub move, evaluate
+            if (moveSubAction.IsLastMove()) return MovedInLShape(_MovePath);
+
+            // If this is our first sub action, add the initial tile to the path
+            if (_MovePath.Count == 0) _MovePath.Add(moveSubAction.NextMove.InitialTile);
+
+            // Update the move path with the next tile
+            _MovePath.Add(moveSubAction.NextMove.FinalTile);
+
+            // Continue on
             return false;
-            //// Unless this was a movement action, ignore it
-            //var action = actionData.PawnAction;
-            //if (!(action is WalkAction moveAction)) return new Command();
+        }
 
-            //// If it is a movement action, but the moving pawn is not in a moving state,
-            //// they haven't finished moving, so ignore it
-            //if (moveAction.Pawn.GetComponent<StateHandlerComponent>().IsInState<MovingPawnState>()) return new Command();
-
-            //// If it is, look through the move path and decide if they moved in an
-            //// L-shaped path or not
-            //var movePath = moveAction.GetMovePath(actionData.Message);
-            //return new ConditionalCommand(
-            //    () => MovedInLShape(movePath),
-            //    BreakRule(actionData.Pawn)
-            //);
+        public override void ResetRule()
+        {
+            _MovePath.Clear();
         }
 
         protected bool MovedInLShape(Array<Tile> movePath)
