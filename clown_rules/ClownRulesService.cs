@@ -57,6 +57,16 @@ namespace ShopIsDone.ClownRules
             _RulesUI.Init(_Rules);
             _RulesList.Init(_Rules);
 
+            // Oneshot connect
+            _PlayerUnitService.Connect(
+                nameof(_PlayerUnitService.Initialized),
+                Callable.From(OnInitUnits),
+                (uint)ConnectFlags.OneShot
+            );
+        }
+
+        private void OnInitUnits()
+        {
             // Init rage
             _GroupRage = 0;
             _UnitRage = _PlayerUnitService.GetUnits().Aggregate(new Dictionary<string, float>(), (acc, unit) =>
@@ -72,7 +82,7 @@ namespace ShopIsDone.ClownRules
         public Command ProcessActionRules(ArenaAction action, Dictionary<string, Variant> message)
         {
             return new ConditionalCommand(
-                () => _IsActive,
+                () => _IsActive && _PlayerUnitService.GetUnits().Contains(action.Entity),
                 new DeferredCommand(() => new SeriesCommand(
                     _Rules
                         .Where(rule =>
@@ -88,7 +98,8 @@ namespace ShopIsDone.ClownRules
 
                             // Increment rage threshold
                             return new ActionCommand(() => {
-
+                                _UnitRage[action.Entity.Id] += 1;
+                                _GroupRage += 0.2f;
                             });
                         })
                         .ToArray()

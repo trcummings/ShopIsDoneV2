@@ -101,7 +101,12 @@ namespace ShopIsDone.Actions
                 new DeferredCommand(() => new ActionCommand(_TileManager.UpdateTiles)),
 
                 // Process rules
-                new DeferredCommand(() => _ClownRulesService.ProcessActionRules(_CurrentAction, _CurrentMessage)),
+                new DeferredCommand(() => new ConditionalCommand(
+                    () => _CurrentAction != null,
+                    new DeferredCommand(() =>
+                        _ClownRulesService.ProcessActionRules(_CurrentAction, _CurrentMessage)
+                    )
+                )),
 
                 // Run script queue
                 new DeferredCommand(_ScriptQueueService.RunQueue)

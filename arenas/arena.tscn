@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=73 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -63,6 +63,7 @@
 [ext_resource type="PackedScene" uid="uid://cdce80truckjp" path="res://clown_rules/ui/rules_ui.tscn" id="61_0b8j6"]
 [ext_resource type="PackedScene" uid="uid://bvr1260jlynow" path="res://conditions/ui/conditions_remaining.tscn" id="62_ioot1"]
 [ext_resource type="PackedScene" uid="uid://brpya8arwjb2" path="res://clown_rules/ui/rules_list.tscn" id="63_x3x63"]
+[ext_resource type="PackedScene" uid="uid://dq35dnfbvmsgh" path="res://clown_rules/clown_debug.tscn" id="64_oyack"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
@@ -171,6 +172,7 @@ _ActionService = NodePath("../ActionService")
 
 [node name="ClownRulesService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesUI", "_RulesList")]
 script = ExtResource("21_etobo")
+_IsActive = true
 _RulesUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContainer/RulesUI")
 _RulesList = NodePath("../../UILayer/RulesList")
 
@@ -690,3 +692,6 @@ layout_mode = 2
 
 [node name="RulesList" parent="UILayer" instance=ExtResource("63_x3x63")]
 visible = false
+
+[node name="ClownDebug" parent="UILayer" node_paths=PackedStringArray("_ClownRulesService") instance=ExtResource("64_oyack")]
+_ClownRulesService = NodePath("../../Services/ClownRulesService")
