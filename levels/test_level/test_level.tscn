@@ -100,17 +100,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 7)
 EditorFacingDir = 1
 
 [node name="BreakDownBoxesTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="2" instance=ExtResource("13_y1rrm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
 
 [node name="WetSpotTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="3" instance=ExtResource("14_ixrgw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -5)
 
 [node name="RegisterTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="4" instance=ExtResource("16_k8qim")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7, 0, 3)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5, 0, 3)
 EditorFacingDir = 1
 
 [node name="FixDisplayTask" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="5" instance=ExtResource("15_nmno6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -7)
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1, 0)
