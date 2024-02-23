@@ -35,6 +35,9 @@ namespace ShopIsDone.Arenas.Battles.States
             base.OnStart(message);
 
             new SeriesCommand(
+                // Clean up action history
+                new ActionCommand(_ActionService.ResetActionHistory),
+                // Reset units
                 new ActionCommand(() =>
                 {
                     // Reset all units for the next turn
@@ -50,21 +53,24 @@ namespace ShopIsDone.Arenas.Battles.States
                     _OutcomeService.IsPlayerVictorious,
                     //If so, end the arena!
                     new ActionCommand(_OutcomeService.AdvanceToVictoryPhase),
-                    // Otherwise, kick off the next turn
-                    new ActionCommand(_PhaseManager.AdvanceToNextPhase)
-                ),
-                // Clean up for all entities
-                new SeriesCommand(
-                    GetTree()
-                        .GetNodesInGroup("entities")
-                        .OfType<LevelEntity>()
-                        .Where(_Arena.IsAncestorOf)
-                        .Select(e => e.OnCleanUp())
-                        .ToArray()
-                ),
-                new WaitIdleFrameCommand(this),
-                // Update arena
-                _ActionService.PostActionUpdate()
+                    // Otherwise, continue
+                    new SeriesCommand(
+                        // Clean up for all entities
+                        new SeriesCommand(
+                            GetTree()
+                                .GetNodesInGroup("entities")
+                                .OfType<LevelEntity>()
+                                .Where(_Arena.IsAncestorOf)
+                                .Select(e => e.OnCleanUp())
+                                .ToArray()
+                        ),
+                        new WaitIdleFrameCommand(this),
+                        // Update arena
+                        _ActionService.PostActionUpdate(),
+                        // Kick off the next turn
+                        new ActionCommand(_PhaseManager.AdvanceToNextPhase)
+                    )
+                )
             ).Execute();
         }
     }

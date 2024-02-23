@@ -11,11 +11,20 @@ using ShopIsDone.ClownRules.ActionRules;
 using System.Linq;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Arenas;
+using static ShopIsDone.Actions.ActionService;
+using ShopIsDone.Employees.Actions;
+using ShopIsDone.Entities.Employees.Actions;
 
 namespace ShopIsDone.ClownRules
 {
-    public partial class ClownRulesService : Node, IService, IInitializable
+    public partial class ClownRulesService : Node, IService, IInitializable, ICleanUpable
     {
+        [Signal]
+        public delegate void InitializedEventHandler();
+
+        [Signal]
+        public delegate void CleanedUpEventHandler();
+
         [Export]
         private bool _IsActive = false;
 
@@ -28,12 +37,14 @@ namespace ShopIsDone.ClownRules
         [Export]
         private RulesList _RulesList;
 
-        private Array<ClownActionRule> _Rules = new Array<ClownActionRule>();
+        [Export]
+        private ActionService _ActionService;
 
         [Inject]
         private PlayerUnitService _PlayerUnitService;
 
         // State
+        private Array<ClownActionRule> _Rules = new Array<ClownActionRule>();
         public float GroupRage { get { return _GroupRage; } }
         private float _GroupRage = 0;
 
@@ -63,6 +74,13 @@ namespace ShopIsDone.ClownRules
                 Callable.From(OnInitUnits),
                 (uint)ConnectFlags.OneShot
             );
+
+            EmitSignal(nameof(Initialized));
+        }
+
+        public void CleanUp()
+        {
+            EmitSignal(nameof(CleanedUp));
         }
 
         private void OnInitUnits()
@@ -118,6 +136,50 @@ namespace ShopIsDone.ClownRules
 
             // Clear broken rules
             _BrokenRules.Clear();
+        }
+
+        public Command ProcessTurnRules()
+        {
+            return new ConditionalCommand(
+                () => _IsActive,
+                new ActionCommand(() =>
+                {
+                    // Apply each rule to each unit
+                    foreach (var unit in _PlayerUnitService.GetUnits())
+                    {
+                        // Get that unit's actions from the action history
+                        var actions = _ActionService
+                            .ActionHistory
+                            .Where(item => item.Action.Entity == unit)
+                            .ToGodotArray();
+
+                        if (!(
+                            CheckIfMoved(unit, actions) ||
+                            CheckIfDoingTask(unit, actions) ||
+                            CheckIfHelpedCustomer(unit, actions))
+                        )
+                        {
+                            _UnitRage[unit.Id] += 1;
+                            _GroupRage += 0.2f;
+                        }
+                    }
+                })
+            );
+        }
+
+        private bool CheckIfMoved(LevelEntity _, Array<ActionHistoryItem> history)
+        {
+            return history.Select(item => item.Action).OfType<MoveSubAction>().Count() > 1;
+        }
+
+        private bool CheckIfDoingTask(LevelEntity _, Array<ActionHistoryItem> history)
+        {
+            return history.Select(item => item.Action).Any(action => action is StartTaskAction);
+        }
+
+        private bool CheckIfHelpedCustomer(LevelEntity _, Array<ActionHistoryItem> history)
+        {
+            return history.Select(item => item.Action).Any(action => action is HelpCustomerAction);
         }
     }
 }

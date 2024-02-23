@@ -47,14 +47,15 @@ namespace ShopIsDone.Actions
         private ArenaAction _CurrentAction;
         private Dictionary<string, Variant> _CurrentMessage;
 
-        //public partial class ActionHistoryItem : GodotObject
-        //{
-        //    public ArenaAction Action;
-        //    public Dictionary<string, Variant> Message;
-        //}
+        public partial class ActionHistoryItem : GodotObject
+        {
+            public ArenaAction Action;
+            public Dictionary<string, Variant> Message;
+        }
 
-        //// For each turn
-        //private Array<ActionHistoryItem> _ActionHistory = new Array<ActionHistoryItem>();
+        // For each turn
+        public Array<ActionHistoryItem> ActionHistory { get { return _ActionHistory; } }
+        private Array<ActionHistoryItem> _ActionHistory = new Array<ActionHistoryItem>();
 
         public void Init()
         {
@@ -144,12 +145,12 @@ namespace ShopIsDone.Actions
             _CurrentAction = action;
             _CurrentMessage = message;
 
-            //// Add it to the history
-            //_ActionHistory.Add(new ActionHistoryItem()
-            //{
-            //    Action = _CurrentAction,
-            //    Message = _CurrentMessage
-            //});
+            // Add it to the history
+            _ActionHistory.Add(new ActionHistoryItem()
+            {
+                Action = _CurrentAction,
+                Message = _CurrentMessage
+            });
 
             // IF not a sub action
             if (action is not MoveSubAction)
@@ -172,6 +173,11 @@ namespace ShopIsDone.Actions
 
             // Pass through
             return actionCommand;
+        }
+
+        public void ResetActionHistory()
+        {
+            _ActionHistory.Clear();
         }
 
         private void OnActionFinished()

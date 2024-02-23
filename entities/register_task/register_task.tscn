@@ -44,7 +44,7 @@ MicrogameScene = ExtResource("9_vlibf")
 _OutcomeHandlerPath = NodePath("../TaskComponent")
 
 [node name="RegisterTaskModel" parent="." index="5" instance=ExtResource("7_rnbx4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1, 2.08165e-12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.5, 2.08165e-12)
 LoopingAnimations = []
 
 [editable path="TaskComponent"]

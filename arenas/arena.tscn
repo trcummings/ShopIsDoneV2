@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=74 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -58,6 +58,7 @@
 [ext_resource type="PackedScene" uid="uid://daffdkouahgqp" path="res://arenas/ui/player_unit/player_unit_ui.tscn" id="38_qf0ro"]
 [ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/options_menu.tscn" id="39_yls7l"]
 [ext_resource type="PackedScene" uid="uid://cvfjwqjfca0rm" path="res://arena_actions/effort_meter/effort_meter.tscn" id="40_ho46i"]
+[ext_resource type="Script" path="res://arenas/states/battle_states/JudgePhaseBattleState.cs" id="43_bmay2"]
 [ext_resource type="PackedScene" uid="uid://cqq6dmqdsuqoe" path="res://clown_timer/clown_clock.tscn" id="57_n517i"]
 [ext_resource type="PackedScene" uid="uid://c8xyd8s0yod3u" path="res://tiles/tile_hover_ui/tile_hover_ui.tscn" id="58_m7tmb"]
 [ext_resource type="PackedScene" uid="uid://cdce80truckjp" path="res://clown_rules/ui/rules_ui.tscn" id="61_0b8j6"]
@@ -170,11 +171,12 @@ script = ExtResource("20_u3kfo")
 _PlayerTurnBattleState = NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn")
 _ActionService = NodePath("../ActionService")
 
-[node name="ClownRulesService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesUI", "_RulesList")]
+[node name="ClownRulesService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesUI", "_RulesList", "_ActionService")]
 script = ExtResource("21_etobo")
 _IsActive = true
 _RulesUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContainer/RulesUI")
 _RulesList = NodePath("../../UILayer/RulesList")
+_ActionService = NodePath("../ActionService")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
@@ -189,7 +191,7 @@ _PhaseManager = NodePath("BattlePhaseManager")
 [node name="BattlePhaseManager" type="Node" parent="ArenaStateMachine/Running" node_paths=PackedStringArray("CurrentPhase", "PhaseOrder", "_BattleStateMachine")]
 script = ExtResource("4_c0td2")
 CurrentPhase = NodePath("../BattleStateMachine/TurnCountdown")
-PhaseOrder = [NodePath("../BattleStateMachine/TurnCountdown"), NodePath("../BattleStateMachine/CleanUp"), NodePath("../BattleStateMachine/EnemyActivity"), NodePath("../BattleStateMachine/PrepPlayerTurn"), NodePath("../BattleStateMachine/PlayerTurn")]
+PhaseOrder = [NodePath("../BattleStateMachine/TurnCountdown"), NodePath("../BattleStateMachine/CleanUp"), NodePath("../BattleStateMachine/EnemyActivity"), NodePath("../BattleStateMachine/PrepPlayerTurn"), NodePath("../BattleStateMachine/PlayerTurn"), NodePath("../BattleStateMachine/JudgePhase")]
 _BattleStateMachine = NodePath("../BattleStateMachine")
 
 [node name="BattleStateMachine" type="Node" parent="ArenaStateMachine/Running"]
@@ -287,6 +289,12 @@ _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 
 [node name="MoreInfo" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
 script = ExtResource("20_por72")
+
+[node name="JudgePhase" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ActionService", "_ClownRulesService")]
+script = ExtResource("43_bmay2")
+_PhaseManager = NodePath("../../BattlePhaseManager")
+_ActionService = NodePath("../../../../Services/ActionService")
+_ClownRulesService = NodePath("../../../../Services/ClownRulesService")
 
 [node name="Finished" type="Node" parent="ArenaStateMachine" node_paths=PackedStringArray("_OutcomeStateMachine")]
 script = ExtResource("7_wmirh")
@@ -694,4 +702,8 @@ layout_mode = 2
 visible = false
 
 [node name="ClownDebug" parent="UILayer" node_paths=PackedStringArray("_ClownRulesService") instance=ExtResource("64_oyack")]
+visible = false
 _ClownRulesService = NodePath("../../Services/ClownRulesService")
+
+[connection signal="CleanedUp" from="Services/ClownRulesService" to="UILayer/ClownDebug" method="hide"]
+[connection signal="Initialized" from="Services/ClownRulesService" to="UILayer/ClownDebug" method="show"]

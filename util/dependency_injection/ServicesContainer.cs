@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
-using ShopIsDone.Tiles;
-using Generics = System.Collections.Generic;
 using System.Linq;
 
 namespace ShopIsDone.Utils.DependencyInjection
@@ -42,6 +40,14 @@ namespace ShopIsDone.Utils.DependencyInjection
             foreach (var service in GetServices())
             {
                 _InjectionProvider.UnregisterService(service);
+            }
+        }
+
+        public void CleanUpServices()
+        {
+            foreach (var service in GetServices().OfType<ICleanUpable>())
+            {
+                service.CleanUp();
             }
         }
 

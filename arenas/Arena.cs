@@ -88,6 +88,7 @@ namespace ShopIsDone.Arenas
         {
             // Unregister services
             _Services.UnregisterServices();
+            _Services.CleanUpServices();
 
             // Idle player units
             _PlayerCharacterManager.Idle();
