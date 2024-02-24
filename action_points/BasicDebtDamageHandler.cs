@@ -44,25 +44,37 @@ namespace ShopIsDone.ActionPoints
                     // If we took no actual debt damage, emit
                     else EmitSignal(nameof(TookNoDamage));
                 }),
-                // Take hit animation (only if we took damage)
-                new ConditionalCommand(
+                // React to damage (or no damage)
+                new IfElseCommand(
                     () => payload.TotalDebtDamage > 0,
+                    // Take hit animation (only if we took damage)
                     new SeriesCommand(
                         // Screenshake
                         new ActionCommand(() => _Screenshake.Shake(ScreenshakeHandler.ShakePayload.ShakeSizes.Huge)),
                         // React to damage
-                        _StateHandler.RunPushState(StateConsts.HURT),
-                        // Set facing direction, if we're still alive
+                        _StateHandler.RunChangeState(StateConsts.HURT),
+                        // If still alive
                         new ConditionalCommand(
-                            () => !payload.ApHandler.IsMaxedOut() && payload.Positioning != Positions.Null,
-                            new ActionCommand(() =>
-                            {
-                                // Calculate facing direction of source
-                                var targetFacingDir = _StateHandler.Entity.GetFacingDirTowards(payload.Source.GlobalPosition);
-                                _StateHandler.Entity.FacingDirection = targetFacingDir;
-                            })
+                            () => !payload.ApHandler.IsMaxedOut(),
+                            // Go back to idle
+                            new SeriesCommand(
+                                _StateHandler.RunChangeState(StateConsts.IDLE),
+                                // If that damage came from a position, face that
+                                // position
+                                new ConditionalCommand(
+                                    () => payload.Positioning != Positions.Null,
+                                    new ActionCommand(() =>
+                                    {
+                                        // Calculate facing direction of source
+                                        var targetFacingDir = _StateHandler.Entity.GetFacingDirTowards(payload.Source.GlobalPosition);
+                                        _StateHandler.Entity.FacingDirection = targetFacingDir;
+                                    })
+                                )
+                            )
                         )
-                    )
+                    ),
+                    // Otherwise just go back to idle anyway
+                    _StateHandler.RunChangeState(StateConsts.IDLE)
                 )
             );
         }

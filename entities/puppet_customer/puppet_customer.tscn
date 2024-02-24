@@ -37,6 +37,7 @@
 radius = 0.75
 
 [node name="Customer" type="CharacterBody3D" groups=["entities"]]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 collision_layer = 3
 script = ExtResource("1_hv7oi")
 Id = "puppet_customer_type_1"
@@ -49,11 +50,11 @@ transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-
 shape = SubResource("CapsuleShape3D_0cyyf")
 
 [node name="CustomerType1Model" parent="." instance=ExtResource("2_5ehyc")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
+transform = Transform3D(1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, 1, 0, 0, 0)
 
-[node name="FacingDirectionHandler" type="Node" parent="." node_paths=PackedStringArray("FacingTarget")]
+[node name="FacingDirectionHandler" type="Node" parent="."]
 script = ExtResource("3_v23cd")
-FacingTarget = NodePath("..")
+_UpdateFacingTarget = false
 
 [node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_MoveValidator", "_SkipTileStrategy")]
 script = ExtResource("4_1yuwc")

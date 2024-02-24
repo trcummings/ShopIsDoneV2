@@ -66,7 +66,12 @@ namespace ShopIsDone.Entities.Employees.Actions
                 // Run help customer state change
                 _StateHandler.RunChangeState(StateConsts.Employees.HELP_CUSTOMER),
                 // Run employee microgame
-                targetMicrogameHandler.RunMicrogame(payload)
+                targetMicrogameHandler.RunMicrogame(payload),
+                // If employee is still active, then return to idle
+                new ConditionalCommand(
+                    Entity.IsActive,
+                    _StateHandler.RunChangeState(StateConsts.IDLE)
+                )
             );
         }
     }
