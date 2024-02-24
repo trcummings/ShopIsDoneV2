@@ -249,7 +249,17 @@ namespace ShopIsDone.Lighting
             }
         }
 
-        public async Task FlickerLightOff()
+        public void FlickerLightOff()
+        {
+            _ = FlickerLightOffAsync();
+        }
+
+        public void FlickerLightOn()
+        {
+            _ = FlickerLightOnAsync();
+        }
+
+        public async Task FlickerLightOffAsync()
         {
             if (_LightFlickerSfx != null)
             {
@@ -270,7 +280,7 @@ namespace ShopIsDone.Lighting
             EmitSignal(nameof(FlickeredOff));
         }
 
-        public async Task FlickerLightOn()
+        public async Task FlickerLightOnAsync()
         {
             // Turn self off
             _IsLit = true;

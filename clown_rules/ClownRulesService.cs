@@ -49,7 +49,7 @@ namespace ShopIsDone.ClownRules
         private PlayerUnitService _PlayerUnitService;
 
         [Export]
-        private float _IndividualRageThreshold = 2f;
+        private float _IndividualRageThreshold = 3f;
 
         [Export]
         private float _GroupRageThreshold = 1f;
@@ -177,7 +177,7 @@ namespace ShopIsDone.ClownRules
                                 CheckIfHelpedCustomer(unit, actions))
                             )
                             {
-                                IncreaseRage(unit.Id);
+                                IncreaseRage(unit.Id, 0.5f);
                             }
                         }
                     }),
@@ -189,12 +189,12 @@ namespace ShopIsDone.ClownRules
 
         private bool IsUnitAboveRageThreshold(string id)
         {
-            return _UnitRage[id] > _IndividualRageThreshold;
+            return _UnitRage[id] >= _IndividualRageThreshold;
         }
 
         private bool IsAboveGroupRageThreshold()
         {
-            return _GroupRage > _GroupRageThreshold;
+            return _GroupRage >= _GroupRageThreshold;
         }
 
         private Command ProcessPunishment()
@@ -220,11 +220,13 @@ namespace ShopIsDone.ClownRules
         {
             return new SeriesCommand(
                 // TODO: Punishment
-
+                new ActionCommand(() => GD.Print($"Punishing {unit.EntityName}")),
                 // Subside individual rage by threshold amount
                 new ActionCommand(() =>
                 {
                     _UnitRage[unit.Id] = Mathf.Max(_UnitRage[unit.Id] - _IndividualRageThreshold, 0);
+                    // Tick down group rage by a little bit
+                    _GroupRage = Mathf.Max(_GroupRage - 0.2f, 0);
                 })
             );
         }
@@ -233,7 +235,7 @@ namespace ShopIsDone.ClownRules
         {
             return new SeriesCommand(
                 // TODO: Punishment
-
+                new ActionCommand(() => GD.Print("Punishing Group")),
                 // Subside all rage by threshold amount
                 new ActionCommand(() =>
                 {
@@ -246,13 +248,13 @@ namespace ShopIsDone.ClownRules
             );
         }
 
-        private void IncreaseRage(string id)
+        private void IncreaseRage(string id, float ratio = 1f)
         {
             // Flip rage flag
             _WasEnragedThisTurn = true;
 
             // Increment rage
-            _UnitRage[id] += 1;
+            _UnitRage[id] += 1 * ratio;
             _GroupRage += 0.2f;
         }
 
