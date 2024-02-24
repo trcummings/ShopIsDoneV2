@@ -209,6 +209,9 @@ metadata/_edit_lock_ = true
 [node name="Environment" type="Node3D" parent="World/NavigationRegion3D"]
 metadata/_edit_lock_ = true
 
+[node name="LightmapGI" type="LightmapGI" parent="World/NavigationRegion3D"]
+metadata/_edit_lock_ = true
+
 [node name="DefaultSpawnPoint" parent="World" instance=ExtResource("26_7pn1o")]
 
 [node name="GridSubViewport" type="SubViewport" parent="World"]
