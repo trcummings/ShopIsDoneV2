@@ -1,7 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7xlqty5qdnif"]
+[gd_scene load_steps=8 format=3 uid="uid://c7xlqty5qdnif"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_emqd3"]
 [ext_resource type="PackedScene" uid="uid://dlk4igjt1ir5x" path="res://Models/clown_puppet/clown_puppet_model.tscn" id="2_gx4b6"]
+[ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="3_wiwh8"]
+[ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="4_t87db"]
+[ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="5_tvijx"]
+[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="6_t4uw5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4khx"]
 radius = 0.3
@@ -18,3 +22,43 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 shape = SubResource("CapsuleShape3D_f4khx")
 
 [node name="ClownPuppetModel" parent="." index="3" instance=ExtResource("2_gx4b6")]
+
+[node name="WorldOmniLight" parent="." index="4" instance=ExtResource("3_wiwh8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+Radius = 1.5
+LightColor = Color(0.764706, 0.294118, 0.227451, 1)
+
+[node name="StateHandler" type="Node" parent="." index="5" node_paths=PackedStringArray("InitialState")]
+script = ExtResource("4_t87db")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateHandler" index="0"]
+script = ExtResource("5_tvijx")
+_ModelPath = NodePath("../../ClownPuppetModel")
+_WaitForEnterAnimToFinish = false
+_EnterAnimName = "idle"
+Id = "idle"
+
+[node name="WarpIn" type="Node" parent="StateHandler" index="1"]
+script = ExtResource("5_tvijx")
+_ModelPath = NodePath("../../ClownPuppetModel")
+_WaitForEnterAnimToFinish = false
+_EnterAnimName = "WarpIn"
+Id = "warp_in"
+
+[node name="WarpOut" type="Node" parent="StateHandler" index="2"]
+script = ExtResource("5_tvijx")
+_ModelPath = NodePath("../../ClownPuppetModel")
+_EnterAnimName = "WarpAway"
+Id = "warp_out"
+
+[node name="Punish" type="Node" parent="StateHandler" index="3"]
+script = ExtResource("5_tvijx")
+_ModelPath = NodePath("../../ClownPuppetModel")
+_EnterAnimName = "RaiseHand"
+Id = "punish"
+
+[node name="Hidden" type="Node" parent="StateHandler" index="4"]
+script = ExtResource("6_t4uw5")
+Id = "hidden"
+_IsInArena = false

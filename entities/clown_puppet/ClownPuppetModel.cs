@@ -30,8 +30,8 @@ namespace ShopIsDone.Entities.ClownPuppet
             }
 
             // Set callables
-            _SetHandBlend = Callable.From<float>(SetHandBlend);
-            _SetWarpAmount = Callable.From<float>(SetWarpAmount);
+            _SetHandBlend = new Callable(this, nameof(SetHandBlend));
+            _SetWarpAmount = new Callable(this, nameof(SetWarpAmount));
         }
 
         public override async Task PerformAnimation(string actionName)
