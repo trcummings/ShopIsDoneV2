@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8j1a7xxxmc0r"
-path.s3tc="res://.godot/imported/yellow_slip.png-9aa9b7af01a1d754d8230ebf9da1b05c.s3tc.ctex"
+uid="uid://bbdqwgogk3jup"
+path.s3tc="res://.godot/imported/pink_slip.png-2c12c02cadee3489cbedd767dfe9b643.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/Widgets/Demerits/yellow_slip.png"
-dest_files=["res://.godot/imported/yellow_slip.png-9aa9b7af01a1d754d8230ebf9da1b05c.s3tc.ctex"]
+source_file="res://widgets/demerit_widget/pink_slip.png"
+dest_files=["res://.godot/imported/pink_slip.png-2c12c02cadee3489cbedd767dfe9b643.s3tc.ctex"]
 
 [params]
 

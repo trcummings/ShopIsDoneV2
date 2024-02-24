@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://addons/verlet_rope_4/VerletRope.cs" id="10"]
 [ext_resource type="Material" path="res://title_screen/TitleScreenMannequinString.material" id="11"]
 [ext_resource type="PackedScene" path="res://Models/Environment/Props/Prop_Shelf_Isle_Empty_02_.tscn" id="12"]
-[ext_resource type="Texture2D" uid="uid://bbdqwgogk3jup" path="res://textures/Widgets/Demerits/pink_slip.png" id="13"]
+[ext_resource type="Texture2D" uid="uid://bbdqwgogk3jup" path="res://widgets/demerit_widget/pink_slip.png" id="13"]
 [ext_resource type="PackedScene" uid="uid://cojwv587ghlem" path="res://exit/exit_door_light.tscn" id="14"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="14_7vwky"]
 [ext_resource type="Material" path="res://exit/exit_door.material" id="15"]
