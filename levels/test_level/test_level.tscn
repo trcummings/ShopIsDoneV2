@@ -80,9 +80,6 @@ script = ExtResource("9_bxejf")
 Task = NodePath("../../../Entities/VegetableFridge")
 _Id = "task_completed_condition"
 
-[node name="ClownRulesService" parent="World/NavigationRegion3D/Environment/Arena/Services" index="18" node_paths=PackedStringArray("_ScriptQueueService")]
-_ScriptQueueService = NodePath("../ScriptQueueService")
-
 [node name="MoveInLShapeActionRule" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ClownRulesService" index="0"]
 script = ExtResource("10_kmt7p")
 

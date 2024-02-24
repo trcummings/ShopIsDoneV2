@@ -49,10 +49,10 @@ namespace ShopIsDone.ClownRules
         private PlayerUnitService _PlayerUnitService;
 
         [Export]
-        private float _IndividualRageThreshold;
+        private float _IndividualRageThreshold = 2f;
 
         [Export]
-        private float _GroupRageThreshold;
+        private float _GroupRageThreshold = 1f;
 
         // State
         private Array<ClownActionRule> _Rules = new Array<ClownActionRule>();
@@ -113,7 +113,7 @@ namespace ShopIsDone.ClownRules
         public Command ProcessActionRules(ArenaAction action, Dictionary<string, Variant> message)
         {
             return new ConditionalCommand(
-                () => _IsActive && _PlayerUnitService.GetUnits().Contains(action.Entity),
+                () => _IsActive && _PlayerUnitService.IsPlayerUnit(action.Entity),
                 new DeferredCommand(() =>
                     new SeriesCommand(
                         // Rule breaking
@@ -134,8 +134,9 @@ namespace ShopIsDone.ClownRules
                                     return new ActionCommand(() => IncreaseRage(action.Entity.Id));
                                 })
                                 .ToArray()
-                        )
-                        // TODO: Punishment
+                        ),
+                        // Punishment
+                        new DeferredCommand(ProcessPunishment)
                     )
                 )
             );
@@ -158,29 +159,89 @@ namespace ShopIsDone.ClownRules
         {
             return new ConditionalCommand(
                 () => _IsActive,
+                new SeriesCommand(
+                    new ActionCommand(() =>
+                    {
+                        // Apply each rule to each unit
+                        foreach (var unit in _PlayerUnitService.GetUnits())
+                        {
+                            // Get that unit's actions from the action history
+                            var actions = _ActionService
+                                .ActionHistory
+                                .Where(item => item.Action.Entity == unit)
+                                .ToGodotArray();
+
+                            if (!(
+                                CheckIfMoved(unit, actions) ||
+                                CheckIfDoingTask(unit, actions) ||
+                                CheckIfHelpedCustomer(unit, actions))
+                            )
+                            {
+                                IncreaseRage(unit.Id);
+                            }
+                        }
+                    }),
+                    new DeferredCommand(ProcessPunishment),
+                    new ActionCommand(SubsideRage)
+                )
+            );
+        }
+
+        private bool IsUnitAboveRageThreshold(string id)
+        {
+            return _UnitRage[id] > _IndividualRageThreshold;
+        }
+
+        private bool IsAboveGroupRageThreshold()
+        {
+            return _GroupRage > _GroupRageThreshold;
+        }
+
+        private Command ProcessPunishment()
+        {
+            return new SeriesCommand(
+                // Punish individual units in order of greatest flagrance
+                new SeriesCommand(
+                    _PlayerUnitService
+                        .GetUnits()
+                        .Where(unit => IsUnitAboveRageThreshold(unit.Id))
+                        .OrderBy(unit => _UnitRage[unit.Id])
+                        .Select(PunishUnit)
+                        .ToArray()
+                ),
+                new DeferredCommand(() => new ConditionalCommand(
+                    IsAboveGroupRageThreshold,
+                    PunishGroup()
+                ))
+            );
+        }
+
+        private Command PunishUnit(LevelEntity unit)
+        {
+            return new SeriesCommand(
+                // TODO: Punishment
+
+                // Subside individual rage by threshold amount
                 new ActionCommand(() =>
                 {
-                    // Apply each rule to each unit
-                    foreach (var unit in _PlayerUnitService.GetUnits())
+                    _UnitRage[unit.Id] = Mathf.Max(_UnitRage[unit.Id] - _IndividualRageThreshold, 0);
+                })
+            );
+        }
+
+        private Command PunishGroup()
+        {
+            return new SeriesCommand(
+                // TODO: Punishment
+
+                // Subside all rage by threshold amount
+                new ActionCommand(() =>
+                {
+                    foreach (var key in _UnitRage.Keys)
                     {
-                        // Get that unit's actions from the action history
-                        var actions = _ActionService
-                            .ActionHistory
-                            .Where(item => item.Action.Entity == unit)
-                            .ToGodotArray();
-
-                        if (!(
-                            CheckIfMoved(unit, actions) ||
-                            CheckIfDoingTask(unit, actions) ||
-                            CheckIfHelpedCustomer(unit, actions))
-                        )
-                        {
-                            IncreaseRage(unit.Id);
-                        }
+                        _UnitRage[key] = Mathf.Max(_UnitRage[key] - _IndividualRageThreshold, 0);
                     }
-
-                    // Subside rage
-                    SubsideRage();
+                    _GroupRage = Mathf.Max(_GroupRage - _GroupRageThreshold, 0);
                 })
             );
         }
@@ -209,14 +270,6 @@ namespace ShopIsDone.ClownRules
 
             // Reset rage flag
             _WasEnragedThisTurn = false;
-        }
-
-        //
-        private Command ProcessPunishment()
-        {
-            //
-
-            return new Command();
         }
 
         private bool CheckIfMoved(LevelEntity _, Array<ActionHistoryItem> history)

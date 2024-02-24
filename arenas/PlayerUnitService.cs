@@ -29,6 +29,16 @@ namespace ShopIsDone.Arenas
                 .ToList();
         }
 
+		public bool IsPlayerUnit(LevelEntity entity)
+		{
+			return GetUnits().Contains(entity);
+        }
+
+		public LevelEntity GetUnitById(string id)
+		{
+			return _PlayerUnits.Find(e => e.Id == id);
+		}
+
         public List<ArenaAction> GetUnitRemainingAvailableActions(LevelEntity unit)
 		{
             var actionHandler = unit.GetComponent<ActionHandler>();

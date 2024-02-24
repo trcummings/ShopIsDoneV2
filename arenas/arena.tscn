@@ -171,12 +171,13 @@ script = ExtResource("20_u3kfo")
 _PlayerTurnBattleState = NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn")
 _ActionService = NodePath("../ActionService")
 
-[node name="ClownRulesService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesUI", "_RulesList", "_ActionService")]
+[node name="ClownRulesService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesUI", "_RulesList", "_ActionService", "_ScriptQueueService")]
 script = ExtResource("21_etobo")
 _IsActive = true
 _RulesUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContainer/RulesUI")
 _RulesList = NodePath("../../UILayer/RulesList")
 _ActionService = NodePath("../ActionService")
+_ScriptQueueService = NodePath("../ScriptQueueService")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
