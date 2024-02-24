@@ -14,6 +14,8 @@ using ShopIsDone.Arenas;
 using static ShopIsDone.Actions.ActionService;
 using ShopIsDone.Employees.Actions;
 using ShopIsDone.Entities.Employees.Actions;
+using ShopIsDone.Arenas.ArenaScripts;
+using ShopIsDone.Tasks;
 
 namespace ShopIsDone.ClownRules
 {
@@ -40,8 +42,17 @@ namespace ShopIsDone.ClownRules
         [Export]
         private ActionService _ActionService;
 
+        [Export]
+        private ScriptQueueService _ScriptQueueService;
+
         [Inject]
         private PlayerUnitService _PlayerUnitService;
+
+        [Export]
+        private float _IndividualRageThreshold;
+
+        [Export]
+        private float _GroupRageThreshold;
 
         // State
         private Array<ClownActionRule> _Rules = new Array<ClownActionRule>();
@@ -52,6 +63,7 @@ namespace ShopIsDone.ClownRules
         private Dictionary<string, float> _UnitRage = new Dictionary<string, float>();
 
         // Track broken rules per action
+        private bool _WasEnragedThisTurn = false;
         public Dictionary<ClownActionRule, bool> BrokenRules { get { return _BrokenRules; } }
         private Dictionary<ClownActionRule, bool> _BrokenRules = new Dictionary<ClownActionRule, bool>();
 
@@ -92,6 +104,7 @@ namespace ShopIsDone.ClownRules
                 acc[unit.Id] = 0;
                 return acc;
             });
+            _WasEnragedThisTurn = false;
         }
 
         // Check if any action rules have been broken and increment the clown
@@ -101,27 +114,30 @@ namespace ShopIsDone.ClownRules
         {
             return new ConditionalCommand(
                 () => _IsActive && _PlayerUnitService.GetUnits().Contains(action.Entity),
-                new DeferredCommand(() => new SeriesCommand(
-                    _Rules
-                        .Where(rule =>
-                            // if we haven't broken this rule yet
-                            !_BrokenRules.ContainsKey(rule) &&
-                            // And it's broken
-                            rule.BrokeRule(action, message)
-                        )
-                        .Select(rule =>
-                        {
-                            // Add to broken rules
-                            _BrokenRules.Add(rule, true);
+                new DeferredCommand(() =>
+                    new SeriesCommand(
+                        // Rule breaking
+                        new SeriesCommand(
+                            _Rules
+                                .Where(rule =>
+                                    // if we haven't broken this rule yet
+                                    !_BrokenRules.ContainsKey(rule) &&
+                                    // And it's broken
+                                    rule.BrokeRule(action, message)
+                                )
+                                .Select(rule =>
+                                {
+                                    // Add to broken rules
+                                    _BrokenRules.Add(rule, true);
 
-                            // Increment rage threshold
-                            return new ActionCommand(() => {
-                                _UnitRage[action.Entity.Id] += 1;
-                                _GroupRage += 0.2f;
-                            });
-                        })
-                        .ToArray()
-                ))
+                                    // Increment rage threshold
+                                    return new ActionCommand(() => IncreaseRage(action.Entity.Id));
+                                })
+                                .ToArray()
+                        )
+                        // TODO: Punishment
+                    )
+                )
             );
         }
 
@@ -159,12 +175,48 @@ namespace ShopIsDone.ClownRules
                             CheckIfHelpedCustomer(unit, actions))
                         )
                         {
-                            _UnitRage[unit.Id] += 1;
-                            _GroupRage += 0.2f;
+                            IncreaseRage(unit.Id);
                         }
                     }
+
+                    // Subside rage
+                    SubsideRage();
                 })
             );
+        }
+
+        private void IncreaseRage(string id)
+        {
+            // Flip rage flag
+            _WasEnragedThisTurn = true;
+
+            // Increment rage
+            _UnitRage[id] += 1;
+            _GroupRage += 0.2f;
+        }
+
+        private void SubsideRage()
+        {
+            // If we weren't enraged this turn, decrement all rage
+            if (!_WasEnragedThisTurn)
+            {
+                foreach (var key in _UnitRage.Keys)
+                {
+                    _UnitRage[key] = Mathf.Max(_UnitRage[key] - 0.5f, 0);
+                }
+                _GroupRage = Mathf.Max(_GroupRage - 0.2f, 0);
+            }
+
+            // Reset rage flag
+            _WasEnragedThisTurn = false;
+        }
+
+        //
+        private Command ProcessPunishment()
+        {
+            //
+
+            return new Command();
         }
 
         private bool CheckIfMoved(LevelEntity _, Array<ActionHistoryItem> history)
@@ -172,9 +224,12 @@ namespace ShopIsDone.ClownRules
             return history.Select(item => item.Action).OfType<MoveSubAction>().Count() > 1;
         }
 
-        private bool CheckIfDoingTask(LevelEntity _, Array<ActionHistoryItem> history)
+        private bool CheckIfDoingTask(LevelEntity unit, Array<ActionHistoryItem> history)
         {
-            return history.Select(item => item.Action).Any(action => action is StartTaskAction);
+            return history
+                .Select(item => item.Action)
+                .Any(action => action is StartTaskAction) ||
+                (unit?.GetComponent<TaskHandler>().HasCurrentTask() ?? false);
         }
 
         private bool CheckIfHelpedCustomer(LevelEntity _, Array<ActionHistoryItem> history)

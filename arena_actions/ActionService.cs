@@ -93,6 +93,8 @@ namespace ShopIsDone.Actions
             );
         }
 
+        // Usually run after an action, but can also be run after a significant
+        // arena mutation whenever we want
         public Command PostActionUpdate()
         {
             // Wrap the whole thing in a Win-Fail check so we interrupt further
