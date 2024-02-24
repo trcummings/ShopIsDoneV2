@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://deium5vier2tq"
+path="res://.godot/imported/ARENA-START__Bass Swell 8_E.wav-0c0b2104e8c686d818029fc5b301e104.sample"
+
+[deps]
+
+source_file="res://arenas/ARENA-START__Bass Swell 8_E.wav"
+dest_files=["res://.godot/imported/ARENA-START__Bass Swell 8_E.wav-0c0b2104e8c686d818029fc5b301e104.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

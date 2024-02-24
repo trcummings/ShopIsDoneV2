@@ -13,6 +13,7 @@ namespace ShopIsDone.Arenas.UI
 
         // Nodes
         private TextureRect _Portrait;
+        private TextureRect _PortraitBg;
         private Label _PawnNameLabel;
         private TextureRect _PortraitOutline;
         private ActionPointMeter _ActionPointMeter;
@@ -29,6 +30,7 @@ namespace ShopIsDone.Arenas.UI
         {
             // Ready nodes
             _Portrait = GetNode<TextureRect>("%Portrait");
+            _PortraitBg = GetNode<TextureRect>("%PortraitBackground");
             _PawnNameLabel = GetNode<Label>("%PawnName");
             _PortraitOutline = GetNode<TextureRect>("%CardBase");
             _ApExcessUI = GetNode<ApExcessUI>("%ApExcessContainer");
@@ -61,6 +63,8 @@ namespace ShopIsDone.Arenas.UI
         public void SelectPawnUI(bool val)
         {
             _PortraitOutline.Modulate = val ? Colors.White : DeselectedColor;
+            _Portrait.Modulate = val ? Colors.White : DeselectedColor;
+            _PortraitBg.Modulate = val ? Colors.White : DeselectedColor;
         }
 
         public void SetActionPoints()

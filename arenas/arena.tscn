@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=75 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -65,6 +65,7 @@
 [ext_resource type="PackedScene" uid="uid://bvr1260jlynow" path="res://conditions/ui/conditions_remaining.tscn" id="62_ioot1"]
 [ext_resource type="PackedScene" uid="uid://brpya8arwjb2" path="res://clown_rules/ui/rules_list.tscn" id="63_x3x63"]
 [ext_resource type="PackedScene" uid="uid://dq35dnfbvmsgh" path="res://clown_rules/clown_debug.tscn" id="64_oyack"]
+[ext_resource type="AudioStream" uid="uid://deium5vier2tq" path="res://arenas/ARENA-START__Bass Swell 8_E.wav" id="66_bteqj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
@@ -706,5 +707,10 @@ visible = false
 visible = false
 _ClownRulesService = NodePath("../../Services/ClownRulesService")
 
+[node name="ArenaEnteredPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("66_bteqj")
+bus = &"SFX"
+
+[connection signal="ArenaEntered" from="." to="ArenaEnteredPlayer" method="play"]
 [connection signal="CleanedUp" from="Services/ClownRulesService" to="UILayer/ClownDebug" method="hide"]
 [connection signal="Initialized" from="Services/ClownRulesService" to="UILayer/ClownDebug" method="show"]
