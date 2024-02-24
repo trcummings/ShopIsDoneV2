@@ -16,6 +16,9 @@ using ShopIsDone.Employees.Actions;
 using ShopIsDone.Entities.Employees.Actions;
 using ShopIsDone.Arenas.ArenaScripts;
 using ShopIsDone.Tasks;
+using ShopIsDone.EntityStates;
+using ShopIsDone.ActionPoints;
+using ShopIsDone.Demerits;
 
 namespace ShopIsDone.ClownRules
 {
@@ -53,6 +56,10 @@ namespace ShopIsDone.ClownRules
 
         [Export]
         private float _GroupRageThreshold = 1f;
+
+        [Export]
+        private LevelEntity _Judge;
+        private EntityStateHandler _StateHandler;
 
         // State
         private Array<ClownActionRule> _Rules = new Array<ClownActionRule>();
@@ -218,6 +225,9 @@ namespace ShopIsDone.ClownRules
 
         private Command PunishUnit(LevelEntity unit)
         {
+            var apHandler = unit.GetComponent<ActionPointHandler>();
+            var demeritHandler = unit.GetComponent<DemeritHandler>();
+
             return new SeriesCommand(
                 // TODO: Punishment
                 new ActionCommand(() => GD.Print($"Punishing {unit.EntityName}")),

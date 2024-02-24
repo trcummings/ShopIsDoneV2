@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7xlqty5qdnif"]
+[gd_scene load_steps=13 format=3 uid="uid://c7xlqty5qdnif"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_emqd3"]
 [ext_resource type="PackedScene" uid="uid://dlk4igjt1ir5x" path="res://Models/clown_puppet/clown_puppet_model.tscn" id="2_gx4b6"]
@@ -6,10 +6,25 @@
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="4_t87db"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="5_tvijx"]
 [ext_resource type="Script" path="res://entity_states/EntityState.cs" id="6_t4uw5"]
+[ext_resource type="AudioStream" uid="uid://b5hvguhl7le6y" path="res://entities/clown_puppet/sfx/clown_puppet_noises_1.wav" id="7_jpt2k"]
+[ext_resource type="AudioStream" uid="uid://bmkga0fh0on1a" path="res://entities/clown_puppet/sfx/clown_puppet_noises_2.wav" id="8_4bcnd"]
+[ext_resource type="AudioStream" uid="uid://kic6m7x0gmbc" path="res://entities/clown_puppet/sfx/clown_puppet_noises_3.wav" id="9_qkry2"]
+[ext_resource type="AudioStream" uid="uid://btkk4ntnwojjj" path="res://entities/clown_puppet/sfx/clown_puppet_noises_4.wav" id="10_3ufqe"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4khx"]
 radius = 0.3
 height = 1.4
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_86jjf"]
+streams_count = 4
+stream_0/stream = ExtResource("7_jpt2k")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("8_4bcnd")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("9_qkry2")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("10_3ufqe")
+stream_3/weight = 1.0
 
 [node name="ClownPuppet" instance=ExtResource("1_emqd3")]
 collision_layer = 2
@@ -58,7 +73,18 @@ _ModelPath = NodePath("../../ClownPuppetModel")
 _EnterAnimName = "RaiseHand"
 Id = "punish"
 
-[node name="Hidden" type="Node" parent="StateHandler" index="4"]
+[node name="FinishPunish" type="Node" parent="StateHandler" index="4"]
+script = ExtResource("5_tvijx")
+_ModelPath = NodePath("../../ClownPuppetModel")
+_EnterAnimName = "LowerHand"
+Id = "finish_punish"
+
+[node name="Hidden" type="Node" parent="StateHandler" index="5"]
 script = ExtResource("6_t4uw5")
 Id = "hidden"
 _IsInArena = false
+
+[node name="ClatterPlayer" type="AudioStreamPlayer" parent="." index="6"]
+stream = SubResource("AudioStreamRandomizer_86jjf")
+pitch_scale = 1.1
+bus = &"SFX"

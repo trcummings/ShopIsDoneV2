@@ -1,11 +1,14 @@
 using Godot;
+using ShopIsDone.Cameras;
+using ShopIsDone.Utils;
+using ShopIsDone.Utils.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
 namespace ShopIsDone.Widgets
 {
-	public partial class DemeritWidget : Node3D
-	{
+	public partial class DemeritWidget : Node3D, IService, IInitializable
+    {
         [Signal]
         public delegate void DemeritBeganEventHandler();
 
@@ -27,6 +30,9 @@ namespace ShopIsDone.Widgets
         [Export]
         public Texture2D PinkSlipTexture;
 
+        [Inject]
+        private ScreenshakeService _Screenshake;
+
         // Nodes
         private MeshInstance3D _Slip;
         private AnimationPlayer _AnimPlayer;
@@ -35,6 +41,11 @@ namespace ShopIsDone.Widgets
         {
             _Slip = GetNode<MeshInstance3D>("%Slip");
             _AnimPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
+        }
+
+        public void Init()
+        {
+            InjectionProvider.Inject(this);
         }
 
         public void GrantDemerit(Vector3 pos, DemeritType demeritType)
@@ -64,6 +75,9 @@ namespace ShopIsDone.Widgets
 
             // Emit signal
             EmitSignal(nameof(DemeritSlapped));
+
+            // Screenshake
+            _Screenshake.Shake(ScreenshakeHandler.ShakePayload.ShakeSizes.Huge);
 
             // Set to billboard mode
             var material = (StandardMaterial3D)_Slip.GetActiveMaterial(0);

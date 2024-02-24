@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://di08wvwur3gyd"]
+[gd_scene load_steps=13 format=3 uid="uid://di08wvwur3gyd"]
 
 [ext_resource type="Script" path="res://widgets/demerit_widget/DemeritWidget.cs" id="1"]
 [ext_resource type="Texture2D" uid="uid://bbdqwgogk3jup" path="res://widgets/demerit_widget/pink_slip.png" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Material" path="res://widgets/demerit_widget/demerit_slip.material" id="4"]
 [ext_resource type="AudioStream" uid="uid://odaw0ldqsa80" path="res://widgets/demerit_widget/demerit_slap.wav" id="5_a022e"]
 [ext_resource type="AudioStream" uid="uid://b8f4b353ho6rl" path="res://widgets/demerit_widget/demerit_debuff.wav" id="6_mu62s"]
+[ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="7_lsfor"]
 
 [sub_resource type="QuadMesh" id="2"]
 material = ExtResource("4")
@@ -89,6 +90,8 @@ bus = &"SFX"
 [node name="DemeritDebuffSfx" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_vf8am")
 bus = &"SFX"
+
+[node name="ScreenshakeHandler" parent="." instance=ExtResource("7_lsfor")]
 
 [connection signal="DemeritBegan" from="." to="DemeritDebuffSfx" method="play"]
 [connection signal="DemeritSlapped" from="." to="DemeritSlapSfx" method="play"]

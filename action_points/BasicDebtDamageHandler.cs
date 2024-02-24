@@ -1,7 +1,9 @@
 ﻿using System;
 using Godot;
+using ShopIsDone.Cameras;
 using ShopIsDone.EntityStates;
 using ShopIsDone.Utils.Commands;
+using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.Positioning;
 using StateConsts = ShopIsDone.EntityStates.Consts;
@@ -12,6 +14,9 @@ namespace ShopIsDone.ActionPoints
 	{
         [Export]
         protected EntityStateHandler _StateHandler;
+
+        [Inject]
+        private ScreenshakeService _Screenshake;
 
         public override Command HandleDebtDamage(ApDamagePayload payload)
         {
@@ -43,6 +48,9 @@ namespace ShopIsDone.ActionPoints
                 new ConditionalCommand(
                     () => payload.TotalDebtDamage > 0,
                     new SeriesCommand(
+                        // Screenshake
+                        new ActionCommand(() => _Screenshake.Shake(ScreenshakeHandler.ShakePayload.ShakeSizes.Huge)),
+                        // React to damage
                         _StateHandler.RunPushState(StateConsts.HURT),
                         // Set facing direction, if we're still alive
                         new ConditionalCommand(

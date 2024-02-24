@@ -12,6 +12,7 @@ using ShopIsDone.ArenaInteractions;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Tiles;
 using ShopIsDone.Widgets;
+using ShopIsDone.Cameras;
 
 namespace ShopIsDone.Tasks
 {
@@ -90,6 +91,9 @@ namespace ShopIsDone.Tasks
         [Export]
         private SelectTaskHandler _SelectTaskHandler;
 
+        [Inject]
+        private ScreenshakeService _Screenshake;
+
         // Tiles that that an task handler can stand on and start a task on
         protected Array<TaskTile> _TaskTiles = new Array<TaskTile>();
 
@@ -106,6 +110,8 @@ namespace ShopIsDone.Tasks
         public override void Init()
         {
             base.Init();
+            // Inject
+            InjectionProvider.Inject(this);
             // Register tiles with task
             foreach (var iTile in _TaskTiles)  iTile.Task = this;
             // Init finished handler
@@ -257,6 +263,9 @@ namespace ShopIsDone.Tasks
                 var percent = TaskHealth / (float)MaxTaskHealth * 100;
                 _ProgressBar3D.TweenValue(percent);
                 EmitSignal(nameof(TaskHealthDamaged), amount, TaskHealth, MaxTaskHealth, percent);
+
+                // Shake screen
+                _Screenshake.Shake(ScreenshakeHandler.ShakePayload.ShakeSizes.Mild);
             });
         }
 
