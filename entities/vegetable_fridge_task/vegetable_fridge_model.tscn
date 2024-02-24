@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cwxwa2f46orap"]
 
 [ext_resource type="Script" path="res://render/Model.cs" id="1_eod5j"]
-[ext_resource type="PackedScene" uid="uid://o0kv402fowrx" path="res://entities/vegetable_fridge_task/vegetable_fridge.glb" id="2_8qbo3"]
 [ext_resource type="Texture2D" uid="uid://nacgji826jgc" path="res://entities/vegetable_fridge_task/vegetables.png" id="3_i43dc"]
+[ext_resource type="PackedScene" uid="uid://coeiie1hunk73" path="res://entities/vegetable_fridge_task/vegetable_fridge.gltf" id="4_13rsq"]
 
 [sub_resource type="Animation" id="Animation_ulmlj"]
 resource_name = "RESET"
@@ -20,14 +20,15 @@ _AnimPlayer = NodePath("AnimationPlayer")
 [node name="Pivot" type="Node3D" parent="."]
 transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, -1, 2.08165e-12, 2.08165e-12)
 
-[node name="vegetable_fridge" parent="Pivot" instance=ExtResource("2_8qbo3")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 2.08165e-12, 2.08165e-12, -0.7)
-
-[node name="Sprite3D" type="Sprite3D" parent="Pivot"]
-transform = Transform3D(1.054, -3.09724e-16, 3.38573e-16, 3.56856e-16, 0.695033, 0.240228, -4.55934e-16, -0.172003, 0.970716, 2.08165e-12, 1.614, 0.381)
+[node name="VeggiesPanel" type="Sprite3D" parent="Pivot"]
+transform = Transform3D(1.054, -1.39986e-15, 3.77114e-15, 3.56856e-16, 0.695033, 0.240228, 0, -0.172003, 0.970716, -5.96046e-08, 1.614, 0.395783)
 transparent = false
+shaded = true
 alpha_cut = 1
 texture = ExtResource("3_i43dc")
+
+[node name="VegetableFridge" parent="Pivot" instance=ExtResource("4_13rsq")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 2.08165e-12, 2.08165e-12, -0.7)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
