@@ -31,12 +31,6 @@ namespace ShopIsDone.ClownRules
 {
     public partial class ClownRulesService : Node, IService, IInitializable, ICleanUpable
     {
-        [Signal]
-        public delegate void InitializedEventHandler();
-
-        [Signal]
-        public delegate void CleanedUpEventHandler();
-
         [Export]
         private bool _IsActive = false;
 
@@ -72,6 +66,10 @@ namespace ShopIsDone.ClownRules
         private EntityStateHandler _StateHandler;
         private MicrogameHandler _MicrogameHandler;
 
+        [Export]
+        private PackedScene _DebugPanelScene;
+        private ClownDebug _DebugPanel;
+
         // State
         private Array<ClownActionRule> _Rules = new Array<ClownActionRule>();
         public float GroupRage { get { return _GroupRage; } }
@@ -104,13 +102,13 @@ namespace ShopIsDone.ClownRules
                 Callable.From(OnInitUnits),
                 (uint)ConnectFlags.OneShot
             );
-
-            EmitSignal(nameof(Initialized));
         }
 
         public void CleanUp()
         {
-            EmitSignal(nameof(CleanedUp));
+            // Remove clown debug panel
+            var events = Events.GetEvents(this);
+            events.EmitSignal(nameof(events.RemoveDebugPanelRequested), _DebugPanel);
         }
 
         private void OnInitUnits()
@@ -123,6 +121,13 @@ namespace ShopIsDone.ClownRules
                 return acc;
             });
             _WasEnragedThisTurn = false;
+
+            // Create and add debug panel
+            _DebugPanel = _DebugPanelScene.Instantiate<ClownDebug>();
+            var events = Events.GetEvents(this);
+            events.EmitSignal(nameof(events.AddDebugPanelRequested), _DebugPanel);
+            // Init debug panel
+            _DebugPanel.Init(this);
         }
 
         // Check if any action rules have been broken and increment the clown

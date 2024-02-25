@@ -179,6 +179,7 @@ _RulesUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContai
 _RulesList = NodePath("../../UILayer/RulesList")
 _ActionService = NodePath("../ActionService")
 _ScriptQueueService = NodePath("../ScriptQueueService")
+_DebugPanelScene = ExtResource("64_oyack")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
@@ -703,14 +704,8 @@ layout_mode = 2
 [node name="RulesList" parent="UILayer" instance=ExtResource("63_x3x63")]
 visible = false
 
-[node name="ClownDebug" parent="UILayer" node_paths=PackedStringArray("_ClownRulesService") instance=ExtResource("64_oyack")]
-visible = false
-_ClownRulesService = NodePath("../../Services/ClownRulesService")
-
 [node name="ArenaEnteredPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("66_bteqj")
 bus = &"SFX"
 
 [connection signal="ArenaEntered" from="." to="ArenaEnteredPlayer" method="play"]
-[connection signal="CleanedUp" from="Services/ClownRulesService" to="UILayer/ClownDebug" method="hide"]
-[connection signal="Initialized" from="Services/ClownRulesService" to="UILayer/ClownDebug" method="show"]

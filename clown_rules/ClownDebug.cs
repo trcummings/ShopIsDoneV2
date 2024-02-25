@@ -16,11 +16,17 @@ namespace ShopIsDone.ClownRules
         [Export]
         private Control _RulesBroken;
 
-        [Export]
         private ClownRulesService _ClownRulesService;
+
+        public void Init(ClownRulesService service)
+        {
+            _ClownRulesService = service;
+        }
 
         public override void _Process(double delta)
         {
+            if (_ClownRulesService == null) return;
+
             SetRage();
             //SetBrokenRules();
         }
