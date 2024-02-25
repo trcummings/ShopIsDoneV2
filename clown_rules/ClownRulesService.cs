@@ -19,6 +19,11 @@ using ShopIsDone.Tasks;
 using ShopIsDone.EntityStates;
 using ShopIsDone.ActionPoints;
 using ShopIsDone.Demerits;
+using ShopIsDone.Microgames;
+using ShopIsDone.Utils.Positioning;
+using ShopIsDone.Microgames.Outcomes;
+using StateConsts = ShopIsDone.EntityStates.Consts;
+using ShopIsDone.Cameras;
 
 namespace ShopIsDone.ClownRules
 {
@@ -32,9 +37,6 @@ namespace ShopIsDone.ClownRules
 
         [Export]
         private bool _IsActive = false;
-
-        //[Export]
-        //private LevelEntity _Judge;
 
         [Export]
         private RulesUI _RulesUI;
@@ -51,6 +53,9 @@ namespace ShopIsDone.ClownRules
         [Inject]
         private PlayerUnitService _PlayerUnitService;
 
+        [Inject]
+        private CameraService _CameraService;
+
         [Export]
         private float _IndividualRageThreshold = 3f;
 
@@ -60,6 +65,7 @@ namespace ShopIsDone.ClownRules
         [Export]
         private LevelEntity _Judge;
         private EntityStateHandler _StateHandler;
+        private MicrogameHandler _MicrogameHandler;
 
         // State
         private Array<ClownActionRule> _Rules = new Array<ClownActionRule>();
@@ -243,9 +249,35 @@ namespace ShopIsDone.ClownRules
 
         private Command PunishGroup()
         {
+            // Get judge's components
+            _MicrogameHandler ??= _Judge.GetComponent<MicrogameHandler>();
+            _StateHandler ??= _Judge.GetComponent<EntityStateHandler>();
+
+            // Get all unit outcome handlers
+            var outcomeHandlers = _PlayerUnitService
+                .GetUnits()
+                .Select(unit => unit.GetComponent<IOutcomeHandler>())
+                .ToArray();
+
+            var payload = new MicrogamePayload()
+            {
+                Targets = outcomeHandlers,
+                Position = Positions.Null,
+                Message = new Dictionary<string, Variant>()
+            };
+
             return new SeriesCommand(
-                // TODO: Punishment
-                new ActionCommand(() => GD.Print("Punishing Group")),
+                RaiseJudgeArm(),
+                // TODO: Kill the lights
+
+                // Punish group with a microgame that impacts all of them
+                _MicrogameHandler.RunMicrogame(payload),
+
+                // TODO: Bring lights back on
+
+                // Lower arm
+                _StateHandler.RunChangeState(StateConsts.ClownPuppet.FINISH_PUNISH),
+
                 // Subside all rage by threshold amount
                 new ActionCommand(() =>
                 {
@@ -255,6 +287,23 @@ namespace ShopIsDone.ClownRules
                     }
                     _GroupRage = Mathf.Max(_GroupRage - _GroupRageThreshold, 0);
                 })
+            );
+        }
+
+        private Command RaiseJudgeArm(Command next = null)
+        {
+            return _CameraService.PanToTemporaryCameraTarget(
+                _Judge,
+                _CameraService.TemporaryCameraZoom(
+                    _CameraService.RunRotateCameraTo(_Judge.FacingDirection,
+                        new SeriesCommand(
+                            // Raise arm
+                            _StateHandler.RunChangeState(StateConsts.ClownPuppet.PUNISH),
+                            next ?? new Command()
+                        )
+                    ),
+                    0.25f
+                )
             );
         }
 

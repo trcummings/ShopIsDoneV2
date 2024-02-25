@@ -21,6 +21,14 @@ namespace ShopIsDone.EntityStates
 			public const string INTIMIDATE = "intimidate";
 			public const string BOTHER = "bother";
 		}
+
+		public static class ClownPuppet
+		{
+			public const string WARP_IN = "warp_in";
+            public const string WARP_OUT = "warp_out";
+            public const string PUNISH = "punish";
+            public const string FINISH_PUNISH = "finish_punish";
+        }
 	}
 }
 

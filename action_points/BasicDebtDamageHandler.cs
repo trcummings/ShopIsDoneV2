@@ -11,7 +11,7 @@ using StateConsts = ShopIsDone.EntityStates.Consts;
 namespace ShopIsDone.ActionPoints
 {
     public partial class BasicDebtDamageHandler : DebtDamageHandler
-	{
+    {
         [Export]
         protected EntityStateHandler _StateHandler;
 
@@ -47,36 +47,45 @@ namespace ShopIsDone.ActionPoints
                 // React to damage (or no damage)
                 new IfElseCommand(
                     () => payload.TotalDebtDamage > 0,
-                    // Take hit animation (only if we took damage)
-                    new SeriesCommand(
-                        // Screenshake
-                        new ActionCommand(() => _Screenshake.Shake(ScreenshakeHandler.ShakePayload.ShakeSizes.Huge)),
-                        // React to damage
-                        _StateHandler.RunChangeState(StateConsts.HURT),
-                        // If still alive
-                        new ConditionalCommand(
-                            () => !payload.ApHandler.IsMaxedOut(),
-                            // Go back to idle
-                            new SeriesCommand(
-                                _StateHandler.RunChangeState(StateConsts.IDLE),
-                                // If that damage came from a position, face that
-                                // position
-                                new ConditionalCommand(
-                                    () => payload.Positioning != Positions.Null,
-                                    new ActionCommand(() =>
-                                    {
-                                        // Calculate facing direction of source
-                                        var targetFacingDir = _StateHandler.Entity.GetFacingDirTowards(payload.Source.GlobalPosition);
-                                        _StateHandler.Entity.FacingDirection = targetFacingDir;
-                                    })
-                                )
-                            )
-                        )
-                    ),
-                    // Otherwise just go back to idle anyway
-                    _StateHandler.RunChangeState(StateConsts.IDLE)
+                    OnTookDamage(payload),
+                    OnTookNoDamage(payload)
                 )
             );
+        }
+
+        protected virtual Command OnTookDamage(ApDamagePayload payload)
+        {
+            // Take hit animation (only if we took damage)
+            return new SeriesCommand(
+                // Screenshake
+                new ActionCommand(() => _Screenshake.Shake(ScreenshakeHandler.ShakePayload.ShakeSizes.Huge)),
+                // React to damage
+                _StateHandler.RunChangeState(StateConsts.HURT),
+                // If still alive
+                new ConditionalCommand(
+                    () => !payload.ApHandler.IsMaxedOut(),
+                    // Go back to idle
+                    new SeriesCommand(
+                        _StateHandler.RunChangeState(StateConsts.IDLE),
+                        // If that damage came from a position, face that
+                        // position
+                        new ConditionalCommand(
+                            () => payload.Positioning != Positions.Null,
+                            new ActionCommand(() =>
+                            {
+                                // Calculate facing direction of source
+                                var targetFacingDir = _StateHandler.Entity.GetFacingDirTowards(payload.Source.GlobalPosition);
+                                _StateHandler.Entity.FacingDirection = targetFacingDir;
+                            })
+                        )
+                    )
+                )
+            );
+        }
+
+        protected virtual Command OnTookNoDamage(ApDamagePayload payload)
+        {
+            return _StateHandler.RunChangeState(StateConsts.IDLE);
         }
     }
 }

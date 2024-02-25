@@ -39,25 +39,25 @@ namespace ShopIsDone.Entities.ClownPuppet
             if (actionName == Consts.Anims.ClownPuppet.RAISE_HAND)
             {
                 // Tween the Blend Hand Parameter in the animation tree to .99
-                await ToSignal(GetTree().CreateTween().TweenMethod(_SetHandBlend, 0, 0.99, 1.5), "finished");
+                await ToSignal(GetTree().CreateTween().TweenMethod(_SetHandBlend, 0f, 1f, 1.5f), "finished");
             }
 
             else if (actionName == Consts.Anims.ClownPuppet.LOWER_HAND)
             {
                 // Tween the Blend Hand Parameter in the animation tree back down to 0
-                await ToSignal(GetTree().CreateTween().TweenMethod(_SetHandBlend, 0.99, 0, 1.5), "finished");
+                await ToSignal(GetTree().CreateTween().TweenMethod(_SetHandBlend, 1f, 0f, 1.5f), "finished");
             }
 
             else if (actionName == Consts.Anims.ClownPuppet.WARP_AWAY)
             {
                 // Tween the warp material from min value to maximum value
-                await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 0, 1, 1.5), "finished");
+                await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 0f, 1f, 1.5f), "finished");
             }
 
             else if (actionName == Consts.Anims.ClownPuppet.WARP_IN)
             {
                 // Tween the warp material from max value to minimum value
-                await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 1, 0, 1.5), "finished");
+                await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 1f, 0f, 1.5f), "finished");
             }
 
             // Otherwise, send it to the base handler
