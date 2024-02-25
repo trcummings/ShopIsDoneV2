@@ -22,7 +22,7 @@ namespace ShopIsDone.ClownRules
         public override void _Process(double delta)
         {
             SetRage();
-            SetBrokenRules();
+            //SetBrokenRules();
         }
 
         private void SetRage()
@@ -50,26 +50,26 @@ namespace ShopIsDone.ClownRules
             }
         }
 
-        private void SetBrokenRules()
-        {
-            // Fix up number of labels
-            var brokenRulesCount = _RulesBroken.GetChildCount();
-            if (brokenRulesCount != _ClownRulesService.BrokenRules.Count)
-            {
-                _RulesBroken.RemoveChildrenOfType<Label>();
-                for (int i = 0; i < _ClownRulesService.BrokenRules.Count; i++)
-                {
-                    _RulesBroken.AddChild(new Label());
-                }
-            }
+        //private void SetBrokenRules()
+        //{
+        //    // Fix up number of labels
+        //    var brokenRulesCount = _RulesBroken.GetChildCount();
+        //    if (brokenRulesCount != _ClownRulesService.BrokenRules.Count)
+        //    {
+        //        _RulesBroken.RemoveChildrenOfType<Label>();
+        //        for (int i = 0; i < _ClownRulesService.BrokenRules.Count; i++)
+        //        {
+        //            _RulesBroken.AddChild(new Label());
+        //        }
+        //    }
 
-            // Update each rage label
-            var brokenRules = _ClownRulesService.BrokenRules.Keys.ToList();
-            for (int j = 0; j < brokenRulesCount; j++)
-            {
-                var label = _RulesBroken.GetChild(j) as Label;
-                label.Text = $"rule broken: {brokenRules[j].Name}";
-            }
-        }
+        //    // Update each rage label
+        //    var brokenRules = _ClownRulesService.BrokenRules.Keys.ToList();
+        //    for (int j = 0; j < brokenRulesCount; j++)
+        //    {
+        //        var label = _RulesBroken.GetChild(j) as Label;
+        //        label.Text = $"rule broken: {brokenRules[j].Name}";
+        //    }
+        //}
     }
 }

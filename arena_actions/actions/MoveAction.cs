@@ -61,14 +61,7 @@ namespace ShopIsDone.Actions
                 // Accumulate the movement action as a series of conditional commands
                 // that execute sub-movement actions which only continue if the unit
                 // is still in a movement state after each one
-                GenerateSubMovements(moveQueue),
-
-                // At the end, if the pawn is still in a movement state, return it
-                // to an idle state
-                new ConditionalCommand(
-                    () => _StateHandler.IsInState(StateConsts.MOVE),
-                    _StateHandler.RunChangeState(StateConsts.IDLE)
-                )
+                GenerateSubMovements(moveQueue)
             );
         }
 
@@ -99,8 +92,8 @@ namespace ShopIsDone.Actions
                             // Recurse
                             GenerateSubMovements(commands)
                         ),
-                        // Otherwise, play interruption animation and change pawn back to a
-                        // normal state
+                        // Otherwise, play interruption animation and change
+                        // pawn back to a normal state
                         new SeriesCommand(
                             // Idle and run the alert state
                             _StateHandler.RunChangeState(StateConsts.IDLE),

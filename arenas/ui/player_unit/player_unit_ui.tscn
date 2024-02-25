@@ -120,8 +120,10 @@ theme_override_constants/separation = 0
 
 [node name="YellowSlip" type="TextureRect" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer/SlipContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 0
+size_flags_vertical = 0
 mouse_filter = 2
 texture = ExtResource("5")
 expand_mode = 4
@@ -129,8 +131,10 @@ stretch_mode = 5
 
 [node name="PinkSlip" type="TextureRect" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer/SlipContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
+size_flags_vertical = 0
 mouse_filter = 2
 texture = ExtResource("8")
 expand_mode = 4

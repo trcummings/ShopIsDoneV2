@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmahkabaogex0"]
+[gd_scene load_steps=9 format=3 uid="uid://bmahkabaogex0"]
 
 [ext_resource type="Script" path="res://core/data/LevelDb.cs" id="1_qrhrn"]
 [ext_resource type="Script" path="res://core/data/LevelDbItem.cs" id="2_ppeyr"]
@@ -33,12 +33,19 @@ Id = "test_level_2"
 Label = "Test Level 2"
 LevelScenePath = "res://levels/test_level_2/test_level_2.tscn"
 
+[sub_resource type="Resource" id="Resource_pl34l"]
+script = ExtResource("2_ppeyr")
+Id = "parking_lot"
+Label = "Parking Lot"
+LevelScenePath = "res://levels/parking_lot_1/parking_lot_1_level.tscn"
+
 [node name="LevelDb" type="Node"]
 script = ExtResource("1_qrhrn")
 Levels = {
 "behind_spirit_level": SubResource("Resource_ht0rr"),
 "break_room_level": SubResource("Resource_sukpv"),
 "clown_timer_level": SubResource("Resource_rhtnn"),
+"parking_lot": SubResource("Resource_pl34l"),
 "test_level_1": SubResource("Resource_jkuqg"),
 "test_level_2": SubResource("Resource_6k5gf")
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShopIsDone.Widgets
 {
-	public partial class DemeritWidget : Node3D, IService, IInitializable
+	public partial class DemeritWidget : Node3D, IService
     {
         [Signal]
         public delegate void DemeritBeganEventHandler();
@@ -30,7 +30,7 @@ namespace ShopIsDone.Widgets
         [Export]
         public Texture2D PinkSlipTexture;
 
-        [Inject]
+        [Export]
         private ScreenshakeService _Screenshake;
 
         // Nodes
@@ -43,11 +43,6 @@ namespace ShopIsDone.Widgets
             _AnimPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
         }
 
-        public void Init()
-        {
-            InjectionProvider.Inject(this);
-        }
-
         public void GrantDemerit(Vector3 pos, DemeritType demeritType)
         {
             _ = GrantDemeritAsync(pos, demeritType);
@@ -56,7 +51,7 @@ namespace ShopIsDone.Widgets
         public async Task GrantDemeritAsync(Vector3 pos, DemeritType demeritType)
         {
             // Position demerit (Higher than our rule breaker)
-            GlobalPosition = pos + Vector3.Up;
+            GlobalPosition = pos + (Vector3.Up * 1.5f);
 
             // Set demerit type
             SetDemeritType(demeritType);

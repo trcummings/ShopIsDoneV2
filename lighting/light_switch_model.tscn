@@ -75,7 +75,7 @@ _data = {
 "SetOn": SubResource("4")
 }
 
-[node name="LightSwitchModel" type="Node3D" node_paths=PackedStringArray("_AnimPlayer") groups=["renderable"]]
+[node name="LightSwitchModel" type="Node3D" node_paths=PackedStringArray("_AnimPlayer")]
 script = ExtResource("1_686ku")
 _AnimPlayer = NodePath("AnimationPlayer")
 

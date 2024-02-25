@@ -24,6 +24,8 @@ using ShopIsDone.Utils.Positioning;
 using ShopIsDone.Microgames.Outcomes;
 using StateConsts = ShopIsDone.EntityStates.Consts;
 using ShopIsDone.Cameras;
+using ShopIsDone.Widgets;
+using ApConsts = ShopIsDone.ActionPoints.Consts;
 
 namespace ShopIsDone.ClownRules
 {
@@ -55,6 +57,9 @@ namespace ShopIsDone.ClownRules
 
         [Inject]
         private CameraService _CameraService;
+
+        [Inject]
+        private DemeritWidget _DemeritWidget;
 
         [Export]
         private float _IndividualRageThreshold = 3f;
@@ -143,13 +148,19 @@ namespace ShopIsDone.ClownRules
                                     // Add to broken rules
                                     _BrokenRules.Add(rule, true);
 
-                                    // Increment rage threshold
-                                    return new ActionCommand(() => IncreaseRage(action.Entity.Id));
+                                    return new ActionCommand(() => {
+                                        // Increment rage threshold
+                                        IncreaseRage(action.Entity.Id);
+
+                                        // Enqueue Punishment for after action is completed
+                                        _ScriptQueueService.AddScriptToQueue(new CommandArenaScript()
+                                        {
+                                            CommandFn = ProcessPunishment
+                                        });
+                                    });
                                 })
                                 .ToArray()
-                        ),
-                        // Punishment
-                        new DeferredCommand(ProcessPunishment)
+                        )
                     )
                 )
             );
@@ -233,10 +244,60 @@ namespace ShopIsDone.ClownRules
         {
             var apHandler = unit.GetComponent<ActionPointHandler>();
             var demeritHandler = unit.GetComponent<DemeritHandler>();
+            var stateHandler = unit.GetComponent<EntityStateHandler>();
 
             return new SeriesCommand(
-                // TODO: Punishment
-                new ActionCommand(() => GD.Print($"Punishing {unit.EntityName}")),
+                // Face judge towards offender
+                new ActionCommand(() => _Judge.FacingDirection = _Judge.GetFacingDirTowards(unit.GlobalPosition)),
+                // Raise judge arm
+                FocusTarget(
+                    _Judge,
+                    _StateHandler.RunChangeState(StateConsts.ClownPuppet.PUNISH)
+                ),
+                // TODO: Pause unit animation if they're walking
+
+                // Oneshot connect to slap for unit take hit
+                new ActionCommand(() =>
+                {
+                    _DemeritWidget.Connect(
+                        nameof(_DemeritWidget.DemeritSlapped),
+                        Callable.From(() => stateHandler.PushState(StateConsts.HURT)),
+                        (uint)ConnectFlags.OneShot
+                    );
+                }),
+
+                // Apply demerit punishment
+                _CameraService.PanToTemporaryCameraTarget(
+                    unit,
+                    _CameraService.TemporaryCameraZoom(
+                    new IfElseCommand(
+                        () => !demeritHandler.HasYellowSlip,
+                        // Give them the yellow slip
+                        new SeriesCommand(
+                            demeritHandler.EscalateDemeritStatus(),
+                            new AsyncCommand(() => _DemeritWidget.GrantDemeritAsync(
+                                unit.GlobalPosition,
+                                DemeritWidget.DemeritType.YellowSlip
+                            ))
+                        ),
+                        // Otherwise, give them the pink slip and punish them severely
+                        new SeriesCommand(
+                            demeritHandler.EscalateDemeritStatus(),
+                            new AsyncCommand(() => _DemeritWidget.GrantDemeritAsync(
+                                unit.GlobalPosition,
+                                DemeritWidget.DemeritType.PinkSlip
+                            )),
+                            apHandler.TakeAPDamage(new Dictionary<string, Variant>()
+                            {
+                                { ApConsts.DAMAGE_SOURCE, unit },
+                                // Infinite damage
+                                { ApConsts.DAMAGE_AMOUNT, 1000000000 }
+                            })
+                        )
+                    ))
+                ),
+                // Lower arm
+                _StateHandler.RunChangeState(StateConsts.ClownPuppet.FINISH_PUNISH),
                 // Subside individual rage by threshold amount
                 new ActionCommand(() =>
                 {
@@ -267,7 +328,10 @@ namespace ShopIsDone.ClownRules
             };
 
             return new SeriesCommand(
-                RaiseJudgeArm(),
+                FocusTarget(
+                    _Judge,
+                    _StateHandler.RunChangeState(StateConsts.ClownPuppet.PUNISH)
+                ),
                 // TODO: Kill the lights
 
                 // Punish group with a microgame that impacts all of them
@@ -290,17 +354,13 @@ namespace ShopIsDone.ClownRules
             );
         }
 
-        private Command RaiseJudgeArm(Command next = null)
+        private Command FocusTarget(LevelEntity target, Command next = null)
         {
             return _CameraService.PanToTemporaryCameraTarget(
-                _Judge,
+                target,
                 _CameraService.TemporaryCameraZoom(
                     _CameraService.RunRotateCameraTo(_Judge.FacingDirection,
-                        new SeriesCommand(
-                            // Raise arm
-                            _StateHandler.RunChangeState(StateConsts.ClownPuppet.PUNISH),
-                            next ?? new Command()
-                        )
+                        next ?? new Command()
                     ),
                     0.25f
                 )
