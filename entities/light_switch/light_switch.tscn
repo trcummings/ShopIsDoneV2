@@ -29,6 +29,9 @@ shape = SubResource("BoxShape3D_wtkvf")
 disabled = true
 metadata/_edit_lock_ = true
 
+[node name="FacingDirectionHandler" parent="." index="1"]
+_UpdateFacingTarget = false
+
 [node name="LightSwitchModel" parent="." index="3" instance=ExtResource("2_83ns4")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
 LoopingAnimations = []

@@ -3,6 +3,7 @@ using Godot;
 using Godot.Collections;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
+using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.Positioning;
 
@@ -87,6 +88,12 @@ namespace ShopIsDone.ActionPoints
             _DrainHandler = GetNode<IDrainHandler>(_DrainHandlerPath);
             _DebtDamageHandler = GetNode<IDebtDamageHandler>(_DebtDamageHandlerPath);
             _DeathHandler = GetNode<IDeathHandler>(_DeathHandlerPath);
+        }
+
+        public override void Init()
+        {
+            base.Init();
+            InjectionProvider.Inject(_DebtDamageHandler as Node);
         }
 
         // Public API

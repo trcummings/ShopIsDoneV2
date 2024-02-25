@@ -5,27 +5,20 @@ namespace ShopIsDone.Debug
 {
     public partial class DebugDisplay : CanvasLayer
     {
-        [Export]
-        private Label _OS;
-
-        [Export]
-        private Label _Version;
-
-        [Export]
-        private Label _FPS;
-
-        [Export]
-        private Label _DrawCalls;
-
-        [Export]
-        private Label _VideoMemory;
+        private Control _PanelContainer;
 
         public override void _Ready()
         {
-            _OS.Text = "OS: " + OS.GetName();
-            _Version.Text = "Godot Version: " + Engine.GetVersionInfo()["string"];
+            // Ready nodes
+            _PanelContainer = GetNode<Control>("%PanelContainer");
+
             // Initially hide
             SetVisibility(false);
+
+            // Connect to Events
+            var events = Events.GetEvents(this);
+            events.AddDebugPanelRequested += (Control panel) => _PanelContainer.AddChild(panel);
+            events.RemoveDebugPanelRequested += (Control panel) => _PanelContainer.AddChild(panel);
         }
 
         public void SetVisibility(bool value)
@@ -33,16 +26,6 @@ namespace ShopIsDone.Debug
             // If this is a debug build, set visibility manually
             if (GameManager.IsDebugMode() && value) Show();
             else Hide();
-        }
-
-        public override void _Process(double delta)
-        {
-            // Ignore unless we're a debug build
-            if (!GameManager.IsDebugMode()) return;
-
-            _FPS.Text = "FPS: " + Performance.GetMonitor(Performance.Monitor.TimeFps);
-            _DrawCalls.Text = "Draw Calls: " + Performance.GetMonitor(Performance.Monitor.RenderTotalDrawCallsInFrame);
-            _VideoMemory.Text = "Video Memory Used: " + Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed);
         }
     }
 }

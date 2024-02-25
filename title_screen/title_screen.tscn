@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cstrf18fypse2"]
+[gd_scene load_steps=19 format=3 uid="uid://cstrf18fypse2"]
 
 [ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="2_d05bg"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_y6b84"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://djplffn73ui5s" path="res://game_settings/settings_menu.tscn" id="8"]
 [ext_resource type="Material" path="res://Materials/ClownPuppetString.material" id="8_vvi6j"]
 [ext_resource type="Script" path="res://addons/verlet_rope_4/VerletRope.cs" id="9_n03u7"]
+[ext_resource type="Material" uid="uid://c5esb16gvlyeb" path="res://title_screen/title_screen_particles.tres" id="10_hil51"]
+[ext_resource type="QuadMesh" uid="uid://ccic678m062mx" path="res://title_screen/title_screen_particle_mesh.tres" id="11_3dw51"]
 
 [sub_resource type="Animation" id="8"]
 length = 0.001
@@ -73,17 +75,17 @@ _data = {
 "idle": SubResource("7")
 }
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_3phw8"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_ribdo"]
 resource_local_to_scene = true
-metadata/creation_stamp = 68924829965001
+metadata/creation_stamp = 42815673406210
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_feppv"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_hbbse"]
 resource_local_to_scene = true
-metadata/creation_stamp = 68924863519437
+metadata/creation_stamp = 42815706960139
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_m56fn"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_xl2g2"]
 resource_local_to_scene = true
-metadata/creation_stamp = 68924897073855
+metadata/creation_stamp = 42815740513801
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("3")
@@ -137,74 +139,91 @@ autoplay = "idle"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="LeftHandBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="6"]
-transform = Transform3D(-0.0665188, 0.997785, 7.80875e-07, -0.997785, -0.0665188, -5.33883e-08, 3.20716e-11, -7.87188e-07, 1, 0.51096, 0.880579, -1.35973e-07)
+transform = Transform3D(-0.0656873, 0.99784, 8.35891e-07, -0.99784, -0.0656873, -9.43474e-05, -9.40939e-05, -7.00518e-06, 1, 0.51098, 0.883949, -2.40467e-06)
 
 [node name="RightHandBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="7"]
-transform = Transform3D(-0.0665189, -0.997785, -7.21647e-07, 0.997785, -0.0665189, -5.76321e-08, 4.17227e-09, -6.36648e-07, 1, -0.51096, 0.880579, -1.06171e-07)
+transform = Transform3D(-0.0656873, -0.99784, -7.76616e-07, 0.99784, -0.0656873, -9.43738e-05, 9.41243e-05, -6.89265e-06, 1, -0.51098, 0.883949, -2.38419e-06)
 
 [node name="LeftFootBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="8"]
-transform = Transform3D(0.0168325, 0.0980765, -0.995036, -0.906154, -0.419138, -0.0566414, -0.422613, 0.90261, 0.0818174, 0.153452, 0.0468811, -0.0275269)
+transform = Transform3D(0.0168325, 0.0980765, -0.995036, -0.906154, -0.419138, -0.0566414, -0.422613, 0.90261, 0.0818174, 0.153452, 0.0499589, -0.0275269)
 
 [node name="RightFootBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="9"]
-transform = Transform3D(0.0168325, -0.0980765, 0.995036, 0.906154, -0.419138, -0.0566414, 0.422613, 0.90261, 0.0818174, -0.153452, 0.0468811, -0.0275269)
+transform = Transform3D(0.0168325, -0.0980765, 0.995036, 0.906154, -0.419138, -0.0566414, 0.422613, 0.90261, 0.0818174, -0.153452, 0.0499589, -0.0275269)
 
 [node name="NeckBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="10"]
-transform = Transform3D(1, 1.42464e-12, 2.38418e-07, -8.07583e-08, 0.940887, 0.33872, -2.24324e-07, -0.33872, 0.940887, 6.54137e-13, 0.969229, -0.00879175)
+transform = Transform3D(1, 1.41043e-12, 2.38418e-07, -8.02678e-08, 0.941625, 0.336663, -2.245e-07, -0.336663, 0.941625, 6.53971e-13, 0.972307, -0.00879175)
 
 [node name="NeckWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="11"]
-transform = Transform3D(1, 1.42464e-12, 2.38418e-07, -8.07583e-08, 0.940887, 0.33872, -2.24324e-07, -0.33872, 0.940887, 6.54137e-13, 0.969229, -0.00879175)
+transform = Transform3D(1, 1.41043e-12, 2.38418e-07, -8.02678e-08, 0.941625, 0.336663, -2.245e-07, -0.336663, 0.941625, 6.53971e-13, 0.972307, -0.00879175)
 
 [node name="HatWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="12"]
-transform = Transform3D(0.896597, 0.439006, 0.0582042, -0.442174, 0.894714, 0.0630037, -0.0244171, -0.0822253, 0.996314, 0.0400278, 1.27254, -0.0322453)
+transform = Transform3D(0.897841, 0.436469, 0.0581065, -0.439575, 0.896158, 0.0606257, -0.0256113, -0.0799744, 0.996468, 0.0400278, 1.27567, -0.0315822)
 
 [node name="PelvisWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="13"]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 6.64639e-13, 6.64639e-13, 6.64639e-13)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 6.64473e-13, 0.00307783, 6.64473e-13)
 
 [node name="LArmWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="14"]
-transform = Transform3D(-0.0689462, 0.991323, 0.111912, -0.99762, -0.068511, -0.0077346, -2.57045e-07, -0.112179, 0.993688, 0.160266, 0.904816, -1.11759e-08)
+transform = Transform3D(-0.0681149, 0.99138, 0.111919, -0.997678, -0.0676744, -0.00773505, -9.43355e-05, -0.112186, 0.993687, 0.160266, 0.907894, -1.11759e-08)
 
 [node name="RArmWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="15"]
-transform = Transform3D(-0.0689464, -0.991323, -0.111912, 0.99762, -0.0685111, -0.00773462, 2.64496e-07, -0.112179, 0.993688, -0.160266, 0.904816, -2.23517e-08)
+transform = Transform3D(-0.0681149, -0.99138, -0.111919, 0.997678, -0.0676744, -0.00773507, 9.43691e-05, -0.112186, 0.993687, -0.160266, 0.907894, -2.23517e-08)
+
+[node name="LeftHandTarget" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/LeftHandHandle" index="0"]
+transform = Transform3D(-3.61999e-06, 1, 3.48787e-16, -1, -3.61999e-06, -3.48787e-16, -3.48786e-16, -3.48788e-16, 1, 0, 0, 0)
+
+[node name="RightHandTarget" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/RightHandHandle" index="0"]
+transform = Transform3D(-3.61999e-06, -1, 0, 1, -3.61999e-06, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="LeftFootTarget" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/LeftFootHandle" index="0"]
+transform = Transform3D(1, 0, 0, 0, -3.61999e-06, -1, 0, 1, -3.61999e-06, 0, -0.071913, 0.22448)
 
 [node name="RightRope" type="MeshInstance3D" parent="TitleScreenClownPuppet" node_paths=PackedStringArray("AttachEnd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0999976, 3.20003, -0.160006)
 material_override = ExtResource("8_vvi6j")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_3phw8")
+mesh = SubResource("ImmediateMesh_ribdo")
 script = ExtResource("9_n03u7")
-AttachEnd = NodePath("../ClownPuppetModel/RightHandHandle")
+AttachEnd = NodePath("../ClownPuppetModel/clown_puppet/Armature/Skeleton3D/RightHandBoneAttachment")
 RopeLength = 2.0
 RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="TitleScreenClownPuppet/RightRope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -3.2, 0.16)
-aabb = AABB(-0.577726, -2.32917, -0.00318724, 0.58709, 2.3307, 0.161987)
+aabb = AABB(-0.419127, -2.16791, -0.00238636, 0.428795, 2.16892, 0.165422)
 
 [node name="LeftRope" type="MeshInstance3D" parent="TitleScreenClownPuppet" node_paths=PackedStringArray("AttachEnd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.100001, 3.20003, -0.160003)
 material_override = ExtResource("8_vvi6j")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_feppv")
+mesh = SubResource("ImmediateMesh_hbbse")
 script = ExtResource("9_n03u7")
-AttachEnd = NodePath("../ClownPuppetModel/LeftHandHandle")
+AttachEnd = NodePath("../ClownPuppetModel/clown_puppet/Armature/Skeleton3D/LeftHandBoneAttachment")
 RopeLength = 2.0
 RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="TitleScreenClownPuppet/LeftRope"]
-aabb = AABB(-0.00953637, -2.3229, -0.0027411, 0.491823, 2.32415, 0.14687)
+aabb = AABB(-0.00964278, -2.16782, -0.0024343, 0.428805, 2.16887, 0.165498)
 
-[node name="HeadRope" type="MeshInstance3D" parent="TitleScreenClownPuppet" node_paths=PackedStringArray("AttachEnd")]
+[node name="HeadRope" type="MeshInstance3D" parent="TitleScreenClownPuppet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.82859e-06, 3.20003, -0.620004)
 material_override = ExtResource("8_vvi6j")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_m56fn")
+mesh = SubResource("ImmediateMesh_xl2g2")
 script = ExtResource("9_n03u7")
-AttachEnd = NodePath("../ClownPuppetModel/HeadHandle")
 RopeLength = 1.5
 RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="TitleScreenClownPuppet/HeadRope"]
-aabb = AABB(-0.0100038, -2.2159, -8.67893e-09, 0.0200138, 2.21591, 0.589133)
+aabb = AABB(-0.01, -1.74228, -2.23894e-08, 0.02001, 1.74229, 1.00448e-05)
+
+[node name="Particles" type="GPUParticles3D" parent="TitleScreenClownPuppet"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+amount = 300
+lifetime = 5.27
+preprocess = 4.71
+fixed_fps = 0
+process_material = ExtResource("10_hil51")
+draw_pass_1 = ExtResource("11_3dw51")
 
 [node name="TextOverlayContainer" type="MarginContainer" parent="."]
 anchors_preset = 15

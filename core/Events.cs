@@ -32,6 +32,13 @@ public partial class Events : Node
     [Signal]
     public delegate void LevelChangeRequestedEventHandler(string levelId);
 
+    // Debug
+    [Signal]
+    public delegate void AddDebugPanelRequestedEventHandler(Control panel);
+
+    [Signal]
+    public delegate void RemoveDebugPanelRequestedEventHandler(Control panel);
+
     // Static function to help get the singleton
     public static Events GetEvents(Node node)
     {

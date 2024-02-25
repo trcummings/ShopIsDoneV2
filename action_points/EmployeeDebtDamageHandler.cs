@@ -2,6 +2,7 @@
 using Godot;
 using ShopIsDone.Tasks;
 using ShopIsDone.Utils.Commands;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.ActionPoints
 {
@@ -27,6 +28,15 @@ namespace ShopIsDone.ActionPoints
                 // Inflict damage
                 InflictDamage(payload)
             );
+        }
+
+        protected override Command OnTookNoDamage(ApDamagePayload payload)
+        {
+            return new IfElseCommand(
+				_TaskHandler.HasCurrentTask,
+				_StateHandler.RunChangeState(StateConsts.Employees.DO_TASK),
+				base.OnTookNoDamage(payload)
+			);
         }
     }
 }

@@ -1,12 +1,372 @@
-[gd_scene load_steps=5 format=3 uid="uid://dlk4igjt1ir5x"]
+[gd_scene load_steps=15 format=3 uid="uid://dlk4igjt1ir5x"]
 
+[ext_resource type="Script" path="res://entities/clown_puppet/ClownPuppetModel.cs" id="1_g61qf"]
 [ext_resource type="PackedScene" uid="uid://dn5cltxpon5dl" path="res://Models/clown_puppet/clown_puppet.gltf" id="1_xgqws"]
+[ext_resource type="Material" uid="uid://kiljlgaga037" path="res://Models/clown_puppet/clown_puppet.material" id="2_g3gdl"]
 [ext_resource type="Script" path="res://addons/wigglebone/wiggle_bone.gd" id="2_rt2d3"]
 [ext_resource type="Resource" uid="uid://d0n4gdo00henp" path="res://Models/clown_puppet/clown_puppet_wiggle_properties.tres" id="3_a4o7u"]
 [ext_resource type="Resource" uid="uid://dk2rpw1bc8fl7" path="res://Models/clown_puppet/clown_puppet_wiggle_properties_2.tres" id="4_x40rn"]
 
-[node name="ClownPuppetModel" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 0.01)
+[sub_resource type="Animation" id="Animation_f3lyt"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("clown_puppet/HeadHandle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.984135, -0.0308714), Vector3(0, 1.13448, -0.0308714)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("clown_puppet/RightFootHandle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.154672, 0.0666173, -0.0315476)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("clown_puppet/LeftFootHandle:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.145, 0.0744164, -0.0790939)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("clown_puppet/RightHandHandle:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.669448, 0.875, -0.005), Vector3(-0.51728, 0.875, -0.005)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("clown_puppet/LeftHandHandle:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.573647, 0.880886, -0.0192296), Vector3(0.573647, 0.880886, -0.0192296)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("clown_puppet/HeadHandle/HeadTarget:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("clown_puppet/HeadHandle/HeadTarget:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("clown_puppet/HeadHandle:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("clown_puppet/LeftFootHandle:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("clown_puppet/RightHandHandle:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("clown_puppet/LeftHandHandle:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("clown_puppet/LeftHandHandle/LeftHandTarget:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.48787e-16, 3.48787e-16, -1.5708)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("clown_puppet/LeftHandHandle/LeftHandTarget:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("clown_puppet/RightFootHandle:rotation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("clown_puppet/RightHandHandle/RightHandTarget:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("clown_puppet/RightHandHandle/RightHandTarget:rotation")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0.001),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 1.5708)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("clown_puppet/LeftFootHandle/LeftFootTarget:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.001),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -0.071913, 0.22448)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("clown_puppet/LeftFootHandle/LeftFootTarget:rotation")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0.001),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5708, 0, 0)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("clown_puppet:position")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("clown_puppet:rotation")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_vlci1"]
+resource_name = "idle"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("clown_puppet:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5.1, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(2.08165e-12, 0.1, 2.08165e-12), Vector3(2.08165e-12, 0.3, 2.08165e-12), Vector3(2.08165e-12, 0.1, 2.08165e-12)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("clown_puppet/LeftHandHandle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.30529, 0.419715, -0.0192296)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("clown_puppet/RightHandHandle:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.328371, 0.435544, -0.005)]
+}
+
+[sub_resource type="Animation" id="Animation_af0y6"]
+resource_name = "raise_hand"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("clown_puppet/RightHandHandle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.482926, 0.875, -0.005), Vector3(-0.0627348, 1.84543, -0.005)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("clown_puppet/RightHandHandle/RightHandTarget:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12), Vector3(0, 0.139988, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("clown_puppet/RightHandHandle/RightHandTarget:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -0.48569), Vector3(0, 0, -0.48569)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nlury"]
+_data = {
+"RESET": SubResource("Animation_f3lyt"),
+"idle": SubResource("Animation_vlci1"),
+"raise_hand": SubResource("Animation_af0y6")
+}
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_v83tj"]
+filter_enabled = true
+filters = ["RightHandHandle:position", "clown_puppet/RightHandHandle/RightHandTarget:position", "clown_puppet/RightHandHandle/RightHandTarget:rotation", "clown_puppet/RightHandHandle:position", "clown_puppet/RightHandHandle:rotation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tpkl8"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k1uxk"]
+animation = &"raise_hand"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_f4on2"]
+graph_offset = Vector2(-3.84, 48)
+nodes/blend_hand/node = SubResource("AnimationNodeBlend2_v83tj")
+nodes/blend_hand/position = Vector2(270, 10)
+nodes/idle/node = SubResource("AnimationNodeAnimation_tpkl8")
+nodes/idle/position = Vector2(10, 60)
+nodes/output/position = Vector2(580, 130)
+nodes/raise_hand/node = SubResource("AnimationNodeAnimation_k1uxk")
+nodes/raise_hand/position = Vector2(20, 210)
+node_connections = [&"blend_hand", 0, &"idle", &"blend_hand", 1, &"raise_hand", &"output", 0, &"blend_hand"]
+
+[node name="ClownPuppetModel" type="Node3D" node_paths=PackedStringArray("_Skeleton", "_AnimTree", "_AnimPlayer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.1, 2.08165e-12)
+script = ExtResource("1_g61qf")
+DissolveMaterial = ExtResource("2_g3gdl")
+_Skeleton = NodePath("clown_puppet/Armature/Skeleton3D")
+_AnimTree = NodePath("AnimationTree")
+LoopingAnimations = []
+_AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="clown_puppet" parent="." instance=ExtResource("1_xgqws")]
 
@@ -48,20 +408,20 @@ bones/27/rotation = Quaternion(-0.113099, -0.695119, -0.183987, 0.685688)
 
 [node name="LeftArmIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="1"]
 process_priority = 1
-root_bone = &"lower_arm.L"
+root_bone = &"upper_arm.L"
 tip_bone = &"wrist.L"
 interpolation = 0.644
 magnet = Vector3(0, 0, 25)
-target_node = NodePath("../../../../LeftHandHandle/LeftHandTarget")
+target_node = NodePath("../../../LeftHandHandle/LeftHandTarget")
 
 [node name="RightArmIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="2"]
 process_priority = 1
-root_bone = &"lower_arm.R"
+root_bone = &"upper_arm.R"
 tip_bone = &"wrist.R"
 interpolation = 0.644
 use_magnet = true
 magnet = Vector3(0, 0, 25)
-target_node = NodePath("../../../../RightHandHandle/RightHandTarget")
+target_node = NodePath("../../../RightHandHandle/RightHandTarget")
 
 [node name="LeftFootIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="3"]
 process_priority = 1
@@ -70,16 +430,16 @@ tip_bone = &"toe.L"
 interpolation = 0.644
 use_magnet = true
 magnet = Vector3(0, 0, 25)
-target_node = NodePath("../../../../LeftFootHandle/LeftFootTarget")
+target_node = NodePath("../../../LeftFootHandle/LeftFootTarget")
 
 [node name="RightFootIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="4"]
 process_priority = 1
-root_bone = &"shin.R"
+root_bone = &"foot.R"
 tip_bone = &"toe.R"
 interpolation = 0.644
 use_magnet = true
 magnet = Vector3(0, 0, 25)
-target_node = NodePath("../../../../RightFootHandle/RightFootTarget")
+target_node = NodePath("../../../RightFootHandle/RightFootTarget")
 
 [node name="HeadIK" type="SkeletonIK3D" parent="clown_puppet/Armature/Skeleton3D" index="5"]
 process_priority = 1
@@ -88,56 +448,56 @@ tip_bone = &"head"
 interpolation = 0.644
 use_magnet = true
 magnet = Vector3(0, 0, 25)
-target_node = NodePath("../../../../HeadHandle/HeadTarget")
+target_node = NodePath("../../../HeadHandle/HeadTarget")
 
 [node name="LeftHandBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="6"]
-transform = Transform3D(-0.0665188, 0.997785, 7.80875e-07, -0.997785, -0.0665188, -5.33883e-08, 3.20716e-11, -7.87188e-07, 1, 0.51096, 0.880579, -1.35973e-07)
+transform = Transform3D(-0.0236984, 0.999719, 2.79865e-07, -0.999719, -0.0236984, -9.56403e-09, -2.92897e-09, -2.80014e-07, 1, 0.361409, 0.616115, -0.0117063)
 bone_name = "wrist.L"
 bone_idx = 12
 
 [node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="7"]
-transform = Transform3D(-0.0665189, -0.997785, -7.21647e-07, 0.997785, -0.0665189, -5.76321e-08, 4.17227e-09, -6.36648e-07, 1, -0.51096, 0.880579, -1.06171e-07)
+transform = Transform3D(-0.0236984, -0.999717, -2.28963e-07, 0.999717, -0.0236984, -1.34464e-08, 8.01657e-09, -2.29217e-07, 1, -0.371464, 0.622912, 0.00104697)
 bone_name = "wrist.R"
 bone_idx = 16
 
 [node name="LeftFootBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="8"]
-transform = Transform3D(0.0168325, 0.0980765, -0.995036, -0.906154, -0.419138, -0.0566414, -0.422613, 0.90261, 0.0818174, 0.153452, 0.0468811, -0.0275269)
+transform = Transform3D(0.0231726, -0.0172764, -0.999582, -0.960764, -0.276816, -0.0174884, -0.276398, 0.960768, -0.0230131, 0.153452, 0.045597, -0.0275269)
 bone_name = "foot.L"
 bone_idx = 21
 
 [node name="RightFootBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="9"]
-transform = Transform3D(0.0168325, -0.0980765, 0.995036, 0.906154, -0.419138, -0.0566414, 0.422613, 0.90261, 0.0818174, -0.153452, 0.0468811, -0.0275269)
+transform = Transform3D(0.0780993, -0.150095, 0.985582, 0.995978, 0.0552901, -0.070503, -0.0439107, 0.987124, 0.15381, -0.153452, 0.045597, -0.0275269)
 bone_name = "foot.R"
 bone_idx = 26
 
 [node name="NeckBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="10"]
-transform = Transform3D(1, 1.42464e-12, 2.38418e-07, -8.07583e-08, 0.940887, 0.33872, -2.24324e-07, -0.33872, 0.940887, 6.54137e-13, 0.969229, -0.00879175)
+transform = Transform3D(1, -1.76925e-11, 2.38416e-07, -1.36492e-07, 0.819865, 0.572557, -1.95479e-07, -0.572557, 0.819865, 6.54137e-13, 0.967945, -0.00879175)
 bone_name = "neck"
 bone_idx = 6
 
 [node name="NeckWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="11"]
-transform = Transform3D(1, 1.42464e-12, 2.38418e-07, -8.07583e-08, 0.940887, 0.33872, -2.24324e-07, -0.33872, 0.940887, 6.54137e-13, 0.969229, -0.00879175)
+transform = Transform3D(1, -1.76925e-11, 2.38416e-07, -1.36492e-07, 0.819865, 0.572557, -1.95479e-07, -0.572557, 0.819865, 6.54137e-13, 0.967945, -0.00879175)
 bone_name = "neck"
 bone_idx = 6
 script = ExtResource("2_rt2d3")
 properties = ExtResource("3_a4o7u")
 
 [node name="HatWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="12"]
-transform = Transform3D(0.896597, 0.439006, 0.0582042, -0.442174, 0.894714, 0.0630037, -0.0244171, -0.0822253, 0.996314, 0.0400278, 1.27254, -0.0322453)
+transform = Transform3D(0.896316, 0.439444, 0.0592207, -0.443416, 0.888035, 0.121561, 0.000829261, -0.135217, 0.990816, 0.0400278, 1.26376, -0.0602835)
 bone_name = "hat"
 bone_idx = 8
 script = ExtResource("2_rt2d3")
 properties = ExtResource("3_a4o7u")
 
 [node name="PelvisWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="13"]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 6.64639e-13, 6.64639e-13, 6.64639e-13)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 6.64639e-13, -0.00128411, 6.64639e-13)
 bone_name = "root"
 bone_idx = 0
 script = ExtResource("2_rt2d3")
 properties = ExtResource("4_x40rn")
 
 [node name="LArmWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="14"]
-transform = Transform3D(-0.0689462, 0.991323, 0.111912, -0.99762, -0.068511, -0.0077346, -2.57045e-07, -0.112179, 0.993688, 0.160266, 0.904816, -1.11759e-08)
+transform = Transform3D(-0.738318, 0.669723, 0.079729, -0.67137, -0.74108, 0.00795151, 0.0644109, -0.0476569, 0.996785, 0.160266, 0.903532, -1.11759e-08)
 bone_name = "upper_arm.L"
 bone_idx = 10
 script = ExtResource("2_rt2d3")
@@ -146,40 +506,54 @@ const_force_global = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
 const_force_local = Vector3(2.08165e-12, -9.8, 2.08165e-12)
 
 [node name="RArmWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="15"]
-transform = Transform3D(-0.0689464, -0.991323, -0.111912, 0.99762, -0.0685111, -0.00773462, 2.64496e-07, -0.112179, 0.993688, -0.160266, 0.904816, -2.23517e-08)
+transform = Transform3D(-0.80036, -0.594503, 0.0773996, 0.5995, -0.794679, 0.0953109, 0.00484528, 0.122684, 0.992434, -0.160266, 0.903532, -2.23517e-08)
 bone_name = "upper_arm.R"
 bone_idx = 14
 script = ExtResource("2_rt2d3")
 properties = ExtResource("3_a4o7u")
 const_force_local = Vector3(2.08165e-12, -9.8, 2.08165e-12)
 
-[node name="LeftHandHandle" type="Marker3D" parent="."]
+[node name="LeftHandHandle" type="Marker3D" parent="clown_puppet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.573647, 0.880886, -0.0192296)
 
-[node name="LeftHandTarget" type="Marker3D" parent="LeftHandHandle"]
-transform = Transform3D(-0.94711, 0.0868978, -0.308921, -0.320911, -0.256463, 0.911725, -4.20783e-08, 0.96264, 0.270785, 0.111223, -0.00999993, 0)
+[node name="LeftHandTarget" type="Marker3D" parent="clown_puppet/LeftHandHandle"]
+transform = Transform3D(-3.61999e-06, 1, 3.48787e-16, -1, -3.61999e-06, -3.48787e-16, -3.48786e-16, -3.48788e-16, 1, 0, 0, 0)
 
-[node name="RightHandHandle" type="Marker3D" parent="."]
+[node name="RightHandHandle" type="Marker3D" parent="clown_puppet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.669448, 0.875, -0.005)
 
-[node name="RightHandTarget" type="Marker3D" parent="RightHandHandle"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.175943, -0.00999999, 0.102728)
+[node name="RightHandTarget" type="Marker3D" parent="clown_puppet/RightHandHandle"]
+transform = Transform3D(-3.61999e-06, -1, 0, 1, -3.61999e-06, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="LeftFootHandle" type="Marker3D" parent="."]
+[node name="LeftFootHandle" type="Marker3D" parent="clown_puppet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.145, 0.0744164, -0.0790939)
 
-[node name="LeftFootTarget" type="Marker3D" parent="LeftFootHandle"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.0647269, 0.201438)
+[node name="LeftFootTarget" type="Marker3D" parent="clown_puppet/LeftFootHandle"]
+transform = Transform3D(1, 0, 0, 0, -3.61999e-06, -1, 0, 1, -3.61999e-06, 0, -0.071913, 0.22448)
 
-[node name="RightFootHandle" type="Marker3D" parent="."]
+[node name="RightFootHandle" type="Marker3D" parent="clown_puppet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.154672, 0.0666173, -0.0315476)
 
-[node name="RightFootTarget" type="Marker3D" parent="RightFootHandle"]
-transform = Transform3D(1, 0, 0, 0, -0.728215, -0.685348, 0, 0.685348, -0.728215, -0.00909932, 0.000494301, 0.136577)
+[node name="RightFootTarget" type="Marker3D" parent="clown_puppet/RightFootHandle"]
+transform = Transform3D(1, -7.26992e-19, -2.2508e-17, -2.2508e-17, -0.0645322, -0.997915, -7.26992e-19, 0.997915, -0.0645322, 0, 0, 0)
 
-[node name="HeadHandle" type="Marker3D" parent="."]
+[node name="HeadHandle" type="Marker3D" parent="clown_puppet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.984135, -0.0308714)
 
-[node name="HeadTarget" type="Marker3D" parent="HeadHandle"]
+[node name="HeadTarget" type="Marker3D" parent="clown_puppet/HeadHandle"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nlury")
+}
+autoplay = "RESET"
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nlury")
+}
+tree_root = SubResource("AnimationNodeBlendTree_f4on2")
+anim_player = NodePath("../AnimationPlayer")
+parameters/blend_hand/blend_amount = 0.0
 
 [editable path="clown_puppet"]

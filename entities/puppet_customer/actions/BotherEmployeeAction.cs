@@ -70,7 +70,12 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
                     targetStateHandler.RunChangeState(StateConsts.ALERT)
                 ),
                 // Run employee microgame
-                _MicrogameHandler.RunMicrogame(payload)
+                _MicrogameHandler.RunMicrogame(payload),
+                // If botherer is still active, then return to idle
+                new ConditionalCommand(
+                    Entity.IsActive,
+                    _StateHandler.RunChangeState(StateConsts.IDLE)
+                )
             );
         }
     }

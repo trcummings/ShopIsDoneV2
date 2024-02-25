@@ -19,6 +19,9 @@ namespace ShopIsDone.Arenas
         [Signal]
         public delegate void ArenaFailedEventHandler();
 
+        [Signal]
+        public delegate void ArenaEnteredEventHandler();
+
         [Export]
         public StateMachine _ArenaStateMachine;
 
@@ -82,12 +85,15 @@ namespace ShopIsDone.Arenas
 
             // Change state to initializing
             _ArenaStateMachine.ChangeState(ArenaConsts.INITIALIZING);
+
+            EmitSignal(nameof(ArenaEntered));
         }
 
         public void CleanUp()
         {
             // Unregister services
             _Services.UnregisterServices();
+            _Services.CleanUpServices();
 
             // Idle player units
             _PlayerCharacterManager.Idle();

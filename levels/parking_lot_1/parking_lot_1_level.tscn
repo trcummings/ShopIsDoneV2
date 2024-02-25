@@ -63,7 +63,7 @@ density_texture = SubResource("NoiseTexture3D_dprvk")
 
 [node name="Level" instance=ExtResource("1_qcbwj")]
 
-[node name="WorldEnvironment" parent="." index="0"]
+[node name="WorldEnvironment" parent="." index="1"]
 environment = ExtResource("2_ornuu")
 
 [node name="LevelData" parent="Services" index="0"]
@@ -167,9 +167,6 @@ transform = Transform3D(1, 0, -2.50326e-08, 0, 1, 0, -2.50326e-08, 0, 1, 0.98541
 shape = SubResource("BoxShape3D_y1gtw")
 metadata/_edit_lock_ = true
 
-[node name="Label3D" parent="World/NavigationRegion3D/Interactable" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09261, 1.75167, 0.32461)
-
 [node name="DoorInteraction" type="Node" parent="World/NavigationRegion3D/Interactable" index="2" node_paths=PackedStringArray("_WarpPoint")]
 script = ExtResource("14_ysv03")
 _WarpPoint = NodePath("../../Arena/DoorPoint")
@@ -187,6 +184,9 @@ HasTurnCounter = false
 [node name="NeverCompleteCondition" type="Node" parent="World/NavigationRegion3D/Arena/Services/ConditionsService" index="0"]
 script = ExtResource("18_3lau5")
 _Id = "never_complete"
+
+[node name="ActionMeddler" parent="World/NavigationRegion3D/Arena/Services" index="13"]
+_IsActive = true
 
 [node name="MoveDestinationMeddle" type="Node" parent="World/NavigationRegion3D/Arena/Services/ActionMeddler" index="0" node_paths=PackedStringArray("_FinalPoint", "_Interaction")]
 script = ExtResource("19_jue60")
@@ -214,9 +214,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
 
 [node name="ScreeningComputer" parent="World/NavigationRegion3D/Arena/Entities" index="2" instance=ExtResource("21_2o413")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2, 0, -4)
+EditorFacingDir = 1
 
 [node name="LightSwitch" parent="World/NavigationRegion3D/Arena/Entities" index="3" instance=ExtResource("21_2hf0b")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+EditorFacingDir = 1
+
+[node name="LightSwitchModel" parent="World/NavigationRegion3D/Arena/Entities/LightSwitch" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="LightSwitchComponent" parent="World/NavigationRegion3D/Arena/Entities/LightSwitch" index="5" node_paths=PackedStringArray("_Lights")]
 _IsFlippedOn = false
@@ -291,6 +296,21 @@ material = SubResource("FogMaterial_g1l4w")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" index="6"]
 transform = Transform3D(0.671608, 0.606754, -0.425197, -0.221229, 0.711934, 0.666489, 0.707107, -0.353553, 0.612372, 0, 0, 0)
 visible = false
+
+[node name="Camera" parent="World/GridSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, 0.353553, -0.612373, 4.29723e-16, 0.866026, 0.5, 0.707107, -0.353553, 0.612373, -30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/LightSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, 0.353553, -0.612373, 4.29723e-16, 0.866026, 0.5, 0.707107, -0.353553, 0.612373, -30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/WidgetsSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, 0.353553, -0.612373, 4.29723e-16, 0.866026, 0.5, 0.707107, -0.353553, 0.612373, -30.6186, 25, 30.6186)
+
+[node name="Distortion" parent="PostProcessing/Effects" index="2"]
+visible = false
+
+[node name="SubViewport2" parent="PostProcessing/Effects/Distortion" index="0"]
+render_target_update_mode = 0
 
 [connection signal="AreaTriggered" from="World/NavigationRegion3D/FirstCutsceneTriggerArea" to="World/NavigationRegion3D/FirstCutsceneTriggerArea/CutsceneInteraction" method="Execute" flags=6]
 [connection signal="AreaTriggered" from="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea" to="World/NavigationRegion3D/Arena/Entities/EntityTriggerArea/ArenaScriptInteraction" method="Execute" flags=6]

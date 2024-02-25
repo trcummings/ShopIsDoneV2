@@ -123,11 +123,11 @@ namespace ShopIsDone.Cameras
         }
 
         // Decorator command that zooms in and out after completing a given command
-        public Command TemporaryCameraZoom(Command next)
+        public Command TemporaryCameraZoom(Command next, float zoomOverride = 0.5f)
         {
             return new SeriesCommand(
                 // Punch in
-                ZoomCameraTo(0.5f),
+                ZoomCameraTo(zoomOverride),
                 // Run deferred action
                 new DeferredCommand(() => next),
                 // Zoom out

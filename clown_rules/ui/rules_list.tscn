@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://brpya8arwjb2"]
+
+[ext_resource type="Texture2D" uid="uid://b4w2k8lvoe8ra" path="res://clown_rules/ui/wooden_rules_board.png" id="1"]
+[ext_resource type="Script" path="res://clown_rules/ui/RulesList.cs" id="2"]
+[ext_resource type="Script" path="res://util/ControlTweener.cs" id="3"]
+[ext_resource type="PackedScene" uid="uid://d4hjmqf3pe7is" path="res://clown_rules/ui/rule_list_element.tscn" id="4"]
+
+[node name="RulesList" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2")
+RuleElementScene = ExtResource("4")
+
+[node name="ControlTweener" type="Node" parent="." node_paths=PackedStringArray("_ControlToTween")]
+unique_name_in_owner = true
+script = ExtResource("3")
+_ControlToTween = NodePath("../CenterContainer")
+InTransType = 10
+OutTransType = 10
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="RulesBoard" type="TextureRect" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("1")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/RulesBoard"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 175
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="Rules" type="VBoxContainer" parent="CenterContainer/RulesBoard/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="RuleListElement" parent="CenterContainer/RulesBoard/MarginContainer/Rules" instance=ExtResource("4")]
+layout_mode = 2

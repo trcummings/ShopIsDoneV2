@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=75 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -43,6 +43,7 @@
 [ext_resource type="Script" path="res://clown_timer/TurnInterrupterService.cs" id="20_u3kfo"]
 [ext_resource type="PackedScene" uid="uid://d4f3h0uwl480d" path="res://arenas/states/player_turn_states/choosing_action_states/facing_direction_state.tscn" id="20_ycbal"]
 [ext_resource type="PackedScene" uid="uid://dmawm142xfh0t" path="res://arenas/states/player_turn_states/choosing_action_states/move_state.tscn" id="21_6pg1j"]
+[ext_resource type="Script" path="res://clown_rules/ClownRulesService.cs" id="21_etobo"]
 [ext_resource type="PackedScene" uid="uid://bswkvjqatmnba" path="res://arenas/states/player_turn_states/choosing_action_states/targeting_state.tscn" id="22_e5qdl"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/OutOfTimeFinishedState.cs" id="22_qh40g"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/VictoryFinishedState.cs" id="23_2yhgl"]
@@ -57,8 +58,14 @@
 [ext_resource type="PackedScene" uid="uid://daffdkouahgqp" path="res://arenas/ui/player_unit/player_unit_ui.tscn" id="38_qf0ro"]
 [ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/options_menu.tscn" id="39_yls7l"]
 [ext_resource type="PackedScene" uid="uid://cvfjwqjfca0rm" path="res://arena_actions/effort_meter/effort_meter.tscn" id="40_ho46i"]
+[ext_resource type="Script" path="res://arenas/states/battle_states/JudgePhaseBattleState.cs" id="43_bmay2"]
 [ext_resource type="PackedScene" uid="uid://cqq6dmqdsuqoe" path="res://clown_timer/clown_clock.tscn" id="57_n517i"]
 [ext_resource type="PackedScene" uid="uid://c8xyd8s0yod3u" path="res://tiles/tile_hover_ui/tile_hover_ui.tscn" id="58_m7tmb"]
+[ext_resource type="PackedScene" uid="uid://cdce80truckjp" path="res://clown_rules/ui/rules_ui.tscn" id="61_0b8j6"]
+[ext_resource type="PackedScene" uid="uid://bvr1260jlynow" path="res://conditions/ui/conditions_remaining.tscn" id="62_ioot1"]
+[ext_resource type="PackedScene" uid="uid://brpya8arwjb2" path="res://clown_rules/ui/rules_list.tscn" id="63_x3x63"]
+[ext_resource type="PackedScene" uid="uid://dq35dnfbvmsgh" path="res://clown_rules/clown_debug.tscn" id="64_oyack"]
+[ext_resource type="AudioStream" uid="uid://deium5vier2tq" path="res://arenas/ARENA-START__Bass Swell 8_E.wav" id="66_bteqj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
@@ -76,6 +83,8 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wt6n1"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ssca0"]
+
 [node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_PlayerUnitService") groups=["arena"]]
 script = ExtResource("1_loukv")
 _ArenaStateMachine = NodePath("ArenaStateMachine")
@@ -91,12 +100,13 @@ _ExtraServices = [NodePath("../Tiles")]
 [node name="TurnCounter" type="Node" parent="Services"]
 script = ExtResource("2_qt0kh")
 
-[node name="ActionService" type="Node" parent="Services" node_paths=PackedStringArray("_ScriptQueueService", "_OutcomeService", "_ActionMeddler", "_ParallelHunterService")]
+[node name="ActionService" type="Node" parent="Services" node_paths=PackedStringArray("_ScriptQueueService", "_OutcomeService", "_ActionMeddler", "_ParallelHunterService", "_ClownRulesService")]
 script = ExtResource("3_y84tj")
 _ScriptQueueService = NodePath("../ScriptQueueService")
 _OutcomeService = NodePath("../ArenaOutcomeService")
 _ActionMeddler = NodePath("../ActionMeddler")
 _ParallelHunterService = NodePath("../ParallelHunterService")
+_ClownRulesService = NodePath("../ClownRulesService")
 
 [node name="PlayerUnitService" type="Node" parent="Services"]
 script = ExtResource("4_m7h52")
@@ -128,8 +138,9 @@ _ConditionsService = NodePath("../ConditionsService")
 [node name="UnitDeathService" type="Node" parent="Services"]
 script = ExtResource("10_y7i7b")
 
-[node name="ConditionsService" type="Node" parent="Services"]
+[node name="ConditionsService" type="Node" parent="Services" node_paths=PackedStringArray("_ConditionsRemaining")]
 script = ExtResource("11_jvwpy")
+_ConditionsRemaining = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContainer/ConditionsRemaining")
 
 [node name="UnitInteractionService" parent="Services" instance=ExtResource("12_i1lmg")]
 
@@ -161,6 +172,15 @@ script = ExtResource("20_u3kfo")
 _PlayerTurnBattleState = NodePath("../../ArenaStateMachine/Running/BattleStateMachine/PlayerTurn")
 _ActionService = NodePath("../ActionService")
 
+[node name="ClownRulesService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesUI", "_RulesList", "_ActionService", "_ScriptQueueService")]
+script = ExtResource("21_etobo")
+_IsActive = true
+_RulesUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContainer/RulesUI")
+_RulesList = NodePath("../../UILayer/RulesList")
+_ActionService = NodePath("../ActionService")
+_ScriptQueueService = NodePath("../ScriptQueueService")
+_DebugPanelScene = ExtResource("64_oyack")
+
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
 
@@ -174,7 +194,7 @@ _PhaseManager = NodePath("BattlePhaseManager")
 [node name="BattlePhaseManager" type="Node" parent="ArenaStateMachine/Running" node_paths=PackedStringArray("CurrentPhase", "PhaseOrder", "_BattleStateMachine")]
 script = ExtResource("4_c0td2")
 CurrentPhase = NodePath("../BattleStateMachine/TurnCountdown")
-PhaseOrder = [NodePath("../BattleStateMachine/TurnCountdown"), NodePath("../BattleStateMachine/CleanUp"), NodePath("../BattleStateMachine/EnemyActivity"), NodePath("../BattleStateMachine/PrepPlayerTurn"), NodePath("../BattleStateMachine/PlayerTurn")]
+PhaseOrder = [NodePath("../BattleStateMachine/TurnCountdown"), NodePath("../BattleStateMachine/CleanUp"), NodePath("../BattleStateMachine/EnemyActivity"), NodePath("../BattleStateMachine/PrepPlayerTurn"), NodePath("../BattleStateMachine/PlayerTurn"), NodePath("../BattleStateMachine/JudgePhase")]
 _BattleStateMachine = NodePath("../BattleStateMachine")
 
 [node name="BattleStateMachine" type="Node" parent="ArenaStateMachine/Running"]
@@ -227,7 +247,7 @@ script = ExtResource("3_q440h")
 [node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_TileHoverUI", "_EndPlayerTurnWidget") instance=ExtResource("15_hbm50")]
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 _PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
-_TileHoverUI = NodePath("../../../../../../UILayer/PanelContainer/MarginContainer/TileHoverUI")
+_TileHoverUI = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/TileHoverUI")
 _EndPlayerTurnWidget = NodePath("../../../../../../UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
 
 [node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService")]
@@ -272,6 +292,12 @@ _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 
 [node name="MoreInfo" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
 script = ExtResource("20_por72")
+
+[node name="JudgePhase" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ActionService", "_ClownRulesService")]
+script = ExtResource("43_bmay2")
+_PhaseManager = NodePath("../../BattlePhaseManager")
+_ActionService = NodePath("../../../../Services/ActionService")
+_ClownRulesService = NodePath("../../../../Services/ClownRulesService")
 
 [node name="Finished" type="Node" parent="ArenaStateMachine" node_paths=PackedStringArray("_OutcomeStateMachine")]
 script = ExtResource("7_wmirh")
@@ -621,7 +647,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_t11pk")
 position = Vector2(150, 150)
 scale = Vector2(0.3, 0.3)
 
-[node name="PanelContainer" type="PanelContainer" parent="UILayer"]
+[node name="TileHoverUIContainer" type="PanelContainer" parent="UILayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -629,15 +655,57 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_wt6n1")
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/TileHoverUIContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="TileHoverUI" parent="UILayer/PanelContainer/MarginContainer" instance=ExtResource("58_m7tmb")]
+[node name="TileHoverUI" parent="UILayer/TileHoverUIContainer/MarginContainer" instance=ExtResource("58_m7tmb")]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+
+[node name="RulesAndConditions" type="PanelContainer" parent="UILayer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 10
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ssca0")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/RulesAndConditions"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/RulesAndConditions/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RulesUI" parent="UILayer/RulesAndConditions/MarginContainer/VBoxContainer" instance=ExtResource("61_0b8j6")]
+visible = false
+layout_mode = 2
+
+[node name="ConditionsRemaining" parent="UILayer/RulesAndConditions/MarginContainer/VBoxContainer" instance=ExtResource("62_ioot1")]
+visible = false
+layout_mode = 2
+
+[node name="RulesList" parent="UILayer" instance=ExtResource("63_x3x63")]
+visible = false
+
+[node name="ArenaEnteredPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("66_bteqj")
+bus = &"SFX"
+
+[connection signal="ArenaEntered" from="." to="ArenaEnteredPlayer" method="play"]

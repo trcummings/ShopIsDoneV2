@@ -61,21 +61,14 @@ namespace ShopIsDone.Actions
                 // Accumulate the movement action as a series of conditional commands
                 // that execute sub-movement actions which only continue if the unit
                 // is still in a movement state after each one
-                GenerateSubMovements(moveQueue),
-
-                // At the end, if the pawn is still in a movement state, return it
-                // to an idle state
-                new ConditionalCommand(
-                    () => _StateHandler.IsInState(StateConsts.MOVE),
-                    _StateHandler.RunChangeState(StateConsts.IDLE)
-                )
+                GenerateSubMovements(moveQueue)
             );
         }
 
-        protected Command GenerateSubMovements(SystemGeneric.Queue<Command> commands)
+        private Command GenerateSubMovements(SystemGeneric.Queue<Command> commands)
         {
-            // Base case
-            if (commands.Count == 0) return new Command();
+            // Base case (return null sub move)
+            if (commands.Count == 0) return _ActionService.ExecuteAction(NullSubMove());
 
             // Pluck next movement command from front of list
             var nextMovement = commands.Dequeue() as TileMovementHandler.PawnMoveCommand;
@@ -99,16 +92,26 @@ namespace ShopIsDone.Actions
                             // Recurse
                             GenerateSubMovements(commands)
                         ),
-                        // Otherwise, play interruption animation and change pawn back to a
-                        // normal state
+                        // Otherwise, play interruption animation and change
+                        // pawn back to a normal state
                         new SeriesCommand(
-                            // Idle
+                            // Idle and run the alert state
                             _StateHandler.RunChangeState(StateConsts.IDLE),
-                            _StateHandler.RunPushState(StateConsts.ALERT)
+                            _StateHandler.RunPushState(StateConsts.ALERT),
+                            // Run the null sub move
+                            _ActionService.ExecuteAction(NullSubMove())
                         )
                     )
                 )
             );
+        }
+
+        private MoveSubAction NullSubMove()
+        {
+            var subMove = (MoveSubAction)MoveSubAction.Duplicate();
+            subMove.Init(_ActionHandler);
+            subMove.NextMove = null;
+            return subMove;
         }
     }
 }

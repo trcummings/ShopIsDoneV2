@@ -13,6 +13,7 @@ namespace ShopIsDone.Arenas.UI
 
         // Nodes
         private TextureRect _Portrait;
+        private TextureRect _PortraitBg;
         private Label _PawnNameLabel;
         private TextureRect _PortraitOutline;
         private ActionPointMeter _ActionPointMeter;
@@ -25,10 +26,13 @@ namespace ShopIsDone.Arenas.UI
         // State
         public LevelEntity Pawn;
 
+        private DemeritHandler _DemeritHandler;
+
         public override void _Ready()
         {
             // Ready nodes
             _Portrait = GetNode<TextureRect>("%Portrait");
+            _PortraitBg = GetNode<TextureRect>("%PortraitBackground");
             _PawnNameLabel = GetNode<Label>("%PawnName");
             _PortraitOutline = GetNode<TextureRect>("%CardBase");
             _ApExcessUI = GetNode<ApExcessUI>("%ApExcessContainer");
@@ -61,6 +65,8 @@ namespace ShopIsDone.Arenas.UI
         public void SelectPawnUI(bool val)
         {
             _PortraitOutline.Modulate = val ? Colors.White : DeselectedColor;
+            _Portrait.Modulate = val ? Colors.White : DeselectedColor;
+            _PortraitBg.Modulate = val ? Colors.White : DeselectedColor;
         }
 
         public void SetActionPoints()
@@ -97,10 +103,12 @@ namespace ShopIsDone.Arenas.UI
 
         private void SetDemerits()
         {
-            if (Pawn.GetComponent<DemeritHandler>().HasYellowSlip) _YellowSlip.Show();
+            _DemeritHandler ??= Pawn.GetComponent<DemeritHandler>();
+
+            if (_DemeritHandler.HasYellowSlip) _YellowSlip.Show();
             else _YellowSlip.Hide();
 
-            if (Pawn.GetComponent<DemeritHandler>().HasPinkSlip) _PinkSlip.Show();
+            if (_DemeritHandler.HasPinkSlip) _PinkSlip.Show();
             else _PinkSlip.Hide();
         }
 

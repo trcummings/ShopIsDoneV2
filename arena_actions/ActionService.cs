@@ -10,6 +10,7 @@ using ShopIsDone.Arenas.ArenaScripts;
 using ShopIsDone.Arenas.Meddling;
 using ShopIsDone.Entities.ParallelHunters;
 using ShopIsDone.Utils;
+using ShopIsDone.ClownRules;
 
 namespace ShopIsDone.Actions
 {
@@ -39,9 +40,22 @@ namespace ShopIsDone.Actions
         [Export]
         private ParallelHunterService _ParallelHunterService;
 
+        [Export]
+        private ClownRulesService _ClownRulesService;
+
         // State
         private ArenaAction _CurrentAction;
         private Dictionary<string, Variant> _CurrentMessage;
+
+        public partial class ActionHistoryItem : GodotObject
+        {
+            public ArenaAction Action;
+            public Dictionary<string, Variant> Message;
+        }
+
+        // For each turn
+        public Array<ActionHistoryItem> ActionHistory { get { return _ActionHistory; } }
+        private Array<ActionHistoryItem> _ActionHistory = new Array<ActionHistoryItem>();
 
         public void Init()
         {
@@ -79,6 +93,8 @@ namespace ShopIsDone.Actions
             );
         }
 
+        // Usually run after an action, but can also be run after a significant
+        // arena mutation whenever we want
         public Command PostActionUpdate()
         {
             // Wrap the whole thing in a Win-Fail check so we interrupt further
@@ -87,7 +103,13 @@ namespace ShopIsDone.Actions
                 // Update tiles
                 new DeferredCommand(() => new ActionCommand(_TileManager.UpdateTiles)),
 
-                // TODO: Process rules
+                // Process rules
+                new DeferredCommand(() => new ConditionalCommand(
+                    () => _CurrentAction != null,
+                    new DeferredCommand(() =>
+                        _ClownRulesService.ProcessActionRules(_CurrentAction, _CurrentMessage)
+                    )
+                )),
 
                 // Run script queue
                 new DeferredCommand(_ScriptQueueService.RunQueue)
@@ -125,6 +147,13 @@ namespace ShopIsDone.Actions
             _CurrentAction = action;
             _CurrentMessage = message;
 
+            // Add it to the history
+            _ActionHistory.Add(new ActionHistoryItem()
+            {
+                Action = _CurrentAction,
+                Message = _CurrentMessage
+            });
+
             // IF not a sub action
             if (action is not MoveSubAction)
             {
@@ -132,6 +161,11 @@ namespace ShopIsDone.Actions
                 actionCommand.Connect(
                     nameof(actionCommand.Finished),
                     Callable.From(() => {
+                        // Run final action finished hook (only for synchronous
+                        // cleanup functions)
+                        OnActionFinished();
+
+                        // Clear out the current action / current message
                         _CurrentAction = null;
                         _CurrentMessage = null;
                     }),
@@ -141,6 +175,16 @@ namespace ShopIsDone.Actions
 
             // Pass through
             return actionCommand;
+        }
+
+        public void ResetActionHistory()
+        {
+            _ActionHistory.Clear();
+        }
+
+        private void OnActionFinished()
+        {
+            _ClownRulesService.ResetActionRules();
         }
 
         private Command WinFailCheck(Command next)

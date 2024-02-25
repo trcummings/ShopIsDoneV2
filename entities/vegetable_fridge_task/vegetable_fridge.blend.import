@@ -29,7 +29,14 @@ animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
-_subresources={}
+_subresources={
+"materials": {
+"Outline": {
+"use_external/enabled": false,
+"use_external/path": "res://Materials/Outline.material"
+}
+}
+}
 gltf/naming_version=1
 gltf/embedded_image_handling=1
 blender/nodes/visible=0
@@ -43,7 +50,7 @@ blender/meshes/normals=true
 blender/meshes/tangents=true
 blender/meshes/skins=2
 blender/meshes/export_bones_deforming_mesh_only=false
-blender/materials/unpack_enabled=true
+blender/materials/unpack_enabled=false
 blender/materials/export_materials=1
 blender/animation/limit_playback=true
 blender/animation/always_sample=true

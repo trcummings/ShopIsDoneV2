@@ -33,6 +33,7 @@ _UpdateFacingTarget = false
 [node name="TaskComponent" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler") instance=ExtResource("2_8yhxd")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 2.1684e-19, 4.1633e-12, -2.1684e-19)
 TaskHealth = 2
+MaxTaskHealth = 2
 OperatorsAllowed = 2
 _MicrogameHandler = NodePath("../MicrogameHandler")
 

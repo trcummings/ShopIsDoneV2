@@ -2,13 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fc5mbk1l4jl0"
+uid="uid://cdhbijjkee0xf"
 path.s3tc="res://.godot/imported/vegetable_fridge_VegetableFridgeUV.png-c6a2e343a50fac73ca89e9e92bd07933.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 

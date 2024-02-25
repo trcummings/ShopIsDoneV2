@@ -18,56 +18,6 @@ namespace ShopIsDone.Arenas.ArenaScripts
         {
             return new Command();
         }
-
-        //protected LevelEntity GetLevelEntity(string id)
-        //{
-        //    return _EntityManager.GetEntity<LevelEntity>(id);
-        //}
-
-        //protected Pawn GetPawnById(string id)
-        //{
-        //    return Arena.GetAllPawns().Where(e => e.Id == id).First();
-        //}
-
-        //protected Interactable GetInteractableById(string id)
-        //{
-        //    return Arena.GetAllInteractables().Where(e => e.Id == id).First();
-        //}
-
-        //protected Tile FindTileByOffset(Tile baseTile, Vector3 offset)
-        //{
-        //    return Arena
-        //        .GetAllTiles()
-        //        .Where(t => t.TilemapPosition == (baseTile.TilemapPosition + offset))
-        //        .First();
-        //}
-
-        //protected Command MovePawnTo(Pawn pawn, Tile goalTile)
-        //{
-        //    var movement = pawn.GetComponent<MovementComponent>();
-        //    var actions = pawn.GetComponent<ActionHandlerComponent>();
-        //    // Find the best path to the destination
-        //    // HACK: Use impossibly large pawn move range to 100000
-        //    var bestPath = new SimpleTileAStar().GetMovePath(movement.GetAvailableMoves(null, true, 100000), pawn.CurrentTile, goalTile);
-        //    // Add current tile to the path
-        //    bestPath = bestPath.Prepend(pawn.CurrentTile).ToList();
-        //    // Follow the path
-        //    var action = actions.GetPawnAction("walk");
-        //    return action.Execute(Arena, new Dictionary<string, object>()
-        //    {
-        //        { "MovePath", new Godot.Collections.Array(bestPath) }
-        //    });
-        //}
-
-        //protected Command RunAnimation(LevelEntity entity, string animName)
-        //{
-        //    return entity.GetComponent<RenderComponent>()?.PerformAction(animName) ?? new Command();
-        //}
-
-        //protected CharacterData GetCharacter(string id)
-        //{
-        //    return Arena.GetCharacter(id);
-        //}
     }
 
     public partial class CommandArenaScript : ArenaScript

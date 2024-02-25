@@ -10,12 +10,16 @@ namespace ShopIsDone.Arenas
 {
 	public partial class PlayerUnitService : Node, IService
     {
+		[Signal]
+		public delegate void InitializedEventHandler();
+
 		private List<LevelEntity> _PlayerUnits = new List<LevelEntity>();
 
 		public void Init(List<LevelEntity> playerUnits)
 		{
 			_PlayerUnits = playerUnits;
 			foreach (var unit in _PlayerUnits) unit.Init();
+			EmitSignal(nameof(Initialized));
 		}
 
         public List<LevelEntity> GetUnits()
@@ -24,6 +28,16 @@ namespace ShopIsDone.Arenas
                 .Where(u => u.IsInArena())
                 .ToList();
         }
+
+		public bool IsPlayerUnit(LevelEntity entity)
+		{
+			return GetUnits().Contains(entity);
+        }
+
+		public LevelEntity GetUnitById(string id)
+		{
+			return _PlayerUnits.Find(e => e.Id == id);
+		}
 
         public List<ArenaAction> GetUnitRemainingAvailableActions(LevelEntity unit)
 		{
