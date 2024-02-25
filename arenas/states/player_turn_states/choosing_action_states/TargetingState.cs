@@ -200,16 +200,14 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 // Emit Cancellation Signal
                 EmitSignal(nameof(CanceledSelection));
 
-                // If our cursor's current tile isn't the same as when it started,
-                // revert
-                if (_TileCursor.CurrentTile != _InitialCursorTile)
-                {
-                    _TileCursor.MoveCursorTo(_InitialCursorTile);
-                    _SelectedUnit.FacingDirection = _InitialUnitFacingDir;
-                }
-                // Otherwise, if our chosen direction is the same as the initial
-                // direction, request to cancel the current state instead
-                else EmitSignal(nameof(MainMenuRequested));
+                // Persist if we moved at all during targeting
+                var wasOnInitialTile = _TileCursor.CurrentTile == _InitialCursorTile;
+                // Reset position and facing direction of the unit
+                _TileCursor.MoveCursorTo(_InitialCursorTile);
+                _SelectedUnit.FacingDirection = _InitialUnitFacingDir;
+                // And if we were on the same square as when we started, cancel
+                // back to the main menu
+                if (wasOnInitialTile) EmitSignal(nameof(MainMenuRequested));
 
                 return;
             }
@@ -219,6 +217,15 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Ignore if no movement input
             if (moveVec == Vector3.Zero) return;
+
+            // Get the candidate tile
+            var candidateTile = _TileManager.GetTileAtTilemapPos(_TileCursor.CurrentTile.TilemapPosition + moveVec);
+            var allTiles = _AvailableTiles.ToList().Append(_InitialCursorTile);
+            if (candidateTile == null || !allTiles.Contains(candidateTile))
+            {
+                EmitSignal(nameof(ConfirmedInvalidSelection));
+                return;
+            }
 
             // Move the cursor in the direction of the movement
             _TileCursor.MoveCursorInDirection(moveVec);
