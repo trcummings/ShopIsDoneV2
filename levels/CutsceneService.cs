@@ -25,7 +25,12 @@ namespace ShopIsDone.Levels
 
         public void FinishCutscene()
         {
-            EmitSignal(nameof(CutsceneFinished));
+            // Defer finishing cutscene for a short pause
+            GetTree().CreateTimer(0.05f).Connect(
+                "timeout",
+                Callable.From(() => EmitSignal(nameof(CutsceneFinished))),
+                (uint)ConnectFlags.OneShot
+            );
         }
     }
 }
