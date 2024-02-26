@@ -36,8 +36,8 @@ namespace ShopIsDone.EntityStates
             private set { _IsInArena = value; }
         }
 
-        private LevelEntity _Entity;
-        private EntityStateHandler _StateHandler;
+        protected LevelEntity _Entity;
+        protected EntityStateHandler _StateHandler;
 
         public virtual void Init(LevelEntity entity, EntityStateHandler stateHandler)
         {

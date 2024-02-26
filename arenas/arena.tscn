@@ -182,9 +182,10 @@ _ActionService = NodePath("../ActionService")
 _ScriptQueueService = NodePath("../ScriptQueueService")
 _DebugPanelScene = ExtResource("64_oyack")
 
-[node name="ArenaLightService" type="Node" parent="Services"]
+[node name="ArenaLightService" type="Node" parent="Services" node_paths=PackedStringArray("_Arena")]
 script = ExtResource("23_ssg27")
 ClownColor = Color(0.764706, 0.407843, 0.133333, 1)
+_Arena = NodePath("../..")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")

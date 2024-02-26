@@ -38,6 +38,12 @@ namespace ShopIsDone.EntityStates
                     seed.Add(state.Id, state);
                     return seed;
                 });
+            foreach (var state in _States.Values)
+            {
+                // NB: Because we're doing this at Ready time, shortcut the init
+                // by referencing the component's parent directly
+                state.Init(GetParent() as LevelEntity, this);
+            }
             _CurrentState = InitialState;
             _CurrentState.Enter();
         }

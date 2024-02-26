@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://lighting/WorldLight.cs" id="1_27bq8"]
 
-[node name="NullWorldLight" type="Node3D"]
+[node name="NullWorldLight" type="Node3D" groups=["arena_lights"]]
 editor_description = "This is a special \"null\" implementation of a world light that doesn't actually light an area, just provides the light volume and collider"
 script = ExtResource("1_27bq8")
 UseLightRadiusAsVolume = false

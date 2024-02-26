@@ -32,9 +32,6 @@ namespace ShopIsDone.Arenas
                 _CameraService.SetCameraTarget(lastTile).Execute();
             }
 
-            // Disable body collder
-            entity.GetNode<CollisionShape3D>("CollisionShape").Disabled = true;
-
             // Move to far off point
             entity.GlobalPosition = Vec3.FarOffPoint;
         }

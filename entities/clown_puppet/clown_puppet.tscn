@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="3_wiwh8"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="4_t87db"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="5_tvijx"]
-[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="6_t4uw5"]
+[ext_resource type="Script" path="res://entities/clown_puppet/states/ClownPuppetHiddenState.cs" id="6_d7lmh"]
 [ext_resource type="AudioStream" uid="uid://b5hvguhl7le6y" path="res://entities/clown_puppet/sfx/clown_puppet_noises_1.wav" id="7_jpt2k"]
 [ext_resource type="AudioStream" uid="uid://bmkga0fh0on1a" path="res://entities/clown_puppet/sfx/clown_puppet_noises_2.wav" id="8_4bcnd"]
 [ext_resource type="AudioStream" uid="uid://kic6m7x0gmbc" path="res://entities/clown_puppet/sfx/clown_puppet_noises_3.wav" id="9_qkry2"]
@@ -49,7 +49,7 @@ LightColor = Color(0.764706, 0.294118, 0.227451, 1)
 
 [node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState")]
 script = ExtResource("4_t87db")
-InitialState = NodePath("Idle")
+InitialState = NodePath("Hidden")
 
 [node name="Idle" type="Node" parent="StateHandler" index="0"]
 script = ExtResource("5_tvijx")
@@ -83,7 +83,7 @@ _EnterAnimName = "LowerHand"
 Id = "finish_punish"
 
 [node name="Hidden" type="Node" parent="StateHandler" index="5"]
-script = ExtResource("6_t4uw5")
+script = ExtResource("6_d7lmh")
 Id = "hidden"
 _IsInArena = false
 
