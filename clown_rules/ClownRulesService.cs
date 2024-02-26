@@ -391,10 +391,8 @@ namespace ShopIsDone.ClownRules
                 // normal again
                 new IfElseCommand(
                     () => _GroupRage >= _GroupRageThreshold * 0.75,
-                    new ConditionalCommand(
-                        () => !_ArenaLightService.AreLightsSet(),
-                        new AsyncCommand(_ArenaLightService.SetAllLightsToColorAsync)
-                    ),
+                    new AsyncCommand(() => _ArenaLightService.SetAllLightsToColorAsync(_ArenaLightService.ClownColor)),
+                    // Only revert them if we've actually changed them
                     new ConditionalCommand(
                         _ArenaLightService.AreLightsSet,
                         new AsyncCommand(_ArenaLightService.RevertAllLightColorsAsync)

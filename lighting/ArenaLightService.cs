@@ -17,6 +17,9 @@ namespace ShopIsDone.Lighting
 		public Color ClownColor;
 
 		[Export]
+		public Color LightClownColor;
+
+		[Export]
 		private Arena _Arena;
 
 		private Dictionary<WorldLight, Color> _LightColors = new Dictionary<WorldLight, Color>();
@@ -26,11 +29,8 @@ namespace ShopIsDone.Lighting
 			return _LightColors.Count > 0;
 		}
 
-		public async Task SetAllLightsToColorAsync()
+		public async Task SetAllLightsToColorAsync(Color toColor)
 		{
-			// Clear
-			_LightColors.Clear();
-
 			// Get arena lights
 			var lights = GetArenaLights();
 
@@ -45,10 +45,14 @@ namespace ShopIsDone.Lighting
 			var tween = GetTree().CreateTween().Parallel();
 			foreach (var light in GetArenaLights())
 			{
-				// Persist the light colors in the arena light
-				_LightColors.Add(light, light.LightColor);
+				// Persist the light colors in the arena light if we've never
+				// manipulated it before
+				if (!_LightColors.ContainsKey(light))
+				{
+					_LightColors.Add(light, light.LightColor);
+				}
 				// Add the light to the tween
-				tween.Parallel().TweenProperty(light, nameof(light.LightColor), ClownColor, 1f);
+				tween.Parallel().TweenProperty(light, nameof(light.LightColor), toColor, 1f);
 			}
 			await ToSignal(tween, "finished");
 		}
