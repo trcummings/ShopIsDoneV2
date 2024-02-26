@@ -19,6 +19,7 @@ radius = 0.3
 height = 1.4
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_86jjf"]
+random_pitch = 1.1
 streams_count = 4
 stream_0/stream = ExtResource("7_jpt2k")
 stream_0/weight = 1.0
@@ -88,7 +89,6 @@ _IsInArena = false
 
 [node name="ClatterPlayer" type="AudioStreamPlayer" parent="StateHandler" index="6"]
 stream = SubResource("AudioStreamRandomizer_86jjf")
-pitch_scale = 1.1
 bus = &"SFX"
 
 [node name="MicrogameHandler" type="Node" parent="." index="5"]
@@ -99,5 +99,7 @@ _OutcomeHandlerPath = NodePath("../OutcomeHandler")
 [node name="OutcomeHandler" type="Node" parent="." index="6"]
 script = ExtResource("13_30w5h")
 
+[connection signal="StateEntered" from="StateHandler/WarpIn" to="StateHandler/ClatterPlayer" method="play"]
+[connection signal="StateEntered" from="StateHandler/WarpOut" to="StateHandler/ClatterPlayer" method="play"]
 [connection signal="StateEntered" from="StateHandler/Punish" to="StateHandler/ClatterPlayer" method="play"]
 [connection signal="StateEntered" from="StateHandler/FinishPunish" to="StateHandler/ClatterPlayer" method="play"]

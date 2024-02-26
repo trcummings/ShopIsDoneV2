@@ -159,7 +159,7 @@ EditorFacingDir = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -7)
 
 [node name="ClownPuppet" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="6" instance=ExtResource("19_74hlg")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, -1)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -1)
 EditorFacingDir = 3
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="3"]

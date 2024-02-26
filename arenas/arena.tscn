@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=76 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -47,6 +47,7 @@
 [ext_resource type="PackedScene" uid="uid://bswkvjqatmnba" path="res://arenas/states/player_turn_states/choosing_action_states/targeting_state.tscn" id="22_e5qdl"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/OutOfTimeFinishedState.cs" id="22_qh40g"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/VictoryFinishedState.cs" id="23_2yhgl"]
+[ext_resource type="Script" path="res://lighting/ArenaLightService.cs" id="23_ssg27"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/FailureFinishedState.cs" id="24_ych7k"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/InteractState.cs" id="29_22p7l"]
 [ext_resource type="Script" path="res://util/ControlTweener.cs" id="32_b7vkh"]
@@ -180,6 +181,10 @@ _RulesList = NodePath("../../UILayer/RulesList")
 _ActionService = NodePath("../ActionService")
 _ScriptQueueService = NodePath("../ScriptQueueService")
 _DebugPanelScene = ExtResource("64_oyack")
+
+[node name="ArenaLightService" type="Node" parent="Services"]
+script = ExtResource("23_ssg27")
+ClownColor = Color(0.764706, 0.407843, 0.133333, 1)
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
