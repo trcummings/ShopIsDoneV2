@@ -349,15 +349,8 @@ namespace ShopIsDone.ClownRules
         {
             // First, get a set of all the spaces too close to existing
             // units and add them to a hash set
-            var invalidTiles = _PlayerUnitService
-                .GetUnits()
-                .Aggregate(new SystemGenerics.HashSet<Tile>(), (acc, unit) =>
-                {
-                    var unitTile = _TileManager.GetTileAtTilemapPos(unit.TilemapPosition);
-                    var tiles = unitTile?.GetTilesInRange(2) ?? new Array<Tile>();
-                    foreach (var tile in tiles) acc.Add(tile);
-                    return acc;
-                });
+            var invalidTiles = GetInvalidJudgeTiles();
+
             // Filter out all the unoccupied tiles by the invalid tile
             // set to get all the tiles we could potentially warp to
             var availableTiles = _TileManager
@@ -375,14 +368,22 @@ namespace ShopIsDone.ClownRules
             return poisson.Generate(availableTiles);
         }
 
+        private SystemGenerics.HashSet<Tile> GetInvalidJudgeTiles(int range = 2)
+        {
+            return _PlayerUnitService
+                .GetUnits()
+                .Aggregate(new SystemGenerics.HashSet<Tile>(), (acc, unit) =>
+                {
+                    var unitTile = _TileManager.GetTileAtTilemapPos(unit.TilemapPosition);
+                    var tiles = unitTile?.GetTilesInRange(range) ?? new Array<Tile>();
+                    foreach (var tile in tiles) acc.Add(tile);
+                    return acc;
+                });
+        }
+
         private Command UpdateJudgeBehavior()
         {
-
-
             // If any units are above 50% rage, warn, and same with group percent
-
-            // If we're above 25%, appear + message, below, disappear + message.
-            // Make sure we stay out for at least a few turns
 
             return new SeriesCommand(
                 //// HIGH RAGE
@@ -409,33 +410,63 @@ namespace ShopIsDone.ClownRules
                         _StateHandler.IsInState(StateConsts.ClownPuppet.HIDDEN),
                     // Appear
                     new SeriesCommand(
-                        WarpJudgeIn(
-                            GetAvailableTilesForJudge()
-                                .ToList()
-                                .Shuffle()
-                                .First()
-                        ),
+                        // Use the furthest tile BFS search to pick the furthest
+                        // tile the clown puppet could enter the arena at
+                        WarpJudgeIn(GetFurthestJudgeSpawnTile()),
                         // Idle judge
-                        _StateHandler.RunChangeState(StateConsts.IDLE)
+                        _StateHandler.RunChangeState(StateConsts.IDLE),
+                        // Wait for a moment for emphasis
+                        new WaitForCommand(this, 2)
                     )
                 ),
                 // If we're below 25% on all rage, not hidden, and have been out
                 // for at least 3 turns
                 new ConditionalCommand(
-                    () => (
+                    () =>
                         !_StateHandler.IsInState(StateConsts.ClownPuppet.HIDDEN) &&
                         _NumTurnsInArena >= _MinTurnsToStayOut &&
                         _GroupRage <= _GroupRageThreshold * 0.25 &&
-                        _UnitRage.Values.All(val => val <= _IndividualRageThreshold * 0.25f)
-                    ),
+                        _UnitRage.Values.All(val => val <= _IndividualRageThreshold * 0.25f),
                     // Warp out
                     new SeriesCommand(
                         WarpJudgeOut(),
                         // And reset the number of turns in the arena
-                        new ActionCommand(() => _NumTurnsInArena = 0)
+                        new ActionCommand(() => _NumTurnsInArena = 0),
+                        // Wait for a moment for emphasis
+                        new WaitForCommand(this, 2)
                     )
                 )
             );
+        }
+
+        private Tile GetFurthestJudgeSpawnTile()
+        {
+            // Use BFS to get an ordered list of the furthest tiles from the units
+            var furthestTiles = new FurthestTileBFS().FindTilesOrderedByDistance(
+                _TileManager.GetAllTilesInArena(),
+                _PlayerUnitService
+                    .GetUnits()
+                    .Select(u => _TileManager.GetTileAtTilemapPos(u.TilemapPosition))
+            );
+            // Reverse the list because the return from that BFS is actually the
+            // closest
+            furthestTiles.Reverse();
+
+            // Grab all tiles that the judge cannot go to no matter what
+            var invalidTiles = GetInvalidJudgeTiles();
+
+            // Filter out any invalid tiles and occupied tiles
+            var orderedTiles = furthestTiles
+                .Where(tile =>
+                    !tile.HasObstacleOnTile &&
+                    !tile.HasUnitOnTile() &&
+                    !invalidTiles.Contains(tile)
+                )
+                .ToList();
+
+            // Return the first item in the list, because that will be the last
+            // remaining furthest point available
+            return orderedTiles.First();
         }
 
         private Command JudgeTurnUpdate()
