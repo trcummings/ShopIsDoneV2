@@ -4,10 +4,10 @@
 [ext_resource type="Material" uid="uid://cnfmg14t6cmu5" path="res://lighting/light_chroma_key.material" id="3_y2tl3"]
 [ext_resource type="AudioStream" uid="uid://s7jauqubu8vr" path="res://lighting/Lightbulb-Buzz_420651__deleted-user-228014__failing-lightbulb.wav" id="4"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_3apcq"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_1s5sq"]
 radius = 2.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_as1jy"]
+[sub_resource type="SphereMesh" id="SphereMesh_pcedf"]
 radius = 2.0
 height = 4.0
 
@@ -16,7 +16,7 @@ streams_count = 1
 stream_0/stream = ExtResource("4")
 stream_0/weight = 1.0
 
-[node name="WorldOmniLight" type="Node3D"]
+[node name="WorldOmniLight" type="Node3D" groups=["arena_lights"]]
 script = ExtResource("1")
 IsLit = true
 
@@ -33,13 +33,13 @@ collision_mask = 32
 
 [node name="LightShape" type="CollisionShape3D" parent="LightArea"]
 unique_name_in_owner = true
-shape = SubResource("SphereShape3D_3apcq")
+shape = SubResource("SphereShape3D_1s5sq")
 
 [node name="LightVolumeMesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 visible = false
 layers = 8
-mesh = SubResource("SphereMesh_as1jy")
+mesh = SubResource("SphereMesh_pcedf")
 skeleton = NodePath("../Light")
 surface_material_override/0 = ExtResource("3_y2tl3")
 

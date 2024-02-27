@@ -9,6 +9,14 @@ namespace ShopIsDone.Utils.Extensions
 		{
 			return new Vector3I((int)vec.X, (int)vec.Y, (int)vec.Z);
 		}
+
+		public static float ManhattanDistance(this Vector3 source, Vector3 target)
+		{
+			return
+				Mathf.Abs(source.X - target.X) +
+				Mathf.Abs(source.Y - target.Y) +
+				Mathf.Abs(source.Z - target.Z);
+		}
 	}
 }
 

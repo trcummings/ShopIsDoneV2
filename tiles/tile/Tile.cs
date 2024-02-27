@@ -3,6 +3,8 @@ using System;
 using Godot.Collections;
 using ShopIsDone.Core;
 using ShopIsDone.Lighting;
+using SystemGenerics = System.Collections.Generic;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Tiles
 {
@@ -81,6 +83,47 @@ namespace ShopIsDone.Tiles
 
             if (!neighbors.ContainsKey(dir)) return null;
             return neighbors[dir];
+        }
+
+        /* Simple outwards BFS using manhattan distance */
+        public Array<Tile> GetTilesInRange(int range, bool useManhattanDistance = true)
+        {
+            SystemGenerics.HashSet<Tile> visited = new SystemGenerics.HashSet<Tile>();
+            SystemGenerics.Queue<Tile> queue = new SystemGenerics.Queue<Tile>();
+            Array<Tile> tilesWithinRange = new Array<Tile>();
+
+            // Add the initial tile to the queue and track that it was visited
+            queue.Enqueue(this);
+            visited.Add(this);
+
+            while (queue.Count > 0)
+            {
+                Tile currentTile = queue.Dequeue();
+
+                // Pick which distance to use
+                var distance = useManhattanDistance
+                    ? TilemapPosition.ManhattanDistance(currentTile.TilemapPosition)
+                    : TilemapPosition.DistanceTo(currentTile.TilemapPosition);
+
+                // If the current candidate tile is within the distance from the
+                // initial tile, add it and enqueue its neighbors
+                if (distance <= range)
+                {
+                    tilesWithinRange.Add(currentTile);
+
+                    foreach (var neighborPair in currentTile.FindNeighbors())
+                    {
+                        Tile neighbor = neighborPair.Value;
+                        if (!visited.Contains(neighbor))
+                        {
+                            queue.Enqueue(neighbor);
+                            visited.Add(neighbor);
+                        }
+                    }
+                }
+            }
+
+            return tilesWithinRange;
         }
 
         public bool HasUnitOnTile()

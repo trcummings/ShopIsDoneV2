@@ -51,13 +51,13 @@ namespace ShopIsDone.Entities.ClownPuppet
             else if (actionName == Consts.Anims.ClownPuppet.WARP_AWAY)
             {
                 // Tween the warp material from min value to maximum value
-                await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 0f, 1f, 1.5f), "finished");
+                await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 0f, 1f, .5f), "finished");
             }
 
             else if (actionName == Consts.Anims.ClownPuppet.WARP_IN)
             {
                 // Tween the warp material from max value to minimum value
-                await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 1f, 0f, 1.5f), "finished");
+                await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 1f, 0f, .5f), "finished");
             }
 
             // Otherwise, send it to the base handler

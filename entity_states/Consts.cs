@@ -24,6 +24,7 @@ namespace ShopIsDone.EntityStates
 
 		public static class ClownPuppet
 		{
+			public const string HIDDEN = "hidden";
 			public const string WARP_IN = "warp_in";
             public const string WARP_OUT = "warp_out";
             public const string PUNISH = "punish";

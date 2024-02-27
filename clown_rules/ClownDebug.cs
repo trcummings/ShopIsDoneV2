@@ -33,7 +33,7 @@ namespace ShopIsDone.ClownRules
 
         private void SetRage()
         {
-            _GroupRage.Text = $"group rage: {_ClownRulesService.GroupRage}";
+            _GroupRage.Text = $"group rage: {_ClownRulesService.PrevGroupRage} -> {_ClownRulesService.GroupRage}";
 
             // Fix up number of labels
             var iRageCount = _IndividualRages.GetChildCount();
@@ -52,7 +52,9 @@ namespace ShopIsDone.ClownRules
             {
                 var label = _IndividualRages.GetChild(j) as Label;
                 var id = ids[j];
-                label.Text = $"{id} rage: {_ClownRulesService.UnitRage[id]}";
+                var rage = _ClownRulesService.UnitRage[id];
+                var prevRage = _ClownRulesService.PrevUnitRage[id];
+                label.Text = $"{id} rage: {prevRage} -> {rage}";
             }
         }
 

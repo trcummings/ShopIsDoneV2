@@ -159,15 +159,25 @@ EditorFacingDir = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -7)
 
 [node name="ClownPuppet" parent="World/NavigationRegion3D/Environment/Arena/Entities" index="6" instance=ExtResource("19_74hlg")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, -1)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -64, 1000, -13)
 EditorFacingDir = 3
+
+[node name="Lights" type="Node3D" parent="World/NavigationRegion3D/Environment/Arena" index="8"]
+metadata/_edit_lock_ = true
+
+[node name="WorldOmniLight" parent="World/NavigationRegion3D/Environment/Arena/Lights" index="0" instance=ExtResource("13_hfsdd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 1)
+Radius = 6.0
+metadata/_edit_lock_ = true
+
+[node name="WorldOmniLight2" parent="World/NavigationRegion3D/Environment/Arena/Lights" index="1" instance=ExtResource("13_hfsdd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1, 0)
+Radius = 3.0
+metadata/_edit_lock_ = true
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="World/NavigationRegion3D/Environment" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1, 0)
-
-[node name="WorldOmniLight" parent="World/NavigationRegion3D/Environment" index="4" instance=ExtResource("13_hfsdd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 1)
-Radius = 6.0
+visible = false
 
 [node name="LightmapGI" parent="World/NavigationRegion3D" index="1"]
 visible = false
@@ -191,10 +201,6 @@ transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.
 transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
 [node name="Lights" type="Node3D" parent="World" index="9"]
-
-[node name="WorldOmniLight" parent="World/Lights" index="0" instance=ExtResource("13_hfsdd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1, 0)
-Radius = 3.0
 
 [node name="BackBufferCopy3" type="BackBufferCopy" parent="PostProcessing/Effects" index="3"]
 position = Vector2(960, 540)

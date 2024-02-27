@@ -15,14 +15,14 @@ uniform float distortion : hint_range(0, 1);
 uniform sampler2D noise_texture;
 
 // For affine
-vec4 snap_to_position(vec4 base_position)
+vec4 snap_to_position(vec4 base_position, float jitter_val)
 {
 	vec4 snapped_position = base_position;
 	snapped_position.xyz = base_position.xyz / base_position.w;
 	
-	vec2 snap_resulotion = floor(vec2(resolution) * (1.0 - jitter));
-	snapped_position.x = floor(snap_resulotion.x * snapped_position.x) / snap_resulotion.x;
-	snapped_position.y = floor(snap_resulotion.y * snapped_position.y) / snap_resulotion.y;
+	vec2 snap_resolution = floor(vec2(resolution) * (1.0 - jitter_val));
+	snapped_position.x = floor(snap_resolution.x * snapped_position.x) / snap_resolution.x;
+	snapped_position.y = floor(snap_resolution.y * snapped_position.y) / snap_resolution.y;
 	
 	snapped_position.xyz *= base_position.w;
 	return snapped_position;
@@ -36,7 +36,14 @@ void vertex() {
 	VERTEX.x /= (distortion + 1.0);
 
 	// Affine
-	vec4 snapped_position = snap_to_position(PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+	// Get distance from camera to vertex 
+	vec3 a = CAMERA_POSITION_WORLD * VERTEX;
+	float d = distance(a.xyz, CAMERA_POSITION_WORLD);
+	// Adjust jitter by a ratio of distance to camera
+	float adjusted_jitter = clamp(smoothstep(jitter, 0, d / 5.), 0, .5);
+	// Calculate snapped vertex position for affine mapping shader
+	vec4 to_position = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
+	vec4 snapped_position = snap_to_position(to_position, adjusted_jitter);
 	if (affine_mapping)
 	{
 		POSITION = snapped_position;

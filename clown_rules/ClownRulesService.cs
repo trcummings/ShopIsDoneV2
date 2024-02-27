@@ -26,6 +26,13 @@ using StateConsts = ShopIsDone.EntityStates.Consts;
 using ShopIsDone.Cameras;
 using ShopIsDone.Widgets;
 using ApConsts = ShopIsDone.ActionPoints.Consts;
+using ShopIsDone.Utils.Pathfinding;
+using ShopIsDone.Tiles;
+using SystemGenerics = System.Collections.Generic;
+using Utils.Extensions;
+using ShopIsDone.Lighting;
+using DialogueManagerRuntime;
+using ShopIsDone.Dialogue;
 
 namespace ShopIsDone.ClownRules
 {
@@ -55,6 +62,12 @@ namespace ShopIsDone.ClownRules
         [Inject]
         private DemeritWidget _DemeritWidget;
 
+        [Inject]
+        private TileManager _TileManager;
+
+        [Inject]
+        private ArenaLightService _ArenaLightService;
+
         [Export]
         private float _IndividualRageThreshold = 3f;
 
@@ -70,18 +83,32 @@ namespace ShopIsDone.ClownRules
         private PackedScene _DebugPanelScene;
         private ClownDebug _DebugPanel;
 
+        [Export]
+        private Resource _JudgeDialogue;
+
         // State
         private Array<ClownActionRule> _Rules = new Array<ClownActionRule>();
         public float GroupRage { get { return _GroupRage; } }
         private float _GroupRage = 0;
+        public float PrevGroupRage { get { return _PrevGroupRage; } }
+        private float _PrevGroupRage = 0;
 
         public Dictionary<string, float> UnitRage { get { return _UnitRage; } }
         private Dictionary<string, float> _UnitRage = new Dictionary<string, float>();
+        public Dictionary<string, float> PrevUnitRage { get { return _PrevUnitRage; } }
+        private Dictionary<string, float> _PrevUnitRage = new Dictionary<string, float>();
 
         // Track broken rules per action
         private bool _WasEnragedThisTurn = false;
         public Dictionary<ClownActionRule, bool> BrokenRules { get { return _BrokenRules; } }
         private Dictionary<ClownActionRule, bool> _BrokenRules = new Dictionary<ClownActionRule, bool>();
+
+        private Dictionary<string, bool> _WasUnitWarnedThisTurn = new Dictionary<string, bool>();
+        private bool _WasGroupWarnedThisTurn = false;
+
+        // Number of turns judge has been unhidden
+        private const int _MinTurnsToStayOut = 3;
+        private int _NumTurnsInArena = 0;
 
         public void Init()
         {
@@ -120,7 +147,13 @@ namespace ShopIsDone.ClownRules
                 acc[unit.Id] = 0;
                 return acc;
             });
+            _PrevGroupRage = 0;
+            _PrevUnitRage = _UnitRage.Duplicate();
             _WasEnragedThisTurn = false;
+
+            // Get judge's components
+            _MicrogameHandler ??= _Judge.GetComponent<MicrogameHandler>();
+            _StateHandler ??= _Judge.GetComponent<EntityStateHandler>();
 
             // Create and add debug panel
             _DebugPanel = _DebugPanelScene.Instantiate<ClownDebug>();
@@ -165,7 +198,9 @@ namespace ShopIsDone.ClownRules
                                     });
                                 })
                                 .ToArray()
-                        )
+                        ),
+                        // Puppet positioning
+                        new DeferredCommand(UpdateJudgePosition)
                     )
                 )
             );
@@ -184,6 +219,7 @@ namespace ShopIsDone.ClownRules
             _BrokenRules.Clear();
         }
 
+        // Runs once per turn
         public Command ProcessTurnRules()
         {
             return new ConditionalCommand(
@@ -211,7 +247,9 @@ namespace ShopIsDone.ClownRules
                         }
                     }),
                     new DeferredCommand(ProcessPunishment),
-                    new ActionCommand(SubsideRage)
+                    new ActionCommand(SubsideRage),
+                    // Update on turn
+                    JudgeTurnUpdate()
                 )
             );
         }
@@ -229,6 +267,8 @@ namespace ShopIsDone.ClownRules
         private Command ProcessPunishment()
         {
             return new SeriesCommand(
+                // Update judge behavior but no warnings before punishment
+                new DeferredCommand(() => UpdateJudgeBehavior()),
                 // Punish individual units in order of greatest flagrance
                 new SeriesCommand(
                     _PlayerUnitService
@@ -241,7 +281,324 @@ namespace ShopIsDone.ClownRules
                 new DeferredCommand(() => new ConditionalCommand(
                     IsAboveGroupRageThreshold,
                     PunishGroup()
+                )),
+                // Update judge behavior, but this time, give any warnings
+                new DeferredCommand(() => UpdateJudgeBehavior(true))
+            );
+        }
+
+        private Command UpdateJudgePosition()
+        {
+            // If a unit gets too close, warp away to a better position away from
+            // the action
+            return new ConditionalCommand(
+                // If we're not hidden
+                () => !_StateHandler.IsInState(StateConsts.ClownPuppet.HIDDEN) &&
+                // If any unit is within 1 tile
+                _PlayerUnitService
+                    .GetUnits()
+                    .Any(unit => unit.TilemapPosition.ManhattanDistance(_Judge.TilemapPosition) <= 1),
+                // Then warp to an available tile
+                _CameraService.PanToTemporaryCameraTarget(
+                    _TileManager.GetTileAtTilemapPos(_Judge.TilemapPosition),
+                    new SeriesCommand(
+                        // Warp clown away
+                        WarpJudgeOut(),
+                        // Pick random tile to warp to and warp there
+                        new DeferredCommand(() => WarpJudgeIn(
+                            GetAvailableTilesForJudge()
+                                .ToList()
+                                .Shuffle()
+                                .First()
+                        )),
+                        // Idle judge
+                        _StateHandler.RunChangeState(StateConsts.IDLE)
+                    )
+                )
+            );
+        }
+
+        private Command WarpJudgeOut()
+        {
+            return new SeriesCommand(
+                new ParallelCommand(
+                    new AsyncCommand(async () => await ToSignal(
+                        GetTree()
+                            .CreateTween()
+                            .TweenProperty(_Judge, "global_position", _Judge.GlobalPosition + 2 * Vector3.Up, 0.25f),
+                        "finished"
+                    )),
+                    _StateHandler.RunChangeState(StateConsts.ClownPuppet.WARP_OUT)
+                ),
+                _StateHandler.RunChangeState(StateConsts.ClownPuppet.HIDDEN),
+                new ActionCommand(() =>
+                {
+                    // Move to far off point
+                    _Judge.GlobalPosition = Vec3.FarOffPoint;
+                    // Set judge bones off
+                    SetJudgeBones(false);
+                })
+            );
+        }
+
+        // Helper function to stop judge's wigglebones from acting up on warp
+        private void SetJudgeBones(bool value)
+        {
+            _Judge.RecurseChildrenOfType<BoneAttachment3D>((_, bone) =>
+            {
+                // If the enabled property is not null
+                if (!bone.Get("enabled").Equals(default(Variant)))
+                {
+                    bone.Set("enabled", value);
+                }
+            });
+        }
+
+        private Command WarpJudgeIn(Tile toTile)
+        {
+            return new SeriesCommand(
+                // Warp to given tile
+                new ActionCommand(() =>
+                {
+                    _Judge.GlobalPosition = toTile.GlobalPosition + 2 * Vector3.Up;
+                    SetJudgeBones(true);
+                }),
+                // Warp back in
+                new DeferredCommand(() => new ParallelCommand(
+                    new AsyncCommand(async () => await ToSignal(
+                        GetTree()
+                            .CreateTween()
+                            .TweenProperty(_Judge, "global_position", _Judge.GlobalPosition - 2 * Vector3.Up, 0.25f),
+                        "finished"
+                    )),
+                    _StateHandler.RunChangeState(StateConsts.ClownPuppet.WARP_IN)
                 ))
+            );
+        }
+
+        private Array<Tile> GetAvailableTilesForJudge()
+        {
+            // First, get a set of all the spaces too close to existing
+            // units and add them to a hash set
+            var invalidTiles = GetInvalidJudgeTiles();
+
+            // Filter out all the unoccupied tiles by the invalid tile
+            // set to get all the tiles we could potentially warp to
+            var availableTiles = _TileManager
+                .GetAllTilesInArena()
+                .Where(tile =>
+                    !tile.HasObstacleOnTile &&
+                    !tile.HasUnitOnTile() &&
+                    !invalidTiles.Contains(tile)
+                )
+                .ToGodotArray();
+
+            // Take a poisson sample of the valid tiles to get a nicer
+            // distribution
+            var poisson = new TilePoissonDiskSampler(1, 3);
+            return poisson.Generate(availableTiles);
+        }
+
+        private SystemGenerics.HashSet<Tile> GetInvalidJudgeTiles(int range = 2)
+        {
+            return _PlayerUnitService
+                .GetUnits()
+                .Aggregate(new SystemGenerics.HashSet<Tile>(), (acc, unit) =>
+                {
+                    var unitTile = _TileManager.GetTileAtTilemapPos(unit.TilemapPosition);
+                    var tiles = unitTile?.GetTilesInRange(range) ?? new Array<Tile>();
+                    foreach (var tile in tiles) acc.Add(tile);
+                    return acc;
+                });
+        }
+
+        private Command UpdateJudgeBehavior(bool warn = false)
+        {
+            return new SeriesCommand(
+                //// LIGHTS
+                // If we're above 75% group rage, change the lights, if we're below, make them
+                // normal again
+                new IfElseCommand(
+                    () => _GroupRage >= _GroupRageThreshold * 0.75,
+                    new AsyncCommand(() => _ArenaLightService.SetAllLightsToColorAsync(_ArenaLightService.ClownColor)),
+                    // Only revert them if we've actually changed them
+                    new ConditionalCommand(
+                        _ArenaLightService.AreLightsSet,
+                        new AsyncCommand(_ArenaLightService.RevertAllLightColorsAsync)
+                    )
+                ),
+
+                // DIALOGUE WARNINGS
+                new ConditionalCommand(
+                    () => warn,
+                    // If we were below 50% but are now above 50%, send out a warning
+                    new SeriesCommand(
+                        new SeriesCommand(
+                            _PlayerUnitService.GetUnits().Select(unit => new ConditionalCommand(
+                                () =>
+                                    !_WasUnitWarnedThisTurn.ContainsKey(unit.Id) &&
+                                    _PrevUnitRage[unit.Id] < _IndividualRageThreshold *.5 &&
+                                    _UnitRage[unit.Id] >= _IndividualRageThreshold * .5,
+                                new DeferredCommand(() => new SeriesCommand(
+                                    new ActionCommand(() =>
+                                    {
+                                        SetWarnTarget(unit.EntityName);
+                                        _WasUnitWarnedThisTurn.Add(unit.Id, true);
+                                    }),
+                                    new DeferredCommand(() => RunDialogue(WARN_KEY)),
+                                    new WaitForCommand(this, .5f)
+                                ))
+                            )).ToArray()
+                        ),
+                        // For group, warn once past 75%
+                        new DeferredCommand(() => new ConditionalCommand(
+                            () =>
+                                !_WasGroupWarnedThisTurn &&
+                                _PrevGroupRage < _GroupRageThreshold * .75 &&
+                                _GroupRage >= _GroupRageThreshold * .75,
+                            new SeriesCommand(
+                                new ActionCommand(() => {
+                                    SetWarnTarget("the group");
+                                    _WasGroupWarnedThisTurn = true;
+                                }),
+                                new DeferredCommand(() => RunDialogue(WARN_KEY)),
+                                new WaitForCommand(this, .5f)
+                            )
+                        ))
+                    )
+                ),
+
+                //// APPEARANCE / DISAPPEARANCE
+                // If we're above 25% on any type of rage, and hidden, warp in
+                new ConditionalCommand(
+                    () =>
+                        (_GroupRage >= _GroupRageThreshold * 0.25 ||
+                        _UnitRage.Values.Any(val => val >= _IndividualRageThreshold * 0.25f)) &&
+                        _StateHandler.IsInState(StateConsts.ClownPuppet.HIDDEN),
+                    // Appear
+                    new SeriesCommand(
+                        // Use the furthest tile BFS search to pick the furthest
+                        // tile the clown puppet could enter the arena at
+                        WarpJudgeIn(GetFurthestJudgeSpawnTile()),
+                        // Dialogue
+                        RunDialogue(ENTRY),
+                        // Idle judge
+                        _StateHandler.RunChangeState(StateConsts.IDLE),
+                        // Wait for a moment for emphasis
+                        new WaitForCommand(this, 1.5f)
+                    )
+                ),
+                // If we're below 25% on all rage, not hidden, and have been out
+                // for at least 3 turns
+                new ConditionalCommand(
+                    () =>
+                        !_StateHandler.IsInState(StateConsts.ClownPuppet.HIDDEN) &&
+                        _NumTurnsInArena >= _MinTurnsToStayOut &&
+                        _GroupRage <= _GroupRageThreshold * 0.25 &&
+                        _UnitRage.Values.All(val => val <= _IndividualRageThreshold * 0.25f),
+                    // Warp out
+                    new SeriesCommand(
+                        RunDialogue(EXIT),
+                        WarpJudgeOut(),
+                        // And reset the number of turns in the arena
+                        new ActionCommand(() => _NumTurnsInArena = 0),
+                        // Wait for a moment for emphasis
+                        new WaitForCommand(this, 1.5f)
+                    )
+                )
+            );
+        }
+
+        private void SetWarnTarget(string key)
+        {
+            var dialogueState = GlobalDialogueState.GetGlobalDialogueState(this);
+            dialogueState.SetDialogueState("watched_unit", key);
+        }
+
+        private const string WARN_KEY = "warn";
+        private const string ENTRY = "entry";
+        private const string EXIT = "exit";
+
+        private Command RunDialogue(string key)
+        {
+            // Decide which piece of dialogue to run
+            return new DialogueCommand(_JudgeDialogue, key);
+        }
+
+        private partial class DialogueCommand : Command
+        {
+            private Resource _Dialogue;
+            private string _Key;
+
+            public DialogueCommand(Resource dialogue, string key)
+            {
+                _Dialogue = dialogue;
+                _Key = key;
+            }
+
+            public override void Execute()
+            {
+                DialogueManager.DialogueEnded += OnDialogueEnded;
+                DialogueManager.ShowExampleDialogueBalloon(_Dialogue, _Key);
+            }
+
+            private void OnDialogueEnded(Resource _)
+            {
+                DialogueManager.DialogueEnded -= OnDialogueEnded;
+                Finish();
+            }
+        }
+
+        private Tile GetFurthestJudgeSpawnTile()
+        {
+            // Use BFS to get an ordered list of the furthest tiles from the units
+            var furthestTiles = new FurthestTileBFS().FindTilesOrderedByDistance(
+                _TileManager.GetAllTilesInArena(),
+                _PlayerUnitService
+                    .GetUnits()
+                    .Select(u => _TileManager.GetTileAtTilemapPos(u.TilemapPosition))
+            );
+            // Reverse the list because the return from that BFS is actually the
+            // closest
+            furthestTiles.Reverse();
+
+            // Grab all tiles that the judge cannot go to no matter what
+            var invalidTiles = GetInvalidJudgeTiles();
+
+            // Filter out any invalid tiles and occupied tiles
+            var orderedTiles = furthestTiles
+                .Where(tile =>
+                    !tile.HasObstacleOnTile &&
+                    !tile.HasUnitOnTile() &&
+                    !invalidTiles.Contains(tile)
+                )
+                .ToList();
+
+            // Return the first item in the list, because that will be the last
+            // remaining furthest point available
+            return orderedTiles.First();
+        }
+
+        private Command JudgeTurnUpdate()
+        {
+            return new SeriesCommand(
+                // If we're not hidden, tick up the number of turns not hidden
+                new ConditionalCommand(
+                    () => !_StateHandler.IsInState(StateConsts.ClownPuppet.HIDDEN),
+                    new ActionCommand(() => _NumTurnsInArena += 1)
+                ),
+                // Update rage tracking values
+                new ActionCommand(() =>
+                {
+                    _PrevGroupRage = _GroupRage;
+                    _PrevUnitRage = _UnitRage.Duplicate();
+                }),
+                // Update warn values
+                new ActionCommand(() =>
+                {
+                    _WasUnitWarnedThisTurn.Clear();
+                    _WasGroupWarnedThisTurn = false;
+                })
             );
         }
 
@@ -259,8 +616,6 @@ namespace ShopIsDone.ClownRules
                     _Judge,
                     _StateHandler.RunChangeState(StateConsts.ClownPuppet.PUNISH)
                 ),
-                // TODO: Pause unit animation if they're walking
-
                 // Oneshot connect to slap for unit take hit
                 new ActionCommand(() =>
                 {
@@ -304,7 +659,7 @@ namespace ShopIsDone.ClownRules
                 // Lower arm
                 _StateHandler.RunChangeState(StateConsts.ClownPuppet.FINISH_PUNISH),
                 // Subside individual rage by threshold amount
-                new ActionCommand(() =>
+                new ActionCommand(() => 
                 {
                     _UnitRage[unit.Id] = Mathf.Max(_UnitRage[unit.Id] - _IndividualRageThreshold, 0);
                     // Tick down group rage by a little bit
@@ -315,10 +670,6 @@ namespace ShopIsDone.ClownRules
 
         private Command PunishGroup()
         {
-            // Get judge's components
-            _MicrogameHandler ??= _Judge.GetComponent<MicrogameHandler>();
-            _StateHandler ??= _Judge.GetComponent<EntityStateHandler>();
-
             // Get all unit outcome handlers
             var outcomeHandlers = _PlayerUnitService
                 .GetUnits()
@@ -348,14 +699,7 @@ namespace ShopIsDone.ClownRules
                 _StateHandler.RunChangeState(StateConsts.ClownPuppet.FINISH_PUNISH),
 
                 // Subside all rage by threshold amount
-                new ActionCommand(() =>
-                {
-                    foreach (var key in _UnitRage.Keys)
-                    {
-                        _UnitRage[key] = Mathf.Max(_UnitRage[key] - _IndividualRageThreshold, 0);
-                    }
-                    _GroupRage = Mathf.Max(_GroupRage - _GroupRageThreshold, 0);
-                })
+                new ActionCommand(() => DecreaseRage(_IndividualRageThreshold, _GroupRageThreshold))
             );
         }
 
@@ -378,21 +722,23 @@ namespace ShopIsDone.ClownRules
             _WasEnragedThisTurn = true;
 
             // Increment rage
-            _UnitRage[id] += 1 * ratio;
-            _GroupRage += 0.2f;
+            _UnitRage[id] += 0.75f * ratio;
+            _GroupRage += 0.1f;
+        }
+
+        private void DecreaseRage(float individual, float group)
+        {
+            foreach (var key in _UnitRage.Keys)
+            {
+                _UnitRage[key] = Mathf.Max(_UnitRage[key] - individual, 0);
+            }
+            _GroupRage = Mathf.Max(_GroupRage - group, 0);
         }
 
         private void SubsideRage()
         {
             // If we weren't enraged this turn, decrement all rage
-            if (!_WasEnragedThisTurn)
-            {
-                foreach (var key in _UnitRage.Keys)
-                {
-                    _UnitRage[key] = Mathf.Max(_UnitRage[key] - 0.5f, 0);
-                }
-                _GroupRage = Mathf.Max(_GroupRage - 0.2f, 0);
-            }
+            if (!_WasEnragedThisTurn) DecreaseRage(0.5f, 0.2f);
 
             // Reset rage flag
             _WasEnragedThisTurn = false;
