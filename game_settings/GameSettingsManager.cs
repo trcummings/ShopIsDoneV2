@@ -212,7 +212,7 @@ namespace ShopIsDone.GameSettings
             GetTree().Root.ContentScaleFactor = newValue;
 
             // Emit signal
-            EmitSignal(nameof(UIScalingChangedEventHandler), newValue);
+            EmitSignal(nameof(UIScalingChanged), newValue);
         }
 
         // Audio
