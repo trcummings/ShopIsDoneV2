@@ -36,6 +36,8 @@ namespace ShopIsDone.GameSettings
         private OptionButton _Resolution;
         private ResolutionScaling _ResolutionScaling;
         private CheckButton _Vsync;
+        private HSlider _UIScale;
+        private Label _UIScaleLabel;
 
         // Debug
         private Control _DebugSettingsContainer;
@@ -74,11 +76,14 @@ namespace ShopIsDone.GameSettings
             _Resolution = GetNode<OptionButton>("%Resolution");
             _ResolutionScaling = GetNode<ResolutionScaling>("%ResolutionScaling");
             _Vsync = GetNode<CheckButton>("%Vsync");
+            _UIScale = GetNode<HSlider>("%UIScale");
+            _UIScaleLabel = GetNode<Label>("%UIScaleLabel");
             // Connect
             _Fullscreen.Toggled += _GameSettings.SetFullscreen;
             _Resolution.Connect("item_selected", new Callable(this, nameof(OnResolutionSelected)));
             _ResolutionScaling.ModeChanged += _GameSettings.SetResolutionScalingMode;
             _ResolutionScaling.ScaleChanged += _GameSettings.SetResolutionScaling;
+            _UIScale.Connect("value_changed", new Callable(this, nameof(OnUIScaleChanged)));
 
             // Debug
             _DebugSettingsContainer = GetNode<Control>("%VideoSettingsContainer");
@@ -150,6 +155,10 @@ namespace ShopIsDone.GameSettings
             );
             // Set Vsync
             _Vsync.SetPressedNoSignal(_GameSettings.GetVsync());
+            // UI Scale
+            var uiScale = _GameSettings.GetUIScaling();
+            _UIScale.SetValueNoSignal(uiScale);
+            _UIScaleLabel.Text = $"{uiScale}x";
 
             // Debug
             _ShowDebugDisplay.SetPressedNoSignal(_GameSettings.GetIsDebugDisplayVisible());
@@ -217,6 +226,12 @@ namespace ShopIsDone.GameSettings
         {
             var resolution = (Vector2)_Resolution.GetItemMetadata(idx);
             _GameSettings.SetResolution(resolution);
+        }
+
+        private void OnUIScaleChanged(float newValue)
+        {
+            _GameSettings.SetUIScaling(newValue);
+            _UIScaleLabel.Text = $"{newValue}x";
         }
 
         // General

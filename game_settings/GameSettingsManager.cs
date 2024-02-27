@@ -20,6 +20,9 @@ namespace ShopIsDone.GameSettings
         [Signal]
         public delegate void ScalingModeChangedEventHandler(int newValue);
 
+        [Signal]
+        public delegate void UIScalingChangedEventHandler(float newValue);
+
         // Debug Signals
         [Signal]
         public delegate void BlurDuringPauseChangedEventHandler(bool newValue);
@@ -57,6 +60,7 @@ namespace ShopIsDone.GameSettings
             SetResolutionScaling(GetResolutionScaling());
             SetResolutionScalingMode((int)GetResolutionScalingMode());
             SetVsync(GetVsync());
+            SetUIScaling(GetUIScaling());
             // Audio Settings
             SetMasterVolume(GetMasterVolume());
             SetSfxVolume(GetSfxVolume());
@@ -192,6 +196,23 @@ namespace ShopIsDone.GameSettings
 
             // Emit signal
             EmitSignal(nameof(VsyncChanged), newValue);
+        }
+
+        public float GetUIScaling()
+        {
+            return (float)_UserSettings.GetValue("video", "ui_scaling", 1);
+        }
+
+        public void SetUIScaling(float newValue)
+        {
+            // Update value in settings
+            _UserSettings.SetValue("video", "ui_scaling", newValue);
+
+            // Update the value in the settings
+            GetTree().Root.ContentScaleFactor = newValue;
+
+            // Emit signal
+            EmitSignal(nameof(UIScalingChangedEventHandler), newValue);
         }
 
         // Audio
