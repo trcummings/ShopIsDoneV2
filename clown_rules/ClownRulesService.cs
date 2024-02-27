@@ -320,8 +320,23 @@ namespace ShopIsDone.ClownRules
                 {
                     // Move to far off point
                     _Judge.GlobalPosition = Vec3.FarOffPoint;
+                    // Set judge bones off
+                    SetJudgeBones(false);
                 })
             );
+        }
+
+        // Helper function to stop judge's wigglebones from acting up on warp
+        private void SetJudgeBones(bool value)
+        {
+            _Judge.RecurseChildrenOfType<BoneAttachment3D>((_, bone) =>
+            {
+                // If the enabled property is not null
+                if (!bone.Get("enabled").Equals(default(Variant)))
+                {
+                    bone.Set("enabled", value);
+                }
+            });
         }
 
         private Command WarpJudgeIn(Tile toTile)
@@ -331,6 +346,7 @@ namespace ShopIsDone.ClownRules
                 new ActionCommand(() =>
                 {
                     _Judge.GlobalPosition = toTile.GlobalPosition + 2 * Vector3.Up;
+                    SetJudgeBones(true);
                 }),
                 // Warp back in
                 new DeferredCommand(() => new ParallelCommand(
