@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_11"
+type="Resource"
+uid="uid://5fosu0kpci6h"
+path="res://.godot/imported/clown_warnings.dialogue-711831b4731a4b2f50e9359eaba29998.tres"
+
+[deps]
+
+source_file="res://entities/clown_puppet/clown_warnings.dialogue"
+dest_files=["res://.godot/imported/clown_warnings.dialogue-711831b4731a4b2f50e9359eaba29998.tres"]
+
+[params]
+
+defaults=true

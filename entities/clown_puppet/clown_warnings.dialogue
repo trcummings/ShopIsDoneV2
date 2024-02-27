@@ -1,0 +1,30 @@
+using GlobalDialogueState
+
+~ entry
+% It descends
+% It emerges
+% It appears
+% It enters
+% Its visit begins
+% It watches you
+=> END
+
+~ exit
+% It exits
+% It dawdles off
+% It is no longer there
+% It vanishes
+% It's suddenly gone
+% It has forgotten about you
+% It attends to something elsewhere
+=> END
+
+~ warn
+% Its painted eyes watch {{GetDialogueState("watched_unit")}} with mute rage
+% It gazes unpleasantly at {{GetDialogueState("watched_unit")}}
+% Its motionless lips grimace at {{GetDialogueState("watched_unit")}}'s incompetence
+% {{Capitalize(GetDialogueState("watched_unit"))}}'s failures have caught Its attention
+% It regards {{GetDialogueState("watched_unit")}} like a prey animal
+% It leers at {{GetDialogueState("watched_unit")}} with a cold apprehension
+% Its still wooden body trembles at {{GetDialogueState("watched_unit")}}'s ineptitude
+=> END
