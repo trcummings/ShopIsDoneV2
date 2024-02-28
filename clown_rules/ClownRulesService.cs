@@ -442,8 +442,11 @@ namespace ShopIsDone.ClownRules
                                 new DeferredCommand(() => new SeriesCommand(
                                     new ActionCommand(() =>
                                     {
+                                        // Set dialogue state value
                                         SetWarnTarget(unit.EntityName);
                                         _WasUnitWarnedThisTurn.Add(unit.Id, true);
+                                        // Face towards offending unit
+                                        _Judge.FacingDirection = _Judge.GetFacingDirTowards(unit.GlobalPosition);
                                     }),
                                     new DeferredCommand(() => RunDialogue(WARN_KEY)),
                                     new WaitForCommand(this, .5f)
