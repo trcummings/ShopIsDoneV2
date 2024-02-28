@@ -293,7 +293,7 @@ _UnitInteractionService = NodePath("../../../../../../../../Services/UnitInterac
 [node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService", "_TaskInfoUI")]
 script = ExtResource("33_pf6p2")
 _UnitTaskService = NodePath("../../../../../../../../Services/UnitTaskService")
-_TaskInfoUI = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/VBoxContainer/TaskInfoUI")
+_TaskInfoUI = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/TaskContainer/TaskInfoUI")
 
 [node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionService", "_PlayerUnitService")]
 script = ExtResource("19_3o4ep")
@@ -680,14 +680,15 @@ size_flags_horizontal = 8
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer"]
+[node name="TaskContainer" type="VBoxContainer" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TaskInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("64_ihoml")]
+[node name="TaskInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/TaskContainer" instance=ExtResource("64_ihoml")]
 visible = false
 layout_mode = 2
 
 [node name="TileHoverUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer" instance=ExtResource("58_m7tmb")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
