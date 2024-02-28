@@ -1,7 +1,7 @@
 ﻿using Godot;
 using Godot.Collections;
-using ShopIsDone.ArenaInteractions;
 using ShopIsDone.Tasks;
+using ShopIsDone.Tasks.UI;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
@@ -9,6 +9,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
     {
         [Export]
         private UnitTaskService _UnitTaskService;
+
+        [Export]
+        private TaskInfoUI _TaskInfoUI;
 
         private bool _JustConfirmedTask = false;
 
@@ -19,9 +22,10 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Set flag
             _JustConfirmedTask = false;
 
-            // Wire up unit interaction service
-            _UnitTaskService.ConfirmedInteraction += OnConfirmTask;
-            _UnitTaskService.CanceledInteraction += OnCancel;
+            // Wire up unit task service
+            _UnitTaskService.ConfirmedTask += OnConfirmTask;
+            _UnitTaskService.Canceled += OnCancel;
+            _UnitTaskService.SelectedTask += OnTaskSelected;
             _UnitTaskService.Activate(_SelectedUnit);
         }
 
@@ -37,13 +41,22 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Reset flag
             _JustConfirmedTask = false;
 
-            // Clean up unit interaction service
-            _UnitTaskService.ConfirmedInteraction -= OnConfirmTask;
-            _UnitTaskService.CanceledInteraction -= OnCancel;
+            // Clean up unit task service
+            _UnitTaskService.ConfirmedTask -= OnConfirmTask;
+            _UnitTaskService.Canceled -= OnCancel;
             _UnitTaskService.Deactivate();
+
+            // Hide task UI
+            _TaskInfoUI.Hide();
 
             // Base OnExit
             base.OnExit(nextState);
+        }
+
+        private void OnTaskSelected(TaskComponent task)
+        {
+            _TaskInfoUI.Init(task);
+            _TaskInfoUI.Show();
         }
 
         private void OnCancel()

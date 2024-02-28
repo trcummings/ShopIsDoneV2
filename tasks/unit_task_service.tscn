@@ -17,7 +17,7 @@ script = ExtResource("1_cp5iy")
 
 [node name="UIInvalidPlayer" parent="." instance=ExtResource("5_nuveo")]
 
-[connection signal="CanceledInteraction" from="." to="UICancelPlayer" method="play"]
-[connection signal="ConfirmedInteraction" from="." to="UIConfirmPlayer" method="play" unbinds=1]
-[connection signal="InvalidConfirmation" from="." to="UIInvalidPlayer" method="play"]
-[connection signal="SelectedInteraction" from="." to="UISelectPlayer" method="play" unbinds=1]
+[connection signal="Canceled" from="." to="UICancelPlayer" method="play"]
+[connection signal="Confirmed" from="." to="UIConfirmPlayer" method="play"]
+[connection signal="Invalid" from="." to="UIInvalidPlayer" method="play"]
+[connection signal="Selected" from="." to="UISelectPlayer" method="play"]

@@ -1,22 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8xyd8s0yod3u"]
+[gd_scene load_steps=6 format=3 uid="uid://c8xyd8s0yod3u"]
 
 [ext_resource type="Script" path="res://tiles/tile_hover_ui/TileHoverUI.cs" id="1_17uux"]
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2_acxco"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="3_pciq0"]
 [ext_resource type="Texture2D" uid="uid://lcy8qojfo8xw" path="res://textures/EyeIcon/eye_icon.png" id="4_mndua"]
 
-[node name="TileHoverUI" type="Control"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b7qjw"]
+
+[node name="TileHoverUI" type="PanelContainer"]
 custom_minimum_size = Vector2(225, 52)
-layout_mode = 3
-anchors_preset = 0
 size_flags_horizontal = 9
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_b7qjw")
 script = ExtResource("1_17uux")
 
 [node name="BorderedUIWindow" parent="." instance=ExtResource("2_acxco")]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="BorderedUIWindow"]
 layout_mode = 0
