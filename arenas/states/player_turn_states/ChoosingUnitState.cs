@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using ShopIsDone.Utils.StateMachine;
-using ShopIsDone.Arenas;
 using ShopIsDone.Cameras;
 using ShopIsDone.Core;
 using ShopIsDone.Tiles;
@@ -10,7 +9,6 @@ using Godot.Collections;
 using System.Linq;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Arenas.UI;
-using ShopIsDone.Actions;
 using ShopIsDone.Utils;
 using ShopIsDone.Tiles.UI;
 
@@ -77,14 +75,20 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
+            // Inject dependencies
+            InjectionProvider.Inject(this);
+
             // Get last selected tile from message to focus cursor on initially
             if (message?.ContainsKey(Consts.LAST_SELECTED_TILE_KEY) ?? false)
             {
                 _LastSelectedTile = (Tile)message[Consts.LAST_SELECTED_TILE_KEY];
             }
-
-            // Inject dependencies
-            InjectionProvider.Inject(this);
+            // Otherwise, just pick the first of the units we have to work with
+            else
+            {
+                var firstUnit = _PlayerUnitService.GetUnitsThatCanStillAct().First();
+                _LastSelectedTile = _TileManager.GetTileAtTilemapPos(firstUnit.TilemapPosition);
+            }
 
             // Init tile cursor
             _TileCursor.Init(_TileManager);

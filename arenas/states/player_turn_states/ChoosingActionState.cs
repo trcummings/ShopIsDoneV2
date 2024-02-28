@@ -64,9 +64,20 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _PlayerPawnUI.SelectPawnUI(true);
             _PlayerPawnUI.Show();
 
-            // Show cursors
-            _TileCursor.Show();
-            _FingerCursor.Show();
+            // Show cursors at the selected unit
+            var unitTile = _TileManager.GetTileAtTilemapPos(_SelectedUnit.TilemapPosition);
+            _TileCursor.MoveCursorTo(unitTile);
+            _FingerCursor.WarpCursorTo(unitTile.GlobalPosition);
+            // Show after a frame delay so there isn't an unpleasant warping effect
+            GetTree().Connect(
+                "process_frame",
+                Callable.From(() =>
+                {
+                    _TileCursor.Show();
+                    _FingerCursor.Show();
+                }),
+                (uint)ConnectFlags.OneShot
+            );
 
             // base start
             base.OnStart(message);

@@ -86,7 +86,6 @@ namespace ShopIsDone.Arenas
 		public bool HasUnitsThatCanStillAct()
 		{
 			return GetUnitsThatCanStillAct().Count > 0;
-
         }
 	}
 }

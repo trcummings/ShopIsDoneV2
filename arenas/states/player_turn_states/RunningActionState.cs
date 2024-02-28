@@ -2,12 +2,10 @@ using Godot;
 using System;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
-using ShopIsDone.Widgets;
 using ShopIsDone.Actions;
 using ShopIsDone.Utils.DependencyInjection;
 using ActionConsts = ShopIsDone.Arenas.PlayerTurn.ChoosingActions.Consts;
 using ShopIsDone.Tiles;
-using System.Linq;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -18,12 +16,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         [Export]
         private PlayerUnitService _PlayerUnitService;
-
-        [Inject]
-        private FingerCursor _FingerCursor;
-
-        [Inject]
-        private TileCursor _TileCursor;
 
         [Inject]
         private TileManager _TileManager;
@@ -44,10 +36,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // Track the unit's current tile
             var unitLastTile = _TileManager.GetTileAtTilemapPos(unit.TilemapPosition);
 
-            // Hide all UI and the cursors
-            _FingerCursor.Hide();
-            _TileCursor.Hide();
-
             // Execute action
             var command = _ActionService.ExecuteAction(action, message);
             command.CallDeferred(nameof(command.Execute));
@@ -56,18 +44,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // If an outcome was reached, do not continue any of this
             if (_OutcomeService.WasOutcomeReached()) return;
 
-            // Show the cursors
-            _FingerCursor.Show();
-            _TileCursor.Show();
-
             // If unit can still act, continue choosing actions for that unit
             if (_PlayerUnitService.UnitHasAvailableActions(unit))
             {
-                // Focus cursors on unit
-                var newTile = _TileManager.GetTileAtTilemapPos(unit.TilemapPosition);
-                _TileCursor.MoveCursorTo(newTile);
-                _FingerCursor.WarpCursorTo(newTile.GlobalPosition);
-
                 // Go back to choosing actions
                 ChangeState(Consts.States.CHOOSING_ACTION, new Dictionary<string, Variant>()
                 {
