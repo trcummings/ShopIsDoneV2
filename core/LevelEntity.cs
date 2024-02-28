@@ -40,9 +40,6 @@ namespace ShopIsDone.Core
         [Signal]
         public delegate void InitializedEventHandler();
 
-        [Export]
-        protected ArenaEvents _ArenaEvents;
-
         // Id
         [Export]
         public string Id;
@@ -233,13 +230,6 @@ namespace ShopIsDone.Core
             // Iterate through active handlers
             return _ActiveHandlers.All(h => h.IsActive());
         }
-
-        #region ArenaScripts
-        public void EmitArenaScript(ArenaScript script)
-        {
-            _ArenaEvents.AddArenaCommandToQueue(script);
-        }
-        #endregion
 
         // Commands
         private partial class SetEnabledCommand : Command
