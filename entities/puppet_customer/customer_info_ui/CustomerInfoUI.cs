@@ -37,7 +37,7 @@ namespace ShopIsDone.Entities.PuppetCustomers
 
         public void SetDiff(int amount)
         {
-            _HealthBar.DiffValue = amount;
+            _HealthBar.DiffValue = Mathf.Max(_HealthBar.Value - amount, 0);
             _HealthBar.ShowDiff = true;
         }
 
