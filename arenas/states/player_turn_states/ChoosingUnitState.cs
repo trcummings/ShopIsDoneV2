@@ -62,6 +62,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
         [Inject]
         private TileManager _TileManager;
 
+        [Inject]
+        private ScreenshakeService _Screenshake;
+
         // Widgets
         [Inject]
         private FingerCursor _FingerCursor;
@@ -182,6 +185,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 if (unit == null)
                 {
                     EmitSignal(nameof(AttemptedInvalidSelection));
+                    _Screenshake.Shake(ScreenshakeHandler.ShakePayload.ShakeSizes.Tiny);
                     return;
                 }
 
