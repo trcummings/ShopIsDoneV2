@@ -1,4 +1,5 @@
 using Godot;
+using ShopIsDone.Game;
 using System;
 
 namespace ShopIsDone.Tiles.UI
@@ -18,8 +19,12 @@ namespace ShopIsDone.Tiles.UI
 
         public void SelectTile(Tile tile)
         {
-            // Set tile coordinates
-            _TileCoordinates.Text = "(" + tile.TilemapPosition.X + ", " + tile.TilemapPosition.Z + ")";
+            if (GameManager.IsDebugMode())
+            {
+                // Set tile coordinates
+                _TileCoordinates.Text = "(" + tile.TilemapPosition.X + ", " + tile.TilemapPosition.Z + ")";
+            }
+            else _TileCoordinates.Hide();
 
             // Set eye icon based on if tile is lit or not
             if (tile.IsLit()) _EyeIcon.Frame = 0;

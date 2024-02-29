@@ -1,24 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cunubcx0qdxp8"]
+[gd_scene load_steps=7 format=3 uid="uid://cunubcx0qdxp8"]
 
 [ext_resource type="Script" path="res://tasks/ui/TaskInfoUI.cs" id="1_twgh6"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="2_rq7bx"]
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2_wgdnv"]
-[ext_resource type="PackedScene" uid="uid://c7vca6ydo632e" path="res://arenas/ui/player_unit/action_point_bulb.tscn" id="3_mk5ja"]
+[ext_resource type="PackedScene" uid="uid://b6y5j243k5n3v" path="res://ui/diffable_health_bar.tscn" id="4_3si3p"]
 [ext_resource type="Texture2D" uid="uid://cksp5pu5eddjd" path="res://textures/person_icon.png" id="4_dwk5t"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wpykh"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eulvr"]
-bg_color = Color(0, 0, 0, 1)
-border_blend = true
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q0u68"]
-bg_color = Color(0, 0.435294, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 0)
 
 [node name="TaskInfoUI" type="PanelContainer"]
 size_flags_horizontal = 3
@@ -53,14 +41,9 @@ text = "Task Health"
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HealthBox"]
 layout_mode = 2
 
-[node name="HealthBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/HealthBox/MarginContainer"]
+[node name="HealthBar" parent="MarginContainer/VBoxContainer/HealthBox/MarginContainer" instance=ExtResource("4_3si3p")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(250, 25)
 layout_mode = 2
-theme = ExtResource("2_rq7bx")
-theme_override_styles/background = SubResource("StyleBoxFlat_eulvr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_q0u68")
-value = 50.0
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -80,11 +63,30 @@ text = "Cost:"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ActionPointBulb" parent="MarginContainer/VBoxContainer/CostBox" instance=ExtResource("3_mk5ja")]
-layout_mode = 2
-BulbState = 2
-
 [node name="APCost" type="Label" parent="MarginContainer/VBoxContainer/CostBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "0"
+
+[node name="DamageBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/DamageBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "Damage:"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/DamageBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Damage" type="Label" parent="MarginContainer/VBoxContainer/DamageBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
