@@ -60,7 +60,7 @@ namespace ShopIsDone.GameSettings
             SetResolutionScaling(GetResolutionScaling());
             SetResolutionScalingMode((int)GetResolutionScalingMode());
             SetVsync(GetVsync());
-            SetUIScaling(GetUIScaling());
+            //SetUIScaling(GetUIScaling());
             // Audio Settings
             SetMasterVolume(GetMasterVolume());
             SetSfxVolume(GetSfxVolume());
