@@ -185,7 +185,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 if (unit == null)
                 {
                     EmitSignal(nameof(AttemptedInvalidSelection));
-                    _Screenshake.Shake(ScreenshakeHandler.ShakePayload.ShakeSizes.Tiny);
+                    _Screenshake.Shake(
+                        ScreenshakeHandler.ShakePayload.ShakeSizes.Tiny,
+                        ScreenshakeHandler.ShakeAxis.XOnly
+                    );
                     return;
                 }
 
@@ -320,6 +323,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
         private void OnAttemptedInvalidMove()
         {
             EmitSignal(nameof(AttemptedInvalidMove));
+            _Screenshake.Shake(
+                ScreenshakeHandler.ShakePayload.ShakeSizes.Tiny,
+                ScreenshakeHandler.ShakeAxis.XOnly
+            );
         }
 
         //private void SelectInteractable(Tile tile)
