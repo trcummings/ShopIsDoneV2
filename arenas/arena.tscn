@@ -478,6 +478,10 @@ alignment = 2
 visible = false
 layout_mode = 2
 
+[node name="Spacer" type="Control" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="OptionsMenu" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("39_yls7l")]
 visible = false
 layout_mode = 2
