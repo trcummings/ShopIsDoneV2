@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c22hrt14p21y0"
-path="res://.godot/imported/logo_labyrinth_IS.png-f42a04c6144baf069768150c4c052592.ctex"
+path="res://.godot/imported/logo_labyrinth_IS.png-bbdac16e7e1c8b658f8a9770cca66ef6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/logo_labyrinth_IS.png"
-dest_files=["res://.godot/imported/logo_labyrinth_IS.png-f42a04c6144baf069768150c4c052592.ctex"]
+source_file="res://textures/logo_labyrinth/logo_labyrinth_IS.png"
+dest_files=["res://.godot/imported/logo_labyrinth_IS.png-bbdac16e7e1c8b658f8a9770cca66ef6.ctex"]
 
 [params]
 

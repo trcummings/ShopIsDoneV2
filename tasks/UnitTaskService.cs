@@ -12,16 +12,23 @@ namespace ShopIsDone.Tasks
     public partial class UnitTaskService : Node, IService
     {
         [Signal]
-        public delegate void SelectedInteractionEventHandler(TaskComponent task);
+        public delegate void SelectedTaskEventHandler(TaskComponent task);
 
         [Signal]
-        public delegate void ConfirmedInteractionEventHandler(TaskComponent task);
+        public delegate void ConfirmedTaskEventHandler(TaskComponent task);
+
+        // UI signals
+        [Signal]
+        public delegate void SelectedEventHandler();
 
         [Signal]
-        public delegate void CanceledInteractionEventHandler();
+        public delegate void ConfirmedEventHandler();
 
         [Signal]
-        public delegate void InvalidConfirmationEventHandler();
+        public delegate void CanceledEventHandler();
+
+        [Signal]
+        public delegate void InvalidEventHandler();
 
         [Inject]
         private FingerCursor _FingerCursor;
@@ -58,8 +65,10 @@ namespace ShopIsDone.Tasks
                 .GetComponent<TaskHandler>()
                 .GetTasksInRange();
 
+            // TODO: If there's more than one, show the "Cycle Tasks" prompt
+
             // Select the first one
-            SelectInteractable(_Tasks.First());
+            SelectTask(_Tasks.First());
 
             // Allow processing
             SetProcess(true);
@@ -88,12 +97,13 @@ namespace ShopIsDone.Tasks
                 // If the interaction is not available, emit invalid signal
                 if (!_SelectedTask.Entity.IsActive())
                 {
-                    EmitSignal(nameof(InvalidConfirmation));
+                    EmitSignal(nameof(Invalid));
                     return;
                 }
 
                 // Emit a confirmation signal
-                EmitSignal(nameof(ConfirmedInteraction), _SelectedTask);
+                EmitSignal(nameof(Confirmed));
+                EmitSignal(nameof(ConfirmedTask), _SelectedTask);
                 return;
             }
 
@@ -102,43 +112,50 @@ namespace ShopIsDone.Tasks
             {
                 Reset();
                 // Otherwise, cancel signal
-                EmitSignal(nameof(CanceledInteraction));
+                EmitSignal(nameof(Canceled));
                 return;
             }
 
             // Rotate between selectables
             if (Input.IsActionJustPressed("move_left"))
             {
-                // Get previous interactable in list
+                // Get previous task in list
                 var selectedIdx = _Tasks.IndexOf(_SelectedTask);
-                var prevInteractable = _Tasks.SelectCircular(selectedIdx, -1);
+                var prevTask = _Tasks.SelectCircular(selectedIdx, -1);
 
-                // If it's not the same as the previous interactable, select it
-                if (prevInteractable != _SelectedTask) SelectInteractable(prevInteractable);
+                // If it's not the same as the previous task, select it
+                if (prevTask != _SelectedTask)
+                {
+                    SelectTask(prevTask);
+                    EmitSignal(nameof(Selected));
+                }
                 return;
             }
 
             if (Input.IsActionJustPressed("move_right"))
             {
-                // Get next interactable in list
+                // Get next task in list
                 var selectedIdx = _Tasks.IndexOf(_SelectedTask);
-                var nextInteractable = _Tasks.SelectCircular(selectedIdx, 1);
+                var nextTask = _Tasks.SelectCircular(selectedIdx, 1);
 
-                // If it's not the same as the previous interactable, select it
-                if (nextInteractable != _SelectedTask) SelectInteractable(nextInteractable);
+                // If it's not the same as the previous task, select it
+                if (nextTask != _SelectedTask)
+                {
+                    SelectTask(nextTask);
+                    EmitSignal(nameof(Selected));
+                }
+
                 return;
             }
         }
 
-        private void SelectInteractable(TaskComponent task)
+        private void SelectTask(TaskComponent task)
         {
-            //    // Cancel the current diff
-            //    CancelApDiff();
-
-            //    // Hide the current interactable UI
-            //    _InteractableUIContainer.Hide();
             // Set the interactable as the selected interaction
             _SelectedTask = task;
+            // Emit
+            EmitSignal(nameof(SelectedTask), _SelectedTask);
+
             //    // Activate its relevant UI
             //    _InteractableUIContainer.SelectInteractable(_SelectedInteractable);
             //    // Show it
@@ -153,10 +170,6 @@ namespace ShopIsDone.Tasks
             //    }
             //    else _InteractionConfirmationUI.Hide();
 
-            //    // If there are multiple interactables, show the cycle interactables UI
-            //    if (_Interactables.Count > 1) _CycleInteractionsUI.Show();
-            //    else _CycleInteractionsUI.Hide();
-
             // Point the finger cursor at the interaction
             var destination = _SelectedTask.Entity.GlobalPosition;
             _FingerCursor.PointCursorAt(destination, destination + (Vector3.Up * 2));
@@ -167,12 +180,6 @@ namespace ShopIsDone.Tasks
             {
                 _SelectedUnit.FacingDirection = _SelectedUnit.GetFacingDirTowards(closestTile.GlobalPosition);
             }
-
-            //    // Set the UI action cost diff
-            //    RequestApDiff(new ActionPointHandlerComponent()
-            //    {
-            //        ActionPoints = interaction.InteractionAPCost
-            //    });
 
             //    // Unhighlight other interactables and highlight this one
             //    foreach (var otherInteractable in _Interactables) otherInteractable.GetComponent<HoverEntityComponent>()?.Unhover();

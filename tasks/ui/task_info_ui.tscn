@@ -1,0 +1,193 @@
+[gd_scene load_steps=7 format=3 uid="uid://cunubcx0qdxp8"]
+
+[ext_resource type="Script" path="res://tasks/ui/TaskInfoUI.cs" id="1_twgh6"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="2_rq7bx"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2_wgdnv"]
+[ext_resource type="PackedScene" uid="uid://b6y5j243k5n3v" path="res://ui/diffable_health_bar.tscn" id="4_3si3p"]
+[ext_resource type="Texture2D" uid="uid://cksp5pu5eddjd" path="res://textures/person_icon.png" id="4_dwk5t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wpykh"]
+
+[node name="TaskInfoUI" type="PanelContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wpykh")
+script = ExtResource("1_twgh6")
+
+[node name="BorderedUIWindow" parent="." instance=ExtResource("2_wgdnv")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HealthBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/HealthBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "Task Health"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HealthBox"]
+layout_mode = 2
+
+[node name="HealthBar" parent="MarginContainer/VBoxContainer/HealthBox/MarginContainer" instance=ExtResource("4_3si3p")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CostBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/CostBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "Cost:"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/CostBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="APCost" type="Label" parent="MarginContainer/VBoxContainer/CostBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "0"
+
+[node name="DamageBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/DamageBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "Damage:"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/DamageBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Damage" type="Label" parent="MarginContainer/VBoxContainer/DamageBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "0"
+
+[node name="AllowedNumberBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/AllowedNumberBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "Allowed"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/AllowedNumberBox"]
+custom_minimum_size = Vector2(20, 2.08165e-12)
+layout_mode = 2
+texture = ExtResource("4_dwk5t")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Colon" type="Label" parent="MarginContainer/VBoxContainer/AllowedNumberBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = ":"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/AllowedNumberBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AllowedNumber" type="Label" parent="MarginContainer/VBoxContainer/AllowedNumberBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "0"
+
+[node name="NeedEmployeesBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/NeedEmployeesBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "Need"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/NeedEmployeesBox"]
+custom_minimum_size = Vector2(20, 2.08165e-12)
+layout_mode = 2
+texture = ExtResource("4_dwk5t")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Colon" type="Label" parent="MarginContainer/VBoxContainer/NeedEmployeesBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = ":"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/NeedEmployeesBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RequiredEmployees" type="Label" parent="MarginContainer/VBoxContainer/NeedEmployeesBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "0"
+
+[node name="RequiredContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RequiredLabelContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/RequiredContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/RequiredContainer/RequiredLabelContainer"]
+layout_mode = 2
+
+[node name="RequiredLabel" type="Label" parent="MarginContainer/VBoxContainer/RequiredContainer/RequiredLabelContainer"]
+layout_mode = 2
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"
+text = "Required"
+
+[node name="NotRequiredSpacer" type="Control" parent="MarginContainer/VBoxContainer/RequiredContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme = ExtResource("2_rq7bx")
+theme_type_variation = &"LabelDark"

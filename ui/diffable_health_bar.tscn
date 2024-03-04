@@ -1,0 +1,144 @@
+[gd_scene load_steps=12 format=3 uid="uid://b6y5j243k5n3v"]
+
+[ext_resource type="Script" path="res://ui/DiffableProgressBar.cs" id="1_4sw5h"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="1_ttblx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qbc6c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ykyn"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8i14t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mupy"]
+bg_color = Color(0, 0.435294, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rj6by"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qhgln"]
+bg_color = Color(0, 0.435294, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0)
+
+[sub_resource type="Animation" id="1"]
+resource_name = "strobe_base"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseBar:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.6),
+"transitions": PackedFloat32Array(-2, -2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OverlayBar:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4fhqr"]
+resource_name = "strobe_overlay"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OverlayBar:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.6),
+"transitions": PackedFloat32Array(-2, -2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BaseBar:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kfnsp"]
+_data = {
+"strobe_base": SubResource("1"),
+"strobe_overlay": SubResource("Animation_4fhqr")
+}
+
+[node name="DiffableHealthBar" type="PanelContainer"]
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qbc6c")
+script = ExtResource("1_4sw5h")
+MaxValue = 5
+Value = 5
+DiffValue = 5
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6ykyn")
+
+[node name="BaseBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 25)
+layout_mode = 2
+theme = ExtResource("1_ttblx")
+theme_override_styles/background = SubResource("StyleBoxEmpty_8i14t")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8mupy")
+value = 100.0
+show_percentage = false
+
+[node name="OverlayBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.33948)
+custom_minimum_size = Vector2(250, 25)
+layout_mode = 2
+theme = ExtResource("1_ttblx")
+theme_override_styles/background = SubResource("StyleBoxEmpty_rj6by")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qhgln")
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1_ttblx")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "5 / 5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_kfnsp")
+}
+autoplay = "strobe_overlay"

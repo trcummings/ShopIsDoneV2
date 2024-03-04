@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=79 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -66,7 +66,9 @@
 [ext_resource type="PackedScene" uid="uid://cdce80truckjp" path="res://clown_rules/ui/rules_ui.tscn" id="61_0b8j6"]
 [ext_resource type="PackedScene" uid="uid://bvr1260jlynow" path="res://conditions/ui/conditions_remaining.tscn" id="62_ioot1"]
 [ext_resource type="PackedScene" uid="uid://brpya8arwjb2" path="res://clown_rules/ui/rules_list.tscn" id="63_x3x63"]
+[ext_resource type="PackedScene" uid="uid://cunubcx0qdxp8" path="res://tasks/ui/task_info_ui.tscn" id="64_ihoml"]
 [ext_resource type="PackedScene" uid="uid://dq35dnfbvmsgh" path="res://clown_rules/clown_debug.tscn" id="64_oyack"]
+[ext_resource type="PackedScene" uid="uid://bueosq3tcjgp" path="res://entities/puppet_customer/customer_info_ui/customer_info_ui.tscn" id="65_5pv26"]
 [ext_resource type="AudioStream" uid="uid://deium5vier2tq" path="res://arenas/ARENA-START__Bass Swell 8_E.wav" id="66_bteqj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
@@ -255,7 +257,7 @@ script = ExtResource("3_q440h")
 [node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_TileHoverUI", "_EndPlayerTurnWidget") instance=ExtResource("15_hbm50")]
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 _PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
-_TileHoverUI = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/TileHoverUI")
+_TileHoverUI = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/TileHoverUI")
 _EndPlayerTurnWidget = NodePath("../../../../../../UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
 
 [node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService")]
@@ -284,14 +286,18 @@ _OptionsMenu = NodePath("../../../../../../../../UILayer/ActionMenuContainer/Mar
 [node name="Move" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" instance=ExtResource("21_6pg1j")]
 
 [node name="Targeting" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" instance=ExtResource("22_e5qdl")]
+_UIPathMap = {
+"help_customer": NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/CustomerContainer/CustomerInfoUI")
+}
 
 [node name="Interact" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitInteractionService")]
 script = ExtResource("29_22p7l")
 _UnitInteractionService = NodePath("../../../../../../../../Services/UnitInteractionService")
 
-[node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService")]
+[node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService", "_TaskInfoUI")]
 script = ExtResource("33_pf6p2")
 _UnitTaskService = NodePath("../../../../../../../../Services/UnitTaskService")
+_TaskInfoUI = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/TaskContainer/TaskInfoUI")
 
 [node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionService", "_PlayerUnitService")]
 script = ExtResource("19_3o4ep")
@@ -471,6 +477,10 @@ alignment = 2
 [node name="PlayerPawnUI" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("38_qf0ro")]
 visible = false
 layout_mode = 2
+
+[node name="Spacer" type="Control" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="OptionsMenu" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("39_yls7l")]
 visible = false
@@ -670,7 +680,31 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="TileHoverUI" parent="UILayer/TileHoverUIContainer/MarginContainer" instance=ExtResource("58_m7tmb")]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TileHoverUIContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Spacer" type="Control" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TaskContainer" type="VBoxContainer" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TaskInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/TaskContainer" instance=ExtResource("64_ihoml")]
+visible = false
+layout_mode = 2
+
+[node name="CustomerContainer" type="VBoxContainer" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="CustomerInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/CustomerContainer" instance=ExtResource("65_5pv26")]
+visible = false
+layout_mode = 2
+
+[node name="TileHoverUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer" instance=ExtResource("58_m7tmb")]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 8

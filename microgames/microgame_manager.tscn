@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://df0fk08hmrihh"]
+[gd_scene load_steps=10 format=3 uid="uid://df0fk08hmrihh"]
 
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="1"]
 [ext_resource type="Script" path="res://microgames/MicrogameManager.cs" id="2"]
@@ -7,20 +7,22 @@
 [ext_resource type="AudioStream" uid="uid://ybubgytjg27v" path="res://microgames/common/audio/HEARTBEAT--60-BPM--619037__mrrap4food__heart-beat.wav" id="7"]
 [ext_resource type="AudioStream" uid="uid://tsnocvita65y" path="res://microgames/common/audio/CLOCK-TICK-60-BPM--450509__abyeditsound__clockticksound_01.wav" id="8"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qfmo4"]
+
 [sub_resource type="ViewportTexture" id="2"]
 viewport_path = NodePath("CenterContainer/FrameContainer/MarginContainer/MicrogameViewport")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7lor"]
 bg_color = Color(0, 0.545098, 0.192157, 1)
 
-[node name="MicrogameManager" type="Control" node_paths=PackedStringArray("_Background", "_FrameContainer", "_MicrogameViewport", "_PromptLabel", "_ProgressBar", "_RemainingTicksLabel", "_ProgressContainer", "_HeartbeatPlayer", "_ClockTickPlayer")]
-layout_mode = 3
+[node name="MicrogameManager" type="PanelContainer" node_paths=PackedStringArray("_Background", "_FrameContainer", "_MicrogameViewport", "_PromptLabel", "_ProgressBar", "_RemainingTicksLabel", "_ProgressContainer", "_HeartbeatPlayer", "_ClockTickPlayer")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qfmo4")
 script = ExtResource("2")
 _Background = NodePath("Background")
 _FrameContainer = NodePath("CenterContainer/FrameContainer")
@@ -35,19 +37,12 @@ _ClockTickPlayer = NodePath("ClockTickPlayer")
 [node name="Background" type="ColorRect" parent="."]
 unique_name_in_owner = true
 visible = false
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 mouse_filter = 2
 
 [node name="FrameContainer" type="AspectRatioContainer" parent="CenterContainer"]
@@ -127,10 +122,6 @@ horizontal_alignment = 1
 [node name="PromptLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = 420.0
-offset_top = 527.0
-offset_right = 1500.0
-offset_bottom = 552.0
 theme = ExtResource("6")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4

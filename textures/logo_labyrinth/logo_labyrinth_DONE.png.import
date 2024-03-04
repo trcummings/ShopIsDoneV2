@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqqrgia0xlqk0"
-path="res://.godot/imported/white_labyrinth.png-b56324f2c4eef7019dc513dc858b7e2c.ctex"
+uid="uid://b3qqsh51bg8hc"
+path="res://.godot/imported/logo_labyrinth_DONE.png-74484a153f282f270bd7e6bb54aed521.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/white_labyrinth.png"
-dest_files=["res://.godot/imported/white_labyrinth.png-b56324f2c4eef7019dc513dc858b7e2c.ctex"]
+source_file="res://textures/logo_labyrinth/logo_labyrinth_DONE.png"
+dest_files=["res://.godot/imported/logo_labyrinth_DONE.png-74484a153f282f270bd7e6bb54aed521.ctex"]
 
 [params]
 

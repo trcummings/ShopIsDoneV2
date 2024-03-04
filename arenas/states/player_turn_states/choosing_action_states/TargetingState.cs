@@ -14,9 +14,24 @@ using ShopIsDone.ActionPoints;
 using ActionConsts = ShopIsDone.Actions.Consts;
 using ShopIsDone.Utils.Positioning;
 using ShopIsDone.Cameras;
+using ShopIsDone.Core;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
+    public interface ITargetUI
+    {
+        void Init(LevelEntity entity);
+
+        void Show();
+
+        void Hide();
+
+        void SetDiff(int amount);
+
+        void ClearDiff();
+    }
+
+    // This state deals with targeting a unit for some kind of action
 	public partial class TargetingState : ActionState
     {
         [Signal]
@@ -30,6 +45,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         [Signal]
         public delegate void CanceledSelectionEventHandler();
+
+        [Export]
+        private Dictionary<string, NodePath> _UIPathMap = new Dictionary<string, NodePath>();
 
         // Nodes
         [Inject]
@@ -48,12 +66,10 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         private ScreenshakeService _Screenshake;
 
         // State Variables
+        private ITargetUI _CurrentUI;
         private Vector3 _InitialUnitFacingDir = Vector3.Zero;
         private Tile _InitialCursorTile;
         private GenericCollections.List<Tile> _AvailableTiles = new GenericCollections.List<Tile>();
-
-        // Message vars
-        private int _TransferAmount = 0;
 
         public override void _Ready()
         {
@@ -82,9 +98,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Grab if we can target self from the message
             var canTargetSelf = _Action.CanTargetSelf;
-
-            // Grab transfer amount from payload
-            _TransferAmount = (int)message?.GetValueOrDefault("TransferAmount", 0);
 
             // Choose the origin for the tile selection
             var originTile = _TileManager.GetTileAtTilemapPos(_SelectedUnit.TilemapPosition);
@@ -118,9 +131,13 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Request a diff (and include excess cost)
             RequestApDiff(new ActionPointHandler()
             {
-                ActionPoints = _Action.ActionCost,
-                ActionPointExcess = _TransferAmount
+                ActionPoints = _Action.ActionCost
             });
+
+            // Connect to selection changed signal
+            ChangedSelection += OnChangedSelection;
+            // Initially select (in case we're targeting ourself)
+            OnChangedSelection();
         }
 
         private IndicatorColor GetIndicatorColor()
@@ -187,7 +204,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 {
                     { Consts.ACTION_KEY, _Action },
                     { ActionConsts.TARGET, target },
-                    { ActionConsts.TRANSFER_AMOUNT, _TransferAmount },
                     { ActionConsts.POSITIONING, (int)position }
                 });
 
@@ -250,6 +266,10 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         {
             base.OnExit(nextState);
 
+            // Disconnect and clean up target UI
+            ChangedSelection -= OnChangedSelection;
+            CleanUpTargetUI();
+
             // Reset state vars
             _InitialUnitFacingDir = Vector3.Zero;
             _AvailableTiles.Clear();
@@ -261,6 +281,42 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Clear diff
             CancelApDiff();
+        }
+
+        private void OnChangedSelection()
+        {
+            // Clear and reset the current UI if we have one
+            CleanUpTargetUI();
+
+            // Get selected tile from cursor
+            var currentTile = _TileCursor.CurrentTile;
+
+            // If the target on the current tile is a valid target and we have a
+            // related UI for that action in the dictionary, then populate and
+            // show that UI
+            if (_Action.ContainsValidTarget(currentTile) && _UIPathMap.ContainsKey(_Action.Id))
+            {
+                // Get the target from the tile our cursor is on
+                var target = currentTile.UnitOnTile;
+
+                // Handle the UI
+                var path = _UIPathMap[_Action.Id];
+                _CurrentUI = GetNode<ITargetUI>(path);
+                _CurrentUI.Init(target);
+                _CurrentUI.SetDiff(1);
+                _CurrentUI.Show();
+            }
+        }
+
+        private void CleanUpTargetUI()
+        {
+            // Clear and reset the current UI if we have one
+            if (_CurrentUI != null)
+            {
+                _CurrentUI.Hide();
+                _CurrentUI.ClearDiff();
+                _CurrentUI = null;
+            }
         }
     }
 }

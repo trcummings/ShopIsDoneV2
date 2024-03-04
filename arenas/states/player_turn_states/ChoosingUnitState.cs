@@ -11,6 +11,7 @@ using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Arenas.UI;
 using ShopIsDone.Utils;
 using ShopIsDone.Tiles.UI;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -60,6 +61,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         [Inject]
         private TileManager _TileManager;
+
+        [Inject]
+        private ScreenshakeService _Screenshake;
 
         // Widgets
         [Inject]
@@ -181,6 +185,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 if (unit == null)
                 {
                     EmitSignal(nameof(AttemptedInvalidSelection));
+                    _Screenshake.Shake(
+                        ScreenshakeHandler.ShakePayload.ShakeSizes.Tiny,
+                        ScreenshakeHandler.ShakeAxis.XOnly
+                    );
                     return;
                 }
 
@@ -195,17 +203,17 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 return;
             }
 
-            //    // Cycle through units input
-            //    if (Input.IsActionJustPressed("cycle_player_pawns_forward"))
-            //    {
-            //        CycleActivePawns(1);
-            //        return;
-            //    }
-            //    if (Input.IsActionJustPressed("cycle_player_pawns_backward"))
-            //    {
-            //        CycleActivePawns(-1);
-            //        return;
-            //    }
+            // Cycle through units input
+            if (Input.IsActionJustPressed("cycle_player_pawns_forward"))
+            {
+                CycleActivePawns(1);
+                return;
+            }
+            if (Input.IsActionJustPressed("cycle_player_pawns_backward"))
+            {
+                CycleActivePawns(-1);
+                return;
+            }
 
             //    // Cycle through tasks input
             //    if (Input.IsActionJustPressed("cycle_tasks_forward"))
@@ -315,6 +323,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
         private void OnAttemptedInvalidMove()
         {
             EmitSignal(nameof(AttemptedInvalidMove));
+            _Screenshake.Shake(
+                ScreenshakeHandler.ShakePayload.ShakeSizes.Tiny,
+                ScreenshakeHandler.ShakeAxis.XOnly
+            );
         }
 
         //private void SelectInteractable(Tile tile)
@@ -362,37 +374,40 @@ namespace ShopIsDone.Arenas.PlayerTurn
         //    }
         //}
 
-        //// Cycling Pawns and Tasks
-        //private void CycleActivePawns(int dir)
-        //{
-        //    // Get all active units
-        //    // NB: We can safely assume that there will be at least one to warp to
-        //    var activeUnits = PTM.GetActivePlayerPawns().Select(e => e as Pawn);
+        // Cycling Pawns and Tasks
+        private void CycleActivePawns(int dir)
+        {
+            // Get all units
+            // NB: We can safely assume that there will be at least one to warp to
+            var units = _PlayerUnitService.GetUnits();
 
-        //    // Set up a var for the next selected unit
-        //    Pawn newUnit;
+            // Set up a var for the next selected unit
+            LevelEntity newUnit;
 
-        //    // If we're not on a tile with a unit on it
-        //    if (!_LastSelectedTile.HasUnitOnTile())
-        //    {
-        //        // Get the closest unit to the selected tile
-        //        newUnit = PawnHelper.GetClosestPawn(activeUnits, _LastSelectedTile);
-        //    }
-        //    // Otherwise, out of the list of active units, go either forward or backwards in
-        //    // the list based on our currently selected unit
-        //    else
-        //    {
-        //        var currentUnit = _LastSelectedTile.CurrentPawn;
-        //        var selectedIdx = activeUnits.ToList().IndexOf(currentUnit);
+            // If we're not on a tile with a unit on it, get the closest unit to
+            // the selected tile
+            if (!_LastSelectedTile.HasUnitOnTile())
+            {
+                newUnit = units
+                    .OrderBy(pawn => _LastSelectedTile.TilemapPosition.DistanceTo(pawn.TilemapPosition))
+                    .FirstOrDefault();
+            }
+            // Otherwise, out of the list of active units, go either forward or backwards in
+            // the list based on our currently selected unit
+            else
+            {
+                var currentUnit = _LastSelectedTile.UnitOnTile;
+                var selectedIdx = units.ToList().IndexOf(currentUnit);
 
-        //        // Select circularly
-        //        newUnit = activeUnits.SelectCircular(selectedIdx, dir);
-        //    }
+                // Select circularly
+                newUnit = units.SelectCircular(selectedIdx, dir);
+            }
 
-        //    // Warp the cursors to the new tile
-        //    _TileCursor.MoveCursorTo(newUnit.CurrentTile);
-        //    _FingerCursor.WarpCursorTo(_TileCursor.CurrentTile.GlobalPosition);
-        //}
+            // Warp the cursors to the new tile
+            var newUnitTile = _TileManager.GetTileAtTilemapPos(newUnit.TilemapPosition);
+            _TileCursor.MoveCursorTo(newUnitTile);
+            _FingerCursor.WarpCursorTo(_TileCursor.CurrentTile.GlobalPosition);
+        }
 
         //private void CycleActiveTasks(int dir)
         //{

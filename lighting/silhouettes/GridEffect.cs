@@ -62,15 +62,16 @@ namespace ShopIsDone.Lighting.Silhouettes
             // Pull out material
             var material = (ShaderMaterial)Material;
 
+            // Get camera's viewport rect size
+            var cameraSize = _Camera.GetViewport().GetVisibleRect().Size;
             // Update grid center lerp and params
             _CurrentPoint = _CurrentPoint.Lerp(_GridPointDestination, (float)delta * 5);
             // Get the clip space position of the point
             var gridPoint = _Camera.UnprojectPosition(_CurrentPoint);
             // Flip the y point's offset (so we're oriented to screen x/y)
-            gridPoint.Y = Size.Y - gridPoint.Y;
-            // Adjust the grid point by the container's rect size
-            var ratio = gridPoint / Size;
-            gridPoint = ratio * GetViewportRect().Size;
+            gridPoint.Y = cameraSize.Y - gridPoint.Y;
+            // Adjust the grid point to account for UI scaling
+            gridPoint *= GetViewportRect().Size / cameraSize;
             // Set the shader param
             material.SetShaderParameter("grid_point", gridPoint);
 
