@@ -1768,7 +1768,7 @@ tracks/16/keys = {
 "args": ["footstep"],
 "method": &"FireEvent"
 }, {
-"args": ["footttep"],
+"args": ["footstep"],
 "method": &"FireEvent"
 }]
 }
@@ -3619,6 +3619,7 @@ autoplay = "idle"
 
 [node name="Skeleton2D" type="Skeleton2D" parent="Model"]
 unique_name_in_owner = true
+visible = false
 
 [node name="Hip" type="Bone2D" parent="Model/Skeleton2D"]
 position = Vector2(0, 66)
@@ -3630,6 +3631,7 @@ rest = Transform2D(1, 0, 0, 1, 0, -42)
 
 [node name="L_Shoulder" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest"]
 position = Vector2(-46, -49)
+scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, -46, -49)
 
 [node name="L_Arm" type="Bone2D" parent="Model/Skeleton2D/Hip/Chest/L_Shoulder"]

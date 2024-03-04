@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk4ulvdfvgt0w"
-path="res://.godot/imported/mini_portraits_for_3d.png-bed9c69eaa119210915ff8b761db87c4.ctex"
+uid="uid://bgixk4fixqwli"
+path="res://.godot/imported/mini_portrait_background.png-2fd0253c20b91fdc94cecc89073d7f12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/mini_portraits_for_3d.png"
-dest_files=["res://.godot/imported/mini_portraits_for_3d.png-bed9c69eaa119210915ff8b761db87c4.ctex"]
+source_file="res://arenas/ui/player_unit/textures/mini_portrait_background.png"
+dest_files=["res://.godot/imported/mini_portrait_background.png-2fd0253c20b91fdc94cecc89073d7f12.ctex"]
 
 [params]
 

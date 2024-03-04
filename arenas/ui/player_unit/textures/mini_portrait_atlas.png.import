@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0et2n8wnyvxe"
-path="res://.godot/imported/haskell_mini_portrait.png-17d6380a01d0e659b250c8d5b7dae9cb.ctex"
+uid="uid://u3qgymjgqncv"
+path="res://.godot/imported/mini_portrait_atlas.png-0967fa8383d9aac64c94fa8e9020851a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://arenas/ui/player_unit/textures/haskell_mini_portrait.png"
-dest_files=["res://.godot/imported/haskell_mini_portrait.png-17d6380a01d0e659b250c8d5b7dae9cb.ctex"]
+source_file="res://arenas/ui/player_unit/textures/mini_portrait_atlas.png"
+dest_files=["res://.godot/imported/mini_portrait_atlas.png-0967fa8383d9aac64c94fa8e9020851a.ctex"]
 
 [params]
 

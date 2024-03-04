@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tptbd2by2vcb"
-path="res://.godot/imported/mini_portraits.png-03d090a90f7fa871e7fad62110822456.ctex"
+uid="uid://goxnwdn8jeic"
+path="res://.godot/imported/aubrette-skeleton.png-91e3d1ebf893c698f0de33cbab0d0b9a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/mini_portraits.png"
-dest_files=["res://.godot/imported/mini_portraits.png-03d090a90f7fa871e7fad62110822456.ctex"]
+source_file="res://textures/characters/aubrette/aubrette-skeleton.png"
+dest_files=["res://.godot/imported/aubrette-skeleton.png-91e3d1ebf893c698f0de33cbab0d0b9a.ctex"]
 
 [params]
 
