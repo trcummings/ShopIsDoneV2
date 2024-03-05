@@ -1,7 +1,7 @@
 [gd_scene load_steps=31 format=3 uid="uid://d2fx1myspm6wk"]
 
 [ext_resource type="Script" path="res://render/isometric_models/SkeletalIsometricSprite2D.cs" id="2"]
-[ext_resource type="Texture2D" uid="uid://dfcw5y1i588br" path="res://textures/characters/javier/javier-skeleton.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://5pe35s6hdmc3" path="res://render/employees/javier/javier_skeleton.png" id="3"]
 
 [sub_resource type="Animation" id="2"]
 length = 0.001

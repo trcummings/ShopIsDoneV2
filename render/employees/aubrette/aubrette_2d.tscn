@@ -1,7 +1,7 @@
 [gd_scene load_steps=44 format=3 uid="uid://elqdvcak3fuh"]
 
 [ext_resource type="Script" path="res://render/isometric_models/SkeletalIsometricSprite2D.cs" id="1_f65be"]
-[ext_resource type="Texture2D" uid="uid://goxnwdn8jeic" path="res://textures/characters/aubrette/aubrette-skeleton.png" id="2_1i56e"]
+[ext_resource type="Texture2D" uid="uid://goxnwdn8jeic" path="res://render/employees/aubrette/aubrette-skeleton.png" id="2_1i56e"]
 [ext_resource type="Script" path="res://render/poly_fix.gd" id="3_ovjyp"]
 
 [sub_resource type="Animation" id="2"]
