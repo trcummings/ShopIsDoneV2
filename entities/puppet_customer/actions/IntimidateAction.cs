@@ -37,7 +37,9 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
                 base.Execute(message),
                 // Intimidate animation and SFX
                 new ParallelCommand(
-                    _Model.RunPerformAction(StateConsts.Customers.INTIMIDATE),
+                    // FIXME: Add some kind of animation for this, but for now
+                    // leave it commented out
+                    //_Model.RunPerformAction(StateConsts.Customers.INTIMIDATE),
                     _SfxService.RunPlaySfx(_IntimidateSfx, 2.5f)
                 )
             );

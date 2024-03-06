@@ -34,10 +34,11 @@ namespace ShopIsDone.Arenas
             var allEntities = GetTree()
                 .GetNodesInGroup("entities")
                 .OfType<LevelEntity>()
-                .Where(_Arena.IsAncestorOf);
+                .Where(_Arena.IsAncestorOf)
+                .ToList();
 
             // Add player characters to the mix
-            allEntities.ToList().AddRange(_PlayerCharacterManager.GetAllUnits());
+            allEntities.AddRange(_PlayerCharacterManager.GetAllUnits());
 
             return allEntities.ToGodotArray();
         }

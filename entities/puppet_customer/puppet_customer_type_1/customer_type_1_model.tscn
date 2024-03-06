@@ -410,6 +410,10 @@ _data = {
 [node name="CustomerType1Model" type="Node3D" node_paths=PackedStringArray("_AnimPlayer") groups=["renderable"]]
 script = ExtResource("1")
 LoopingAnimations = ["Travel", "Idle"]
+_AnimationNameMap = {
+"bother": "Bother",
+"hurt": "TakeHit"
+}
 _AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="SpawnPool" parent="." instance=ExtResource("4")]

@@ -41,8 +41,10 @@ namespace ShopIsDone.Entities.ClownPuppet
             _SetWarpAmount = new Callable(this, nameof(SetWarpAmount));
         }
 
-        public override async Task PerformAnimation(string actionName)
+        public override async Task PerformAnimation(string rawActionName)
         {
+            var actionName = TransformAnimName(rawActionName);
+
             if (actionName == ModelConsts.Anims.ClownPuppet.RAISE_HAND)
             {
                 FireEvent("clatter");

@@ -248,7 +248,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.66468e-13, 1, -2.66468e-13
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.99702e-13, 1.70988, -3.99702e-13)
 
 [node name="Head" parent="BehindSpiritModel/behind_spirit/Armature/Skeleton3D" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.32937e-13, 2.3742, -5.32937e-13)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.32937e-13, 2.3742, -5.32936e-13)
 
 [node name="LightVolumeMesh" type="MeshInstance3D" parent="BehindSpiritModel/behind_spirit" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2, 2.08165e-12)
@@ -264,26 +264,22 @@ _ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler" index="0"]
 script = ExtResource("4_qg682")
-_ModelPath = NodePath("../../BehindSpiritModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "Idle"
 Id = "idle"
 
 [node name="Emerge" type="Node" parent="StateHandler" index="1"]
 script = ExtResource("4_qg682")
-_ModelPath = NodePath("../../BehindSpiritModel")
 _EnterAnimName = "Emerge"
 Id = "emerge"
 
 [node name="Sink" type="Node" parent="StateHandler" index="2"]
 script = ExtResource("4_qg682")
-_ModelPath = NodePath("../../BehindSpiritModel")
 _EnterAnimName = "Sink"
 Id = "sink"
 
 [node name="Lurking" type="Node" parent="StateHandler" index="3"]
 script = ExtResource("4_qg682")
-_ModelPath = NodePath("../../BehindSpiritModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "Lurking"
 Id = "lurking"

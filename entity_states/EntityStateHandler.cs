@@ -146,6 +146,9 @@ namespace ShopIsDone.EntityStates
             _CurrentState.Enter(message);
             await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
 
+            // Idle the new state
+            _CurrentState.Idle();
+
             EmitSignal(nameof(ChangedState));
         }
 

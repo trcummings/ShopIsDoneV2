@@ -68,7 +68,7 @@ namespace ShopIsDone.Widgets
         public void Alert(Node3D point)
         {
             // Create scene
-            var scene = _PopupLabelScene.Instantiate<AlertEffect>();
+            var scene = _AlertEffectScene.Instantiate<AlertEffect>();
             point.AddChild(scene);
             scene.Connect(
                 nameof(scene.Finished),
@@ -81,7 +81,7 @@ namespace ShopIsDone.Widgets
         public async Task AlertAsync(Node3D point)
         {
             // Create scene
-            var scene = _PopupLabelScene.Instantiate<AlertEffect>();
+            var scene = _AlertEffectScene.Instantiate<AlertEffect>();
             point.AddChild(scene);
             await scene.PopupAsync();
             // Remove it when done
@@ -92,7 +92,7 @@ namespace ShopIsDone.Widgets
         public void TalkingEffect(Node3D point)
         {
             // Create scene
-            var scene = _PopupLabelScene.Instantiate<TalkingEffect>();
+            var scene = _TalkingEffectScene.Instantiate<TalkingEffect>();
             point.AddChild(scene);
             scene.Connect(
                 nameof(scene.Finished),
@@ -105,7 +105,7 @@ namespace ShopIsDone.Widgets
         public async Task TalkingEffectAsync(Node3D point)
         {
             // Create scene
-            var scene = _PopupLabelScene.Instantiate<TalkingEffect>();
+            var scene = _TalkingEffectScene.Instantiate<TalkingEffect>();
             point.AddChild(scene);
             await scene.PopupAsync();
             // Remove it when done

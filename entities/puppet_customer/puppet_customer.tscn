@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c84riwntsfpy5"]
+[gd_scene load_steps=31 format=3 uid="uid://c84riwntsfpy5"]
 
 [ext_resource type="Script" path="res://core/LevelEntity.cs" id="1_hv7oi"]
 [ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
@@ -21,7 +21,6 @@
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="18_e7js2"]
 [ext_resource type="Script" path="res://ai/ActionPlanner.cs" id="18_ock78"]
 [ext_resource type="Resource" uid="uid://dgdoi87t5014c" path="res://entities/puppet_customer/ai/aggressive_turn_plan.tres" id="19_ynvcu"]
-[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="20_5faon"]
 [ext_resource type="Script" path="res://entities/puppet_customer/ai/sensors/NearestEmployeeSensor.cs" id="20_oymu8"]
 [ext_resource type="Script" path="res://entities/puppet_customer/CustomerOutcomeHandler.cs" id="26_vx53h"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="27_fpgq0"]
@@ -106,29 +105,13 @@ _ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler"]
 script = ExtResource("18_e7js2")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "Idle"
+_IdleAnimName = "Idle"
 Id = "idle"
 
 [node name="Move" type="Node" parent="StateHandler"]
 script = ExtResource("18_e7js2")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "Travel"
+_IdleAnimName = "Travel"
 Id = "move"
-
-[node name="Hurt" type="Node" parent="StateHandler"]
-script = ExtResource("18_e7js2")
-_EnterAnimName = "TakeHit"
-Id = "hurt"
-
-[node name="Intimidate" type="Node" parent="StateHandler"]
-script = ExtResource("20_5faon")
-Id = "intimidate"
-
-[node name="Bother" type="Node" parent="StateHandler"]
-script = ExtResource("18_e7js2")
-_EnterAnimName = "Bother"
-Id = "bother"
 
 [node name="Dead" type="Node" parent="StateHandler"]
 script = ExtResource("18_e7js2")

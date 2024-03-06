@@ -18,6 +18,16 @@ namespace ShopIsDone.Models
         [Export]
         public Array<string> LoopingAnimations;
 
+        [ExportGroup("Animation Mapping")]
+        [Export]
+        private bool _ForceAnimLowercase = false;
+
+        // This maps a normalized action name that we call in a state handler or
+        // through a script to a specific animation name that the model may have
+        // for that action
+        [Export]
+        private Dictionary<string, string> _AnimationNameMap = new Dictionary<string, string>();
+
         [Export]
         protected AnimationPlayer _AnimPlayer;
 
@@ -58,8 +68,10 @@ namespace ShopIsDone.Models
             return _AnimPlayer?.CurrentAnimation;
         }
 
-        public virtual async Task PerformAnimation(string animName)
+        public virtual async Task PerformAnimation(string rawActionName)
         {
+            var animName = TransformAnimName(rawActionName);
+
             // Save ourselves some output here, if it's the default call and we
             // don't have any animations, ignore it
             if (
@@ -107,6 +119,19 @@ namespace ShopIsDone.Models
             // If animation should loop, then run it again
             if (IsLoopingAnimation(animName)) _ = PerformAnimation(animName);
             EmitSignal(nameof(AnimationFinished), animName);
+        }
+
+        protected string TransformAnimName(string rawActionName)
+        {
+            var animationName = rawActionName;
+
+            // Map the given 
+            if (_AnimationNameMap.ContainsKey(rawActionName))
+            {
+                animationName = _AnimationNameMap[rawActionName];
+            }
+
+            return _ForceAnimLowercase ? animationName.ToLower() : animationName;
         }
     }
 }
