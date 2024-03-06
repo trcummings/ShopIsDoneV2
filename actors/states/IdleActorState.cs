@@ -5,6 +5,7 @@ using ShopIsDone.EntityStates;
 using ShopIsDone.Utils.StateMachine;
 using StateConsts = ShopIsDone.EntityStates.Consts;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Models;
 
 namespace ShopIsDone.Actors.States
 {
@@ -16,6 +17,15 @@ namespace ShopIsDone.Actors.States
         [Export]
         private ActorFloorIndicator _FloorIndicator;
 
+        [Export]
+        private NodePath _ModelPath;
+        private IModel _Model;
+
+        public override void _Ready()
+        {
+            _Model = GetNode<IModel>(_ModelPath);
+        }
+
         public override void OnStart(Dictionary<string, Variant> message)
         {
             // Pull default animation out of message
@@ -25,7 +35,7 @@ namespace ShopIsDone.Actors.States
             _FloorIndicator.Hide();
 
             // Idle state handler
-            _StateHandler.ChangeState(anim);
+            _Model.PerformAnimation(anim);
 
             // Base start
             base.OnStart(message);

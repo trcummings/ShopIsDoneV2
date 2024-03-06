@@ -14,6 +14,8 @@ namespace ShopIsDone.Models
 
         Task PerformAnimation(string animName);
 
+        string GetCurrentAnimation();
+
         void Show();
 
         void Hide();

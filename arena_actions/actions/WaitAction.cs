@@ -2,8 +2,7 @@
 using Godot;
 using ShopIsDone.Core;
 using ShopIsDone.EntityStates;
-using ShopIsDone.Utils.Commands;
-using Godot.Collections;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.Actions
 {
@@ -25,7 +24,7 @@ namespace ShopIsDone.Actions
         // Visible in menu if we're in the idle state, as most actions are
         public override bool IsVisibleInMenu()
         {
-            return _StateHandler.IsInState("idle");
+            return _StateHandler.IsInState(StateConsts.IDLE);
         }
     }
 }

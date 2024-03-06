@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://bhmg13nssujbh"]
+[gd_scene load_steps=51 format=3 uid="uid://bhmg13nssujbh"]
 
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_52ctf"]
 [ext_resource type="PackedScene" uid="uid://blwt1nyomjjj8" path="res://render/employees/aubrette/aubrette_model.tscn" id="2_ulapc"]
@@ -46,6 +46,7 @@
 [ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="44_oeao0"]
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="45_f6qud"]
 [ext_resource type="PackedScene" uid="uid://c03r17klsdybr" path="res://lighting/null_world_light.tscn" id="46_s6pyb"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="47_36jgp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u5s6l"]
 
@@ -79,6 +80,7 @@ script = ExtResource("3_af5pp")
 script = ExtResource("4_141w5")
 _StateHandler = NodePath("../../StateHandler")
 _FloorIndicator = NodePath("../../ActorFloorIndicator")
+_ModelPath = NodePath("../../AubretteModel")
 
 [node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_InteractableHandler")]
 script = ExtResource("5_80273")
@@ -102,10 +104,9 @@ _ActorPathfinder = NodePath("../../ActorPathfinder")
 [node name="ActorVelocity" type="Node" parent="."]
 script = ExtResource("8_lv0a3")
 
-[node name="ActorAnimator" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
+[node name="ActorAnimator" type="Node" parent="."]
 script = ExtResource("9_ygoh5")
 ModelPath = NodePath("../AubretteModel")
-_StateHandler = NodePath("../StateHandler")
 
 [node name="ActorPathfinder" type="Node" parent="." node_paths=PackedStringArray("_Body", "NavigationAgent", "_VelocityComponent", "_IntervalTimer")]
 script = ExtResource("10_gkh5g")
@@ -166,9 +167,10 @@ FacingTarget = NodePath("..")
 
 [node name="TilemapPositionHandler" parent="." instance=ExtResource("19_7i8dp")]
 
-[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState", "_ModelComponent")]
 script = ExtResource("20_ug73f")
 InitialState = NodePath("Idle")
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler"]
 script = ExtResource("21_fcvei")
@@ -287,6 +289,10 @@ shape = SubResource("BoxShape3D_1iyrw")
 
 [node name="LightVolumeMesh" parent="NullWorldLight" index="1"]
 mesh = SubResource("CapsuleMesh_v11p7")
+
+[node name="ModelComponent" type="Node" parent="."]
+script = ExtResource("47_36jgp")
+_ModelPath = NodePath("../AubretteModel")
 
 [connection signal="Footstep" from="AubretteModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://c84riwntsfpy5"]
+[gd_scene load_steps=35 format=3 uid="uid://c84riwntsfpy5"]
 
 [ext_resource type="Script" path="res://core/LevelEntity.cs" id="1_hv7oi"]
 [ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
@@ -32,6 +32,7 @@
 [ext_resource type="Script" path="res://lighting/LightDetector.cs" id="30_tades"]
 [ext_resource type="PackedScene" uid="uid://br2e0jnd08ebo" path="res://lighting/light_detector_area.tscn" id="31_kfuq5"]
 [ext_resource type="Script" path="res://lighting/LightDetectorComponent.cs" id="32_0u2uw"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="33_3tcx5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0cyyf"]
 radius = 0.75
@@ -100,9 +101,10 @@ script = ExtResource("11_5w0ou")
 Actions = [ExtResource("12_3ebgi"), ExtResource("13_k6cqb"), ExtResource("14_ejwco"), ExtResource("14_u6t0o"), ExtResource("15_v7snx")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
-[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState", "_ModelComponent")]
 script = ExtResource("12_tm0l2")
 InitialState = NodePath("Idle")
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler"]
 script = ExtResource("18_e7js2")
@@ -176,6 +178,10 @@ script = ExtResource("30_tades")
 [node name="LightDetectorComponent" type="Node" parent="." node_paths=PackedStringArray("Detector")]
 script = ExtResource("32_0u2uw")
 Detector = NodePath("../LightDetector")
+
+[node name="ModelComponent" type="Node" parent="."]
+script = ExtResource("33_3tcx5")
+_ModelPath = NodePath("../CustomerType1Model")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="CustomerType1Model" method="SetFacingDir"]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]

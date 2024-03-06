@@ -64,6 +64,11 @@ namespace ShopIsDone.Models.IsometricModels
             }
         }
 
+        public string GetCurrentAnimation()
+        {
+            return _ActionName;
+        }
+
         public virtual async Task PerformAnimation(string animName)
         {
             // Persist action name in state

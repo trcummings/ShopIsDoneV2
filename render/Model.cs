@@ -48,9 +48,14 @@ namespace ShopIsDone.Models
             LookAt(GlobalPosition - facingDir, Vector3.Up);
         }
 
-        private void FireEvent(string eventName)
+        protected void FireEvent(string eventName)
         {
             EmitSignal(nameof(AnimationEventFired), eventName);
+        }
+
+        public string GetCurrentAnimation()
+        {
+            return _AnimPlayer?.CurrentAnimation;
         }
 
         public virtual async Task PerformAnimation(string animName)

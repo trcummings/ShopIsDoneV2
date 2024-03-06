@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c7xlqty5qdnif"]
+[gd_scene load_steps=17 format=3 uid="uid://c7xlqty5qdnif"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_emqd3"]
 [ext_resource type="PackedScene" uid="uid://dlk4igjt1ir5x" path="res://Models/clown_puppet/clown_puppet_model.tscn" id="2_gx4b6"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="11_j7f1x"]
 [ext_resource type="PackedScene" uid="uid://cs55ll2s8e14e" path="res://microgames/always_outcome/always_lose_microgame.tscn" id="12_p4fb3"]
 [ext_resource type="Script" path="res://entities/clown_puppet/ClownPuppetOutcomeHandler.cs" id="13_30w5h"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="14_hre88"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4khx"]
 radius = 0.3
@@ -47,9 +48,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08165e-12, 0.1, -2.08165e-
 Radius = 1.5
 LightColor = Color(0.764706, 0.294118, 0.227451, 1)
 
-[node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState")]
+[node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState", "_ModelComponent")]
 script = ExtResource("4_t87db")
 InitialState = NodePath("Hidden")
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler" index="0"]
 script = ExtResource("5_tvijx")
@@ -87,10 +89,6 @@ script = ExtResource("6_d7lmh")
 Id = "hidden"
 _IsInArena = false
 
-[node name="ClatterPlayer" type="AudioStreamPlayer" parent="StateHandler" index="6"]
-stream = SubResource("AudioStreamRandomizer_86jjf")
-bus = &"SFX"
-
 [node name="MicrogameHandler" type="Node" parent="." index="5"]
 script = ExtResource("11_j7f1x")
 MicrogameScene = ExtResource("12_p4fb3")
@@ -99,7 +97,12 @@ _OutcomeHandlerPath = NodePath("../OutcomeHandler")
 [node name="OutcomeHandler" type="Node" parent="." index="6"]
 script = ExtResource("13_30w5h")
 
-[connection signal="StateEntered" from="StateHandler/WarpIn" to="StateHandler/ClatterPlayer" method="play"]
-[connection signal="StateEntered" from="StateHandler/WarpOut" to="StateHandler/ClatterPlayer" method="play"]
-[connection signal="StateEntered" from="StateHandler/Punish" to="StateHandler/ClatterPlayer" method="play"]
-[connection signal="StateEntered" from="StateHandler/FinishPunish" to="StateHandler/ClatterPlayer" method="play"]
+[node name="ModelComponent" type="Node" parent="." index="7"]
+script = ExtResource("14_hre88")
+_ModelPath = NodePath("../ClownPuppetModel")
+
+[node name="ClatterPlayer" type="AudioStreamPlayer" parent="." index="8"]
+stream = SubResource("AudioStreamRandomizer_86jjf")
+bus = &"SFX"
+
+[connection signal="Clattered" from="ClownPuppetModel" to="ClatterPlayer" method="play"]

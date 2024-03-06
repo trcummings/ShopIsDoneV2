@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=51 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_0yjha"]
@@ -45,6 +45,7 @@
 [ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="33_dnns8"]
 [ext_resource type="PackedScene" uid="uid://cd50jq54ec7cv" path="res://tasks/task_handler.tscn" id="39_7it71"]
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="43_h3he4"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="47_jxpnj"]
 [ext_resource type="PackedScene" uid="uid://c03r17klsdybr" path="res://lighting/null_world_light.tscn" id="50_hxo81"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
@@ -79,6 +80,7 @@ script = ExtResource("2_6jaxx")
 script = ExtResource("4_rbt7t")
 _StateHandler = NodePath("../../StateHandler")
 _FloorIndicator = NodePath("../../ActorFloorIndicator")
+_ModelPath = NodePath("../../HaskellModel")
 
 [node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_InteractableHandler")]
 script = ExtResource("3_f0qiv")
@@ -102,10 +104,9 @@ _ActorPathfinder = NodePath("../../ActorPathfinder")
 [node name="ActorVelocity" type="Node" parent="."]
 script = ExtResource("3")
 
-[node name="ActorAnimator" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
+[node name="ActorAnimator" type="Node" parent="."]
 script = ExtResource("5")
 ModelPath = NodePath("../HaskellModel")
-_StateHandler = NodePath("../StateHandler")
 
 [node name="ActorPathfinder" type="Node" parent="." node_paths=PackedStringArray("_Body", "NavigationAgent", "_VelocityComponent", "_IntervalTimer")]
 script = ExtResource("8_exart")
@@ -166,9 +167,10 @@ FacingTarget = NodePath("..")
 
 [node name="TilemapPositionHandler" parent="." instance=ExtResource("21_k5t6c")]
 
-[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState", "_ModelComponent")]
 script = ExtResource("11_uh075")
 InitialState = NodePath("Idle")
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler"]
 script = ExtResource("15_7e1m5")
@@ -284,6 +286,10 @@ shape = SubResource("BoxShape3D_1iyrw")
 
 [node name="LightVolumeMesh" parent="NullWorldLight" index="1"]
 mesh = SubResource("CapsuleMesh_v11p7")
+
+[node name="ModelComponent" type="Node" parent="."]
+script = ExtResource("47_jxpnj")
+_ModelPath = NodePath("../HaskellModel")
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]
