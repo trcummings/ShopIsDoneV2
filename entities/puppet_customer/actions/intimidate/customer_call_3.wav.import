@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://d1uyadkudcsu1"
-path="res://.godot/imported/customer_call_3.wav-4de2e34ddcec9325af57a447d2342344.sample"
+path="res://.godot/imported/customer_call_3.wav-c9815ed66b9938fe5ec763ed5315f438.sample"
 
 [deps]
 
-source_file="res://entities/puppet_customer/states/audio/customer_call_3.wav"
-dest_files=["res://.godot/imported/customer_call_3.wav-4de2e34ddcec9325af57a447d2342344.sample"]
+source_file="res://entities/puppet_customer/actions/intimidate/customer_call_3.wav"
+dest_files=["res://.godot/imported/customer_call_3.wav-c9815ed66b9938fe5ec763ed5315f438.sample"]
 
 [params]
 

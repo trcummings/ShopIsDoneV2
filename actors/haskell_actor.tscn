@@ -33,7 +33,7 @@
 [ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="22_4rv4k"]
 [ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="22_f48js"]
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="22_odajy"]
-[ext_resource type="Script" path="res://entities/employees/states/HelpCustomerEntityState.cs" id="22_rd0nb"]
+[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="22_yhedh"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="23_sv0kt"]
 [ext_resource type="Script" path="res://widgets/entity_widgets/EntityWidgetHelper.cs" id="25_i35xk"]
 [ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://entities/employees/actions/interrupt_task_action.tres" id="28_i3j6t"]
@@ -173,46 +173,40 @@ _ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler"]
 script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "idle"
 Id = "idle"
 
 [node name="Move" type="Node" parent="StateHandler"]
 script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "walk"
 Id = "move"
 
 [node name="Alert" type="Node" parent="StateHandler"]
 script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
 _EnterAnimName = "alert"
 Id = "alert"
 
 [node name="Hurt" type="Node" parent="StateHandler"]
 script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
 _EnterAnimName = "take_hit"
 Id = "hurt"
 
 [node name="DoTask" type="Node" parent="StateHandler"]
 script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "do_task"
 Id = "do_task"
 
 [node name="Dead" type="Node" parent="StateHandler"]
 script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
 _EnterAnimName = "meltdown"
 Id = "dead"
 _IsActive = false
 
 [node name="HelpCustomer" type="Node" parent="StateHandler"]
-script = ExtResource("22_rd0nb")
+script = ExtResource("22_yhedh")
 Id = "help_customer"
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://bqh5iqllvqmhp"]
 
-[ext_resource type="AudioStream" uid="uid://cauonwns384o4" path="res://entities/puppet_customer/actions/indimidate_sfx_random_stream.tres" id="1_ouydf"]
+[ext_resource type="AudioStream" uid="uid://cauonwns384o4" path="res://entities/puppet_customer/actions/intimidate/indimidate_sfx_random_stream.tres" id="1_ouydf"]
 [ext_resource type="Script" path="res://entities/puppet_customer/actions/IntimidateAction.cs" id="1_s046a"]
 
 [resource]

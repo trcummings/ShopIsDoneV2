@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://c84riwntsfpy5"]
+[gd_scene load_steps=32 format=3 uid="uid://c84riwntsfpy5"]
 
 [ext_resource type="Script" path="res://core/LevelEntity.cs" id="1_hv7oi"]
 [ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
@@ -18,14 +18,11 @@
 [ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="14_ejwco"]
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="14_u6t0o"]
 [ext_resource type="Resource" uid="uid://bqh5iqllvqmhp" path="res://entities/puppet_customer/actions/intimidate_action.tres" id="15_v7snx"]
-[ext_resource type="Script" path="res://entities/puppet_customer/states/IntimidateEntityState.cs" id="16_6jv6x"]
-[ext_resource type="PackedScene" uid="uid://hj3hfw66ke8t" path="res://entities/puppet_customer/states/audio/intimidate_player.tscn" id="17_r0uob"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="18_e7js2"]
 [ext_resource type="Script" path="res://ai/ActionPlanner.cs" id="18_ock78"]
 [ext_resource type="Resource" uid="uid://dgdoi87t5014c" path="res://entities/puppet_customer/ai/aggressive_turn_plan.tres" id="19_ynvcu"]
+[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="20_5faon"]
 [ext_resource type="Script" path="res://entities/puppet_customer/ai/sensors/NearestEmployeeSensor.cs" id="20_oymu8"]
-[ext_resource type="AudioStream" uid="uid://cauonwns384o4" path="res://entities/puppet_customer/actions/indimidate_sfx_random_stream.tres" id="22_te83v"]
-[ext_resource type="Script" path="res://entities/puppet_customer/states/BotherEntityState.cs" id="23_72o6q"]
 [ext_resource type="Script" path="res://entities/puppet_customer/CustomerOutcomeHandler.cs" id="26_vx53h"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="27_fpgq0"]
 [ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="28_v08d8"]
@@ -109,41 +106,32 @@ _ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler"]
 script = ExtResource("18_e7js2")
-_ModelPath = NodePath("../../CustomerType1Model")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "Idle"
 Id = "idle"
 
 [node name="Move" type="Node" parent="StateHandler"]
 script = ExtResource("18_e7js2")
-_ModelPath = NodePath("../../CustomerType1Model")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "Travel"
 Id = "move"
 
 [node name="Hurt" type="Node" parent="StateHandler"]
 script = ExtResource("18_e7js2")
-_ModelPath = NodePath("../../CustomerType1Model")
 _EnterAnimName = "TakeHit"
 Id = "hurt"
 
-[node name="Intimidate" type="Node" parent="StateHandler" node_paths=PackedStringArray("_IntimidatePlayer")]
-script = ExtResource("16_6jv6x")
-_IntimidatePlayer = NodePath("IntimidatePlayer")
+[node name="Intimidate" type="Node" parent="StateHandler"]
+script = ExtResource("20_5faon")
 Id = "intimidate"
 
-[node name="IntimidatePlayer" parent="StateHandler/Intimidate" instance=ExtResource("17_r0uob")]
-stream = ExtResource("22_te83v")
-
 [node name="Bother" type="Node" parent="StateHandler"]
-script = ExtResource("23_72o6q")
-_ModelPath = NodePath("../../CustomerType1Model")
+script = ExtResource("18_e7js2")
 _EnterAnimName = "Bother"
 Id = "bother"
 
 [node name="Dead" type="Node" parent="StateHandler"]
 script = ExtResource("18_e7js2")
-_ModelPath = NodePath("../../CustomerType1Model")
 _EnterAnimName = "Die"
 Id = "dead"
 _IsActive = false

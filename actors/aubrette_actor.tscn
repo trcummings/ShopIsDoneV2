@@ -21,7 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="19_7i8dp"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="20_ug73f"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="21_fcvei"]
-[ext_resource type="Script" path="res://entities/employees/states/HelpCustomerEntityState.cs" id="22_ws76g"]
+[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="22_8kndd"]
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="23_cun02"]
 [ext_resource type="Script" path="res://action_points/EmployeeDebtDamageHandler.cs" id="24_7hdkn"]
 [ext_resource type="Script" path="res://action_points/BasicDeathHandler.cs" id="25_1abqp"]
@@ -173,46 +173,40 @@ _ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler"]
 script = ExtResource("21_fcvei")
-_ModelPath = NodePath("../../AubretteModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "idle"
 Id = "idle"
 
 [node name="Move" type="Node" parent="StateHandler"]
 script = ExtResource("21_fcvei")
-_ModelPath = NodePath("../../AubretteModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "walk"
 Id = "move"
 
 [node name="Alert" type="Node" parent="StateHandler"]
 script = ExtResource("21_fcvei")
-_ModelPath = NodePath("../../AubretteModel")
 _EnterAnimName = "alert"
 Id = "alert"
 
 [node name="Hurt" type="Node" parent="StateHandler"]
 script = ExtResource("21_fcvei")
-_ModelPath = NodePath("../../AubretteModel")
 _EnterAnimName = "take_hit"
 Id = "hurt"
 
 [node name="DoTask" type="Node" parent="StateHandler"]
 script = ExtResource("21_fcvei")
-_ModelPath = NodePath("../../AubretteModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "do_task"
 Id = "do_task"
 
 [node name="Dead" type="Node" parent="StateHandler"]
 script = ExtResource("21_fcvei")
-_ModelPath = NodePath("../../AubretteModel")
 _EnterAnimName = "meltdown"
 Id = "dead"
 _IsActive = false
 
 [node name="HelpCustomer" type="Node" parent="StateHandler"]
-script = ExtResource("22_ws76g")
+script = ExtResource("22_8kndd")
 Id = "help_customer"
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("23_cun02")]

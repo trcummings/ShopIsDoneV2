@@ -55,6 +55,12 @@ namespace ShopIsDone.EntityStates
                 state.Init(Entity, this, _ModelComponent);
             }
             _CurrentState = InitialState;
+            // After enter, idle
+            _CurrentState.Connect(
+                nameof(_CurrentState.StateEntered),
+                Callable.From(_CurrentState.Idle),
+                (uint)ConnectFlags.OneShot
+            );
             _CurrentState.Enter();
         }
 

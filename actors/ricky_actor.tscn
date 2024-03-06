@@ -23,7 +23,7 @@
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="18_dc6tp"]
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="20_y8124"]
 [ext_resource type="Script" path="res://action_points/EmployeeDebtDamageHandler.cs" id="21_yami5"]
-[ext_resource type="Script" path="res://entities/employees/states/HelpCustomerEntityState.cs" id="22_1iffw"]
+[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="22_8sky7"]
 [ext_resource type="Script" path="res://action_points/BasicDeathHandler.cs" id="22_qdagb"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="24_i5ygc"]
 [ext_resource type="Script" path="res://widgets/entity_widgets/EntityWidgetHelper.cs" id="25_qy8t7"]
@@ -174,46 +174,40 @@ _ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler"]
 script = ExtResource("18_dc6tp")
-_ModelPath = NodePath("../../RickyModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "idle"
 Id = "idle"
 
 [node name="Move" type="Node" parent="StateHandler"]
 script = ExtResource("18_dc6tp")
-_ModelPath = NodePath("../../RickyModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "walk"
 Id = "move"
 
 [node name="Alert" type="Node" parent="StateHandler"]
 script = ExtResource("18_dc6tp")
-_ModelPath = NodePath("../../RickyModel")
 _EnterAnimName = "alert"
 Id = "alert"
 
 [node name="Hurt" type="Node" parent="StateHandler"]
 script = ExtResource("18_dc6tp")
-_ModelPath = NodePath("../../RickyModel")
 _EnterAnimName = "take_hit"
 Id = "hurt"
 
 [node name="DoTask" type="Node" parent="StateHandler"]
 script = ExtResource("18_dc6tp")
-_ModelPath = NodePath("../../RickyModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "do_task"
 Id = "do_task"
 
 [node name="Dead" type="Node" parent="StateHandler"]
 script = ExtResource("18_dc6tp")
-_ModelPath = NodePath("../../RickyModel")
 _EnterAnimName = "meltdown"
 Id = "dead"
 _IsActive = false
 
 [node name="HelpCustomer" type="Node" parent="StateHandler"]
-script = ExtResource("22_1iffw")
+script = ExtResource("22_8sky7")
 Id = "help_customer"
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("20_y8124")]
