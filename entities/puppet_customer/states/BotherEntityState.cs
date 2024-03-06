@@ -2,13 +2,15 @@ using System;
 using Godot;
 using ShopIsDone.EntityStates;
 using Godot.Collections;
+using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Widgets;
 
 namespace ShopIsDone.Entities.PuppetCustomers.States
 {
     public partial class BotherEntityState : AnimatedEntityState
     {
-        [Signal]
-        public delegate void RequestedPromptTextEventHandler(string promptText);
+        [Inject]
+        private EntityWidgetService _WidgetService;
 
         public const string PROMPT_TEXT = "PromptText";
 
@@ -16,7 +18,10 @@ namespace ShopIsDone.Entities.PuppetCustomers.States
         {
             // Pull the prompt text from the message
             var promptText = (string)message?[PROMPT_TEXT] ?? "";
-            if (!string.IsNullOrEmpty(promptText)) EmitSignal(nameof(RequestedPromptText), promptText);
+            if (!string.IsNullOrEmpty(promptText))
+            {
+                _WidgetService.PopupLabel(_Entity.WidgetPoint, promptText);
+            }
 
             // Run the enter animation
             RunEnterAnimation();

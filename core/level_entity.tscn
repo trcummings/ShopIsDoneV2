@@ -4,10 +4,11 @@
 [ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="2_ttjwl"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="3_bfgks"]
 
-[node name="LevelEntity" type="CharacterBody3D" groups=["entities"]]
+[node name="LevelEntity" type="CharacterBody3D" node_paths=PackedStringArray("WidgetPoint") groups=["entities"]]
 script = ExtResource("1_o447p")
 _TilemapPositionHandlerPath = NodePath("TilemapPositionHandler")
 _FacingDirectionHandlerPath = NodePath("FacingDirectionHandler")
+WidgetPoint = NodePath("WidgetPoint")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 
@@ -16,3 +17,5 @@ script = ExtResource("2_ttjwl")
 FacingTarget = NodePath("..")
 
 [node name="TilemapPositionHandler" parent="." instance=ExtResource("3_bfgks")]
+
+[node name="WidgetPoint" type="Node3D" parent="."]

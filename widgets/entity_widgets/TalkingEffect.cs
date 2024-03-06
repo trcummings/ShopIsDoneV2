@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 namespace ShopIsDone.Widgets
 {
@@ -28,6 +29,12 @@ namespace ShopIsDone.Widgets
                 (uint)ConnectFlags.OneShot
             );
             _AnimationPlayer.Play("default");
+        }
+
+        public async Task PopupAsync(bool small = false)
+        {
+            Popup(small);
+            await ToSignal(this, nameof(Finished));
         }
 
         private void OnAnimationFinished(string _)
