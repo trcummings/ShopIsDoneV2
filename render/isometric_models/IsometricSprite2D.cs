@@ -40,6 +40,11 @@ namespace ShopIsDone.Models.IsometricModels
             return LoopingAnimations?.Any(lAnim => lAnim.ToLower() == animName.ToLower()) ?? false;
         }
 
+        public bool HasAnimation(string animName)
+        {
+            return _AnimPlayer.HasAnimation(animName);
+        }
+
         public async virtual void PlayAnimation(string animName)
         {
             // Main animation player

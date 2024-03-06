@@ -79,8 +79,6 @@ namespace ShopIsDone.Entities.Employees.Actions
                         "Can I help you?"
                     ))
                 ),
-                // Run help customer state change
-                _StateHandler.RunChangeState(StateConsts.Employees.HELP_CUSTOMER),
                 // Run customer's microgame
                 targetMicrogameHandler.RunMicrogame(payload)
             );

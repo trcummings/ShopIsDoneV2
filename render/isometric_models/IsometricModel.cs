@@ -71,6 +71,13 @@ namespace ShopIsDone.Models.IsometricModels
 
         public virtual async Task PerformAnimation(string animName)
         {
+            // If we don't have that animation, error to the console but keep
+            // running
+            if (!_Sprite.HasAnimation(animName))
+            {
+                GD.PrintErr($"Action {animName} not valid for {Name}");
+            }
+
             // Persist action name in state
             _ActionName = animName;
 

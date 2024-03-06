@@ -19,7 +19,7 @@ namespace ShopIsDone.Audio
             _Pool = new Queue<AudioStreamPlayer>(GetChildren().OfType<AudioStreamPlayer>());
         }
 
-        public Command RunPlaySfx(AudioStream stream)
+        public Command RunPlaySfx(AudioStream stream, float lengthOverride = -Mathf.Inf)
         {
             return new DeferredCommand(() =>
             {
@@ -29,7 +29,9 @@ namespace ShopIsDone.Audio
                 _Pool.Enqueue(player);
 
                 // Get the length of the stream
-                var length = stream.GetLength();
+                var length = lengthOverride != -Mathf.Inf
+                    ? lengthOverride
+                    : stream.GetLength();
 
                 // Play the SFX and wait for the duration of the stream to be over
                 return new SeriesCommand(
