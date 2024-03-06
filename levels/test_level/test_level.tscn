@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c71hl7eo13nse"]
+[gd_scene load_steps=33 format=3 uid="uid://c71hl7eo13nse"]
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b7n2nvaxotrvp" path="res://actors/ricky_actor.tscn" id="4_qbaqy"]
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="5_arh5s"]
 [ext_resource type="Script" path="res://levels/test_level/conditions/CustomerSatisfiedCondition.cs" id="6_a2ot6"]
+[ext_resource type="PackedScene" uid="uid://bhmg13nssujbh" path="res://actors/aubrette_actor.tscn" id="6_yvfpe"]
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="7_xooi4"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge_task.tscn" id="8_5fhod"]
 [ext_resource type="Script" path="res://levels/test_level/conditions/TaskCompletedCondition.cs" id="9_bxejf"]
@@ -89,7 +90,7 @@ bus = &"Ambience"
 
 [node name="PlayerCharacterManager" parent="World" index="2"]
 _LeaderScene = ExtResource("3_xxrhr")
-_FollowerScenes = [ExtResource("4_qbaqy")]
+_FollowerScenes = [ExtResource("4_qbaqy"), ExtResource("6_yvfpe")]
 
 [node name="NavigationRegion3D" parent="World" index="3"]
 navigation_mesh = SubResource("NavigationMesh_n5n74")

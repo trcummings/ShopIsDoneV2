@@ -1,6 +1,6 @@
 [gd_scene load_steps=36 format=3 uid="uid://c3erap73t1tjq"]
 
-[ext_resource type="Texture2D" uid="uid://tm6ni7ocb4yb" path="res://textures/characters/jessica/jessica-skeleton.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://cuewdajyq6523" path="res://render/employees/jessica/jessica_skeleton.png" id="1"]
 [ext_resource type="Script" path="res://render/isometric_models/SkeletalIsometricSprite2D.cs" id="2"]
 
 [sub_resource type="Animation" id="2"]

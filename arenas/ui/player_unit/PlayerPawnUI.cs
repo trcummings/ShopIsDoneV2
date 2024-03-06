@@ -3,6 +3,7 @@ using ShopIsDone.Demerits;
 using ShopIsDone.ActionPoints;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Extensions;
+using Godot.Collections;
 
 namespace ShopIsDone.Arenas.UI
 {
@@ -10,6 +11,9 @@ namespace ShopIsDone.Arenas.UI
     {
         [Export]
         public Color DeselectedColor;
+
+        [Export]
+        private Dictionary<string, int> _PortraitIdxes = new Dictionary<string, int>();
 
         // Nodes
         private TextureRect _Portrait;
@@ -45,6 +49,9 @@ namespace ShopIsDone.Arenas.UI
         {
             // Set pawn
             Pawn = pawn;
+
+            // Duplicate portrait texture
+            _Portrait.Texture = _Portrait.Texture.Duplicate() as Texture2D;
 
             // Fill out fields with pawn data
             _PawnNameLabel.Text = pawn.EntityName;
@@ -115,11 +122,11 @@ namespace ShopIsDone.Arenas.UI
         private void SetPortrait()
         {
             // Get index by pawn Id
+            // Default to zero
             var idx = 0;
-            if (Pawn.Id == "haskell") idx = 1;
-            else if (Pawn.Id == "ricky") idx = 2;
-            else if (Pawn.Id == "jessica") idx = 3;
-
+            // Look up the index in the portrait index dictionary
+            if (_PortraitIdxes.ContainsKey(Pawn.Id)) idx = _PortraitIdxes[Pawn.Id];
+            // Set the atlas texture's index
             (_Portrait.Texture as AtlasTexture).SetAtlasIdx(idx, 4);
         }
     }

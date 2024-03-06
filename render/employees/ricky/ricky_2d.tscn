@@ -1,6 +1,6 @@
 [gd_scene load_steps=44 format=3 uid="uid://dlgw7l30auvan"]
 
-[ext_resource type="Texture2D" uid="uid://cd31ju0o0kmay" path="res://textures/characters/ricky/ricky-skeleton.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://kmx08xudsjii" path="res://render/employees/ricky/ricky_skeleton.png" id="1"]
 [ext_resource type="Script" path="res://render/isometric_models/SkeletalIsometricSprite2D.cs" id="2"]
 [ext_resource type="Script" path="res://render/poly_fix.gd" id="3_4mmvh"]
 
@@ -1768,7 +1768,7 @@ tracks/16/keys = {
 "args": ["footstep"],
 "method": &"FireEvent"
 }, {
-"args": ["footttep"],
+"args": ["footstep"],
 "method": &"FireEvent"
 }]
 }
@@ -3619,6 +3619,7 @@ autoplay = "idle"
 
 [node name="Skeleton2D" type="Skeleton2D" parent="Model"]
 unique_name_in_owner = true
+visible = false
 
 [node name="Hip" type="Bone2D" parent="Model/Skeleton2D"]
 position = Vector2(0, 66)

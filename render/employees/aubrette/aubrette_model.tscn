@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://blwt1nyomjjj8"]
+
+[ext_resource type="PackedScene" uid="uid://cvky7xhrr3ygf" path="res://render/employees/employee_isometric_model.tscn" id="1_hn0vb"]
+[ext_resource type="PackedScene" uid="uid://elqdvcak3fuh" path="res://render/employees/aubrette/aubrette_2d.tscn" id="2_8d6pe"]
+
+[sub_resource type="ViewportTexture" id="2"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="3"]
+resource_local_to_scene = true
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = SubResource("2")
+billboard_mode = 2
+
+[node name="AubretteModel" node_paths=PackedStringArray("_Sprite") instance=ExtResource("1_hn0vb")]
+_Sprite = NodePath("SubViewport/Aubrette2D")
+
+[node name="Aubrette2D" parent="SubViewport" index="0" instance=ExtResource("2_8d6pe")]
+position = Vector2(300, 270)
+scale = Vector2(1.1, 1.1)
+
+[node name="MeshInstance3D" parent="." index="2"]
+layers = 257
+material_override = SubResource("3")

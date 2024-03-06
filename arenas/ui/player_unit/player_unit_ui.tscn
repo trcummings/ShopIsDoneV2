@@ -1,21 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://daffdkouahgqp"]
+[gd_scene load_steps=11 format=3 uid="uid://daffdkouahgqp"]
 
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="1"]
+[ext_resource type="Texture2D" uid="uid://bgixk4fixqwli" path="res://arenas/ui/player_unit/textures/mini_portrait_background.png" id="2_rilv4"]
+[ext_resource type="Texture2D" uid="uid://lovahrludahs" path="res://arenas/ui/player_unit/textures/mini_portrait_atlas.atlastex" id="3_mcs8u"]
 [ext_resource type="Script" path="res://arenas/ui/player_unit/PlayerPawnUI.cs" id="4"]
 [ext_resource type="Texture2D" uid="uid://df7k41uwwwerr" path="res://arenas/ui/player_unit/textures/character_card_base.png" id="4_cvu0x"]
 [ext_resource type="Texture2D" uid="uid://8j1a7xxxmc0r" path="res://widgets/demerit_widget/yellow_slip.png" id="5"]
 [ext_resource type="PackedScene" uid="uid://2dxsabvxw7i3" path="res://arenas/ui/player_unit/ap_excess_ui.tscn" id="7"]
 [ext_resource type="Texture2D" uid="uid://bbdqwgogk3jup" path="res://widgets/demerit_widget/pink_slip.png" id="8"]
 [ext_resource type="PackedScene" uid="uid://cjo12066q8cua" path="res://arenas/ui/player_unit/action_point_meter.tscn" id="9_1f0bx"]
-[ext_resource type="Texture2D" uid="uid://tptbd2by2vcb" path="res://textures/mini_portraits.png" id="12"]
-[ext_resource type="Texture2D" uid="uid://bgixk4fixqwli" path="res://textures/mini_portrait_background.png" id="13"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kc1mv"]
-
-[sub_resource type="AtlasTexture" id="1"]
-resource_local_to_scene = true
-atlas = ExtResource("12")
-region = Rect2(0, 0, 128, 128)
 
 [node name="PlayerPawnUI" type="PanelContainer"]
 custom_minimum_size = Vector2(200, 125)
@@ -27,6 +22,12 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_kc1mv")
 script = ExtResource("4")
 DeselectedColor = Color(0.243137, 0.227451, 0.227451, 1)
+_PortraitIdxes = {
+"aubrette": 4,
+"haskell": 1,
+"jessica": 3,
+"ricky": 2
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(80, 80)
@@ -43,14 +44,14 @@ theme_override_constants/margin_bottom = 5
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("13")
+texture = ExtResource("2_rilv4")
 expand_mode = 1
 
 [node name="Portrait" type="TextureRect" parent="MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-texture = SubResource("1")
+texture = ExtResource("3_mcs8u")
 expand_mode = 1
 
 [node name="CardBase" type="TextureRect" parent="."]
