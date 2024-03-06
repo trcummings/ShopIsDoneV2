@@ -11,6 +11,8 @@ using ShopIsDone.Arenas.Meddling;
 using ShopIsDone.Entities.ParallelHunters;
 using ShopIsDone.Utils;
 using ShopIsDone.ClownRules;
+using ShopIsDone.EntityStates;
+using System.Linq;
 
 namespace ShopIsDone.Actions
 {
@@ -27,6 +29,9 @@ namespace ShopIsDone.Actions
 
         [Inject]
         private TileManager _TileManager;
+
+        [Inject]
+        private ArenaEntitiesService _ArenaEntities;
 
         [Export]
         private ScriptQueueService _ScriptQueueService;
@@ -102,6 +107,8 @@ namespace ShopIsDone.Actions
             return WinFailCheck(new DeferredCommand(() => new SeriesCommand(
                 // Update tiles
                 new DeferredCommand(() => new ActionCommand(_TileManager.UpdateTiles)),
+                // Idle all units
+                new DeferredCommand(IdleAllUnits),
 
                 // Process rules
                 new DeferredCommand(() => new ConditionalCommand(
@@ -112,8 +119,21 @@ namespace ShopIsDone.Actions
                 )),
 
                 // Run script queue
-                new DeferredCommand(_ScriptQueueService.RunQueue)
+                new DeferredCommand(_ScriptQueueService.RunQueue),
+                // Idle all units
+                new DeferredCommand(IdleAllUnits)
             )));
+        }
+
+        private Command IdleAllUnits()
+        {
+            return new SeriesCommand(_ArenaEntities
+                .GetAllArenaEntities()
+                .Where(u => u.HasComponent<EntityStateHandler>())
+                .Select(u => u.GetComponent<EntityStateHandler>())
+                .Select(state => state.RunIdleCurrentState())
+                .ToArray()
+            );
         }
 
         // Queries

@@ -1,7 +1,7 @@
 ﻿using System;
 using Godot;
 using ShopIsDone.Cameras;
-using ShopIsDone.EntityStates;
+using ShopIsDone.Models;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Extensions;
@@ -13,7 +13,7 @@ namespace ShopIsDone.ActionPoints
     public partial class BasicDebtDamageHandler : DebtDamageHandler
     {
         [Export]
-        protected EntityStateHandler _StateHandler;
+        protected ModelComponent _ModelComponent;
 
         [Inject]
         private ScreenshakeService _Screenshake;
@@ -60,32 +60,23 @@ namespace ShopIsDone.ActionPoints
                 // Screenshake
                 new ActionCommand(() => _Screenshake.Shake(ScreenshakeHandler.ShakePayload.ShakeSizes.Huge)),
                 // React to damage
-                _StateHandler.RunChangeState(StateConsts.HURT),
-                // If still alive
+                _ModelComponent.RunPerformAction(StateConsts.HURT),
+                // If still alive and that damage came from a position
                 new ConditionalCommand(
-                    () => !payload.ApHandler.IsMaxedOut(),
-                    // Go back to idle
-                    new SeriesCommand(
-                        _StateHandler.RunChangeState(StateConsts.IDLE),
-                        // If that damage came from a position, face that
-                        // position
-                        new ConditionalCommand(
-                            () => payload.Positioning != Positions.Null,
-                            new ActionCommand(() =>
-                            {
-                                // Calculate facing direction of source
-                                var targetFacingDir = _StateHandler.Entity.GetFacingDirTowards(payload.Source.GlobalPosition);
-                                _StateHandler.Entity.FacingDirection = targetFacingDir;
-                            })
-                        )
-                    )
+                    () => !payload.ApHandler.IsMaxedOut() && payload.Positioning != Positions.Null,
+                    new ActionCommand(() =>
+                    {
+                        // Calculate facing direction of source
+                        var targetFacingDir = _ModelComponent.Entity.GetFacingDirTowards(payload.Source.GlobalPosition);
+                        _ModelComponent.Entity.FacingDirection = targetFacingDir;
+                    })
                 )
             );
         }
 
         protected virtual Command OnTookNoDamage(ApDamagePayload payload)
         {
-            return _StateHandler.RunChangeState(StateConsts.IDLE);
+            return new Command();
         }
     }
 }

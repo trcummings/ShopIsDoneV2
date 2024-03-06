@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=51 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://environments/EnvironmentManager.cs" id="2_4ygry"]
@@ -34,6 +34,7 @@
 [ext_resource type="Script" path="res://camera/WallXRayHelper.cs" id="21_28jhl"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
 [ext_resource type="Script" path="res://core/EntityIdHelper.cs" id="24_gt0bo"]
+[ext_resource type="PackedScene" uid="uid://cwkrn1l88es1" path="res://audio/sfx_service.tscn" id="25_h5u0j"]
 [ext_resource type="PackedScene" uid="uid://vkdrv2wvhw46" path="res://levels/directional_point.tscn" id="26_7pn1o"]
 [ext_resource type="PackedScene" uid="uid://ddwvyl3d8scbv" path="res://levels/level_states/game_over_ui.tscn" id="26_yq21p"]
 [ext_resource type="PackedScene" uid="uid://kxhd2aa43gxp" path="res://widgets/clown_arm/clown_arm_widget.tscn" id="29_pvwuo"]
@@ -156,6 +157,8 @@ _LevelStateMachine = NodePath("../../LevelStateMachine")
 script = ExtResource("21_28jhl")
 _CharacterManager = NodePath("../../World/PlayerCharacterManager")
 _Camera = NodePath("../../World/IsometricCamera/Camera")
+
+[node name="SfxService" parent="Services" instance=ExtResource("25_h5u0j")]
 
 [node name="Audio" type="Node" parent="."]
 

@@ -14,11 +14,11 @@
 [ext_resource type="Script" path="res://entities/puppet_customer/CustomerDeathHandler.cs" id="11_51akd"]
 [ext_resource type="Resource" uid="uid://bfolorkindt4h" path="res://entities/puppet_customer/actions/bother_employee_action.tres" id="12_3ebgi"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="12_tm0l2"]
-[ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="13_k6cqb"]
-[ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="14_ejwco"]
-[ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="14_u6t0o"]
+[ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="14_hl0t7"]
+[ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="15_jxbad"]
 [ext_resource type="Resource" uid="uid://bqh5iqllvqmhp" path="res://entities/puppet_customer/actions/intimidate_action.tres" id="15_v7snx"]
 [ext_resource type="Script" path="res://entities/puppet_customer/states/IntimidateEntityState.cs" id="16_6jv6x"]
+[ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="16_nwcsv"]
 [ext_resource type="PackedScene" uid="uid://hj3hfw66ke8t" path="res://entities/puppet_customer/states/audio/intimidate_player.tscn" id="17_r0uob"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="18_e7js2"]
 [ext_resource type="Script" path="res://ai/ActionPlanner.cs" id="18_ock78"]
@@ -98,7 +98,7 @@ _StateHandler = NodePath("../StateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("11_5w0ou")
-Actions = [ExtResource("12_3ebgi"), ExtResource("13_k6cqb"), ExtResource("14_ejwco"), ExtResource("14_u6t0o"), ExtResource("15_v7snx")]
+Actions = [ExtResource("12_3ebgi"), ExtResource("14_hl0t7"), ExtResource("15_jxbad"), ExtResource("16_nwcsv"), ExtResource("15_v7snx")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState", "_ModelComponent")]

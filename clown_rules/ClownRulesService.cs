@@ -33,6 +33,7 @@ using Utils.Extensions;
 using ShopIsDone.Lighting;
 using DialogueManagerRuntime;
 using ShopIsDone.Dialogue;
+using ShopIsDone.Models;
 
 namespace ShopIsDone.ClownRules
 {
@@ -78,6 +79,7 @@ namespace ShopIsDone.ClownRules
         private LevelEntity _Judge;
         private EntityStateHandler _StateHandler;
         private MicrogameHandler _MicrogameHandler;
+        private ModelComponent _ModelComponent;
 
         [Export]
         private PackedScene _DebugPanelScene;
@@ -154,6 +156,7 @@ namespace ShopIsDone.ClownRules
             // Get judge's components
             _MicrogameHandler ??= _Judge.GetComponent<MicrogameHandler>();
             _StateHandler ??= _Judge.GetComponent<EntityStateHandler>();
+            _ModelComponent ??= _Judge.GetComponent<ModelComponent>();
 
             // Create and add debug panel
             _DebugPanel = _DebugPanelScene.Instantiate<ClownDebug>();
@@ -328,9 +331,11 @@ namespace ShopIsDone.ClownRules
                             .TweenProperty(_Judge, "global_position", _Judge.GlobalPosition + 2 * Vector3.Up, 0.25f),
                         "finished"
                     )),
-                    _StateHandler.RunChangeState(StateConsts.ClownPuppet.WARP_OUT)
+                    _ModelComponent.RunPerformAction(StateConsts.ClownPuppet.WARP_OUT)
                 ),
+                // Set judge to hidden
                 _StateHandler.RunChangeState(StateConsts.ClownPuppet.HIDDEN),
+                // Move it
                 new ActionCommand(() =>
                 {
                     // Move to far off point
@@ -371,8 +376,10 @@ namespace ShopIsDone.ClownRules
                             .TweenProperty(_Judge, "global_position", _Judge.GlobalPosition - 2 * Vector3.Up, 0.25f),
                         "finished"
                     )),
-                    _StateHandler.RunChangeState(StateConsts.ClownPuppet.WARP_IN)
-                ))
+                    _ModelComponent.RunPerformAction(StateConsts.ClownPuppet.WARP_IN)
+                )),
+                // Idle judge
+                _StateHandler.RunChangeState(StateConsts.IDLE)
             );
         }
 
@@ -485,8 +492,6 @@ namespace ShopIsDone.ClownRules
                         WarpJudgeIn(GetFurthestJudgeSpawnTile()),
                         // Dialogue
                         RunDialogue(ENTRY),
-                        // Idle judge
-                        _StateHandler.RunChangeState(StateConsts.IDLE),
                         // Wait for a moment for emphasis
                         new WaitForCommand(this, 1.5f)
                     )
@@ -609,7 +614,7 @@ namespace ShopIsDone.ClownRules
         {
             var apHandler = unit.GetComponent<ActionPointHandler>();
             var demeritHandler = unit.GetComponent<DemeritHandler>();
-            var stateHandler = unit.GetComponent<EntityStateHandler>();
+            var unitModel = unit.GetComponent<ModelComponent>();
 
             return new SeriesCommand(
                 // Face judge towards offender
@@ -617,14 +622,14 @@ namespace ShopIsDone.ClownRules
                 // Raise judge arm
                 FocusTarget(
                     _Judge,
-                    _StateHandler.RunChangeState(StateConsts.ClownPuppet.PUNISH)
+                    _ModelComponent.RunPerformAction(StateConsts.ClownPuppet.PUNISH)
                 ),
                 // Oneshot connect to slap for unit take hit
                 new ActionCommand(() =>
                 {
                     _DemeritWidget.Connect(
                         nameof(_DemeritWidget.DemeritSlapped),
-                        Callable.From(() => stateHandler.PushState(StateConsts.HURT)),
+                        Callable.From(() => _ = unitModel.PerformActionAsync(StateConsts.HURT)),
                         (uint)ConnectFlags.OneShot
                     );
                 }),
@@ -660,7 +665,7 @@ namespace ShopIsDone.ClownRules
                     ))
                 ),
                 // Lower arm
-                _StateHandler.RunChangeState(StateConsts.ClownPuppet.FINISH_PUNISH),
+                _ModelComponent.RunPerformAction(StateConsts.ClownPuppet.FINISH_PUNISH),
                 // Subside individual rage by threshold amount
                 new ActionCommand(() => 
                 {
@@ -689,7 +694,7 @@ namespace ShopIsDone.ClownRules
             return new SeriesCommand(
                 FocusTarget(
                     _Judge,
-                    _StateHandler.RunChangeState(StateConsts.ClownPuppet.PUNISH)
+                    _ModelComponent.RunPerformAction(StateConsts.ClownPuppet.PUNISH)
                 ),
                 // TODO: Kill the lights
 
@@ -699,7 +704,7 @@ namespace ShopIsDone.ClownRules
                 // TODO: Bring lights back on
 
                 // Lower arm
-                _StateHandler.RunChangeState(StateConsts.ClownPuppet.FINISH_PUNISH),
+                _ModelComponent.RunPerformAction(StateConsts.ClownPuppet.FINISH_PUNISH),
 
                 // Subside all rage by threshold amount
                 new ActionCommand(() => DecreaseRage(_IndividualRageThreshold, _GroupRageThreshold))

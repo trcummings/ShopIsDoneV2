@@ -5,10 +5,11 @@ namespace ShopIsDone.EntityStates
 	public static class Consts
 	{
 		public const string IDLE = "idle";
-        public const string ALERT = "alert";
         public const string MOVE = "move";
-		public const string HURT = "hurt";
 		public const string DEAD = "dead";
+
+        public const string ALERT = "alert";
+		public const string HURT = "hurt";
 
 		public static class Employees
 		{

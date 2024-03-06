@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwkrn1l88es1"]
+
+[ext_resource type="Script" path="res://audio/SfxService.cs" id="1_kl0hn"]
+
+[node name="SfxService" type="Node"]
+script = ExtResource("1_kl0hn")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="AudioStreamPlayer5" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
