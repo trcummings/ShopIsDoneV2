@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ShopIsDone.Models;
+using ModelConsts = ShopIsDone.Models.Consts;
 
 namespace ShopIsDone.Entities.ClownPuppet
 {
@@ -42,28 +43,28 @@ namespace ShopIsDone.Entities.ClownPuppet
 
         public override async Task PerformAnimation(string actionName)
         {
-            if (actionName == Consts.Anims.ClownPuppet.RAISE_HAND)
+            if (actionName == ModelConsts.Anims.ClownPuppet.RAISE_HAND)
             {
                 FireEvent("clatter");
                 // Tween the Blend Hand Parameter in the animation tree to .99
                 await ToSignal(GetTree().CreateTween().TweenMethod(_SetHandBlend, 0f, 1f, 1.5f), "finished");
             }
 
-            else if (actionName == Consts.Anims.ClownPuppet.LOWER_HAND)
+            else if (actionName == ModelConsts.Anims.ClownPuppet.LOWER_HAND)
             {
                 FireEvent("clatter");
                 // Tween the Blend Hand Parameter in the animation tree back down to 0
                 await ToSignal(GetTree().CreateTween().TweenMethod(_SetHandBlend, 1f, 0f, 1.5f), "finished");
             }
 
-            else if (actionName == Consts.Anims.ClownPuppet.WARP_AWAY)
+            else if (actionName == ModelConsts.Anims.ClownPuppet.WARP_AWAY)
             {
                 FireEvent("clatter");
                 // Tween the warp material from min value to maximum value
                 await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 0f, 1f, .5f), "finished");
             }
 
-            else if (actionName == Consts.Anims.ClownPuppet.WARP_IN)
+            else if (actionName == ModelConsts.Anims.ClownPuppet.WARP_IN)
             {
                 FireEvent("clatter");
                 // Tween the warp material from max value to minimum value

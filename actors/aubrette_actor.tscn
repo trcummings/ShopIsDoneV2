@@ -21,18 +21,18 @@
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="19_7i8dp"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="20_ug73f"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="21_fcvei"]
-[ext_resource type="Script" path="res://entities/employees/states/HelpCustomerEntityState.cs" id="22_e3hpr"]
+[ext_resource type="Script" path="res://entities/employees/states/HelpCustomerEntityState.cs" id="22_ws76g"]
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="23_cun02"]
 [ext_resource type="Script" path="res://action_points/EmployeeDebtDamageHandler.cs" id="24_7hdkn"]
 [ext_resource type="Script" path="res://action_points/BasicDeathHandler.cs" id="25_1abqp"]
 [ext_resource type="Script" path="res://widgets/entity_widgets/EntityWidgetHelper.cs" id="25_8yjef"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="26_hwu1i"]
-[ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://entities/employees/actions/interrupt_task_action.tres" id="27_1lll6"]
 [ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="28_nm65l"]
+[ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://entities/employees/actions/interrupt_task_action.tres" id="28_qnhdb"]
 [ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="29_4omth"]
-[ext_resource type="Resource" uid="uid://bupxc6b5js2tr" path="res://entities/employees/actions/start_task_action.tres" id="30_von6o"]
+[ext_resource type="Resource" uid="uid://bupxc6b5js2tr" path="res://entities/employees/actions/start_task_action.tres" id="31_5h07f"]
 [ext_resource type="Resource" uid="uid://dhfcjhk223e7o" path="res://arena_actions/actions/interact_action.tres" id="31_hhs26"]
-[ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://entities/employees/actions/help_customer_action.tres" id="32_j8q8f"]
+[ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://entities/employees/actions/help_customer_action.tres" id="33_3w5n4"]
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="33_u7b53"]
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="34_lv1u5"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="35_ui06v"]
@@ -212,16 +212,16 @@ Id = "dead"
 _IsActive = false
 
 [node name="HelpCustomer" type="Node" parent="StateHandler"]
-script = ExtResource("22_e3hpr")
+script = ExtResource("22_ws76g")
 Id = "help_customer"
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("23_cun02")]
 _DeathHandlerPath = NodePath("../DeathHandler")
 
-[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_StateHandler")]
+[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_ModelComponent")]
 script = ExtResource("24_7hdkn")
 _TaskHandler = NodePath("../../TaskHandler")
-_StateHandler = NodePath("../../StateHandler")
+_ModelComponent = NodePath("../../ModelComponent")
 
 [node name="WidgetHelper" type="Node" parent="ActionPointHandler"]
 script = ExtResource("25_8yjef")
@@ -233,7 +233,7 @@ _StateHandler = NodePath("../StateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("26_hwu1i")
-Actions = [ExtResource("27_1lll6"), ExtResource("28_nm65l"), ExtResource("29_4omth"), ExtResource("30_von6o"), ExtResource("31_hhs26"), ExtResource("32_j8q8f"), ExtResource("33_u7b53")]
+Actions = [ExtResource("28_qnhdb"), ExtResource("28_nm65l"), ExtResource("29_4omth"), ExtResource("31_5h07f"), ExtResource("31_hhs26"), ExtResource("33_3w5n4"), ExtResource("33_u7b53")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_MoveValidator", "_SkipTileStrategy")]

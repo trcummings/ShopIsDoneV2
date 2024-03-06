@@ -1,0 +1,26 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=8 format=3 uid="uid://cauonwns384o4"]
+
+[ext_resource type="AudioStream" uid="uid://bxunu40duio4y" path="res://entities/puppet_customer/states/audio/customer_call.wav" id="1_e50c4"]
+[ext_resource type="AudioStream" uid="uid://op2wd1w1p0ce" path="res://entities/puppet_customer/states/audio/customer_call_1.wav" id="2_o77ge"]
+[ext_resource type="AudioStream" uid="uid://m260efjim8be" path="res://entities/puppet_customer/states/audio/customer_call_2.wav" id="3_8nrfo"]
+[ext_resource type="AudioStream" uid="uid://d1uyadkudcsu1" path="res://entities/puppet_customer/states/audio/customer_call_3.wav" id="4_vdb8j"]
+[ext_resource type="AudioStream" uid="uid://blrjvuc3ei18e" path="res://entities/puppet_customer/states/audio/customer_call_4.wav" id="5_dvgen"]
+[ext_resource type="AudioStream" uid="uid://c2ialtk62q04t" path="res://entities/puppet_customer/states/audio/customer_call_5.wav" id="6_j6bku"]
+[ext_resource type="AudioStream" uid="uid://ms7ju4ckeiqj" path="res://entities/puppet_customer/states/audio/customer_call_7.wav" id="7_e2i07"]
+
+[resource]
+streams_count = 7
+stream_0/stream = ExtResource("1_e50c4")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_o77ge")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_8nrfo")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_vdb8j")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("5_dvgen")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("6_j6bku")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("7_e2i07")
+stream_6/weight = 1.0

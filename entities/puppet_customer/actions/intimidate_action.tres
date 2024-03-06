@@ -1,9 +1,11 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bqh5iqllvqmhp"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bqh5iqllvqmhp"]
 
+[ext_resource type="AudioStream" uid="uid://cauonwns384o4" path="res://entities/puppet_customer/actions/indimidate_sfx_random_stream.tres" id="1_ouydf"]
 [ext_resource type="Script" path="res://entities/puppet_customer/actions/IntimidateAction.cs" id="1_s046a"]
 
 [resource]
 script = ExtResource("1_s046a")
+_IntimidateSfx = ExtResource("1_ouydf")
 Id = "intimidate"
 ActionName = "Intimidate"
 EndsTurnAfterUse = false

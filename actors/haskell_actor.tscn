@@ -20,13 +20,11 @@
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="11_uh075"]
 [ext_resource type="PackedScene" uid="uid://bfkpwxhh1pcdn" path="res://actors/interactables/interactable_detector.tscn" id="13_vx5xu"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="15_7e1m5"]
-[ext_resource type="Script" path="res://entities/employees/states/HelpCustomerEntityState.cs" id="16_5ve4v"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="16_87xgg"]
 [ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="17_xmxqu"]
 [ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="18_64csj"]
 [ext_resource type="Script" path="res://action_points/BasicDeathHandler.cs" id="18_t6671"]
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="19_dsksq"]
-[ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://entities/employees/actions/interrupt_task_action.tres" id="19_lonxh"]
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="19_vhxse"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="20_1bpch"]
 [ext_resource type="Script" path="res://action_points/EmployeeDebtDamageHandler.cs" id="21_4q2q7"]
@@ -35,12 +33,14 @@
 [ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="22_4rv4k"]
 [ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="22_f48js"]
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="22_odajy"]
+[ext_resource type="Script" path="res://entities/employees/states/HelpCustomerEntityState.cs" id="22_rd0nb"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="23_sv0kt"]
-[ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://entities/employees/actions/help_customer_action.tres" id="24_xn5yg"]
 [ext_resource type="Script" path="res://widgets/entity_widgets/EntityWidgetHelper.cs" id="25_i35xk"]
-[ext_resource type="Resource" uid="uid://bupxc6b5js2tr" path="res://entities/employees/actions/start_task_action.tres" id="29_ivj5r"]
+[ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://entities/employees/actions/interrupt_task_action.tres" id="28_i3j6t"]
 [ext_resource type="Resource" uid="uid://dhfcjhk223e7o" path="res://arena_actions/actions/interact_action.tres" id="29_vnii4"]
+[ext_resource type="Resource" uid="uid://bupxc6b5js2tr" path="res://entities/employees/actions/start_task_action.tres" id="31_vp1cx"]
 [ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="31_xx1gf"]
+[ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://entities/employees/actions/help_customer_action.tres" id="33_vnjau"]
 [ext_resource type="PackedScene" uid="uid://cd50jq54ec7cv" path="res://tasks/task_handler.tscn" id="39_7it71"]
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="43_h3he4"]
 [ext_resource type="Script" path="res://render/ModelComponent.cs" id="47_jxpnj"]
@@ -212,16 +212,16 @@ Id = "dead"
 _IsActive = false
 
 [node name="HelpCustomer" type="Node" parent="StateHandler"]
-script = ExtResource("16_5ve4v")
+script = ExtResource("22_rd0nb")
 Id = "help_customer"
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
 _DeathHandlerPath = NodePath("../DeathHandler")
 
-[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_StateHandler")]
+[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_ModelComponent")]
 script = ExtResource("21_4q2q7")
 _TaskHandler = NodePath("../../TaskHandler")
-_StateHandler = NodePath("../../StateHandler")
+_ModelComponent = NodePath("../../ModelComponent")
 
 [node name="WidgetHelper" type="Node" parent="ActionPointHandler"]
 script = ExtResource("25_i35xk")
@@ -233,7 +233,7 @@ _StateHandler = NodePath("../StateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("16_87xgg")
-Actions = [ExtResource("19_lonxh"), ExtResource("17_xmxqu"), ExtResource("18_64csj"), ExtResource("29_ivj5r"), ExtResource("29_vnii4"), ExtResource("24_xn5yg"), ExtResource("22_odajy")]
+Actions = [ExtResource("28_i3j6t"), ExtResource("17_xmxqu"), ExtResource("18_64csj"), ExtResource("31_vp1cx"), ExtResource("29_vnii4"), ExtResource("33_vnjau"), ExtResource("22_odajy")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_MoveValidator", "_SkipTileStrategy")]
