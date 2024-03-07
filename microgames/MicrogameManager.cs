@@ -230,8 +230,8 @@ namespace ShopIsDone.Microgames
             // On final beat, return early
             if (currentBeat == _Microgame.NumBeats) return;
 
-            // On zero beat, start the heartbeat
-            if (currentBeat == 0)
+            // Play a heartbeat each even beat
+            else if (currentBeat % 2 == 0)
             {
                 _HeartbeatPlayer.PitchScale = (_Microgame.BPM / 2f) / 60;
                 _HeartbeatPlayer.Play();
