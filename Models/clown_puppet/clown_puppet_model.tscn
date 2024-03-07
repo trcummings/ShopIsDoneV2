@@ -366,6 +366,12 @@ DissolveMaterial = ExtResource("2_g3gdl")
 _Skeleton = NodePath("clown_puppet/Armature/Skeleton3D")
 _AnimTree = NodePath("AnimationTree")
 LoopingAnimations = []
+_AnimationNameMap = {
+"finish_punish": "LowerHand",
+"punish": "RaiseHand",
+"warp_in": "WarpIn",
+"warp_out": "WarpAway"
+}
 _AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="clown_puppet" parent="." instance=ExtResource("1_xgqws")]
@@ -451,53 +457,53 @@ magnet = Vector3(0, 0, 25)
 target_node = NodePath("../../../HeadHandle/HeadTarget")
 
 [node name="LeftHandBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="6"]
-transform = Transform3D(-0.0236984, 0.999719, 2.79865e-07, -0.999719, -0.0236984, -9.56403e-09, -2.92897e-09, -2.80014e-07, 1, 0.361409, 0.616115, -0.0117063)
+transform = Transform3D(-0.0236984, 0.999719, 2.79865e-07, -0.999719, -0.0236984, -9.56402e-09, -2.92896e-09, -2.80014e-07, 1, 0.360609, 0.617477, -0.0116619)
 bone_name = "wrist.L"
 bone_idx = 12
 
 [node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="7"]
-transform = Transform3D(-0.0236984, -0.999717, -2.28963e-07, 0.999717, -0.0236984, -1.34464e-08, 8.01657e-09, -2.29217e-07, 1, -0.371464, 0.622912, 0.00104697)
+transform = Transform3D(-0.0236985, -0.999719, -2.28963e-07, 0.999719, -0.0236985, -1.34464e-08, 8.01656e-09, -2.29217e-07, 1, -0.37063, 0.624233, 0.00105113)
 bone_name = "wrist.R"
 bone_idx = 16
 
 [node name="LeftFootBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="8"]
-transform = Transform3D(0.0231726, -0.0172764, -0.999582, -0.960764, -0.276816, -0.0174884, -0.276398, 0.960768, -0.0230131, 0.153452, 0.045597, -0.0275269)
+transform = Transform3D(0.0225859, -0.0172023, -0.999597, -0.956656, -0.290746, -0.0166122, -0.290343, 0.956646, -0.0230235, 0.153452, 0.047786, -0.0275269)
 bone_name = "foot.L"
 bone_idx = 21
 
 [node name="RightFootBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="9"]
-transform = Transform3D(0.0780993, -0.150095, 0.985582, 0.995978, 0.0552901, -0.070503, -0.0439107, 0.987124, 0.15381, -0.153452, 0.045597, -0.0275269)
+transform = Transform3D(0.06668, -0.150245, 0.986398, 0.996844, -0.0326462, -0.0723587, 0.0430738, 0.98811, 0.147594, -0.153452, 0.047786, -0.0275269)
 bone_name = "foot.R"
 bone_idx = 26
 
 [node name="NeckBoneAttachment" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="10"]
-transform = Transform3D(1, -1.76925e-11, 2.38416e-07, -1.36492e-07, 0.819865, 0.572557, -1.95479e-07, -0.572557, 0.819865, 6.54137e-13, 0.967945, -0.00879175)
+transform = Transform3D(1, -1.85736e-11, 2.38415e-07, -1.43333e-07, 0.799058, 0.601254, -1.90519e-07, -0.601254, 0.799058, 6.54137e-13, 0.970134, -0.00879175)
 bone_name = "neck"
 bone_idx = 6
 
 [node name="NeckWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="11"]
-transform = Transform3D(1, -1.76925e-11, 2.38416e-07, -1.36492e-07, 0.819865, 0.572557, -1.95479e-07, -0.572557, 0.819865, 6.54137e-13, 0.967945, -0.00879175)
+transform = Transform3D(1, -1.85736e-11, 2.38415e-07, -1.43333e-07, 0.799058, 0.601254, -1.90519e-07, -0.601254, 0.799058, 6.54137e-13, 0.970134, -0.00879175)
 bone_name = "neck"
 bone_idx = 6
 script = ExtResource("2_rt2d3")
 properties = ExtResource("3_a4o7u")
 
 [node name="HatWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="12"]
-transform = Transform3D(0.896316, 0.439444, 0.0592207, -0.443416, 0.888035, 0.121561, 0.000829261, -0.135217, 0.990816, 0.0400278, 1.26376, -0.0602835)
+transform = Transform3D(0.896793, 0.43871, 0.0574109, -0.44245, 0.88901, 0.117899, 0.000684442, -0.131132, 0.991364, 0.0400278, 1.26454, -0.0616572)
 bone_name = "hat"
 bone_idx = 8
 script = ExtResource("2_rt2d3")
 properties = ExtResource("3_a4o7u")
 
 [node name="PelvisWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="13"]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 6.64639e-13, -0.00128411, 6.64639e-13)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 6.64639e-13, 0.000904923, 6.64639e-13)
 bone_name = "root"
 bone_idx = 0
 script = ExtResource("2_rt2d3")
 properties = ExtResource("4_x40rn")
 
 [node name="LArmWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="14"]
-transform = Transform3D(-0.738318, 0.669723, 0.079729, -0.67137, -0.74108, 0.00795151, 0.0644109, -0.0476569, 0.996785, 0.160266, 0.903532, -1.11759e-08)
+transform = Transform3D(-0.743835, 0.66359, 0.0797395, -0.665203, -0.746618, 0.00811215, 0.0649181, -0.0470089, 0.996783, 0.160266, 0.905721, -1.11759e-08)
 bone_name = "upper_arm.L"
 bone_idx = 10
 script = ExtResource("2_rt2d3")
@@ -506,7 +512,7 @@ const_force_global = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
 const_force_local = Vector3(2.08165e-12, -9.8, 2.08165e-12)
 
 [node name="RArmWiggleBone" type="BoneAttachment3D" parent="clown_puppet/Armature/Skeleton3D" index="15"]
-transform = Transform3D(-0.80036, -0.594503, 0.0773996, 0.5995, -0.794679, 0.0953109, 0.00484528, 0.122684, 0.992434, -0.160266, 0.903532, -2.23517e-08)
+transform = Transform3D(-0.802485, -0.592236, 0.0726261, 0.596667, -0.797067, 0.0931345, 0.00273016, 0.118073, 0.993001, -0.160266, 0.905721, -2.23517e-08)
 bone_name = "upper_arm.R"
 bone_idx = 14
 script = ExtResource("2_rt2d3")

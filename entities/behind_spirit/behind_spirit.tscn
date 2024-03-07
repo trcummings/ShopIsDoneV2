@@ -268,17 +268,7 @@ _WaitForEnterAnimToFinish = false
 _EnterAnimName = "Idle"
 Id = "idle"
 
-[node name="Emerge" type="Node" parent="StateHandler" index="1"]
-script = ExtResource("4_qg682")
-_EnterAnimName = "Emerge"
-Id = "emerge"
-
-[node name="Sink" type="Node" parent="StateHandler" index="2"]
-script = ExtResource("4_qg682")
-_EnterAnimName = "Sink"
-Id = "sink"
-
-[node name="Lurking" type="Node" parent="StateHandler" index="3"]
+[node name="Lurking" type="Node" parent="StateHandler" index="1"]
 script = ExtResource("4_qg682")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "Lurking"

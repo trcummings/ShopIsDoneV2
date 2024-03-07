@@ -177,6 +177,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 // Get the unit on the tile if they have one
                 var unit = _PlayerUnitService
                     .GetUnits()
+                    // Only active units
+                    .Where(u => u.IsActive())
+                    // That have available actions
                     .Where(_PlayerUnitService.UnitHasAvailableActions)
                     .ToList()
                     .Find(e => e.TilemapPosition == _LastSelectedTile.TilemapPosition);

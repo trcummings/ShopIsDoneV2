@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=47 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_0yjha"]
@@ -17,9 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://2ae2lvic7v6g" path="res://audio/footsteps/tile/footsteps_tile_slow.tscn" id="10_0nb28"]
 [ext_resource type="Script" path="res://actors/interactables/InteractableHandler.cs" id="11_7ska3"]
 [ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="11_862jn"]
-[ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="11_uh075"]
 [ext_resource type="PackedScene" uid="uid://bfkpwxhh1pcdn" path="res://actors/interactables/interactable_detector.tscn" id="13_vx5xu"]
-[ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="15_7e1m5"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="16_87xgg"]
 [ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="17_xmxqu"]
 [ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="18_64csj"]
@@ -27,13 +25,13 @@
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="19_dsksq"]
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="19_vhxse"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="20_1bpch"]
+[ext_resource type="PackedScene" uid="uid://ba3fv8flh1nna" path="res://entities/employees/states/employee_state_handler.tscn" id="20_nw71y"]
 [ext_resource type="Script" path="res://action_points/EmployeeDebtDamageHandler.cs" id="21_4q2q7"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="21_k5t6c"]
 [ext_resource type="Script" path="res://tiles/UnitTileMoveValidator.cs" id="21_lkw5d"]
 [ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="22_4rv4k"]
 [ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="22_f48js"]
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="22_odajy"]
-[ext_resource type="Script" path="res://entity_states/EntityState.cs" id="22_yhedh"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="23_sv0kt"]
 [ext_resource type="Script" path="res://widgets/entity_widgets/EntityWidgetHelper.cs" id="25_i35xk"]
 [ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://entities/employees/actions/interrupt_task_action.tres" id="28_i3j6t"]
@@ -77,7 +75,7 @@ script = ExtResource("2_6jaxx")
 
 [node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler", "_FloorIndicator")]
 script = ExtResource("4_rbt7t")
-_StateHandler = NodePath("../../StateHandler")
+_StateHandler = NodePath("../../EmployeeStateHandler")
 _FloorIndicator = NodePath("../../ActorFloorIndicator")
 _ModelPath = NodePath("../../HaskellModel")
 
@@ -91,7 +89,7 @@ _InteractableHandler = NodePath("../../InteractableHandler")
 
 [node name="InArena" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("4_oqqp8")
-_StateHandler = NodePath("../../StateHandler")
+_StateHandler = NodePath("../../EmployeeStateHandler")
 
 [node name="FollowLeader" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorPathfinder")]
 script = ExtResource("5_dq058")
@@ -166,48 +164,8 @@ FacingTarget = NodePath("..")
 
 [node name="TilemapPositionHandler" parent="." instance=ExtResource("21_k5t6c")]
 
-[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState", "_ModelComponent")]
-script = ExtResource("11_uh075")
-InitialState = NodePath("Idle")
+[node name="EmployeeStateHandler" parent="." node_paths=PackedStringArray("_ModelComponent") instance=ExtResource("20_nw71y")]
 _ModelComponent = NodePath("../ModelComponent")
-
-[node name="Idle" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "idle"
-Id = "idle"
-
-[node name="Move" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "walk"
-Id = "move"
-
-[node name="Alert" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_EnterAnimName = "alert"
-Id = "alert"
-
-[node name="Hurt" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_EnterAnimName = "take_hit"
-Id = "hurt"
-
-[node name="DoTask" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "do_task"
-Id = "do_task"
-
-[node name="Dead" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_EnterAnimName = "meltdown"
-Id = "dead"
-_IsActive = false
-
-[node name="HelpCustomer" type="Node" parent="StateHandler"]
-script = ExtResource("22_yhedh")
-Id = "help_customer"
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
 _DeathHandlerPath = NodePath("../DeathHandler")
@@ -223,7 +181,7 @@ _EntityPath = NodePath("../..")
 
 [node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("18_t6671")
-_StateHandler = NodePath("../StateHandler")
+_StateHandler = NodePath("../EmployeeStateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("16_87xgg")
@@ -260,7 +218,7 @@ script = ExtResource("31_xx1gf")
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TaskHandler" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler") instance=ExtResource("39_7it71")]
-_StateHandler = NodePath("../StateHandler")
+_StateHandler = NodePath("../EmployeeStateHandler")
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="WidgetPoint" type="Node3D" parent="."]

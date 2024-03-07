@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://c7xlqty5qdnif"]
+[gd_scene load_steps=16 format=3 uid="uid://c7xlqty5qdnif"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_emqd3"]
 [ext_resource type="PackedScene" uid="uid://dlk4igjt1ir5x" path="res://Models/clown_puppet/clown_puppet_model.tscn" id="2_gx4b6"]
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="3_wiwh8"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="4_t87db"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="5_tvijx"]
-[ext_resource type="Script" path="res://entities/clown_puppet/states/ClownPuppetHiddenState.cs" id="6_d7lmh"]
 [ext_resource type="AudioStream" uid="uid://b5hvguhl7le6y" path="res://entities/clown_puppet/sfx/clown_puppet_noises_1.wav" id="7_jpt2k"]
 [ext_resource type="AudioStream" uid="uid://bmkga0fh0on1a" path="res://entities/clown_puppet/sfx/clown_puppet_noises_2.wav" id="8_4bcnd"]
 [ext_resource type="AudioStream" uid="uid://kic6m7x0gmbc" path="res://entities/clown_puppet/sfx/clown_puppet_noises_3.wav" id="9_qkry2"]
@@ -55,37 +54,11 @@ _ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler" index="0"]
 script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "idle"
+_IdleAnimName = "idle"
 Id = "idle"
 
-[node name="WarpIn" type="Node" parent="StateHandler" index="1"]
+[node name="Hidden" type="Node" parent="StateHandler" index="1"]
 script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_EnterAnimName = "WarpIn"
-Id = "warp_in"
-
-[node name="WarpOut" type="Node" parent="StateHandler" index="2"]
-script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_EnterAnimName = "WarpAway"
-Id = "warp_out"
-
-[node name="Punish" type="Node" parent="StateHandler" index="3"]
-script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_EnterAnimName = "RaiseHand"
-Id = "punish"
-
-[node name="FinishPunish" type="Node" parent="StateHandler" index="4"]
-script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_EnterAnimName = "LowerHand"
-Id = "finish_punish"
-
-[node name="Hidden" type="Node" parent="StateHandler" index="5"]
-script = ExtResource("6_d7lmh")
 Id = "hidden"
 _IsInArena = false
 

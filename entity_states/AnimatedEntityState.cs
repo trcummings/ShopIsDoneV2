@@ -7,18 +7,21 @@ namespace ShopIsDone.EntityStates
 {
 	public partial class AnimatedEntityState : EntityState
 	{
+        [ExportGroup("Enter")]
         [Export]
         private bool _WaitForEnterAnimToFinish = true;
 
         [Export]
         private string _EnterAnimName;
 
+        [ExportGroup("Exit")]
         [Export]
         private bool _WaitForExitAnimToFinish = true;
 
         [Export]
         private string _ExitAnimName;
 
+        [ExportGroup("")]
         [Export]
         private string _IdleAnimName;
 

@@ -28,6 +28,7 @@ namespace ShopIsDone.Models
         [Export]
         private Dictionary<string, string> _AnimationNameMap = new Dictionary<string, string>();
 
+        [ExportGroup("")]
         [Export]
         protected AnimationPlayer _AnimPlayer;
 
