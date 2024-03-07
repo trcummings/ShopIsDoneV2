@@ -42,7 +42,7 @@ namespace ShopIsDone.Utils.Commands
         {
             _FinishedCommands += 1;
             // If all commands are finished, finish this one
-            if (_FinishedCommands == _Commands.Count) Finish();
+            if (_FinishedCommands == _Commands.Count) CallDeferred(nameof(Finish));
         }
     }
 }
