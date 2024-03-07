@@ -8,6 +8,8 @@ using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using SystemGeneric = System.Collections.Generic;
 using StateConsts = ShopIsDone.EntityStates.Consts;
+using ShopIsDone.Widgets;
+using ShopIsDone.Models;
 
 namespace ShopIsDone.Actions
 {
@@ -22,20 +24,26 @@ namespace ShopIsDone.Actions
         [Inject]
         private ActionService _ActionService;
 
+        [Inject]
+        private EntityWidgetService _EntityWidgetService;
+
         private TileMovementHandler _MovementHandler;
         private EntityStateHandler _StateHandler;
+        private ModelComponent _ModelComponent;
 
         public override void Init(ActionHandler actionHandler)
         {
             base.Init(actionHandler);
             _MovementHandler = Entity.GetComponent<TileMovementHandler>();
             _StateHandler = Entity.GetComponent<EntityStateHandler>();
+            _ModelComponent = Entity.GetComponent<ModelComponent>();
         }
 
         public override bool HasRequiredComponents(LevelEntity entity)
         {
             return
                 entity.HasComponent<TileMovementHandler>() &&
+                entity.HasComponent<ModelComponent>() &&
                 entity.HasComponent<EntityStateHandler>();
         }
 
@@ -92,12 +100,15 @@ namespace ShopIsDone.Actions
                             // Recurse
                             GenerateSubMovements(commands)
                         ),
-                        // Otherwise, play interruption animation and change
-                        // pawn back to a normal state
+                        // Otherwise, play interruption animation
                         new SeriesCommand(
-                            // Idle and run the alert state
-                            _StateHandler.RunChangeState(StateConsts.IDLE),
-                            _StateHandler.RunPushState(StateConsts.ALERT),
+                            // Alert animation and popup
+                            new ParallelCommand(
+                                new AsyncCommand(() => _EntityWidgetService.AlertAsync(Entity.WidgetPoint)),
+                                _ModelComponent.RunPerformAction(StateConsts.ALERT)
+                            ),
+                            //// Change the pawn to idle
+                            //_StateHandler.RunChangeState(StateConsts.IDLE),
                             // Run the null sub move
                             _ActionService.ExecuteAction(NullSubMove())
                         )

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://bupxc6b5js2tr"]
 
-[ext_resource type="Script" path="res://arena_actions/employee_actions/StartTaskAction.cs" id="1_wgiks"]
+[ext_resource type="Script" path="res://entities/employees/actions/StartTaskAction.cs" id="1_wgiks"]
 
 [resource]
 script = ExtResource("1_wgiks")

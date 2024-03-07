@@ -1,6 +1,7 @@
 using Godot;
 using ShopIsDone.Utils.Extensions;
 using System;
+using System.Threading.Tasks;
 
 namespace ShopIsDone.Widgets
 {
@@ -21,6 +22,18 @@ namespace ShopIsDone.Widgets
 
             // Hide the damage label initially
             _Label.Hide();
+        }
+
+        public async Task PopupNumberAsync(int amount, Color textColor, Color outlineColor)
+        {
+            PopupNumber(amount, textColor, outlineColor);
+            await ToSignal(this, nameof(Finished));
+        }
+
+        public async Task PopupTextAsync(string text, Color textColor, Color outlineColor)
+        {
+            PopupText(text, textColor, outlineColor);
+            await ToSignal(this, nameof(Finished));
         }
 
         public void PopupNumber(int amount, Color textColor, Color outlineColor)

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Game;
+using ShopIsDone.Models;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.EntityStates
 {
@@ -19,6 +21,9 @@ namespace ShopIsDone.EntityStates
 
         [Export]
         public EntityState InitialState;
+
+        [Export]
+        private ModelComponent _ModelComponent;
 
         [Export]
         public bool Debug = false;
@@ -38,13 +43,24 @@ namespace ShopIsDone.EntityStates
                     seed.Add(state.Id, state);
                     return seed;
                 });
+        }
+
+        public override void Init()
+        {
             foreach (var state in _States.Values)
             {
-                // NB: Because we're doing this at Ready time, shortcut the init
-                // by referencing the component's parent directly
-                state.Init(GetParent() as LevelEntity, this);
+                // Inject state
+                InjectionProvider.Inject(state);
+                // Initialize state
+                state.Init(Entity, this, _ModelComponent);
             }
             _CurrentState = InitialState;
+            // After enter, idle
+            _CurrentState.Connect(
+                nameof(_CurrentState.StateEntered),
+                Callable.From(_CurrentState.Idle),
+                (uint)ConnectFlags.OneShot
+            );
             _CurrentState.Enter();
         }
 
@@ -68,6 +84,16 @@ namespace ShopIsDone.EntityStates
         public bool IsActive()
         {
             return _CurrentState.IsActive;
+        }
+
+        public Command RunIdleCurrentState()
+        {
+            return new ActionCommand(IdleCurrentState);
+        }
+
+        public void IdleCurrentState()
+        {
+            _CurrentState?.Idle();
         }
 
         public void ChangeState(string state, Dictionary<string, Variant> message = null)
@@ -119,6 +145,9 @@ namespace ShopIsDone.EntityStates
             }
             _CurrentState.Enter(message);
             await ToSignal(_CurrentState, nameof(_CurrentState.StateEntered));
+
+            // Idle the new state
+            _CurrentState.Idle();
 
             EmitSignal(nameof(ChangedState));
         }

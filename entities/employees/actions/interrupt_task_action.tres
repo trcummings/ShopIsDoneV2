@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://cvwykweh5xmw8"]
 
-[ext_resource type="Script" path="res://arena_actions/employee_actions/InterruptTaskAction.cs" id="1_3fulg"]
+[ext_resource type="Script" path="res://entities/employees/actions/InterruptTaskAction.cs" id="1_3fulg"]
 
 [resource]
 script = ExtResource("1_3fulg")

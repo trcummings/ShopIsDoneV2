@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://basxpcdqgypj5"]
 
-[ext_resource type="Script" path="res://arena_actions/employee_actions/HelpCustomerAction.cs" id="1_53vfm"]
+[ext_resource type="Script" path="res://entities/employees/actions/HelpCustomerAction.cs" id="1_53vfm"]
 
 [resource]
 script = ExtResource("1_53vfm")

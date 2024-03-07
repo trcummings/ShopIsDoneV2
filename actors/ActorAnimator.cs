@@ -1,8 +1,6 @@
 ﻿using System;
 using Godot;
-using ShopIsDone.EntityStates;
 using ShopIsDone.Models;
-using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.Actors
 {
@@ -14,9 +12,6 @@ namespace ShopIsDone.Actors
         [Export]
         private NodePath ModelPath;
         private IModel _Model;
-
-        [Export]
-        private EntityStateHandler _StateHandler;
 
         private const float NORM_VAL = 0.7071067811865475244f;
         private Vector3 _BackRightNorm = new Vector3(NORM_VAL, 0, NORM_VAL);
@@ -38,13 +33,13 @@ namespace ShopIsDone.Actors
         {
             // Update animations based on velocity
             var isMoving = velocity.Length() > 0.001;
-            if (isMoving && _StateHandler.IsInState(StateConsts.IDLE))
+            if (isMoving && _Model.GetCurrentAnimation() == "idle")
             {
-                _StateHandler.ChangeState(StateConsts.MOVE);
+                _ = _Model.PerformAnimation("walk");
             }
-            else if (!isMoving && _StateHandler.IsInState(StateConsts.MOVE))
+            else if (!isMoving && _Model.GetCurrentAnimation() == "walk")
             {
-                _StateHandler.ChangeState(StateConsts.IDLE);
+                _ = _Model.PerformAnimation("idle");
             }
 
             // Update facing direction based on input

@@ -10,6 +10,9 @@ using Godot.Collections;
 using ShopIsDone.Utils.Positioning;
 using ActionConsts = ShopIsDone.Actions.Consts;
 using StateConsts = ShopIsDone.EntityStates.Consts;
+using ShopIsDone.Models;
+using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Widgets;
 
 namespace ShopIsDone.Entities.Employees.Actions
 {
@@ -17,12 +20,17 @@ namespace ShopIsDone.Entities.Employees.Actions
     {
         private IOutcomeHandler _OutcomeHandler;
         private EntityStateHandler _StateHandler;
+        private ModelComponent _ModelComponent;
+
+        [Inject]
+        private EntityWidgetService _EntityWidgetService;
 
         public override void Init(ActionHandler actionHandler)
         {
             base.Init(actionHandler);
             _OutcomeHandler = Entity.GetComponent<IOutcomeHandler>();
             _StateHandler = Entity.GetComponent<EntityStateHandler>();
+            _ModelComponent = Entity.GetComponent<ModelComponent>();
         }
 
         public override bool HasRequiredComponents(LevelEntity entity)
@@ -63,15 +71,16 @@ namespace ShopIsDone.Entities.Employees.Actions
             return new SeriesCommand(
                 // Mark action as used
                 base.Execute(message),
-                // Run help customer state change
-                _StateHandler.RunChangeState(StateConsts.Employees.HELP_CUSTOMER),
-                // Run employee microgame
-                targetMicrogameHandler.RunMicrogame(payload),
-                // If employee is still active, then return to idle
-                new ConditionalCommand(
-                    Entity.IsActive,
-                    _StateHandler.RunChangeState(StateConsts.IDLE)
-                )
+                // Simultaneous animation and pop up
+                new ParallelCommand(
+                    _ModelComponent.RunPerformAction(StateConsts.Employees.HELP_CUSTOMER),
+                    new AsyncCommand(() => _EntityWidgetService.PopupLabelAsync(
+                        Entity.WidgetPoint,
+                        "Can I help you?"
+                    ))
+                ),
+                // Run customer's microgame
+                targetMicrogameHandler.RunMicrogame(payload)
             );
         }
     }

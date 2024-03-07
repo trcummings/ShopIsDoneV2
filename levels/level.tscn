@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://clfmotf3uelqh"]
+[gd_scene load_steps=51 format=3 uid="uid://clfmotf3uelqh"]
 
 [ext_resource type="Script" path="res://levels/Level.cs" id="1_uriqi"]
 [ext_resource type="Script" path="res://environments/EnvironmentManager.cs" id="2_4ygry"]
@@ -34,13 +34,18 @@
 [ext_resource type="Script" path="res://camera/WallXRayHelper.cs" id="21_28jhl"]
 [ext_resource type="PackedScene" uid="uid://dekbcridbwhhs" path="res://pausing/level_pause_menu.tscn" id="21_u1g8v"]
 [ext_resource type="Script" path="res://core/EntityIdHelper.cs" id="24_gt0bo"]
+[ext_resource type="PackedScene" uid="uid://cwkrn1l88es1" path="res://audio/sfx_service.tscn" id="25_h5u0j"]
 [ext_resource type="PackedScene" uid="uid://vkdrv2wvhw46" path="res://levels/directional_point.tscn" id="26_7pn1o"]
 [ext_resource type="PackedScene" uid="uid://ddwvyl3d8scbv" path="res://levels/level_states/game_over_ui.tscn" id="26_yq21p"]
 [ext_resource type="PackedScene" uid="uid://kxhd2aa43gxp" path="res://widgets/clown_arm/clown_arm_widget.tscn" id="29_pvwuo"]
 [ext_resource type="PackedScene" uid="uid://di08wvwur3gyd" path="res://widgets/demerit_widget/demerit_widget.tscn" id="31_bd4jk"]
+[ext_resource type="Script" path="res://widgets/entity_widgets/EntityWidgetService.cs" id="32_fyr0g"]
 [ext_resource type="Texture2D" uid="uid://bsf743nafvrlm" path="res://textures/screenshot_example.png" id="33_7umqv"]
+[ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="33_qdspr"]
+[ext_resource type="PackedScene" uid="uid://dx6r37l2dvf6v" path="res://widgets/entity_widgets/talking_effect.tscn" id="34_0rirl"]
 [ext_resource type="PackedScene" uid="uid://5tltus61wl40" path="res://lighting/silhouettes/grid_effect.tscn" id="34_4u7va"]
 [ext_resource type="Material" uid="uid://dhddd5g0tswbc" path="res://lighting/silhouettes/shadow_distortion.material" id="34_52nk5"]
+[ext_resource type="PackedScene" uid="uid://c51x12itwmxoa" path="res://widgets/entity_widgets/alert_effect.tscn" id="35_1cql3"]
 [ext_resource type="Material" uid="uid://dax0bf76hj7s7" path="res://lighting/silhouettes/shadow_outline.material" id="35_j1o0a"]
 [ext_resource type="Script" path="res://ui/downscale_and_center.gd" id="39_v4ema"]
 
@@ -106,7 +111,7 @@ _GameOverUI = NodePath("../../UILayer/GameOverUI")
 [node name="Services" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("11_v0osm")
-_ExtraServices = [NodePath("../World/PlayerCharacterManager"), NodePath("../World/Widgets/FingerCursor"), NodePath("../World/Widgets/TileIndicator"), NodePath("../World/Widgets/MovePathWidget"), NodePath("../World/Widgets/FacingWidget"), NodePath("../World/Widgets/TileCursor"), NodePath("../World/Widgets/ClownArmWidget"), NodePath("../World/Widgets/DemeritWidget")]
+_ExtraServices = [NodePath("../World/PlayerCharacterManager"), NodePath("../World/Widgets/FingerCursor"), NodePath("../World/Widgets/TileIndicator"), NodePath("../World/Widgets/MovePathWidget"), NodePath("../World/Widgets/FacingWidget"), NodePath("../World/Widgets/TileCursor"), NodePath("../World/Widgets/ClownArmWidget"), NodePath("../World/Widgets/DemeritWidget"), NodePath("../World/Widgets/EntityWidgetService")]
 
 [node name="LevelData" type="Node" parent="Services"]
 script = ExtResource("10_iufdb")
@@ -153,6 +158,8 @@ script = ExtResource("21_28jhl")
 _CharacterManager = NodePath("../../World/PlayerCharacterManager")
 _Camera = NodePath("../../World/IsometricCamera/Camera")
 
+[node name="SfxService" parent="Services" instance=ExtResource("25_h5u0j")]
+
 [node name="Audio" type="Node" parent="."]
 
 [node name="UISelectPlayer" parent="Audio" instance=ExtResource("10_5oljb")]
@@ -181,6 +188,12 @@ visible = false
 
 [node name="DemeritWidget" parent="World/Widgets" node_paths=PackedStringArray("_Screenshake") instance=ExtResource("31_bd4jk")]
 _Screenshake = NodePath("../../../Services/ScreenshakeService")
+
+[node name="EntityWidgetService" type="Node3D" parent="World/Widgets"]
+script = ExtResource("32_fyr0g")
+_PopupLabelScene = ExtResource("33_qdspr")
+_TalkingEffectScene = ExtResource("34_0rirl")
+_AlertEffectScene = ExtResource("35_1cql3")
 
 [node name="IsometricCamera" parent="World" instance=ExtResource("2_s72y3")]
 transform = Transform3D(0.707107, -0.353553, 0.612372, 3.02058e-16, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 0, 0, 0)

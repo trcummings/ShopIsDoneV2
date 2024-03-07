@@ -1,65 +1,89 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Godot;
-using ShopIsDone.Models;
 using Godot.Collections;
 
 namespace ShopIsDone.EntityStates
 {
 	public partial class AnimatedEntityState : EntityState
 	{
-        [Export]
-        private NodePath _ModelPath;
-        protected IModel _Model;
-
+        [ExportGroup("Enter")]
         [Export]
         private bool _WaitForEnterAnimToFinish = true;
 
         [Export]
         private string _EnterAnimName;
 
-        public override void _Ready()
-        {
-            base._Ready();
-            _Model = GetNode<IModel>(_ModelPath);
-        }
+        [ExportGroup("Exit")]
+        [Export]
+        private bool _WaitForExitAnimToFinish = true;
+
+        [Export]
+        private string _ExitAnimName;
+
+        [ExportGroup("")]
+        [Export]
+        private string _IdleAnimName;
 
         public override void Enter(Dictionary<string, Variant> message = null)
         {
-            RunEnterAnimation();
+            _ = RunEnterAnimation();
         }
 
-        protected void RunEnterAnimation()
+        public override void Idle()
         {
-            // If we weren't given an enter animation name, just end immediately
+            if (!string.IsNullOrEmpty(_IdleAnimName))
+            {
+                _ = _ModelComponent.PerformActionAsync(_IdleAnimName);
+            }
+        }
+
+        public override void Exit()
+        {
+            _ = RunExitAnimation();
+        }
+
+        protected async Task RunExitAnimation()
+        {
+            // If we weren't given an animation name, just end immediately
+            if (string.IsNullOrEmpty(_ExitAnimName))
+            {
+                base.Exit();
+                return;
+            }
+            // If we wait for it to finish, call base afterwards to end
+            else if (_WaitForExitAnimToFinish)
+            {
+                await _ModelComponent.PerformActionAsync(_EnterAnimName);
+                base.Exit();
+                return;
+            }
+
+            // Otherwise run the animation and end immediately
+            _ = _ModelComponent.PerformActionAsync(_ExitAnimName);
+            base.Exit();
+        }
+
+        protected async Task RunEnterAnimation()
+        {
+            // If we weren't given an animation name, just end immediately
             if (string.IsNullOrEmpty(_EnterAnimName))
             {
                 base.Enter();
                 return;
             }
 
-            // Only connect to the enter animation if we're going to wait for it
-            // to finish (as a one shot)
-            if (_WaitForEnterAnimToFinish)
+            // If we wait for it to finish, call base afterwards to end
+            else if (_WaitForEnterAnimToFinish)
             {
-                (_Model as Node)?.Connect(
-                    nameof(Model.AnimationFinished),
-                    new Callable(this, nameof(OnEnterAnimFinished)),
-                    (uint)ConnectFlags.OneShot
-                );
+                await _ModelComponent.PerformActionAsync(_EnterAnimName);
+                base.Enter();
+                return;
             }
 
-            // Run the enter animation
-            Task _ = _Model.PerformAnimation(_EnterAnimName);
-
-            // If we're not waiting for this animation to finish, then just end
-            // immediately
-            if (!_WaitForEnterAnimToFinish) base.Enter();
-        }
-
-        private void OnEnterAnimFinished(string animName)
-        {
-            if (animName == _EnterAnimName) base.Enter();
+            // Otherwise run the animation and end immediately
+            _ = _ModelComponent.PerformActionAsync(_EnterAnimName);
+            base.Enter();
         }
     }
 }

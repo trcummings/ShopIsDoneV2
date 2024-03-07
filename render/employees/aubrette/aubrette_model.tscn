@@ -16,6 +16,10 @@ billboard_mode = 2
 
 [node name="AubretteModel" node_paths=PackedStringArray("_Sprite") instance=ExtResource("1_hn0vb")]
 _Sprite = NodePath("SubViewport/Aubrette2D")
+_AnimationNameMap = {
+"dead": "meltdown",
+"hurt": "take_hit"
+}
 
 [node name="Aubrette2D" parent="SubViewport" index="0" instance=ExtResource("2_8d6pe")]
 position = Vector2(300, 270)

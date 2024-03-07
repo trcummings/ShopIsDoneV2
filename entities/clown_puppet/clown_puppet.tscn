@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="3_wiwh8"]
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="4_t87db"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="5_tvijx"]
-[ext_resource type="Script" path="res://entities/clown_puppet/states/ClownPuppetHiddenState.cs" id="6_d7lmh"]
 [ext_resource type="AudioStream" uid="uid://b5hvguhl7le6y" path="res://entities/clown_puppet/sfx/clown_puppet_noises_1.wav" id="7_jpt2k"]
 [ext_resource type="AudioStream" uid="uid://bmkga0fh0on1a" path="res://entities/clown_puppet/sfx/clown_puppet_noises_2.wav" id="8_4bcnd"]
 [ext_resource type="AudioStream" uid="uid://kic6m7x0gmbc" path="res://entities/clown_puppet/sfx/clown_puppet_noises_3.wav" id="9_qkry2"]
@@ -13,6 +12,7 @@
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="11_j7f1x"]
 [ext_resource type="PackedScene" uid="uid://cs55ll2s8e14e" path="res://microgames/always_outcome/always_lose_microgame.tscn" id="12_p4fb3"]
 [ext_resource type="Script" path="res://entities/clown_puppet/ClownPuppetOutcomeHandler.cs" id="13_30w5h"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="14_hre88"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4khx"]
 radius = 0.3
@@ -47,49 +47,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08165e-12, 0.1, -2.08165e-
 Radius = 1.5
 LightColor = Color(0.764706, 0.294118, 0.227451, 1)
 
-[node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState")]
+[node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState", "_ModelComponent")]
 script = ExtResource("4_t87db")
 InitialState = NodePath("Hidden")
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler" index="0"]
 script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "idle"
+_IdleAnimName = "idle"
 Id = "idle"
 
-[node name="WarpIn" type="Node" parent="StateHandler" index="1"]
+[node name="Hidden" type="Node" parent="StateHandler" index="1"]
 script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_EnterAnimName = "WarpIn"
-Id = "warp_in"
-
-[node name="WarpOut" type="Node" parent="StateHandler" index="2"]
-script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_EnterAnimName = "WarpAway"
-Id = "warp_out"
-
-[node name="Punish" type="Node" parent="StateHandler" index="3"]
-script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_EnterAnimName = "RaiseHand"
-Id = "punish"
-
-[node name="FinishPunish" type="Node" parent="StateHandler" index="4"]
-script = ExtResource("5_tvijx")
-_ModelPath = NodePath("../../ClownPuppetModel")
-_EnterAnimName = "LowerHand"
-Id = "finish_punish"
-
-[node name="Hidden" type="Node" parent="StateHandler" index="5"]
-script = ExtResource("6_d7lmh")
 Id = "hidden"
 _IsInArena = false
-
-[node name="ClatterPlayer" type="AudioStreamPlayer" parent="StateHandler" index="6"]
-stream = SubResource("AudioStreamRandomizer_86jjf")
-bus = &"SFX"
 
 [node name="MicrogameHandler" type="Node" parent="." index="5"]
 script = ExtResource("11_j7f1x")
@@ -99,7 +70,12 @@ _OutcomeHandlerPath = NodePath("../OutcomeHandler")
 [node name="OutcomeHandler" type="Node" parent="." index="6"]
 script = ExtResource("13_30w5h")
 
-[connection signal="StateEntered" from="StateHandler/WarpIn" to="StateHandler/ClatterPlayer" method="play"]
-[connection signal="StateEntered" from="StateHandler/WarpOut" to="StateHandler/ClatterPlayer" method="play"]
-[connection signal="StateEntered" from="StateHandler/Punish" to="StateHandler/ClatterPlayer" method="play"]
-[connection signal="StateEntered" from="StateHandler/FinishPunish" to="StateHandler/ClatterPlayer" method="play"]
+[node name="ModelComponent" type="Node" parent="." index="7"]
+script = ExtResource("14_hre88")
+_ModelPath = NodePath("../ClownPuppetModel")
+
+[node name="ClatterPlayer" type="AudioStreamPlayer" parent="." index="8"]
+stream = SubResource("AudioStreamRandomizer_86jjf")
+bus = &"SFX"
+
+[connection signal="Clattered" from="ClownPuppetModel" to="ClatterPlayer" method="play"]

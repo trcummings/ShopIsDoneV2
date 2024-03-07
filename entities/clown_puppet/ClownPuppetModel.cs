@@ -3,12 +3,16 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ShopIsDone.Models;
+using ModelConsts = ShopIsDone.Models.Consts;
 
 namespace ShopIsDone.Entities.ClownPuppet
 {
     [Tool]
     public partial class ClownPuppetModel : Model
     {
+        [Signal]
+        public delegate void ClatteredEventHandler();
+
         [Export]
         public Material DissolveMaterial;
 
@@ -23,6 +27,9 @@ namespace ShopIsDone.Entities.ClownPuppet
 
         public override void _Ready()
         {
+            base._Ready();
+            AnimationEventFired += OnEvent;
+
             // Get the Skeleton IK nodes and start them
             foreach (var ik in _Skeleton.GetChildren().OfType<SkeletonIK3D>())
             {
@@ -34,28 +41,34 @@ namespace ShopIsDone.Entities.ClownPuppet
             _SetWarpAmount = new Callable(this, nameof(SetWarpAmount));
         }
 
-        public override async Task PerformAnimation(string actionName)
+        public override async Task PerformAnimation(string rawActionName)
         {
-            if (actionName == Consts.Anims.ClownPuppet.RAISE_HAND)
+            var actionName = TransformAnimName(rawActionName);
+
+            if (actionName == ModelConsts.Anims.ClownPuppet.RAISE_HAND)
             {
+                FireEvent("clatter");
                 // Tween the Blend Hand Parameter in the animation tree to .99
                 await ToSignal(GetTree().CreateTween().TweenMethod(_SetHandBlend, 0f, 1f, 1.5f), "finished");
             }
 
-            else if (actionName == Consts.Anims.ClownPuppet.LOWER_HAND)
+            else if (actionName == ModelConsts.Anims.ClownPuppet.LOWER_HAND)
             {
+                FireEvent("clatter");
                 // Tween the Blend Hand Parameter in the animation tree back down to 0
                 await ToSignal(GetTree().CreateTween().TweenMethod(_SetHandBlend, 1f, 0f, 1.5f), "finished");
             }
 
-            else if (actionName == Consts.Anims.ClownPuppet.WARP_AWAY)
+            else if (actionName == ModelConsts.Anims.ClownPuppet.WARP_AWAY)
             {
+                FireEvent("clatter");
                 // Tween the warp material from min value to maximum value
                 await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 0f, 1f, .5f), "finished");
             }
 
-            else if (actionName == Consts.Anims.ClownPuppet.WARP_IN)
+            else if (actionName == ModelConsts.Anims.ClownPuppet.WARP_IN)
             {
+                FireEvent("clatter");
                 // Tween the warp material from max value to minimum value
                 await ToSignal(GetTree().CreateTween().TweenMethod(_SetWarpAmount, 1f, 0f, .5f), "finished");
             }
@@ -75,6 +88,11 @@ namespace ShopIsDone.Entities.ClownPuppet
         private void SetWarpAmount(float warpAmount)
         {
             (DissolveMaterial as ShaderMaterial).SetShaderParameter("distortion", warpAmount);
+        }
+
+        private void OnEvent(string eventName)
+        {
+            if (eventName == "clatter") EmitSignal(nameof(Clattered));
         }
     }
 }

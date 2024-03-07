@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba3fv8flh1nna"]
+
+[ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="1_qq2mc"]
+[ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="2_mrpex"]
+
+[node name="EmployeeStateHandler" type="Node" node_paths=PackedStringArray("InitialState")]
+script = ExtResource("1_qq2mc")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="."]
+script = ExtResource("2_mrpex")
+_IdleAnimName = "idle"
+Id = "idle"
+
+[node name="Move" type="Node" parent="."]
+script = ExtResource("2_mrpex")
+_IdleAnimName = "walk"
+Id = "move"
+
+[node name="DoTask" type="Node" parent="."]
+script = ExtResource("2_mrpex")
+_IdleAnimName = "do_task"
+Id = "do_task"
+
+[node name="Dead" type="Node" parent="."]
+script = ExtResource("2_mrpex")
+_EnterAnimName = "meltdown"
+Id = "dead"
+_IsActive = false

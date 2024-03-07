@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=47 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_0yjha"]
@@ -17,18 +17,15 @@
 [ext_resource type="PackedScene" uid="uid://2ae2lvic7v6g" path="res://audio/footsteps/tile/footsteps_tile_slow.tscn" id="10_0nb28"]
 [ext_resource type="Script" path="res://actors/interactables/InteractableHandler.cs" id="11_7ska3"]
 [ext_resource type="Script" path="res://arenas/FacingDirectionHandler.cs" id="11_862jn"]
-[ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="11_uh075"]
 [ext_resource type="PackedScene" uid="uid://bfkpwxhh1pcdn" path="res://actors/interactables/interactable_detector.tscn" id="13_vx5xu"]
-[ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="15_7e1m5"]
-[ext_resource type="Script" path="res://entity_states/employee_states/HelpCustomerEntityState.cs" id="16_5ve4v"]
 [ext_resource type="Script" path="res://arena_actions/ActionHandler.cs" id="16_87xgg"]
 [ext_resource type="Resource" uid="uid://cup25aeyo3fel" path="res://arena_actions/actions/move_action.tres" id="17_xmxqu"]
 [ext_resource type="Resource" uid="uid://cqxeimysjvp16" path="res://arena_actions/actions/move_sub_action.tres" id="18_64csj"]
 [ext_resource type="Script" path="res://action_points/BasicDeathHandler.cs" id="18_t6671"]
 [ext_resource type="Script" path="res://tiles/TileMovementHandler.cs" id="19_dsksq"]
-[ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://arena_actions/employee_actions/interrupt_task_action.tres" id="19_lonxh"]
 [ext_resource type="PackedScene" uid="uid://dwpnri8oiktxb" path="res://action_points/action_point_handler.tscn" id="19_vhxse"]
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="20_1bpch"]
+[ext_resource type="PackedScene" uid="uid://ba3fv8flh1nna" path="res://entities/employees/states/employee_state_handler.tscn" id="20_nw71y"]
 [ext_resource type="Script" path="res://action_points/EmployeeDebtDamageHandler.cs" id="21_4q2q7"]
 [ext_resource type="PackedScene" uid="uid://ik8hrd21pgrq" path="res://tiles/tilemap_position_handler.tscn" id="21_k5t6c"]
 [ext_resource type="Script" path="res://tiles/UnitTileMoveValidator.cs" id="21_lkw5d"]
@@ -36,15 +33,15 @@
 [ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="22_f48js"]
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="22_odajy"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="23_sv0kt"]
-[ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://arena_actions/employee_actions/help_customer_action.tres" id="24_xn5yg"]
-[ext_resource type="Resource" uid="uid://bupxc6b5js2tr" path="res://arena_actions/employee_actions/start_task_action.tres" id="29_ivj5r"]
+[ext_resource type="Script" path="res://widgets/entity_widgets/EntityWidgetHelper.cs" id="25_i35xk"]
+[ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://entities/employees/actions/interrupt_task_action.tres" id="28_i3j6t"]
 [ext_resource type="Resource" uid="uid://dhfcjhk223e7o" path="res://arena_actions/actions/interact_action.tres" id="29_vnii4"]
-[ext_resource type="PackedScene" uid="uid://dx6r37l2dvf6v" path="res://widgets/entity_widgets/talking_effect.tscn" id="31_nnm70"]
+[ext_resource type="Resource" uid="uid://bupxc6b5js2tr" path="res://entities/employees/actions/start_task_action.tres" id="31_vp1cx"]
 [ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="31_xx1gf"]
-[ext_resource type="PackedScene" uid="uid://c51x12itwmxoa" path="res://widgets/entity_widgets/alert_effect.tscn" id="32_gdm0m"]
-[ext_resource type="PackedScene" uid="uid://bj5l5gakr31ud" path="res://widgets/entity_widgets/popup_label.tscn" id="33_dnns8"]
+[ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://entities/employees/actions/help_customer_action.tres" id="33_vnjau"]
 [ext_resource type="PackedScene" uid="uid://cd50jq54ec7cv" path="res://tasks/task_handler.tscn" id="39_7it71"]
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="43_h3he4"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="47_jxpnj"]
 [ext_resource type="PackedScene" uid="uid://c03r17klsdybr" path="res://lighting/null_world_light.tscn" id="50_hxo81"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
@@ -56,7 +53,7 @@ size = Vector3(2.5, 1.5, 2.5)
 radius = 1.0
 height = 3.0
 
-[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine") groups=["entities"]]
+[node name="HaskellActor" type="CharacterBody3D" node_paths=PackedStringArray("_ActorAnimator", "_ActorStateMachine", "WidgetPoint") groups=["entities"]]
 collision_layer = 2
 script = ExtResource("1_0yjha")
 _ActorAnimator = NodePath("ActorAnimator")
@@ -65,6 +62,7 @@ Id = "haskell"
 EntityName = "Haskell"
 _TilemapPositionHandlerPath = NodePath("TilemapPositionHandler")
 _FacingDirectionHandlerPath = NodePath("FacingDirectionHandler")
+WidgetPoint = NodePath("WidgetPoint")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 1, 2.08165e-12)
@@ -77,8 +75,9 @@ script = ExtResource("2_6jaxx")
 
 [node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler", "_FloorIndicator")]
 script = ExtResource("4_rbt7t")
-_StateHandler = NodePath("../../StateHandler")
+_StateHandler = NodePath("../../EmployeeStateHandler")
 _FloorIndicator = NodePath("../../ActorFloorIndicator")
+_ModelPath = NodePath("../../HaskellModel")
 
 [node name="FreeMove" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorFloorIndicator", "_InteractableHandler")]
 script = ExtResource("3_f0qiv")
@@ -90,7 +89,7 @@ _InteractableHandler = NodePath("../../InteractableHandler")
 
 [node name="InArena" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("4_oqqp8")
-_StateHandler = NodePath("../../StateHandler")
+_StateHandler = NodePath("../../EmployeeStateHandler")
 
 [node name="FollowLeader" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorPathfinder")]
 script = ExtResource("5_dq058")
@@ -102,10 +101,9 @@ _ActorPathfinder = NodePath("../../ActorPathfinder")
 [node name="ActorVelocity" type="Node" parent="."]
 script = ExtResource("3")
 
-[node name="ActorAnimator" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
+[node name="ActorAnimator" type="Node" parent="."]
 script = ExtResource("5")
 ModelPath = NodePath("../HaskellModel")
-_StateHandler = NodePath("../StateHandler")
 
 [node name="ActorPathfinder" type="Node" parent="." node_paths=PackedStringArray("_Body", "NavigationAgent", "_VelocityComponent", "_IntervalTimer")]
 script = ExtResource("8_exart")
@@ -166,69 +164,28 @@ FacingTarget = NodePath("..")
 
 [node name="TilemapPositionHandler" parent="." instance=ExtResource("21_k5t6c")]
 
-[node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
-script = ExtResource("11_uh075")
-InitialState = NodePath("Idle")
-
-[node name="Idle" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "idle"
-Id = "idle"
-
-[node name="Move" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "walk"
-Id = "move"
-
-[node name="Alert" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
-_EnterAnimName = "alert"
-Id = "alert"
-
-[node name="Hurt" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
-_EnterAnimName = "take_hit"
-Id = "hurt"
-
-[node name="DoTask" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
-_WaitForEnterAnimToFinish = false
-_EnterAnimName = "do_task"
-Id = "do_task"
-
-[node name="Dead" type="Node" parent="StateHandler"]
-script = ExtResource("15_7e1m5")
-_ModelPath = NodePath("../../HaskellModel")
-_EnterAnimName = "meltdown"
-Id = "dead"
-_IsActive = false
-
-[node name="HelpCustomer" type="Node" parent="StateHandler"]
-script = ExtResource("16_5ve4v")
-Id = "help_customer"
+[node name="EmployeeStateHandler" parent="." node_paths=PackedStringArray("_ModelComponent") instance=ExtResource("20_nw71y")]
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
 _DeathHandlerPath = NodePath("../DeathHandler")
 
-[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_StateHandler")]
+[node name="DebtDamageHandler" parent="ActionPointHandler" index="4" node_paths=PackedStringArray("_TaskHandler", "_ModelComponent")]
 script = ExtResource("21_4q2q7")
 _TaskHandler = NodePath("../../TaskHandler")
-_StateHandler = NodePath("../../StateHandler")
+_ModelComponent = NodePath("../../ModelComponent")
+
+[node name="WidgetHelper" type="Node" parent="ActionPointHandler"]
+script = ExtResource("25_i35xk")
+_EntityPath = NodePath("../..")
 
 [node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("_StateHandler")]
 script = ExtResource("18_t6671")
-_StateHandler = NodePath("../StateHandler")
+_StateHandler = NodePath("../EmployeeStateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("16_87xgg")
-Actions = [ExtResource("19_lonxh"), ExtResource("17_xmxqu"), ExtResource("18_64csj"), ExtResource("29_ivj5r"), ExtResource("29_vnii4"), ExtResource("24_xn5yg"), ExtResource("22_odajy")]
+Actions = [ExtResource("28_i3j6t"), ExtResource("17_xmxqu"), ExtResource("18_64csj"), ExtResource("31_vp1cx"), ExtResource("29_vnii4"), ExtResource("33_vnjau"), ExtResource("22_odajy")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_MoveValidator", "_SkipTileStrategy")]
@@ -261,17 +218,11 @@ script = ExtResource("31_xx1gf")
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TaskHandler" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler") instance=ExtResource("39_7it71")]
-_StateHandler = NodePath("../StateHandler")
+_StateHandler = NodePath("../EmployeeStateHandler")
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="WidgetPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12)
-
-[node name="TalkingEffect" parent="WidgetPoint" instance=ExtResource("31_nnm70")]
-
-[node name="AlertEffect" parent="WidgetPoint" instance=ExtResource("32_gdm0m")]
-
-[node name="PopupLabel" parent="WidgetPoint" instance=ExtResource("33_dnns8")]
 
 [node name="UnitInteractionHandler" parent="." instance=ExtResource("43_h3he4")]
 
@@ -285,16 +236,19 @@ shape = SubResource("BoxShape3D_1iyrw")
 [node name="LightVolumeMesh" parent="NullWorldLight" index="1"]
 mesh = SubResource("CapsuleMesh_v11p7")
 
+[node name="ModelComponent" type="Node" parent="."]
+script = ExtResource("47_jxpnj")
+_ModelPath = NodePath("../HaskellModel")
+
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="HaskellModel" method="SetFacingDir"]
-[connection signal="RequestedPromptText" from="StateHandler/HelpCustomer" to="WidgetPoint/PopupLabel" method="PopupText" binds= [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]]
-[connection signal="ReceivedExcessAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]]
-[connection signal="RecoveredAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
-[connection signal="SpentAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
-[connection signal="SpentExcessAp" from="ActionPointHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]]
-[connection signal="TookApDrain" from="ActionPointHandler/DrainHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
-[connection signal="TookDebtDamage" from="ActionPointHandler/DebtDamageHandler" to="WidgetPoint/PopupLabel" method="PopupNumber" binds= [Color(1, 0, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="ReceivedExcessAp" from="ActionPointHandler" to="ActionPointHandler/WidgetHelper" method="PopupNumber" binds= [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="RecoveredAp" from="ActionPointHandler" to="ActionPointHandler/WidgetHelper" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="SpentAp" from="ActionPointHandler" to="ActionPointHandler/WidgetHelper" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="SpentExcessAp" from="ActionPointHandler" to="ActionPointHandler/WidgetHelper" method="PopupNumber" binds= [Color(0, 1, 0, 1), Color(0, 0, 0, 1)]]
+[connection signal="TookApDrain" from="ActionPointHandler/DrainHandler" to="ActionPointHandler/WidgetHelper" method="PopupNumber" binds= [Color(0, 0, 1, 1), Color(0, 0, 0, 1)]]
+[connection signal="TookDebtDamage" from="ActionPointHandler/DebtDamageHandler" to="ActionPointHandler/WidgetHelper" method="PopupNumber" binds= [Color(1, 0, 0, 1), Color(0, 0, 0, 1)]]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
 
 [editable path="ActorFloorIndicator"]

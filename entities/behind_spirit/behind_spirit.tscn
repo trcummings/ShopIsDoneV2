@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b4ioplxcvprpo"]
+[gd_scene load_steps=26 format=3 uid="uid://b4ioplxcvprpo"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_8jbph"]
 [ext_resource type="PackedScene" uid="uid://bbx7tkqlpdpv7" path="res://entities/behind_spirit/behind_spirit_model.tscn" id="2_voxxa"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://cvbbanvyfm1d7" path="res://entities/behind_spirit/HORROR_WHOOSH--245361__klankbeeld__horror-whoosh-003-140729_0313.wav" id="12_f5h7r"]
 [ext_resource type="Material" uid="uid://dnyflcrc6lpnr" path="res://Materials/GrowShadowOutline_NoDissolve.material" id="12_llha0"]
 [ext_resource type="AudioStream" uid="uid://dsw2ovvcdb75e" path="res://entities/behind_spirit/CRACK__70109__justinbw__crack-2.wav" id="13_ekc4u"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="19_payim"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2m1rl"]
 radius = 0.75
@@ -256,32 +257,19 @@ layers = 8
 mesh = SubResource("CapsuleMesh_dq6bg")
 script = ExtResource("4_nyxgh")
 
-[node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState")]
+[node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState", "_ModelComponent")]
 script = ExtResource("3_w83lb")
 InitialState = NodePath("Lurking")
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="Idle" type="Node" parent="StateHandler" index="0"]
 script = ExtResource("4_qg682")
-_ModelPath = NodePath("../../BehindSpiritModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "Idle"
 Id = "idle"
 
-[node name="Emerge" type="Node" parent="StateHandler" index="1"]
+[node name="Lurking" type="Node" parent="StateHandler" index="1"]
 script = ExtResource("4_qg682")
-_ModelPath = NodePath("../../BehindSpiritModel")
-_EnterAnimName = "Emerge"
-Id = "emerge"
-
-[node name="Sink" type="Node" parent="StateHandler" index="2"]
-script = ExtResource("4_qg682")
-_ModelPath = NodePath("../../BehindSpiritModel")
-_EnterAnimName = "Sink"
-Id = "sink"
-
-[node name="Lurking" type="Node" parent="StateHandler" index="3"]
-script = ExtResource("4_qg682")
-_ModelPath = NodePath("../../BehindSpiritModel")
 _WaitForEnterAnimToFinish = false
 _EnterAnimName = "Lurking"
 Id = "lurking"
@@ -365,6 +353,10 @@ script = ExtResource("12_a0dcs")
 script = ExtResource("8_hos8a")
 MicrogameScene = ExtResource("10_rjhkd")
 _OutcomeHandlerPath = NodePath("../OutcomeHandler")
+
+[node name="ModelComponent" type="Node" parent="." index="9"]
+script = ExtResource("19_payim")
+_ModelPath = NodePath("../BehindSpiritModel")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="BehindSpiritModel" method="SetFacingDir"]
 [connection signal="ShakeOffsetUpdated" from="OutcomeHandler/ScreenshakeHandler" to="OutcomeHandler/RemoteTransform3D/CameraPivot/Camera3D" method="set_offset"]

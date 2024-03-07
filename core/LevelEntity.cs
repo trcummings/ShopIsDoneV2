@@ -4,9 +4,7 @@ using Godot.Collections;
 using SystemCollections = System.Collections.Generic;
 using System.Linq;
 using ShopIsDone.Tiles;
-using ShopIsDone.Arenas.ArenaScripts;
 using ShopIsDone.Utils.Commands;
-using ShopIsDone.Arenas;
 
 namespace ShopIsDone.Core
 {
@@ -62,6 +60,9 @@ namespace ShopIsDone.Core
         [Export]
         private NodePath _FacingDirectionHandlerPath;
         private FacingDirectionHandler _FacingDirectionHandler;
+
+        [Export]
+        public Node3D WidgetPoint;
 
         // Tilemap position
         public Vector3 TilemapPosition
@@ -129,6 +130,9 @@ namespace ShopIsDone.Core
             // Connect to enabled/disabled hooks
             EntityEnabled += OnEnabled;
             EntityDisabled += OnDisabled;
+
+            // If we don't have a widget point, set it to the entity itself
+            WidgetPoint ??= this;
 
             // Get all components in the children of the entity
             foreach (var component in GetChildren().OfType<IComponent>())

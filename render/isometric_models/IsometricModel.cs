@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using ShopIsDone.Utils;
+using Godot.Collections;
 
 namespace ShopIsDone.Models.IsometricModels
 {
@@ -17,6 +18,16 @@ namespace ShopIsDone.Models.IsometricModels
         // Nodes
         [Export]
         protected IsometricSprite2D _Sprite;
+
+        [ExportGroup("Animation Mapping")]
+        [Export]
+        private bool _ForceAnimLowercase = false;
+
+        // This maps a normalized action name that we call in a state handler or
+        // through a script to a specific animation name that the model may have
+        // for that action
+        [Export]
+        private Dictionary<string, string> _AnimationNameMap = new Dictionary<string, string>();
 
         // State vars
         protected Vector3 _ViewedDir = Vec3.BackRight;
@@ -64,8 +75,22 @@ namespace ShopIsDone.Models.IsometricModels
             }
         }
 
-        public virtual async Task PerformAnimation(string animName)
+        public string GetCurrentAnimation()
         {
+            return _ActionName;
+        }
+
+        public virtual async Task PerformAnimation(string rawActionName)
+        {
+            var animName = TransformAnimName(rawActionName);
+
+            // If we don't have that animation, error to the console but keep
+            // running
+            if (!_Sprite.HasAnimation(animName))
+            {
+                GD.PrintErr($"Action {animName} not valid for {Name}");
+            }
+
             // Persist action name in state
             _ActionName = animName;
 
@@ -110,6 +135,19 @@ namespace ShopIsDone.Models.IsometricModels
 
             // Run the animation
             return SetSpriteAction(_ActionName);
+        }
+
+        protected string TransformAnimName(string rawActionName)
+        {
+            var animationName = rawActionName;
+
+            // Map the given 
+            if (_AnimationNameMap.ContainsKey(rawActionName))
+            {
+                animationName = _AnimationNameMap[rawActionName];
+            }
+
+            return _ForceAnimLowercase ? animationName.ToLower() : animationName;
         }
     }
 

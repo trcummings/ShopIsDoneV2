@@ -2,9 +2,9 @@ using Godot;
 using Godot.Collections;
 using ShopIsDone.Actions;
 using ShopIsDone.Core;
-using ShopIsDone.EntityStates;
 using ShopIsDone.Microgames;
 using ShopIsDone.Microgames.Outcomes;
+using ShopIsDone.Models;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.Positioning;
 using System;
@@ -14,26 +14,27 @@ namespace ShopIsDone.Entities.BehindSpirit.Actions
 {
     public partial class LurkingStrikeAction : ArenaAction
     {
-        private EntityStateHandler _StateHandler;
         private MicrogameHandler _MicrogameHandler;
+        private ModelComponent _ModelComponent;
 
         public override void Init(ActionHandler actionHandler)
         {
             base.Init(actionHandler);
-            _StateHandler = Entity.GetComponent<EntityStateHandler>();
             _MicrogameHandler = Entity.GetComponent<MicrogameHandler>();
+            _ModelComponent = Entity.GetComponent<ModelComponent>();
         }
 
         public override bool HasRequiredComponents(LevelEntity entity)
         {
-            return entity.HasComponent<MicrogameHandler>();
+            return
+                entity.HasComponent<MicrogameHandler>() &&
+                entity.HasComponent<ModelComponent>();
         }
 
         public override bool TargetHasRequiredComponents(LevelEntity entity)
         {
             return
-                entity.HasComponent<IOutcomeHandler>() &&
-                entity.HasComponent<EntityStateHandler>();
+                entity.HasComponent<IOutcomeHandler>();
         }
 
         public override Command Execute(Dictionary<string, Variant> message = null)
@@ -57,13 +58,13 @@ namespace ShopIsDone.Entities.BehindSpirit.Actions
                 // Wait for emphasis
                 new WaitForCommand(Entity, 0.5f),
                 // Emerge
-                _StateHandler.RunChangeState(Consts.States.EMERGE),
+                _ModelComponent.RunPerformAction(Consts.States.EMERGE),
                 // Wait for emphasis
                 new WaitForCommand(Entity, 0.5f),
                 // Run microgame
                 _MicrogameHandler.RunMicrogame(payload),
                 // Descend
-                _StateHandler.RunChangeState(Consts.States.SINK)
+                _ModelComponent.RunPerformAction(Consts.States.SINK)
             );
         }
     }

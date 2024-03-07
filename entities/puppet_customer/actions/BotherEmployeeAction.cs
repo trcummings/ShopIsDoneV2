@@ -1,7 +1,6 @@
 using Godot;
 using ShopIsDone.Actions;
 using ShopIsDone.Core;
-using ShopIsDone.EntityStates;
 using ShopIsDone.Microgames;
 using ShopIsDone.Microgames.Outcomes;
 using ShopIsDone.Tiles;
@@ -9,35 +8,41 @@ using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.Positioning;
 using Godot.Collections;
 using ActionConsts = ShopIsDone.Actions.Consts;
-using ShopIsDone.Entities.PuppetCustomers.States;
 using StateConsts = ShopIsDone.EntityStates.Consts;
+using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Widgets;
+using ShopIsDone.Models;
 
 namespace ShopIsDone.Entities.PuppetCustomers.Actions
 {
     public partial class BotherEmployeeAction : ArenaAction
     {
-        private EntityStateHandler _StateHandler;
         private MicrogameHandler _MicrogameHandler;
+        private ModelComponent _ModelComponent;
+
+        [Inject]
+        private EntityWidgetService _EntityWidgetService;
 
         public override void Init(ActionHandler actionHandler)
         {
             base.Init(actionHandler);
-            _StateHandler = Entity.GetComponent<EntityStateHandler>();
             _MicrogameHandler = Entity.GetComponent<MicrogameHandler>();
+            _ModelComponent = Entity.GetComponent<ModelComponent>();
         }
 
         public override bool HasRequiredComponents(LevelEntity entity)
         {
             return
                 entity.HasComponent<FacingDirectionHandler>() &&
-                entity.HasComponent<MicrogameHandler>();
+                entity.HasComponent<MicrogameHandler>() &&
+                entity.HasComponent<ModelComponent>();
         }
 
         public override bool TargetHasRequiredComponents(LevelEntity entity)
         {
             return
                 entity.HasComponent<IOutcomeHandler>() &&
-                entity.HasComponent<EntityStateHandler>();
+                entity.HasComponent<ModelComponent>();
         }
 
         public override Command Execute(Dictionary<string, Variant> message = null)
@@ -45,7 +50,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
             // Get the target from the message
             var target = (LevelEntity)message[ActionConsts.TARGET];
             var positioning = (Positions)(int)message[ActionConsts.POSITIONING];
-            var targetStateHandler = target.GetComponent<EntityStateHandler>();
+            var targetModel = target.GetComponent<ModelComponent>();
             var targetOutcomeHandler = target.GetComponent<IOutcomeHandler>();
 
             // Get customer's microgame
@@ -62,20 +67,19 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
                 // Simultaneous bother / alert
                 new ParallelCommand(
                     // Run bother animation
-                    _StateHandler.RunChangeState(StateConsts.Customers.BOTHER, new Dictionary<string, Variant>
-                    {
-                        { BotherEntityState.PROMPT_TEXT, _MicrogameHandler.GetMicrogamePrompt(payload) }
-                    }),
-                    // Alert Target
-                    targetStateHandler.RunChangeState(StateConsts.ALERT)
+                    _ModelComponent.RunPerformAction(StateConsts.Customers.BOTHER),
+                    // Show prompt popup
+                    new AsyncCommand(() => _EntityWidgetService.PopupLabelAsync(
+                        Entity.WidgetPoint,
+                        _MicrogameHandler.GetMicrogamePrompt(payload))
+                    ),
+                    // Target alert popup
+                    new AsyncCommand(() => _EntityWidgetService.AlertAsync(target.WidgetPoint)),
+                    // Target alert animation
+                    targetModel.RunPerformAction(StateConsts.ALERT)
                 ),
                 // Run employee microgame
-                _MicrogameHandler.RunMicrogame(payload),
-                // If botherer is still active, then return to idle
-                new ConditionalCommand(
-                    Entity.IsActive,
-                    _StateHandler.RunChangeState(StateConsts.IDLE)
-                )
+                _MicrogameHandler.RunMicrogame(payload)
             );
         }
     }

@@ -14,8 +14,12 @@ alpha_antialiasing_mode = 0
 albedo_texture = SubResource("ViewportTexture_3u8yj")
 billboard_mode = 2
 
-[node name="RickyRenderManager" node_paths=PackedStringArray("_Sprite") instance=ExtResource("1")]
+[node name="RickyModel" node_paths=PackedStringArray("_Sprite") instance=ExtResource("1")]
 _Sprite = NodePath("SubViewport/Ricky2D")
+_AnimationNameMap = {
+"dead": "meltdown",
+"hurt": "take_hit"
+}
 
 [node name="Ricky2D" parent="SubViewport" index="0" instance=ExtResource("2")]
 position = Vector2(300, 300)
