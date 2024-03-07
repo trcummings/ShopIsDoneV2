@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=85 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -54,6 +54,7 @@
 [ext_resource type="Script" path="res://arenas/states/unit_placement/SelectingUnitPlacementState.cs" id="28_5mwv1"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/InteractState.cs" id="29_22p7l"]
 [ext_resource type="Script" path="res://arenas/states/unit_placement/MovingUnitPlacementState.cs" id="29_sa81n"]
+[ext_resource type="Script" path="res://util/HeldInputHelper.cs" id="30_tki4u"]
 [ext_resource type="Script" path="res://util/ControlTweener.cs" id="32_b7vkh"]
 [ext_resource type="PackedScene" uid="uid://dqw2sf0ivpiqj" path="res://arenas/turn_counter/turns_remaining_panel.tscn" id="33_otw68"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/TaskState.cs" id="33_pf6p2"]
@@ -73,6 +74,7 @@
 [ext_resource type="PackedScene" uid="uid://dq35dnfbvmsgh" path="res://clown_rules/clown_debug.tscn" id="64_oyack"]
 [ext_resource type="PackedScene" uid="uid://bueosq3tcjgp" path="res://entities/puppet_customer/customer_info_ui/customer_info_ui.tscn" id="65_5pv26"]
 [ext_resource type="AudioStream" uid="uid://deium5vier2tq" path="res://arenas/ARENA-START__Bass Swell 8_E.wav" id="66_bteqj"]
+[ext_resource type="PackedScene" uid="uid://dkd8del2h3k7q" path="res://arenas/states/unit_placement/ConfirmPlacementPrompt.tscn" id="74_defnj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
@@ -91,6 +93,8 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wt6n1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ssca0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hx7uj"]
 
 [node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager") groups=["arena"]]
 script = ExtResource("1_loukv")
@@ -213,11 +217,17 @@ script = ExtResource("2_1igvu")
 [node name="Idle" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine"]
 script = ExtResource("3_q440h")
 
-[node name="SelectingUnit" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine" node_paths=PackedStringArray("_InitState", "_TileManager", "_PlayerUnitService")]
+[node name="SelectingUnit" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine" node_paths=PackedStringArray("_InitState", "_TileManager", "_PlayerUnitService", "_ConfirmPlacementInput", "_ConfirmPrompt")]
 script = ExtResource("28_5mwv1")
 _InitState = NodePath("../..")
 _TileManager = NodePath("../../../../Tiles")
 _PlayerUnitService = NodePath("../../../../Services/PlayerUnitService")
+_ConfirmPlacementInput = NodePath("ConfirmInputHelper")
+_ConfirmPrompt = NodePath("../../../../UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer/ConfirmPlacementPrompt")
+
+[node name="ConfirmInputHelper" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine/SelectingUnit"]
+script = ExtResource("30_tki4u")
+ActionName = &"end_player_turn"
 
 [node name="MovingUnit" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine"]
 script = ExtResource("29_sa81n")
@@ -770,6 +780,41 @@ layout_mode = 2
 
 [node name="RulesList" parent="UILayer" instance=ExtResource("63_x3x63")]
 visible = false
+
+[node name="PlacementUIContainer" type="PanelContainer" parent="UILayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hx7uj")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/PlacementUIContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/PlacementUIContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ConfirmPlacementPrompt" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("74_defnj")]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="ArenaEnteredPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("66_bteqj")

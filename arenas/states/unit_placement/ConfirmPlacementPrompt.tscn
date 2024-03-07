@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://dkd8del2h3k7q"]
+
+[ext_resource type="Script" path="res://arenas/states/unit_placement/ConfirmPlacementPrompt.cs" id="1_283op"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="1_vm3w5"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="2_t0llg"]
+[ext_resource type="Script" path="res://addons/radial_progress/RadialProgress.gd" id="3_n2i1h"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="4_okx1j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0d2nq"]
+
+[node name="ConfirmPlacementPrompt" type="PanelContainer" node_paths=PackedStringArray("_RadialProgress")]
+custom_minimum_size = Vector2(200, 100)
+mouse_filter = 2
+script = ExtResource("1_283op")
+_RadialProgress = NodePath("MarginContainer/HBoxContainer/PanelContainer/CenterContainer/RadialProgress")
+
+[node name="BorderedUIWindow" parent="." instance=ExtResource("1_vm3w5")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("2_t0llg")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Confirm Placement?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0d2nq")
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RadialProgress" type="Control" parent="MarginContainer/HBoxContainer/PanelContainer/CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_n2i1h")
+radius = 32.0
+thickness = 15.0
+bg_color = Color(0.501961, 0.501961, 0.501961, 0)
+bar_color = Color(0.0705882, 0.329412, 0.0666667, 1)
+ring = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ActionIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4_okx1j")
+action_name = &"end_player_turn"

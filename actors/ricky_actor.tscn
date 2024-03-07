@@ -75,9 +75,8 @@ shape = SubResource("1")
 [node name="ActorStateMachine" type="Node" parent="."]
 script = ExtResource("3_plocb")
 
-[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler", "_FloorIndicator")]
+[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_FloorIndicator")]
 script = ExtResource("4_qed56")
-_StateHandler = NodePath("../../EmployeeStateHandler")
 _FloorIndicator = NodePath("../../ActorFloorIndicator")
 _ModelPath = NodePath("../../RickyModel")
 
@@ -89,9 +88,9 @@ _ActorVelocity = NodePath("../../ActorVelocity")
 _ActorFloorIndicator = NodePath("../../ActorFloorIndicator")
 _InteractableHandler = NodePath("../../InteractableHandler")
 
-[node name="InArena" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
+[node name="InArena" type="Node" parent="ActorStateMachine"]
 script = ExtResource("5_l5aer")
-_StateHandler = NodePath("../../EmployeeStateHandler")
+_ModelPath = NodePath("../../RickyModel")
 
 [node name="FollowLeader" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorPathfinder")]
 script = ExtResource("6_2a0rx")

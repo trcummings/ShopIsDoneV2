@@ -7,6 +7,9 @@ using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Tiles;
 using ShopIsDone.Levels;
 using System.Linq;
+using ShopIsDone.Widgets;
+using ShopIsDone.Utils;
+using ShopIsDone.Arenas.UnitPlacement.UI;
 
 namespace ShopIsDone.Arenas.UnitPlacement
 {
@@ -23,6 +26,23 @@ namespace ShopIsDone.Arenas.UnitPlacement
 
         [Inject]
         private PlayerCharacterManager _PlayerCharacterManager;
+
+        // Widgets
+        [Inject]
+        private FingerCursor _FingerCursor;
+
+        [Inject]
+        private TileCursor _TileCursor;
+
+        [Export]
+        private HeldInputHelper _ConfirmPlacementInput;
+
+        [Export]
+        private ConfirmPlacementPrompt _ConfirmPrompt;
+
+        [Export]
+        private float _HoldConfirmTime = 1.5f;
+
 
         public override void _Ready()
 		{
@@ -53,8 +73,47 @@ namespace ShopIsDone.Arenas.UnitPlacement
                 unit.GlobalPosition = placement.GlobalPosition;
             }
 
-            // Finish immediately
-            _InitState.Finish();
+            // Place cursor on leader
+            var leader = _PlayerCharacterManager.Leader;
+            var leaderTile = _TileManager.GetTileAtGlobalPos(leader.GlobalPosition);
+
+            // Move the cursors to the last selected tile
+            _TileCursor.MoveCursorTo(leaderTile);
+            _FingerCursor.WarpCursorTo(leaderTile.GlobalPosition);
+
+            // Show cursors
+            _FingerCursor.Show();
+            _TileCursor.Show();
+
+            // Show confirm prompt
+            _ConfirmPrompt.Show();
+        }
+
+        public override void UpdateState(double delta)
+        {
+            base.UpdateState(delta);
+
+            // Handle confirmation press
+            var wasHeldEnough = _ConfirmPlacementInput.WasHeldFor(_HoldConfirmTime);
+
+            // Update radial progress
+            var progress = _ConfirmPlacementInput.HeldTime / _HoldConfirmTime * 100;
+            _ConfirmPrompt.SetRadialProgress(progress);
+
+            // If we've been held long enough, finish immediately
+            if (wasHeldEnough) _InitState.Finish();
+        }
+
+        public override void OnExit(string nextState)
+        {
+            // Hide cursors
+            _FingerCursor.Hide();
+            _TileCursor.Hide();
+
+            // Hide confirm prompt
+            _ConfirmPrompt.Hide();
+
+            base.OnExit(nextState);
         }
     }
 }

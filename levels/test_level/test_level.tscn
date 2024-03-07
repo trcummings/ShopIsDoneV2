@@ -121,6 +121,9 @@ _Judge = NodePath("../../Entities/ClownPuppet")
 [node name="MoveInLShapeActionRule" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ClownRulesService" index="0"]
 script = ExtResource("10_kmt7p")
 
+[node name="ConfirmInputHelper" parent="World/NavigationRegion3D/Environment/Arena/ArenaStateMachine/Initializing/UnitPlacementStateMachine/SelectingUnit" index="0"]
+_ActionName = &""
+
 [node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../TileManager")
 

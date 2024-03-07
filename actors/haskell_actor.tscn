@@ -73,9 +73,8 @@ shape = SubResource("1")
 [node name="ActorStateMachine" type="Node" parent="."]
 script = ExtResource("2_6jaxx")
 
-[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler", "_FloorIndicator")]
+[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_FloorIndicator")]
 script = ExtResource("4_rbt7t")
-_StateHandler = NodePath("../../EmployeeStateHandler")
 _FloorIndicator = NodePath("../../ActorFloorIndicator")
 _ModelPath = NodePath("../../HaskellModel")
 
@@ -87,9 +86,9 @@ _ActorVelocity = NodePath("../../ActorVelocity")
 _ActorFloorIndicator = NodePath("../../ActorFloorIndicator")
 _InteractableHandler = NodePath("../../InteractableHandler")
 
-[node name="InArena" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
+[node name="InArena" type="Node" parent="ActorStateMachine"]
 script = ExtResource("4_oqqp8")
-_StateHandler = NodePath("../../EmployeeStateHandler")
+_ModelPath = NodePath("../../HaskellModel")
 
 [node name="FollowLeader" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorPathfinder")]
 script = ExtResource("5_dq058")
@@ -166,6 +165,7 @@ FacingTarget = NodePath("..")
 
 [node name="EmployeeStateHandler" parent="." node_paths=PackedStringArray("_ModelComponent") instance=ExtResource("20_nw71y")]
 _ModelComponent = NodePath("../ModelComponent")
+Debug = true
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
 _DeathHandlerPath = NodePath("../DeathHandler")

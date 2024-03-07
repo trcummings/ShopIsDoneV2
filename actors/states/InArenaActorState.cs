@@ -1,7 +1,7 @@
 ﻿using System;
 using Godot;
 using Godot.Collections;
-using ShopIsDone.EntityStates;
+using ShopIsDone.Models;
 using ShopIsDone.Utils.StateMachine;
 using StateConsts = ShopIsDone.EntityStates.Consts;
 
@@ -10,11 +10,17 @@ namespace ShopIsDone.Actors.States
     public partial class InArenaActorState : State
     {
         [Export]
-        private EntityStateHandler _StateHandler;
+        private NodePath _ModelPath;
+        private IModel _Model;
+
+        public override void _Ready()
+        {
+            _Model = GetNode<IModel>(_ModelPath);
+        }
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
-            _StateHandler.ChangeState(StateConsts.IDLE);
+            _Model.PerformAnimation(StateConsts.IDLE);
             base.OnStart(message);
         }
     }

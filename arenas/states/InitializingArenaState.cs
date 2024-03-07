@@ -50,16 +50,14 @@ namespace ShopIsDone.Arenas.States
 
         public async void Finish()
         {
+            // Change placement state machine to idle
+            _PlacementStateMachine.ChangeState(PlacementConsts.IDLE);
+
             // Get player units
             var allUnits = _PlayerCharacterManager.GetAllUnits();
 
             // Add player units to player unit service
             _PlayerUnitService.Init(allUnits.ToList<LevelEntity>());
-
-            // Update all tiles
-            _TileManager.UpdateTiles();
-
-            await ToSignal(GetTree(), "process_frame");
 
             // Init all entities under the arena
             foreach (var entity in _EntitiesService.GetArenaChildEntities())

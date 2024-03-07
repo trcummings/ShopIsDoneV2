@@ -1,7 +1,6 @@
 using System;
 using Godot;
 using Godot.Collections;
-using ShopIsDone.EntityStates;
 using ShopIsDone.Utils.StateMachine;
 using StateConsts = ShopIsDone.EntityStates.Consts;
 using ShopIsDone.Utils.Extensions;
@@ -11,9 +10,6 @@ namespace ShopIsDone.Actors.States
 {
     public partial class IdleActorState : State
     {
-        [Export]
-        private EntityStateHandler _StateHandler;
-
         [Export]
         private ActorFloorIndicator _FloorIndicator;
 

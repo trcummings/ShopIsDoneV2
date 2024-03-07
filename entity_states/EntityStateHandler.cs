@@ -96,15 +96,15 @@ namespace ShopIsDone.EntityStates
             _CurrentState?.Idle();
         }
 
-        public void ChangeState(string state, Dictionary<string, Variant> message = null)
-        {
-            Task _ = ChangeStateAsync(state, message);
-        }
+        //public void ChangeState(string state, Dictionary<string, Variant> message = null)
+        //{
+        //    Task _ = ChangeStateAsync(state, message);
+        //}
 
-        public void PushState(string state, Dictionary<string, Variant> message = null)
-        {
-            Task _ = PushStateAsync(state, message);
-        }
+        //public void PushState(string state, Dictionary<string, Variant> message = null)
+        //{
+        //    Task _ = PushStateAsync(state, message);
+        //}
 
         public Command RunChangeState(string state, Dictionary<string, Variant> message = null)
         {
