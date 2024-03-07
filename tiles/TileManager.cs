@@ -5,6 +5,7 @@ using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils;
+using System.Linq;
 
 namespace ShopIsDone.Tiles
 {
@@ -122,14 +123,16 @@ namespace ShopIsDone.Tiles
             return !tile.IsTileAvailable();
         }
 
-        public bool CanPassThroughTile(LevelEntity entity, Tile tile)
-        {
-            return true;
-        }
-
         public Array<Tile> GetAllTilesInArena()
         {
             return _TilesByPos.Values.ToGodotArray();
+        }
+
+        public Array<Tile> GetPlacementTiles()
+        {
+            return GetAllTilesInArena()
+                .Where(t => t.IsInGroup("placement_tile"))
+                .ToGodotArray();
         }
     }
 }

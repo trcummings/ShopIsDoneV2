@@ -1,16 +1,16 @@
-[gd_scene load_steps=80 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=82 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
 [ext_resource type="Script" path="res://arenas/turn_counter/TurnCounter.cs" id="2_qt0kh"]
 [ext_resource type="Script" path="res://util/dependency_injection/ServicesContainer.cs" id="2_tsep3"]
 [ext_resource type="Script" path="res://util/state_machine/State.cs" id="3_q440h"]
-[ext_resource type="Script" path="res://arenas/states/InitializingState.cs" id="3_s3t2k"]
+[ext_resource type="Script" path="res://arenas/states/InitializingArenaState.cs" id="3_s3t2k"]
 [ext_resource type="Script" path="res://arena_actions/ActionService.cs" id="3_y84tj"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/BattlePhaseManager.cs" id="4_c0td2"]
 [ext_resource type="Script" path="res://tiles/TileManager.cs" id="4_hwpdd"]
 [ext_resource type="Script" path="res://arenas/PlayerUnitService.cs" id="4_m7h52"]
-[ext_resource type="Script" path="res://arenas/states/RunningState.cs" id="4_oqnwb"]
+[ext_resource type="Script" path="res://arenas/states/RunningArenaState.cs" id="4_oqnwb"]
 [ext_resource type="Script" path="res://arenas/EnterArenaArea.cs" id="5_2f7tb"]
 [ext_resource type="Script" path="res://arena_actions/effort_meter/EffortMeterService.cs" id="5_gmbyy"]
 [ext_resource type="PackedScene" uid="uid://k1cfuob2nivk" path="res://tiles/tile/tile.tscn" id="5_hl2gx"]
@@ -19,7 +19,7 @@
 [ext_resource type="Script" path="res://arenas/states/battle_states/UnitTurnService.cs" id="6_qjeqh"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/CleanUpBattleState.cs" id="7_dwkpa"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/UnitAIService.cs" id="7_fplic"]
-[ext_resource type="Script" path="res://arenas/states/FinishedState.cs" id="7_wmirh"]
+[ext_resource type="Script" path="res://arenas/states/FinishedArenaState.cs" id="7_wmirh"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/EnemyActivityBattleState.cs" id="8_om56i"]
 [ext_resource type="Script" path="res://tasks/TaskService.cs" id="8_tfcjj"]
 [ext_resource type="Script" path="res://arenas/ScriptQueueService.cs" id="8_tmi38"]
@@ -51,7 +51,9 @@
 [ext_resource type="Resource" uid="uid://5fosu0kpci6h" path="res://entities/clown_puppet/clown_warnings.dialogue" id="23_xgetg"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/FailureFinishedState.cs" id="24_ych7k"]
 [ext_resource type="Script" path="res://arenas/ArenaEntitiesService.cs" id="25_04uvk"]
+[ext_resource type="Script" path="res://arenas/states/unit_placement/SelectingUnitPlacementState.cs" id="28_5mwv1"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/InteractState.cs" id="29_22p7l"]
+[ext_resource type="Script" path="res://arenas/states/unit_placement/MovingUnitPlacementState.cs" id="29_sa81n"]
 [ext_resource type="Script" path="res://util/ControlTweener.cs" id="32_b7vkh"]
 [ext_resource type="PackedScene" uid="uid://dqw2sf0ivpiqj" path="res://arenas/turn_counter/turns_remaining_panel.tscn" id="33_otw68"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/TaskState.cs" id="33_pf6p2"]
@@ -90,11 +92,10 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ssca0"]
 
-[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager", "_PlayerUnitService") groups=["arena"]]
+[node name="Arena" type="Node3D" node_paths=PackedStringArray("_ArenaStateMachine", "_TileManager") groups=["arena"]]
 script = ExtResource("1_loukv")
 _ArenaStateMachine = NodePath("ArenaStateMachine")
 _TileManager = NodePath("Tiles")
-_PlayerUnitService = NodePath("Services/PlayerUnitService")
 metadata/_edit_lock_ = true
 
 [node name="Services" type="Node" parent="."]
@@ -199,8 +200,27 @@ _Arena = NodePath("../..")
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
 
-[node name="Initializing" type="Node" parent="ArenaStateMachine"]
+[node name="Initializing" type="Node" parent="ArenaStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_EntitiesService", "_TileManager", "_PlacementStateMachine")]
 script = ExtResource("3_s3t2k")
+_PlayerUnitService = NodePath("../../Services/PlayerUnitService")
+_EntitiesService = NodePath("../../Services/ArenaEntitiesService")
+_TileManager = NodePath("../../Tiles")
+_PlacementStateMachine = NodePath("UnitPlacementStateMachine")
+
+[node name="UnitPlacementStateMachine" type="Node" parent="ArenaStateMachine/Initializing"]
+script = ExtResource("2_1igvu")
+
+[node name="Idle" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine"]
+script = ExtResource("3_q440h")
+
+[node name="SelectingUnit" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine" node_paths=PackedStringArray("_InitState", "_TileManager", "_PlayerUnitService")]
+script = ExtResource("28_5mwv1")
+_InitState = NodePath("../..")
+_TileManager = NodePath("../../../../Tiles")
+_PlayerUnitService = NodePath("../../../../Services/PlayerUnitService")
+
+[node name="MovingUnit" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine"]
+script = ExtResource("29_sa81n")
 
 [node name="Running" type="Node" parent="ArenaStateMachine" node_paths=PackedStringArray("_PhaseManager")]
 script = ExtResource("4_oqnwb")

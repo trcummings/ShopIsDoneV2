@@ -24,6 +24,17 @@ namespace ShopIsDone.Arenas
             InjectionProvider.Inject(this);
         }
 
+        /* Gets us entities in the arena that are strictly within the Arena, e.g. 
+         * not any player units */
+        public Array<LevelEntity> GetArenaChildEntities()
+        {
+            return GetTree()
+                .GetNodesInGroup("entities")
+                .OfType<LevelEntity>()
+                .Where(_Arena.IsAncestorOf)
+                .ToGodotArray();
+        }
+
         /* This gets us ALL entities that are of concern to the Arena. NOTE WELL, 
          * this does not account for entity state like IsInArena / IsActive. It 
          * is EVERY single entity of concern to the Arena. Do that filtering 
@@ -31,11 +42,7 @@ namespace ShopIsDone.Arenas
          */
         public Array<LevelEntity> GetAllArenaEntities()
         {
-            var allEntities = GetTree()
-                .GetNodesInGroup("entities")
-                .OfType<LevelEntity>()
-                .Where(_Arena.IsAncestorOf)
-                .ToList();
+            var allEntities = GetArenaChildEntities().ToList();
 
             // Add player characters to the mix
             allEntities.AddRange(_PlayerCharacterManager.GetAllUnits());
