@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7iwkbcbq31id"]
+
+[ext_resource type="PackedScene" uid="uid://d3bnxo337mk18" path="res://tiles/tile/forward_placement_tile.tscn" id="1_nl6aj"]
+
+[node name="PlacementTile" instance=ExtResource("1_nl6aj")]
+EditorFacingDir = 2

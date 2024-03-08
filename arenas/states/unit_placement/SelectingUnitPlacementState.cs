@@ -71,6 +71,8 @@ namespace ShopIsDone.Arenas.UnitPlacement
                 var placement = placementTiles[i];
                 var unit = allUnits[i];
                 unit.GlobalPosition = placement.GlobalPosition;
+                // Set the unit's facing direction to the placement tile's direction
+                unit.FacingDirection = placement.PlacementFacingDir;
             }
 
             // Place cursor on leader
