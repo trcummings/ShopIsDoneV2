@@ -73,17 +73,17 @@ namespace ShopIsDone.EntityStates
 
         public bool IsInState(string state)
         {
-            return _CurrentState.Id == state;
+            return _CurrentState?.Id == state;
         }
 
         public bool IsInArena()
         {
-            return _CurrentState.IsInArena;
+            return _CurrentState?.IsInArena ?? false;
         }
 
         public bool IsActive()
         {
-            return _CurrentState.IsActive;
+            return _CurrentState?.IsActive ?? false;
         }
 
         public Command RunIdleCurrentState()
@@ -96,15 +96,15 @@ namespace ShopIsDone.EntityStates
             _CurrentState?.Idle();
         }
 
-        public void ChangeState(string state, Dictionary<string, Variant> message = null)
-        {
-            Task _ = ChangeStateAsync(state, message);
-        }
+        //public void ChangeState(string state, Dictionary<string, Variant> message = null)
+        //{
+        //    Task _ = ChangeStateAsync(state, message);
+        //}
 
-        public void PushState(string state, Dictionary<string, Variant> message = null)
-        {
-            Task _ = PushStateAsync(state, message);
-        }
+        //public void PushState(string state, Dictionary<string, Variant> message = null)
+        //{
+        //    Task _ = PushStateAsync(state, message);
+        //}
 
         public Command RunChangeState(string state, Dictionary<string, Variant> message = null)
         {

@@ -14,6 +14,29 @@ namespace ShopIsDone.Tiles
 
 		public bool Enabled = true;
 
+        #region Placement Tile Exports
+        [ExportGroup("Placement Tile")]
+        [Export]
+        private DirEnum.Dir EditorFacingDir
+        {
+            get { return DirEnum.VectorToDir(PlacementFacingDir); }
+            set
+            {
+                _EditorFacingDir = DirEnum.DirToVector(value);
+                PlacementFacingDir = DirEnum.DirToVector(value);
+            }
+        }
+        private Vector3 _EditorFacingDir = Vector3.Forward;
+
+        public Vector3 PlacementFacingDir
+        {
+            get { return _PlacementFacingDir; }
+            set { _PlacementFacingDir = value; }
+        }
+        public Vector3 _PlacementFacingDir = Vector3.Forward;
+        #endregion
+
+        [ExportGroup("")]
         [Export]
         private RayCast3D _North;
 

@@ -28,9 +28,6 @@ namespace ShopIsDone.Arenas
         [Export]
         private TileManager _TileManager;
 
-        [Export]
-        private PlayerUnitService _PlayerUnitService;
-
         // NB: Technically a service, but it lives under Level
         [Export]
         private PlayerCharacterManager _PlayerCharacterManager;
@@ -44,44 +41,13 @@ namespace ShopIsDone.Arenas
             _Services = GetNode<ServicesContainer>("%Services");
         }
 
-        public async void Init()
+        public void Init()
         {
             _Services.RegisterServices();
             _Services.InitServices();
 
             // Move units into arena
             _PlayerCharacterManager.EnterArena();
-            var allUnits = _PlayerCharacterManager.GetAllUnits();
-            var placementTiles = GetTree()
-                .GetNodesInGroup("placement_tile")
-                .OfType<Tile>()
-                .Where(IsAncestorOf)
-                .Take(allUnits.Count)
-                .ToArray();
-            for (int i = 0; i < placementTiles.Count(); i++)
-            {
-                var placement = placementTiles[i];
-                var unit = allUnits[i];
-                unit.GlobalPosition = placement.GlobalPosition;
-            }
-
-            // Add player units to player unit service
-            _PlayerUnitService.Init(allUnits.ToList<LevelEntity>());
-
-            // Update all tiles
-            _TileManager.UpdateTiles();
-
-            await ToSignal(GetTree(), "process_frame");
-
-            // Init all entities under the arena
-            var allEntities = GetTree()
-                .GetNodesInGroup("entities")
-                .OfType<LevelEntity>()
-                .Where(IsAncestorOf);
-            foreach (var entity in allEntities) entity.Init();
-
-            // Update all tiles
-            _TileManager.UpdateTiles();
 
             // Change state to initializing
             _ArenaStateMachine.ChangeState(ArenaConsts.INITIALIZING);

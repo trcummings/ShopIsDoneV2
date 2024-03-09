@@ -73,9 +73,8 @@ shape = SubResource("CapsuleShape3D_u5s6l")
 [node name="ActorStateMachine" type="Node" parent="."]
 script = ExtResource("3_af5pp")
 
-[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler", "_FloorIndicator")]
+[node name="Idle" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_FloorIndicator")]
 script = ExtResource("4_141w5")
-_StateHandler = NodePath("../../EmployeeStateHandler")
 _FloorIndicator = NodePath("../../ActorFloorIndicator")
 _ModelPath = NodePath("../../AubretteModel")
 
@@ -87,9 +86,9 @@ _ActorVelocity = NodePath("../../ActorVelocity")
 _ActorFloorIndicator = NodePath("../../ActorFloorIndicator")
 _InteractableHandler = NodePath("../../InteractableHandler")
 
-[node name="InArena" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_StateHandler")]
+[node name="InArena" type="Node" parent="ActorStateMachine"]
 script = ExtResource("6_q514i")
-_StateHandler = NodePath("../../EmployeeStateHandler")
+_ModelPath = NodePath("../../AubretteModel")
 
 [node name="FollowLeader" type="Node" parent="ActorStateMachine" node_paths=PackedStringArray("_Body", "_ActorAnimator", "_ActorVelocity", "_ActorPathfinder")]
 script = ExtResource("7_jtdjr")

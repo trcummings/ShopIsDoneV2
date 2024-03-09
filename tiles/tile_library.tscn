@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0ukda8jmgq7b"]
+[gd_scene load_steps=6 format=3 uid="uid://c0ukda8jmgq7b"]
 
 [ext_resource type="Texture2D" uid="uid://db2p6fqjn7wys" path="res://textures/greybox_textures/greybox_green_solid.png" id="1_jlsj4"]
-[ext_resource type="Texture2D" uid="uid://cgvbsic0sngx6" path="res://textures/greybox_textures/greybox_purple_solid.png" id="2_3nawi"]
+[ext_resource type="Material" uid="uid://dk5jgh1dtkf35" path="res://tiles/tile/placement_tile.material" id="2_speu5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1nt4"]
 albedo_texture = ExtResource("1_jlsj4")
@@ -11,19 +11,32 @@ material = SubResource("StandardMaterial3D_g1nt4")
 size = Vector2(2, 2)
 orientation = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfcd6"]
-albedo_texture = ExtResource("2_3nawi")
-
 [sub_resource type="QuadMesh" id="QuadMesh_x43tl"]
-material = SubResource("StandardMaterial3D_wfcd6")
+material = ExtResource("2_speu5")
 size = Vector2(2, 2)
 orientation = 1
 
 [node name="TileLibrary" type="Node3D"]
 
 [node name="Tile" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("QuadMesh_xiyci")
 
-[node name="UnitPlacementTile" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2)
+[node name="ForwardPlacementTile" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 2.08165e-12, 2.08165e-12, 0)
+visible = false
+mesh = SubResource("QuadMesh_x43tl")
+
+[node name="LeftPlacementTile" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -3.48787e-16, -1, 3.48787e-16, 1, -3.48787e-16, 1, -3.48787e-16, -4.37114e-08, 2.08165e-12, 2.08165e-12, 0)
+visible = false
+mesh = SubResource("QuadMesh_x43tl")
+
+[node name="RightPlacementTile" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 3.48787e-16, 1, 3.48787e-16, 1, -3.48787e-16, -1, 3.48787e-16, -4.37114e-08, 2.08165e-12, 2.08165e-12, 0)
+mesh = SubResource("QuadMesh_x43tl")
+
+[node name="BackwardPlacementTile" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 2.08165e-12, 0)
+visible = false
 mesh = SubResource("QuadMesh_x43tl")

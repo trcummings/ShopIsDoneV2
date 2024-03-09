@@ -8,7 +8,7 @@ using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Arenas.States
 {
-	public partial class RunningState : State
+	public partial class RunningArenaState : State
 	{
         [Export]
         private BattlePhaseManager _PhaseManager;

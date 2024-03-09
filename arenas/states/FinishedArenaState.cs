@@ -8,7 +8,7 @@ using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.Arenas.States
 {
-    public partial class FinishedState : State
+    public partial class FinishedArenaState : State
     {
         [Export]
         public StateMachine _OutcomeStateMachine;

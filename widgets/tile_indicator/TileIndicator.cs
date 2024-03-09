@@ -13,7 +13,8 @@ namespace ShopIsDone.Widgets
             Green,
             Blue,
             Yellow,
-            Grey
+            Grey,
+            Purple
         }
 
         // Nodes
@@ -23,6 +24,7 @@ namespace ShopIsDone.Widgets
         private MeshInstance3D _BlueIndicator;
         private MeshInstance3D _YellowIndicator;
         private MeshInstance3D _GreyIndicator;
+        private MeshInstance3D _PurpleIndicator;
 
         public override void _Ready()
         {
@@ -33,6 +35,7 @@ namespace ShopIsDone.Widgets
             _RedIndicator = GetNode<MeshInstance3D>("%RedIndicator");
             _YellowIndicator = GetNode<MeshInstance3D>("%YellowIndicator");
             _GreyIndicator = GetNode<MeshInstance3D>("%GreyIndicator");
+            _PurpleIndicator = GetNode<MeshInstance3D>("%PurpleIndicator");
         }
 
         public void ClearIndicators()
@@ -75,6 +78,10 @@ namespace ShopIsDone.Widgets
 
                 case IndicatorColor.Grey:
                     indicatorNodeTemplate = _GreyIndicator;
+                    break;
+
+                case IndicatorColor.Purple:
+                    indicatorNodeTemplate = _PurpleIndicator;
                     break;
             }
 
