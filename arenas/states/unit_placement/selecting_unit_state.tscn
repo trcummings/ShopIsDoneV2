@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://4i7q7t1ox12t"]
+
+[ext_resource type="Script" path="res://arenas/states/unit_placement/SelectingUnitPlacementState.cs" id="1_j6iu0"]
+[ext_resource type="Script" path="res://util/HeldInputHelper.cs" id="2_u424y"]
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="3_e5mej"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="4_pyyy4"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="5_n5b3h"]
+[ext_resource type="PackedScene" uid="uid://dqrhke68klwx2" path="res://audio/ui/ui_invalid_player.tscn" id="6_77rrh"]
+
+[node name="SelectingUnit" type="Node" node_paths=PackedStringArray("_ConfirmPlacementInput")]
+script = ExtResource("1_j6iu0")
+_ConfirmPlacementInput = NodePath("ConfirmInputHelper")
+
+[node name="ConfirmInputHelper" type="Node" parent="."]
+script = ExtResource("2_u424y")
+ActionName = &"end_player_turn"
+
+[node name="UISelectPlayer" parent="." instance=ExtResource("3_e5mej")]
+
+[node name="UICancelPlayer" parent="." instance=ExtResource("4_pyyy4")]
+
+[node name="UIConfirmPlayer" parent="." instance=ExtResource("5_n5b3h")]
+
+[node name="UIInvalidPlayer" parent="." instance=ExtResource("6_77rrh")]
+
+[connection signal="Canceled" from="." to="UICancelPlayer" method="play"]
+[connection signal="Confirmed" from="." to="UIConfirmPlayer" method="play"]
+[connection signal="Invalid" from="." to="UIInvalidPlayer" method="play"]
+[connection signal="Selected" from="." to="UISelectPlayer" method="play"]

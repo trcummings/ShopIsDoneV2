@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://swb4777ufru4"]
+[gd_scene load_steps=10 format=3 uid="uid://swb4777ufru4"]
 
 [ext_resource type="Script" path="res://widgets/tile_indicator/TileIndicator.cs" id="1"]
 [ext_resource type="Material" path="res://widgets/tile_indicator/indicators/green_indicator.material" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Material" path="res://widgets/tile_indicator/indicators/blue_indicator.material" id="4"]
 [ext_resource type="Material" path="res://widgets/tile_indicator/indicators/yellow_indicator.material" id="5_gtceh"]
 [ext_resource type="Material" path="res://widgets/tile_indicator/indicators/red_indicator.material" id="6"]
+[ext_resource type="Material" uid="uid://47oook61vd3q" path="res://widgets/tile_indicator/indicators/purple_indicator.material" id="7_wokbn"]
 
 [sub_resource type="PlaneMesh" id="1"]
 
@@ -55,6 +56,14 @@ visible = false
 layers = 5
 mesh = SubResource("2")
 surface_material_override/0 = ExtResource("3")
+
+[node name="PurpleIndicator" type="MeshInstance3D" parent="Templates"]
+unique_name_in_owner = true
+transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 2.08165e-12, 0)
+visible = false
+layers = 5
+mesh = SubResource("2")
+surface_material_override/0 = ExtResource("7_wokbn")
 
 [node name="Indicators" type="Node3D" parent="."]
 unique_name_in_owner = true

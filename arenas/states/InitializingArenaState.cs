@@ -9,6 +9,7 @@ using ShopIsDone.Levels;
 using ShopIsDone.Tiles;
 using System.Linq;
 using PlacementConsts = ShopIsDone.Arenas.UnitPlacement.Consts;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Arenas.States
 {
@@ -32,6 +33,9 @@ namespace ShopIsDone.Arenas.States
         [Inject]
         private PlayerCharacterManager _PlayerCharacterManager;
 
+        // State
+        private Array<LevelEntity> _Units = new Array<LevelEntity>();
+
 
         public override void OnStart(Dictionary<string, Variant> message = null)
         {
@@ -43,21 +47,42 @@ namespace ShopIsDone.Arenas.States
             // Disable Pausing
             _PauseInputHandler.IsActive = false;
 
+            // Get player units
+            _Units = _PlayerCharacterManager
+                .GetAllUnits()
+                .OfType<LevelEntity>()
+                .ToGodotArray();
+
             // TODO: Skip placement if we have some sort of save data for the
             // level
-            _PlacementStateMachine.ChangeState(PlacementConsts.SELECTING_UNIT);
+
+            // Get placement tiles
+            var placementTiles = _TileManager
+                .GetPlacementTiles()
+                .Take(_Units.Count)
+                .ToArray();
+
+            // Place the player units on the first few placement tiles we have
+            for (int i = 0; i < placementTiles.Length; i++)
+            {
+                var placement = placementTiles[i];
+                var unit = _Units[i];
+                unit.GlobalPosition = placement.GlobalPosition;
+                // Set the unit's facing direction to the placement tile's direction
+                unit.FacingDirection = placement.PlacementFacingDir;
+            }
+
+            // Add player units to player unit service
+            _PlayerUnitService.Init(_Units.ToList());
+
+            // Change to the selecting unit state
+            _PlacementStateMachine.ChangeState(PlacementConsts.States.SELECTING_UNIT);
         }
 
         public async void Finish()
         {
             // Change placement state machine to idle
-            _PlacementStateMachine.ChangeState(PlacementConsts.IDLE);
-
-            // Get player units
-            var allUnits = _PlayerCharacterManager.GetAllUnits();
-
-            // Add player units to player unit service
-            _PlayerUnitService.Init(allUnits.ToList<LevelEntity>());
+            _PlacementStateMachine.ChangeState(PlacementConsts.States.IDLE);
 
             // Init all entities under the arena
             foreach (var entity in _EntitiesService.GetArenaChildEntities())

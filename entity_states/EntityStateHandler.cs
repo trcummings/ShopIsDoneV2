@@ -73,17 +73,17 @@ namespace ShopIsDone.EntityStates
 
         public bool IsInState(string state)
         {
-            return _CurrentState.Id == state;
+            return _CurrentState?.Id == state;
         }
 
         public bool IsInArena()
         {
-            return _CurrentState.IsInArena;
+            return _CurrentState?.IsInArena ?? false;
         }
 
         public bool IsActive()
         {
-            return _CurrentState.IsActive;
+            return _CurrentState?.IsActive ?? false;
         }
 
         public Command RunIdleCurrentState()

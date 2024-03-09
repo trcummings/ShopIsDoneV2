@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=88 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -50,10 +50,9 @@
 [ext_resource type="Resource" uid="uid://5fosu0kpci6h" path="res://entities/clown_puppet/clown_warnings.dialogue" id="23_xgetg"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/FailureFinishedState.cs" id="24_ych7k"]
 [ext_resource type="Script" path="res://arenas/ArenaEntitiesService.cs" id="25_04uvk"]
-[ext_resource type="Script" path="res://arenas/states/unit_placement/SelectingUnitPlacementState.cs" id="28_5mwv1"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/InteractState.cs" id="29_22p7l"]
-[ext_resource type="Script" path="res://arenas/states/unit_placement/MovingUnitPlacementState.cs" id="29_sa81n"]
-[ext_resource type="Script" path="res://util/HeldInputHelper.cs" id="30_tki4u"]
+[ext_resource type="PackedScene" uid="uid://4i7q7t1ox12t" path="res://arenas/states/unit_placement/selecting_unit_state.tscn" id="29_210gg"]
+[ext_resource type="PackedScene" uid="uid://cbi0wx8o2ucbo" path="res://arenas/states/unit_placement/moving_unit_state.tscn" id="30_xgwp3"]
 [ext_resource type="Script" path="res://util/ControlTweener.cs" id="32_b7vkh"]
 [ext_resource type="PackedScene" uid="uid://dqw2sf0ivpiqj" path="res://arenas/turn_counter/turns_remaining_panel.tscn" id="33_otw68"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/TaskState.cs" id="33_pf6p2"]
@@ -221,20 +220,17 @@ script = ExtResource("2_1igvu")
 [node name="Idle" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine"]
 script = ExtResource("3_q440h")
 
-[node name="SelectingUnit" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine" node_paths=PackedStringArray("_InitState", "_TileManager", "_PlayerUnitService", "_ConfirmPlacementInput", "_ConfirmPrompt")]
-script = ExtResource("28_5mwv1")
+[node name="SelectingUnit" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine" node_paths=PackedStringArray("_InitState", "_TileManager", "_PlayerUnitService", "_ConfirmPrompt", "_SelectPrompt") instance=ExtResource("29_210gg")]
 _InitState = NodePath("../..")
 _TileManager = NodePath("../../../../Tiles")
 _PlayerUnitService = NodePath("../../../../Services/PlayerUnitService")
-_ConfirmPlacementInput = NodePath("ConfirmInputHelper")
 _ConfirmPrompt = NodePath("../../../../UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer/ConfirmPlacementPrompt")
+_SelectPrompt = NodePath("../../../../UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SelectUnitCTA")
 
-[node name="ConfirmInputHelper" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine/SelectingUnit"]
-script = ExtResource("30_tki4u")
-ActionName = &"end_player_turn"
-
-[node name="MovingUnit" type="Node" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine"]
-script = ExtResource("29_sa81n")
+[node name="MovingUnit" parent="ArenaStateMachine/Initializing/UnitPlacementStateMachine" node_paths=PackedStringArray("_CancelPrompt", "_SwapPrompt", "_PlacePrompt") instance=ExtResource("30_xgwp3")]
+_CancelPrompt = NodePath("../../../../UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/CancelCTA")
+_SwapPrompt = NodePath("../../../../UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SwapUnitsCTA")
+_PlacePrompt = NodePath("../../../../UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/PlaceUnitCTA")
 
 [node name="Running" type="Node" parent="ArenaStateMachine" node_paths=PackedStringArray("_PhaseManager")]
 script = ExtResource("4_oqnwb")
@@ -824,6 +820,7 @@ alignment = 2
 [node name="SelectUnitCTA" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("75_aedxp")]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 8
 
 [node name="Label" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SelectUnitCTA/BackgroundPanel/MarginContainer/HBoxContainer" index="0"]
 text = "Select
@@ -832,13 +829,23 @@ text = "Select
 [node name="SwapUnitsCTA" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("75_aedxp")]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 8
 
 [node name="Label" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SwapUnitsCTA/BackgroundPanel/MarginContainer/HBoxContainer" index="0"]
 text = "Swap"
 
+[node name="PlaceUnitCTA" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("75_aedxp")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Label" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/PlaceUnitCTA/BackgroundPanel/MarginContainer/HBoxContainer" index="0"]
+text = "Place Unit"
+
 [node name="CancelCTA" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("75_aedxp")]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 8
 
 [node name="Label" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/CancelCTA/BackgroundPanel/MarginContainer/HBoxContainer" index="0"]
 text = "Cancel
@@ -855,4 +862,5 @@ bus = &"SFX"
 
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SelectUnitCTA"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SwapUnitsCTA"]
+[editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/PlaceUnitCTA"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/CancelCTA"]
