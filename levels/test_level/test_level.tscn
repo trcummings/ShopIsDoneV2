@@ -195,4 +195,5 @@ grow_vertical = 2
 [editable path="World/NavigationRegion3D/Environment/Arena"]
 [editable path="World/NavigationRegion3D/Environment/Arena/UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SelectUnitCTA"]
 [editable path="World/NavigationRegion3D/Environment/Arena/UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SwapUnitsCTA"]
+[editable path="World/NavigationRegion3D/Environment/Arena/UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/PlaceUnitCTA"]
 [editable path="World/NavigationRegion3D/Environment/Arena/UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/CancelCTA"]
