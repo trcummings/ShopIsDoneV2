@@ -42,7 +42,7 @@ namespace ShopIsDone.Arenas.Battles.States
             _EnemyTurnService.RefillApToMax();
 
             // Resolve status effects
-            //_EnemyTurnSystem.ResolveStatusEffects();
+            _EnemyTurnService.ResolveStatusEffects();
 
             // Run enemy AI
             _EnemyTurnService.Connect(

@@ -33,6 +33,7 @@ namespace ShopIsDone.Arenas.Battles.States
                 new ActionCommand(_PlayerUnitTurnService.RefillApToMax),
 
                 // Resolve status effects
+                _PlayerUnitTurnService.ResolveStatusEffects(),
 
                 // Resolve in progress tasks
                 _TaskService.ResolveInProgressTasks(),
