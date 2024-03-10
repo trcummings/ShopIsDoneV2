@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cfix8fr0l76pi"]
+
+[ext_resource type="Script" path="res://status_effects/DepressedStatusEffect.cs" id="1_s3qpg"]
+
+[resource]
+script = ExtResource("1_s3qpg")
+Id = "depressed"
+EffectName = "Depressed"
+Stackable = false
+MaxStacks = 0
+Duration = 1

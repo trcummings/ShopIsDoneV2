@@ -18,6 +18,11 @@ namespace ShopIsDone.Utils.DependencyInjection
             return node.GetNode<InjectionProvider>("/root/InjectionProvider");
         }
 
+        public bool IsServiceRegistered(Type serviceType)
+        {
+            return _Services.ContainsKey(serviceType);
+        }
+
         public static void Inject(Node node)
         {
             GetProvider(node).InjectObject(node);
@@ -68,7 +73,7 @@ namespace ShopIsDone.Utils.DependencyInjection
             // Get first base type
             type = type.BaseType;
 
-            // Find their "private" memebers
+            // Find their "private" members
             while (
                 type != null &&
                 type != typeof(Node) &&
@@ -82,7 +87,7 @@ namespace ShopIsDone.Utils.DependencyInjection
                 foreach (var item in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
                 {
                     // Make sure it's private!
-                    // To prevent doubleing up on protected members
+                    // To prevent doubling up on protected members
                     if (item.IsPrivate)
                     {
                         yield return item;

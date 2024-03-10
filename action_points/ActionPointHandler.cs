@@ -2,8 +2,8 @@ using System;
 using Godot;
 using Godot.Collections;
 using ShopIsDone.Core;
+using ShopIsDone.Core.Stats;
 using ShopIsDone.Utils.Commands;
-using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.Positioning;
 
@@ -45,6 +45,9 @@ namespace ShopIsDone.ActionPoints
         public delegate void SpentExcessApEventHandler(int amount);
 
         [Signal]
+        public delegate void TookDebtDamageEventHandler(int amount);
+
+        [Signal]
         public delegate void MaxedOutDebtEventHandler();
 
         [Export]
@@ -82,18 +85,23 @@ namespace ShopIsDone.ActionPoints
         [Export]
         public int MaxActionPoints = 5;
 
+        public Stat ApRecovery = new Stat(5);
+
         public override void _Ready()
         {
             _EvasionHandler = GetNode<IEvasionHandler>(_EvasionHandlerPath);
             _DrainHandler = GetNode<IDrainHandler>(_DrainHandlerPath);
             _DebtDamageHandler = GetNode<IDebtDamageHandler>(_DebtDamageHandlerPath);
             _DeathHandler = GetNode<IDeathHandler>(_DeathHandlerPath);
+
+            // Ready stats
+            ApRecovery = new Stat(MaxActionPoints);
         }
 
         public override void Init()
         {
             base.Init();
-            InjectionProvider.Inject(_DebtDamageHandler as Node);
+            _DebtDamageHandler.Init(this);
         }
 
         // Public API
@@ -199,12 +207,14 @@ namespace ShopIsDone.ActionPoints
 
         public virtual void RefillApToMax()
         {
-            // Calculate the amount we're going to refill to this unit, the
-            // difference between their max and the amount of debt
-            var availableRefillAmount = MaxActionPoints - ActionPointDebt;
+            // Get the recovery amount
+            var refillAmount = (int)ApRecovery.GetValue();
+
+            // Calculate how much refill we can get this turn based on debt
+            var availableRefillAmount = Mathf.Max(refillAmount - ActionPointDebt, 0);
 
             // Calculate the real amount we refill based on current AP
-            var realRefillAmount = availableRefillAmount - ActionPoints;
+            var realRefillAmount = Mathf.Max(availableRefillAmount - ActionPoints, 0);
 
             // If refill amount is more than 0, refill
             if (realRefillAmount > 0)

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bif37q5lcly8f"]
+
+[ext_resource type="Resource" uid="uid://cfix8fr0l76pi" path="res://status_effects/depressed_status_effect.tres" id="1_lratp"]
+[ext_resource type="Script" path="res://passive_effects/EasilyDepressedPassiveEffect.cs" id="1_o3ody"]
+
+[resource]
+script = ExtResource("1_o3ody")
+_DepressedEffect = ExtResource("1_lratp")
+Id = "easily_depressed"
+EffectName = "Easily Depressed"

@@ -72,7 +72,7 @@ namespace ShopIsDone.Arenas
                 GetTurnEntities()
                     // Filter out entities with no status effects
                     .Where(e => e.HasComponent<StatusEffectHandler>())
-                    .Select(e => e.GetComponent<StatusEffectHandler>().ProcessStatusEffects())
+                    .Select(e => e.GetComponent<StatusEffectHandler>().ProcessEffects())
                     .ToArray()
             );
         }

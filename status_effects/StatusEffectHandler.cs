@@ -10,7 +10,9 @@ namespace ShopIsDone.StatusEffects
 {
     public partial class StatusEffectHandler : NodeComponent
     {
+        [Export]
         private Array<StatusEffect> _Effects = new Array<StatusEffect>();
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -21,7 +23,12 @@ namespace ShopIsDone.StatusEffects
 
         public override void Init()
         {
-
+            // Initialize each effect
+            var clonedList = _Effects.ToList();
+            // Clear the initial list of effects
+            _Effects.Clear();
+            // Apply and init each effect
+            foreach (var effect in clonedList) ApplyEffect(effect).Execute();
         }
 
         public bool HasStatusEffect(string id)
@@ -29,27 +36,49 @@ namespace ShopIsDone.StatusEffects
             return _Effects.Any(se => se.Id == id);
         }
 
-        public Command AddStatusEffect(StatusEffect status)
+        public StatusEffect GetEffect(string id)
         {
-            // Return command
-            return new SeriesCommand(
+            return _Effects.ToList().Find(se => se.Id == id);
+        }
 
+        public Command ApplyEffect(StatusEffect effect)
+        {
+            return new SeriesCommand(
+                new ActionCommand(() => InitEffect(effect)),
+                new DeferredCommand(() =>
+                    GetEffect(effect.Id)?.ApplyEffect() ??
+                    new Command()
+                )
             );
         }
 
-        public Command RemoveStatusEffect(StatusEffect status)
+        public Command RemoveEffect(StatusEffect effect)
         {
             return new SeriesCommand(
-
+                new ActionCommand(() => _Effects.Remove(effect)),
+                new DeferredCommand(effect.RemoveEffect)
             );
         }
 
-        public Command ProcessStatusEffects()
+        public Command ProcessEffects()
         {
             return new SeriesCommand(
-                _Effects.Select(e => e.ProcessStatusEffect())
-                .ToArray()
+                _Effects
+                    .Select(e => e.ProcessStatusEffect())
+                    .ToArray()
             );
+        }
+
+        private void InitEffect(StatusEffect effect)
+        {
+            // Duplicate effect
+            var newEffect = (StatusEffect)effect.Duplicate();
+            // Add to list
+            _Effects.Add(newEffect);
+            // Inject into action
+            _InjectionProvider.InjectObject(newEffect);
+            // Init object
+            newEffect.Init(this);
         }
     }
 }
