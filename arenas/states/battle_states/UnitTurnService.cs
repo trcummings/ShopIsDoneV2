@@ -10,6 +10,7 @@ using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.ArenaInteractions;
 using ShopIsDone.StatusEffects;
 using ShopIsDone.Utils.Commands;
+using ShopIsDone.PassiveEffects;
 
 namespace ShopIsDone.Arenas
 {
@@ -65,15 +66,26 @@ namespace ShopIsDone.Arenas
             }
         }
 
-        public Command ResolveStatusEffects()
+        public Command ResolveEffects()
         {
-            // Resolve status effects
             return new SeriesCommand(
-                GetTurnEntities()
-                    // Filter out entities with no status effects
-                    .Where(e => e.HasComponent<StatusEffectHandler>())
-                    .Select(e => e.GetComponent<StatusEffectHandler>().ProcessEffects())
-                    .ToArray()
+                // Resolve passive effects
+                new ActionCommand(() =>
+                {
+                    var passiveHandlers = GetTurnEntities()
+                        // Filter out entities with no status effects
+                        .Where(e => e.HasComponent<PassiveEffectHandler>())
+                        .Select(e => e.GetComponent<PassiveEffectHandler>());
+                    foreach (var handler in passiveHandlers) handler.ProcessEffects();
+                }),
+                // Resolve status effects
+                new SeriesCommand(
+                    GetTurnEntities()
+                        // Filter out entities with no status effects
+                        .Where(e => e.HasComponent<StatusEffectHandler>())
+                        .Select(e => e.GetComponent<StatusEffectHandler>().ProcessEffects())
+                        .ToArray()
+                )
             );
         }
     }

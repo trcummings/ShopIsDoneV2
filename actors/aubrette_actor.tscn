@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://bhmg13nssujbh"]
+[gd_scene load_steps=50 format=3 uid="uid://bhmg13nssujbh"]
 
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_52ctf"]
 [ext_resource type="PackedScene" uid="uid://blwt1nyomjjj8" path="res://render/employees/aubrette/aubrette_model.tscn" id="2_ulapc"]
@@ -43,6 +43,7 @@
 [ext_resource type="Script" path="res://status_effects/StatusEffectHandler.cs" id="44_jo8p0"]
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="45_f6qud"]
 [ext_resource type="Script" path="res://passive_effects/PassiveEffectHandler.cs" id="45_yep7i"]
+[ext_resource type="Resource" uid="uid://doulbhi1cwa3p" path="res://passive_effects/chronic_pain_passive_effect.tres" id="46_mw1b6"]
 [ext_resource type="PackedScene" uid="uid://c03r17klsdybr" path="res://lighting/null_world_light.tscn" id="46_s6pyb"]
 [ext_resource type="Script" path="res://render/ModelComponent.cs" id="47_36jgp"]
 
@@ -249,6 +250,7 @@ script = ExtResource("44_jo8p0")
 
 [node name="PassiveEffectHandler" type="Node" parent="."]
 script = ExtResource("45_yep7i")
+_Effects = [ExtResource("46_mw1b6")]
 
 [connection signal="Footstep" from="AubretteModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]

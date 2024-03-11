@@ -12,6 +12,7 @@ namespace ShopIsDone.StatusEffects
     {
         [Export]
         private Array<StatusEffect> _Effects = new Array<StatusEffect>();
+        public Array<StatusEffect> Effects { get { return _Effects; } }
 
         private InjectionProvider _InjectionProvider;
 

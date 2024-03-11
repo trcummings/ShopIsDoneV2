@@ -11,6 +11,7 @@ namespace ShopIsDone.PassiveEffects
     {
         [Export]
         private Array<PassiveEffect> _Effects = new Array<PassiveEffect>();
+        public Array<PassiveEffect> Effects { get { return _Effects; } }
 
         private InjectionProvider _InjectionProvider;
 
@@ -52,6 +53,11 @@ namespace ShopIsDone.PassiveEffects
             effect.RemoveEffect();
         }
 
+        public void ProcessEffects()
+        {
+            foreach (var effect in _Effects) effect.ProcessEffect();
+        }
+
         private void InitEffect(PassiveEffect effect)
         {
             // Duplicate effect
@@ -63,6 +69,5 @@ namespace ShopIsDone.PassiveEffects
             // Init object
             newEffect.Init(this);
         }
-
     }
 }

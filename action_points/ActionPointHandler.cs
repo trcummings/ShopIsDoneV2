@@ -36,6 +36,9 @@ namespace ShopIsDone.ActionPoints
         public delegate void RecoveredApEventHandler(int amount);
 
         [Signal]
+        public delegate void RefilledApEventHandler(int prevAp, int refillAmount);
+
+        [Signal]
         public delegate void HealedDebtEventHandler(int amount);
 
         [Signal]
@@ -207,6 +210,9 @@ namespace ShopIsDone.ActionPoints
 
         public virtual void RefillApToMax()
         {
+            // Record the previous AP amount
+            var currentAp = ActionPoints;
+
             // Get the recovery amount
             var refillAmount = (int)ApRecovery.GetValue();
 
@@ -217,12 +223,19 @@ namespace ShopIsDone.ActionPoints
             var realRefillAmount = Mathf.Max(availableRefillAmount - ActionPoints, 0);
 
             // If refill amount is more than 0, refill
-            if (realRefillAmount > 0)
-            {
-                // Set number of action points to the refill amount + max check
-                ActionPoints = Mathf.Min(ActionPoints + realRefillAmount, MaxActionPoints);
-                EmitSignal(nameof(RecoveredAp), realRefillAmount);
-            }
+            if (realRefillAmount > 0) RecoverAp(realRefillAmount);
+
+            // Calculate the actual refilled amount based on the amount
+            // after recovery minus the previous amount
+            var actualAmount = ActionPoints - currentAp;
+            EmitSignal(nameof(RefilledAp), currentAp, actualAmount);
+        }
+
+        public virtual void RecoverAp(int amount)
+        {
+            // Set number of action points to the recovery amount + max check
+            ActionPoints = Mathf.Min(ActionPoints + amount, MaxActionPoints);
+            EmitSignal(nameof(RecoveredAp), amount);
         }
 
         public virtual void GrantExcessAp(int amount)

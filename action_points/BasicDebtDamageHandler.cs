@@ -32,10 +32,17 @@ namespace ShopIsDone.ActionPoints
                     // Set debt
                     if (payload.TotalDebtDamage > 0)
                     {
+                        var apHandler = payload.ApHandler;
                         // Set debt
-                        payload.ApHandler.ActionPointDebt = Mathf.Min(
+                        apHandler.ActionPointDebt = Mathf.Min(
                             payload.DebtAfterDamage,
-                            payload.ApHandler.MaxActionPoints
+                            apHandler.MaxActionPoints
+                        );
+
+                        // Cap action points
+                        apHandler.ActionPoints = Mathf.Min(
+                            apHandler.MaxActionPoints - apHandler.ActionPointDebt,
+                            apHandler.ActionPoints
                         );
 
                         // Emit

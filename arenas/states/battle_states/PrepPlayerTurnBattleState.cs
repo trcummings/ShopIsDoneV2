@@ -30,7 +30,7 @@ namespace ShopIsDone.Arenas.Battles.States
                 // Update silhouettes
 
                 // Resolve status effects
-                _PlayerUnitTurnService.ResolveStatusEffects(),
+                _PlayerUnitTurnService.ResolveEffects(),
 
                 // Refill AP
                 new ActionCommand(_PlayerUnitTurnService.RefillApToMax),

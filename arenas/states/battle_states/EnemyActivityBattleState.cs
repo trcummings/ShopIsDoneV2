@@ -37,7 +37,7 @@ namespace ShopIsDone.Arenas.Battles.States
             }
 
             // Resolve status effects
-            await _EnemyTurnService.ResolveStatusEffects().AwaitCommandFrom(this);
+            await _EnemyTurnService.ResolveEffects().AwaitCommandFrom(this);
 
             // Refill enemy AP
             _EnemyTurnService.RefillApToMax();

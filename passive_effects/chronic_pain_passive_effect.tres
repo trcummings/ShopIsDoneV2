@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://doulbhi1cwa3p"]
+
+[ext_resource type="Script" path="res://passive_effects/ChronicPainPassiveEffect.cs" id="1_muart"]
+
+[resource]
+script = ExtResource("1_muart")
+Id = "chronic_pain"
+EffectName = "Chronic Pain"
