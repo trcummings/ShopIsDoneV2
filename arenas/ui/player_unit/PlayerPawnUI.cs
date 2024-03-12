@@ -4,6 +4,8 @@ using ShopIsDone.ActionPoints;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Extensions;
 using Godot.Collections;
+using ShopIsDone.PassiveEffects;
+using ShopIsDone.StatusEffects;
 
 namespace ShopIsDone.Arenas.UI
 {
@@ -19,9 +21,11 @@ namespace ShopIsDone.Arenas.UI
         private TextureRect _Portrait;
         private TextureRect _PortraitBg;
         private Label _PawnNameLabel;
-        private TextureRect _PortraitOutline;
+        private TextureRect _CardBase;
         private ActionPointMeter _ActionPointMeter;
         private ApExcessUI _ApExcessUI;
+        private Control _EffectsContainer;
+        private TextureRect _EffectIconTemplate;
 
         // Demerits
         private TextureRect _YellowSlip;
@@ -38,11 +42,13 @@ namespace ShopIsDone.Arenas.UI
             _Portrait = GetNode<TextureRect>("%Portrait");
             _PortraitBg = GetNode<TextureRect>("%PortraitBackground");
             _PawnNameLabel = GetNode<Label>("%PawnName");
-            _PortraitOutline = GetNode<TextureRect>("%CardBase");
+            _CardBase = GetNode<TextureRect>("%CardBase");
             _ApExcessUI = GetNode<ApExcessUI>("%ApExcessContainer");
             _ActionPointMeter = GetNode<ActionPointMeter>("%ActionPointMeter");
             _YellowSlip = GetNode<TextureRect>("%YellowSlip");
             _PinkSlip = GetNode<TextureRect>("%PinkSlip");
+            _EffectsContainer = GetNode<Control>("%EffectsContainer");
+            _EffectIconTemplate = GetNode<TextureRect>("%EffectIconTemplate");
         }
 
         public void Init(LevelEntity pawn)
@@ -67,11 +73,14 @@ namespace ShopIsDone.Arenas.UI
 
             // Set Demerits
             SetDemerits();
+
+            // Handle Effect Icons
+            SetEffectIcons();
         }
 
         public void SelectPawnUI(bool val)
         {
-            _PortraitOutline.Modulate = val ? Colors.White : DeselectedColor;
+            _CardBase.Modulate = val ? Colors.White : DeselectedColor;
             _Portrait.Modulate = val ? Colors.White : DeselectedColor;
             _PortraitBg.Modulate = val ? Colors.White : DeselectedColor;
         }
@@ -128,6 +137,34 @@ namespace ShopIsDone.Arenas.UI
             if (_PortraitIdxes.ContainsKey(Pawn.Id)) idx = _PortraitIdxes[Pawn.Id];
             // Set the atlas texture's index
             (_Portrait.Texture as AtlasTexture).SetAtlasIdx(idx, 4);
+        }
+
+        private void SetEffectIcons()
+        {
+            // Clear away icons
+            foreach (var child in _EffectsContainer.GetChildren())
+            {
+                if (child != _EffectIconTemplate) _EffectsContainer.RemoveChild(child);
+            }
+
+            var passiveEffects = Pawn.GetComponent<PassiveEffectHandler>()?.Effects ?? new Array<PassiveEffect>();
+            var statusEffects = Pawn.GetComponent<StatusEffectHandler>()?.Effects ?? new Array<StatusEffect>();
+
+            foreach (var effect in passiveEffects)
+            {
+                var node = _EffectIconTemplate.Duplicate() as TextureRect;
+                node.Texture = effect.Icon;
+                _EffectsContainer.AddChild(node);
+                node.Show();
+            }
+
+            foreach (var effect in statusEffects)
+            {
+                var node = _EffectIconTemplate.Duplicate() as TextureRect;
+                node.Texture = effect.Icon;
+                _EffectsContainer.AddChild(node);
+                node.Show();
+            }
         }
     }
 }
