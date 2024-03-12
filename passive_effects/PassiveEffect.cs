@@ -20,6 +20,9 @@ namespace ShopIsDone.PassiveEffects
         [Export(PropertyHint.MultilineText)]
         public string EffectDescription;
 
+        [Export]
+        public Texture2D Icon;
+
         [Inject]
         private ScriptQueueService _Queue;
 

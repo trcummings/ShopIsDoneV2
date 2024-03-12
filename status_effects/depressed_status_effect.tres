@@ -6,6 +6,9 @@
 script = ExtResource("1_s3qpg")
 Id = "depressed"
 EffectName = "Depressed"
-Stackable = false
+EffectDescription = ""
+IsStackable = false
 MaxStacks = 0
 Duration = 1
+Punctuation = 0
+ShowIconInPopup = false

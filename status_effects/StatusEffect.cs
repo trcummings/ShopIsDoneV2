@@ -1,7 +1,9 @@
 using System;
 using Godot;
+using ShopIsDone.Arenas.ArenaScripts;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.StatusEffects
 {
@@ -15,8 +17,14 @@ namespace ShopIsDone.StatusEffects
         [Export]
         public string EffectName;
 
+        [Export(PropertyHint.MultilineText)]
+        public string EffectDescription;
+
         [Export]
-        public bool Stackable = false;
+        public Texture2D Icon;
+
+        [Export]
+        public bool IsStackable = false;
 
         [Export]
         public int MaxStacks = 0;
@@ -24,7 +32,40 @@ namespace ShopIsDone.StatusEffects
         [Export]
         public int Duration = 0;
 
+        [ExportGroup("Popup")]
+        [Export(PropertyHint.Enum)]
+        public Punctuations Punctuation = Punctuations.None;
+
+        [Export]
+        public bool ShowIconInPopup;
+
+        public enum Punctuations
+        {
+            None,
+            Exclamation,
+            Question
+        }
+
+        [Inject]
+        private ScriptQueueService _Queue;
+
         protected LevelEntity _Entity;
+
+        public string GetPopupString()
+        {
+            return $"{EffectName}{PunctuationToString(Punctuation)}";
+        }
+
+        private static string PunctuationToString(Punctuations punctuation)
+        {
+            switch (punctuation)
+            {
+                case Punctuations.None: return "";
+                case Punctuations.Exclamation: return "!";
+                case Punctuations.Question: return "?";
+                default: return "";
+            }
+        }
 
         /* Init method ONLY for the intialization of needed components */
         public virtual void Init(StatusEffectHandler handler)
@@ -33,9 +74,20 @@ namespace ShopIsDone.StatusEffects
             _Entity = handler.Entity;
         }
 
-        public virtual Command ApplyEffect()
+        public void StackEffect(StatusEffect effect)
         {
-            return new Command();
+            // Ignore attempts to stack incompatible effects
+            // NB: This should not happen but it doesn't hurt to guard it here
+            if (effect.Id != Id) return;
+
+            // FIXME: This doesn't really make sense unless all effects are
+            // duration based for stacking, but YAGNI until they aren't
+            Duration = Mathf.Min(Duration + effect.Duration, MaxStacks);
+        }
+
+        public virtual void ApplyEffect()
+        {
+            // Do nothing
         }
 
         public Command ProcessStatusEffect()
@@ -47,7 +99,7 @@ namespace ShopIsDone.StatusEffects
                 new IfElseCommand(
                     () => Duration == 0,
                     // If duration is down to zero, remove the effect
-                    _Handler.RemoveEffect(this),
+                    _Handler.RemoveEffect(Id),
                     // Otherwise, tick down duration
                     new ActionCommand(() =>
                     {
@@ -57,9 +109,9 @@ namespace ShopIsDone.StatusEffects
             );
         }
 
-        public virtual Command RemoveEffect()
+        public virtual void RemoveEffect()
         {
-            return new Command();
+            // Do nothing
         }
 
         // API overrides for protection
@@ -67,6 +119,18 @@ namespace ShopIsDone.StatusEffects
         {
             return new Command();
         }
+
+        #region Sandbox subclass methods
+        /* Helper method to emit any command to the queue on triggering a 
+         * passive effect */
+        protected void EmitCommandToQueue(Command command)
+        {
+            _Queue.AddScriptToQueue(new CommandArenaScript()
+            {
+                CommandFn = () => command
+            });
+        }
+        #endregion
     }
 }
 

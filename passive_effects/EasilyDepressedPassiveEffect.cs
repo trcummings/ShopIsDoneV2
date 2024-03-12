@@ -34,9 +34,6 @@ namespace ShopIsDone.PassiveEffects
 
         private void OnTriggerDepression(int _)
         {
-            // Ignore if they already have depression
-            if (HasStatusEffect(_DepressedEffect.Id)) return;
-
             // Probability check
             if (PercentCheck(_TriggerChance))
             {

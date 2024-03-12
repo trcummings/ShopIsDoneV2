@@ -2,7 +2,6 @@ using Godot;
 using ShopIsDone.ActionPoints;
 using ShopIsDone.Core.Stats;
 using ShopIsDone.Utils.Commands;
-using System;
 
 namespace ShopIsDone.StatusEffects
 {
@@ -18,24 +17,18 @@ namespace ShopIsDone.StatusEffects
             _RecoveryMod = new Modifier(-_ApHandler.MaxActionPoints, Modifier.ModifierType.Additive);
         }
 
-        // Add an AP recovery modifier that reduces recovery to 0
-        public override Command ApplyEffect()
+        public override void ApplyEffect()
         {
-            return new ActionCommand(() =>
-            {
-                GD.Print($"{_Entity.EntityName} is Depressed! No AP refill next turn.");
-                _ApHandler.ApRecovery.AddModifier(_RecoveryMod);
-            });
+            // Add an AP recovery modifier that reduces recovery to 0, drain
+            // remaining AP
+            _ApHandler.ApRecovery.AddModifier(_RecoveryMod);
+            EmitCommandToQueue(new ActionCommand(() => _ApHandler.SpendAPOnAction(_ApHandler.ActionPoints)));
         }
 
         // Remove the AP recovery modifier that reduces recovery to 0
-        public override Command RemoveEffect()
+        public override void RemoveEffect()
         {
-            return new ActionCommand(() =>
-            {
-                GD.Print($"{_Entity.EntityName} is no longer depressed.");
-                _ApHandler.ApRecovery.RemoveModifier(_RecoveryMod);
-            });
+            _ApHandler.ApRecovery.RemoveModifier(_RecoveryMod);
         }
     }
 }

@@ -3,6 +3,7 @@ using Godot.Collections;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
+using ShopIsDone.Widgets;
 using System;
 using System.Linq;
 
@@ -14,6 +15,9 @@ namespace ShopIsDone.StatusEffects
         private Array<StatusEffect> _Effects = new Array<StatusEffect>();
         public Array<StatusEffect> Effects { get { return _Effects; } }
 
+        [Inject]
+        private EntityWidgetService _WidgetService;
+
         private InjectionProvider _InjectionProvider;
 
         public override void _Ready()
@@ -24,12 +28,20 @@ namespace ShopIsDone.StatusEffects
 
         public override void Init()
         {
+            // Inject
+            _InjectionProvider.InjectObject(this);
+
             // Initialize each effect
             var clonedList = _Effects.ToList();
             // Clear the initial list of effects
             _Effects.Clear();
             // Apply and init each effect
-            foreach (var effect in clonedList) ApplyEffect(effect).Execute();
+            foreach (var effect in clonedList)
+            {
+                var newEffect = InitEffect(effect);
+                _Effects.Add(newEffect);
+                newEffect.ApplyEffect();
+            }
         }
 
         public bool HasStatusEffect(string id)
@@ -44,20 +56,52 @@ namespace ShopIsDone.StatusEffects
 
         public Command ApplyEffect(StatusEffect effect)
         {
-            return new SeriesCommand(
-                new ActionCommand(() => InitEffect(effect)),
+            return new IfElseCommand(
+                // If we have it already, attempt to stack the effect
+                () => HasStatusEffect(effect.Id),
+                // Check for stacking
+                new ConditionalCommand(
+                    () => effect.IsStackable,
+                    new ActionCommand(() =>
+                    {
+                        // NB: We don't need to null check this
+                        var baseEffect = GetEffect(effect.Id);
+                        baseEffect.StackEffect(effect);
+                        // TODO: Global UI signal
+                    })
+                ),
+                // Otherwise, apply it normally
                 new DeferredCommand(() =>
-                    GetEffect(effect.Id)?.ApplyEffect() ??
-                    new Command()
-                )
+                {
+                    // Initialize, apply it, and add it to the effects
+                    var newEffect = InitEffect(effect);
+                    _Effects.Add(newEffect);
+                    newEffect.ApplyEffect();
+
+                    // TODO: Global UI signal
+
+                    // Run the application animations / FX
+                    return new AsyncCommand(() =>
+                        _WidgetService.PopupLabelAsync(
+                            Entity.WidgetPoint,
+                            newEffect.GetPopupString()
+                        )
+                    );
+                })
             );
         }
 
-        public Command RemoveEffect(StatusEffect effect)
+        public Command RemoveEffect(string id)
         {
-            return new SeriesCommand(
-                new ActionCommand(() => _Effects.Remove(effect)),
-                new DeferredCommand(effect.RemoveEffect)
+            // If we have it, then simply remove it and call the removal hook
+            return new ConditionalCommand(
+                () => HasStatusEffect(id),
+                new ActionCommand(() =>
+                {
+                    var effect = GetEffect(id);
+                    _Effects.Remove(effect);
+                    effect.RemoveEffect();
+                })
             );
         }
 
@@ -70,16 +114,16 @@ namespace ShopIsDone.StatusEffects
             );
         }
 
-        private void InitEffect(StatusEffect effect)
+        private StatusEffect InitEffect(StatusEffect effect)
         {
             // Duplicate effect
             var newEffect = (StatusEffect)effect.Duplicate();
-            // Add to list
-            _Effects.Add(newEffect);
             // Inject into action
             _InjectionProvider.InjectObject(newEffect);
             // Init object
             newEffect.Init(this);
+
+            return newEffect;
         }
     }
 }

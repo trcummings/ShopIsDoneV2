@@ -5,6 +5,8 @@
 
 [resource]
 script = ExtResource("1_o3ody")
+_TriggerChance = 0.5
 _DepressedEffect = ExtResource("1_lratp")
 Id = "easily_depressed"
 EffectName = "Easily Depressed"
+EffectDescription = ""
