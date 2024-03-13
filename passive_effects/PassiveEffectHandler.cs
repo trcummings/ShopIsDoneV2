@@ -23,10 +23,20 @@ namespace ShopIsDone.PassiveEffects
 
         public override void Init()
         {
+            // Inject
+            _InjectionProvider.InjectObject(this);
+
             // Initialize each effect
             var clonedList = _Effects.ToList();
+            // Clear the initial list of effects
             _Effects.Clear();
-            foreach (var effect in clonedList) ApplyEffect(effect);
+            // Apply and init each effect
+            foreach (var effect in clonedList)
+            {
+                var newEffect = InitEffect(effect);
+                _Effects.Add(newEffect);
+                newEffect.ApplyEffect();
+            }
         }
 
         public bool HasEffect(string id)
@@ -41,8 +51,14 @@ namespace ShopIsDone.PassiveEffects
 
         public void ApplyEffect(PassiveEffect effect)
         {
-            InitEffect(effect);
-            GetEffect(effect.Id)?.ApplyEffect();
+            // We can't add it twice
+            if (HasEffect(effect.Id)) return;
+
+            // Initialize, apply it, and add it to the effects
+            var newEffect = InitEffect(effect);
+            _Effects.Add(newEffect);
+            newEffect.ApplyEffect();
+
         }
 
         public void RemoveEffect(PassiveEffect effect)
@@ -58,16 +74,16 @@ namespace ShopIsDone.PassiveEffects
             foreach (var effect in _Effects) effect.ProcessEffect();
         }
 
-        private void InitEffect(PassiveEffect effect)
+        private PassiveEffect InitEffect(PassiveEffect effect)
         {
             // Duplicate effect
             var newEffect = (PassiveEffect)effect.Duplicate();
-            // Add to list
-            _Effects.Add(newEffect);
             // Inject into action
             _InjectionProvider.InjectObject(newEffect);
             // Init object
             newEffect.Init(this);
+
+            return newEffect;
         }
     }
 }

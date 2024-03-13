@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://d3qolbjxfntwd"]
+
+[ext_resource type="Resource" uid="uid://75dq8c1pkm4r" path="res://status_effects/competence_status_effect.tres" id="1_oduqu"]
+[ext_resource type="Resource" uid="uid://cyg8dekp1x0ej" path="res://status_effects/incompetence_status_effect.tres" id="2_7hitc"]
+[ext_resource type="Script" path="res://entities/employees/actions/ricky/ShiftBlameAction.cs" id="3_6vbqy"]
+
+[resource]
+script = ExtResource("3_6vbqy")
+CompetenceEffect = ExtResource("1_oduqu")
+IncompetenceEffect = ExtResource("2_7hitc")
+Id = "shift_blame"
+ActionName = "Shift Blame"
+EndsTurnAfterUse = false
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = false
+Range = 5
+TargetDisposition = 1
+ActionType = 3
+IndicatorType = 1
+FollowEntity = true
+FocusEntity = true
+RotateToFaceEntity = true

@@ -10,3 +10,4 @@ stream_0/weight = 1.0
 
 [node name="DebuffSfxPlayer" type="AudioStreamPlayer"]
 stream = SubResource("AudioStreamRandomizer_w4b36")
+bus = &"SFX"

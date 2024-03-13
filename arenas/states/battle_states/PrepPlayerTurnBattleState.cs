@@ -38,6 +38,9 @@ namespace ShopIsDone.Arenas.Battles.States
                 // Resolve in progress tasks
                 _TaskService.ResolveInProgressTasks(),
 
+                // Tick status effect durations
+                _PlayerUnitTurnService.TickEffectDurations(),
+
                 // Update arena
                 _ActionService.PostActionUpdate()
             );

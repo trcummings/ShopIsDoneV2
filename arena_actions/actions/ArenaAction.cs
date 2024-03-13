@@ -84,16 +84,22 @@ namespace ShopIsDone.Actions
         // The action handler
         protected ActionHandler _ActionHandler;
 
-        // Functions for action selection either through AI or though a menu
+        /* Function to determine if this action should show up in the player's 
+         * menu */
         public virtual bool IsVisibleInMenu()
         {
             return false;
         }
 
-        // Is the action available for the unit to use?
+        /* Function for action selection either through AI or though a menu */
         public virtual bool IsAvailable()
         {
-            return _ActionHandler.IsActionAvailable(this);
+            return
+                // Is the action available for the unit to use?
+                _ActionHandler.IsActionAvailable(this) &&
+                // Do we have the necessary components for it? Otherwise we may
+                // throw an error
+                HasRequiredComponents(Entity);
         }
 
         /* This function is for targeting. Does this curernt tile contain a valid 

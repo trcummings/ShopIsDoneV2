@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://75dq8c1pkm4r"]
+
+[ext_resource type="Texture2D" uid="uid://b7ymfdwxt5da8" path="res://status_effects/competence_icon.png" id="1_gmqbf"]
+[ext_resource type="Script" path="res://status_effects/CompetenceStatusEffect.cs" id="2_0mo37"]
+
+[resource]
+script = ExtResource("2_0mo37")
+Amount = 0.0
+Id = "competence"
+EffectName = "Competence"
+EffectDescription = ""
+Icon = ExtResource("1_gmqbf")
+IsDebuff = false
+EffectStackingType = 1
+CurrentStacks = 1
+MaxStacks = 1
+UsesDurationForRemoval = true
+Duration = 0
+MaxDuration = 100
+Punctuation = 0
+ShowIconInPopup = false
