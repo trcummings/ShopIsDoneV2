@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using ShopIsDone.Audio;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
@@ -11,6 +12,9 @@ namespace ShopIsDone.StatusEffects
 {
     public partial class StatusEffectHandler : NodeComponent
     {
+        [Signal]
+        public delegate void DebuffAppliedEventHandler();
+
         [Export]
         private Array<StatusEffect> _Effects = new Array<StatusEffect>();
         public Array<StatusEffect> Effects { get { return _Effects; } }
@@ -81,10 +85,13 @@ namespace ShopIsDone.StatusEffects
                     // TODO: Global UI signal
 
                     // Run the application animations / FX
-                    return new AsyncCommand(() =>
-                        _WidgetService.PopupLabelAsync(
-                            Entity.WidgetPoint,
-                            newEffect.GetPopupString()
+                    return new SeriesCommand(
+                        new ActionCommand(() => EmitSignal(nameof(DebuffApplied))),
+                        new AsyncCommand(() =>
+                            _WidgetService.PopupLabelAsync(
+                                Entity.WidgetPoint,
+                                newEffect.GetPopupString()
+                            )
                         )
                     );
                 })

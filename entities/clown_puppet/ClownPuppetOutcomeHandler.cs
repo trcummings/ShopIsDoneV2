@@ -8,7 +8,7 @@ using System;
 
 namespace ShopIsDone.Entities.ClownPuppet
 {
-    public partial class ClownPuppetOutcomeHandler : NodeComponent, IOutcomeHandler
+    public partial class ClownPuppetOutcomeHandler : OutcomeHandler
     {
         public override void Init()
         {
@@ -16,22 +16,17 @@ namespace ShopIsDone.Entities.ClownPuppet
             InjectionProvider.Inject(this);
         }
 
-        // Empty outcome, only deals damage
-        public Command HandleOutcome(MicrogamePayload payload)
+        public override Command InflictDamage(IDamageTarget target, MicrogamePayload outcomePayload)
         {
-            return new Command();
+            return target.ReceiveDamage(GetDamage(outcomePayload));
         }
 
-        public DamagePayload GetDamage()
+        public override DamagePayload GetDamage(MicrogamePayload outcomePayload)
         {
             return new DamagePayload()
             {
-                Health = 0,
-                Defense = 0,
-                DrainDefense = 0,
-                Damage = 2,
-                Drain = 0,
-                Piercing = 0
+                Damage = outcomePayload.WonMicrogame() ? 3 : 0,
+                Source = Entity
             };
         }
     }

@@ -11,51 +11,31 @@ using ShopIsDone.Microgames.Outcomes;
 
 namespace ShopIsDone.Entities.PuppetCustomers
 {
-    public partial class CustomerOutcomeHandler : NodeComponent, IOutcomeHandler
+    public partial class CustomerOutcomeHandler : OutcomeHandler
     {
         [Export]
         private ActionPointHandler _ActionPointHandler;
 
-        public Command HandleOutcome(MicrogamePayload payload)
+        public override Command InflictDamage(IDamageTarget target, MicrogamePayload outcomePayload)
         {
-            return new SeriesCommand(
-                payload.Targets.Select(t => {
-                    var damage = t.GetDamage();
-                    var employee = t.Entity;
-
-                    // Concat payload message to damage payload
-                    var message = new Dictionary<string, Variant>()
-                    {
-                        { ApConsts.DAMAGE_SOURCE, employee },
-                        // If the outcome is a win (for the player),
-                        // pass along full damage
-                        { ApConsts.DEBT_DAMAGE, payload.Outcome == Microgame.Outcomes.Win ? damage.Damage : 0 }
-                    };
-                    if (payload.Message != null)
-                    {
-                        foreach (var kv in payload.Message) message[kv.Key] = kv.Value;
-                    }
-
-                    return new ConditionalCommand(
-                        // Are we still active check
-                        Entity.IsActive,
-                        // Deal damage to us
-                        _ActionPointHandler.TakeAPDamage(message)
-                    );
-                }).ToArray()
-            );
+            return target.ReceiveDamage(GetDamage(outcomePayload));
         }
 
-        public DamagePayload GetDamage()
+        public override DamagePayload GetDamage(MicrogamePayload outcomePayload)
         {
+            // Copy over the message to the damage payload's message
+            var message = new Dictionary<string, Variant>();
+            foreach (var kv in outcomePayload?.Message ?? new Dictionary<string, Variant>())
+            {
+                message[kv.Key] = kv.Value;
+            }
+
             return new DamagePayload()
             {
-                Health = _ActionPointHandler.ActionPoints,
-                Defense = 0,
-                DrainDefense = 0,
-                Damage = 1,
-                Drain = 1,
-                Piercing = 0
+                // If we won, pass along full damage
+                Damage = outcomePayload.WonMicrogame() ? 1 : 0,
+                Source = Entity,
+                Message = message
             };
         }
     }
