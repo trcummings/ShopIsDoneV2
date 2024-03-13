@@ -20,7 +20,9 @@ namespace ShopIsDone.Widgets
         {
             // Create scene
             var scene = _PopupLabelScene.Instantiate<PopupLabel>();
+            scene.Hide();
             point.AddChild(scene);
+            scene.Show();
             // Remove it when done
             scene.Connect(
                 nameof(scene.Finished),
@@ -34,7 +36,9 @@ namespace ShopIsDone.Widgets
         {
             // Create scene
             var scene = _PopupLabelScene.Instantiate<PopupLabel>();
+            scene.Hide();
             point.AddChild(scene);
+            scene.Show();
             await scene.PopupTextAsync(labelText, Colors.White, Colors.Black);
             // Remove it when done
             scene.QueueFree();
@@ -44,7 +48,9 @@ namespace ShopIsDone.Widgets
         {
             // Create scene
             var scene = _PopupLabelScene.Instantiate<PopupLabel>();
+            scene.Hide();
             point.AddChild(scene);
+            scene.Show();
             // Remove it when done
             scene.Connect(
                 nameof(scene.Finished),
@@ -58,7 +64,9 @@ namespace ShopIsDone.Widgets
         {
             // Create scene
             var scene = _PopupLabelScene.Instantiate<PopupLabel>();
+            scene.Hide();
             point.AddChild(scene);
+            scene.Show();
             await scene.PopupNumberAsync(amount, textColor, outlineColor);
             // Remove it when done
             scene.QueueFree();
@@ -69,7 +77,9 @@ namespace ShopIsDone.Widgets
         {
             // Create scene
             var scene = _AlertEffectScene.Instantiate<AlertEffect>();
+            scene.Hide();
             point.AddChild(scene);
+            scene.Show();
             scene.Connect(
                 nameof(scene.Finished),
                 Callable.From(scene.QueueFree),
@@ -82,7 +92,9 @@ namespace ShopIsDone.Widgets
         {
             // Create scene
             var scene = _AlertEffectScene.Instantiate<AlertEffect>();
+            scene.Hide();
             point.AddChild(scene);
+            scene.Show();
             await scene.PopupAsync();
             // Remove it when done
             scene.QueueFree();
@@ -93,7 +105,9 @@ namespace ShopIsDone.Widgets
         {
             // Create scene
             var scene = _TalkingEffectScene.Instantiate<TalkingEffect>();
+            scene.Hide();
             point.AddChild(scene);
+            scene.Show();
             scene.Connect(
                 nameof(scene.Finished),
                 Callable.From(scene.QueueFree),
@@ -106,7 +120,9 @@ namespace ShopIsDone.Widgets
         {
             // Create scene
             var scene = _TalkingEffectScene.Instantiate<TalkingEffect>();
+            scene.Hide();
             point.AddChild(scene);
+            scene.Show();
             await scene.PopupAsync();
             // Remove it when done
             scene.QueueFree();

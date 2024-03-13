@@ -135,8 +135,9 @@ script = ExtResource("6_qjeqh")
 script = ExtResource("7_fplic")
 Team = 1
 
-[node name="TaskService" type="Node" parent="Services"]
+[node name="TaskService" type="Node" parent="Services" node_paths=PackedStringArray("_ActionService")]
 script = ExtResource("8_tfcjj")
+_ActionService = NodePath("../ActionService")
 
 [node name="ScriptQueueService" type="Node" parent="Services" node_paths=PackedStringArray("_ActionService")]
 script = ExtResource("8_tmi38")

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dboh680hqhedk"]
+
+[ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="1_f8f73"]
+[ext_resource type="PackedScene" uid="uid://dqrhke68klwx2" path="res://audio/ui/ui_invalid_player.tscn" id="2_tocf5"]
+
+[node name="EmployeeOutcomeHandler" type="Node"]
+script = ExtResource("1_f8f73")
+
+[node name="UIInvalidPlayer" parent="." instance=ExtResource("2_tocf5")]
+
+[connection signal="FailedDamage" from="." to="UIInvalidPlayer" method="play"]

@@ -31,8 +31,12 @@ namespace ShopIsDone.Entities.PuppetCustomers
             _HealthBar.Value = apHandler.ActionPoints;
             _HealthBar.ShowDiff = false;
 
-            // Set AP Cost
-            _Damage.Text = outcomeHandler.GetDamage().Damage.ToString();
+            // Set Damage
+            _Damage.Text = outcomeHandler.GetDamage(
+                new Microgames.MicrogamePayload() {
+                    Outcome = Microgames.Microgame.Outcomes.Win
+                }
+            ).Damage.ToString();
         }
 
         public void SetDiff(int amount)

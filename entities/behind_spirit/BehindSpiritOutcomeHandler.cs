@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ShopIsDone.Entities.BehindSpirit
 {
-    public partial class BehindSpiritOutcomeHandler : NodeComponent, IOutcomeHandler
+    public partial class BehindSpiritOutcomeHandler : OutcomeHandler
     {
         [Inject]
         private CameraService _CameraService;
@@ -27,12 +27,17 @@ namespace ShopIsDone.Entities.BehindSpirit
             InjectionProvider.Inject(this);
         }
 
-        // Empty outcome
-        public Command HandleOutcome(MicrogamePayload payload)
+        public override Command InflictDamage(IDamageTarget target, MicrogamePayload outcomePayload)
+        {
+            return target.ReceiveDamage(GetDamage(outcomePayload));
+        }
+
+        // Before we resovle the damage, play the neck cracking animation
+        public override Command BeforeOutcomeResolution(MicrogamePayload payload)
         {
             return new ConditionalCommand(
-                // If the player lost
-                () => payload.Outcome == Microgame.Outcomes.Loss,
+                // If we won the microgame
+                payload.WonMicrogame,
                 // Run animation
                 new SeriesCommand(
                     // Swap camera angles
@@ -53,16 +58,12 @@ namespace ShopIsDone.Entities.BehindSpirit
             await ToSignal(_AnimPlayer, "animation_finished");
         }
 
-        public DamagePayload GetDamage()
+        public override DamagePayload GetDamage(MicrogamePayload outcomePayload)
         {
             return new DamagePayload()
             {
-                Health = 0,
-                Defense = 0,
-                DrainDefense = 0,
-                Damage = 3,
-                Drain = 0,
-                Piercing = 0
+                Damage = outcomePayload.WonMicrogame() ? 3 : 0,
+                Source = Entity
             };
         }
     }

@@ -47,4 +47,7 @@ _OutcomeHandlerPath = NodePath("../TaskComponent")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.5, 2.08165e-12)
 LoopingAnimations = []
 
+[node name="WidgetPoint" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
 [editable path="TaskComponent"]

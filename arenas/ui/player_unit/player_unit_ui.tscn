@@ -13,7 +13,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kc1mv"]
 
 [node name="PlayerPawnUI" type="PanelContainer"]
-custom_minimum_size = Vector2(200, 125)
+custom_minimum_size = Vector2(250, 125)
 offset_right = 200.0
 offset_bottom = 125.0
 size_flags_horizontal = 0
@@ -54,7 +54,10 @@ mouse_filter = 2
 texture = ExtResource("3_mcs8u")
 expand_mode = 1
 
-[node name="CardBase" type="TextureRect" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="CardBase" type="TextureRect" parent="HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 125)
 layout_mode = 2
@@ -64,7 +67,7 @@ mouse_filter = 2
 texture = ExtResource("4_cvu0x")
 expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="CardBase"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CardBase"]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -74,24 +77,24 @@ theme_override_constants/margin_top = 9
 theme_override_constants/margin_right = 9
 theme_override_constants/margin_bottom = 9
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CardBase/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CardBase/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="MarginContainer" type="MarginContainer" parent="CardBase/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 65
 theme_override_constants/margin_top = 1
 
-[node name="StatusText" type="VBoxContainer" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="StatusText" type="VBoxContainer" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="PawnName" type="Label" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText"]
+[node name="PawnName" type="Label" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -99,27 +102,27 @@ theme = ExtResource("1")
 theme_type_variation = &"LabelDark"
 text = "[Name]"
 
-[node name="Label" type="Label" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText"]
+[node name="Label" type="Label" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText"]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 2
 text = " Team Member"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="ApExcessContainer" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer" instance=ExtResource("7")]
+[node name="ApExcessContainer" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer" instance=ExtResource("7")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SlipContainer" type="HBoxContainer" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer"]
+[node name="SlipContainer" type="HBoxContainer" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="YellowSlip" type="TextureRect" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer/SlipContainer"]
+[node name="YellowSlip" type="TextureRect" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer/SlipContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
@@ -130,7 +133,7 @@ texture = ExtResource("5")
 expand_mode = 4
 stretch_mode = 5
 
-[node name="PinkSlip" type="TextureRect" parent="CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer/SlipContainer"]
+[node name="PinkSlip" type="TextureRect" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer/MarginContainer/StatusText/HBoxContainer/SlipContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
@@ -141,6 +144,19 @@ texture = ExtResource("8")
 expand_mode = 4
 stretch_mode = 5
 
-[node name="ActionPointMeter" parent="CardBase/MarginContainer/VBoxContainer" instance=ExtResource("9_1f0bx")]
+[node name="ActionPointMeter" parent="HBoxContainer/CardBase/MarginContainer/VBoxContainer" instance=ExtResource("9_1f0bx")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="EffectsContainer" type="VBoxContainer" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EffectIconTemplate" type="TextureRect" parent="HBoxContainer/EffectsContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 4

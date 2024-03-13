@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://b7n2nvaxotrvp"]
+[gd_scene load_steps=50 format=3 uid="uid://b7n2nvaxotrvp"]
 
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_fe38l"]
 [ext_resource type="PackedScene" uid="uid://bfvclquu5ftth" path="res://render/employees/ricky/ricky_model.tscn" id="2"]
@@ -37,11 +37,14 @@
 [ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="33_3xyj5"]
 [ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://entities/employees/actions/help_customer_action.tres" id="33_c7i67"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="34_srxwc"]
-[ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="35_1n2q3"]
 [ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="37_5hku5"]
+[ext_resource type="PackedScene" uid="uid://dboh680hqhedk" path="res://entities/employees/employee_outcome_handler.tscn" id="39_yf6kr"]
 [ext_resource type="PackedScene" uid="uid://cd50jq54ec7cv" path="res://tasks/task_handler.tscn" id="41_2r2ga"]
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="42_se0x0"]
+[ext_resource type="PackedScene" uid="uid://br0maldoa20hv" path="res://status_effects/status_effect_handler.tscn" id="44_tnfgi"]
+[ext_resource type="Script" path="res://passive_effects/PassiveEffectHandler.cs" id="45_acgk5"]
 [ext_resource type="PackedScene" uid="uid://c03r17klsdybr" path="res://lighting/null_world_light.tscn" id="46_33c03"]
+[ext_resource type="Resource" uid="uid://b3c1tcxk1jyv6" path="res://passive_effects/incompetent_passive_effect.tres" id="46_ie1t5"]
 [ext_resource type="Script" path="res://render/ModelComponent.cs" id="47_nhr34"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
@@ -210,12 +213,11 @@ _TeamHandler = NodePath("../../TeamHandler")
 [node name="TeamHandler" type="Node" parent="."]
 script = ExtResource("34_srxwc")
 
-[node name="OutcomeHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
-script = ExtResource("35_1n2q3")
-_ActionPointHandler = NodePath("../ActionPointHandler")
-
 [node name="DemeritHandler" type="Node" parent="."]
 script = ExtResource("37_5hku5")
+
+[node name="EmployeeOutcomeHandler" parent="." node_paths=PackedStringArray("_ActionPointHandler") instance=ExtResource("39_yf6kr")]
+_ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="WidgetPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.5, 2.08165e-12)
@@ -238,6 +240,12 @@ mesh = SubResource("CapsuleMesh_vx0qh")
 [node name="ModelComponent" type="Node" parent="."]
 script = ExtResource("47_nhr34")
 _ModelPath = NodePath("../RickyModel")
+
+[node name="StatusEffectHandler" parent="." instance=ExtResource("44_tnfgi")]
+
+[node name="PassiveEffectHandler" type="Node" parent="."]
+script = ExtResource("45_acgk5")
+_Effects = [ExtResource("46_ie1t5")]
 
 [connection signal="Footstep" from="RickyModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]

@@ -2,23 +2,40 @@ using Godot;
 using System;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Core;
+using Godot.Collections;
 
 namespace ShopIsDone.Microgames.Outcomes
 {
-    public class DamagePayload
+    public partial class DamagePayload : GodotObject
     {
-        public int Health;
         public int Damage;
-        public int Drain;
-        public int Defense;
-        public int DrainDefense;
-        public int Piercing;
+        public LevelEntity Source;
+        public Dictionary<string, Variant> Message = new Dictionary<string, Variant>();
     }
 
     public interface IOutcomeHandler : IComponent
     {
-        Command HandleOutcome(MicrogamePayload payload);
+        public IDamageTarget DamageTarget { get; }
 
-        DamagePayload GetDamage();
+        Command InflictDamage(IDamageTarget target, MicrogamePayload outcomePayload);
+
+        Command BeforeOutcomeResolution(MicrogamePayload payload);
+
+        Command AfterOutcomeResolution(MicrogamePayload payload);
+
+        DamagePayload GetDamage(MicrogamePayload outcomePayload);
+    }
+
+    public interface IDamageTarget
+    {
+        Command ReceiveDamage(DamagePayload damage);
+    }
+
+    public class NullDamageTarget : IDamageTarget
+    {
+        public Command ReceiveDamage(DamagePayload _)
+        {
+            return new Command();
+        }
     }
 }

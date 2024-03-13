@@ -3,12 +3,10 @@ using System;
 using System.Linq;
 using ShopIsDone.Core;
 using ShopIsDone.Microgames;
-using ShopIsDone.Utils.Positioning;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Microgames.Outcomes;
 using Godot.Collections;
 using ShopIsDone.Utils.Extensions;
-using ShopIsDone.ArenaInteractions;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Tiles;
 using ShopIsDone.Widgets;
@@ -17,7 +15,7 @@ using ShopIsDone.Cameras;
 namespace ShopIsDone.Tasks
 {
     // This is a component that represents a task attached to an entity
-    public partial class TaskComponent : NodeComponent, IOutcomeHandler, IEntityActiveHandler
+    public partial class TaskComponent : NodeComponent, IOutcomeHandler, IEntityActiveHandler, IDamageTarget
     {
         [Signal]
         public delegate void TaskProgressedEventHandler(Error status);
@@ -94,6 +92,9 @@ namespace ShopIsDone.Tasks
         [Inject]
         private ScreenshakeService _Screenshake;
 
+        [Inject]
+        private EntityWidgetService _WidgetService;
+
         // Tiles that that an task handler can stand on and start a task on
         protected Array<TaskTile> _TaskTiles = new Array<TaskTile>();
 
@@ -105,6 +106,11 @@ namespace ShopIsDone.Tasks
             // Ready interaction tiles
             _TaskTiles = GetChildren().OfType<TaskTile>().ToGodotArray();
             foreach (var tile in _TaskTiles) tile.Hide();
+
+            TaskHealthDamaged += (int amount, int _current, int _total, float _percent) =>
+            {
+                _WidgetService.PopupNumber(Entity.WidgetPoint, amount, Colors.Red, Colors.Black);
+            };
         }
 
         public override void Init()
@@ -197,61 +203,74 @@ namespace ShopIsDone.Tasks
             );
         }
 
-        public Command HandleOutcome(MicrogamePayload payload)
+        #region IOutcomeHandler and IDamageTarget
+        // We are our own damage target
+        public IDamageTarget DamageTarget { get { return this; } }
+
+        public Command InflictDamage(IDamageTarget target, MicrogamePayload outcomePayload)
         {
-            return new IfElseCommand(
-                // Win check
-                () => payload.Outcome == Microgame.Outcomes.Win,
-                // If the player wins, damage the task
-                RunTaskProgress(payload.Targets.Select(t => t.GetDamage().Damage).ToArray()),
-                // On Lose
-                new Command()
-            );
+            return target.ReceiveDamage(GetDamage(outcomePayload));
         }
 
-        public Command RunTaskProgress(int[] damage)
+        public Command ReceiveDamage(DamagePayload damage)
         {
-            return new SeriesCommand(
-                // Show progress bar
-                new ActionCommand(() =>
-                {
-                    EmitSignal(nameof(TaskProgressBegan), 0.25f);
-                }),
-                // Wait for bar
-                new WaitForCommand(Entity, 0.3f),
-                // Progress the task
-                new SeriesCommand(damage.Select(d => new SeriesCommand(
-                    // TODO: Resolve any penalties the task might incur
-
+            return new ConditionalCommand(
+                // Only run this if the task actually received damage
+                () => damage.Damage > 0,
+                new SeriesCommand(
                     // Tick down the task by the damage payload
-                    DamageTaskHealth(d),
+                    DamageTaskHealth(damage.Damage),
                     // Wait a moment for the result to have impact
-                    new WaitForCommand(Entity, 0.25F)
-                )).ToArray()),
-                // Run progress hook
-                _TaskProgressHandler.OnProgressTask(this),
-                // Hide progress bar
-                new ActionCommand(() =>
-                {
-                    EmitSignal(nameof(TaskProgressEnded), 0.25f);
-                }),
-                // Wait for bar
-                new WaitForCommand(Entity, 0.3f)
+                    new WaitForCommand(Entity, 0.25F),
+                    // Run progress hook
+                    _TaskProgressHandler.OnProgressTask(this)
+                )
             );
         }
 
-        public DamagePayload GetDamage()
+        public Command BeforeOutcomeResolution(MicrogamePayload payload)
+        {
+            // Only show the health bar if we lost
+            return new ConditionalCommand(
+                payload.LostMicrogame,
+                new SeriesCommand(
+                    // Show progress bar
+                    new ActionCommand(() =>
+                    {
+                        EmitSignal(nameof(TaskProgressBegan), 0.25f);
+                    }),
+                    // Wait for bar
+                    new WaitForCommand(Entity, 0.3f)
+                )
+            );
+        }
+
+        public Command AfterOutcomeResolution(MicrogamePayload payload)
+        {
+            // Only need to hide the health bar if we lost
+            return new ConditionalCommand(
+                payload.LostMicrogame,
+                new SeriesCommand(
+                    // Hide progress bar
+                    new ActionCommand(() =>
+                    {
+                        EmitSignal(nameof(TaskProgressEnded), 0.25f);
+                    }),
+                    // Wait for bar
+                    new WaitForCommand(Entity, 0.3f)
+                )
+            );
+        }
+
+        public DamagePayload GetDamage(MicrogamePayload outcomePayload)
         {
             return new DamagePayload()
             {
-                Health = TaskHealth,
-                Defense = 0,
-                DrainDefense = 0,
-                Damage = TaskDamage,
-                Drain = 0,
-                Piercing = 0
+                Damage = outcomePayload.WonMicrogame() ? TaskDamage : 0,
+                Source = Entity
             };
         }
+        #endregion
 
         public Command DamageTaskHealth(int amount)
         {

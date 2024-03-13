@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://br0maldoa20hv"]
+
+[ext_resource type="Script" path="res://status_effects/StatusEffectHandler.cs" id="1_qy3ej"]
+[ext_resource type="PackedScene" uid="uid://bivt5ko2aahwa" path="res://status_effects/debuff_sfx_player.tscn" id="2_bcl4p"]
+
+[node name="StatusEffectHandler" type="Node"]
+script = ExtResource("1_qy3ej")
+
+[node name="DebuffSfxPlayer" parent="." instance=ExtResource("2_bcl4p")]
+
+[connection signal="DebuffApplied" from="." to="DebuffSfxPlayer" method="play"]

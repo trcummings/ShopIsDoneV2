@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using ShopIsDone.Actions;
 using ShopIsDone.Cameras;
 using ShopIsDone.Core;
 using ShopIsDone.Utils;
@@ -14,6 +15,9 @@ namespace ShopIsDone.Tasks
     {
         [Inject]
         private CameraService _CameraService;
+
+        [Export]
+        private ActionService _ActionService;
 
         public void Init()
         {
@@ -62,13 +66,17 @@ namespace ShopIsDone.Tasks
                 new DeferredCommand(task.ReadyOperators),
                 // Progress the task
                 new DeferredCommand(task.ProgressTask),
+                // Update arena
+                _ActionService.PostActionUpdate(),
                 // If the task has progressed, conditionally complete it
                 new ConditionalCommand(
                     task.IsTaskComplete,
                     task.CompleteTask()
                 ),
                 // Unzoom camera
-                _CameraService.ZoomCameraTo(1f)
+                _CameraService.ZoomCameraTo(1f),
+                // Update arena
+                _ActionService.PostActionUpdate()
             );
         }
     }

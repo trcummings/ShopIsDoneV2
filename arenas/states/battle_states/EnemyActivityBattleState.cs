@@ -33,16 +33,14 @@ namespace ShopIsDone.Arenas.Battles.States
             // Execute behind spirit turn
             if (_BehindSpiritService.CanExecute())
             {
-                var command = _BehindSpiritService.Execute();
-                command.CallDeferred(nameof(command.Execute));
-                await ToSignal(command, nameof(command.Finished));
+                await _BehindSpiritService.Execute().AwaitCommandFrom(this);
             }
+
+            // Resolve status effects
+            await _EnemyTurnService.ResolveEffects().AwaitCommandFrom(this);
 
             // Refill enemy AP
             _EnemyTurnService.RefillApToMax();
-
-            // Resolve status effects
-            //_EnemyTurnSystem.ResolveStatusEffects();
 
             // Run enemy AI
             _EnemyTurnService.Connect(

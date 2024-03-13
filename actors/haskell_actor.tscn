@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cf243oyu5kvrf"]
+[gd_scene load_steps=50 format=3 uid="uid://cf243oyu5kvrf"]
 
 [ext_resource type="PackedScene" uid="uid://dgx1b2mmmsdr5" path="res://render/employees/haskell/haskell_model.tscn" id="1"]
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_0yjha"]
@@ -37,10 +37,13 @@
 [ext_resource type="Resource" uid="uid://cvwykweh5xmw8" path="res://entities/employees/actions/interrupt_task_action.tres" id="28_i3j6t"]
 [ext_resource type="Resource" uid="uid://dhfcjhk223e7o" path="res://arena_actions/actions/interact_action.tres" id="29_vnii4"]
 [ext_resource type="Resource" uid="uid://bupxc6b5js2tr" path="res://entities/employees/actions/start_task_action.tres" id="31_vp1cx"]
-[ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="31_xx1gf"]
 [ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://entities/employees/actions/help_customer_action.tres" id="33_vnjau"]
 [ext_resource type="PackedScene" uid="uid://cd50jq54ec7cv" path="res://tasks/task_handler.tscn" id="39_7it71"]
+[ext_resource type="PackedScene" uid="uid://dboh680hqhedk" path="res://entities/employees/employee_outcome_handler.tscn" id="39_slud8"]
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="43_h3he4"]
+[ext_resource type="PackedScene" uid="uid://br0maldoa20hv" path="res://status_effects/status_effect_handler.tscn" id="44_0imw7"]
+[ext_resource type="Script" path="res://passive_effects/PassiveEffectHandler.cs" id="45_8ptr4"]
+[ext_resource type="Resource" uid="uid://bif37q5lcly8f" path="res://passive_effects/easily_depressed_passive_effect.tres" id="46_dc7k5"]
 [ext_resource type="Script" path="res://render/ModelComponent.cs" id="47_jxpnj"]
 [ext_resource type="PackedScene" uid="uid://c03r17klsdybr" path="res://lighting/null_world_light.tscn" id="50_hxo81"]
 
@@ -165,7 +168,6 @@ FacingTarget = NodePath("..")
 
 [node name="EmployeeStateHandler" parent="." node_paths=PackedStringArray("_ModelComponent") instance=ExtResource("20_nw71y")]
 _ModelComponent = NodePath("../ModelComponent")
-Debug = true
 
 [node name="ActionPointHandler" parent="." instance=ExtResource("19_vhxse")]
 _DeathHandlerPath = NodePath("../DeathHandler")
@@ -213,8 +215,7 @@ script = ExtResource("22_f48js")
 [node name="TeamHandler" type="Node" parent="."]
 script = ExtResource("23_sv0kt")
 
-[node name="OutcomeHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
-script = ExtResource("31_xx1gf")
+[node name="EmployeeOutcomeHandler" parent="." node_paths=PackedStringArray("_ActionPointHandler") instance=ExtResource("39_slud8")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TaskHandler" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler") instance=ExtResource("39_7it71")]
@@ -239,6 +240,12 @@ mesh = SubResource("CapsuleMesh_v11p7")
 [node name="ModelComponent" type="Node" parent="."]
 script = ExtResource("47_jxpnj")
 _ModelPath = NodePath("../HaskellModel")
+
+[node name="StatusEffectHandler" parent="." instance=ExtResource("44_0imw7")]
+
+[node name="PassiveEffectHandler" type="Node" parent="."]
+script = ExtResource("45_8ptr4")
+_Effects = [ExtResource("46_dc7k5")]
 
 [connection signal="Footstep" from="HaskellModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]

@@ -24,8 +24,9 @@ namespace ShopIsDone.Levels
             // Ready nodes
             _Services = GetNode<ServicesContainer>("%Services");
 
-            // Register all services
+            // Register and init all services
             _Services.RegisterServices();
+            _Services.InitServices();
         }
 
         public void CleanUp()
@@ -36,8 +37,9 @@ namespace ShopIsDone.Levels
                 _LevelStateMachine.ChangeState(Consts.States.EXITING);
             }
 
-            // Unregister all services
+            // Unregister and clean up all services
             _Services.UnregisterServices();
+            _Services.CleanUpServices();
         }
 
         public const string ON_FINISHED_INIT = "OnFinishedInit";

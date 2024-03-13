@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Godot;
 
 namespace ShopIsDone.Utils.Commands
@@ -19,6 +20,12 @@ namespace ShopIsDone.Utils.Commands
         protected void Finish()
         {
             EmitSignal(nameof(Finished));
+        }
+
+        public async Task AwaitCommandFrom(Node node)
+        {
+            CallDeferred(nameof(Execute));
+            await node.ToSignal(this, nameof(Finished));
         }
     }
 }

@@ -50,17 +50,21 @@ namespace ShopIsDone.Tasks
 
         public Command StopDoingTask()
         {
-            return new SeriesCommand(
-                // Deregister with task
-                new ActionCommand(() =>
-                {
-                    _CurrentTask.DeregisterOperator(this);
-                    _CurrentTask = null;
-                }),
-                // Go back to normal state
-                _StateHandler.RunChangeState(StateConsts.IDLE),
-                // Wait a moment for the result to have impact
-                new WaitForCommand(Entity, 0.25f)
+            // Only run this if we have a current task
+            return new ConditionalCommand(
+                HasCurrentTask,
+                new SeriesCommand(
+                    // Deregister with task
+                    new ActionCommand(() =>
+                    {
+                        _CurrentTask.DeregisterOperator(this);
+                        _CurrentTask = null;
+                    }),
+                    // Go back to normal state
+                    _StateHandler.RunChangeState(StateConsts.IDLE),
+                    // Wait a moment for the result to have impact
+                    new WaitForCommand(Entity, 0.25f)
+                )
             );
         }
 

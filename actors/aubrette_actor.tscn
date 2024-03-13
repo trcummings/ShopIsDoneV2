@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bhmg13nssujbh"]
+[gd_scene load_steps=50 format=3 uid="uid://bhmg13nssujbh"]
 
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_52ctf"]
 [ext_resource type="PackedScene" uid="uid://blwt1nyomjjj8" path="res://render/employees/aubrette/aubrette_model.tscn" id="2_ulapc"]
@@ -38,9 +38,12 @@
 [ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="37_slk46"]
 [ext_resource type="Script" path="res://demerits/DemeritHandler.cs" id="38_4vtgg"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="39_8juym"]
-[ext_resource type="Script" path="res://microgames/EmployeeOutcomeHandler.cs" id="40_4nbyo"]
+[ext_resource type="PackedScene" uid="uid://dboh680hqhedk" path="res://entities/employees/employee_outcome_handler.tscn" id="39_q607x"]
 [ext_resource type="PackedScene" uid="uid://cd50jq54ec7cv" path="res://tasks/task_handler.tscn" id="41_4kkya"]
+[ext_resource type="PackedScene" uid="uid://br0maldoa20hv" path="res://status_effects/status_effect_handler.tscn" id="44_ev7o8"]
 [ext_resource type="PackedScene" uid="uid://b01e7a8jon3xv" path="res://arena_interactions/unit_interaction_handler.tscn" id="45_f6qud"]
+[ext_resource type="Script" path="res://passive_effects/PassiveEffectHandler.cs" id="45_yep7i"]
+[ext_resource type="Resource" uid="uid://doulbhi1cwa3p" path="res://passive_effects/chronic_pain_passive_effect.tres" id="46_mw1b6"]
 [ext_resource type="PackedScene" uid="uid://c03r17klsdybr" path="res://lighting/null_world_light.tscn" id="46_s6pyb"]
 [ext_resource type="Script" path="res://render/ModelComponent.cs" id="47_36jgp"]
 
@@ -215,8 +218,7 @@ script = ExtResource("38_4vtgg")
 [node name="TeamHandler" type="Node" parent="."]
 script = ExtResource("39_8juym")
 
-[node name="OutcomeHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
-script = ExtResource("40_4nbyo")
+[node name="EmployeeOutcomeHandler" parent="." node_paths=PackedStringArray("_ActionPointHandler") instance=ExtResource("39_q607x")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TaskHandler" parent="." node_paths=PackedStringArray("_StateHandler", "_ActionPointHandler") instance=ExtResource("41_4kkya")]
@@ -241,6 +243,12 @@ mesh = SubResource("CapsuleMesh_v11p7")
 [node name="ModelComponent" type="Node" parent="."]
 script = ExtResource("47_36jgp")
 _ModelPath = NodePath("../AubretteModel")
+
+[node name="StatusEffectHandler" parent="." instance=ExtResource("44_ev7o8")]
+
+[node name="PassiveEffectHandler" type="Node" parent="."]
+script = ExtResource("45_yep7i")
+_Effects = [ExtResource("46_mw1b6")]
 
 [connection signal="Footstep" from="AubretteModel" to="FootstepController" method="PlayFootstep"]
 [connection signal="FacingDirUpdated" from="ActorAnimator" to="FacingDirectionHandler" method="SetFacingDirection"]

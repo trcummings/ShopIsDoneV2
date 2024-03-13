@@ -65,7 +65,8 @@ namespace ShopIsDone.Entities.Employees.Actions
             {
                 Targets = new[] { _OutcomeHandler },
                 Position = positioning,
-                Message = message ?? new Dictionary<string, Variant>()
+                Message = message ?? new Dictionary<string, Variant>(),
+                IsPlayerAggressor = true
             };
 
             return new SeriesCommand(

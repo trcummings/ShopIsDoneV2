@@ -8,7 +8,7 @@ using ShopIsDone.Utils.Positioning;
 
 namespace ShopIsDone.Microgames
 {
-    public partial class MicrogamePayload : GodotObject
+    public partial class MicrogamePayload : Resource
     {
         public Microgame Microgame;
         public Microgame.Outcomes Outcome;
@@ -17,6 +17,16 @@ namespace ShopIsDone.Microgames
         public Positions Position = Positions.Null;
         public Dictionary<string, Variant> Message = new Dictionary<string, Variant>();
         public bool IsPlayerAggressor = false;
+
+        public bool WonMicrogame()
+        {
+            return Outcome == Microgame.Outcomes.Win;
+        }
+
+        public bool LostMicrogame()
+        {
+            return Outcome == Microgame.Outcomes.Loss;
+        }
     }
 
     public partial class MicrogameController : Node, IService
@@ -32,6 +42,7 @@ namespace ShopIsDone.Microgames
 
         public Command RunMicrogame(MicrogamePayload payload)
         {
+            // Initially set outcome to loss
             Microgame.Outcomes outcome = Microgame.Outcomes.Loss;
 
             return new SeriesCommand(
@@ -50,18 +61,54 @@ namespace ShopIsDone.Microgames
                     // Set outcome in payload
                     payload.Outcome = outcome;
                 }),
-                new DeferredCommand(() => PostMicrogame(payload))
+                new DeferredCommand(() => ResolveDamage(payload))
             );
         }
 
-        private Command PostMicrogame(MicrogamePayload payload)
+        private Command ResolveDamage(MicrogamePayload payload)
         {
-            return new SeriesCommand(
-                payload.Source.HandleOutcome(payload),
-                new DeferredCommand(() => new SeriesCommand(
-                    payload.Targets.Select(t => t.HandleOutcome(payload)).ToArray())
-                )
-            );
+            return new DeferredCommand(() => {
+                // Pull the source and targets out of the payload
+                var targets = payload.Targets;
+                var source = payload.Source;
+
+                // Create an inverted outcome payload for the source, as the
+                // source is always the "producer" of the microgame and therefore
+                // a source win is a player loss, and vice versa.
+                var sourcePayload = (MicrogamePayload)payload.Duplicate();
+                sourcePayload.Outcome = payload.WonMicrogame()
+                    ? Microgame.Outcomes.Loss
+                    : Microgame.Outcomes.Win;
+
+                return new SeriesCommand(
+                    // First, run the before outcome hook for all handlers
+                    new SeriesCommand(
+                        source.BeforeOutcomeResolution(sourcePayload),
+                        new SeriesCommand(
+                            targets.Select(h => h.BeforeOutcomeResolution(payload)).ToArray()
+                        )
+                    ),
+                    // Next, resolve damage from the targets to the source
+                    new SeriesCommand(
+                        targets
+                            .Select(t => t.InflictDamage(source.DamageTarget, payload))
+                            .ToArray()
+                    ),
+                    // Then, resolve damage from the source to the targets
+                    new SeriesCommand(
+                        targets
+                            .Select(t => source.InflictDamage(t.DamageTarget, sourcePayload))
+                            .ToArray()
+                    ),
+                    // Finally, run the after outcome hook for all handlers
+                    new SeriesCommand(
+                        source.AfterOutcomeResolution(sourcePayload),
+                        new SeriesCommand(
+                            targets.Select(h => h.AfterOutcomeResolution(payload)).ToArray()
+                        )
+                    )
+                );
+            });
         }
     }
 }

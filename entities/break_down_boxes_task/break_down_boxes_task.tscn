@@ -73,5 +73,8 @@ script = ExtResource("4_ddvjj")
 MicrogameScene = ExtResource("5_gtgg2")
 _OutcomeHandlerPath = NodePath("../TaskComponent")
 
+[node name="WidgetPoint" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
 [editable path="TaskComponent"]
 [editable path="BreakDownBoxesModel"]

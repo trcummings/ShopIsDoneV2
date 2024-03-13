@@ -29,10 +29,11 @@ namespace ShopIsDone.Arenas.Battles.States
             var command = new SeriesCommand(
                 // Update silhouettes
 
+                // Resolve status effects
+                _PlayerUnitTurnService.ResolveEffects(),
+
                 // Refill AP
                 new ActionCommand(_PlayerUnitTurnService.RefillApToMax),
-
-                // Resolve status effects
 
                 // Resolve in progress tasks
                 _TaskService.ResolveInProgressTasks(),

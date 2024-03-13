@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cfix8fr0l76pi"]
+
+[ext_resource type="Script" path="res://status_effects/DepressedStatusEffect.cs" id="1_s3qpg"]
+[ext_resource type="Texture2D" uid="uid://dkla2wj358ijj" path="res://status_effects/depressed_icon.png" id="1_s682u"]
+
+[resource]
+script = ExtResource("1_s3qpg")
+Id = "depressed"
+EffectName = "Depressed"
+EffectDescription = ""
+Icon = ExtResource("1_s682u")
+IsStackable = false
+MaxStacks = 0
+Duration = 1
+Punctuation = 0
+ShowIconInPopup = false
