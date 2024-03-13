@@ -61,5 +61,11 @@ _OutcomeHandlerPath = NodePath("../TaskComponent")
 [node name="FixDisplayTaskModel" parent="." index="5" instance=ExtResource("9_yujhs")]
 LoopingAnimations = []
 
+[node name="Prop_SaleSign" parent="FixDisplayTaskModel" index="1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.040182, 0.8)
+
+[node name="WidgetPoint" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
 [editable path="TaskComponent"]
 [editable path="FixDisplayTaskModel"]

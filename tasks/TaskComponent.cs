@@ -3,12 +3,10 @@ using System;
 using System.Linq;
 using ShopIsDone.Core;
 using ShopIsDone.Microgames;
-using ShopIsDone.Utils.Positioning;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Microgames.Outcomes;
 using Godot.Collections;
 using ShopIsDone.Utils.Extensions;
-using ShopIsDone.ArenaInteractions;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Tiles;
 using ShopIsDone.Widgets;
@@ -94,6 +92,9 @@ namespace ShopIsDone.Tasks
         [Inject]
         private ScreenshakeService _Screenshake;
 
+        [Inject]
+        private EntityWidgetService _WidgetService;
+
         // Tiles that that an task handler can stand on and start a task on
         protected Array<TaskTile> _TaskTiles = new Array<TaskTile>();
 
@@ -105,6 +106,11 @@ namespace ShopIsDone.Tasks
             // Ready interaction tiles
             _TaskTiles = GetChildren().OfType<TaskTile>().ToGodotArray();
             foreach (var tile in _TaskTiles) tile.Hide();
+
+            TaskHealthDamaged += (int amount, int _current, int _total, float _percent) =>
+            {
+                _WidgetService.PopupNumber(Entity.WidgetPoint, amount, Colors.Red, Colors.Black);
+            };
         }
 
         public override void Init()

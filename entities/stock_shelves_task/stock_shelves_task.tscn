@@ -82,5 +82,8 @@ transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 2.1684
 remote_path = NodePath("../../TaskComponent")
 update_position = false
 
+[node name="WidgetPoint" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
+
 [editable path="TaskComponent"]
 [editable path="StockShelvesTaskModel"]
