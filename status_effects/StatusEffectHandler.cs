@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using ShopIsDone.Audio;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
@@ -14,6 +13,9 @@ namespace ShopIsDone.StatusEffects
     {
         [Signal]
         public delegate void DebuffAppliedEventHandler();
+
+        [Signal]
+        public delegate void BuffAppliedEventHandler();
 
         [Export]
         private Array<StatusEffect> _Effects = new Array<StatusEffect>();
@@ -65,7 +67,7 @@ namespace ShopIsDone.StatusEffects
                 () => HasStatusEffect(effect.Id),
                 // Check for stacking
                 new ConditionalCommand(
-                    () => effect.IsStackable,
+                    effect.IsStackable,
                     new ActionCommand(() =>
                     {
                         // NB: We don't need to null check this
@@ -86,13 +88,17 @@ namespace ShopIsDone.StatusEffects
 
                     // Run the application animations / FX
                     return new SeriesCommand(
-                        new ActionCommand(() => EmitSignal(nameof(DebuffApplied))),
+                        new ActionCommand(() => {
+                            if (newEffect.IsDebuff) EmitSignal(nameof(DebuffApplied));
+                            else EmitSignal(nameof(BuffApplied));
+                        }),
                         new AsyncCommand(() =>
                             _WidgetService.PopupLabelAsync(
                                 Entity.WidgetPoint,
                                 newEffect.GetPopupString()
                             )
-                        )
+                        ),
+                        new WaitForCommand(this, 0.25f)
                     );
                 })
             );
@@ -117,6 +123,15 @@ namespace ShopIsDone.StatusEffects
             return new SeriesCommand(
                 _Effects
                     .Select(e => e.ProcessStatusEffect())
+                    .ToArray()
+            );
+        }
+
+        public Command TickEffectDurations()
+        {
+            return new SeriesCommand(
+                _Effects
+                    .Select(e => e.TickEffectDuration())
                     .ToArray()
             );
         }

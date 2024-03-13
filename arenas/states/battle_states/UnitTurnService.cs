@@ -66,13 +66,24 @@ namespace ShopIsDone.Arenas
             }
         }
 
+        public Command TickEffectDurations()
+        {
+            return new SeriesCommand(
+                GetActiveTurnEntities()
+                    // Filter out entities with no status effects
+                    .Where(e => e.HasComponent<StatusEffectHandler>())
+                    .Select(e => e.GetComponent<StatusEffectHandler>().TickEffectDurations())
+                    .ToArray()
+            );
+        }
+
         public Command ResolveEffects()
         {
             return new SeriesCommand(
                 // Resolve passive effects
                 new ActionCommand(() =>
                 {
-                    var passiveHandlers = GetTurnEntities()
+                    var passiveHandlers = GetActiveTurnEntities()
                         // Filter out entities with no status effects
                         .Where(e => e.HasComponent<PassiveEffectHandler>())
                         .Select(e => e.GetComponent<PassiveEffectHandler>());
@@ -80,7 +91,7 @@ namespace ShopIsDone.Arenas
                 }),
                 // Resolve status effects
                 new SeriesCommand(
-                    GetTurnEntities()
+                    GetActiveTurnEntities()
                         // Filter out entities with no status effects
                         .Where(e => e.HasComponent<StatusEffectHandler>())
                         .Select(e => e.GetComponent<StatusEffectHandler>().ProcessEffects())

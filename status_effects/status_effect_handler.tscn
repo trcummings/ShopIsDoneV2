@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://br0maldoa20hv"]
+[gd_scene load_steps=4 format=3 uid="uid://br0maldoa20hv"]
 
 [ext_resource type="Script" path="res://status_effects/StatusEffectHandler.cs" id="1_qy3ej"]
 [ext_resource type="PackedScene" uid="uid://bivt5ko2aahwa" path="res://status_effects/debuff_sfx_player.tscn" id="2_bcl4p"]
+[ext_resource type="PackedScene" uid="uid://cfhvqp880jh3x" path="res://status_effects/buff_sfx_player.tscn" id="3_ehafk"]
 
 [node name="StatusEffectHandler" type="Node"]
 script = ExtResource("1_qy3ej")
 
 [node name="DebuffSfxPlayer" parent="." instance=ExtResource("2_bcl4p")]
 
+[node name="BuffSfxPlayer" parent="." instance=ExtResource("3_ehafk")]
+
+[connection signal="BuffApplied" from="." to="BuffSfxPlayer" method="play"]
 [connection signal="DebuffApplied" from="." to="DebuffSfxPlayer" method="play"]

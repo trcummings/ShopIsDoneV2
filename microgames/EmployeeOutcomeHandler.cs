@@ -86,6 +86,7 @@ namespace ShopIsDone.Microgames.Outcomes
             return new DeferredCommand(() =>
             {
                 var competence = Competence.GetValue();
+                GD.Print(Entity.EntityName, competence);
                 var wasIncompetent =
                     // If we won
                     outcomePayload.WonMicrogame() &&

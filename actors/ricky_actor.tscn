@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://b7n2nvaxotrvp"]
+[gd_scene load_steps=51 format=3 uid="uid://b7n2nvaxotrvp"]
 
 [ext_resource type="Script" path="res://actors/Actor.cs" id="1_fe38l"]
 [ext_resource type="PackedScene" uid="uid://bfvclquu5ftth" path="res://render/employees/ricky/ricky_model.tscn" id="2"]
@@ -34,6 +34,7 @@
 [ext_resource type="Script" path="res://util/command/CommandProcessor.cs" id="31_gb6an"]
 [ext_resource type="Resource" uid="uid://bupxc6b5js2tr" path="res://entities/employees/actions/start_task_action.tres" id="31_jqoeg"]
 [ext_resource type="Script" path="res://tiles/UnitTileMoveValidator.cs" id="32_1voga"]
+[ext_resource type="Resource" uid="uid://d3qolbjxfntwd" path="res://entities/employees/actions/ricky/shift_blame_action.tres" id="32_i3stk"]
 [ext_resource type="Script" path="res://tiles/UnitShouldSkipTileStrategy.cs" id="33_3xyj5"]
 [ext_resource type="Resource" uid="uid://basxpcdqgypj5" path="res://entities/employees/actions/help_customer_action.tres" id="33_c7i67"]
 [ext_resource type="Script" path="res://arena_actions/TeamHandler.cs" id="34_srxwc"]
@@ -188,7 +189,7 @@ _StateHandler = NodePath("../EmployeeStateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("24_i5ygc")
-Actions = [ExtResource("28_kbnck"), ExtResource("26_wtwuy"), ExtResource("27_qr0p6"), ExtResource("31_jqoeg"), ExtResource("31_763qf"), ExtResource("33_c7i67"), ExtResource("29_orafb")]
+Actions = [ExtResource("28_kbnck"), ExtResource("26_wtwuy"), ExtResource("27_qr0p6"), ExtResource("31_jqoeg"), ExtResource("31_763qf"), ExtResource("33_c7i67"), ExtResource("32_i3stk"), ExtResource("29_orafb")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="TileMovementHandler" type="Node" parent="." node_paths=PackedStringArray("_Body", "_MoveValidator", "_SkipTileStrategy")]

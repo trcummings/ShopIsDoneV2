@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cyg8dekp1x0ej"]
+
+[ext_resource type="Texture2D" uid="uid://b88pk1aknj236" path="res://status_effects/incompetence_icon.png" id="1_c6x4b"]
+[ext_resource type="Script" path="res://status_effects/CompetenceStatusEffect.cs" id="1_lmqhv"]
+
+[resource]
+script = ExtResource("1_lmqhv")
+Amount = 0.0
+Id = "incompetence"
+EffectName = "Incompetence"
+EffectDescription = ""
+Icon = ExtResource("1_c6x4b")
+IsDebuff = true
+EffectStackingType = 1
+CurrentStacks = 1
+MaxStacks = 1
+UsesDurationForRemoval = true
+Duration = 0
+MaxDuration = 100
+Punctuation = 0
+ShowIconInPopup = false

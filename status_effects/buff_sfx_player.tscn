@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfhvqp880jh3x"]
+
+[ext_resource type="AudioStream" uid="uid://cv86gh7jx1ya0" path="res://status_effects/BUFF.wav" id="1_8mrty"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5ta82"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1_8mrty")
+stream_0/weight = 1.0
+
+[node name="BuffSfxPlayer" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_5ta82")
+bus = &"SFX"

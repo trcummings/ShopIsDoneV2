@@ -24,13 +24,36 @@ namespace ShopIsDone.StatusEffects
         public Texture2D Icon;
 
         [Export]
-        public bool IsStackable = false;
+        public bool IsDebuff = false;
+
+        [ExportGroup("Stacking")]
+        [Export]
+        public StackingTypes EffectStackingType = StackingTypes.None;
+
+        public enum StackingTypes
+        {
+            None,       // No stacking, only one instance of the effect can be active
+            Duration,   // Stacking increases the duration
+            Intensity,  // Stacking increases the intensity or potency of the effect
+            Custom      // Custom behavior (requires overriding methods to implement)
+        }
+
+        // Starts with 1 as the initial application counts as the first stack
+        [Export]
+        public int CurrentStacks = 1;
 
         [Export]
-        public int MaxStacks = 0;
+        public int MaxStacks = 1;
+
+        [ExportGroup("Duration")]
+        [Export]
+        public bool UsesDurationForRemoval = false;
 
         [Export]
         public int Duration = 0;
+
+        [Export]
+        public int MaxDuration = 100;
 
         [ExportGroup("Popup")]
         [Export(PropertyHint.Enum)]
@@ -74,15 +97,33 @@ namespace ShopIsDone.StatusEffects
             _Entity = handler.Entity;
         }
 
+        public bool IsStackable()
+        {
+            return EffectStackingType != StackingTypes.None;
+        }
+
         public void StackEffect(StatusEffect effect)
         {
             // Ignore attempts to stack incompatible effects
             // NB: This should not happen but it doesn't hurt to guard it here
-            if (effect.Id != Id) return;
+            if (effect.Id != Id || EffectStackingType == StackingTypes.None) return;
 
-            // FIXME: This doesn't really make sense unless all effects are
-            // duration based for stacking, but YAGNI until they aren't
-            Duration = Mathf.Min(Duration + effect.Duration, MaxStacks);
+            switch (EffectStackingType)
+            {
+                case StackingTypes.Duration:
+                    AdjustDuration(effect);
+                    break;
+
+                case StackingTypes.Intensity:
+                    // Override this to adjust the intensity of the effect
+                    AdjustIntensity(effect);
+                    break;
+
+                case StackingTypes.Custom:
+                    // Override this for custom behavior
+                    HandleCustomStacking(effect);
+                    break;
+            }
         }
 
         public virtual void ApplyEffect()
@@ -90,22 +131,25 @@ namespace ShopIsDone.StatusEffects
             // Do nothing
         }
 
-        public Command ProcessStatusEffect()
+        /* Run any effects of the status effect here, e.g. how a Poison status 
+         * effect would impart damage at the beginning of the turn */
+        public virtual Command ProcessStatusEffect()
         {
-            return new SeriesCommand(
-                // Process the effect during the process phase
-                OnProcessEffect(),
-                // Handle duration check
-                new IfElseCommand(
-                    () => Duration == 0,
-                    // If duration is down to zero, remove the effect
-                    _Handler.RemoveEffect(Id),
-                    // Otherwise, tick down duration
-                    new ActionCommand(() =>
-                    {
-                        Duration = Mathf.Max(Duration - 1, 0);
-                    })
-                )
+            return new Command();
+        }
+
+        public Command TickEffectDuration()
+        {
+            return new IfElseCommand(
+                // Check if the effect should be removed
+                () => UsesDurationForRemoval && Duration == 0,
+                // If duration is down to zero, remove the effect
+                _Handler.RemoveEffect(Id),
+                // Otherwise, tick down duration
+                new ActionCommand(() =>
+                {
+                    if (UsesDurationForRemoval) Duration = Mathf.Max(Duration - 1, 0);
+                })
             );
         }
 
@@ -114,10 +158,23 @@ namespace ShopIsDone.StatusEffects
             // Do nothing
         }
 
-        // API overrides for protection
-        protected virtual Command OnProcessEffect()
+        protected virtual void HandleCustomStacking(StatusEffect effect)
         {
-            return new Command();
+            // Override here
+        }
+
+        protected virtual void AdjustIntensity(StatusEffect effect)
+        {
+            // Increment stacks (for intensity) up to the max
+            CurrentStacks = Mathf.Min(CurrentStacks + 1, MaxStacks);
+
+            // Override for more
+        }
+
+        private void AdjustDuration(StatusEffect effect)
+        {
+            // Increment duration up to the max
+            Duration = Mathf.Min(Duration + effect.Duration, MaxDuration);
         }
 
         #region Sandbox subclass methods
