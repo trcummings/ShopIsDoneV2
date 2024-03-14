@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://df0fk08hmrihh"]
+[gd_scene load_steps=18 format=3 uid="uid://df0fk08hmrihh"]
 
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="1"]
 [ext_resource type="Script" path="res://microgames/MicrogameManager.cs" id="2"]
@@ -7,8 +7,11 @@
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="6"]
 [ext_resource type="AudioStream" uid="uid://diwcrs8qlrfst" path="res://microgames/common/audio/heartbeats/heartbeat_2.wav" id="6_i6ffa"]
 [ext_resource type="AudioStream" uid="uid://bmfaxxp14xnuu" path="res://microgames/common/audio/heartbeats/heartbeat_3.wav" id="7_t2h3m"]
-[ext_resource type="AudioStream" uid="uid://tsnocvita65y" path="res://microgames/common/audio/CLOCK-TICK-60-BPM--450509__abyeditsound__clockticksound_01.wav" id="8"]
 [ext_resource type="AudioStream" uid="uid://cu2qos623fl0q" path="res://microgames/common/audio/heartbeats/heartbeat_4.wav" id="8_w0jxv"]
+[ext_resource type="AudioStream" uid="uid://2v3vwcducxqd" path="res://microgames/common/audio/clock_ticks/CLOCK-TICK-1.wav" id="9_22vll"]
+[ext_resource type="AudioStream" uid="uid://dkna37a45687d" path="res://microgames/common/audio/clock_ticks/CLOCK-TICK-2.wav" id="10_ts1yx"]
+[ext_resource type="AudioStream" uid="uid://cni3ur8fa6cob" path="res://microgames/common/audio/clock_ticks/CLOCK-TICK-3.wav" id="11_tvh7n"]
+[ext_resource type="AudioStream" uid="uid://7xyvrjdhfqfv" path="res://microgames/common/audio/clock_ticks/CLOCK-TICK-4.wav" id="12_yaewm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qfmo4"]
 
@@ -28,6 +31,17 @@ stream_1/weight = 1.0
 stream_2/stream = ExtResource("7_t2h3m")
 stream_2/weight = 1.0
 stream_3/stream = ExtResource("8_w0jxv")
+stream_3/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gdg1v"]
+streams_count = 4
+stream_0/stream = ExtResource("9_22vll")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("10_ts1yx")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("11_tvh7n")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("12_yaewm")
 stream_3/weight = 1.0
 
 [node name="MicrogameManager" type="PanelContainer" node_paths=PackedStringArray("_Background", "_FrameContainer", "_MicrogameViewport", "_PromptLabel", "_ProgressBar", "_RemainingTicksLabel", "_ProgressContainer", "_HeartbeatPlayer", "_ClockTickPlayer")]
@@ -150,5 +164,5 @@ stream = SubResource("AudioStreamRandomizer_dino1")
 
 [node name="ClockTickPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("8")
+stream = SubResource("AudioStreamRandomizer_gdg1v")
 pitch_scale = 2.0

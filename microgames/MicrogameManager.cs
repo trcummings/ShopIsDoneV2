@@ -238,7 +238,7 @@ namespace ShopIsDone.Microgames
             }
 
             // With four beats left, play the clock ticking and show label
-            if (remainingBeats == 3)
+            if (remainingBeats <= 3)
             {
                 // Noises
                 _ClockTickPlayer.PitchScale = _Microgame.BPM / 60;
