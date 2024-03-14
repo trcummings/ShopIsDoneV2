@@ -38,6 +38,15 @@ namespace ShopIsDone.Entities.PuppetCustomers
                 Message = message
             };
         }
+
+        protected override IDamageTarget GetDamageTarget()
+        {
+            return new ActionPointDamageTarget()
+            {
+                Entity = Entity,
+                ApHandler = _ActionPointHandler
+            };
+        }
     }
 }
 
