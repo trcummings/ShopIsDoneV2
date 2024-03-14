@@ -226,7 +226,7 @@ namespace ShopIsDone.Actions
             // time, not call time
             return new DeferredCommand(() => new IfElseCommand(
                 () => action.RotateToFaceEntity,
-                _CameraService.RunRotateCameraTo(
+                _CameraService.RunRotateToFaceEntity(
                     action.Entity.FacingDirection,
                     next
                 ),
