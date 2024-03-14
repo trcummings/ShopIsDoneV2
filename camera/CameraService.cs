@@ -5,6 +5,8 @@ using ShopIsDone.Utils.Commands;
 using ShopIsDone.Models.IsometricModels;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Extensions;
+using Godot.Collections;
+using ShopIsDone.Utils;
 
 namespace ShopIsDone.Cameras
 {
@@ -93,6 +95,11 @@ namespace ShopIsDone.Cameras
             _IsometricCamera.SetYawToDir(facingDir);
         }
 
+        public Vector3 GetClosestDirToYaw()
+        {
+            return _IsometricCamera.GetClosestDirToYaw();
+        }
+
         public Command RunRotateCameraTo(Vector3 facingDir, Command next)
         {
             return new SeriesCommand(
@@ -101,6 +108,51 @@ namespace ShopIsDone.Cameras
                 next
             );
         }
+
+        // This is a dictionary that gives "good" angles for the camera to rotate
+        // to in order to face an entity.
+        private Dictionary<Vector3, Vector3[]> _GoodAngles = new Dictionary<Vector3, Vector3[]>()
+        {
+            { Vector3.Forward, new Vector3[] { Vector3.Back, Vector3.Left } },
+            { Vector3.Back, new Vector3[] { Vector3.Forward, Vector3.Right } },
+            { Vector3.Left, new Vector3[] { Vector3.Left, Vector3.Forward } },
+            { Vector3.Right, new Vector3[] { Vector3.Right, Vector3.Forward } },
+        };
+
+        public void RotateToFaceEntity(Vector3 facingDir)
+        {
+            // Get the current yaw direction of the camera
+            var yawDir = _IsometricCamera.GetClosestDirToYaw();
+
+            // Convert it back to degrees
+            var yawDeg = Vec3.FacingDirToYDeg(yawDir);
+
+            // Find the closest good angle to the current yaw deg
+            var closestGoodAngle = _GoodAngles[facingDir]
+                .Select(Vec3.FacingDirToYDeg)
+                .OrderBy(x => {
+                    // Make sure we account for the circular nature of angles
+                    var diff = Math.Abs(x - yawDeg) % 360;
+                    return Math.Min(diff, 360 - diff);
+                })
+                .First();
+
+            // Convert it back to a direction
+            var closestGoodDir = Vec3.YRotDegToFacingDir(closestGoodAngle);
+
+            // Rotate the camera to that dir
+            RotateCameraTo(closestGoodDir);
+        }
+
+        public Command RunRotateToFaceEntity(Vector3 facingDir, Command next)
+        {
+            return new SeriesCommand(
+                new ActionCommand(() => RotateToFaceEntity(facingDir)),
+                new WaitForCommand(this, 0.15f),
+                next
+            );
+        }
+
 
         // Decorator command that saves whatever the prior target was and goes
         // back to it after a command is completed

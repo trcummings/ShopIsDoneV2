@@ -31,6 +31,7 @@ namespace ShopIsDone.Cameras
         public const Tween.TransitionType TRANS_TYPE = Tween.TransitionType.Linear;
 
         // Camera state
+        public float Yaw { get { return _Yaw; } }
         private float _Yaw = -45.0F; // Y-Axis rotation
 
         // Targeting state
@@ -189,6 +190,13 @@ namespace ShopIsDone.Cameras
         public void ForceZoom(float zoomAmount)
         {
             _Zoom.ForceZoom(zoomAmount);
+        }
+
+        public Vector3 GetClosestDirToYaw()
+        {
+            // Looks at the camera yaw and gives us the best answer for what
+            // cardinal direction the camera is facing
+            return Vec3.YRotDegToFacingDir(_Yaw + 45);
         }
 
         public void SetYawToDir(Vector3 dir)
