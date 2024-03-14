@@ -82,8 +82,8 @@ namespace ShopIsDone.Entities.Employees.Actions
             return new SeriesCommand(
                 // Mark action as used
                 base.Execute(message),
-                // TODO: Use Action animation
-
+                // Run use ability animation
+                _ModelComponent.RunPerformAction(StateConsts.Employees.USE_ABILITY),
                 // Move camera to target
                 _Camera.PanToTemporaryCameraTarget(
                     target,

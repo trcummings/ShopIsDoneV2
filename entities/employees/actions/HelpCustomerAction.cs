@@ -74,7 +74,7 @@ namespace ShopIsDone.Entities.Employees.Actions
                 base.Execute(message),
                 // Simultaneous animation and pop up
                 new ParallelCommand(
-                    _ModelComponent.RunPerformAction(StateConsts.Employees.HELP_CUSTOMER),
+                    _ModelComponent.RunPerformAction(StateConsts.Employees.USE_ABILITY),
                     new AsyncCommand(() => _EntityWidgetService.PopupLabelAsync(
                         Entity.WidgetPoint,
                         "Can I help you?"

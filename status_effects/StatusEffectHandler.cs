@@ -1,11 +1,13 @@
 using Godot;
 using Godot.Collections;
 using ShopIsDone.Core;
+using ShopIsDone.Models;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Widgets;
 using System;
 using System.Linq;
+using StateConsts = ShopIsDone.EntityStates.Consts;
 
 namespace ShopIsDone.StatusEffects
 {
@@ -16,6 +18,9 @@ namespace ShopIsDone.StatusEffects
 
         [Signal]
         public delegate void BuffAppliedEventHandler();
+
+        [Export]
+        private ModelComponent _ModelComponent;
 
         [Export]
         private Array<StatusEffect> _Effects = new Array<StatusEffect>();
@@ -68,13 +73,16 @@ namespace ShopIsDone.StatusEffects
                 // Check for stacking
                 new ConditionalCommand(
                     effect.IsStackable,
-                    new ActionCommand(() =>
-                    {
-                        // NB: We don't need to null check this
-                        var baseEffect = GetEffect(effect.Id);
-                        baseEffect.StackEffect(effect);
-                        // TODO: Global UI signal
-                    })
+                    new SeriesCommand(
+                        new ActionCommand(() =>
+                        {
+                            // NB: We don't need to null check this
+                            var baseEffect = GetEffect(effect.Id);
+                            baseEffect.StackEffect(effect);
+                            // TODO: Global UI signal
+                        }),
+                        ApplyEffectFx(effect)
+                    )
                 ),
                 // Otherwise, apply it normally
                 new DeferredCommand(() =>
@@ -87,20 +95,32 @@ namespace ShopIsDone.StatusEffects
                     // TODO: Global UI signal
 
                     // Run the application animations / FX
-                    return new SeriesCommand(
-                        new ActionCommand(() => {
-                            if (newEffect.IsDebuff) EmitSignal(nameof(DebuffApplied));
-                            else EmitSignal(nameof(BuffApplied));
-                        }),
-                        new AsyncCommand(() =>
-                            _WidgetService.PopupLabelAsync(
-                                Entity.WidgetPoint,
-                                newEffect.GetPopupString()
-                            )
-                        ),
-                        new WaitForCommand(this, 0.25f)
-                    );
+                    return ApplyEffectFx(newEffect);
                 })
+            );
+        }
+
+        private Command ApplyEffectFx(StatusEffect effect)
+        {
+            return new SeriesCommand(
+                new ActionCommand(() => {
+                    if (effect.IsDebuff) EmitSignal(nameof(DebuffApplied));
+                    else EmitSignal(nameof(BuffApplied));
+                }),
+                new ParallelCommand(
+                    new AsyncCommand(() =>
+                        _WidgetService.PopupLabelAsync(
+                            Entity.WidgetPoint,
+                            effect.GetPopupString()
+                        )
+                    ),
+                    // TODO: Buff animation?
+                    new ConditionalCommand(
+                        () => effect.IsDebuff,
+                        _ModelComponent.RunPerformAction(StateConsts.HURT)
+                    )
+                ),
+                new WaitForCommand(this, 0.25f)
             );
         }
 

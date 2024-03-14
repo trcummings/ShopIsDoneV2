@@ -244,7 +244,8 @@ mesh = SubResource("CapsuleMesh_v11p7")
 script = ExtResource("47_36jgp")
 _ModelPath = NodePath("../AubretteModel")
 
-[node name="StatusEffectHandler" parent="." instance=ExtResource("44_ev7o8")]
+[node name="StatusEffectHandler" parent="." node_paths=PackedStringArray("_ModelComponent") instance=ExtResource("44_ev7o8")]
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="PassiveEffectHandler" type="Node" parent="."]
 script = ExtResource("45_yep7i")
