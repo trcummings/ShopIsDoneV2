@@ -14,7 +14,7 @@ namespace ShopIsDone.EntityStates
 		public static class Employees
 		{
 			public const string DO_TASK = "do_task";
-			public const string HELP_CUSTOMER = "help_customer";
+			public const string USE_ABILITY = "use_ability";
 		}
 
 		public static class Customers

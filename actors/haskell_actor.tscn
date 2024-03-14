@@ -241,7 +241,8 @@ mesh = SubResource("CapsuleMesh_v11p7")
 script = ExtResource("47_jxpnj")
 _ModelPath = NodePath("../HaskellModel")
 
-[node name="StatusEffectHandler" parent="." instance=ExtResource("44_0imw7")]
+[node name="StatusEffectHandler" parent="." node_paths=PackedStringArray("_ModelComponent") instance=ExtResource("44_0imw7")]
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="PassiveEffectHandler" type="Node" parent="."]
 script = ExtResource("45_8ptr4")

@@ -242,7 +242,8 @@ mesh = SubResource("CapsuleMesh_vx0qh")
 script = ExtResource("47_nhr34")
 _ModelPath = NodePath("../RickyModel")
 
-[node name="StatusEffectHandler" parent="." instance=ExtResource("44_tnfgi")]
+[node name="StatusEffectHandler" parent="." node_paths=PackedStringArray("_ModelComponent") instance=ExtResource("44_tnfgi")]
+_ModelComponent = NodePath("../ModelComponent")
 
 [node name="PassiveEffectHandler" type="Node" parent="."]
 script = ExtResource("45_acgk5")
