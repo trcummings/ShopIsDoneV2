@@ -187,11 +187,11 @@ namespace ShopIsDone.ActionPoints
                         // Handle damage
                         _DebtDamageHandler.HandleDebtDamage(payload),
                         // Handle death (deferred so we can decide after
-                        // damage if we should die
+                        // damage if we should die)
                         new DeferredCommand(() => new ConditionalCommand(
                             () => ActionPointDebt == MaxActionPoints,
                             // If we've maxed out AP debt, run death
-                            new DeferredCommand(_DeathHandler.Die)
+                            new DeferredCommand(() => _DeathHandler.Die(payload))
                         ))
                     )
                 )

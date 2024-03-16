@@ -7,13 +7,13 @@ namespace ShopIsDone.ActionPoints
 {
 	public interface IDeathHandler
 	{
-		Command Die();
+		Command Die(ApDamagePayload damagePayload);
 	}
 
 	// Null implementation of interface
 	public partial class DeathHandler : NodeComponent, IDeathHandler
     {
-		public virtual Command Die()
+		public virtual Command Die(ApDamagePayload damagePayload)
 		{
 			return new Command();
 		}

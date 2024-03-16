@@ -11,7 +11,7 @@ namespace ShopIsDone.ActionPoints
         [Export]
         protected EntityStateHandler _StateHandler;
 
-        public override Command Die()
+        public override Command Die(ApDamagePayload damagePayload)
         {
             return _StateHandler.RunChangeState(StateConsts.DEAD);
         }
