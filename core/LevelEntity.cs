@@ -181,8 +181,15 @@ namespace ShopIsDone.Core
         }
 
         // Is On Tile
-        public virtual bool IsOnTile(Tile tile)
+        public virtual bool IsHoverableOnTile(Tile tile)
         {
+            // If we have hoverable tiles, then use those to decide
+            var hoverables = _Components.OfType<IHoverableComponent>();
+            if (hoverables.Any())
+            {
+                return hoverables.Any(h => h.IsHoverableOnTile(tile));
+            }
+            // Otherwise, just test against tilemap position
             return tile?.TilemapPosition == TilemapPosition;
         }
 

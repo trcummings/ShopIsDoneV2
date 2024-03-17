@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c84riwntsfpy5"]
+[gd_scene load_steps=32 format=3 uid="uid://c84riwntsfpy5"]
 
 [ext_resource type="Script" path="res://core/LevelEntity.cs" id="1_hv7oi"]
 [ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" path="res://entities/puppet_customer/CustomerOutcomeHandler.cs" id="26_vx53h"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="27_fpgq0"]
 [ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="28_v08d8"]
+[ext_resource type="Script" path="res://entities/puppet_customer/CustomerComponent.cs" id="30_k5lfj"]
 [ext_resource type="Script" path="res://lighting/LightDetector.cs" id="30_tades"]
 [ext_resource type="PackedScene" uid="uid://br2e0jnd08ebo" path="res://lighting/light_detector_area.tscn" id="31_kfuq5"]
 [ext_resource type="Script" path="res://lighting/LightDetectorComponent.cs" id="32_0u2uw"]
@@ -155,6 +156,9 @@ _ModelPath = NodePath("../CustomerType1Model")
 
 [node name="WidgetPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.5, 2.08165e-12)
+
+[node name="CustomerComponent" type="Node" parent="."]
+script = ExtResource("30_k5lfj")
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="CustomerType1Model" method="SetFacingDir"]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]

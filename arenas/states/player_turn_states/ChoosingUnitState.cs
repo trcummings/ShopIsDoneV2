@@ -37,10 +37,11 @@ namespace ShopIsDone.Arenas.PlayerTurn
         [Export]
         private PlayerPawnUIContainer _PawnUIContainer;
 
-        //private InteractableUIContainer _InteractableUIContainer;
-
         [Export]
         private TileHoverUI _TileHoverUI;
+
+        [Export]
+        private InfoUIContainer _InfoUIContainer;
 
         [Export]
         private Control _EndPlayerTurnWidget;
@@ -49,6 +50,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         [Inject]
         private DirectionalInputHelper _InputHelper;
+
+        [Inject]
+        private ArenaEntitiesService _EntitiesService;
 
         [Inject]
         private CameraService _CameraService;
@@ -71,8 +75,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         [Inject]
         private TileCursor _TileCursor;
-
-        //private TileIndicator _TileIndicatorWidget;
 
         // State
         private Tile _LastSelectedTile;
@@ -132,10 +134,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
         public override void UpdateState(double delta)
         {
             base.UpdateState(delta);
-
-            //    // Camera and conditions input
-            //    ProcessConditionsInput();
-            //    ProcessCameraInput();
 
             //    // Check for "more info" input
             //    if (Input.IsActionJustPressed("open_more_info"))
@@ -218,18 +216,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 return;
             }
 
-            //    // Cycle through tasks input
-            //    if (Input.IsActionJustPressed("cycle_tasks_forward"))
-            //    {
-            //        CycleActiveTasks(1);
-            //        return;
-            //    }
-            //    if (Input.IsActionJustPressed("cycle_tasks_backward"))
-            //    {
-            //        CycleActiveTasks(-1);
-            //        return;
-            //    }
-
             // Ignore if no movement input
             if (_InputHelper.InputDir == Vector3.Zero) return;
 
@@ -258,24 +244,14 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _TileCursor.Hide();
             _FingerCursor.Hide();
 
-            //    // Hide Interactable Container UI
-            //    _InteractableUIContainer.Hide();
+            // Clear out any info UI
+            _InfoUIContainer.CleanUp();
 
             // Hide tile UI
             _TileHoverUI.Hide();
 
-            //    // Hide and clear indicator widget
-            //    _TileIndicatorWidget.ClearIndicators();
-            //    _TileIndicatorWidget.Hide();
-
             //    // Hide MoreInfo UI CTA
             //    _MoreInfoUI.Hide();
-
-            //    // Unhighlight all interactables
-            //    foreach (var hoverable in PTM.GetAllEntities().Where(e => e.HasComponent<HoverEntityComponent>()))
-            //    {
-            //        hoverable.GetComponent<HoverEntityComponent>()?.Unhover();
-            //    }
 
             // Base OnExit
             base.OnExit(nextState);
@@ -283,7 +259,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
         private LevelEntity GetActiveUnitOnTile(Tile tile)
         {
-
             // Get active units that have remaining moves
             var activeUnits = _PlayerUnitService.GetActiveUnits();
             return activeUnits.Contains(tile.UnitOnTile) ? tile.UnitOnTile : null;
@@ -307,20 +282,42 @@ namespace ShopIsDone.Arenas.PlayerTurn
             if (!_TileHoverUI.Visible) _TileHoverUI.Show();
             _TileHoverUI.SelectTile(tile);
 
-            //    // If tile is not lit, we can't get more info about it, so hide/show
-            //    var lightDetector = tile.GetComponent<LightDetectorComponent>();
-            //    if (lightDetector.IsLit()) _MoreInfoUI.Show();
-            //    else _MoreInfoUI.Hide();
-
             // Select Player Pawn UI if there's an active unit on the tile
             _PawnUIContainer.SelectPawnElement(GetActiveUnitOnTile(tile));
 
-            //    // Handle interactable hover case
-            //    SelectInteractable(tile);
+            // If the tile is lit, then we can get see an info UI card and opt
+            // to see more info about the entities on it
+            if (tile.IsLit())
+            {
+                // Get all hoverable units on the tile
+                var entities = _EntitiesService
+                    .GetAllArenaEntities()
+                    .Where(e => e.IsHoverableOnTile(tile))
+                    .Where(_InfoUIContainer.HasTargetableUIForEntity);
+                // Create info UI container for whatever gets flagged first on
+                // the tile
+                // NB: In the future, we might need to be able to flip between
+                // the two
+                if (entities.Any())
+                {
+                    _InfoUIContainer.Init(entities.First());
+                    _InfoUIContainer.ShowTileInfo();
 
-            //    // Handle tile
-            //    if (!_TileUIContainer.Visible) _TileUIContainer.Show();
-            //    _TileUIContainer.SelectTile(tile);
+                    // _MoreInfoUI.Show();
+                }
+                // Otherwise, hide it
+                else
+                {
+                    _InfoUIContainer.CleanUp();
+                    // _MoreInfoUI.Hide();
+                }
+            }
+            // Otherwise, hide it all
+            else
+            {
+                _InfoUIContainer.CleanUp();
+                // _MoreInfoUI.Hide();
+            }
         }
 
         private void OnAttemptedInvalidMove()
@@ -331,51 +328,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 ScreenshakeHandler.ShakeAxis.XOnly
             );
         }
-
-        //private void SelectInteractable(Tile tile)
-        //{
-        //    // Unhighlight all interactables
-        //    foreach (var hoverable in PTM.GetAllEntities().Where(e => e.HasComponent<HoverEntityComponent>()))
-        //    {
-        //        hoverable.GetComponent<HoverEntityComponent>()?.Unhover();
-        //    }
-        //    // Hide widgets and UI
-        //    _InteractableUIContainer.Hide();
-        //    _TileIndicatorWidget.Hide();
-        //    _TileIndicatorWidget.ClearIndicators();
-
-        //    // Ignore if selectable is null
-        //    var selectable = GetSelectableOnTile(tile);
-        //    if (selectable == null) return;
-
-        //    // If not lit, ignore
-        //    if (!selectable.GetComponent<LightDetectorComponent>().IsLit()) return;
-
-        //    // If it doesn't have an interaction, ignore
-        //    if (!selectable.HasComponent<InteractionComponent>()) return;
-
-        //    var interactable = selectable;
-
-        //    // Select Interactable Container UI if we're on an interactable
-        //    _InteractableUIContainer.SelectInteractable(interactable);
-        //    _InteractableUIContainer.Show();
-
-        //    // Show indicators for selected tile if any
-        //    if (interactable.IsActive())
-        //    {
-        //        // Show yellow tile indicators where the interactable has them
-        //        var interaction = interactable.GetComponent<InteractionComponent>();
-        //        _TileIndicatorWidget.CreateIndicators(
-        //            interaction.GetInteractionTiles()
-        //                .Where(iTile => iTile.Tile != null)
-        //                .Select(iTile => iTile.Tile.Entity as Tile),
-        //            TileIndicator.IndicatorColor.Yellow
-        //        );
-
-        //        // Highlight this interactable if it's available
-        //        if (interactable.IsInArena()) interactable.GetComponent<HoverEntityComponent>()?.Hover();
-        //    }
-        //}
 
         // Cycling Pawns and Tasks
         private void CycleActivePawns(int dir)
@@ -411,87 +363,5 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _TileCursor.MoveCursorTo(newUnitTile);
             _FingerCursor.WarpCursorTo(_TileCursor.CurrentTile.GlobalPosition);
         }
-
-        //private void CycleActiveTasks(int dir)
-        //{
-        //    // Grab the last selected entity
-        //    var lastSelected = GetSelectableOnTile(_LastSelectedTile);
-        //    // Grab all the active tasks in the arena
-        //    var activeTaskInteractables = PTM.GetActiveTaskInteractables();
-
-        //    // If we don't have any active tasks, don't cycle,
-        //    // but emit an error signal and return early
-        //    if (activeTaskInteractables.Count() == 0)
-        //    {
-        //        EmitSignal(nameof(AttemptedInvalidSelection));
-        //        return;
-        //    }
-
-        //    // Check if we're on a tile with an active task on it
-        //    var selectedTileHasActiveTaskInteractable = activeTaskInteractables.Contains(lastSelected);
-
-        //    // If we're not on a tile with an active task on it, then get the closest task's selectable tile
-        //    if (!selectedTileHasActiveTaskInteractable)
-        //    {
-        //        var nextTile = PTM.GetAllTiles()
-        //            // Winnow down to tiles that are in our active tasks
-        //            .Where(tile => activeTaskInteractables.Contains(GetSelectableOnTile(tile)))
-        //            // Get the closest tile based on the tilemap position
-        //            .OrderBy(tile => tile.TilemapPosition.DistanceTo(_LastSelectedTile.TilemapPosition))
-        //            // Grab the first item in the list
-        //            // NB: There will always be an item in the list here because our previous case filtered
-        //            // out situations where there's no active tasks
-        //            .FirstOrDefault();
-
-        //        // Warp to the next tile
-        //        _TileCursor.MoveCursorTo(nextTile);
-        //        _FingerCursor.WarpCursorTo(_TileCursor.CurrentTile.GlobalPosition);
-
-        //        // Return early
-        //        return;
-        //    }
-
-        //    // But, if we're on the only task, emit an error signal and return early
-        //    else if (selectedTileHasActiveTaskInteractable && activeTaskInteractables.Count() == 1)
-        //    {
-        //        EmitSignal(nameof(AttemptedInvalidSelection));
-        //        return;
-        //    }
-
-        //    // Otherwise, out of the list of active tasks, go forwards or backwards in
-        //    // the list based on our current tile, and pick the first selection tile we get, so first,
-        //    // Find our currently selected task
-        //    // NB: We know for sure this exists because of the previous two cases
-        //    var currentTaskInteractable = lastSelected;
-        //    var selectedIdx = activeTaskInteractables.ToList().IndexOf(currentTaskInteractable);
-
-        //    // Select circularly
-        //    var newTaskInteractable = activeTaskInteractables.SelectCircular(selectedIdx, dir);
-
-        //    // Pick the first tile that references that task interactable
-        //    var newTile = PTM.GetAllTiles()
-        //        .Where(tile => GetSelectableOnTile(tile) == newTaskInteractable)
-        //        .FirstOrDefault();
-
-        //    // Warp the cursors to the new tile
-        //    _TileCursor.MoveCursorTo(newTile);
-        //    _FingerCursor.WarpCursorTo(_TileCursor.CurrentTile.GlobalPosition);
-        //}
-
-        //private LevelEntity GetSelectableOnTile(Tile tile)
-        //{
-        //    var selectables = GetSelectablesOnTile(tile);
-        //    if (selectables.Count() == 0) return null;
-        //    // FIXME: There can be two
-        //    return selectables.First();
-        //}
-
-        //private List<LevelEntity> GetSelectablesOnTile(Tile tile)
-        //{
-        //    return PTM.GetAllEntities()
-        //        .Where(e => e.IsOnTile(tile))
-        //        .Where(e => e.HasComponent<SelectableComponent>())
-        //        .ToList();
-        //}
     }
 }

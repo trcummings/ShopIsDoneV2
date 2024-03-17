@@ -48,7 +48,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Hide task UI
             _TaskInfoUI.Hide();
-            _TaskInfoUI.ClearHealthDiff();
+            _TaskInfoUI.ClearDiff();
 
             // Base OnExit
             base.OnExit(nextState);
@@ -56,9 +56,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         private void OnTaskSelected(TaskComponent task)
         {
-            _TaskInfoUI.Init(task);
+            _TaskInfoUI.Init(task.Entity);
             _TaskInfoUI.Show();
-            _TaskInfoUI.SetHealthDiff(1);
+            _TaskInfoUI.SetDiff(1);
         }
 
         private void OnCancel()

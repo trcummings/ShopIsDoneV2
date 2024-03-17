@@ -1,6 +1,6 @@
 using Godot;
 using ShopIsDone.ActionPoints;
-using ShopIsDone.Arenas.PlayerTurn.ChoosingActions;
+using ShopIsDone.Arenas.UI;
 using ShopIsDone.Core;
 using ShopIsDone.Microgames.Outcomes;
 using ShopIsDone.UI;
@@ -13,6 +13,7 @@ namespace ShopIsDone.Entities.PuppetCustomers
         // Nodes
         private DiffableProgressBar _HealthBar;
         private Label _Damage;
+        private LevelEntity _Customer;
 
         public override void _Ready()
         {
@@ -21,8 +22,15 @@ namespace ShopIsDone.Entities.PuppetCustomers
             _Damage = GetNode<Label>("%Damage");
         }
 
+        public bool IsValidEntityForUI(LevelEntity entity)
+        {
+            return entity.HasComponent<CustomerComponent>();
+        }
+
         public void Init(LevelEntity customer)
         {
+            _Customer = customer;
+
             var apHandler = customer.GetComponent<ActionPointHandler>();
             var outcomeHandler = customer.GetComponent<IOutcomeHandler>();
 
@@ -48,6 +56,16 @@ namespace ShopIsDone.Entities.PuppetCustomers
         public void ClearDiff()
         {
             _HealthBar.ShowDiff = false;
+        }
+
+        public void ShowTileInfo()
+        {
+            // Show movement range and damage range
+        }
+
+        public void CleanUp()
+        {
+            // Clear away tile indicators
         }
     }
 }

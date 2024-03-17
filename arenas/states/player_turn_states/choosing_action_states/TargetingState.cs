@@ -14,23 +14,10 @@ using ShopIsDone.ActionPoints;
 using ActionConsts = ShopIsDone.Actions.Consts;
 using ShopIsDone.Utils.Positioning;
 using ShopIsDone.Cameras;
-using ShopIsDone.Core;
+using ShopIsDone.Arenas.UI;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
-    public interface ITargetUI
-    {
-        void Init(LevelEntity entity);
-
-        void Show();
-
-        void Hide();
-
-        void SetDiff(int amount);
-
-        void ClearDiff();
-    }
-
     // This state deals with targeting a unit for some kind of action
 	public partial class TargetingState : ActionState
     {
@@ -46,10 +33,10 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         [Signal]
         public delegate void CanceledSelectionEventHandler();
 
-        [Export]
-        private Dictionary<string, NodePath> _UIPathMap = new Dictionary<string, NodePath>();
-
         // Nodes
+        [Export]
+        private InfoUIContainer _InfoUIContainer;
+
         [Inject]
         private DirectionalInputHelper _DirectionalInputHelper;
 
@@ -66,7 +53,6 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         private ScreenshakeService _Screenshake;
 
         // State Variables
-        private ITargetUI _CurrentUI;
         private Vector3 _InitialUnitFacingDir = Vector3.Zero;
         private Tile _InitialCursorTile;
         private GenericCollections.List<Tile> _AvailableTiles = new GenericCollections.List<Tile>();
@@ -268,7 +254,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
             // Disconnect and clean up target UI
             ChangedSelection -= OnChangedSelection;
-            CleanUpTargetUI();
+            _InfoUIContainer.CleanUp();
 
             // Reset state vars
             _InitialUnitFacingDir = Vector3.Zero;
@@ -286,7 +272,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         private void OnChangedSelection()
         {
             // Clear and reset the current UI if we have one
-            CleanUpTargetUI();
+            _InfoUIContainer.CleanUp();
 
             // Get selected tile from cursor
             var currentTile = _TileCursor.CurrentTile;
@@ -294,28 +280,14 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // If the target on the current tile is a valid target and we have a
             // related UI for that action in the dictionary, then populate and
             // show that UI
-            if (_Action.ContainsValidTarget(currentTile) && _UIPathMap.ContainsKey(_Action.Id))
+            if (_Action.ContainsValidTarget(currentTile))
             {
                 // Get the target from the tile our cursor is on
                 var target = currentTile.UnitOnTile;
 
                 // Handle the UI
-                var path = _UIPathMap[_Action.Id];
-                _CurrentUI = GetNode<ITargetUI>(path);
-                _CurrentUI.Init(target);
-                _CurrentUI.SetDiff(1);
-                _CurrentUI.Show();
-            }
-        }
-
-        private void CleanUpTargetUI()
-        {
-            // Clear and reset the current UI if we have one
-            if (_CurrentUI != null)
-            {
-                _CurrentUI.Hide();
-                _CurrentUI.ClearDiff();
-                _CurrentUI = null;
+                _InfoUIContainer.Init(target);
+                _InfoUIContainer.SetDiff(1);
             }
         }
     }

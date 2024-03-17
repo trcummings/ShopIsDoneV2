@@ -1,4 +1,5 @@
 using Godot;
+using ShopIsDone.Tiles;
 using ShopIsDone.Utils.Commands;
 using System;
 
@@ -21,5 +22,10 @@ namespace ShopIsDone.Core
     public interface IOnCleanupComponent : IComponent
     {
         Command OnCleanup();
+    }
+
+    public interface IHoverableComponent : IComponent
+    {
+        bool IsHoverableOnTile(Tile tile);
     }
 }
