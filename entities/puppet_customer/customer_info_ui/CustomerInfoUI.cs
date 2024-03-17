@@ -8,7 +8,7 @@ using System;
 
 namespace ShopIsDone.Entities.PuppetCustomers
 {
-    public partial class CustomerInfoUI : Control, ITargetUI
+    public partial class CustomerInfoUI : TargetInfoUI
     {
         // Nodes
         private DiffableProgressBar _HealthBar;
@@ -22,17 +22,17 @@ namespace ShopIsDone.Entities.PuppetCustomers
             _Damage = GetNode<Label>("%Damage");
         }
 
-        public bool IsValidEntityForUI(LevelEntity entity)
+        public override bool IsValidEntityForUI(LevelEntity entity)
         {
             return entity.HasComponent<CustomerComponent>();
         }
 
-        public void Init(LevelEntity customer)
+        public override void Init(LevelEntity entity)
         {
-            _Customer = customer;
+            base.Init(entity);
 
-            var apHandler = customer.GetComponent<ActionPointHandler>();
-            var outcomeHandler = customer.GetComponent<IOutcomeHandler>();
+            var apHandler = _Entity.GetComponent<ActionPointHandler>();
+            var outcomeHandler = _Entity.GetComponent<IOutcomeHandler>();
 
             // Set progress bar
             _HealthBar.MaxValue = apHandler.MaxActionPoints;
@@ -47,23 +47,23 @@ namespace ShopIsDone.Entities.PuppetCustomers
             ).Damage.ToString();
         }
 
-        public void SetDiff(int amount)
+        public override void SetDiff(int amount)
         {
             _HealthBar.DiffValue = Mathf.Max(_HealthBar.Value - amount, 0);
             _HealthBar.ShowDiff = true;
         }
 
-        public void ClearDiff()
+        public override void ClearDiff()
         {
             _HealthBar.ShowDiff = false;
         }
 
-        public void ShowTileInfo()
+        public override void ShowTileInfo()
         {
             // Show movement range and damage range
         }
 
-        public void CleanUp()
+        public override void CleanUp()
         {
             // Clear away tile indicators
         }

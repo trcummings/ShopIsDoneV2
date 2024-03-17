@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2dsmfror0n7j"]
+
+[ext_resource type="Script" path="res://entities/clown_puppet/ClownPuppetInfoUI.cs" id="1_1fkkg"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2_x1jqn"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="3_ww55k"]
+[ext_resource type="Material" uid="uid://dkagnsboi8w54" path="res://clown_timer/digital_glitch.material" id="4_pahgh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wpykh"]
+
+[node name="ClownPuppetInfoUI" type="PanelContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wpykh")
+script = ExtResource("1_1fkkg")
+
+[node name="BorderedUIWindow" parent="." instance=ExtResource("2_x1jqn")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("3_ww55k")
+theme_type_variation = &"LabelDark"
+text = "Clown Puppet"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ClownFeed" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+material = ExtResource("4_pahgh")
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 2

@@ -47,6 +47,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08165e-12, 0.1, -2.08165e-
 Radius = 1.5
 LightColor = Color(0.764706, 0.294118, 0.227451, 1)
 
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="ClownPuppetModel" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08165e-12, -0.1, -2.08165e-12)
+remote_path = NodePath("../../FaceCamViewport/Node3D")
+update_scale = false
+
 [node name="StateHandler" type="Node" parent="." index="4" node_paths=PackedStringArray("InitialState", "_ModelComponent")]
 script = ExtResource("4_t87db")
 InitialState = NodePath("Hidden")
@@ -77,5 +82,23 @@ _ModelPath = NodePath("../ClownPuppetModel")
 [node name="ClatterPlayer" type="AudioStreamPlayer" parent="." index="8"]
 stream = SubResource("AudioStreamRandomizer_86jjf")
 bus = &"SFX"
+
+[node name="FaceCamViewport" type="SubViewport" parent="." index="10"]
+transparent_bg = true
+size = Vector2i(200, 300)
+
+[node name="Node3D" type="Node3D" parent="FaceCamViewport" index="0"]
+
+[node name="FaceCam" type="Camera3D" parent="FaceCamViewport/Node3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41568, 0.283937)
+cull_mask = 262145
+fov = 60.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="FaceCamViewport/Node3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.40493, 0.354366)
+layers = 262144
+light_color = Color(0.764706, 0.294118, 0.227451, 1)
+light_energy = 0.068
+light_cull_mask = 4294180865
 
 [connection signal="Clattered" from="ClownPuppetModel" to="ClatterPlayer" method="play"]

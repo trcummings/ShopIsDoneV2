@@ -5,7 +5,7 @@ using ShopIsDone.UI;
 
 namespace ShopIsDone.Tasks.UI
 {
-    public partial class TaskInfoUI : Control, ITargetUI
+    public partial class TaskInfoUI : TargetInfoUI
     {
         // Nodes
         private DiffableProgressBar _HealthBar;
@@ -13,7 +13,6 @@ namespace ShopIsDone.Tasks.UI
         private Label _APCost;
         private Label _AllowedNumber;
         private Label _RequiredEmployees;
-        private LevelEntity _Task;
 
         public override void _Ready()
         {
@@ -25,14 +24,15 @@ namespace ShopIsDone.Tasks.UI
             _RequiredEmployees = GetNode<Label>("%RequiredEmployees");
         }
 
-        public bool IsValidEntityForUI(LevelEntity entity)
+        public override bool IsValidEntityForUI(LevelEntity entity)
         {
             return entity.HasComponent<TaskComponent>();
         }
 
-        public void Init(LevelEntity entity)
+        public override void Init(LevelEntity entity)
         {
-            _Task = entity;
+            base.Init(entity);
+            _Entity = entity;
 
             // Get task component
             var task = entity.GetComponent<TaskComponent>();
@@ -52,23 +52,23 @@ namespace ShopIsDone.Tasks.UI
             _RequiredEmployees.Text = $"{numOperators} / {task.OperatorsRequired}";
         }
 
-        public void SetDiff(int amount)
+        public override void SetDiff(int amount)
         {
             _HealthBar.DiffValue = Mathf.Max(_HealthBar.Value - amount, 0);
             _HealthBar.ShowDiff = true;
         }
 
-        public void ClearDiff()
+        public override void ClearDiff()
         {
             _HealthBar.ShowDiff = false;
         }
 
-        public void ShowTileInfo()
+        public override void ShowTileInfo()
         {
             // Show tile indicators for squares units can start the task on
         }
 
-        public void CleanUp()
+        public override void CleanUp()
         {
             // Clear away tile indicators
         }

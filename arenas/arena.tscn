@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=90 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -77,6 +77,7 @@
 [ext_resource type="PackedScene" uid="uid://bueosq3tcjgp" path="res://entities/puppet_customer/customer_info_ui/customer_info_ui.tscn" id="65_5pv26"]
 [ext_resource type="AudioStream" uid="uid://deium5vier2tq" path="res://arenas/ARENA-START__Bass Swell 8_E.wav" id="66_bteqj"]
 [ext_resource type="Script" path="res://arenas/ui/InfoUIContainer.cs" id="72_r3j85"]
+[ext_resource type="PackedScene" uid="uid://b2dsmfror0n7j" path="res://entities/clown_puppet/clown_puppet_info_ui.tscn" id="73_7mvf3"]
 [ext_resource type="PackedScene" uid="uid://dkd8del2h3k7q" path="res://arenas/states/unit_placement/ConfirmPlacementPrompt.tscn" id="74_defnj"]
 [ext_resource type="PackedScene" uid="uid://b55lvstnyky6x" path="res://ui/button_cta.tscn" id="75_aedxp"]
 
@@ -733,6 +734,10 @@ visible = false
 layout_mode = 2
 
 [node name="TaskInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer" instance=ExtResource("64_ihoml")]
+visible = false
+layout_mode = 2
+
+[node name="ClownPuppetInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer" instance=ExtResource("73_7mvf3")]
 visible = false
 layout_mode = 2
 
