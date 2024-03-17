@@ -141,6 +141,14 @@ namespace ShopIsDone.Tasks
                 .FirstOrDefault();
         }
 
+        public Array<Tile> GetSelectTiles()
+        {
+            return _SelectTaskHandler
+                .SelectableTiles
+                .Select(t => t.Tile)
+                .ToGodotArray();
+        }
+
         public bool IsTaskComplete()
         {
             return TaskHealth <= 0;
