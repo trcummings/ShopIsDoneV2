@@ -11,14 +11,14 @@ namespace ShopIsDone.Game
 {
     public partial class GameManager : Node
     {
-        [Export(PropertyHint.Enum, "Vanity Card, Main Menu, Level, Break Room")]
-        public int OverrideModeAfterLoad = 1;
+        [Export(PropertyHint.Enum)]
+        public InitialGameStates OverrideModeAfterLoad = InitialGameStates.MainMenu;
 
         [Export]
         public string InitialLevelId;
 
         // Enum for what game mode should be picked
-        public enum InitialGameState
+        public enum InitialGameStates
         {
             VanityCard = 0,
             MainMenu = 1,
@@ -56,7 +56,7 @@ namespace ShopIsDone.Game
             // Set GSM into settings load state
             _GSM.ChangeState(Consts.GameStates.INITIAL_LOAD, new Dictionary<string, Variant>()
             {
-                { Consts.OVERRIDE_GAME_STATE, OverrideModeAfterLoad },
+                { Consts.OVERRIDE_GAME_STATE, (int)OverrideModeAfterLoad },
                 { Consts.INITIAL_LEVEL, InitialLevelId }
             });
         }

@@ -48,22 +48,22 @@ namespace ShopIsDone.Game.States
 
             // Otherwise, allow the override mode to apply
             // Pull override from message
-            var initialState = (GameManager.InitialGameState)(int)message[Consts.OVERRIDE_GAME_STATE];
+            var initialState = (GameManager.InitialGameStates)(int)message[Consts.OVERRIDE_GAME_STATE];
             switch (initialState)
             {
-                case GameManager.InitialGameState.VanityCard:
+                case GameManager.InitialGameStates.VanityCard:
                     {
                         ChangeState(Consts.GameStates.VANITY_CARD);
                         return;
                     }
 
-                case GameManager.InitialGameState.MainMenu:
+                case GameManager.InitialGameStates.MainMenu:
                     {
                         ChangeState(Consts.GameStates.MAIN_MENU);
                         return;
                     }
 
-                case GameManager.InitialGameState.Level:
+                case GameManager.InitialGameStates.Level:
                     {
                         // Pull the initial level from the message
                         var initialLevel = (string)message.GetValueOrDefault(Consts.INITIAL_LEVEL);
