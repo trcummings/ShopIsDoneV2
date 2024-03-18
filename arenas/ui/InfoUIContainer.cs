@@ -10,6 +10,8 @@ namespace ShopIsDone.Arenas.UI
     {
         void Init(LevelEntity entity);
 
+        bool IsAvailable();
+
         void ShowTileInfo();
 
         void Show();
@@ -34,10 +36,15 @@ namespace ShopIsDone.Arenas.UI
         [Signal]
         public delegate void InfoPanelRequestedEventHandler(MoreInfoPayload payload);
 
+        [Signal]
+        public delegate void PanelAvailabilityChangedEventHandler(bool value);
+
+        // State
         public ITargetUI CurrentUI { get { return _CurrentUI; } }
         private ITargetUI _CurrentUI;
         private LevelEntity _CurrentEntity = null;
         private List<ITargetUI> _TargetUIList = new List<ITargetUI>();
+        private bool _PrevAvailable = false;
 
         public override void _Ready()
         {
@@ -49,9 +56,9 @@ namespace ShopIsDone.Arenas.UI
                 .ToList();
         }
 
-        public bool HasCurrentUI()
+        public bool HasAvailableUI()
         {
-            return CurrentUI != null;
+            return _CurrentUI?.IsAvailable() ?? false;
         }
 
         public bool HasTargetableUIForEntity(LevelEntity entity)
@@ -81,6 +88,9 @@ namespace ShopIsDone.Arenas.UI
                     _CurrentUI.Init(entity);
                     _CurrentUI.Show();
                 }
+
+                // Update availability
+                UpdateAvailability();
             }
         }
 
@@ -90,6 +100,26 @@ namespace ShopIsDone.Arenas.UI
             {
                 EmitSignal(nameof(InfoPanelRequested), payload);
             });
+        }
+
+        public override void _Process(double delta)
+        {
+            UpdateAvailability();
+        }
+
+        private void UpdateAvailability()
+        {
+            // Check if we're available
+            var isAvailable = _CurrentUI?.IsAvailable() ?? false;
+
+            // Emit signal if availability changed
+            if ((isAvailable && !_PrevAvailable) || (!isAvailable && _PrevAvailable))
+            {
+                EmitSignal(nameof(PanelAvailabilityChanged), isAvailable);
+            }
+
+            // Update if we were available before
+            _PrevAvailable = isAvailable;
         }
 
         public void ShowTileInfo()

@@ -128,6 +128,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
             // Connect to more info ui signal
             _InfoUIContainer.InfoPanelRequested += OnMoreInfoPayload;
+            _InfoUIContainer.PanelAvailabilityChanged += OnPanelAvailabilityChanged;
 
             // Base start hook
             base.OnStart(message);
@@ -138,7 +139,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
             base.UpdateState(delta);
 
             // Check for "more info" input
-            if (Input.IsActionJustPressed("open_more_info") && _InfoUIContainer.HasCurrentUI())
+            if (Input.IsActionJustPressed("open_more_info") && _InfoUIContainer.HasAvailableUI())
             {
                 // SFX Feedback
                 EmitSignal(nameof(SelectedUnit));
@@ -243,11 +244,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // Hide tile UI
             _TileHoverUI.Hide();
 
-            // Hide MoreInfo UI CTA
-            _MoreInfoPrompt.Hide();
-
             // Disconnect from
             _InfoUIContainer.InfoPanelRequested -= OnMoreInfoPayload;
+            _InfoUIContainer.PanelAvailabilityChanged -= OnPanelAvailabilityChanged;
 
             // Base OnExit
             base.OnExit(nextState);
@@ -299,21 +298,13 @@ namespace ShopIsDone.Arenas.PlayerTurn
                     _InfoUIContainer.Init(entities.First());
                     _InfoUIContainer.ShowTileInfo();
 
-                    _MoreInfoPrompt.Show();
-                }
-                // Otherwise, hide it
-                else
-                {
-                    _InfoUIContainer.CleanUp();
-                    _MoreInfoPrompt.Hide();
+                    // Return early
+                    return;
                 }
             }
-            // Otherwise, hide it all
-            else
-            {
-                _InfoUIContainer.CleanUp();
-                _MoreInfoPrompt.Hide();
-            }
+
+            // Otherwise, hide it
+            _InfoUIContainer.CleanUp();
         }
 
         private void OnAttemptedInvalidMove()
@@ -368,6 +359,12 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 { Consts.MORE_INFO_PAYLOAD_KEY, payload },
                 { Consts.LAST_SELECTED_TILE_KEY, _LastSelectedTile }
             });
+        }
+
+        private void OnPanelAvailabilityChanged(bool value)
+        {
+            if (value) _MoreInfoPrompt.Show();
+            else _MoreInfoPrompt.Hide();
         }
     }
 }

@@ -13,6 +13,11 @@ namespace ShopIsDone.Arenas.UI
             return false;
         }
 
+        public virtual bool IsAvailable()
+        {
+            return true;
+        }
+
         public virtual void Init(LevelEntity entity)
         {
             _Entity = entity;
