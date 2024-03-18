@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bou73723io7w1"]
+[gd_scene load_steps=11 format=3 uid="uid://bou73723io7w1"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_lauly"]
 [ext_resource type="PackedScene" uid="uid://cfyqrs06180rr" path="res://tasks/task_component.tscn" id="2_0yyud"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://tasks/task_models/AnimatedTaskModelHelper.cs" id="5_wi31c"]
 [ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="6_gal1p"]
 [ext_resource type="PackedScene" uid="uid://d4apl4ogrj486" path="res://entities/stock_shelves_task/stock_shelves_task_model.tscn" id="7_i3tky"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="9_krvv8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_33y7d"]
 size = Vector3(3.4, 2, 1.515)
@@ -84,6 +85,10 @@ update_position = false
 
 [node name="WidgetPoint" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
+
+[node name="ModelComponent" type="Node" parent="." index="7"]
+script = ExtResource("9_krvv8")
+_ModelPath = NodePath("../StockShelvesTaskModel")
 
 [editable path="TaskComponent"]
 [editable path="StockShelvesTaskModel"]

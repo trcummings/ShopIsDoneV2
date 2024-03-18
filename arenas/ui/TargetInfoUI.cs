@@ -18,6 +18,17 @@ namespace ShopIsDone.Arenas.UI
             _Entity = entity;
         }
 
+        public virtual void RequestInfoPayload(Action<MoreInfoPayload> payloadCb)
+        {
+            payloadCb?.Invoke(GetInfoPayload());
+        }
+
+        protected virtual MoreInfoPayload GetInfoPayload()
+        {
+            // Override the payload here
+            return new MoreInfoPayload();
+        }
+
         public virtual void SetDiff(int amount)
         {
             // Override to show a damage diff

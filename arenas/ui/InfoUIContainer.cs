@@ -24,12 +24,17 @@ namespace ShopIsDone.Arenas.UI
         void CleanUp();
 
         bool IsValidEntityForUI(LevelEntity entity);
+
+        void RequestInfoPayload(Action<MoreInfoPayload> payloadCb);
     }
 
     // This is a manager that delegates selection of a selected/targeted
     // entity's UI
     public partial class InfoUIContainer : VBoxContainer
     {
+        [Signal]
+        public delegate void InfoPanelRequestedEventHandler(MoreInfoPayload payload);
+
         public ITargetUI CurrentUI { get { return _CurrentUI; } }
         private ITargetUI _CurrentUI;
         private LevelEntity _CurrentEntity = null;
@@ -43,6 +48,11 @@ namespace ShopIsDone.Arenas.UI
             _TargetUIList = GetChildren()
                 .OfType<ITargetUI>()
                 .ToList();
+        }
+
+        public bool HasCurrentUI()
+        {
+            return CurrentUI != null;
         }
 
         public bool HasTargetableUIForEntity(LevelEntity entity)
@@ -73,6 +83,14 @@ namespace ShopIsDone.Arenas.UI
                     _CurrentUI.Show();
                 }
             }
+        }
+
+        public void RequestInfoPanel()
+        {
+            _CurrentUI?.RequestInfoPayload((MoreInfoPayload payload) =>
+            {
+                EmitSignal(nameof(InfoPanelRequested), payload);
+            });
         }
 
         public void ShowTileInfo()

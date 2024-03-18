@@ -12,6 +12,7 @@ using ShopIsDone.Arenas.UI;
 using ShopIsDone.Utils;
 using ShopIsDone.Tiles.UI;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Interactables;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -125,6 +126,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
             _PlayerCameraService.Activate();
 
+            // Connect to more info ui signal
+            _InfoUIContainer.InfoPanelRequested += OnMoreInfoPayload;
+
             // Base start hook
             base.OnStart(message);
         }
@@ -133,26 +137,17 @@ namespace ShopIsDone.Arenas.PlayerTurn
         {
             base.UpdateState(delta);
 
-            //    // Check for "more info" input
-            //    if (Input.IsActionJustPressed("open_more_info"))
-            //    {
-            //        // Do not open more info if tile is hidden
-            //        if (!_LastSelectedTile.IsLit()) return;
+            // Check for "more info" input
+            if (Input.IsActionJustPressed("open_more_info") && _InfoUIContainer.HasCurrentUI())
+            {
+                // SFX Feedback
+                EmitSignal(nameof(SelectedUnit));
 
-            //        // SFX Feedback
-            //        EmitSignal(nameof(SelectedUnit));
+                // Request UI
+                _InfoUIContainer.RequestInfoPanel();
 
-            //        // Grab the last selected entity
-            //        var lastSelected = GetSelectableOnTile(_LastSelectedTile);
-            //        // Change to "More Info" state with payload
-            //        ChangeState("MoreInfoState", new Dictionary<string, Variant>()
-            //        {
-            //            { "Tile", _LastSelectedTile },
-            //            { "Pawn", _LastSelectedTile.CurrentPawn },
-            //            { "Interactable", lastSelected is Interactable ? lastSelected : null }
-            //        });
-            //        return;
-            //    }
+                return;
+            }
 
             // Check for end turn early input
             if (Input.IsActionJustPressed("end_player_turn"))
@@ -251,6 +246,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // Hide MoreInfo UI CTA
             _MoreInfoPrompt.Hide();
 
+            // Disconnect from
+            _InfoUIContainer.InfoPanelRequested -= OnMoreInfoPayload;
+
             // Base OnExit
             base.OnExit(nextState);
         }
@@ -301,20 +299,20 @@ namespace ShopIsDone.Arenas.PlayerTurn
                     _InfoUIContainer.Init(entities.First());
                     _InfoUIContainer.ShowTileInfo();
 
-                     _MoreInfoPrompt.Show();
+                    _MoreInfoPrompt.Show();
                 }
                 // Otherwise, hide it
                 else
                 {
                     _InfoUIContainer.CleanUp();
-                     _MoreInfoPrompt.Hide();
+                    _MoreInfoPrompt.Hide();
                 }
             }
             // Otherwise, hide it all
             else
             {
                 _InfoUIContainer.CleanUp();
-                 _MoreInfoPrompt.Hide();
+                _MoreInfoPrompt.Hide();
             }
         }
 
@@ -360,6 +358,15 @@ namespace ShopIsDone.Arenas.PlayerTurn
             var newUnitTile = _TileManager.GetTileAtTilemapPos(newUnit.TilemapPosition);
             _TileCursor.MoveCursorTo(newUnitTile);
             _FingerCursor.WarpCursorTo(_TileCursor.CurrentTile.GlobalPosition);
+        }
+
+        private void OnMoreInfoPayload(MoreInfoPayload payload)
+        {
+            // Change to "More Info" state with payload
+            ChangeState("MoreInfoState", new Dictionary<string, Variant>()
+            {
+
+            });
         }
     }
 }

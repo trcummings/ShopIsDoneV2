@@ -26,6 +26,12 @@ namespace ShopIsDone.Entities.ClownPuppet
             var viewport = entity.GetNode<SubViewport>("FaceCamViewport");
             _ClownFeed.Texture = viewport.GetTexture();
         }
+
+        public override void RequestInfoPayload(Action<MoreInfoPayload> _)
+        {
+            // Emit more info warning effect
+            GD.Print("No no no. No.");
+        }
     }
 }
 

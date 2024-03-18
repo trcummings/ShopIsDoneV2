@@ -6,9 +6,9 @@ namespace ShopIsDone.Arenas.UI
 {
     public partial class MoreInfoPayload : GodotObject
     {
-        public string Title;
-        public string Description;
-        public IModel Model;
+        public string Title = "N/A";
+        public string Description = "N/A";
+        public IModel Model = new Model();
     }
 
     public partial class MoreInfoPanel : Control

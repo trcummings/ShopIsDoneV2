@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://br5e18nash7g5"]
+[gd_scene load_steps=11 format=3 uid="uid://br5e18nash7g5"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_mffes"]
 [ext_resource type="PackedScene" uid="uid://cfyqrs06180rr" path="res://tasks/task_component.tscn" id="2_spma7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://tasks/task_models/AnimatedTaskModelHelper.cs" id="6_nt3j3"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="8_ghewq"]
 [ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="9_dsuv6"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="9_e2s3c"]
 [ext_resource type="PackedScene" uid="uid://cjopkbd3a1gd4" path="res://entities/fix_display_task/fix_display_task_model.tscn" id="9_yujhs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wu3g3"]
@@ -66,6 +67,10 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.0
 
 [node name="WidgetPoint" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="ModelComponent" type="Node" parent="." index="7"]
+script = ExtResource("9_e2s3c")
+_ModelPath = NodePath("../FixDisplayTaskModel")
 
 [editable path="TaskComponent"]
 [editable path="FixDisplayTaskModel"]

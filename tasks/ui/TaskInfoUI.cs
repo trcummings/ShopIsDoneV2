@@ -2,6 +2,7 @@ using System.Linq;
 using Godot;
 using ShopIsDone.Arenas.UI;
 using ShopIsDone.Core;
+using ShopIsDone.Models;
 using ShopIsDone.UI;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Widgets;
@@ -21,6 +22,7 @@ namespace ShopIsDone.Tasks.UI
         protected TileIndicator _TileIndicator;
 
         private TaskComponent _Task;
+        private ModelComponent _Model;
 
         public override void _Ready()
         {
@@ -42,8 +44,9 @@ namespace ShopIsDone.Tasks.UI
             base.Init(entity);
             InjectionProvider.Inject(this);
 
-            // Get task component
+            // Get components
             _Task = entity.GetComponent<TaskComponent>();
+            _Model = entity.GetComponent<ModelComponent>();
 
             // Get current number of operators
             var numOperators = _Task.Operators.Count;
@@ -58,6 +61,16 @@ namespace ShopIsDone.Tasks.UI
             _APCost.Text = _Task.APCostPerTurn.ToString();
             _AllowedNumber.Text = $"{numOperators} / {_Task.OperatorsAllowed}";
             _RequiredEmployees.Text = $"{numOperators} / {_Task.OperatorsRequired}";
+        }
+
+        protected override MoreInfoPayload GetInfoPayload()
+        {
+            return new MoreInfoPayload()
+            {
+                Title = _Entity.EntityName,
+                Description = _Task.TaskDescription,
+                Model = (IModel)(_Model.Model as Node3D).Duplicate()
+            };
         }
 
         public override void SetDiff(int amount)
@@ -85,6 +98,7 @@ namespace ShopIsDone.Tasks.UI
 
         public override void CleanUp()
         {
+            base.CleanUp();
             // Clear away tile indicators
             _TileIndicator.ClearIndicators();
         }

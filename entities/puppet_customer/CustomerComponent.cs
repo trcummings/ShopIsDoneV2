@@ -1,5 +1,6 @@
 ﻿using System;
 using ShopIsDone.Core;
+using Godot;
 
 namespace ShopIsDone.Entities.PuppetCustomers
 {
@@ -7,7 +8,8 @@ namespace ShopIsDone.Entities.PuppetCustomers
 	// customer, it may have functionality in the future
 	public partial class CustomerComponent : NodeComponent
     {
-
+		[Export(PropertyHint.MultilineText)]
+		public string Description = "";
 	}
 }
 

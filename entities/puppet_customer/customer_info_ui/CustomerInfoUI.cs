@@ -4,6 +4,7 @@ using ShopIsDone.Actions;
 using ShopIsDone.Arenas.UI;
 using ShopIsDone.Core;
 using ShopIsDone.Microgames.Outcomes;
+using ShopIsDone.Models;
 using ShopIsDone.Tiles;
 using ShopIsDone.UI;
 using ShopIsDone.Utils.DependencyInjection;
@@ -19,13 +20,15 @@ namespace ShopIsDone.Entities.PuppetCustomers
         // Nodes
         private DiffableProgressBar _HealthBar;
         private Label _Damage;
-        private LevelEntity _Customer;
 
         [Inject]
         protected TileIndicator _TileIndicator;
 
         [Inject]
         private TileManager _TileManager;
+
+        private ModelComponent _Model;
+        private CustomerComponent _Customer;
 
         public override void _Ready()
         {
@@ -43,6 +46,9 @@ namespace ShopIsDone.Entities.PuppetCustomers
         {
             base.Init(entity);
             InjectionProvider.Inject(this);
+
+            _Model = entity.GetComponent<ModelComponent>();
+            _Customer = entity.GetComponent<CustomerComponent>();
 
             var apHandler = _Entity.GetComponent<ActionPointHandler>();
             var outcomeHandler = _Entity.GetComponent<IOutcomeHandler>();
@@ -69,6 +75,16 @@ namespace ShopIsDone.Entities.PuppetCustomers
         public override void ClearDiff()
         {
             _HealthBar.ShowDiff = false;
+        }
+
+        protected override MoreInfoPayload GetInfoPayload()
+        {
+            return new MoreInfoPayload()
+            {
+                Title = _Entity.EntityName,
+                Description = _Customer.Description,
+                Model = (IModel)(_Model.Model as Node3D).Duplicate()
+            };
         }
 
         public override void ShowTileInfo()
@@ -109,6 +125,7 @@ namespace ShopIsDone.Entities.PuppetCustomers
 
         public override void CleanUp()
         {
+            base.CleanUp();
             // Clear away tile indicators
             _TileIndicator.ClearIndicators();
         }
