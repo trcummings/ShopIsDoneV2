@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2dsmfror0n7j"]
+[gd_scene load_steps=7 format=3 uid="uid://b2dsmfror0n7j"]
 
 [ext_resource type="Script" path="res://entities/clown_puppet/ClownPuppetInfoUI.cs" id="1_1fkkg"]
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2_x1jqn"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="3_ww55k"]
 [ext_resource type="Material" uid="uid://dkagnsboi8w54" path="res://clown_timer/digital_glitch.material" id="4_pahgh"]
+[ext_resource type="AudioStream" uid="uid://b5rk4mg53ma8n" path="res://entities/clown_puppet/sfx/reject_info__nicolasdrweski_185092__715226__pigeonfriend.wav" id="5_oqdva"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wpykh"]
 
@@ -48,3 +49,9 @@ unique_name_in_owner = true
 material = ExtResource("4_pahgh")
 custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
+
+[node name="RejectionSfxPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_oqdva")
+bus = &"SFX"
+
+[connection signal="ClownEffect" from="." to="RejectionSfxPlayer" method="play"]
