@@ -132,7 +132,10 @@ namespace ShopIsDone.Core
             EntityDisabled += OnDisabled;
 
             // If we don't have a widget point, set it to the entity itself
-            WidgetPoint ??= this;
+            if (!Engine.IsEditorHint())
+            {
+                WidgetPoint ??= this;
+            }
 
             // Get all components in the children of the entity
             foreach (var component in GetChildren().OfType<IComponent>())

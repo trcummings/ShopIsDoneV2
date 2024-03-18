@@ -17,9 +17,11 @@ namespace ShopIsDone.Arenas.UI
             _InfoTabs = GetNode<TabContainer>("%InfoTabs");
         }
 
-        public void Init()
+        public void Init(MoreInfoPayload payload)
         {
-            // TODO: Init with payload
+            var node = MoreInfoPanel.Instantiate<MoreInfoPanel>();
+            _InfoTabs.AddChild(node);
+            node.Init(payload);
 
             // Select the first tab
             if (_InfoTabs.GetTabCount() > 0) _InfoTabs.CurrentTab = 0;
@@ -28,7 +30,7 @@ namespace ShopIsDone.Arenas.UI
         public void Reset()
         {
             // Remove all tabs
-            _InfoTabs.RemoveChildrenOfType<CanvasItem>();
+            _InfoTabs.RemoveChildrenOfType<MoreInfoPanel>();
         }
 
         public override void _Process(double delta)

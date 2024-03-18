@@ -83,7 +83,8 @@ namespace ShopIsDone.Entities.PuppetCustomers
             {
                 Title = _Entity.EntityName,
                 Description = _Customer.Description,
-                Model = (IModel)(_Model.Model as Node3D).Duplicate()
+                Model = (IModel)(_Model.Model as Node3D).Duplicate(),
+                Point = _Entity.WidgetPoint.Position with { Y = 0 }
             };
         }
 

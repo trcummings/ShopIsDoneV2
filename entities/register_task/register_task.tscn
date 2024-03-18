@@ -32,6 +32,7 @@ shape = SubResource("BoxShape3D_xt5bs")
 [node name="TaskComponent" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler") instance=ExtResource("2_1btrr")]
 TaskHealth = 2
 MaxTaskHealth = 2
+TaskDescription = "You know the drill. Print that end-of-day report, dump the cash in the bag, and be sure it matches the amount on the receipt. Money is the lifeblood of every company, after all."
 _MicrogameHandler = NodePath("../MicrogameHandler")
 
 [node name="TaskSelectorTile" parent="TaskComponent/SelectTaskHandler" index="0" instance=ExtResource("4_jahdx")]

@@ -363,9 +363,10 @@ namespace ShopIsDone.Arenas.PlayerTurn
         private void OnMoreInfoPayload(MoreInfoPayload payload)
         {
             // Change to "More Info" state with payload
-            ChangeState("MoreInfoState", new Dictionary<string, Variant>()
+            ChangeState(Consts.States.MORE_INFO, new Dictionary<string, Variant>()
             {
-
+                { Consts.MORE_INFO_PAYLOAD_KEY, payload },
+                { Consts.LAST_SELECTED_TILE_KEY, _LastSelectedTile }
             });
         }
     }

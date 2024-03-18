@@ -22,9 +22,10 @@ namespace ShopIsDone.Arenas.UI
             _RenderPreviewContainer.Rotate(Vector3.Up, (float)delta * 0.5f);
         }
 
-        public void AddRender(Node3D node)
+        public void AddRender(Node3D node, Vector3 offset)
         {
             _RenderSpot.AddChild(node);
+            node.Position = offset;
         }
 
         public void Reset()

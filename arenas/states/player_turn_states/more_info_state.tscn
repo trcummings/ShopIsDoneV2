@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://qv7xj0vhb1e1"]
+
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/MoreInfoState.cs" id="1_yuqyf"]
+[ext_resource type="PackedScene" uid="uid://cbhmkxxt5uq5r" path="res://audio/ui/ui_cancel_player.tscn" id="2_v16b7"]
+
+[node name="MoreInfo" type="Node"]
+script = ExtResource("1_yuqyf")
+
+[node name="UICancelPlayer" parent="." instance=ExtResource("2_v16b7")]
+
+[connection signal="Canceled" from="." to="UICancelPlayer" method="play"]

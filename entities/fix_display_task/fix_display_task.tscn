@@ -33,6 +33,7 @@ shape = SubResource("BoxShape3D_wu3g3")
 TaskHealth = 3
 MaxTaskHealth = 3
 OperatorsAllowed = 4
+TaskDescription = "The guest must be tantalized by way of their vision. A perfect display inflames their fantasy. Engorged. Ravenous."
 _MicrogameHandler = NodePath("../MicrogameHandler")
 
 [node name="TaskSelectorTile" parent="TaskComponent/SelectTaskHandler" index="0" instance=ExtResource("4_duf0s")]

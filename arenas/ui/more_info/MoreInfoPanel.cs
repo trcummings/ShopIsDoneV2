@@ -9,6 +9,7 @@ namespace ShopIsDone.Arenas.UI
         public string Title = "N/A";
         public string Description = "N/A";
         public IModel Model = new Model();
+        public Vector3 Point = Vector3.Zero;
     }
 
     public partial class MoreInfoPanel : Control
@@ -32,7 +33,7 @@ namespace ShopIsDone.Arenas.UI
             _Description.Text = payload.Description;
 
             // Add interactable render to preview
-            _RenderPreview.AddRender(payload.Model as Node3D);
+            _RenderPreview.AddRender(payload.Model as Node3D, payload.Point);
         }
 
         public void Reset()

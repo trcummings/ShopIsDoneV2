@@ -159,6 +159,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.5, 2.08165e-12
 
 [node name="CustomerComponent" type="Node" parent="."]
 script = ExtResource("30_k5lfj")
+Description = "Time and time again we ask \"Is there anyone more important than the customer?\" and the answer is no. But don't get discouraged just because we don't give you our utmost regard— every employee of ours is a customer in someone else's eyes."
 
 [connection signal="FacingDirectionChanged" from="FacingDirectionHandler" to="CustomerType1Model" method="SetFacingDir"]
 [connection signal="TurnedToFaceDir" from="TileMovementHandler" to="FacingDirectionHandler" method="SetFacingDirection"]
