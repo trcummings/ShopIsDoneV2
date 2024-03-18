@@ -46,7 +46,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
         [Export]
         private Control _EndPlayerTurnWidget;
 
-        //private Control _MoreInfoUI;
+        [Export]
+        private Control _MoreInfoPrompt;
 
         [Inject]
         private DirectionalInputHelper _InputHelper;
@@ -113,9 +114,6 @@ namespace ShopIsDone.Arenas.PlayerTurn
 
             // Show the "End turn" UI
             _EndPlayerTurnWidget.Show();
-
-            //    // Show the "More Info" UI
-            //    _MoreInfoUI.Show();
 
             // Connect to tile cursor signal and the invalid move signal
             _TileCursor.CursorEnteredTile += OnCursorHoveredTile;
@@ -250,8 +248,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // Hide tile UI
             _TileHoverUI.Hide();
 
-            //    // Hide MoreInfo UI CTA
-            //    _MoreInfoUI.Hide();
+            // Hide MoreInfo UI CTA
+            _MoreInfoPrompt.Hide();
 
             // Base OnExit
             base.OnExit(nextState);
@@ -303,20 +301,20 @@ namespace ShopIsDone.Arenas.PlayerTurn
                     _InfoUIContainer.Init(entities.First());
                     _InfoUIContainer.ShowTileInfo();
 
-                    // _MoreInfoUI.Show();
+                     _MoreInfoPrompt.Show();
                 }
                 // Otherwise, hide it
                 else
                 {
                     _InfoUIContainer.CleanUp();
-                    // _MoreInfoUI.Hide();
+                     _MoreInfoPrompt.Hide();
                 }
             }
             // Otherwise, hide it all
             else
             {
                 _InfoUIContainer.CleanUp();
-                // _MoreInfoUI.Hide();
+                 _MoreInfoPrompt.Hide();
             }
         }
 

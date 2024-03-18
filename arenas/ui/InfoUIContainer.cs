@@ -85,9 +85,9 @@ namespace ShopIsDone.Arenas.UI
             // Clear and reset the current UI if we have one
             if (_CurrentUI != null)
             {
+                _CurrentUI.ClearDiff();
                 _CurrentUI.CleanUp();
                 _CurrentUI.Hide();
-                _CurrentUI.ClearDiff();
                 _CurrentUI = null;
                 _CurrentEntity = null;
             }

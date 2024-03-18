@@ -292,12 +292,13 @@ script = ExtResource("2_1igvu")
 [node name="Idle" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
 script = ExtResource("3_q440h")
 
-[node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_TileHoverUI", "_InfoUIContainer", "_EndPlayerTurnWidget") instance=ExtResource("15_hbm50")]
+[node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_TileHoverUI", "_InfoUIContainer", "_EndPlayerTurnWidget", "_MoreInfoPrompt") instance=ExtResource("15_hbm50")]
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 _PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
 _TileHoverUI = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/TileHoverUI")
 _InfoUIContainer = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer")
 _EndPlayerTurnWidget = NodePath("../../../../../../UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
+_MoreInfoPrompt = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt")
 
 [node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService")]
 script = ExtResource("17_4ddch")
@@ -331,10 +332,10 @@ _InfoUIContainer = NodePath("../../../../../../../../UILayer/TileHoverUIContaine
 script = ExtResource("29_22p7l")
 _UnitInteractionService = NodePath("../../../../../../../../Services/UnitInteractionService")
 
-[node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService", "_TaskInfoUI")]
+[node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService", "_InfoUIContainer")]
 script = ExtResource("33_pf6p2")
 _UnitTaskService = NodePath("../../../../../../../../Services/UnitTaskService")
-_TaskInfoUI = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer/TaskInfoUI")
+_InfoUIContainer = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer")
 
 [node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionService", "_PlayerUnitService")]
 script = ExtResource("19_3o4ep")
@@ -725,6 +726,16 @@ size_flags_horizontal = 8
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="MoreInfoPrompt" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer" instance=ExtResource("75_aedxp")]
+visible = false
+layout_mode = 2
+
+[node name="Label" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt/BackgroundPanel/MarginContainer/HBoxContainer" index="0"]
+text = "More Info?"
+
+[node name="ActionIcon" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt/BackgroundPanel/MarginContainer/HBoxContainer" index="2"]
+action_name = &"open_more_info"
+
 [node name="InfoUIContainer" type="VBoxContainer" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 script = ExtResource("72_r3j85")
@@ -862,6 +873,7 @@ bus = &"SFX"
 
 [connection signal="ArenaEntered" from="." to="ArenaEnteredPlayer" method="play"]
 
+[editable path="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SelectUnitCTA"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SwapUnitsCTA"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/PlaceUnitCTA"]
