@@ -170,9 +170,9 @@ namespace ShopIsDone.Tasks
             //    }
             //    else _InteractionConfirmationUI.Hide();
 
-            // Point the finger cursor at the interaction
-            var destination = _SelectedTask.Entity.GlobalPosition;
-            _FingerCursor.PointCursorAt(destination, destination + (Vector3.Up * 2));
+            // Point the finger cursor at the task
+            var destination = _SelectedTask.Entity.WidgetPoint.GlobalPosition;
+            _FingerCursor.WarpCursorTo(destination);
 
             // Face the pawn towards the task, if we're not on the same tile
             var closestTile = _SelectedTask.GetClosestTaskTile(_SelectedUnit.GlobalPosition);

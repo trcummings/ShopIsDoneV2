@@ -79,6 +79,10 @@ namespace ShopIsDone.Actions
         [Export]
         public bool RotateToFaceEntity = false;
 
+        [ExportGroup("")]
+        [Export(PropertyHint.MultilineText)]
+        public string Description;
+
         // The pawn using the action
         public LevelEntity Entity;
         // The action handler
@@ -152,6 +156,11 @@ namespace ShopIsDone.Actions
         public int GetEffortSpent()
         {
             return _ActionHandler.GetActionState(Id)?.EffortSpent ?? 0;
+        }
+
+        public virtual Dictionary<string, Variant> GetDescriptionVars()
+        {
+            return new Dictionary<string, Variant>();
         }
 
         public virtual void Init(ActionHandler actionHandler)

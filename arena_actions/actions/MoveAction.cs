@@ -47,6 +47,20 @@ namespace ShopIsDone.Actions
                 entity.HasComponent<EntityStateHandler>();
         }
 
+        public int GetAdjustedMoveRange()
+        {
+            var additionalMove = GetEffortSpent() * _MovementHandler.MoveEffortMod;
+            return Mathf.FloorToInt(_MovementHandler.BaseMove + additionalMove);
+        }
+
+        public override Dictionary<string, Variant> GetDescriptionVars()
+        {
+            return new Dictionary<string, Variant>()
+            {
+                { "MoveRange", GetAdjustedMoveRange() }
+            };
+        }
+
         // Visible in menu if we're in the idle state, as most actions are
         public override bool IsVisibleInMenu()
         {

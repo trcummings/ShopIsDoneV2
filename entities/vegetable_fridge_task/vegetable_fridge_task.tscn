@@ -71,8 +71,12 @@ remote_path = NodePath("../../CollisionShape")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 remote_path = NodePath("../../TaskComponent")
 
+[node name="WidgetPointRotator" type="RemoteTransform3D" parent="VegetableFridgeModel" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.5, 2.08165e-12)
+remote_path = NodePath("../../WidgetPoint")
+
 [node name="WidgetPoint" parent="." index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 0.5)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 1, 1.5, 1.50996e-07)
 
 [node name="ModelComponent" type="Node" parent="." index="7"]
 script = ExtResource("8_nad7f")

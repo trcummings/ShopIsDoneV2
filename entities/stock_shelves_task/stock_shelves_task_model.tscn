@@ -56,8 +56,10 @@ script = ExtResource("2")
 _AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="Prop_Shelf_Isle_Empty_02_" parent="." instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
 [node name="ShelfItems" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
 [node name="FirstShelf" type="Node3D" parent="ShelfItems"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.265, 0)

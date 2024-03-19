@@ -19,3 +19,4 @@ IndicatorType = 0
 FollowEntity = false
 FocusEntity = false
 RotateToFaceEntity = false
+Description = "Change employee facing direction and end the employee's turn"

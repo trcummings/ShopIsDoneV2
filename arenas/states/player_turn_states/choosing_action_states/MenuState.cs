@@ -166,6 +166,14 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Emit signal if it's not our first time selecting an option
             if (IsFirstSelection) IsFirstSelection = false;
             else EmitSignal(nameof(Selected));
+
+            // Show action description
+            ShowActionDescription(action);
+        }
+
+        protected override void InitActionDescription()
+        {
+            // Do nothing
         }
     }
 }
