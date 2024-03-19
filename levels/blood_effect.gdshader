@@ -33,18 +33,18 @@ void fragment()
     float a = 0.0;
     mat2 m = rotate2D(5.);
 
-    for (float j = 0.; j < max(0.,abs(sin(TIME*0.5)*10.)); j++) {
+    for (float j = 0.; j < 30.; j++) {
         p *= m;
         n *= m;
-        q = p * S + t * 4. + sin(t * 4. - d * 6.) * .8 + j + n; // wtf???
+		float tMod = sin(t * 4. - d * 6.);
+        q = p * S + t * 4. + tMod * .8 + j + n; // wtf???
         a += dot(cos(q)/S, vec2(.2));
         n -= sin(q);
         S *= 1.2;
     }
 
     col = vec3(4, 2, 1) * (a + .2) + a + a - d;
-    
-    
+
     // Output to screen
-    COLOR = vec4(col,1.0);
+    COLOR *= vec4(col,1.0);
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=92 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -38,7 +38,6 @@
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/RunningActionState.cs" id="19_3o4ep"]
 [ext_resource type="PackedScene" uid="uid://dkgbq0y5ahht5" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/menu_state.tscn" id="19_pommw"]
 [ext_resource type="Script" path="res://clown_timer/ClownTimer.cs" id="19_rppqo"]
-[ext_resource type="Script" path="res://arenas/states/player_turn_states/MoreInfoState.cs" id="20_por72"]
 [ext_resource type="Script" path="res://clown_timer/TurnInterrupterService.cs" id="20_u3kfo"]
 [ext_resource type="PackedScene" uid="uid://d4f3h0uwl480d" path="res://arenas/states/player_turn_states/choosing_action_states/facing_direction_state.tscn" id="20_ycbal"]
 [ext_resource type="PackedScene" uid="uid://dmawm142xfh0t" path="res://arenas/states/player_turn_states/choosing_action_states/move_state.tscn" id="21_6pg1j"]
@@ -63,6 +62,7 @@
 [ext_resource type="PackedScene" uid="uid://i5cebkjm0fmq" path="res://arenas/states/player_turn_states/choosing_action_states/action_menu_options/options_menu.tscn" id="39_yls7l"]
 [ext_resource type="PackedScene" uid="uid://cvfjwqjfca0rm" path="res://arena_actions/effort_meter/effort_meter.tscn" id="40_ho46i"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/JudgePhaseBattleState.cs" id="43_bmay2"]
+[ext_resource type="PackedScene" uid="uid://qv7xj0vhb1e1" path="res://arenas/states/player_turn_states/more_info_state.tscn" id="48_thbkc"]
 [ext_resource type="PackedScene" uid="uid://cqq6dmqdsuqoe" path="res://clown_timer/clown_clock.tscn" id="57_n517i"]
 [ext_resource type="PackedScene" uid="uid://d3bnxo337mk18" path="res://tiles/tile/forward_placement_tile.tscn" id="57_yy6as"]
 [ext_resource type="PackedScene" uid="uid://b7iwkbcbq31id" path="res://tiles/tile/left_placement_tile.tscn" id="58_8qaye"]
@@ -76,8 +76,12 @@
 [ext_resource type="PackedScene" uid="uid://dq35dnfbvmsgh" path="res://clown_rules/clown_debug.tscn" id="64_oyack"]
 [ext_resource type="PackedScene" uid="uid://bueosq3tcjgp" path="res://entities/puppet_customer/customer_info_ui/customer_info_ui.tscn" id="65_5pv26"]
 [ext_resource type="AudioStream" uid="uid://deium5vier2tq" path="res://arenas/ARENA-START__Bass Swell 8_E.wav" id="66_bteqj"]
+[ext_resource type="Script" path="res://arenas/ui/InfoUIContainer.cs" id="72_r3j85"]
+[ext_resource type="PackedScene" uid="uid://b2dsmfror0n7j" path="res://entities/clown_puppet/clown_puppet_info_ui.tscn" id="73_7mvf3"]
 [ext_resource type="PackedScene" uid="uid://dkd8del2h3k7q" path="res://arenas/states/unit_placement/ConfirmPlacementPrompt.tscn" id="74_defnj"]
 [ext_resource type="PackedScene" uid="uid://b55lvstnyky6x" path="res://ui/button_cta.tscn" id="75_aedxp"]
+[ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="80_b46ih"]
+[ext_resource type="PackedScene" uid="uid://c4mb41kbr2bsr" path="res://arenas/ui/more_info/more_info_ui_container.tscn" id="81_vtc23"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
@@ -290,11 +294,13 @@ script = ExtResource("2_1igvu")
 [node name="Idle" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
 script = ExtResource("3_q440h")
 
-[node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_TileHoverUI", "_EndPlayerTurnWidget") instance=ExtResource("15_hbm50")]
+[node name="ChoosingUnit" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_PawnUIContainer", "_TileHoverUI", "_InfoUIContainer", "_EndPlayerTurnWidget", "_MoreInfoPrompt") instance=ExtResource("15_hbm50")]
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 _PawnUIContainer = NodePath("../../../../../../UILayer/PlayerPawnUIContainer")
 _TileHoverUI = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/TileHoverUI")
+_InfoUIContainer = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer")
 _EndPlayerTurnWidget = NodePath("../../../../../../UILayer/EndTurnUIContainer/MarginContainer/HBoxContainer/VBoxContainer/EndPlayerTurnUI")
+_MoreInfoPrompt = NodePath("../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt")
 
 [node name="EndingTurn" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ConfirmEndTurnPopup", "_PlayerUnitService")]
 script = ExtResource("17_4ddch")
@@ -321,27 +327,26 @@ _OptionsMenu = NodePath("../../../../../../../../UILayer/ActionMenuContainer/Mar
 
 [node name="Move" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" instance=ExtResource("21_6pg1j")]
 
-[node name="Targeting" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" instance=ExtResource("22_e5qdl")]
-_UIPathMap = {
-"help_customer": NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/CustomerContainer/CustomerInfoUI")
-}
+[node name="Targeting" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_InfoUIContainer") instance=ExtResource("22_e5qdl")]
+_InfoUIContainer = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer")
 
 [node name="Interact" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitInteractionService")]
 script = ExtResource("29_22p7l")
 _UnitInteractionService = NodePath("../../../../../../../../Services/UnitInteractionService")
 
-[node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService", "_TaskInfoUI")]
+[node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService", "_InfoUIContainer")]
 script = ExtResource("33_pf6p2")
 _UnitTaskService = NodePath("../../../../../../../../Services/UnitTaskService")
-_TaskInfoUI = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/TaskContainer/TaskInfoUI")
+_InfoUIContainer = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer")
 
 [node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionService", "_PlayerUnitService")]
 script = ExtResource("19_3o4ep")
 _ActionService = NodePath("../../../../../../Services/ActionService")
 _PlayerUnitService = NodePath("../../../../../../Services/PlayerUnitService")
 
-[node name="MoreInfo" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine"]
-script = ExtResource("20_por72")
+[node name="MoreInfo" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_MoreInfoContainer", "_BlurBackground") instance=ExtResource("48_thbkc")]
+_MoreInfoContainer = NodePath("../../../../../../UILayer/MoreInfoUIContainer")
+_BlurBackground = NodePath("../../../../../../UILayer/BlurBackground")
 
 [node name="JudgePhase" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_ActionService", "_ClownRulesService")]
 script = ExtResource("43_bmay2")
@@ -724,19 +729,29 @@ size_flags_horizontal = 8
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TaskContainer" type="VBoxContainer" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="TaskInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/TaskContainer" instance=ExtResource("64_ihoml")]
+[node name="MoreInfoPrompt" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer" instance=ExtResource("75_aedxp")]
 visible = false
 layout_mode = 2
 
-[node name="CustomerContainer" type="VBoxContainer" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
+[node name="Label" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt/BackgroundPanel/MarginContainer/HBoxContainer" index="0"]
+text = "More Info?"
 
-[node name="CustomerInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/CustomerContainer" instance=ExtResource("65_5pv26")]
+[node name="ActionIcon" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt/BackgroundPanel/MarginContainer/HBoxContainer" index="2"]
+action_name = &"open_more_info"
+
+[node name="InfoUIContainer" type="VBoxContainer" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("72_r3j85")
+
+[node name="CustomerInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer" instance=ExtResource("65_5pv26")]
+visible = false
+layout_mode = 2
+
+[node name="TaskInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer" instance=ExtResource("64_ihoml")]
+visible = false
+layout_mode = 2
+
+[node name="ClownPuppetInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer" instance=ExtResource("73_7mvf3")]
 visible = false
 layout_mode = 2
 
@@ -855,12 +870,21 @@ text = "Cancel
 [node name="ActionIcon" parent="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/CancelCTA/BackgroundPanel/MarginContainer/HBoxContainer" index="2"]
 action_name = &"ui_cancel"
 
+[node name="BlurBackground" parent="UILayer" instance=ExtResource("80_b46ih")]
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="MoreInfoUIContainer" parent="UILayer" instance=ExtResource("81_vtc23")]
+visible = false
+
 [node name="ArenaEnteredPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("66_bteqj")
 bus = &"SFX"
 
 [connection signal="ArenaEntered" from="." to="ArenaEnteredPlayer" method="play"]
 
+[editable path="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SelectUnitCTA"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SwapUnitsCTA"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/PlaceUnitCTA"]

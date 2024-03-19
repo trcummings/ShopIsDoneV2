@@ -15,7 +15,7 @@ using ShopIsDone.Cameras;
 namespace ShopIsDone.Tasks
 {
     // This is a component that represents a task attached to an entity
-    public partial class TaskComponent : NodeComponent, IOutcomeHandler, IEntityActiveHandler, IDamageTarget
+    public partial class TaskComponent : NodeComponent, IOutcomeHandler, IEntityActiveHandler, IDamageTarget, IHoverableComponent
     {
         [Signal]
         public delegate void TaskProgressedEventHandler(Error status);
@@ -128,12 +128,25 @@ namespace ShopIsDone.Tasks
             EmitSignal(nameof(TaskHealthInitialized), TaskHealth, MaxTaskHealth, percent);
         }
 
+        public bool IsHoverableOnTile(Tile tile)
+        {
+            return _TaskTiles.Any(tt => tt.Tile == tile);
+        }
+
         public Tile GetClosestTaskTile(Vector3 pos)
         {
             return _TaskTiles
                 .OrderBy(iTile => iTile.GlobalPosition.DistanceTo(pos))
                 .Select(iTile => iTile.Tile)
                 .FirstOrDefault();
+        }
+
+        public Array<Tile> GetSelectTiles()
+        {
+            return _SelectTaskHandler
+                .SelectableTiles
+                .Select(t => t.Tile)
+                .ToGodotArray();
         }
 
         public bool IsTaskComplete()

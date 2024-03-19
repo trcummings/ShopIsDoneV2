@@ -132,7 +132,10 @@ namespace ShopIsDone.Core
             EntityDisabled += OnDisabled;
 
             // If we don't have a widget point, set it to the entity itself
-            WidgetPoint ??= this;
+            if (!Engine.IsEditorHint())
+            {
+                WidgetPoint ??= this;
+            }
 
             // Get all components in the children of the entity
             foreach (var component in GetChildren().OfType<IComponent>())
@@ -181,8 +184,15 @@ namespace ShopIsDone.Core
         }
 
         // Is On Tile
-        public virtual bool IsOnTile(Tile tile)
+        public virtual bool IsHoverableOnTile(Tile tile)
         {
+            // If we have hoverable tiles, then use those to decide
+            var hoverables = _Components.OfType<IHoverableComponent>();
+            if (hoverables.Any())
+            {
+                return hoverables.Any(h => h.IsHoverableOnTile(tile));
+            }
+            // Otherwise, just test against tilemap position
             return tile?.TilemapPosition == TilemapPosition;
         }
 

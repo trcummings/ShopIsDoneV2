@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://fjvoq3olr4fm"]
+[gd_scene load_steps=10 format=3 uid="uid://fjvoq3olr4fm"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_n5srl"]
 [ext_resource type="PackedScene" uid="uid://cfyqrs06180rr" path="res://tasks/task_component.tscn" id="2_1btrr"]
 [ext_resource type="PackedScene" uid="uid://bemfdgy1p2a05" path="res://tasks/task_selector_tile.tscn" id="4_jahdx"]
 [ext_resource type="PackedScene" uid="uid://b46xb2dilpr4v" path="res://tasks/task_tile.tscn" id="5_7cpk5"]
 [ext_resource type="PackedScene" uid="uid://dh00op3fltlq5" path="res://entities/register_task/register_task_model.tscn" id="7_rnbx4"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="8_aflr8"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="8_kgr0f"]
 [ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="9_vlibf"]
 
@@ -31,6 +32,7 @@ shape = SubResource("BoxShape3D_xt5bs")
 [node name="TaskComponent" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler") instance=ExtResource("2_1btrr")]
 TaskHealth = 2
 MaxTaskHealth = 2
+TaskDescription = "You know the drill. Print that end-of-day report, dump the cash in the bag, and be sure it matches the amount on the receipt. Money is the lifeblood of every company, after all."
 _MicrogameHandler = NodePath("../MicrogameHandler")
 
 [node name="TaskSelectorTile" parent="TaskComponent/SelectTaskHandler" index="0" instance=ExtResource("4_jahdx")]
@@ -49,5 +51,9 @@ LoopingAnimations = []
 
 [node name="WidgetPoint" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="ModelComponent" type="Node" parent="." index="7"]
+script = ExtResource("8_aflr8")
+_ModelPath = NodePath("../RegisterTaskModel")
 
 [editable path="TaskComponent"]

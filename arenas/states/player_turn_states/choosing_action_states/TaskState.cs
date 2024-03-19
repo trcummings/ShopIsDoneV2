@@ -1,7 +1,8 @@
-﻿using Godot;
+﻿using System.Threading.Tasks;
+using Godot;
 using Godot.Collections;
+using ShopIsDone.Arenas.UI;
 using ShopIsDone.Tasks;
-using ShopIsDone.Tasks.UI;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
@@ -11,7 +12,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         private UnitTaskService _UnitTaskService;
 
         [Export]
-        private TaskInfoUI _TaskInfoUI;
+        private InfoUIContainer _InfoUIContainer;
 
         private bool _JustConfirmedTask = false;
 
@@ -47,8 +48,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             _UnitTaskService.Deactivate();
 
             // Hide task UI
-            _TaskInfoUI.Hide();
-            _TaskInfoUI.ClearHealthDiff();
+            _InfoUIContainer.CleanUp();
 
             // Base OnExit
             base.OnExit(nextState);
@@ -56,9 +56,8 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         private void OnTaskSelected(TaskComponent task)
         {
-            _TaskInfoUI.Init(task);
-            _TaskInfoUI.Show();
-            _TaskInfoUI.SetHealthDiff(1);
+            _InfoUIContainer.Init(task.Entity);
+            _InfoUIContainer.SetDiff(1);
         }
 
         private void OnCancel()

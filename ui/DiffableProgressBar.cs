@@ -108,7 +108,10 @@ namespace ShopIsDone.UI
 
         private void SetStrobe()
         {
-            if (_Value > _DiffValue) _AnimPlayer?.Play("strobe_base");
+            // If no diff, just don't play the animation player
+            if (!ShowDiff) _AnimPlayer?.Stop();
+            // Otherwise, decide which bar to strobe
+            else if (_Value > _DiffValue) _AnimPlayer?.Play("strobe_base");
             else _AnimPlayer?.Play("strobe_overlay");
         }
 

@@ -13,6 +13,7 @@ using StateConsts = ShopIsDone.EntityStates.Consts;
 using ShopIsDone.Models;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Widgets;
+using ShopIsDone.Entities.PuppetCustomers;
 
 namespace ShopIsDone.Entities.Employees.Actions
 {
@@ -44,7 +45,8 @@ namespace ShopIsDone.Entities.Employees.Actions
         {
             return
                 entity.HasComponent<MicrogameHandler>() &&
-                entity.HasComponent<IOutcomeHandler>();
+                entity.HasComponent<IOutcomeHandler>() &&
+                entity.HasComponent<CustomerComponent>();
         }
 
         // Visible in menu if we're in the idle state, as most actions are

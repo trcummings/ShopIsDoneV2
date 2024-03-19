@@ -1,0 +1,122 @@
+[gd_scene load_steps=8 format=3 uid="uid://c4mb41kbr2bsr"]
+
+[ext_resource type="Script" path="res://arenas/ui/more_info/MoreInfoUIContainer.cs" id="1_fsw52"]
+[ext_resource type="PackedScene" uid="uid://c8extb0tdqbmf" path="res://arenas/ui/more_info/more_info_panel.tscn" id="2_f4lki"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="3_pr17c"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="4_jd8pf"]
+[ext_resource type="Script" path="res://addons/ActionIcon/ActionIcon.gd" id="5_qjeae"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvqwr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_se7v0"]
+
+[node name="MoreInfoUIContainer" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_fsw52")
+MoreInfoPanel = ExtResource("2_f4lki")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MoreInfoSectionContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1000, 600)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wvqwr")
+
+[node name="MoreInfoSection" parent="PanelContainer/MarginContainer/VBoxContainer/MoreInfoSectionContainer" instance=ExtResource("3_pr17c")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MoreInfoSectionContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="InfoTabs" type="TabContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MoreInfoSectionContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("4_jd8pf")
+tabs_visible = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ControlSectionContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxEmpty_se7v0")
+
+[node name="ControlsSection" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer" instance=ExtResource("3_pr17c")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TabsControlContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer/TabsControlContainer"]
+layout_mode = 2
+theme = ExtResource("4_jd8pf")
+theme_type_variation = &"LabelDark"
+text = "Change Tabs"
+
+[node name="ActionIcon" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer/TabsControlContainer"]
+layout_mode = 2
+script = ExtResource("5_qjeae")
+action_name = &"move_left"
+joypad_model = 2
+
+[node name="ActionIcon2" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer/TabsControlContainer"]
+layout_mode = 2
+script = ExtResource("5_qjeae")
+action_name = &"move_right"
+joypad_model = 2
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator2" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_jd8pf")
+theme_type_variation = &"LabelDark"
+text = "Close"
+
+[node name="ActionIcon" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlSectionContainer/MarginContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+script = ExtResource("5_qjeae")
+action_name = &"ui_cancel"
+joypad_model = 2

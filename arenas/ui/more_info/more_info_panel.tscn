@@ -1,0 +1,92 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8extb0tdqbmf"]
+
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="1"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2"]
+[ext_resource type="Script" path="res://arenas/ui/more_info/MoreInfoPanel.cs" id="4"]
+[ext_resource type="PackedScene" uid="uid://0huc1fps21bu" path="res://arenas/ui/more_info/more_info_render_preview.tscn" id="4_e8qay"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ibj6b"]
+
+[node name="MoreInfoPanel" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ibj6b")
+script = ExtResource("4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BorderedUIWindow" parent="VBoxContainer/HBoxContainer/MarginContainer" instance=ExtResource("2")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Title" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1")
+theme_type_variation = &"LabelDark"
+text = "[Interactable]"
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BorderedUIWindow" parent="VBoxContainer/HBoxContainer2/MarginContainer" instance=ExtResource("2")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Description" type="Label" parent="VBoxContainer/HBoxContainer2/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1")
+theme_type_variation = &"LabelDark"
+text = "[Description]"
+autowrap_mode = 3
+
+[node name="RenderPreviewContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer2/RenderPreviewContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/RenderPreviewContainer"]
+layout_mode = 2
+
+[node name="RenderPreview" parent="VBoxContainer/HBoxContainer2/RenderPreviewContainer/MarginContainer" instance=ExtResource("4_e8qay")]
+unique_name_in_owner = true
+layout_mode = 2

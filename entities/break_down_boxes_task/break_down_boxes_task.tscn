@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cgli0qeti2oyr"]
+[gd_scene load_steps=12 format=3 uid="uid://cgli0qeti2oyr"]
 
 [ext_resource type="PackedScene" uid="uid://chfmobnl3wule" path="res://core/level_entity.tscn" id="1_tr603"]
 [ext_resource type="PackedScene" uid="uid://cfyqrs06180rr" path="res://tasks/task_component.tscn" id="2_sshc2"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="4_ddvjj"]
 [ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="5_gtgg2"]
 [ext_resource type="Script" path="res://tasks/task_models/AnimatedTaskModelHelper.cs" id="8_5tvib"]
+[ext_resource type="Script" path="res://render/ModelComponent.cs" id="10_7vusu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wu3g3"]
 size = Vector3(1.8, 1.5, 1.6)
@@ -33,6 +34,7 @@ shape = SubResource("BoxShape3D_wu3g3")
 TaskHealth = 3
 MaxTaskHealth = 3
 OperatorsAllowed = 4
+TaskDescription = "This is all the therapy you can afford."
 _MicrogameHandler = NodePath("../MicrogameHandler")
 
 [node name="CompletionHandler" parent="TaskComponent" index="1"]
@@ -75,6 +77,10 @@ _OutcomeHandlerPath = NodePath("../TaskComponent")
 
 [node name="WidgetPoint" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="ModelComponent" type="Node" parent="." index="7"]
+script = ExtResource("10_7vusu")
+_ModelPath = NodePath("../BreakDownBoxesModel")
 
 [editable path="TaskComponent"]
 [editable path="BreakDownBoxesModel"]

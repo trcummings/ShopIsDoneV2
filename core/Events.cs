@@ -39,6 +39,10 @@ public partial class Events : Node
     [Signal]
     public delegate void RemoveDebugPanelRequestedEventHandler(Control panel);
 
+    // FX
+    [Signal]
+    public delegate void BloodWipeRequestedEventHandler();
+
     // Static function to help get the singleton
     public static Events GetEvents(Node node)
     {
