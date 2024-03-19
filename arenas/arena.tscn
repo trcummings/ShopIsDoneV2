@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=93 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -76,6 +76,7 @@
 [ext_resource type="PackedScene" uid="uid://dq35dnfbvmsgh" path="res://clown_rules/clown_debug.tscn" id="64_oyack"]
 [ext_resource type="PackedScene" uid="uid://bueosq3tcjgp" path="res://entities/puppet_customer/customer_info_ui/customer_info_ui.tscn" id="65_5pv26"]
 [ext_resource type="AudioStream" uid="uid://deium5vier2tq" path="res://arenas/ARENA-START__Bass Swell 8_E.wav" id="66_bteqj"]
+[ext_resource type="PackedScene" uid="uid://dnbm6g60000gx" path="res://arenas/states/player_turn_states/choosing_action_states/action_description.tscn" id="68_c11uj"]
 [ext_resource type="Script" path="res://arenas/ui/InfoUIContainer.cs" id="72_r3j85"]
 [ext_resource type="PackedScene" uid="uid://b2dsmfror0n7j" path="res://entities/clown_puppet/clown_puppet_info_ui.tscn" id="73_7mvf3"]
 [ext_resource type="PackedScene" uid="uid://dkd8del2h3k7q" path="res://arenas/states/unit_placement/ConfirmPlacementPrompt.tscn" id="74_defnj"]
@@ -130,7 +131,7 @@ script = ExtResource("4_m7h52")
 
 [node name="EffortMeterService" type="Node" parent="Services" node_paths=PackedStringArray("_EffortMeter")]
 script = ExtResource("5_gmbyy")
-_EffortMeter = NodePath("../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/EffortMeter")
+_EffortMeter = NodePath("../../UILayer/ActionMenuContainer/MarginContainer/VBoxContainer2/HBoxContainer/EffortMeter")
 
 [node name="PlayerTurnUnitService" type="Node" parent="Services"]
 script = ExtResource("6_qjeqh")
@@ -319,25 +320,31 @@ script = ExtResource("2_1igvu")
 [node name="Idle" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine"]
 script = ExtResource("3_q440h")
 
-[node name="Menu" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_OptionsMenu") instance=ExtResource("19_pommw")]
+[node name="Menu" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_PlayerUnitService", "_OptionsMenu", "_ActionDescription") instance=ExtResource("19_pommw")]
 _PlayerUnitService = NodePath("../../../../../../../../Services/PlayerUnitService")
-_OptionsMenu = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/OptionsMenu")
+_OptionsMenu = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/OptionsMenu")
+_ActionDescription = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/ActionDescription")
 
-[node name="FacingDirection" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" instance=ExtResource("20_ycbal")]
+[node name="FacingDirection" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_ActionDescription") instance=ExtResource("20_ycbal")]
+_ActionDescription = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/ActionDescription")
 
-[node name="Move" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" instance=ExtResource("21_6pg1j")]
+[node name="Move" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_ActionDescription") instance=ExtResource("21_6pg1j")]
+_ActionDescription = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/ActionDescription")
 
-[node name="Targeting" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_InfoUIContainer") instance=ExtResource("22_e5qdl")]
+[node name="Targeting" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_InfoUIContainer", "_ActionDescription") instance=ExtResource("22_e5qdl")]
 _InfoUIContainer = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer")
+_ActionDescription = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/ActionDescription")
 
-[node name="Interact" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitInteractionService")]
+[node name="Interact" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitInteractionService", "_ActionDescription")]
 script = ExtResource("29_22p7l")
 _UnitInteractionService = NodePath("../../../../../../../../Services/UnitInteractionService")
+_ActionDescription = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/ActionDescription")
 
-[node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService", "_InfoUIContainer")]
+[node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService", "_InfoUIContainer", "_ActionDescription")]
 script = ExtResource("33_pf6p2")
 _UnitTaskService = NodePath("../../../../../../../../Services/UnitTaskService")
 _InfoUIContainer = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer")
+_ActionDescription = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/ActionDescription")
 
 [node name="RunningAction" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine" node_paths=PackedStringArray("_ActionService", "_PlayerUnitService")]
 script = ExtResource("19_3o4ep")
@@ -512,6 +519,8 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 mouse_filter = 2
 alignment = 2
 
@@ -523,23 +532,16 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="OptionsMenu" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("39_yls7l")]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="OptionsMenu" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("39_yls7l")]
 visible = false
+custom_minimum_size = Vector2(300, 2.08165e-12)
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-mouse_filter = 2
-alignment = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-mouse_filter = 2
-alignment = 1
-
-[node name="EffortMeter" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer" instance=ExtResource("40_ho46i")]
+[node name="ActionDescription" parent="UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("68_c11uj")]
 visible = false
 layout_mode = 2
 
@@ -547,6 +549,22 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+mouse_filter = 2
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/ActionMenuContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="EffortMeter" parent="UILayer/ActionMenuContainer/MarginContainer/VBoxContainer2/HBoxContainer" instance=ExtResource("40_ho46i")]
+visible = false
+layout_mode = 2
 
 [node name="OutOfTimeUIContainer" type="PanelContainer" parent="UILayer"]
 visible = false

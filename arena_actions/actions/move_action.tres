@@ -21,3 +21,4 @@ IndicatorType = 0
 FollowEntity = true
 FocusEntity = false
 RotateToFaceEntity = false
+Description = "Allows the employee to move [color=darkgreen]{MoveRange}[/color] spaces."

@@ -23,3 +23,4 @@ IndicatorType = 1
 FollowEntity = true
 FocusEntity = true
 RotateToFaceEntity = true
+Description = "Increase employee's competence for the rest of the turn, and reduce another employee's competence for 1 full turn."

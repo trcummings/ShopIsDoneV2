@@ -11,6 +11,7 @@ using ShopIsDone.Tiles;
 using PlayerTurnConsts = ShopIsDone.Arenas.PlayerTurn.Consts;
 using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Cameras;
+using ShopIsDone.Arenas.UI;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
@@ -31,6 +32,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 
         [Signal]
         public delegate void PawnAPDiffCanceledEventHandler();
+
+        [Export]
+        private ActionDescription _ActionDescription;
 
         [Inject]
         protected EffortMeterService _EffortService;
@@ -68,6 +72,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 else RequestApDiff(new ActionPointHandler() { ActionPoints = _Action.ActionCost });
             }
             _PlayerCameraService.Activate();
+
+            InitActionDescription();
+
             base.OnStart(message);
         }
 
@@ -81,6 +88,8 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Clear the ap diff
             CancelApDiff();
 
+            HideActionDescription();
+
             base.OnExit(nextState);
         }
 
@@ -90,6 +99,8 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             {
                 ActionPoints = newTotal
             });
+
+            UpdateActionDescription();
         }
 
         protected void RequestApDiff(ActionPointHandler subtractableAp)
@@ -105,6 +116,36 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
         protected void CancelApDiff()
         {
             EmitSignal(nameof(PawnAPDiffCanceled));
+        }
+
+        protected virtual void InitActionDescription()
+        {
+            ShowActionDescription(_Action);
+        }
+
+        protected void UpdateActionDescription()
+        {
+            _ActionDescription.UpdateDescription();
+        }
+
+        protected void ShowActionDescription(ArenaAction action = null)
+        {
+            // Null coalesce
+            var realAction = action ?? _Action;
+
+            // If it has a description, then show and init the description,
+            if (!string.IsNullOrEmpty(realAction.Description))
+            {
+                _ActionDescription.Init(realAction);
+                _ActionDescription.Show();
+            }
+            // Otherwise hide it
+            else _ActionDescription.Hide();
+        }
+
+        protected void HideActionDescription()
+        {
+            _ActionDescription.Hide();
         }
     }
 }

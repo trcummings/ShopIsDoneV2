@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnbm6g60000gx"]
+
+[ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/ActionDescription.cs" id="1_pdujy"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="1_pywrl"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="2_2nerr"]
+
+[node name="ActionDescription" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 2.08165e-12)
+size_flags_horizontal = 2
+size_flags_vertical = 8
+script = ExtResource("1_pdujy")
+
+[node name="BorderedUIWindow" parent="." instance=ExtResource("1_pywrl")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Description" type="RichTextLabel" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_2nerr")
+bbcode_enabled = true
+text = "Allows the employee to move [color=darkgreen]{MoveRange}[/color] spaces."
+fit_content = true
