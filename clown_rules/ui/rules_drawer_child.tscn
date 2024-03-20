@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwhrj81x35dr7"]
+
+[ext_resource type="PackedScene" uid="uid://b1uw3dfkxngfi" path="res://ui/vertical_drawer_child.tscn" id="1_mthdt"]
+[ext_resource type="Script" path="res://clown_rules/ui/RulesUI.cs" id="2_5vsug"]
+[ext_resource type="PackedScene" uid="uid://cq1kt6qj4tdvw" path="res://clown_rules/ui/rule_ui_element.tscn" id="3_eivnj"]
+
+[node name="RulesDrawerChild" instance=ExtResource("1_mthdt")]
+custom_minimum_size = Vector2(250, 2.08165e-12)
+script = ExtResource("2_5vsug")
+RuleScene = ExtResource("3_eivnj")
+
+[node name="DrawerContents" parent="PanelContainer/MarginContainer" index="0"]
+unique_name_in_owner = true
+
+[node name="TitleContainer" parent="." index="1"]
+unique_name_in_owner = true
+
+[node name="Label" parent="TitleContainer/MarginContainer" index="0"]
+text = "Rules
+"

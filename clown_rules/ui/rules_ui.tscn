@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdce80truckjp"]
+[gd_scene load_steps=8 format=3 uid="uid://cdce80truckjp"]
 
 [ext_resource type="Script" path="res://clown_rules/ui/RulesUI.cs" id="1_iusbg"]
 [ext_resource type="PackedScene" path="res://clown_rules/ui/rule_ui_element.tscn" id="2_ymxgj"]
@@ -7,32 +7,54 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_12ok1"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6lm80"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ue2ac"]
 
 [node name="RulesUI" type="PanelContainer"]
-custom_minimum_size = Vector2(300, 250)
+custom_minimum_size = Vector2(300, 2.08165e-12)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_12ok1")
 script = ExtResource("1_iusbg")
 RuleScene = ExtResource("2_ymxgj")
-theme_override_styles/panel = SubResource("StyleBoxEmpty_12ok1")
 
-[node name="FullBG" parent="." instance=ExtResource("3_7t3a8")]
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(300, 40)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6lm80")
+
+[node name="FullBG" parent="PanelContainer" instance=ExtResource("3_7t3a8")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 56
+
+[node name="Rules" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
+alignment = 2
 
-[node name="MarginContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="TitleContainer" type="PanelContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ue2ac")
 
-[node name="TitleBG" parent="VBoxContainer/MarginContainer" instance=ExtResource("3_7t3a8")]
+[node name="TitleBG" parent="VBoxContainer/TitleContainer" instance=ExtResource("3_7t3a8")]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TitleContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 16
@@ -40,23 +62,8 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/MarginContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/TitleContainer/MarginContainer"]
 layout_mode = 2
 theme = ExtResource("4_rj6ln")
 theme_type_variation = &"LabelDark"
 text = "Rules"
-
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="Rules" type="VBoxContainer" parent="VBoxContainer/MarginContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2

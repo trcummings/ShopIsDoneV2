@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://cq1kt6qj4tdvw"]
 
 [ext_resource type="Script" path="res://clown_rules/ui/RuleUIElement.cs" id="1"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="2"]
 
 [node name="RuleUIElement" type="Label"]
-margin_right = 360.0
-margin_bottom = 14.0
-theme = ExtResource( 2 )
-theme_type_variation = "LabelDark"
+custom_minimum_size = Vector2(200, 2.08165e-12)
+offset_right = 200.0
+offset_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme = ExtResource("2")
+theme_type_variation = &"LabelDark"
 text = "[Rule Description]"
-script = ExtResource( 1 )
+autowrap_mode = 3
+script = ExtResource("1")

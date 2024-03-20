@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqq6dmqdsuqoe"]
+[gd_scene load_steps=4 format=3 uid="uid://cqq6dmqdsuqoe"]
 
-[ext_resource type="Material" uid="uid://dkagnsboi8w54" path="res://clown_timer/digital_glitch.material" id="1_4iqf2"]
 [ext_resource type="Script" path="res://clown_timer/ClownClock.cs" id="1_kspfe"]
 [ext_resource type="Texture2D" uid="uid://b3qd0w20w8e8k" path="res://clown_timer/clown_clock.png" id="2_lyg7m"]
 [ext_resource type="Texture2D" uid="uid://d383lwewjok8h" path="res://clown_timer/clown_clock_hand.png" id="3_ofdg3"]
@@ -9,10 +8,8 @@
 script = ExtResource("1_kspfe")
 
 [node name="ClownClockBase" type="Sprite2D" parent="."]
-material = ExtResource("1_4iqf2")
 texture = ExtResource("2_lyg7m")
 
 [node name="ClownClockHand" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-material = ExtResource("1_4iqf2")
 texture = ExtResource("3_ofdg3")

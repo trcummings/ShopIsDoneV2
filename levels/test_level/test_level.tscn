@@ -75,17 +75,26 @@ _PlayerCharacterManager = NodePath("../../../PlayerCharacterManager")
 script = ExtResource("6_a2ot6")
 Customer = NodePath("../../../Entities/Customer")
 _Id = "customer_satisfied_condition"
+IsVisibleInUI = true
+Verb = "Satisfy"
+Noun = "Customer"
+PluralNoun = "Customers"
 
 [node name="TaskCompletedCondition" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ConditionsService" index="1" node_paths=PackedStringArray("Task")]
 script = ExtResource("9_bxejf")
 Task = NodePath("../../../Entities/VegetableFridge")
 _Id = "task_completed_condition"
+IsVisibleInUI = true
+Verb = "Complete"
+Noun = "Task"
+PluralNoun = "Tasks"
 
 [node name="ClownRulesService" parent="World/NavigationRegion3D/Environment/Arena/Services" index="18" node_paths=PackedStringArray("_Judge")]
 _Judge = NodePath("../../Entities/ClownPuppet")
 
 [node name="MoveInLShapeActionRule" type="Node" parent="World/NavigationRegion3D/Environment/Arena/Services/ClownRulesService" index="0"]
 script = ExtResource("10_kmt7p")
+RuleDescription = "Do NOT walk in an L-shaped path"
 
 [node name="Tiles" parent="World/NavigationRegion3D/Environment/Arena" index="2" node_paths=PackedStringArray("_ArenaTilemap")]
 _ArenaTilemap = NodePath("../TileManager")

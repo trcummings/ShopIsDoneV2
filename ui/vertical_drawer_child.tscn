@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1uw3dfkxngfi"]
+
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="3_nuett"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="4_3168v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_12ok1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6lm80"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ue2ac"]
+
+[node name="VerticalDrawerChild" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 2.08165e-12)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_12ok1")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6lm80")
+
+[node name="FullBG" parent="PanelContainer" instance=ExtResource("3_nuett")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 56
+
+[node name="DrawerContents" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="TitleContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ue2ac")
+
+[node name="TitleBG" parent="TitleContainer" instance=ExtResource("3_nuett")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TitleContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Label" type="Label" parent="TitleContainer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("4_3168v")
+theme_type_variation = &"LabelDark"
+text = "[Title]"

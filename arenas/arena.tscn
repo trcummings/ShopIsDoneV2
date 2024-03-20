@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=95 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -49,6 +49,7 @@
 [ext_resource type="Resource" uid="uid://5fosu0kpci6h" path="res://entities/clown_puppet/clown_warnings.dialogue" id="23_xgetg"]
 [ext_resource type="Script" path="res://arenas/states/finished_states/FailureFinishedState.cs" id="24_ych7k"]
 [ext_resource type="Script" path="res://arenas/ArenaEntitiesService.cs" id="25_04uvk"]
+[ext_resource type="Script" path="res://clown_rules/RuleDisplayService.cs" id="26_olbmy"]
 [ext_resource type="Script" path="res://arenas/states/player_turn_states/choosing_action_states/InteractState.cs" id="29_22p7l"]
 [ext_resource type="PackedScene" uid="uid://4i7q7t1ox12t" path="res://arenas/states/unit_placement/selecting_unit_state.tscn" id="29_210gg"]
 [ext_resource type="PackedScene" uid="uid://cbi0wx8o2ucbo" path="res://arenas/states/unit_placement/moving_unit_state.tscn" id="30_xgwp3"]
@@ -69,8 +70,6 @@
 [ext_resource type="PackedScene" uid="uid://c8xyd8s0yod3u" path="res://tiles/tile_hover_ui/tile_hover_ui.tscn" id="58_m7tmb"]
 [ext_resource type="PackedScene" uid="uid://dsewlrnbawck" path="res://tiles/tile/right_placement_tile.tscn" id="59_fx7iu"]
 [ext_resource type="PackedScene" uid="uid://c3gqm7hpwiqwc" path="res://tiles/tile/backward_placement_tile.tscn" id="60_60fim"]
-[ext_resource type="PackedScene" uid="uid://cdce80truckjp" path="res://clown_rules/ui/rules_ui.tscn" id="61_0b8j6"]
-[ext_resource type="PackedScene" uid="uid://bvr1260jlynow" path="res://conditions/ui/conditions_remaining.tscn" id="62_ioot1"]
 [ext_resource type="PackedScene" uid="uid://brpya8arwjb2" path="res://clown_rules/ui/rules_list.tscn" id="63_x3x63"]
 [ext_resource type="PackedScene" uid="uid://cunubcx0qdxp8" path="res://tasks/ui/task_info_ui.tscn" id="64_ihoml"]
 [ext_resource type="PackedScene" uid="uid://dq35dnfbvmsgh" path="res://clown_rules/clown_debug.tscn" id="64_oyack"]
@@ -81,8 +80,11 @@
 [ext_resource type="PackedScene" uid="uid://b2dsmfror0n7j" path="res://entities/clown_puppet/clown_puppet_info_ui.tscn" id="73_7mvf3"]
 [ext_resource type="PackedScene" uid="uid://dkd8del2h3k7q" path="res://arenas/states/unit_placement/ConfirmPlacementPrompt.tscn" id="74_defnj"]
 [ext_resource type="PackedScene" uid="uid://b55lvstnyky6x" path="res://ui/button_cta.tscn" id="75_aedxp"]
+[ext_resource type="Script" path="res://ui/VerticalDrawer.cs" id="78_lb4oy"]
+[ext_resource type="PackedScene" uid="uid://bwhrj81x35dr7" path="res://clown_rules/ui/rules_drawer_child.tscn" id="80_63bq2"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="80_b46ih"]
 [ext_resource type="PackedScene" uid="uid://c4mb41kbr2bsr" path="res://arenas/ui/more_info/more_info_ui_container.tscn" id="81_vtc23"]
+[ext_resource type="PackedScene" uid="uid://bpfvf5kvj335u" path="res://conditions/ui/conditions_drawer_child.tscn" id="82_2wsx0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpe1"]
 
@@ -159,7 +161,7 @@ script = ExtResource("10_y7i7b")
 
 [node name="ConditionsService" type="Node" parent="Services" node_paths=PackedStringArray("_ConditionsRemaining")]
 script = ExtResource("11_jvwpy")
-_ConditionsRemaining = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContainer/ConditionsRemaining")
+_ConditionsRemaining = NodePath("../../UILayer/RulesAndConditions/MarginContainer/HBoxContainer/ConditionsContainer/ConditionsDrawerChild")
 
 [node name="UnitInteractionService" parent="Services" instance=ExtResource("12_i1lmg")]
 
@@ -194,7 +196,7 @@ _ActionService = NodePath("../ActionService")
 [node name="ClownRulesService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesUI", "_RulesList", "_ActionService", "_ScriptQueueService")]
 script = ExtResource("21_etobo")
 _IsActive = true
-_RulesUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/VBoxContainer/RulesUI")
+_RulesUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/HBoxContainer/RulesContainer/RulesDrawerChild")
 _RulesList = NodePath("../../UILayer/RulesList")
 _ActionService = NodePath("../ActionService")
 _ScriptQueueService = NodePath("../ScriptQueueService")
@@ -209,6 +211,13 @@ _Arena = NodePath("../..")
 [node name="ArenaEntitiesService" type="Node" parent="Services" node_paths=PackedStringArray("_Arena")]
 script = ExtResource("25_04uvk")
 _Arena = NodePath("../..")
+
+[node name="RuleDisplayService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesContainer", "_ConditionsContainer", "_RulesUI", "_ConditionsUI")]
+script = ExtResource("26_olbmy")
+_RulesContainer = NodePath("../../UILayer/RulesAndConditions/MarginContainer/HBoxContainer/RulesContainer")
+_ConditionsContainer = NodePath("../../UILayer/RulesAndConditions/MarginContainer/HBoxContainer/ConditionsContainer")
+_RulesUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/HBoxContainer/RulesContainer/RulesDrawerChild")
+_ConditionsUI = NodePath("../../UILayer/RulesAndConditions/MarginContainer/HBoxContainer/ConditionsContainer/ConditionsDrawerChild")
 
 [node name="ArenaStateMachine" type="Node" parent="."]
 script = ExtResource("2_1igvu")
@@ -717,7 +726,7 @@ theme_override_constants/margin_bottom = 16
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 8
+size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_t11pk")
 
 [node name="ClownClock" parent="UILayer/ClownTimerUIContainer/Panel" instance=ExtResource("57_n517i")]
@@ -780,12 +789,10 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 
 [node name="RulesAndConditions" type="PanelContainer" parent="UILayer"]
-anchors_preset = 11
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -300.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 10
 size_flags_vertical = 3
@@ -795,21 +802,38 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_ssca0")
 [node name="MarginContainer" type="MarginContainer" parent="UILayer/RulesAndConditions"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/RulesAndConditions/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="RulesUI" parent="UILayer/RulesAndConditions/MarginContainer/VBoxContainer" instance=ExtResource("61_0b8j6")]
-visible = false
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/RulesAndConditions/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 2
 
-[node name="ConditionsRemaining" parent="UILayer/RulesAndConditions/MarginContainer/VBoxContainer" instance=ExtResource("62_ioot1")]
+[node name="RulesContainer" type="Control" parent="UILayer/RulesAndConditions/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 2.08165e-12)
+layout_mode = 2
+script = ExtResource("78_lb4oy")
+DrawerPath = NodePath("RulesDrawerChild")
+
+[node name="RulesDrawerChild" parent="UILayer/RulesAndConditions/MarginContainer/HBoxContainer/RulesContainer" instance=ExtResource("80_63bq2")]
 visible = false
+layout_mode = 0
+
+[node name="ConditionsContainer" type="Control" parent="UILayer/RulesAndConditions/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 2.08165e-12)
+layout_mode = 2
+script = ExtResource("78_lb4oy")
+DrawerPath = NodePath("ConditionsDrawerChild")
+
+[node name="ConditionsDrawerChild" parent="UILayer/RulesAndConditions/MarginContainer/HBoxContainer/ConditionsContainer" instance=ExtResource("82_2wsx0")]
+visible = false
+layout_mode = 0
+
+[node name="Spacer" type="Control" parent="UILayer/RulesAndConditions/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(316, 2.08165e-12)
 layout_mode = 2
 
 [node name="RulesList" parent="UILayer" instance=ExtResource("63_x3x63")]

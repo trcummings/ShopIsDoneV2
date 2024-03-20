@@ -3,21 +3,25 @@ using ShopIsDone.ClownRules.ActionRules;
 using ShopIsDone.Utils.Extensions;
 using System;
 using Godot.Collections;
+using ShopIsDone.UI;
 
 namespace ShopIsDone.ClownRules.UI
 {
-    public partial class RulesUI : Control
+    public partial class RulesUI : Control, IVerticalDrawerChild
     {
         [Export]
         public PackedScene RuleScene;
 
         // Nodes
         private Control _RuleElements;
+        private Control _TitleContainer;
+        public Control DrawerFace { get { return _TitleContainer; } }
 
         public override void _Ready()
         {
             // Ready nodes
-            _RuleElements = GetNode<Control>("%Rules");
+            _RuleElements = GetNode<Control>("%DrawerContents");
+            _TitleContainer = GetNode<Control>("%TitleContainer");
         }
 
         public void Init(Array<ClownActionRule> rules)
