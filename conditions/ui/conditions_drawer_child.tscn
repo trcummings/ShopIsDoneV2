@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpfvf5kvj335u"]
+
+[ext_resource type="PackedScene" uid="uid://b1uw3dfkxngfi" path="res://ui/vertical_drawer_child.tscn" id="1_gg1uj"]
+[ext_resource type="Script" path="res://conditions/ui/ConditionsUI.cs" id="2_g1e74"]
+[ext_resource type="PackedScene" uid="uid://dpuwejxtufc3" path="res://conditions/ui/condition_ui_element.tscn" id="3_t4kyc"]
+
+[node name="ConditionsDrawerChild" instance=ExtResource("1_gg1uj")]
+custom_minimum_size = Vector2(250, 2.08165e-12)
+script = ExtResource("2_g1e74")
+ElementTemplate = ExtResource("3_t4kyc")
+
+[node name="DrawerContents" parent="PanelContainer/MarginContainer" index="0"]
+unique_name_in_owner = true
+
+[node name="TitleContainer" parent="." index="1"]
+unique_name_in_owner = true
+
+[node name="Label" parent="TitleContainer/MarginContainer" index="0"]
+text = "Conditions
+"

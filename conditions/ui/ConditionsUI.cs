@@ -1,22 +1,19 @@
 using Godot;
-using ShopIsDone.Utils.UI;
-using System;
 using Godot.Collections;
 using System.Linq;
+using ShopIsDone.UI;
 
 namespace ShopIsDone.Conditions.UI
 {
-    public partial class ConditionsUI : Control
+    public partial class ConditionsUI : Control, IVerticalDrawerChild
     {
-        //[Export]
-        //public NodePath AllTasksDoneTweenerPath;
-
         [Export]
         public PackedScene ElementTemplate;
 
         // Nodes
         private Control _ConditionElementsNode;
-        //private ControlTweener _AllTasksDoneTweener;
+        private Control _TitleContainer;
+        public Control DrawerFace { get { return _TitleContainer; } }
 
         // State
         private Array<ConditionUIElement> _ConditionElements = new Array<ConditionUIElement>();
@@ -24,8 +21,8 @@ namespace ShopIsDone.Conditions.UI
         public override void _Ready()
         {
             // Ready nodes
-            _ConditionElementsNode = GetNode<Control>("%Conditions");
-            //_AllTasksDoneTweener = GetNode<ControlTweener>(AllTasksDoneTweenerPath);
+            _ConditionElementsNode = GetNode<Control>("%DrawerContents");
+            _TitleContainer = GetNode<Control>("%TitleContainer");
         }
 
         public void Init(Array<Condition> conditions)
@@ -51,13 +48,6 @@ namespace ShopIsDone.Conditions.UI
                 elem.SetCondition(condition);
             }
         }
-
-        //public async void OnAllConditionsComplete()
-        //{
-        //    await _AllTasksDoneTweener.TweenInAsync(0.5f);
-        //    await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
-        //    await _AllTasksDoneTweener.TweenOutAsync(0.5f);
-        //}
 
         public void UpdateCondition(Condition condition)
         {

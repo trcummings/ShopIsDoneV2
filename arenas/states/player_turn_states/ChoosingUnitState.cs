@@ -12,7 +12,7 @@ using ShopIsDone.Arenas.UI;
 using ShopIsDone.Utils;
 using ShopIsDone.Tiles.UI;
 using ShopIsDone.Utils.Extensions;
-using ShopIsDone.Interactables;
+using ShopIsDone.ClownRules;
 
 namespace ShopIsDone.Arenas.PlayerTurn
 {
@@ -71,6 +71,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
         [Inject]
         private ScreenshakeService _Screenshake;
 
+        [Inject]
+        private RuleDisplayService _RulesDisplay;
+
         // Widgets
         [Inject]
         private FingerCursor _FingerCursor;
@@ -125,6 +128,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _FingerCursor.Show();
 
             _PlayerCameraService.Activate();
+
+            _RulesDisplay.Activate();
 
             // Connect to more info ui signal
             _InfoUIContainer.InfoPanelRequested += OnMoreInfoPayload;
@@ -223,6 +228,8 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _PlayerCameraService.Deactivate();
             // Remove camera target
             _CameraService.SetCameraTarget(null).Execute();
+
+            _RulesDisplay.Deactivate();
 
             // Disconnect from tile cursor
             _TileCursor.CursorEnteredTile -= OnCursorHoveredTile;
