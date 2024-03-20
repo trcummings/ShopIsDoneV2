@@ -39,7 +39,7 @@ namespace ShopIsDone.Entities.PuppetCustomers
 
         public override bool IsValidEntityForUI(LevelEntity entity)
         {
-            return entity.HasComponent<CustomerComponent>();
+            return entity.HasComponent<CustomerComponent>() && entity.IsActive();
         }
 
         public override void Init(LevelEntity entity)

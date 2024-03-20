@@ -3,6 +3,8 @@ using System;
 using Godot.Collections;
 using ShopIsDone.UI;
 using ShopIsDone.Core.Data;
+using System.Linq;
+using ShopIsDone.Game;
 
 namespace ShopIsDone.BreakRoom
 {
@@ -21,6 +23,10 @@ namespace ShopIsDone.BreakRoom
             _LevelButtonTemplate = GetNode<Button>("%LevelButtonTemplate");
             _LevelButtons = GetNode<Control>("%LevelButtons");
             _LevelDb = LevelDb.GetLevelDb(this);
+
+            var levelItems = _LevelDb
+                .GetLevels()
+                .Where(item => !item.DebugModeOnly || GameManager.IsDebugMode());
 
             // Create buttons and connect to them
             foreach (var levelItem in _LevelDb.GetLevels())

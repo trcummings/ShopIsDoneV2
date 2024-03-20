@@ -12,6 +12,9 @@ namespace ShopIsDone.Core.Data
         [Export]
         public string Label;
 
+        [Export]
+        public bool DebugModeOnly;
+
         [Export(PropertyHint.File, "*.tscn")]
         public string LevelScenePath;
     }

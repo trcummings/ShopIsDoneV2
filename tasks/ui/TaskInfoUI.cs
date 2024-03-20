@@ -36,7 +36,7 @@ namespace ShopIsDone.Tasks.UI
 
         public override bool IsValidEntityForUI(LevelEntity entity)
         {
-            return entity.HasComponent<TaskComponent>();
+            return entity.HasComponent<TaskComponent>() && entity.IsActive();
         }
 
         public override void Init(LevelEntity entity)
