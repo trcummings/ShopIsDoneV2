@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwygsgjgrklif"]
+
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_707q1"]
+[ext_resource type="Script" path="res://microgames/choose_outcome/ChooseOutcomeMicrogame.cs" id="2_hyvof"]
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="3_yarp0"]
+[ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="4_lsyap"]
+
+[node name="ChooseOutcomeMicrogame" instance=ExtResource("1_707q1")]
+script = ExtResource("2_hyvof")
+PromptText = "Choose Outcome"
+
+[node name="CenterContainer" type="CenterContainer" parent="BackgroundRectangle" index="0"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BackgroundRectangle/CenterContainer" index="0"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="BackgroundRectangle/CenterContainer/VBoxContainer" index="0"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_yarp0")
+theme_override_font_sizes/font_size = 40
+text = "Choose Outcome"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRectangle/CenterContainer/VBoxContainer" index="1"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Win" type="Button" parent="BackgroundRectangle/CenterContainer/VBoxContainer/HBoxContainer" index="0"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 40
+text = "Win"
+
+[node name="Lose" type="Button" parent="BackgroundRectangle/CenterContainer/VBoxContainer/HBoxContainer" index="1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 40
+text = "Lose"
+
+[node name="UISelectPlayer" parent="." index="4" instance=ExtResource("4_lsyap")]
+
+[connection signal="Selected" from="." to="UISelectPlayer" method="play"]
