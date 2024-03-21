@@ -19,3 +19,4 @@ IndicatorType = 0
 FollowEntity = false
 FocusEntity = false
 RotateToFaceEntity = false
+Description = ""
