@@ -42,7 +42,7 @@ namespace ShopIsDone.Lighting
 			}
 
 			// Create tween for light color
-			var tween = GetTree().CreateTween().Parallel();
+			var tween = GetTree().CreateTween().BindNode(this).Parallel();
 			foreach (var light in GetArenaLights())
 			{
 				// Persist the light colors in the arena light if we've never
@@ -66,7 +66,7 @@ namespace ShopIsDone.Lighting
             }
 
 			// Create tween for light color
-			var tween = GetTree().CreateTween().Parallel();
+			var tween = GetTree().CreateTween().BindNode(this).Parallel();
 			foreach (var lightKv in _LightColors)
 			{
 				var light = lightKv.Key;

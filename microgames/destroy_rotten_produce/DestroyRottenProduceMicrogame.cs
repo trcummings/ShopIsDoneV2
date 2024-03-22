@@ -268,7 +268,7 @@ namespace ShopIsDone.Microgames.DestroyRottenProduce
 
         private void TweenBackdrop()
         {
-            var tween = GetTree().CreateTween();
+            var tween = GetTree().CreateTween().BindNode(this);
             // Tween fisheye effect scaling param
             tween
                 .TweenMethod(

@@ -119,7 +119,9 @@ namespace ShopIsDone.Microgames.CheckInBack
         private void OnItemEnteredDetector(Area2D _)
         {
             // Tween reticule alpha
-            CreateTween().TweenProperty(_Reticule, "modulate:a", 1f, 0.2f);
+            CreateTween()
+                .BindNode(this)
+                .TweenProperty(_Reticule, "modulate:a", 1f, 0.2f);
             // Stop timer
             MicrogameTimer.Stop();
             // Stop all player input

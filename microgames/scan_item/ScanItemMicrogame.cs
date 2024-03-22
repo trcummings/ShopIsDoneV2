@@ -74,7 +74,7 @@ namespace ShopIsDone.Microgames.ScanItem
             SetProcess(false);
 
             // Minor fluctuations of camera rotation
-            var cTween = CreateTween().SetLoops();
+            var cTween = CreateTween().SetLoops().BindNode(this);
             cTween
                 .TweenProperty(_Camera, "rotation_degrees:z", 1.5f, 1f)
                 .AsRelative();
@@ -188,7 +188,7 @@ namespace ShopIsDone.Microgames.ScanItem
             // Slam the current tween amount to max
             if (_Tween != null && _Tween.IsValid()) _Tween.CustomStep(1000000.0f);
             // Create a new tween
-            _Tween = CreateTween();
+            _Tween = CreateTween().BindNode(this);
             // Rotate
             _Tween
                 .TweenProperty(_ItemBox, "transform:basis", _ItemBox.Transform.Basis.Rotated(axis, Mathf.Pi / 2), 0.25f)
@@ -251,7 +251,7 @@ namespace ShopIsDone.Microgames.ScanItem
         {
             // tween dither in and out
             var prevAlpha = _Dither.Modulate.A;
-            var tween = CreateTween();
+            var tween = CreateTween().BindNode(this);
             tween.TweenProperty(_Dither, "modulate:a", 0.8, 0.15f);
             tween.Chain().TweenProperty(_Dither, "modulate:a", prevAlpha, 0.15f);
 

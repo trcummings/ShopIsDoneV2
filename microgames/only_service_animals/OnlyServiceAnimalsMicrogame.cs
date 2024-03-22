@@ -224,7 +224,7 @@ namespace ShopIsDone.Microgames.OnlyServiceAnimals
             }
 
             // Tween the attendant to the target point
-            _AttendantTween = GetTree().CreateTween();
+            _AttendantTween = GetTree().CreateTween().BindNode(this);
             _AttendantTween
                 .TweenProperty(_Attendant, "global_position", _TargetAttendantPos, 0.05f)
                 // Set ease and trans type

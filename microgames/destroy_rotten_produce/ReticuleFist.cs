@@ -30,6 +30,7 @@ namespace ShopIsDone.Microgames.DestroyRottenProduce
 
             var launchTween = GetTree()
                 .CreateTween()
+                .BindNode(this)
                 .SetEase(Tween.EaseType.OutIn)
                 .SetTrans(Tween.TransitionType.Bounce);
 

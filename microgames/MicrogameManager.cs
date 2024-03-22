@@ -94,6 +94,7 @@ namespace ShopIsDone.Microgames
 
             // Tween text out
             GetTree().CreateTween()
+                .BindNode(this)
                 .TweenProperty(_PromptLabel, "modulate:a", 0f, 0.5f)
                 // Set ease and trans type
                 .SetEase(Tween.EaseType.Out)
@@ -145,7 +146,7 @@ namespace ShopIsDone.Microgames
 			_PromptLabel.Scale = new Vector2(8, 8);
 
             // Create tween
-            var tween = GetTree().CreateTween();
+            var tween = GetTree().CreateTween().BindNode(this);
 
 			// Tween Frame in
             tween
@@ -157,7 +158,7 @@ namespace ShopIsDone.Microgames
 			// In parallel, tween prompt
 			// Transparency
 			tween
-				.Parallel()
+                .Parallel()
 				.TweenProperty(_PromptLabel, "modulate:a", 1f, 0.35f)
                 // Set ease and trans type
                 .SetEase(Tween.EaseType.In)
@@ -165,7 +166,7 @@ namespace ShopIsDone.Microgames
 
 			// Scale
             tween
-				.Parallel()
+                .Parallel()
 				.TweenProperty(_PromptLabel, "scale", new Vector2(1f, 1f), 0.5f)
                 // Set ease and trans type
                 .SetEase(Tween.EaseType.Out)
@@ -189,6 +190,7 @@ namespace ShopIsDone.Microgames
 
             // Tween Frame out
             tween
+                .BindNode(this)
                 .TweenProperty(_FrameContainer, "position", frameEndPos, 0.5f)
                 // Set ease and trans type
                 .SetEase(Tween.EaseType.In)
@@ -251,7 +253,7 @@ namespace ShopIsDone.Microgames
             var goalValue = (1f - ((currentBeat + 1) / (float)_Microgame.NumBeats)) * 100;
             var duration = _Microgame.GetSecondsPerBeat();
             // Create tween and run it
-            _ProgressTween = GetTree().CreateTween();
+            _ProgressTween = GetTree().CreateTween().BindNode(this);
             _ProgressTween
                 .TweenProperty(_ProgressBar, "value", goalValue, duration)
                 .SetEase(Tween.EaseType.In)
@@ -273,6 +275,7 @@ namespace ShopIsDone.Microgames
         {
             GetTree()
                 .CreateTween()
+                .BindNode(this)
                 .TweenProperty(_ProgressContainer, "modulate:a", 0, duration);
         }
 
@@ -280,6 +283,7 @@ namespace ShopIsDone.Microgames
         {
             GetTree()
                 .CreateTween()
+                .BindNode(this)
                 .TweenProperty(_ProgressContainer, "modulate:a", 1, duration);
         }
 
@@ -287,6 +291,7 @@ namespace ShopIsDone.Microgames
         {
             var tween = GetTree()
                 .CreateTween()
+                .BindNode(this)
                 .TweenProperty(_Background, "modulate:a", 0, duration);
             await ToSignal(tween, "finished");
 
@@ -303,6 +308,7 @@ namespace ShopIsDone.Microgames
 
             GetTree()
                 .CreateTween()
+                .BindNode(this)
                 .TweenProperty(_Background, "modulate:a", 1, duration);
         }
     }

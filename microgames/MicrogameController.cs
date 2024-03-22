@@ -1,7 +1,9 @@
 using System.Linq;
 using Godot;
 using Godot.Collections;
+using ShopIsDone.ClownRules;
 using ShopIsDone.Microgames.Outcomes;
+using ShopIsDone.Utils;
 using ShopIsDone.Utils.Commands;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Positioning;
@@ -29,7 +31,7 @@ namespace ShopIsDone.Microgames
         }
     }
 
-    public partial class MicrogameController : Node, IService
+    public partial class MicrogameController : Node, IService, IInitializable, ICleanUpable
     {
         [Signal]
         public delegate void AttackStartedEventHandler();
@@ -39,6 +41,27 @@ namespace ShopIsDone.Microgames
 
         [Export]
         private MicrogameManager _MicrogameManager;
+
+        [Export]
+        private PackedScene _DebugPanelScene;
+        private MicrogameDebugPanel _DebugPanel;
+
+        public void Init()
+        {
+            // Create and add debug panel
+            _DebugPanel = _DebugPanelScene.Instantiate<MicrogameDebugPanel>();
+            var events = Events.GetEvents(this);
+            events.EmitSignal(nameof(events.AddDebugPanelRequested), _DebugPanel);
+            // Init debug panel
+            _DebugPanel.Init(_MicrogameManager);
+        }
+
+        public void CleanUp()
+        {
+            // Remove debug panel
+            var events = Events.GetEvents(this);
+            events.EmitSignal(nameof(events.RemoveDebugPanelRequested), _DebugPanel);
+        }
 
         public Command RunMicrogame(MicrogamePayload payload)
         {

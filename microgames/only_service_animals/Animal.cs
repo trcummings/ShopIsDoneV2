@@ -48,7 +48,7 @@ namespace ShopIsDone.Microgames.OnlyServiceAnimals
         public void Start(Vector2 endpoint, float duration)
         {
             // Create the tween
-            _MoveTween = GetTree().CreateTween();
+            _MoveTween = GetTree().CreateTween().BindNode(this);
             _MoveTween
                 .TweenProperty(this, "global_position", endpoint, duration);
         }
