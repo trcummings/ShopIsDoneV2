@@ -62,6 +62,7 @@ namespace ShopIsDone.Utils.UI
 
             // Tween Frame in
             tween
+                .BindNode(this)
                 .TweenProperty(_ControlToTween, "position", frameEndPos, duration)
                 // Set ease and trans type
                 .SetEase(InEaseType)
@@ -84,6 +85,7 @@ namespace ShopIsDone.Utils.UI
 
             // Tween Frame out
             tween
+                .BindNode(this)
                 .TweenProperty(_ControlToTween, "position", frameEndPos, duration)
                 // Set ease and trans type
                 .SetEase(OutEaseType)

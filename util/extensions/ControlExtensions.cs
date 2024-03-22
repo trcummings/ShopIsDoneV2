@@ -20,6 +20,7 @@ namespace ShopIsDone.Utils.Extensions
             var tween = control
                 .GetTree()
                 .CreateTween()
+                .BindNode(control)
                 .TweenProperty(control, "modulate:a", 1f, duration)
                 // Set ease and trans type
                 .SetEase(ease)
@@ -39,6 +40,7 @@ namespace ShopIsDone.Utils.Extensions
             var tween = control
                 .GetTree()
                 .CreateTween()
+                .BindNode(control)
                 .TweenProperty(control, "modulate:a", 0f, duration)
                 // Set ease and trans type
                 .SetEase(ease)
