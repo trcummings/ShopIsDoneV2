@@ -29,6 +29,7 @@ namespace ShopIsDone.Widgets
         public void MoveCursorTo(Vector3 globalPos)
         {
             CreateTween()
+                .BindNode(this)
                 .TweenProperty(this, "global_position", globalPos, 0.2f)
                 .SetEase(Tween.EaseType.Out)
                 .SetTrans(Tween.TransitionType.Quad);

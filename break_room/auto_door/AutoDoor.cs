@@ -32,6 +32,7 @@ namespace ShopIsDone.BreakRoom
 
             _DoorTween = GetTree()
                 .CreateTween()
+                .BindNode(this)
                 .SetEase(Tween.EaseType.InOut)
                 .SetTrans(Tween.TransitionType.Back);
             _DoorTween.TweenProperty(_Door, "rotation:y", Mathf.DegToRad(140), 0.4f);

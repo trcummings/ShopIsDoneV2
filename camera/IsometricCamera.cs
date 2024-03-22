@@ -232,7 +232,7 @@ namespace ShopIsDone.Cameras
 
             // When we set a target, we want to set also our initial position and
             // fire off a tween to that target
-            _MoveTween = GetTree().CreateTween();
+            _MoveTween = GetTree().CreateTween().BindNode(this);
             _MoveTween
                 .TweenProperty(this, "global_position", _TargetDestination, MoveDuration)
                 // Set ease and trans type

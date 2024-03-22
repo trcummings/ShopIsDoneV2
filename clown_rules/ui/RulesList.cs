@@ -83,7 +83,7 @@ namespace ShopIsDone.ClownRules.UI
             var sign = Mathf.Sign(_RNG.RandiRange(-2, 2));
             sign = sign == 0 ? -1 : sign;
 
-            var tween = CreateTween();
+            var tween = CreateTween().BindNode(this);
             // Rotate forward
             tween
                 .TweenProperty(_RulesBoard, "rect_rotation", sign * 7f, duration / 2f)

@@ -217,7 +217,8 @@ namespace ShopIsDone.Tiles
             {
                 var tween = Entity
                     .GetTree()
-                    .CreateTween();
+                    .CreateTween()
+                    .BindNode(Entity);
 
                 tween.Finished += Finish;
                 tween.TweenProperty(Entity, "global_position", FinalTile.GlobalPosition, Movement.MoveToTileTime);

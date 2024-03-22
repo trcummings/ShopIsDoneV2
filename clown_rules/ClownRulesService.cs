@@ -328,6 +328,7 @@ namespace ShopIsDone.ClownRules
                     new AsyncCommand(async () => await ToSignal(
                         GetTree()
                             .CreateTween()
+                            .BindNode(this)
                             .TweenProperty(_Judge, "global_position", _Judge.GlobalPosition + 2 * Vector3.Up, 0.25f),
                         "finished"
                     )),
@@ -373,6 +374,7 @@ namespace ShopIsDone.ClownRules
                     new AsyncCommand(async () => await ToSignal(
                         GetTree()
                             .CreateTween()
+                            .BindNode(this)
                             .TweenProperty(_Judge, "global_position", _Judge.GlobalPosition - 2 * Vector3.Up, 0.25f),
                         "finished"
                     )),

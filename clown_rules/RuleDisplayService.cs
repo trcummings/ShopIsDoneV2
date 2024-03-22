@@ -55,6 +55,15 @@ namespace ShopIsDone.ClownRules
                 _RulesContainer.PushIn();
                 _ConditionsContainer.PushIn();
             }
+            // Handle released but still out
+            else if (
+                !Input.IsActionPressed("show_conditions") &&
+                (_RulesContainer.IsExtended() || _ConditionsContainer.IsExtended())
+            )
+            {
+                _RulesContainer.PushIn();
+                _ConditionsContainer.PushIn();
+            }
         }
 
         public void Activate()

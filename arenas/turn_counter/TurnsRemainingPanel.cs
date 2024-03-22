@@ -54,6 +54,7 @@ namespace ShopIsDone.Arenas.Turns
 
             // Create tween
             var tween = CreateTween()
+                .BindNode(this)
                 .SetEase(Tween.EaseType.Out)
                 .SetTrans(Tween.TransitionType.Bounce);
             for (int k = 0; k < _TransitioningDigits.Count; k++)

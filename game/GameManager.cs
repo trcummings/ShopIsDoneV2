@@ -95,7 +95,7 @@ namespace ShopIsDone.Game
         // Overlay
         public async Task FadeOutOverlay()
         {
-            var tween = GetTree().CreateTween();
+            var tween = GetTree().CreateTween().BindNode(this);
             tween.TweenProperty(_BlackOverlay, "color", new Color(0, 0, 0, 0), 0.5F);
             await ToSignal(tween, "finished");
             _Events.EmitSignal(nameof(_Events.FadeOutFinished));
@@ -103,7 +103,7 @@ namespace ShopIsDone.Game
 
         public async Task FadeInOverlay()
         {
-            var tween = GetTree().CreateTween();
+            var tween = GetTree().CreateTween().BindNode(this);
             tween.TweenProperty(_BlackOverlay, "color", Colors.Black, 0.5F);
             await ToSignal(tween, "finished");
             _Events.EmitSignal(nameof(_Events.FadeInFinished));

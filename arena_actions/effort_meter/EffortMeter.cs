@@ -146,6 +146,7 @@ namespace ShopIsDone.Actions.Effort
                 -25
             );
             CreateTween()
+                .BindNode(this)
                 .TweenProperty(_PointerContainer, "position", finalPos, 0.1f)
                 .SetEase(Tween.EaseType.Out)
                 .SetTrans(Tween.TransitionType.Bounce);
@@ -174,6 +175,7 @@ namespace ShopIsDone.Actions.Effort
             var toPercent = Mathf.Min((index + 1f) * fraction, 1f);
             var fromPercent = (_SaturatedMeter.Material as ShaderMaterial).GetShaderParameter("percentage");
             CreateTween()
+                .BindNode(this)
                 .TweenMethod(new Callable(this, nameof(SetPercentage)), fromPercent, toPercent, 0.1f)
                 .SetEase(Tween.EaseType.Out)
                 .SetTrans(Tween.TransitionType.Bounce);

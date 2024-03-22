@@ -20,7 +20,7 @@ namespace ShopIsDone.FX
 
         public void RunWipeEffect()
         {
-            var tween = CreateTween().SetEase(Tween.EaseType.OutIn);
+            var tween = CreateTween().BindNode(this).SetEase(Tween.EaseType.OutIn);
             tween.TweenMethod(new Callable(this, nameof(SetTime)), 0f, 2f, 0.75f);
         }
 

@@ -45,6 +45,7 @@ namespace ShopIsDone.Widgets
             }
             _Tween = GetTree()
                 .CreateTween()
+                .BindNode(this)
                 .SetEase(Tween.EaseType.In)
                 .SetTrans(Tween.TransitionType.Cubic);
 

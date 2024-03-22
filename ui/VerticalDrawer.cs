@@ -27,6 +27,21 @@ namespace ShopIsDone.UI
             _Drawer = GetNode<IVerticalDrawerChild>(DrawerPath);
         }
 
+        public bool IsMoving()
+        {
+            return _DrawerTween?.IsRunning() ?? false;
+        }
+
+        public bool IsRetracted()
+        {
+            return _Drawer.Position.Y == GetDrawerRetractedPoint();
+        }
+
+        public bool IsExtended()
+        {
+            return _Drawer.Position.Y == 0;
+        }
+
         public void InitDrawer()
         {
             // Position rules UI above top of screen
@@ -50,14 +65,14 @@ namespace ShopIsDone.UI
         {
             // Retract to above screen
             _DrawerTween?.Kill();
-            _DrawerTween = GetTree().CreateTween();
+            _DrawerTween = GetTree().CreateTween().BindNode(this);
             _DrawerTween.TweenProperty(_Drawer as Control, "position:y", -_Drawer.Size.Y, .15f);
         }
 
         public void PullOut()
         {
             _DrawerTween?.Kill();
-            _DrawerTween = GetTree().CreateTween();
+            _DrawerTween = GetTree().CreateTween().BindNode(this);
             _DrawerTween.TweenProperty(_Drawer as Control, "position:y", 0, .15f);
         }
 
@@ -65,7 +80,7 @@ namespace ShopIsDone.UI
         {
             // Bring out to retracted point
             _DrawerTween?.Kill();
-            _DrawerTween = GetTree().CreateTween();
+            _DrawerTween = GetTree().CreateTween().BindNode(this);
             _DrawerTween.TweenProperty(_Drawer as Control, "position:y", GetDrawerRetractedPoint(), .15f);
         }
 

@@ -30,6 +30,7 @@ namespace ShopIsDone.Widgets
         {
             GetTree()
                 .CreateTween()
+                .BindNode(this)
                 .TweenProperty(_ProgressBar, "value", value, 0.15f)
                 .SetTrans(Tween.TransitionType.Bounce)
                 .SetEase(Tween.EaseType.OutIn);
