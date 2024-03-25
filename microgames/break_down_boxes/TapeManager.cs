@@ -96,7 +96,7 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
             foreach (var tape in _TapePieces) tape.Frame = 0;
         }
 
-        private void SetTapeCut()
+        public void SetTapeCut()
         {
             foreach (var tape in _TapePieces) tape.Frame = 1;
 			IsTapeCut = true;

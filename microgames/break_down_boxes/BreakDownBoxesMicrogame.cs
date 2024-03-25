@@ -158,16 +158,25 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
             var rotation = selectedOrientation.OrientationDir * halfPi;
             _BoxPivot.Rotation = rotation;
 
-            // Collect tape
+            // Create tape managers
             foreach (var tapeGroup in _TapeGroups)
             {
                 var manager = TapeManagerScene.Instantiate<TapeManager>();
                 AddChild(manager);
                 manager.Init(tapeGroup);
-                manager.GenerateCutPoints(3, _Camera3D, _TapePoints);
                 _Tapes.Add(manager);
                 // Connect
                 manager.AllPointsCut += OnTapeCut;
+            }
+
+            // Pick a random tape and start it as already cut
+            // FIXME: Modulate this based on difficulty or other factors
+            _Tapes.PickRandom().SetTapeCut();
+
+            // Initialize the remaining tapes if they haven't already been cut
+            foreach (var tape in _Tapes)
+            {
+                if (!tape.IsTapeCut) tape.GenerateCutPoints(3, _Camera3D, _TapePoints);
             }
         }
 
