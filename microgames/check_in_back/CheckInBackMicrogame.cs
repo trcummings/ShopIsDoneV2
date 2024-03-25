@@ -18,8 +18,6 @@ namespace ShopIsDone.Microgames.CheckInBack
 
         // State
         private float _Speed;
-        // This is the width of the whole thing
-        private const int _Dim = 940;
         private float _Third;
 
         public override void _Ready()
