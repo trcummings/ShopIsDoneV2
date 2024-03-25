@@ -89,8 +89,8 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
             {
                 Orientation = Orientations.LeftVertical,
                 OrientationDir = Vec3.BackRight,
-                StartAnimName = "side_closed",
-                FinishAnimName = "side_open"
+                StartAnimName = "side_closed_alt",
+                FinishAnimName = "side_open_alt"
             } },
             { Orientations.RightHorizontal, new OrientationInfo()
             {
@@ -102,9 +102,9 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
             { Orientations.RightVertical, new OrientationInfo()
             {
                 Orientation = Orientations.RightVertical,
-                OrientationDir = Vec3.UpBackLeft,
-                StartAnimName = "side_closed",
-                FinishAnimName = "side_open"
+                OrientationDir = Vec3.One,
+                StartAnimName = "side_closed_alt",
+                FinishAnimName = "side_open_alt"
             } }
         };
         
