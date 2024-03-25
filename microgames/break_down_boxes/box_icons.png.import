@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyd2sbrprk1np"
-path.s3tc="res://.godot/imported/moodprobiotic_scary_linoleum_floor_top_down_checker_cracked_20c0f4fc-f402-48fd-98d2-76cba59684df.png-4cf616faa86682e29aa073dd48373635.s3tc.ctex"
+uid="uid://b6dlm6g882x0i"
+path.s3tc="res://.godot/imported/box_icons.png-2cc144cca1d4962f8edc93efb6c3e307.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/moodprobiotic_scary_linoleum_floor_top_down_checker_cracked_20c0f4fc-f402-48fd-98d2-76cba59684df.png"
-dest_files=["res://.godot/imported/moodprobiotic_scary_linoleum_floor_top_down_checker_cracked_20c0f4fc-f402-48fd-98d2-76cba59684df.png-4cf616faa86682e29aa073dd48373635.s3tc.ctex"]
+source_file="res://microgames/break_down_boxes/box_icons.png"
+dest_files=["res://.godot/imported/box_icons.png-2cc144cca1d4962f8edc93efb6c3e307.s3tc.ctex"]
 
 [params]
 

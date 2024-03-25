@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c1hrjv4smokox"]
+[gd_scene load_steps=14 format=3 uid="uid://c1hrjv4smokox"]
 
 [ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_o651h"]
 [ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="2_k0og1"]
@@ -6,8 +6,11 @@
 [ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="3_kyqm3"]
 [ext_resource type="PackedScene" uid="uid://c4nqfg4723jiv" path="res://microgames/break_down_boxes/box_cutter.tscn" id="3_l7anq"]
 [ext_resource type="Texture2D" uid="uid://b1ga12w5a4miy" path="res://microgames/break_down_boxes/cuttable_tape_sprites.png" id="6_k8lkr"]
-[ext_resource type="Texture2D" uid="uid://v1fjlkw1t0ng" path="res://microgames/common/bayer16.png" id="6_keadl"]
+[ext_resource type="Texture2D" uid="uid://cyd2sbrprk1np" path="res://textures/moodprobiotic_scary_linoleum_floor_top_down_checker_cracked_20c0f4fc-f402-48fd-98d2-76cba59684df.png" id="8_2fmco"]
+[ext_resource type="Texture2D" uid="uid://b6dlm6g882x0i" path="res://microgames/break_down_boxes/box_icons.png" id="8_k24hc"]
 [ext_resource type="PackedScene" uid="uid://b8ppc5hohn44q" path="res://microgames/break_down_boxes/opening_box.gltf" id="8_yt8sl"]
+[ext_resource type="Texture2D" uid="uid://ii7i5mbh27gj" path="res://microgames/break_down_boxes/whitePuff22.png" id="10_1k5ir"]
+[ext_resource type="Material" uid="uid://co677ey7wcl0e" path="res://microgames/break_down_boxes/vhs_blur_wiggle.material" id="10_4na3f"]
 [ext_resource type="PackedScene" uid="uid://b4v63n3dtgf0y" path="res://microgames/break_down_boxes/tape_manager.tscn" id="10_36hsx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0pihj"]
@@ -17,6 +20,8 @@ size = Vector2(64, 1000)
 script = ExtResource("2_olpor")
 TapeManagerScene = ExtResource("10_36hsx")
 _BoxAnimPlayer = NodePath("ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/AnimationPlayer")
+_SelectedOrientation = 0
+_OverrideOrientation = false
 PromptText = "Slash Tape!"
 WidgetText = "Break Down Boxes"
 
@@ -52,6 +57,7 @@ size = 4.0
 transform = Transform3D(0.707107, 1.60554e-24, 0.707107, 3.48787e-16, 1, -3.48787e-16, -0.707107, 4.93259e-16, 0.707107, 2.08165e-12, 2.08165e-12, 2)
 
 [node name="BoxPivot" type="Node3D" parent="ViewportContainer/Viewport/World/BoxRootPivot" index="0"]
+unique_name_in_owner = true
 transform = Transform3D(1, 3.15962e-23, 1.2001e-08, -1.22604e-23, 1, 6.39887e-24, -7.57478e-09, -2.57347e-23, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 
 [node name="opening_box" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot" index="0" instance=ExtResource("8_yt8sl")]
@@ -223,13 +229,104 @@ transform = Transform3D(1, 2.08536e-23, -2.50325e-08, 1.14614e-22, 1, -1.08753e-
 [node name="TapeBackAlignedEndPoint" type="Node3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/BSidePivot" index="3" groups=["bdb_back_aligned"]]
 transform = Transform3D(1, 2.08536e-23, -2.50325e-08, 1.14614e-22, 1, -1.08753e-22, -2.50325e-08, 3.79475e-23, 1, 0.8, 2.08165e-12, 2.08165e-12)
 
-[node name="Dither" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="2"]
-unique_name_in_owner = true
-transform = Transform3D(0.95035, -0.185295, 0.25, 0.25, 0.933013, -0.258819, -0.185295, 0.308469, 0.933013, -0.219462, 0.20729, 2.98201)
-visible = false
-modulate = Color(0.643137, 0, 0, 0.180392)
-pixel_size = 0.125
-texture = ExtResource("6_keadl")
+[node name="SideDecals" type="Node3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot" index="3"]
+
+[node name="DecalPivot" type="Node3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals" index="0"]
+transform = Transform3D(1, -2.3003e-23, -2.50325e-08, 3.13527e-22, 1, -3.07666e-22, -2.50325e-08, -2.40751e-23, 1, -1, 0, 1.19209e-07)
+
+[node name="Sprite3D" type="Sprite3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals/DecalPivot" index="0"]
+transform = Transform3D(-1.62978e-08, 1.39515e-16, 0.4, 1.39515e-16, 0.4, -1.39515e-16, -0.4, 1.39515e-16, -5.60988e-10, -2.38419e-07, -0.65027, -0.639887)
+texture = ExtResource("8_k24hc")
+hframes = 2
+vframes = 2
+
+[node name="Sprite3D2" type="Sprite3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals/DecalPivot" index="1"]
+transform = Transform3D(-1.01255e-08, 1.39515e-16, 0.4, 1.39515e-16, 0.4, -1.39515e-16, -0.4, 1.39515e-16, -5.60988e-10, -2.38419e-07, -0.65027, -0.0939014)
+texture = ExtResource("8_k24hc")
+hframes = 2
+vframes = 2
+frame = 1
+
+[node name="DecalPivot2" type="Node3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals" index="1"]
+transform = Transform3D(-4.37114e-08, 3.48787e-16, 1, 3.48787e-16, 1, -3.48787e-16, -1, 3.48787e-16, -4.37114e-08, 0, 2.08165e-12, 1)
+
+[node name="Sprite3D" type="Sprite3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals/DecalPivot2" index="0"]
+transform = Transform3D(-1.62978e-08, 1.39515e-16, 0.4, 1.39515e-16, 0.4, -1.39515e-16, -0.4, 1.39515e-16, -5.60988e-10, -0.001, -0.65027, -0.639887)
+texture = ExtResource("8_k24hc")
+hframes = 2
+vframes = 2
+frame = 2
+
+[node name="Sprite3D2" type="Sprite3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals/DecalPivot2" index="1"]
+transform = Transform3D(-1.01255e-08, 1.39515e-16, 0.4, 1.39515e-16, 0.4, -1.39515e-16, -0.4, 1.39515e-16, -5.60988e-10, -0.001, -0.65027, -0.0939014)
+texture = ExtResource("8_k24hc")
+hframes = 2
+vframes = 2
+frame = 3
+
+[node name="DecalPivot3" type="Node3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals" index="2"]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 1, 2.08165e-12, -1.19209e-07)
+
+[node name="Sprite3D" type="Sprite3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals/DecalPivot3" index="0"]
+transform = Transform3D(-1.20831e-08, 1.39515e-16, 0.4, 1.39515e-16, 0.4, -1.39515e-16, -0.4, 1.39515e-16, 1.3966e-09, -0.000999838, -0.65027, 0.178054)
+texture = ExtResource("8_k24hc")
+hframes = 2
+vframes = 2
+frame = 1
+
+[node name="Sprite3D2" type="Sprite3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals/DecalPivot3" index="1"]
+transform = Transform3D(-5.91083e-09, 1.39515e-16, 0.4, 1.39515e-16, 0.4, -1.39515e-16, -0.4, 1.39515e-16, 1.3966e-09, -0.00100005, -0.65027, 0.685758)
+texture = ExtResource("8_k24hc")
+hframes = 2
+vframes = 2
+
+[node name="DecalPivot4" type="Node3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals" index="3"]
+transform = Transform3D(-4.37114e-08, 3.48787e-16, 1, 3.48787e-16, 1, -3.48787e-16, -1, 3.48787e-16, -4.37114e-08, 0, 2.08165e-12, -1)
+
+[node name="Sprite3D" type="Sprite3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals/DecalPivot4" index="0"]
+transform = Transform3D(-1.20831e-08, 1.39515e-16, 0.4, 1.39515e-16, 0.4, -1.39515e-16, -0.4, 1.39515e-16, 1.3966e-09, 0.001, -0.65027, 0.178054)
+texture = ExtResource("8_k24hc")
+hframes = 2
+vframes = 2
+frame = 3
+
+[node name="Sprite3D2" type="Sprite3D" parent="ViewportContainer/Viewport/World/BoxRootPivot/BoxPivot/opening_box/BoxSidePivotRoot/SideDecals/DecalPivot4" index="1"]
+transform = Transform3D(-5.91083e-09, 1.39515e-16, 0.4, 1.39515e-16, 0.4, -1.39515e-16, -0.4, 1.39515e-16, 1.3966e-09, 0.001, -0.65027, 0.685758)
+texture = ExtResource("8_k24hc")
+hframes = 2
+vframes = 2
+frame = 2
+
+[node name="Floor" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -1.02, -0.20109)
+axis = 1
+transparent = false
+shaded = true
+double_sided = false
+texture = ExtResource("8_2fmco")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="ViewportContainer/Viewport/World" index="3"]
+transform = Transform3D(0.911604, 1.04808e-07, 0.411069, -0.411069, -6.69716e-08, 0.911604, 1.23073e-07, -1, -1.79684e-08, 2.34975, 3.62587, 1.86326)
+spot_range = 7.288
+spot_attenuation = 0.5
+
+[node name="BackgroundCloud" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="4"]
+transform = Transform3D(1.53856, 0, 0.699248, 0, 1.69, 0, -0.699248, 0, 1.53856, -1.95244, -1.03824, -4.76837e-07)
+shaded = true
+double_sided = false
+alpha_cut = 1
+alpha_scissor_threshold = 0.244
+texture_filter = 1
+texture = ExtResource("10_1k5ir")
+
+[node name="BackgroundCloud2" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="5"]
+transform = Transform3D(1.3967, 0, -0.951482, 0, 1.69, 0, 0.951482, 0, 1.3967, 1.69339, -1.03824, -0.321901)
+shaded = true
+double_sided = false
+alpha_cut = 1
+alpha_scissor_threshold = 0.244
+texture_filter = 1
+texture = ExtResource("10_1k5ir")
 
 [node name="World2D" type="Node2D" parent="ViewportContainer/Viewport" index="1"]
 metadata/_edit_lock_ = true
@@ -287,6 +384,13 @@ motion_mode = 1
 [node name="TapePoints" type="Node2D" parent="ViewportContainer/Viewport/World2D" index="3"]
 unique_name_in_owner = true
 metadata/_edit_lock_ = true
+
+[node name="VhsBlurFX" type="ColorRect" parent="." index="7"]
+unique_name_in_owner = true
+visible = false
+material = ExtResource("10_4na3f")
+offset_right = 940.0
+offset_bottom = 940.0
 
 [connection signal="Microsleep" from="." to="MicrosleepHelper" method="Microsleep"]
 

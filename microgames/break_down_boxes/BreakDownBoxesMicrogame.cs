@@ -4,6 +4,7 @@ using ShopIsDone.Cameras;
 using Godot.Collections;
 using ShopIsDone.Utils;
 using System.Linq;
+using Utils.Extensions;
 
 namespace ShopIsDone.Microgames.BreakDownBoxes
 {
@@ -22,6 +23,7 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
         private Camera2D _Camera;
         private ScreenshakeHandler _Screenshake;
         private CharacterBody2D _BoxCutter;
+        private Node3D _BoxPivot;
         private Camera3D _Camera3D;
         private Node2D _TapePoints;
 
@@ -42,15 +44,75 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
         };
         private Array<TapeManager> _Tapes = new Array<TapeManager>();
 
-        private Dictionary<string, Vector3> _Orientations = new Dictionary<string, Vector3>()
+        public enum Orientations
         {
-            { "top_up_left", Vec3.Zero },
-            { "top_up_right", Vec3.Up },
-            { "left_horizontal", Vec3.Back },
-            { "left_vertical", Vec3.BackRight },
-            { "right_horizontal", Vec3.UpBack },
-            { "right_vertical", Vec3.UpBackLeft }
+            TopUpLeft,
+            TopUpRight,
+            LeftHorizontal,
+            LeftVertical,
+            RightHorizontal,
+            RightVertical
+        }
+
+        private partial class OrientationInfo : GodotObject
+        {
+            public Orientations Orientation;
+            public Vector3 OrientationDir;
+            public string StartAnimName;
+            public string FinishAnimName;
+        }
+
+        private Dictionary<Orientations, OrientationInfo> _Orientations = new Dictionary<Orientations, OrientationInfo>()
+        {
+            { Orientations.TopUpLeft, new OrientationInfo()
+            {
+                Orientation = Orientations.TopUpLeft,
+                OrientationDir = Vec3.Zero,
+                StartAnimName = "top_closed",
+                FinishAnimName = "top_open"
+            } },
+            { Orientations.TopUpRight, new OrientationInfo()
+            {
+                Orientation = Orientations.TopUpRight,
+                OrientationDir = Vec3.Up,
+                StartAnimName = "top_closed",
+                FinishAnimName = "top_open"
+            } },
+            { Orientations.LeftHorizontal, new OrientationInfo()
+            {
+                Orientation = Orientations.LeftHorizontal,
+                OrientationDir = Vec3.Back,
+                StartAnimName = "side_closed",
+                FinishAnimName = "side_open"
+            } },
+            { Orientations.LeftVertical, new OrientationInfo()
+            {
+                Orientation = Orientations.LeftVertical,
+                OrientationDir = Vec3.BackRight,
+                StartAnimName = "side_closed",
+                FinishAnimName = "side_open"
+            } },
+            { Orientations.RightHorizontal, new OrientationInfo()
+            {
+                Orientation = Orientations.RightHorizontal,
+                OrientationDir = Vec3.UpBack,
+                StartAnimName = "side_closed",
+                FinishAnimName = "side_open"
+            } },
+            { Orientations.RightVertical, new OrientationInfo()
+            {
+                Orientation = Orientations.RightVertical,
+                OrientationDir = Vec3.UpBackLeft,
+                StartAnimName = "side_closed",
+                FinishAnimName = "side_open"
+            } }
         };
+        
+        [Export]
+        private Orientations _SelectedOrientation = Orientations.TopUpLeft;
+
+        [Export]
+        private bool _OverrideOrientation = false;
 
         public override void _Ready()
         {
@@ -62,6 +124,11 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
             _BoxCutter = GetNode<CharacterBody2D>("%BoxCutter");
             _Camera3D = GetNode<Camera3D>("%Camera3D");
             _TapePoints = GetNode<Node2D>("%TapePoints");
+            _BoxPivot = GetNode<Node3D>("%BoxPivot");
+
+            // Show vhs FX
+            var vhsFx = GetNode<ColorRect>("%VhsBlurFX");
+            vhsFx.Show();
 
             // Connect screenshake
             _Screenshake.ShakeOffsetUpdated += ShakeUpdate;
@@ -76,6 +143,20 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
             base.Init(msg);
 
             // Pick orientation
+            if (!_OverrideOrientation)
+            {
+                // Pick randomly
+                var orientation = _Orientations.Values.ToList().PickRandom();
+                _SelectedOrientation = orientation.Orientation;
+            }
+
+            var selectedOrientation = _Orientations[_SelectedOrientation];
+            // Init box animation
+            _BoxAnimPlayer.Play(selectedOrientation.StartAnimName);
+            // Rotate box by calculating orientation pivot values
+            var halfPi = Mathf.Pi / 2;
+            var rotation = selectedOrientation.OrientationDir * halfPi;
+            _BoxPivot.Rotation = rotation;
 
             // Collect tape
             foreach (var tapeGroup in _TapeGroups)
@@ -88,7 +169,6 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
                 // Connect
                 manager.AllPointsCut += OnTapeCut;
             }
-
         }
 
         public override void Start()
@@ -187,7 +267,8 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
                 .TweenProperty(_BoxCutter, "modulate:a", 0f, 0.25f);
 
             // Run animations
-            _BoxAnimPlayer.Play("top_open");
+            var selectedOrientation = _Orientations[_SelectedOrientation];
+            _BoxAnimPlayer.Play(selectedOrientation.FinishAnimName);
             await ToSignal(_BoxAnimPlayer, "animation_finished");
 
             // Emit outcome
