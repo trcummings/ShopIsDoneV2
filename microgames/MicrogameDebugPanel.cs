@@ -58,6 +58,8 @@ namespace ShopIsDone.Microgames
             // Temporarily pause the game
             _Manager.GetParent().ProcessMode = ProcessModeEnum.WhenPaused;
             GetTree().Paused = true;
+            PhysicsServer2D.SetActive(true);
+            PhysicsServer3D.SetActive(true);
             _IsRunning = true;
 
             await ToSignal(GetTree(), "process_frame");

@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4v63n3dtgf0y"]
+
+[ext_resource type="Script" path="res://microgames/break_down_boxes/TapeManager.cs" id="1_rqqnp"]
+[ext_resource type="PackedScene" uid="uid://d15ikr5x5tudp" path="res://microgames/break_down_boxes/tape_cut_point.tscn" id="2_ns2e8"]
+[ext_resource type="AudioStream" uid="uid://c658ayt6sxlec" path="res://microgames/break_down_boxes/TAPE_CUT_SOUND__447379__florianreichelt__tearing-apart-cardboard-ripping-cardboard.wav" id="3_4xepp"]
+[ext_resource type="AudioStream" uid="uid://chur7pjvyt217" path="res://microgames/break_down_boxes/POINT_CUT__447379__florianreichelt__tearing-apart-cardboard-ripping-cardboard.wav" id="4_17yig"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l2pqh"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("3_4xepp")
+stream_0/weight = 1.0
+
+[node name="TapeManager" type="Node"]
+script = ExtResource("1_rqqnp")
+TapeCutPointScene = ExtResource("2_ns2e8")
+
+[node name="AllPointsCutPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_l2pqh")
+bus = &"Microgames"
+
+[node name="PointCutPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_17yig")
+bus = &"Microgames"
+
+[connection signal="AllPointsCut" from="." to="AllPointsCutPlayer" method="play"]

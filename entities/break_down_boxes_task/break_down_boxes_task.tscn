@@ -7,8 +7,8 @@
 [ext_resource type="Script" path="res://entities/break_down_boxes_task/RemoveObstaclesCompletionHandler.cs" id="3_p67di"]
 [ext_resource type="PackedScene" uid="uid://b46xb2dilpr4v" path="res://tasks/task_tile.tscn" id="3_rmunw"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="4_ddvjj"]
-[ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="5_gtgg2"]
 [ext_resource type="Script" path="res://tasks/task_models/AnimatedTaskModelHelper.cs" id="8_5tvib"]
+[ext_resource type="PackedScene" uid="uid://c1hrjv4smokox" path="res://microgames/break_down_boxes/break_down_boxes_microgame.tscn" id="9_bpjtl"]
 [ext_resource type="Script" path="res://render/ModelComponent.cs" id="10_7vusu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wu3g3"]
@@ -72,7 +72,7 @@ transform = Transform3D(1, 0, -1.73205, 0, 2, 0, 1.73205, 0, 1, 0, 0.645, 0)
 
 [node name="MicrogameHandler" type="Node" parent="." index="5"]
 script = ExtResource("4_ddvjj")
-MicrogameScene = ExtResource("5_gtgg2")
+MicrogameScene = ExtResource("9_bpjtl")
 _OutcomeHandlerPath = NodePath("../TaskComponent")
 
 [node name="WidgetPoint" parent="." index="6"]

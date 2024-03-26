@@ -275,7 +275,7 @@ namespace ShopIsDone.Microgames.Apologize
             SorryAnimation();
 
             // Wait a tick
-            await ToSignal(GetTree().CreateTimer(1, false), "timeout");
+            await ToSignal(GetTree().CreateTimer(1), "timeout");
 
             // Set outcome to win
             Outcome = Outcomes.Win;

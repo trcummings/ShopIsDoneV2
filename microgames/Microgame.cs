@@ -40,6 +40,9 @@ namespace ShopIsDone.Microgames
         public int NumBeats = 8;
         public float BPM = 120;
 
+        // This is the width/height of the whole thing
+        protected const int _Dim = 940;
+
         // State
         protected Timer MicrogameTimer;
         protected Outcomes Outcome = Outcomes.Loss;
