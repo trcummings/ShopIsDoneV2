@@ -1,0 +1,71 @@
+[gd_scene load_steps=12 format=3 uid="uid://227lsgm4dbqv"]
+
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_pkikc"]
+[ext_resource type="Script" path="res://microgames/find_bathroom/FindBathroomMicrogame.cs" id="2_nnof3"]
+[ext_resource type="Texture2D" uid="uid://bqdah312ypifa" path="res://textures/white_square.png" id="5_ldw7f"]
+[ext_resource type="PackedScene" uid="uid://7cvmehh80sol" path="res://microgames/find_bathroom/employee_customer_pair.tscn" id="7_3m7fv"]
+[ext_resource type="PackedScene" uid="uid://b4068rmknffkq" path="res://microgames/find_bathroom/customer_with_cart.tscn" id="8_prfl2"]
+[ext_resource type="Script" path="res://util/InputBuffer.cs" id="8_wvuym"]
+[ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="11_j711q"]
+[ext_resource type="AudioStream" uid="uid://dral5g4c2pqf0" path="res://microgames/common/audio/PUNCH--wariowareclone--punch.wav" id="12_slx58"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_slv54"]
+texture = ExtResource("5_ldw7f")
+use_texture_padding = false
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_p8jsa"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_slv54")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vyljb"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("12_slx58")
+stream_0/weight = 1.0
+
+[node name="FindBathroomMicrogame" instance=ExtResource("1_pkikc")]
+script = ExtResource("2_nnof3")
+MoveNodeScene = null
+
+[node name="World" type="Node2D" parent="." index="3"]
+metadata/_edit_lock_ = true
+
+[node name="Camera" type="Camera2D" parent="World" index="0"]
+unique_name_in_owner = true
+anchor_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="TileMap" type="TileMap" parent="World" index="1"]
+unique_name_in_owner = true
+position = Vector2(-10, -10)
+tile_set = SubResource("TileSet_p8jsa")
+format = 2
+layer_0/name = "movement"
+layer_0/tile_data = PackedInt32Array(65537, 0, 0, 65540, 0, 0, 65543, 0, 0, 65546, 0, 0, 65549, 0, 0, 262145, 0, 0, 458753, 0, 0, 655361, 0, 0, 851969, 0, 0, 851972, 0, 0, 851975, 0, 0, 851978, 0, 0, 851981, 0, 0, 262157, 0, 0, 458765, 0, 0, 655373, 0, 0, 655364, 0, 0, 655367, 0, 0, 655370, 0, 0, 458756, 0, 0, 458759, 0, 0, 458762, 0, 0, 262148, 0, 0, 262151, 0, 0, 262154, 0, 0)
+metadata/_edit_lock_ = true
+
+[node name="Arena" type="Node2D" parent="World" index="2"]
+y_sort_enabled = true
+metadata/_edit_lock_ = true
+
+[node name="EmployeeCustomerPair" parent="World/Arena" index="0" instance=ExtResource("7_3m7fv")]
+position = Vector2(853, 853)
+metadata/_edit_lock_ = true
+
+[node name="CustomerWithCart" parent="World/Arena" index="1" instance=ExtResource("8_prfl2")]
+position = Vector2(853, 646)
+metadata/_edit_lock_ = true
+
+[node name="ScreenshakeHandler" parent="." index="4" instance=ExtResource("11_j711q")]
+unique_name_in_owner = true
+
+[node name="ImpactSfxPlayer" type="AudioStreamPlayer" parent="." index="5"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_vyljb")
+bus = &"Microgames"
+
+[node name="InputBuffer" type="Node" parent="." index="7"]
+unique_name_in_owner = true
+script = ExtResource("8_wvuym")
+_Actions = ["move_left", "move_right", "move_up", "move_down"]
