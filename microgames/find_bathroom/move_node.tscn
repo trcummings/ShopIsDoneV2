@@ -6,9 +6,9 @@
 size = Vector2(32, 32)
 
 [node name="MoveNode" type="Area2D" node_paths=PackedStringArray("_Up", "_Down", "_Left", "_Right")]
-position = Vector2(278, 281)
 collision_layer = 4
 collision_mask = 0
+monitoring = false
 script = ExtResource("1_aehfr")
 _Up = NodePath("Up")
 _Down = NodePath("Down")
@@ -22,15 +22,19 @@ shape = SubResource("RectangleShape2D_m7tjn")
 [node name="Down" type="RayCast2D" parent="."]
 target_position = Vector2(2.08165e-12, 200)
 collision_mask = 6
+collide_with_areas = true
 
 [node name="Right" type="RayCast2D" parent="."]
 target_position = Vector2(200, 2.08165e-12)
 collision_mask = 6
+collide_with_areas = true
 
 [node name="Left" type="RayCast2D" parent="."]
 target_position = Vector2(-200, 2.08165e-12)
 collision_mask = 6
+collide_with_areas = true
 
 [node name="Up" type="RayCast2D" parent="."]
-target_position = Vector2(2.08165e-12, -400)
+target_position = Vector2(2.08165e-12, -200)
 collision_mask = 6
+collide_with_areas = true

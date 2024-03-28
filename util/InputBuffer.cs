@@ -99,24 +99,25 @@ namespace ShopIsDone.Utils.Inputs
             return IsInputInState(actionName, InputActionInfo.State.JustReleased);
         }
 
-        // Method to check if an action was pressed within X milliseconds
-        public bool WasInputPressedWithin(string actionName, float withinMsec)
+        // Method to check if an action was just pressed within X milliseconds
+        public bool WasInputJustPressedWithin(string actionName, float withinMsec)
         {
             float currentTime = Time.GetTicksMsec() / 1000.0f;
-            return _InputActions.Any(action =>
+            return Input.IsActionJustPressed(actionName) || _InputActions.Any(action =>
                 action.ActionName == actionName &&
-                (action.CurrentState == InputActionInfo.State.JustPressed ||
-                action.CurrentState == InputActionInfo.State.StillPressed) &&
+                action.CurrentState == InputActionInfo.State.JustPressed &&
                 currentTime - action.TimeStamp <= withinMsec / 1000.0f
             );
         }
 
-        public string GetMostRecentlyPressedAction(IEnumerable<string> actionNames)
+        public string GetMostRecentlyJustPressedAction(IEnumerable<string> actionNames)
         {
             var relevantActions = _InputActions
-                .Where(action => actionNames.Contains(action.ActionName) &&
-                                 (action.CurrentState == InputActionInfo.State.JustPressed ||
-                                 action.CurrentState == InputActionInfo.State.StillPressed))
+                .Where(action =>
+                    Input.IsActionJustPressed(action.ActionName) || (
+                    actionNames.Contains(action.ActionName) &&
+                    action.CurrentState == InputActionInfo.State.JustPressed
+                ))
                 .OrderByDescending(action => action.TimeStamp)
                 .FirstOrDefault();
 

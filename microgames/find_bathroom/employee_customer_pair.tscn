@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://7cvmehh80sol"]
+[gd_scene load_steps=23 format=3 uid="uid://7cvmehh80sol"]
 
 [ext_resource type="Texture2D" uid="uid://bf6rmroftpmkh" path="res://microgames/find_bathroom/find_bathroom_actors.png" id="1_guen7"]
+[ext_resource type="Script" path="res://microgames/find_bathroom/EmployeeCustomerPair.cs" id="1_venel"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k8yuk"]
 atlas = ExtResource("1_guen7")
@@ -150,13 +151,15 @@ height = 72.0
 
 [node name="EmployeeCustomerPair" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_venel")
 
 [node name="Employee" type="Area2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(-44, 1)
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Employee"]
+[node name="Sprite" type="AnimatedSprite2D" parent="Employee"]
 position = Vector2(0, -86)
 sprite_frames = SubResource("SpriteFrames_gyxny")
 autoplay = "default"
@@ -166,11 +169,12 @@ position = Vector2(4, -13)
 shape = SubResource("CapsuleShape2D_pxe38")
 
 [node name="Customer" type="Area2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(34, 1)
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Customer"]
+[node name="Sprite" type="AnimatedSprite2D" parent="Customer"]
 position = Vector2(-2, -87)
 sprite_frames = SubResource("SpriteFrames_ukjbh")
 autoplay = "default"
@@ -183,13 +187,17 @@ shape = SubResource("CapsuleShape2D_gg0vk")
 metadata/_edit_lock_ = true
 
 [node name="Up" type="Node2D" parent="PivotPoints"]
+unique_name_in_owner = true
 position = Vector2(2.08165e-12, -32)
 
 [node name="Down" type="Node2D" parent="PivotPoints"]
+unique_name_in_owner = true
 position = Vector2(2.08165e-12, 32)
 
 [node name="Left" type="Node2D" parent="PivotPoints"]
+unique_name_in_owner = true
 position = Vector2(-32, 2.08165e-12)
 
 [node name="Right" type="Node2D" parent="PivotPoints"]
+unique_name_in_owner = true
 position = Vector2(32, 2.08165e-12)
