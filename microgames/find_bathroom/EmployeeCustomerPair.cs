@@ -5,6 +5,12 @@ namespace ShopIsDone.Microgames.FindBathroom
 {
     public partial class EmployeeCustomerPair : Node2D
     {
+        [Signal]
+        public delegate void EmployeeWasStruckEventHandler();
+
+        [Signal]
+        public delegate void CustomerWasStruckEventHandler();
+
         private Area2D _Employee;
         private Area2D _Customer;
         private AnimatedSprite2D _EmployeeSprite;
@@ -36,6 +42,22 @@ namespace ShopIsDone.Microgames.FindBathroom
             // Initially walk
             _EmployeeSprite.Play("walk");
             _CustomerSprite.Play("walk");
+
+            // Connect
+            _Employee.AreaEntered += (Area2D _) =>
+            {
+                // Emit
+                EmitSignal(nameof(EmployeeWasStruck));
+
+                // TODO: Run animated sequence
+            };
+            _Customer.AreaEntered += (Area2D _) =>
+            {
+                // Emit
+                EmitSignal(nameof(CustomerWasStruck));
+
+                // TODO: Run animated sequence
+            };
         }
 
         public void MoveTo(Vector2 dir, Vector2 toPos)
@@ -93,13 +115,10 @@ namespace ShopIsDone.Microgames.FindBathroom
             return _PairTween?.IsRunning() ?? false;
         }
 
-        public void StopMoving()
+        public void Stop()
         {
-            if (_PairTween != null)
-            {
-                _PairTween.Kill();
-                _PairTween = null;
-            }
+            _PairTween?.Kill();
+            _PairTween = null;
         }
     }
 }

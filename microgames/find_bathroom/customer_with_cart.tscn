@@ -78,6 +78,8 @@ animations = [{
 size = Vector2(213, 96)
 
 [node name="CustomerWithCart" type="Area2D"]
+collision_mask = 0
+monitoring = false
 
 [node name="Customer" type="AnimatedSprite2D" parent="."]
 position = Vector2(6, -81)

@@ -156,6 +156,8 @@ script = ExtResource("1_venel")
 [node name="Employee" type="Area2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-44, 1)
+collision_layer = 0
+monitorable = false
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
@@ -171,6 +173,8 @@ shape = SubResource("CapsuleShape2D_pxe38")
 [node name="Customer" type="Area2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(34, 1)
+collision_layer = 0
+monitorable = false
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 

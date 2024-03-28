@@ -7,6 +7,7 @@ using Godot.Collections;
 using System.Linq;
 using SystemGenerics = System.Collections.Generic;
 using Utils.Extensions;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Microgames.FindBathroom
 {
@@ -25,6 +26,7 @@ namespace ShopIsDone.Microgames.FindBathroom
         private EmployeeCustomerPair _EmployeeCustomerPair;
         private InputBuffer _InputBuffer;
         private Node2D _MoveNodes;
+        private Array<CartSpawner> _Spawners;
 
         // State
         private MoveNode _CurrentMoveNode;
@@ -40,6 +42,10 @@ namespace ShopIsDone.Microgames.FindBathroom
             _EmployeeCustomerPair = GetNode<EmployeeCustomerPair>("%EmployeeCustomerPair");
             _InputBuffer = GetNode<InputBuffer>("%InputBuffer");
             _MoveNodes = GetNode<Node2D>("%MoveNodes");
+            _Spawners = GetNode<Node2D>("%Spawners")
+                .GetChildren()
+                .OfType<CartSpawner>()
+                .ToGodotArray();
 
             // Connect screenshake
             _Screenshake.Connect(
@@ -72,6 +78,9 @@ namespace ShopIsDone.Microgames.FindBathroom
                 .OfType<MoveNode>()
                 .ToList()
                 .Find(node => node.GlobalPosition == startSpot);
+            // Connect to events
+            _EmployeeCustomerPair.CustomerWasStruck += FailGame;
+            _EmployeeCustomerPair.EmployeeWasStruck += FailGame;
 
             // Place exit
             //var exitSpot = GetCellPositions(2).ToList().PickRandom();
@@ -81,16 +90,6 @@ namespace ShopIsDone.Microgames.FindBathroom
             // Place cart spawners
         }
 
-        private SystemGenerics.IEnumerable<Vector2> GetCellPositions(int layer)
-        {
-            return _TileMap.GetUsedCells(layer).Select(cell =>
-            {
-                var localPos = _TileMap.MapToLocal(cell);
-                return _TileMap.ToGlobal(localPos);
-            });
-
-        }
-
         public override void Start()
         {
             //base.Start();
@@ -98,6 +97,9 @@ namespace ShopIsDone.Microgames.FindBathroom
             // Allow player input
             SetProcess(true);
             SetPhysicsProcess(true);
+
+            // Start carts
+            foreach (var spawner in _Spawners) spawner.Start();
         }
 
         public override void _Process(double delta)
@@ -144,12 +146,24 @@ namespace ShopIsDone.Microgames.FindBathroom
 
         protected override void OnTimerFinished()
         {
-            // Play success sound if we won
-            if (Outcome == Outcomes.Win) PlaySuccessSfx();
+            // TODO: Have customer pee itself
+
+            FailGame();
         }
 
         private void FailGame()
         {
+            // Stop timer
+            MicrogameTimer.Stop();
+
+            // Disconnect immediately
+            _EmployeeCustomerPair.CustomerWasStruck -= FailGame;
+            _EmployeeCustomerPair.EmployeeWasStruck -= FailGame;
+
+            // Stop everything
+            _EmployeeCustomerPair.Stop();
+            foreach (var spawner in _Spawners) spawner.Stop();
+
             // Stop all player input
             SetProcess(false);
             SetPhysicsProcess(false);
@@ -160,14 +174,23 @@ namespace ShopIsDone.Microgames.FindBathroom
             // Play failure sound
             PlayFailureSfx();
 
-            // Finish early
-            FinishEarly();
+            // Emit outcome
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         private void ShakeUpdate(Vector2 offset)
         {
             // These shake values are very small, so amplify them by a lot
             _Camera.Offset = offset * 1000;
+        }
+
+        private SystemGenerics.IEnumerable<Vector2> GetCellPositions(int layer)
+        {
+            return _TileMap.GetUsedCells(layer).Select(cell =>
+            {
+                var localPos = _TileMap.MapToLocal(cell);
+                return _TileMap.ToGlobal(localPos);
+            });
         }
     }
 }
