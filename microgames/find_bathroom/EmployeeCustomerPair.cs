@@ -1,9 +1,10 @@
 using Godot;
+using ShopIsDone.Utils;
 using System;
 
 namespace ShopIsDone.Microgames.FindBathroom
 {
-    public partial class EmployeeCustomerPair : Node2D
+    public partial class EmployeeCustomerPair : Node2D, IStoppable
     {
         [Signal]
         public delegate void EmployeeWasStruckEventHandler();
@@ -11,10 +12,14 @@ namespace ShopIsDone.Microgames.FindBathroom
         [Signal]
         public delegate void CustomerWasStruckEventHandler();
 
+        [Signal]
+        public delegate void ReachedBathroomEventHandler();
+
         private Area2D _Employee;
         private Area2D _Customer;
         private AnimatedSprite2D _EmployeeSprite;
         private AnimatedSprite2D _CustomerSprite;
+        private Area2D _BathroomDetector;
 
         // Positions
         private Node2D _LeftPoint;
@@ -29,6 +34,7 @@ namespace ShopIsDone.Microgames.FindBathroom
         public override void _Ready()
         {
             base._Ready();
+            _BathroomDetector = GetNode<Area2D>("%BathroomDetector");
             _Employee = GetNode<Area2D>("%Employee");
             _EmployeeSprite = _Employee.GetNode<AnimatedSprite2D>("Sprite");
             _Customer = GetNode<Area2D>("%Customer");
@@ -57,6 +63,11 @@ namespace ShopIsDone.Microgames.FindBathroom
                 EmitSignal(nameof(CustomerWasStruck));
 
                 // TODO: Run animated sequence
+            };
+            _BathroomDetector.AreaEntered += (Area2D _) =>
+            {
+                // Emit
+                EmitSignal(nameof(ReachedBathroom));
             };
         }
 

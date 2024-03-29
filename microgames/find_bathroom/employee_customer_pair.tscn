@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://7cvmehh80sol"]
+[gd_scene load_steps=24 format=3 uid="uid://7cvmehh80sol"]
 
 [ext_resource type="Texture2D" uid="uid://bf6rmroftpmkh" path="res://microgames/find_bathroom/find_bathroom_actors.png" id="1_guen7"]
 [ext_resource type="Script" path="res://microgames/find_bathroom/EmployeeCustomerPair.cs" id="1_venel"]
@@ -149,6 +149,9 @@ animations = [{
 radius = 27.0
 height = 72.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nc1wu"]
+size = Vector2(100, 100)
+
 [node name="EmployeeCustomerPair" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_venel")
@@ -205,3 +208,13 @@ position = Vector2(-32, 2.08165e-12)
 [node name="Right" type="Node2D" parent="PivotPoints"]
 unique_name_in_owner = true
 position = Vector2(32, 2.08165e-12)
+
+[node name="BathroomDetector" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BathroomDetector"]
+position = Vector2(-4, -23)
+shape = SubResource("RectangleShape2D_nc1wu")

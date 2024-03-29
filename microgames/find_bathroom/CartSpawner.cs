@@ -1,10 +1,11 @@
 using Godot;
+using ShopIsDone.Utils;
 using System;
 
 namespace ShopIsDone.Microgames.FindBathroom
 {
-	public partial class CartSpawner : Node2D
-	{
+	public partial class CartSpawner : Node2D, IStoppable
+    {
 		[Export]
 		private Node2D _LeftPos;
 

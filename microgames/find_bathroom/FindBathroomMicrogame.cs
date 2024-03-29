@@ -14,10 +14,22 @@ namespace ShopIsDone.Microgames.FindBathroom
     public partial class FindBathroomMicrogame : Microgame
     {
         [Signal]
+        public delegate void MicrosleepEventHandler();
+
+        [Signal]
         public delegate void InvalidMoveEventHandler();
+
+        [Signal]
+        public delegate void MovedEventHandler();
 
         [Export]
         public PackedScene MoveNodeScene;
+
+        [Export]
+        public PackedScene BlockadeScene;
+
+        [Export]
+        public PackedScene ExitScene;
 
         // Nodes
         private Camera2D _Camera;
@@ -27,6 +39,8 @@ namespace ShopIsDone.Microgames.FindBathroom
         private InputBuffer _InputBuffer;
         private Node2D _MoveNodes;
         private Array<CartSpawner> _Spawners;
+        private Node2D _Arena;
+        private Node2D _Background;
 
         // State
         private MoveNode _CurrentMoveNode;
@@ -42,7 +56,9 @@ namespace ShopIsDone.Microgames.FindBathroom
             _EmployeeCustomerPair = GetNode<EmployeeCustomerPair>("%EmployeeCustomerPair");
             _InputBuffer = GetNode<InputBuffer>("%InputBuffer");
             _MoveNodes = GetNode<Node2D>("%MoveNodes");
-            _Spawners = GetNode<Node2D>("%Spawners")
+            _Background = GetNode<Node2D>("%Background");
+            _Arena = GetNode<Node2D>("%Arena");
+            _Spawners = _Arena
                 .GetChildren()
                 .OfType<CartSpawner>()
                 .ToGodotArray();
@@ -81,18 +97,29 @@ namespace ShopIsDone.Microgames.FindBathroom
             // Connect to events
             _EmployeeCustomerPair.CustomerWasStruck += FailGame;
             _EmployeeCustomerPair.EmployeeWasStruck += FailGame;
+            _EmployeeCustomerPair.ReachedBathroom += WinGame;
+
+            // Place 2 blockades on each row
+            var bottomRow = GetCellPositions(3).ToList().Shuffle().Take(3);
+            var topRow = GetCellPositions(4).ToList().Shuffle().Take(3);
+            var blockadePoints = topRow.Concat(bottomRow);
+            foreach (var point in blockadePoints)
+            {
+                var blockade = BlockadeScene.Instantiate<StaticBody2D>();
+                _Arena.AddChild(blockade);
+                blockade.GlobalPosition = point;
+            }
 
             // Place exit
-            //var exitSpot = GetCellPositions(2).ToList().PickRandom();
-
-            // Place obstacles
-
-            // Place cart spawners
+            var exitSpot = GetCellPositions(2).ToList().PickRandom();
+            var exit = ExitScene.Instantiate<Area2D>();
+            _Background.AddChild(exit);
+            exit.GlobalPosition = exitSpot;
         }
 
         public override void Start()
         {
-            //base.Start();
+            base.Start();
 
             // Allow player input
             SetProcess(true);
@@ -130,7 +157,7 @@ namespace ShopIsDone.Microgames.FindBathroom
                     // Screenshake
                     _Screenshake.Shake(ShakePayload.ShakeSizes.Tiny, ShakeAxis.XOnly);
 
-                    // Microsleep
+                    // Emit
                     EmitSignal(nameof(InvalidMove));
                 }
                 // If there is one, tween the employee customer pair to that node
@@ -140,6 +167,9 @@ namespace ShopIsDone.Microgames.FindBathroom
                     var newNode = neighbors[dir];
                     _CurrentMoveNode = newNode;
                     _EmployeeCustomerPair.MoveTo(dir, newNode.GlobalPosition);
+
+                    // Emit
+                    EmitSignal(nameof(Moved));
                 }
             }
         }
@@ -151,6 +181,30 @@ namespace ShopIsDone.Microgames.FindBathroom
             FailGame();
         }
 
+        private void WinGame()
+        {
+            // Stop timer
+            MicrogameTimer.Stop();
+
+            // Disconnect immediately
+            _EmployeeCustomerPair.CustomerWasStruck -= FailGame;
+            _EmployeeCustomerPair.EmployeeWasStruck -= FailGame;
+            _EmployeeCustomerPair.ReachedBathroom -= WinGame;
+
+            // Stop all player input
+            SetProcess(false);
+            SetPhysicsProcess(false);
+
+            // Set outcome to win
+            Outcome = Outcomes.Win;
+
+            // Play failure sound
+            PlaySuccessSfx();
+
+            // Emit outcome
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
+        }
+
         private void FailGame()
         {
             // Stop timer
@@ -159,6 +213,7 @@ namespace ShopIsDone.Microgames.FindBathroom
             // Disconnect immediately
             _EmployeeCustomerPair.CustomerWasStruck -= FailGame;
             _EmployeeCustomerPair.EmployeeWasStruck -= FailGame;
+            _EmployeeCustomerPair.ReachedBathroom -= WinGame;
 
             // Stop everything
             _EmployeeCustomerPair.Stop();

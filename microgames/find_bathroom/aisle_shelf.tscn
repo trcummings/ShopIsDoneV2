@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://byhlgespn258t"]
+
+[ext_resource type="Texture2D" uid="uid://bqdah312ypifa" path="res://textures/white_square.png" id="1_mmur6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hs4bi"]
+size = Vector2(200, 40)
+
+[node name="AisleShelf" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hs4bi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.5, -28)
+scale = Vector2(12.4375, 5.875)
+texture = ExtResource("1_mmur6")
