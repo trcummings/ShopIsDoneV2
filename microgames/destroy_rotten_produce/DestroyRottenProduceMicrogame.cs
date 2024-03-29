@@ -248,6 +248,9 @@ namespace ShopIsDone.Microgames.DestroyRottenProduce
 
             // Play failure sound
             PlayFailureSfx();
+
+            // Emit
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         private void StopGame()

@@ -74,6 +74,9 @@ namespace ShopIsDone.Microgames
 
             if (Outcome == Outcomes.Loss) PlayFailureSfx();
             else if (Outcome == Outcomes.Win) PlaySuccessSfx();
+
+            // Emit
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         private void OnButtonPressed()

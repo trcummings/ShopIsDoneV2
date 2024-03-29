@@ -100,6 +100,8 @@ namespace ShopIsDone.Microgames.CheckInBack
             SetPhysicsProcess(false);
             // Fail sound
             PlayFailureSfx();
+            // Emit
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         public override void _PhysicsProcess(double delta)

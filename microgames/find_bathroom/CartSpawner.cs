@@ -1,6 +1,7 @@
 using Godot;
 using ShopIsDone.Utils;
 using System;
+using Godot.Collections;
 
 namespace ShopIsDone.Microgames.FindBathroom
 {
@@ -24,14 +25,16 @@ namespace ShopIsDone.Microgames.FindBathroom
 		private PackedScene _CartScene;
 
 		private Tween _CartTween;
+		private Array<Area2D> _Carts = new Array<Area2D>();
 
 		public void Start()
 		{
 			var cart = _CartScene.Instantiate<Area2D>();
 			AddChild(cart);
+			_Carts.Add(cart);
 
-			// Position it and start it off
-			_CartTween = GetTree().CreateTween().BindNode(this);
+            // Position it and start it off
+            _CartTween = GetTree().CreateTween().BindNode(this);
 			if (Direction == Directions.ToLeft)
 			{
 				cart.GlobalPosition = _RightPos.GlobalPosition;
@@ -52,6 +55,11 @@ namespace ShopIsDone.Microgames.FindBathroom
 		{
 			_CartTween?.Kill();
 			_CartTween = null;
+			foreach (var cart in _Carts)
+			{
+				cart.GetNode<AnimatedSprite2D>("Customer").Stop();
+                cart.GetNode<AnimatedSprite2D>("Cart").Stop();
+            }
         }
 	}
 }

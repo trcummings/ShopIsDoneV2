@@ -17,6 +17,9 @@ namespace ShopIsDone.Microgames.FindBathroom
         public delegate void MicrosleepEventHandler();
 
         [Signal]
+        public delegate void HitEventHandler();
+
+        [Signal]
         public delegate void InvalidMoveEventHandler();
 
         [Signal]
@@ -95,8 +98,8 @@ namespace ShopIsDone.Microgames.FindBathroom
                 .ToList()
                 .Find(node => node.GlobalPosition == startSpot);
             // Connect to events
-            _EmployeeCustomerPair.CustomerWasStruck += FailGame;
-            _EmployeeCustomerPair.EmployeeWasStruck += FailGame;
+            _EmployeeCustomerPair.CustomerWasStruck += StrikeCustomer;
+            _EmployeeCustomerPair.EmployeeWasStruck += StrikeEmployee;
             _EmployeeCustomerPair.ReachedBathroom += WinGame;
 
             // Place 2 blockades on each row
@@ -174,9 +177,28 @@ namespace ShopIsDone.Microgames.FindBathroom
             }
         }
 
+        private void StrikeEmployee()
+        {
+            EmitSignal(nameof(Microsleep));
+            EmitSignal(nameof(Hit));
+            // Screenshake
+            _Screenshake.Shake(ShakePayload.ShakeSizes.Mild, ShakeAxis.XOnly);
+            FailGame();
+        }
+
+        private void StrikeCustomer()
+        {
+            EmitSignal(nameof(Microsleep));
+            EmitSignal(nameof(Hit));
+            // Screenshake
+            _Screenshake.Shake(ShakePayload.ShakeSizes.Mild, ShakeAxis.XOnly);
+            FailGame();
+        }
+
         protected override void OnTimerFinished()
         {
-            // TODO: Have customer pee itself
+            _EmployeeCustomerPair.IdlePair();
+            _EmployeeCustomerPair.Urinate();
 
             FailGame();
         }
@@ -187,8 +209,8 @@ namespace ShopIsDone.Microgames.FindBathroom
             MicrogameTimer.Stop();
 
             // Disconnect immediately
-            _EmployeeCustomerPair.CustomerWasStruck -= FailGame;
-            _EmployeeCustomerPair.EmployeeWasStruck -= FailGame;
+            _EmployeeCustomerPair.CustomerWasStruck -= StrikeCustomer;
+            _EmployeeCustomerPair.EmployeeWasStruck -= StrikeEmployee;
             _EmployeeCustomerPair.ReachedBathroom -= WinGame;
 
             // Stop all player input
@@ -205,14 +227,14 @@ namespace ShopIsDone.Microgames.FindBathroom
             EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
-        private void FailGame()
+        private async void FailGame()
         {
             // Stop timer
             MicrogameTimer.Stop();
 
             // Disconnect immediately
-            _EmployeeCustomerPair.CustomerWasStruck -= FailGame;
-            _EmployeeCustomerPair.EmployeeWasStruck -= FailGame;
+            _EmployeeCustomerPair.CustomerWasStruck -= StrikeCustomer;
+            _EmployeeCustomerPair.EmployeeWasStruck -= StrikeEmployee;
             _EmployeeCustomerPair.ReachedBathroom -= WinGame;
 
             // Stop everything
@@ -223,11 +245,15 @@ namespace ShopIsDone.Microgames.FindBathroom
             SetProcess(false);
             SetPhysicsProcess(false);
 
+            await ToSignal(GetTree().CreateTimer(2f), "timeout");
+
             // Set outcome to loss
             Outcome = Outcomes.Loss;
 
             // Play failure sound
             PlayFailureSfx();
+
+            await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
 
             // Emit outcome
             EmitSignal(nameof(MicrogameFinished), (int)Outcome);

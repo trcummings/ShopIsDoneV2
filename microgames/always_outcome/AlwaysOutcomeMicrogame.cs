@@ -43,6 +43,7 @@ namespace ShopIsDone.Microgames
         {
             if (Outcome == Outcomes.Loss) PlayFailureSfx();
             else if (Outcome == Outcomes.Win) PlaySuccessSfx();
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
     }
 }

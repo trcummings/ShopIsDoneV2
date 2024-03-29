@@ -40,6 +40,7 @@ PromptText = "Take Me To the Bathroom!"
 WidgetText = "I gotta go real bad!"
 
 [node name="BackgroundRectangle" parent="." index="2"]
+z_index = -5
 metadata/_edit_lock_ = true
 
 [node name="World" type="Node2D" parent="." index="3"]
@@ -52,6 +53,7 @@ metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="World" index="1"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(-10, -10)
 tile_set = SubResource("TileSet_p8jsa")
 format = 2
@@ -139,6 +141,7 @@ _Actions = ["move_left", "move_right", "move_up", "move_down"]
 [node name="MicrosleepHelper" type="Node" parent="." index="10"]
 script = ExtResource("14_ffjs6")
 
+[connection signal="Hit" from="." to="ImpactSfxPlayer" method="play"]
 [connection signal="InvalidMove" from="." to="UIInvalidPlayer" method="play"]
 [connection signal="Microsleep" from="." to="MicrosleepHelper" method="play"]
 [connection signal="Moved" from="." to="UISelectPlayer" method="play"]

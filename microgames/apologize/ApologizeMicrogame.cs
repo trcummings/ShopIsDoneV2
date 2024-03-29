@@ -251,6 +251,9 @@ namespace ShopIsDone.Microgames.Apologize
             SetProcess(false);
             // This is a failure case only, so play the sound
             PlayFailureSfx();
+
+            // Emit
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         private async Task OnAllPromptsSucceded()
@@ -324,8 +327,6 @@ namespace ShopIsDone.Microgames.Apologize
 
             // Finish
             EmitSignal(nameof(MicrogameFinished), (int)Outcome);
-
-            return;
         }
 
         private void ShakeUpdate(Vector2 offset)

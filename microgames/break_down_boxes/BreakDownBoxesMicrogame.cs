@@ -229,6 +229,9 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
 
             // This is a failure case only, so play the sound
             PlayFailureSfx();
+
+            // Emit
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         private void ShakeUpdate(Vector2 offset)

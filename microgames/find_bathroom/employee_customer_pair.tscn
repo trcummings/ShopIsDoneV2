@@ -1,7 +1,39 @@
-[gd_scene load_steps=24 format=3 uid="uid://7cvmehh80sol"]
+[gd_scene load_steps=41 format=3 uid="uid://7cvmehh80sol"]
 
 [ext_resource type="Texture2D" uid="uid://bf6rmroftpmkh" path="res://microgames/find_bathroom/find_bathroom_actors.png" id="1_guen7"]
 [ext_resource type="Script" path="res://microgames/find_bathroom/EmployeeCustomerPair.cs" id="1_venel"]
+[ext_resource type="Texture2D" uid="uid://b2ql3kbp6kkr7" path="res://microgames/find_bathroom/find_bathroom_hit_with_cart.png" id="3_b2x80"]
+[ext_resource type="Texture2D" uid="uid://c7hnj0vtgmgks" path="res://textures/Objects/piss_wet_spot.png" id="4_l7c2r"]
+[ext_resource type="AudioStream" uid="uid://iq6kkwh20ak0" path="res://microgames/find_bathroom/URINATE--18630__walter_odington__indoor-piss-1.wav" id="5_d76w4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqh8x"]
+atlas = ExtResource("4_l7c2r")
+region = Rect2(400, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1k1o1"]
+atlas = ExtResource("4_l7c2r")
+region = Rect2(200, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbct2"]
+atlas = ExtResource("4_l7c2r")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3m0v5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lqh8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1k1o1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbct2")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k8yuk"]
 atlas = ExtResource("1_guen7")
@@ -76,6 +108,42 @@ animations = [{
 radius = 27.0
 height = 90.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyx0g"]
+atlas = ExtResource("3_b2x80")
+region = Rect2(0, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8d8vo"]
+atlas = ExtResource("3_b2x80")
+region = Rect2(256, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5ixg"]
+atlas = ExtResource("3_b2x80")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ogeic"]
+atlas = ExtResource("3_b2x80")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yff5u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyx0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8d8vo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l5ixg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ogeic")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_d250h"]
 atlas = ExtResource("1_guen7")
 region = Rect2(512, 256, 128, 256)
@@ -149,12 +217,58 @@ animations = [{
 radius = 27.0
 height = 72.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qd6qx"]
+atlas = ExtResource("3_b2x80")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eldrc"]
+atlas = ExtResource("3_b2x80")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17lry"]
+atlas = ExtResource("3_b2x80")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6vxo"]
+atlas = ExtResource("3_b2x80")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iuthl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qd6qx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eldrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17lry")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6vxo")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nc1wu"]
 size = Vector2(100, 100)
 
 [node name="EmployeeCustomerPair" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_venel")
+
+[node name="PissPivot" type="Node2D" parent="."]
+
+[node name="PissSprite" type="AnimatedSprite2D" parent="PissPivot"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+position = Vector2(0, 21)
+scale = Vector2(1, 0.565)
+sprite_frames = SubResource("SpriteFrames_3m0v5")
 
 [node name="Employee" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -173,25 +287,47 @@ autoplay = "default"
 position = Vector2(4, -13)
 shape = SubResource("CapsuleShape2D_pxe38")
 
+[node name="Pivot" type="Node2D" parent="Employee"]
+
+[node name="HitSprite" type="AnimatedSprite2D" parent="Employee/Pivot"]
+visible = false
+position = Vector2(-98, -91)
+sprite_frames = SubResource("SpriteFrames_yff5u")
+frame = 3
+frame_progress = 1.0
+
 [node name="Customer" type="Area2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(34, 1)
 collision_layer = 0
 monitorable = false
-metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Customer"]
 position = Vector2(-2, -87)
 sprite_frames = SubResource("SpriteFrames_ukjbh")
 autoplay = "default"
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Customer"]
 position = Vector2(1, -11)
 shape = SubResource("CapsuleShape2D_gg0vk")
 
+[node name="Pivot" type="Node2D" parent="Customer"]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Customer/Pivot"]
+position = Vector2(-34, 20)
+remote_path = NodePath("../../../PissPivot/PissSprite")
+update_scale = false
+
+[node name="HitSprite" type="AnimatedSprite2D" parent="Customer/Pivot"]
+visible = false
+position = Vector2(-98, -91)
+sprite_frames = SubResource("SpriteFrames_iuthl")
+
 [node name="PivotPoints" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="Up" type="Node2D" parent="PivotPoints"]
 unique_name_in_owner = true
@@ -214,7 +350,15 @@ unique_name_in_owner = true
 collision_layer = 0
 collision_mask = 8
 monitorable = false
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BathroomDetector"]
 position = Vector2(-4, -23)
 shape = SubResource("RectangleShape2D_nc1wu")
+
+[node name="UrinateSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_d76w4")
+bus = &"Microgames"
+
+[connection signal="Urinated" from="." to="UrinateSFX" method="play"]

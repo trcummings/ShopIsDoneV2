@@ -15,11 +15,19 @@ namespace ShopIsDone.Microgames.FindBathroom
         [Signal]
         public delegate void ReachedBathroomEventHandler();
 
+        [Signal]
+        public delegate void UrinatedEventHandler();
+
         private Area2D _Employee;
         private Area2D _Customer;
         private AnimatedSprite2D _EmployeeSprite;
         private AnimatedSprite2D _CustomerSprite;
         private Area2D _BathroomDetector;
+        private Node2D _EmployeePivot;
+        private AnimatedSprite2D _EmployeeHitSprite;
+        private Node2D _CustomerPivot;
+        private AnimatedSprite2D _CustomerHitSprite;
+        private AnimatedSprite2D _PissSprite;
 
         // Positions
         private Node2D _LeftPoint;
@@ -30,6 +38,7 @@ namespace ShopIsDone.Microgames.FindBathroom
         // State
         private Tween _PairTween;
         private Vector2 _FacingDir = Vector2.Left;
+        private bool _WasHit = false;
 
         public override void _Ready()
         {
@@ -37,8 +46,13 @@ namespace ShopIsDone.Microgames.FindBathroom
             _BathroomDetector = GetNode<Area2D>("%BathroomDetector");
             _Employee = GetNode<Area2D>("%Employee");
             _EmployeeSprite = _Employee.GetNode<AnimatedSprite2D>("Sprite");
+            _EmployeePivot = _Employee.GetNode<Node2D>("Pivot");
+            _EmployeeHitSprite = _EmployeePivot.GetNode<AnimatedSprite2D>("HitSprite");
             _Customer = GetNode<Area2D>("%Customer");
             _CustomerSprite = _Customer.GetNode<AnimatedSprite2D>("Sprite");
+            _CustomerPivot = _Customer.GetNode<Node2D>("Pivot");
+            _CustomerHitSprite = _CustomerPivot.GetNode<AnimatedSprite2D>("HitSprite");
+            _PissSprite = GetNode<AnimatedSprite2D>("%PissSprite");
 
             _LeftPoint = GetNode<Node2D>("%Left");
             _RightPoint = GetNode<Node2D>("%Right");
@@ -50,25 +64,65 @@ namespace ShopIsDone.Microgames.FindBathroom
             _CustomerSprite.Play("walk");
 
             // Connect
-            _Employee.AreaEntered += (Area2D _) =>
-            {
-                // Emit
-                EmitSignal(nameof(EmployeeWasStruck));
+            _Employee.AreaEntered += OnEmployeeStruck;
+            _Customer.AreaEntered += OnCustomerStruck;
+            _BathroomDetector.AreaEntered += OnBathroomEntered;
+        }
 
-                // TODO: Run animated sequence
-            };
-            _Customer.AreaEntered += (Area2D _) =>
-            {
-                // Emit
-                EmitSignal(nameof(CustomerWasStruck));
+        private async void OnEmployeeStruck(Node2D node)
+        {
+            // Hit check
+            if (_WasHit) return;
+            _WasHit = true;
 
-                // TODO: Run animated sequence
-            };
-            _BathroomDetector.AreaEntered += (Area2D _) =>
+            // Emit
+            EmitSignal(nameof(EmployeeWasStruck));
+
+            // Check which side the hit came from and flip the pivot
+            // appropriately
+            if (Mathf.Sign(node.GlobalPosition.X - _Employee.GlobalPosition.X) != 1)
             {
-                // Emit
-                EmitSignal(nameof(ReachedBathroom));
-            };
+                _EmployeePivot.Scale = new Vector2(-1, 1);
+            }
+
+            // Run animated sequence
+            _CustomerSprite.Play("default");
+            _EmployeeSprite.Hide();
+            _EmployeeHitSprite.Show();
+            _EmployeeHitSprite.Play("default");
+            await ToSignal(_EmployeeHitSprite, "animation_finished");
+            Urinate();
+        }
+
+        private async void OnCustomerStruck(Node2D node)
+        {
+            // Hit check
+            if (_WasHit) return;
+            _WasHit = true;
+
+            // Emit
+            EmitSignal(nameof(CustomerWasStruck));
+
+            // Check which side the hit came from and flip the pivot
+            // appropriately
+            if (Mathf.Sign(node.GlobalPosition.X - _Customer.GlobalPosition.X) != 1)
+            {
+                _CustomerPivot.Scale = new Vector2(-1, 1);
+            }
+
+            // Run animated sequence
+            _EmployeeSprite.Play("default");
+            _CustomerSprite.Hide();
+            _CustomerHitSprite.Show();
+            _CustomerHitSprite.Play("default");
+            await ToSignal(_CustomerHitSprite, "animation_finished");
+            Urinate();
+        }
+
+        private void OnBathroomEntered(Node2D _)
+        {
+            // Emit
+            EmitSignal(nameof(ReachedBathroom));
         }
 
         public void MoveTo(Vector2 dir, Vector2 toPos)
@@ -130,6 +184,19 @@ namespace ShopIsDone.Microgames.FindBathroom
         {
             _PairTween?.Kill();
             _PairTween = null;
+        }
+
+        public void Urinate()
+        {
+            _PissSprite.Show();
+            _PissSprite.Play("default");
+            EmitSignal(nameof(Urinated));
+        }
+
+        public void IdlePair()
+        {
+            _EmployeeSprite.Play("default");
+            _CustomerSprite.Play("default");
         }
     }
 }
