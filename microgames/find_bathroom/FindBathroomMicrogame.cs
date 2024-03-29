@@ -131,7 +131,7 @@ namespace ShopIsDone.Microgames.FindBathroom
             // Start carts
             foreach (var spawner in _Spawners)
             {
-                spawner.Start(1f + (float)GD.RandRange(0f, 1f));
+                spawner.Start(1f + (float)GD.RandRange(.5f, 1f));
             }
         }
 

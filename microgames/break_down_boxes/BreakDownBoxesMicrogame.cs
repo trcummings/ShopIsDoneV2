@@ -126,10 +126,6 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
             _TapePoints = GetNode<Node2D>("%TapePoints");
             _BoxPivot = GetNode<Node3D>("%BoxPivot");
 
-            // Show vhs FX
-            var vhsFx = GetNode<ColorRect>("%VhsBlurFX");
-            vhsFx.Show();
-
             // Connect screenshake
             _Screenshake.ShakeOffsetUpdated += ShakeUpdate;
 

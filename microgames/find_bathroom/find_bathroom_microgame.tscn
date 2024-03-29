@@ -52,6 +52,7 @@ metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="World" index="1"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(-10, -10)
 tile_set = SubResource("TileSet_p8jsa")
 format = 2

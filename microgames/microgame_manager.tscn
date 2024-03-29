@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://df0fk08hmrihh"]
+[gd_scene load_steps=19 format=3 uid="uid://df0fk08hmrihh"]
 
 [ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="1"]
 [ext_resource type="Script" path="res://microgames/MicrogameManager.cs" id="2"]
+[ext_resource type="Material" uid="uid://cy50u0rvjofoh" path="res://microgames/common/vhs_wiggle_texture.material" id="2_p3ufj"]
 [ext_resource type="Texture2D" uid="uid://du8nwh7w0c74b" path="res://ui/nine_path_border_transparent.png" id="3"]
 [ext_resource type="AudioStream" uid="uid://obgshbqqnjm3" path="res://microgames/common/audio/heartbeats/heartbeat_1.wav" id="5_k4xjn"]
 [ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="6"]
@@ -104,6 +105,7 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="MicrogameTexture" type="TextureRect" parent="CenterContainer/FrameContainer/MarginContainer/MarginContainer2"]
+material = ExtResource("2_p3ufj")
 layout_mode = 2
 mouse_filter = 2
 texture = SubResource("2")

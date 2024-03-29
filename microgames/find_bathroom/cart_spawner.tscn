@@ -7,6 +7,7 @@
 position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("1_81bpq")
 _CartScene = ExtResource("2_u7edq")
+_CartTimeToCross = 2.25
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 

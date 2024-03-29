@@ -45,7 +45,7 @@ vec3 yiq2rgb(vec3 c) {
     );
 }
 
-vec3 Blur(vec2 uv, float d, int samples) {
+vec3 Blur(sampler2D tex, vec2 uv, float d, int samples) {
     vec3 sum = vec3(0.0);
     float W = 1.0 / float(samples);
     for (int i = 0; i < samples; ++i) {
@@ -57,7 +57,7 @@ vec3 Blur(vec2 uv, float d, int samples) {
         float Start = 2.0 / float(samples);
         vec2 Scale = 0.66 * 4.0 * 2.0 * PixelOffset.xy;
         
-        vec3 N = texture(Source, uv + Circle(Start, float(samples), float(i)) * Scale).rgb;
+        vec3 N = texture(tex, uv + Circle(Start, float(samples), float(i)) * Scale).rgb;
         sum += N * W;
     }
     return sum;
@@ -78,17 +78,17 @@ void fragment() {
     float c = max(0.0001,.002*d) * smear;
     vec4 final;
 
-    final.rgb = Blur(uv, c + c * uv.x, blur_samples);
+    final.rgb = Blur(TEXTURE, uv, c + c * uv.x, blur_samples);
     float y = rgb2yiq(final.rgb).r;
 
     uv.x += 0.01 * d;
     c *= 6.0;
-    final.rgb = Blur(uv, c, blur_samples);
+    final.rgb = Blur(TEXTURE, uv, c, blur_samples);
     float i = rgb2yiq(final.rgb).g;
 
     uv.x += 0.005 * d;
     c *= 2.50;
-    final.rgb = Blur(uv, c, blur_samples);
+    final.rgb = Blur(TEXTURE, uv, c, blur_samples);
     float q = rgb2yiq(final.rgb).b;
     final.rgb = yiq2rgb(vec3(y, i, q)) - pow(s + e * 2.0, 3.0);
 
