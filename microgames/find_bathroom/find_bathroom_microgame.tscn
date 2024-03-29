@@ -1,13 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://227lsgm4dbqv"]
+[gd_scene load_steps=18 format=3 uid="uid://227lsgm4dbqv"]
 
 [ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_pkikc"]
 [ext_resource type="Script" path="res://microgames/find_bathroom/FindBathroomMicrogame.cs" id="2_nnof3"]
 [ext_resource type="PackedScene" uid="uid://ds20f2bcpehl0" path="res://microgames/find_bathroom/move_node.tscn" id="3_bwq6n"]
 [ext_resource type="Texture2D" uid="uid://bqdah312ypifa" path="res://textures/white_square.png" id="5_ldw7f"]
-[ext_resource type="Script" path="res://microgames/find_bathroom/CartSpawner.cs" id="6_peh3x"]
 [ext_resource type="PackedScene" uid="uid://7cvmehh80sol" path="res://microgames/find_bathroom/employee_customer_pair.tscn" id="7_3m7fv"]
 [ext_resource type="PackedScene" uid="uid://byhlgespn258t" path="res://microgames/find_bathroom/aisle_shelf.tscn" id="8_453rl"]
-[ext_resource type="PackedScene" uid="uid://b4068rmknffkq" path="res://microgames/find_bathroom/customer_with_cart.tscn" id="8_prfl2"]
+[ext_resource type="PackedScene" uid="uid://cn8u73rf5qt18" path="res://microgames/find_bathroom/cart_spawner.tscn" id="8_r7f4n"]
 [ext_resource type="Script" path="res://util/InputBuffer.cs" id="8_wvuym"]
 [ext_resource type="PackedScene" uid="uid://d3ijxjc2vsf5l" path="res://microgames/find_bathroom/bathroom_door.tscn" id="9_5spgy"]
 [ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="11_j711q"]
@@ -53,7 +52,6 @@ metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="World" index="1"]
 unique_name_in_owner = true
-visible = false
 position = Vector2(-10, -10)
 tile_set = SubResource("TileSet_p8jsa")
 format = 2
@@ -89,37 +87,12 @@ unique_name_in_owner = true
 position = Vector2(853, 853)
 metadata/_edit_lock_ = true
 
-[node name="Spawner" type="Node2D" parent="World/Arena" index="1" node_paths=PackedStringArray("_LeftPos", "_RightPos")]
+[node name="CartSpawner" parent="World/Arena" index="1" instance=ExtResource("8_r7f4n")]
 position = Vector2(2.08165e-12, 662)
-script = ExtResource("6_peh3x")
-_LeftPos = NodePath("Node2D2")
-_RightPos = NodePath("Node2D3")
-_CartScene = ExtResource("8_prfl2")
-metadata/_edit_lock_ = true
-metadata/_edit_group_ = true
 
-[node name="Node2D2" type="Node2D" parent="World/Arena/Spawner" index="0"]
-position = Vector2(-200, 2.08165e-12)
-metadata/_edit_lock_ = true
-
-[node name="Node2D3" type="Node2D" parent="World/Arena/Spawner" index="1"]
-position = Vector2(1100, 1)
-
-[node name="Spawner2" type="Node2D" parent="World/Arena" index="2" node_paths=PackedStringArray("_LeftPos", "_RightPos")]
-position = Vector2(-2, 465)
-script = ExtResource("6_peh3x")
-_LeftPos = NodePath("Node2D2")
-_RightPos = NodePath("Node2D3")
+[node name="CartSpawner2" parent="World/Arena" index="2" instance=ExtResource("8_r7f4n")]
+position = Vector2(2.08165e-12, 462)
 Direction = 1
-_CartScene = ExtResource("8_prfl2")
-metadata/_edit_group_ = true
-
-[node name="Node2D2" type="Node2D" parent="World/Arena/Spawner2" index="0"]
-position = Vector2(-200, 2.08165e-12)
-metadata/_edit_lock_ = true
-
-[node name="Node2D3" type="Node2D" parent="World/Arena/Spawner2" index="1"]
-position = Vector2(1100, 1)
 
 [node name="ScreenshakeHandler" parent="." index="4" instance=ExtResource("11_j711q")]
 unique_name_in_owner = true

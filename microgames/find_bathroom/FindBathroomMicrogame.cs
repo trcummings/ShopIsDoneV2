@@ -129,7 +129,10 @@ namespace ShopIsDone.Microgames.FindBathroom
             SetPhysicsProcess(true);
 
             // Start carts
-            foreach (var spawner in _Spawners) spawner.Start();
+            foreach (var spawner in _Spawners)
+            {
+                spawner.Start(1f + (float)GD.RandRange(0f, 1f));
+            }
         }
 
         public override void _Process(double delta)
