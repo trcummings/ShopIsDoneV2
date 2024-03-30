@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c1hrjv4smokox"]
+[gd_scene load_steps=13 format=3 uid="uid://c1hrjv4smokox"]
 
 [ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_o651h"]
 [ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="2_k0og1"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://b6dlm6g882x0i" path="res://microgames/break_down_boxes/box_icons.png" id="8_k24hc"]
 [ext_resource type="PackedScene" uid="uid://b8ppc5hohn44q" path="res://microgames/break_down_boxes/opening_box.gltf" id="8_yt8sl"]
 [ext_resource type="Texture2D" uid="uid://ii7i5mbh27gj" path="res://microgames/break_down_boxes/whitePuff22.png" id="10_1k5ir"]
-[ext_resource type="Material" uid="uid://co677ey7wcl0e" path="res://microgames/break_down_boxes/vhs_blur_wiggle.material" id="10_4na3f"]
 [ext_resource type="PackedScene" uid="uid://b4v63n3dtgf0y" path="res://microgames/break_down_boxes/tape_manager.tscn" id="10_36hsx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0pihj"]
@@ -376,13 +375,6 @@ unique_name_in_owner = true
 position = Vector2(795, 795)
 collision_mask = 1
 motion_mode = 1
-
-[node name="VhsBlurFX" type="ColorRect" parent="." index="7"]
-unique_name_in_owner = true
-visible = false
-material = ExtResource("10_4na3f")
-offset_right = 940.0
-offset_bottom = 940.0
 
 [connection signal="Microsleep" from="." to="MicrosleepHelper" method="Microsleep"]
 

@@ -126,10 +126,6 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
             _TapePoints = GetNode<Node2D>("%TapePoints");
             _BoxPivot = GetNode<Node3D>("%BoxPivot");
 
-            // Show vhs FX
-            var vhsFx = GetNode<ColorRect>("%VhsBlurFX");
-            vhsFx.Show();
-
             // Connect screenshake
             _Screenshake.ShakeOffsetUpdated += ShakeUpdate;
 
@@ -229,6 +225,9 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
 
             // This is a failure case only, so play the sound
             PlayFailureSfx();
+
+            // Emit
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         private void ShakeUpdate(Vector2 offset)

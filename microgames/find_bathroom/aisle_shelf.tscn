@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://byhlgespn258t"]
+
+[ext_resource type="Texture2D" uid="uid://bqqjd8n22a7y4" path="res://microgames/find_bathroom/aisle_shelf.png" id="1_nn3md"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hs4bi"]
+size = Vector2(200, 40)
+
+[node name="AisleShelf" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hs4bi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.08165e-12, -20)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_nn3md")

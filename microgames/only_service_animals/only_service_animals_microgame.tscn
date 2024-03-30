@@ -161,6 +161,7 @@ position = Vector2(962, 0)
 unique_name_in_owner = true
 position = Vector2(812, 560)
 sprite_frames = SubResource("28")
+autoplay = "default"
 frame = 1
 
 [node name="Hitbox" type="Area2D" parent="World/Arena/Attendant" index="0"]

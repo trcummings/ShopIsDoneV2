@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds20f2bcpehl0"]
+
+[ext_resource type="Script" path="res://microgames/find_bathroom/MoveNode.cs" id="1_aehfr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7tjn"]
+size = Vector2(32, 32)
+
+[node name="MoveNode" type="Area2D" node_paths=PackedStringArray("_Up", "_Down", "_Left", "_Right")]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_aehfr")
+_Up = NodePath("Up")
+_Down = NodePath("Down")
+_Left = NodePath("Left")
+_Right = NodePath("Right")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_m7tjn")
+
+[node name="Down" type="RayCast2D" parent="."]
+target_position = Vector2(2.08165e-12, 200)
+collision_mask = 6
+collide_with_areas = true
+
+[node name="Right" type="RayCast2D" parent="."]
+target_position = Vector2(200, 2.08165e-12)
+collision_mask = 6
+collide_with_areas = true
+
+[node name="Left" type="RayCast2D" parent="."]
+target_position = Vector2(-200, 2.08165e-12)
+collision_mask = 6
+collide_with_areas = true
+
+[node name="Up" type="RayCast2D" parent="."]
+target_position = Vector2(2.08165e-12, -200)
+collision_mask = 6
+collide_with_areas = true

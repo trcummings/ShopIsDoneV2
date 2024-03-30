@@ -152,6 +152,9 @@ namespace ShopIsDone.Microgames.OnlyServiceAnimals
         {
             // Play success sound if we won
             if (Outcome == Outcomes.Win) PlaySuccessSfx();
+
+            // Emit
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         private void OnAnimalHitAttendant(Animal.AnimalTypes animalType)

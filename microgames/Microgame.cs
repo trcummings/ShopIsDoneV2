@@ -99,7 +99,7 @@ namespace ShopIsDone.Microgames
         {
             MicrogameTimer.Stop();
             OnTimerFinished();
-            EmitSignal(SignalName.MicrogameFinished, (int)Outcome);
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         protected void PlaySuccessSfx()
@@ -164,7 +164,6 @@ namespace ShopIsDone.Microgames
             {
                 MicrogameTimer.Stop();
                 OnTimerFinished();
-                EmitSignal(SignalName.MicrogameFinished, (int)Outcome);
             }
         }
     }

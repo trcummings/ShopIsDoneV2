@@ -181,6 +181,9 @@ namespace ShopIsDone.Microgames.ScanItem
             SetProcess(false);
             // This is a failure case only, so play the sound
             PlayFailureSfx();
+
+            // Emit
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
         }
 
         private void RotateItem(Vector3 axis)
