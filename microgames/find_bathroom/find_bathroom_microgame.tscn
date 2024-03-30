@@ -1,19 +1,28 @@
-[gd_scene load_steps=18 format=3 uid="uid://227lsgm4dbqv"]
+[gd_scene load_steps=23 format=3 uid="uid://227lsgm4dbqv"]
 
 [ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_pkikc"]
 [ext_resource type="Script" path="res://microgames/find_bathroom/FindBathroomMicrogame.cs" id="2_nnof3"]
 [ext_resource type="PackedScene" uid="uid://ds20f2bcpehl0" path="res://microgames/find_bathroom/move_node.tscn" id="3_bwq6n"]
 [ext_resource type="Texture2D" uid="uid://bqdah312ypifa" path="res://textures/white_square.png" id="5_ldw7f"]
+[ext_resource type="Shader" path="res://microgames/find_bathroom/scale_uv.gdshader" id="6_j8q8c"]
 [ext_resource type="PackedScene" uid="uid://7cvmehh80sol" path="res://microgames/find_bathroom/employee_customer_pair.tscn" id="7_3m7fv"]
+[ext_resource type="Texture2D" uid="uid://by700cxvst2j1" path="res://textures/seamless_tile_texture.png" id="7_g6ncs"]
 [ext_resource type="PackedScene" uid="uid://byhlgespn258t" path="res://microgames/find_bathroom/aisle_shelf.tscn" id="8_453rl"]
 [ext_resource type="PackedScene" uid="uid://cn8u73rf5qt18" path="res://microgames/find_bathroom/cart_spawner.tscn" id="8_r7f4n"]
 [ext_resource type="Script" path="res://util/InputBuffer.cs" id="8_wvuym"]
+[ext_resource type="PackedScene" uid="uid://ceq7occl4n81" path="res://microgames/find_bathroom/back_freezer_shelves.tscn" id="9_2y5je"]
 [ext_resource type="PackedScene" uid="uid://d3ijxjc2vsf5l" path="res://microgames/find_bathroom/bathroom_door.tscn" id="9_5spgy"]
+[ext_resource type="Texture2D" uid="uid://ii7i5mbh27gj" path="res://microgames/break_down_boxes/whitePuff22.png" id="11_ihvx3"]
 [ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="11_j711q"]
 [ext_resource type="AudioStream" uid="uid://dral5g4c2pqf0" path="res://microgames/common/audio/PUNCH--wariowareclone--punch.wav" id="12_slx58"]
 [ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="12_vu03y"]
 [ext_resource type="PackedScene" uid="uid://dqrhke68klwx2" path="res://audio/ui/ui_invalid_player.tscn" id="13_ixmfw"]
 [ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="14_ffjs6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kmur8"]
+shader = ExtResource("6_j8q8c")
+shader_parameter/uv_mult = Vector2(4, 4)
+shader_parameter/uv_offset = Vector2(0, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_slv54"]
 texture = ExtResource("5_ldw7f")
@@ -35,12 +44,33 @@ script = ExtResource("2_nnof3")
 MoveNodeScene = ExtResource("3_bwq6n")
 BlockadeScene = ExtResource("8_453rl")
 ExitScene = ExtResource("9_5spgy")
+BackFreezerShelvesScene = ExtResource("9_2y5je")
 PromptText = "Take Me To the Bathroom!"
 WidgetText = "I gotta go real bad!"
 
 [node name="BackgroundRectangle" parent="." index="2"]
 z_index = -5
 metadata/_edit_lock_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="BackgroundRectangle" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = -10
+theme_override_constants/margin_top = -10
+theme_override_constants/margin_right = -10
+theme_override_constants/margin_bottom = -10
+
+[node name="TextureRect" type="TextureRect" parent="BackgroundRectangle/MarginContainer" index="0"]
+modulate = Color(0.337255, 0.337255, 0.337255, 1)
+texture_repeat = 2
+material = SubResource("ShaderMaterial_kmur8")
+layout_mode = 2
+texture = ExtResource("7_g6ncs")
+expand_mode = 2
 
 [node name="World" type="Node2D" parent="." index="3"]
 metadata/_edit_lock_ = true
@@ -74,14 +104,18 @@ metadata/_edit_lock_ = true
 
 [node name="MoveNodes" type="Node2D" parent="World" index="2"]
 unique_name_in_owner = true
+visible = false
+metadata/_edit_lock_ = true
 
 [node name="Background" type="Node2D" parent="World" index="3"]
 unique_name_in_owner = true
+metadata/_edit_lock_ = true
 
 [node name="Arena" type="Node2D" parent="World" index="4"]
 unique_name_in_owner = true
 y_sort_enabled = true
 metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="EmployeeCustomerPair" parent="World/Arena" index="0" instance=ExtResource("7_3m7fv")]
 unique_name_in_owner = true
@@ -94,6 +128,25 @@ position = Vector2(2.08165e-12, 662)
 [node name="CartSpawner2" parent="World/Arena" index="2" instance=ExtResource("8_r7f4n")]
 position = Vector2(2.08165e-12, 462)
 Direction = 1
+
+[node name="Overlay" type="Node2D" parent="World" index="5"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Overlay" index="0"]
+modulate = Color(0, 0, 0, 1)
+z_index = 10
+position = Vector2(198.25, -54.5)
+scale = Vector2(3.92382, 1)
+texture = ExtResource("11_ihvx3")
+
+[node name="Sprite2D2" type="Sprite2D" parent="World/Overlay" index="1"]
+modulate = Color(0, 0, 0, 1)
+z_index = 10
+position = Vector2(932.25, -23.5)
+scale = Vector2(3.92382, 1)
+texture = ExtResource("11_ihvx3")
+flip_v = true
 
 [node name="ScreenshakeHandler" parent="." index="4" instance=ExtResource("11_j711q")]
 unique_name_in_owner = true

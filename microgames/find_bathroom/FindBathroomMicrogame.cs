@@ -34,6 +34,9 @@ namespace ShopIsDone.Microgames.FindBathroom
         [Export]
         public PackedScene ExitScene;
 
+        [Export]
+        public PackedScene BackFreezerShelvesScene;
+
         // Nodes
         private Camera2D _Camera;
         private ScreenshakeHandler _Screenshake;
@@ -113,8 +116,23 @@ namespace ShopIsDone.Microgames.FindBathroom
                 blockade.GlobalPosition = point;
             }
 
+            // Gather all exit sposts
+            var exitSpots = GetCellPositions(2).ToList();
+            var exitSpot = exitSpots.PickRandom();
+            // Place non-exit backgrounds
+            foreach (var (prev, spot, next) in exitSpots.WithPreviousAndNext(Vector2.Inf, Vector2.Inf))
+            {
+                var shelves = BackFreezerShelvesScene.Instantiate<Node2D>();
+                _Background.AddChild(shelves);
+                shelves.GlobalPosition = spot;
+                var sprite = shelves.GetNode<Sprite2D>("Sprite");
+                if (spot == exitSpot) sprite.Frame = 3;
+                else if (prev == exitSpot) sprite.Frame = 0;
+                else if (next == exitSpot) sprite.Frame = 2;
+                else sprite.Frame = 1;
+            }
+
             // Place exit
-            var exitSpot = GetCellPositions(2).ToList().PickRandom();
             var exit = ExitScene.Instantiate<Area2D>();
             _Background.AddChild(exit);
             exit.GlobalPosition = exitSpot;

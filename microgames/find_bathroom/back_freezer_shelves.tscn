@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceq7occl4n81"]
+
+[ext_resource type="Texture2D" uid="uid://dpbwxph28wup7" path="res://microgames/find_bathroom/back_freezer_shelves.png" id="1_08map"]
+
+[node name="BackFreezerShelves" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(0.301961, 0.301961, 0.301961, 1)
+position = Vector2(2.08165e-12, -100)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_08map")
+hframes = 4

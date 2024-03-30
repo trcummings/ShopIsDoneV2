@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://7cvmehh80sol"]
+[gd_scene load_steps=42 format=3 uid="uid://7cvmehh80sol"]
 
 [ext_resource type="Texture2D" uid="uid://bf6rmroftpmkh" path="res://microgames/find_bathroom/find_bathroom_actors.png" id="1_guen7"]
 [ext_resource type="Script" path="res://microgames/find_bathroom/EmployeeCustomerPair.cs" id="1_venel"]
@@ -116,13 +116,13 @@ region = Rect2(0, 512, 256, 256)
 atlas = ExtResource("3_b2x80")
 region = Rect2(256, 512, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l5ixg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tcs6"]
 atlas = ExtResource("3_b2x80")
-region = Rect2(0, 256, 256, 256)
+region = Rect2(0, 768, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ogeic"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpgq4"]
 atlas = ExtResource("3_b2x80")
-region = Rect2(256, 256, 256, 256)
+region = Rect2(256, 768, 256, 256)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yff5u"]
 animations = [{
@@ -134,10 +134,10 @@ animations = [{
 "texture": SubResource("AtlasTexture_8d8vo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l5ixg")
+"texture": SubResource("AtlasTexture_7tcs6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ogeic")
+"texture": SubResource("AtlasTexture_vpgq4")
 }],
 "loop": false,
 "name": &"default",
@@ -256,6 +256,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nc1wu"]
 size = Vector2(100, 100)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k1464"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("5_d76w4")
+stream_0/weight = 1.0
+
 [node name="EmployeeCustomerPair" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_venel")
@@ -358,7 +364,7 @@ position = Vector2(-4, -23)
 shape = SubResource("RectangleShape2D_nc1wu")
 
 [node name="UrinateSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_d76w4")
+stream = SubResource("AudioStreamRandomizer_k1464")
 bus = &"Microgames"
 
 [connection signal="Urinated" from="." to="UrinateSFX" method="play"]
