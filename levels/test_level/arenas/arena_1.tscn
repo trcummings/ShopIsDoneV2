@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://bg2miiwdt1h4y"]
+
+[ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="1_1h2mb"]
+[ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="2_88hht"]
+[ext_resource type="Script" path="res://levels/test_level/conditions/CustomerSatisfiedCondition.cs" id="2_mulww"]
+[ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge_task.tscn" id="3_c4x54"]
+[ext_resource type="Script" path="res://levels/test_level/conditions/TaskCompletedCondition.cs" id="3_qnavv"]
+[ext_resource type="Script" path="res://clown_rules/action_rules/MoveInLShapeActionRule.cs" id="4_slyis"]
+[ext_resource type="PackedScene" uid="uid://cgli0qeti2oyr" path="res://entities/break_down_boxes_task/break_down_boxes_task.tscn" id="4_tcut0"]
+[ext_resource type="PackedScene" uid="uid://bal3hv6vds0yc" path="res://entities/wet_spot_task/wet_spot_task.tscn" id="5_m8env"]
+[ext_resource type="PackedScene" uid="uid://fjvoq3olr4fm" path="res://entities/register_task/register_task.tscn" id="6_qif3y"]
+[ext_resource type="PackedScene" uid="uid://br5e18nash7g5" path="res://entities/fix_display_task/fix_display_task.tscn" id="7_1bvuq"]
+[ext_resource type="PackedScene" uid="uid://c7xlqty5qdnif" path="res://entities/clown_puppet/clown_puppet.tscn" id="8_io54v"]
+[ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="13_7wsxv"]
+
+[node name="Arena1" instance=ExtResource("1_1h2mb")]
+
+[node name="CustomerSatisfiedCondition" type="Node" parent="Services/ConditionsService" index="0" node_paths=PackedStringArray("Customer")]
+script = ExtResource("2_mulww")
+Customer = NodePath("../../../Entities/Customer")
+_Id = "customer_satisfied_condition"
+IsVisibleInUI = true
+Verb = "Satisfy"
+Noun = "Customer"
+PluralNoun = "Customers"
+
+[node name="TaskCompletedCondition" type="Node" parent="Services/ConditionsService" index="1" node_paths=PackedStringArray("Task")]
+script = ExtResource("3_qnavv")
+Task = NodePath("../../../Entities/RegisterTask")
+_Id = "task_completed_condition"
+IsVisibleInUI = true
+Verb = "Complete"
+Noun = "Task"
+PluralNoun = "Tasks"
+
+[node name="ClownRulesService" parent="Services" index="18" node_paths=PackedStringArray("_Judge")]
+_Judge = NodePath("../../Entities/ClownPuppet")
+
+[node name="MoveInLShapeActionRule" type="Node" parent="Services/ClownRulesService" index="0"]
+script = ExtResource("4_slyis")
+RuleDescription = "Do NOT walk in an L-shaped path"
+
+[node name="TileManager" parent="." index="3"]
+data = {
+"cells": PackedInt32Array(4, 65533, 0, 4, 65532, 0, 3, 65532, 0, 3, 65533, 0, 3, 2, 0, 2, 3, 0, 3, 3, 0, 4, 3, 0, 4, 2, 0, 2, 65532, 0, 2, 65533, 0, 2, 65534, 0, 2, 1, 0, 2, 2, 0, 1, 3, 0, 1, 2, 0, 1, 1, 0, 1, 0, 0, 1, 65535, 0, 1, 65534, 0, 1, 65533, 0, 1, 65532, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 65535, 3, 0, 65535, 2, 0, 65535, 1, 0, 65535, 0, 0, 65535, 65535, 0, 65535, 65534, 0, 65535, 65533, 0, 65535, 65532, 0, 65534, 65532, 0, 65534, 65533, 0, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 0, 65534, 2, 0, 65534, 3, 0, 65533, 3, 0, 65533, 2, 0, 65533, 1, 0, 65533, 0, 0, 65533, 65535, 0, 65533, 65534, 0, 65533, 65533, 0, 65533, 65532, 0, 2, 65535, 1441792, 2, 0, 0, 3, 1, 0, 3, 65534, 0, 3, 0, 2, 3, 65535, 2, 4, 1, 0, 4, 0, 2, 4, 65535, 2, 4, 65534, 0)
+}
+
+[node name="Customer" parent="Entities" index="0" instance=ExtResource("2_88hht")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3, 0, -3)
+Enabled = false
+EditorFacingDir = 3
+
+[node name="VegetableFridge" parent="Entities" index="1" instance=ExtResource("3_c4x54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 7)
+EditorFacingDir = 1
+
+[node name="BreakDownBoxesTask" parent="Entities" index="2" instance=ExtResource("4_tcut0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="WetSpotTask" parent="Entities" index="3" instance=ExtResource("5_m8env")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -5)
+
+[node name="RegisterTask" parent="Entities" index="4" instance=ExtResource("6_qif3y")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5, 0, 3)
+EditorFacingDir = 1
+
+[node name="FixDisplayTask" parent="Entities" index="5" instance=ExtResource("7_1bvuq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -7)
+
+[node name="ClownPuppet" parent="Entities" index="6" instance=ExtResource("8_io54v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 1000, -13)
+
+[node name="Lights" type="Node3D" parent="." index="6"]
+metadata/_edit_lock_ = true
+
+[node name="WorldOmniLight" parent="Lights" index="0" instance=ExtResource("13_7wsxv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 1)
+Radius = 6.0
+metadata/_edit_lock_ = true
+
+[node name="WorldOmniLight2" parent="Lights" index="1" instance=ExtResource("13_7wsxv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1, 0)
+Radius = 3.0
+metadata/_edit_lock_ = true
+
+[editable path="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt"]
+[editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SelectUnitCTA"]
+[editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SwapUnitsCTA"]
+[editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/PlaceUnitCTA"]
+[editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/CancelCTA"]

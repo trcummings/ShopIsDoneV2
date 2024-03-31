@@ -11,7 +11,6 @@
 [ext_resource type="Script" path="res://tiles/TileManager.cs" id="4_hwpdd"]
 [ext_resource type="Script" path="res://arenas/PlayerUnitService.cs" id="4_m7h52"]
 [ext_resource type="Script" path="res://arenas/states/RunningArenaState.cs" id="4_oqnwb"]
-[ext_resource type="Script" path="res://arenas/EnterArenaArea.cs" id="5_2f7tb"]
 [ext_resource type="Script" path="res://arena_actions/effort_meter/EffortMeterService.cs" id="5_gmbyy"]
 [ext_resource type="PackedScene" uid="uid://k1cfuob2nivk" path="res://tiles/tile/tile.tscn" id="5_hl2gx"]
 [ext_resource type="Script" path="res://arenas/states/battle_states/TurnCountdownBattleState.cs" id="6_maxjv"]
@@ -70,6 +69,7 @@
 [ext_resource type="PackedScene" uid="uid://c8xyd8s0yod3u" path="res://tiles/tile_hover_ui/tile_hover_ui.tscn" id="58_m7tmb"]
 [ext_resource type="PackedScene" uid="uid://dsewlrnbawck" path="res://tiles/tile/right_placement_tile.tscn" id="59_fx7iu"]
 [ext_resource type="PackedScene" uid="uid://c3gqm7hpwiqwc" path="res://tiles/tile/backward_placement_tile.tscn" id="60_60fim"]
+[ext_resource type="PackedScene" uid="uid://cs7iyd1n5716s" path="res://tiles/arena_tilemap.tscn" id="61_kl8jc"]
 [ext_resource type="PackedScene" uid="uid://brpya8arwjb2" path="res://clown_rules/ui/rules_list.tscn" id="63_x3x63"]
 [ext_resource type="PackedScene" uid="uid://cunubcx0qdxp8" path="res://tasks/ui/task_info_ui.tscn" id="64_ihoml"]
 [ext_resource type="PackedScene" uid="uid://dq35dnfbvmsgh" path="res://clown_rules/clown_debug.tscn" id="64_oyack"]
@@ -392,21 +392,14 @@ script = ExtResource("24_ych7k")
 _Arena = NodePath("../../../..")
 _Tweener = NodePath("../../../../UILayer/FailureUIContainer/ControlTweener")
 
-[node name="Tiles" type="Node3D" parent="."]
+[node name="Tiles" type="Node3D" parent="." node_paths=PackedStringArray("_ArenaTilemap")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 script = ExtResource("4_hwpdd")
+_ArenaTilemap = NodePath("../TileManager")
 _TileScenes = Array[PackedScene]([ExtResource("5_hl2gx"), ExtResource("57_yy6as"), ExtResource("58_8qaye"), ExtResource("59_fx7iu"), ExtResource("60_60fim")])
 
-[node name="EnterArenaArea" type="Area3D" parent="." node_paths=PackedStringArray("_Arena") groups=["arena_entrance"]]
-collision_layer = 0
-collision_mask = 2
-monitorable = false
-script = ExtResource("5_2f7tb")
-_Arena = NodePath("..")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterArenaArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.676804, 0.5, 2.08165e-12)
+[node name="TileManager" parent="." instance=ExtResource("61_kl8jc")]
+metadata/_edit_lock_ = true
 
 [node name="Entities" type="Node3D" parent="."]
 unique_name_in_owner = true
