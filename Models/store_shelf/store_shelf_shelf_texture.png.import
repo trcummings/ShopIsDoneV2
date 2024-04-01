@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8puc2ndnomke"
-path.s3tc="res://.godot/imported/shelf_texture_NRM.png-abb437f1356916f0dcb46f2f01d500f5.s3tc.ctex"
+uid="uid://dc23uym5ihkor"
+path.s3tc="res://.godot/imported/store_shelf_shelf_texture.png-28fd3411511b8b4cd428367bad20ee5c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://Models/FullShelf/shelf_texture_NRM.png"
-dest_files=["res://.godot/imported/shelf_texture_NRM.png-abb437f1356916f0dcb46f2f01d500f5.s3tc.ctex"]
+source_file="res://Models/store_shelf/store_shelf_shelf_texture.png"
+dest_files=["res://.godot/imported/store_shelf_shelf_texture.png-28fd3411511b8b4cd428367bad20ee5c.s3tc.ctex"]
 
 [params]
 
@@ -20,12 +21,12 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
-roughness/src_normal="res://Models/FullShelf/shelf_texture_NRM.png"
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
