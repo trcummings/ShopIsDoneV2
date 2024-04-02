@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=3 uid="uid://c508f5slhj46u"]
 
-[ext_resource type="PackedScene" uid="uid://bukd04tkk2rnr" path="res://microgames/HallwayChaseMicrogame/HallwayChasePlayer.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://bukd04tkk2rnr" path="res://microgames/hallway_chase/hallway_chase_player.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://dv3jh6ufl6mho" path="res://textures/coarse_rope_texture.png" id="3"]
-[ext_resource type="Script" path="res://microgames/HallwayChaseMicrogame/HallwayChase.cs" id="4"]
+[ext_resource type="Script" path="res://microgames/hallway_chase/HallwayChase.cs" id="4"]
 [ext_resource type="AudioStream" uid="uid://b8v3egn6r78mq" path="res://microgames/common/audio/ROOM-TONE__201544__delaneyrose13__roomtone.wav" id="5"]
-[ext_resource type="Material" uid="uid://bhwjira78ruqu" path="res://microgames/HallwayChaseMicrogame/chase_floor.material" id="5_0fsvi"]
+[ext_resource type="Material" uid="uid://bhwjira78ruqu" path="res://microgames/hallway_chase/chase_floor.material" id="5_0fsvi"]
 [ext_resource type="PackedScene" path="res://Models/PawnMannequin/PawnMannequinModel.tscn" id="6"]
 
 [sub_resource type="StandardMaterial3D" id="5"]
