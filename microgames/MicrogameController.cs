@@ -76,7 +76,7 @@ namespace ShopIsDone.Microgames
                     else EmitSignal(nameof(DefenseStarted));
 
                     // Run microgame
-                    _MicrogameManager.RunMicrogame(payload.Microgame, payload.Message);
+                    _MicrogameManager.RunMicrogame(payload.Microgame, payload);
 
                     // Pull outcome from result
                     var result = await ToSignal(_MicrogameManager, nameof(_MicrogameManager.MicrogameFinished));

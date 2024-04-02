@@ -28,8 +28,10 @@ namespace ShopIsDone.Microgames
             SetProcess(false);
         }
 
-        public override void Init(Dictionary<string, Variant> msg)
+        public override void Init(MicrogamePayload payload)
         {
+            base.Init(payload);
+
             // Connect
             _Win.Pressed += OnButtonPressed;
             _Lose.Pressed += OnButtonPressed;

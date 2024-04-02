@@ -53,7 +53,7 @@ namespace ShopIsDone.Microgames
             _RemainingTicksLabel.Hide();
         }
 
-        public async void RunMicrogame(Microgame microgame, Dictionary<string, Variant> msg = null)
+        public async void RunMicrogame(Microgame microgame, MicrogamePayload payload)
 		{
             Microgame.Outcomes outcome = Microgame.Outcomes.Loss;
 
@@ -70,7 +70,7 @@ namespace ShopIsDone.Microgames
             _Microgame.ShowBackgroundRequested += OnRequestBackgroundShown;
 
             // Initialize the microgame
-            _Microgame.Init(msg);
+            _Microgame.Init(payload);
 
             // Tween in
             await TweenFrameIn(_Microgame.PromptText);

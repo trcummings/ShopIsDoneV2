@@ -80,9 +80,9 @@ namespace ShopIsDone.Microgames.FindBathroom
             SetPhysicsProcess(false);
         }
 
-        public override void Init(Dictionary<string, Variant> msg)
+        public override void Init(MicrogamePayload payload)
         {
-            base.Init(msg);
+            base.Init(payload);
 
             // Place move nodes
             foreach (var pos in GetCellPositions(0))

@@ -20,8 +20,10 @@ namespace ShopIsDone.Microgames
             _Label = GetNode<Label>("%Label");
         }
 
-        public override void Init(Dictionary<string, Variant> msg)
+        public override void Init(MicrogamePayload payload)
         {
+            base.Init(payload);
+
             // Set outcome to win
             Outcome = (Outcomes)AlwaysOutcome;
             // Set label

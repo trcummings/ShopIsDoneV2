@@ -1,0 +1,168 @@
+[gd_scene load_steps=6 format=3 uid="uid://t7dce6phf6op"]
+
+[ext_resource type="PackedScene" uid="uid://dd6ts3yokna6p" path="res://microgames/salad_bar_microgame/salad_bar_microgame_base.tscn" id="14"]
+
+[sub_resource type="Animation" id="4"]
+resource_name = "wave_1"
+length = 10.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("World/ViewportContainer2/Viewport/SaladBarArena")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 9.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"StartFlyTimer"
+}, {
+"args": [],
+"method": &"StopFlyTimer"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("World/ViewportContainer/Viewport/HotbarQueue")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WaveManager")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(9.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"FinishCurrentWave"
+}]
+}
+
+[sub_resource type="Animation" id="5"]
+resource_name = "wave_2"
+length = 9.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("World/ViewportContainer2/Viewport/SaladBarArena")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("World/ViewportContainer/Viewport/HotbarQueue")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5.1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"SpawnCustomer"
+}, {
+"args": [],
+"method": &"SpawnCustomer"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+
+[sub_resource type="Animation" id="6"]
+resource_name = "wave_3"
+length = 9.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("World/ViewportContainer2/Viewport/SaladBarArena")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"StartFlyTimer"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("World/ViewportContainer/Viewport/HotbarQueue")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.6, 6.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"SpawnCustomer"
+}, {
+"args": [],
+"method": &"SpawnCustomer"
+}, {
+"args": [],
+"method": &"SpawnCustomer"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bakoo"]
+_data = {
+"wave_1": SubResource("4"),
+"wave_2": SubResource("5"),
+"wave_3": SubResource("6")
+}
+
+[node name="SaladBar1Microgame" instance=ExtResource("14")]
+
+[node name="WavePlayer" parent="." index="10"]
+libraries = {
+"": SubResource("AnimationLibrary_bakoo")
+}
+
+[editable path="World/ViewportContainer2/Viewport/SaladBarArena"]
