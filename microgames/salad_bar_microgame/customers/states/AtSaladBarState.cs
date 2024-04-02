@@ -15,6 +15,7 @@ namespace ShopIsDone.Microgames.SaladBar.States
         public delegate void WaveDelayTimeoutEventHandler();
 
         [Export]
+        private NodePath _CustomerPath;
         protected BaseCustomer _Customer;
 
         [Export]
@@ -39,6 +40,12 @@ namespace ShopIsDone.Microgames.SaladBar.States
         protected SystemGenerics.Queue<Action> _Actions = new SystemGenerics.Queue<Action>();
         protected int _NumActionWaves = 0;
 
+        public override void _Ready()
+        {
+            base._Ready();
+            _Customer = GetNode<BaseCustomer>(_CustomerPath);
+        }
+
         public override void OnStart(Dictionary<string, Variant> message)
         {
             base.OnStart(message);
@@ -52,9 +59,9 @@ namespace ShopIsDone.Microgames.SaladBar.States
             _WaveDelayTimer.Timeout += StartNextActionWave;
 
             // Connect to Events
-            Events.NastyHandSpawned += (obj) => OnGrabberSpawned(obj as Grabber);
-            Events.TongsSpawned += (obj) => OnGrabberSpawned(obj as Grabber);
-            Events.ShamblerHandSpawned += (obj) => OnGrabberSpawned(obj as Grabber);
+            Events.NastyHandSpawned += OnGrabberSpawned;
+            Events.TongsSpawned += OnGrabberSpawned;
+            Events.ShamblerHandSpawned += OnGrabberSpawned;
 
             // Decide next action
             StartNextActionWave();

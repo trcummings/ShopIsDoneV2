@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://microgames/salad_bar_microgame/salad_bar_queue/HotbarQueue.cs" id="1"]
 [ext_resource type="Material" uid="uid://b667p4yi1qouq" path="res://microgames/common/reticule_outline.material" id="2"]
-[ext_resource type="PackedScene" path="res://microgames/salad_bar_microgame/customers/person_customer.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://coqt5a260e747" path="res://microgames/salad_bar_microgame/customers/person_customer.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://dorsp4gsg3kqs" path="res://microgames/salad_bar_microgame/jellyfish_light_cookie.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://cnuqxfh6sersv" path="res://microgames/salad_bar_microgame/salad_bar_queue/hot_bar_from_side_pixel.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://tul0maxsep6h" path="res://microgames/salad_bar_microgame/salad_bar_queue/upper_background_pixel.png" id="6"]
-[ext_resource type="PackedScene" path="res://microgames/salad_bar_microgame/customers/shambler.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://c5yki2e4gq3eq" path="res://microgames/salad_bar_microgame/customers/shambler.tscn" id="7"]
 [ext_resource type="Texture2D" uid="uid://bwmn5l8hvwo4p" path="res://microgames/salad_bar_microgame/smoke_05.png" id="8"]
 
 [node name="HotbarQueue" type="Node2D"]

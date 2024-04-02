@@ -1,7 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://c5yki2e4gq3eq"]
+[gd_scene load_steps=29 format=3 uid="uid://c5yki2e4gq3eq"]
 
 [ext_resource type="Texture2D" uid="uid://y5aqc8lgef4r" path="res://microgames/salad_bar_microgame/customers/strange_person.png" id="1"]
-[ext_resource type="PackedScene" path="res://microgames/salad_bar_microgame/customers/base_customer.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://dai8545qe3dax" path="res://microgames/salad_bar_microgame/customers/base_customer.tscn" id="2"]
 [ext_resource type="AudioStream" uid="uid://bi5cpfto7dgwl" path="res://microgames/salad_bar_microgame/SHAMBLER_APPROACHES--(475332_sheyvan__428133_apenguin73__397620_laft2k).wav" id="3"]
 [ext_resource type="Script" path="res://microgames/salad_bar_microgame/customers/states/shambler_states/ShamblerMovingState.cs" id="4"]
 [ext_resource type="Texture2D" uid="uid://bwmn5l8hvwo4p" path="res://microgames/salad_bar_microgame/smoke_05.png" id="5"]
@@ -106,10 +106,18 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("22")
 }],
-"loop": true,
+"loop": false,
 "name": &"disappear",
 "speed": 4.0
 }]
+
+[sub_resource type="Animation" id="Animation_6kplg"]
+resource_name = "RESET"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ylpmq"]
+_data = {
+"RESET": SubResource("Animation_6kplg")
+}
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mi03q"]
 random_pitch = 1.1
@@ -138,10 +146,17 @@ texture = ExtResource("5")
 
 [node name="AnimatedSprite" parent="." index="2"]
 sprite_frames = SubResource("9")
+animation = &"disappear"
 autoplay = "default"
 
-[node name="MovingState" parent="StateMachine" index="0"]
+[node name="AnimationPlayer" parent="." index="4"]
+libraries = {
+"": SubResource("AnimationLibrary_ylpmq")
+}
+
+[node name="MovingState" parent="StateMachine" index="0" node_paths=PackedStringArray("_ApproachPlayer")]
 script = ExtResource("4")
+_ApproachPlayer = NodePath("../../ApproachPlayer")
 MoveDuration = 15.0
 
 [node name="AtSaladBarState" parent="StateMachine" index="1"]

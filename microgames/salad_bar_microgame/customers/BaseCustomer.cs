@@ -6,7 +6,7 @@ using ShopIsDone.Utils;
 
 namespace ShopIsDone.Microgames.SaladBar
 {
-    public partial class BaseCustomer : Node2D, IStoppable
+    public partial class BaseCustomer : Area2D, IStoppable
     {
         [Signal]
         public delegate void LeftEventHandler();
@@ -17,6 +17,8 @@ namespace ShopIsDone.Microgames.SaladBar
         private AnimatedSprite2D _AnimatedSprite;
 
         private StateMachine _FSM;
+
+        public const string DESTINATION_KEY = "Destination";
 
         public override void _Ready()
         {
@@ -29,7 +31,7 @@ namespace ShopIsDone.Microgames.SaladBar
         {
             _FSM.ChangeState("MovingState", new Dictionary<string, Variant>()
             {
-                { "Destination", destination }
+                { DESTINATION_KEY, destination }
             });
         }
 

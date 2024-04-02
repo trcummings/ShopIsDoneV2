@@ -1,4 +1,5 @@
 using Godot;
+using ShopIsDone.Utils.Extensions;
 using System;
 using System.Linq;
 using Utils.Extensions;
@@ -29,7 +30,7 @@ namespace ShopIsDone.Microgames.SaladBar
         public PackedScene FlyScene;
 
         [Export]
-        public SaladBarEvents Events;
+        private SaladBarEvents _Events;
 
         private GlovedHand _GlovedHand;
 
@@ -49,9 +50,9 @@ namespace ShopIsDone.Microgames.SaladBar
             _Flies = GetNode<Node2D>("%Flies");
             _FlyTimer = GetNode<Timer>("%FlyTimer");
 
-            Events.NastyHandRequested += SpawnHand;
-            Events.TongsRequested += SpawnTongs;
-            Events.ShamblerHandRequested += SpawnShamblerHand;
+            _Events.Connect(nameof(_Events.NastyHandRequested), new Callable(this, nameof(SpawnHand)));
+            _Events.Connect(nameof(_Events.TongsRequested), new Callable(this, nameof(SpawnTongs)));
+            _Events.Connect(nameof(_Events.ShamblerHandRequested), new Callable(this, nameof(SpawnShamblerHand)));
         }
 
         public override void _Process(double _)
@@ -111,7 +112,7 @@ namespace ShopIsDone.Microgames.SaladBar
         public void ShowWeirdLights(float duration)
         {
             // Create tween
-            var tween = GetTree().CreateTween();
+            var tween = GetTree().CreateTween().BindNode(this);
 
             // Get all weird lights and tween to light
             var weirdLights = GetTree()
@@ -170,7 +171,7 @@ namespace ShopIsDone.Microgames.SaladBar
             // Let loose
             hand.Start(goalPos, 2.5f);
             // Emit
-            Events.EmitSignal(nameof(Events.NastyHandSpawned), hand);
+            _Events.EmitSignal(nameof(_Events.NastyHandSpawned), hand);
         }
 
         public void SpawnTongs()
@@ -184,7 +185,7 @@ namespace ShopIsDone.Microgames.SaladBar
             // Let loose
             tongs.Start(goalPos, 2.5f);
             // Emit
-            Events.EmitSignal(nameof(Events.TongsSpawned), tongs);
+            _Events.EmitSignal(nameof(_Events.TongsSpawned), tongs);
         }
 
         public void SpawnShamblerHand()
@@ -200,14 +201,14 @@ namespace ShopIsDone.Microgames.SaladBar
             // Let loose
             shamblerHand.Start(goalPos, 1.5f);
             // Emit
-            Events.EmitSignal(nameof(Events.ShamblerHandSpawned), shamblerHand);
+            _Events.EmitSignal(nameof(_Events.ShamblerHandSpawned), shamblerHand);
         }
 
         private Vector2 SetRandomPlacement(Node2D node)
         {
             // Pick random placement
             var placement = GetRandomPlacement();
-            var placementPos = placement.GetNode<Node2D>("Position2D");
+            var placementPos = placement.GetNode<Marker2D>("Position2D");
             // Pick random angle from placement
             var deg = Mathf.RoundToInt(placement.RotationDegrees);
             var toolAngle = _RNG.RandiRange(-60, 60) + deg;

@@ -15,13 +15,13 @@ namespace ShopIsDone.Microgames.SaladBar
         public delegate void ShamblerHandRequestedEventHandler();
 
         [Signal]
-        public delegate void NastyHandSpawnedEventHandler(GodotObject hand);
+        public delegate void NastyHandSpawnedEventHandler(Grabber hand);
 
         [Signal]
-        public delegate void TongsSpawnedEventHandler(GodotObject tongs);
+        public delegate void TongsSpawnedEventHandler(Grabber tongs);
 
         [Signal]
-        public delegate void ShamblerHandSpawnedEventHandler(GodotObject tongs);
+        public delegate void ShamblerHandSpawnedEventHandler(Grabber shamblerHand);
     }
 }
 

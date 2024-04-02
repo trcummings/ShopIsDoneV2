@@ -51,7 +51,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("6")
 }],
-"loop": true,
+"loop": false,
 "name": &"disappear",
 "speed": 4.0
 }]
@@ -149,7 +149,6 @@ shape = SubResource("7")
 
 [node name="AnimatedSprite" parent="." index="1"]
 sprite_frames = SubResource("3")
-frame = 1
 
 [node name="CustomerDetector" parent="." index="2"]
 visible = false

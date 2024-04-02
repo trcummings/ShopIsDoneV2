@@ -12,6 +12,7 @@ namespace ShopIsDone.Microgames.SaladBar.States
         public float MoveDuration = 3;
 
         [Export]
+        private NodePath _CustomerPath;
         protected BaseCustomer _Customer;
 
         [Export]
@@ -29,14 +30,17 @@ namespace ShopIsDone.Microgames.SaladBar.States
 
         public override void _Ready()
         {
+            _Customer = GetNode<BaseCustomer>(_CustomerPath);
             SetPhysicsProcess(false);
         }
 
-        public override void OnStart(Dictionary<string, Variant> message)
+        public override void OnStart(Dictionary<string, Variant> message = null)
         {
             _StartPos = _Customer.GlobalPosition;
-            _Destination = (Vector2)message["Destination"];
+            _Destination = (Vector2)message?[BaseCustomer.DESTINATION_KEY];
+
             SetPhysicsProcess(true);
+
             StartMoving();
             base.OnStart(message);
         }
@@ -61,7 +65,7 @@ namespace ShopIsDone.Microgames.SaladBar.States
             if (_Customer.GlobalPosition == _Destination)
             {
                 if (_AnimationPlayer.HasAnimation("RESET")) _AnimationPlayer.Play("RESET");
-                _Customer.EmitSignal(nameof(BaseCustomer.ArrivedAtSaladBar));
+                _Customer.EmitSignal(nameof(_Customer.ArrivedAtSaladBar));
                 ChangeState("AtSaladBarState");
                 return;
             }
@@ -85,7 +89,8 @@ namespace ShopIsDone.Microgames.SaladBar.States
             if (!_IsMoving) return;
 
             // Kill the tween
-            _MoveTween.Kill();
+            _MoveTween?.Kill();
+            _MoveTween = null;
             if (_AnimationPlayer.HasAnimation("RESET")) _AnimationPlayer.Play("RESET");
             _IsMoving = false;
         }

@@ -19,6 +19,7 @@ scale = Vector2(0.5, 0.5)
 
 [node name="CustomerDetector" type="RayCast2D" parent="."]
 unique_name_in_owner = true
+target_position = Vector2(75, 2.08165e-12)
 collide_with_areas = true
 collide_with_bodies = false
 
@@ -29,15 +30,15 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 script = ExtResource("4")
 
-[node name="MovingState" type="Node" parent="StateMachine" node_paths=PackedStringArray("_Customer", "_AnimationPlayer", "_CustomerDetector")]
+[node name="MovingState" type="Node" parent="StateMachine" node_paths=PackedStringArray("_AnimationPlayer", "_CustomerDetector")]
 script = ExtResource("5")
-_Customer = NodePath("../..")
+_CustomerPath = NodePath("../..")
 _AnimationPlayer = NodePath("../../AnimationPlayer")
 _CustomerDetector = NodePath("../../CustomerDetector")
 
-[node name="AtSaladBarState" type="Node" parent="StateMachine" node_paths=PackedStringArray("_Customer", "_WaveDelayTimer", "_ActionDelayTimer")]
+[node name="AtSaladBarState" type="Node" parent="StateMachine" node_paths=PackedStringArray("_WaveDelayTimer", "_ActionDelayTimer")]
 script = ExtResource("3")
-_Customer = NodePath("../..")
+_CustomerPath = NodePath("../..")
 _WaveDelayTimer = NodePath("WaveDelayTimer")
 _ActionDelayTimer = NodePath("ActionDelayTimer")
 Events = ExtResource("2")

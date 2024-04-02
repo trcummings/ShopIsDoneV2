@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://microgames/salad_bar_microgame/SaladBarArena.cs" id="1"]
 [ext_resource type="Texture2D" uid="uid://biqtjj5rxcnp3" path="res://microgames/salad_bar_microgame/salad_bar_contents_pixel.png" id="2"]
-[ext_resource type="PackedScene" path="res://microgames/salad_bar_microgame/gloved_hand.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://pcut1khhv8i0" path="res://microgames/salad_bar_microgame/gloved_hand.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://4uoyhog42r43" path="res://microgames/salad_bar_microgame/world_background.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://c5q2k7il2krps" path="res://microgames/salad_bar_microgame/salad_bar_frame_2_pixel.png" id="5"]
 [ext_resource type="Resource" uid="uid://d3gvuiebtkbb2" path="res://microgames/salad_bar_microgame/salad_bar_events.tres" id="6"]
@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://d3fgbl6swvw2u" path="res://microgames/salad_bar_microgame/circle_05.png" id="9"]
 [ext_resource type="PackedScene" uid="uid://baivcjm7ibe04" path="res://microgames/salad_bar_microgame/fly/fly.tscn" id="10"]
 [ext_resource type="Texture2D" uid="uid://bwmn5l8hvwo4p" path="res://microgames/salad_bar_microgame/smoke_05.png" id="11"]
-[ext_resource type="PackedScene" path="res://microgames/salad_bar_microgame/grabbers/shambler_hand.tscn" id="12"]
+[ext_resource type="PackedScene" uid="uid://wxiws5i8y8u4" path="res://microgames/salad_bar_microgame/grabbers/shambler_hand.tscn" id="12"]
 
 [sub_resource type="RectangleShape2D" id="2"]
 size = Vector2(940, 20)
@@ -26,7 +26,7 @@ NastyHandScene = ExtResource("8")
 TongsScene = ExtResource("7")
 ShamblerHandScene = ExtResource("12")
 FlyScene = ExtResource("10")
-Events = ExtResource("6")
+_Events = ExtResource("6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

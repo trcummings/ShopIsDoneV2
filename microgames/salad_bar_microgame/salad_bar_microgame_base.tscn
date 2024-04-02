@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dhb0ecdjr12kh" path="res://microgames/salad_bar_microgame/salad_bar_arena.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://microgames/salad_bar_microgame/health_bar.tscn" id="4"]
 [ext_resource type="AudioStream" uid="uid://b5bcj4km1327f" path="res://microgames/common/audio/WHIFF__353048__deleted_user_6479820__g_whiff_3.mp3" id="5"]
-[ext_resource type="PackedScene" uid="uid://bso008ermf07x" path="res://microgames/salad_bar_microgame/salad_bar_queue/HotbarQueue.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://bso008ermf07x" path="res://microgames/salad_bar_microgame/salad_bar_queue/hotbar_queue.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="7"]
 [ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="8"]
 [ext_resource type="AudioStream" uid="uid://cvh2pkwlqqlrv" path="res://microgames/salad_bar_microgame/SLAP--444407__mootmcnoodles__slap.wav" id="9"]

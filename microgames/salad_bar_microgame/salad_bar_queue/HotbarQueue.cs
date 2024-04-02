@@ -17,32 +17,34 @@ namespace ShopIsDone.Microgames.SaladBar
         [Export]
         public PackedScene StrangeCustomerScene;
 
-        private Node2D _SpawnPoint;
+        private Marker2D _SpawnPoint;
         private Node2D _Customers;
-        private Node2D _EndPoint;
+        private Marker2D _EndPoint;
 
         public override void _Ready()
         {
-            _SpawnPoint = GetNode<Node2D>("%SpawnPoint");
+            _SpawnPoint = GetNode<Marker2D>("%SpawnPoint");
             _Customers = GetNode<Node2D>("%Customers");
-            _EndPoint = GetNode<Node2D>("%EndPoint");
+            _EndPoint = GetNode<Marker2D>("%EndPoint");
         }
 
         public void SpawnCustomer()
         {
-            CreateCustomer(PersonCustomerScene);
+            CreateCustomer<BaseCustomer>(PersonCustomerScene);
         }
 
         public void SpawnShambler()
         {
-            CreateCustomer(StrangeCustomerScene);
+            CreateCustomer<Shambler>(StrangeCustomerScene);
         }
 
-        private void CreateCustomer(PackedScene customerScene)
+        private void CreateCustomer<T>(PackedScene customerScene)
+            where T : BaseCustomer
         {
-            var customer = customerScene.Instantiate<BaseCustomer>();
-            customer.GlobalPosition = _SpawnPoint.GlobalPosition;
+            var customer = customerScene.Instantiate<T>();
             _Customers.AddChild(customer);
+            customer.GlobalPosition = _SpawnPoint.GlobalPosition;
+
             EmitSignal(nameof(SpawnedCustomer), customer);
             customer.Start(_EndPoint.GlobalPosition);
         }

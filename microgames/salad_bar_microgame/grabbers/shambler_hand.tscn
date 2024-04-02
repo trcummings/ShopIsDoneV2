@@ -81,6 +81,7 @@ _data = {
 
 [node name="ShamblerHand" type="Node2D" groups=["salad_bar_stoppable"]]
 script = ExtResource("1")
+SecondsToDrain = 6.0
 
 [node name="Pivot" type="Node2D" parent="."]
 position = Vector2(71, 0)
