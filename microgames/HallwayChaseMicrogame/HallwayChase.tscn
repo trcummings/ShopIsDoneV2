@@ -1,0 +1,195 @@
+[gd_scene load_steps=13 format=3 uid="uid://c508f5slhj46u"]
+
+[ext_resource type="PackedScene" uid="uid://bukd04tkk2rnr" path="res://microgames/HallwayChaseMicrogame/HallwayChasePlayer.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://dv3jh6ufl6mho" path="res://textures/coarse_rope_texture.png" id="3"]
+[ext_resource type="Script" path="res://microgames/HallwayChaseMicrogame/HallwayChase.cs" id="4"]
+[ext_resource type="AudioStream" uid="uid://b8v3egn6r78mq" path="res://microgames/common/audio/ROOM-TONE__201544__delaneyrose13__roomtone.wav" id="5"]
+[ext_resource type="Material" uid="uid://bhwjira78ruqu" path="res://microgames/HallwayChaseMicrogame/chase_floor.material" id="5_0fsvi"]
+[ext_resource type="PackedScene" path="res://Models/PawnMannequin/PawnMannequinModel.tscn" id="6"]
+
+[sub_resource type="StandardMaterial3D" id="5"]
+albedo_texture = ExtResource("3")
+metallic = 1.0
+
+[sub_resource type="BoxMesh" id="4"]
+material = SubResource("5")
+size = Vector3(1, 2, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yq26c"]
+material = ExtResource("5_0fsvi")
+
+[sub_resource type="BoxShape3D" id="2"]
+size = Vector3(40, 1, 40)
+
+[sub_resource type="BoxShape3D" id="6"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="BoxShape3D" id="7"]
+size = Vector3(160, 1, 160)
+
+[node name="HallwayChase" type="Node3D"]
+script = ExtResource("4")
+
+[node name="RoomTone" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5")
+volume_db = -12.735
+
+[node name="Player" parent="." instance=ExtResource("1")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11, 0)
+collision_layer = 3
+collision_mask = 0
+
+[node name="HeadController" parent="Player" index="1" node_paths=PackedStringArray("_Camera")]
+_Camera = NodePath("Camera")
+
+[node name="Camera" type="Camera3D" parent="Player/HeadController" index="0"]
+
+[node name="SpotLight" type="SpotLight3D" parent="Player/HeadController" index="1"]
+light_energy = 2.0
+spot_range = 10.0
+spot_angle = 30.0
+
+[node name="SprintController" parent="Player" index="3" node_paths=PackedStringArray("_Camera")]
+_Camera = NodePath("../HeadController/Camera")
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 7.00875, 0, 0, 0, 1, -12.39, 6.99, 0)
+mesh = SubResource("4")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2" type="MeshInstance3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 7.00875, 0, 0, 0, 1, -8.93, 6.99, -9.45)
+mesh = SubResource("4")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3" type="MeshInstance3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 7.00875, 0, 0, 0, 1, 7.91, 6.99, -10.06)
+mesh = SubResource("4")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance4" type="MeshInstance3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 7.00875, 0, 0, 0, 1, 12.19, 6.99, 0.860001)
+mesh = SubResource("4")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance5" type="MeshInstance3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 7.00875, 0, 0, 0, 1, 5.45, 6.99, 9.67)
+mesh = SubResource("4")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance6" type="MeshInstance3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 7.00875, 0, 0, 0, 1, -7, 6.99, 9.16)
+mesh = SubResource("4")
+skeleton = NodePath("../..")
+
+[node name="Floor" type="StaticBody3D" parent="Geometry"]
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Geometry/Floor"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("PlaneMesh_yq26c")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Geometry/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("2")
+
+[node name="Floor2" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Geometry/Floor2"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("PlaneMesh_yq26c")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Geometry/Floor2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("2")
+
+[node name="Floor3" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -40)
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Geometry/Floor3"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("PlaneMesh_yq26c")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Geometry/Floor3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("2")
+
+[node name="Floor4" type="StaticBody3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 0)
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Geometry/Floor4"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("PlaneMesh_yq26c")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Geometry/Floor4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("2")
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="OmniLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.88, 1.47, 7.67)
+light_color = Color(0.717647, 0.270588, 0.0313726, 1)
+
+[node name="OmniLight2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.98, 1.47, 7.67)
+light_color = Color(0.717647, 0.270588, 0.0313726, 1)
+
+[node name="OmniLight3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.14, 1.47, 4.67)
+light_color = Color(0.717647, 0.270588, 0.0313726, 1)
+
+[node name="OmniLight4" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.45, 1.47, -6.39)
+light_color = Color(0.717647, 0.270588, 0.0313726, 1)
+
+[node name="OmniLight5" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.549999, 1.47, -13.65)
+light_color = Color(0.717647, 0.270588, 0.0313726, 1)
+
+[node name="GoalArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.29, 0.1, -47.56)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape3D" parent="GoalArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("6")
+
+[node name="SpotLight" type="SpotLight3D" parent="GoalArea"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0)
+light_color = Color(0.0470588, 0.556863, 0.921569, 1)
+light_energy = 5.0
+spot_angle = 30.0
+
+[node name="MannequinRenderModel" parent="GoalArea" instance=ExtResource("6")]
+transform = Transform3D(1.67097, 0, -1.09902, 0, 2, 0, 1.09902, 0, 1.67097, 0, 0, 0)
+
+[node name="Skeleton3D" parent="GoalArea/MannequinRenderModel/Armature" index="0"]
+bones/3/rotation = Quaternion(1.80215e-05, -0.00932328, 0.00193319, 0.999955)
+bones/6/rotation = Quaternion(-0.00115859, 0.178242, -0.00603736, 0.983968)
+bones/7/rotation = Quaternion(0.00291939, -0.164206, -0.00048598, 0.986422)
+bones/10/rotation = Quaternion(-0.00115859, -0.178242, 0.00603736, 0.983968)
+bones/11/rotation = Quaternion(0.00291939, 0.164206, 0.00048598, 0.986422)
+bones/12/rotation = Quaternion(-0.675574, 0.00298486, 0.737285, 0.0016032)
+bones/14/rotation = Quaternion(0.0840755, -0.00687243, 0.668652, 0.738775)
+bones/15/rotation = Quaternion(0.675574, 0.00298486, 0.737285, -0.0016032)
+bones/17/rotation = Quaternion(0.0840755, 0.00687248, -0.668652, 0.738775)
+
+[node name="FailArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -20)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape3D" parent="FailArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, 0)
+shape = SubResource("7")
+
+[editable path="Player"]
+[editable path="GoalArea/MannequinRenderModel"]
