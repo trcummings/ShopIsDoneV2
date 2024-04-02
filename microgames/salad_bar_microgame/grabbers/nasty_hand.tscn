@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="4"]
 radius = 79.0002
-height = 269.999
+height = 414.0
 
 [sub_resource type="Animation" id="1"]
 resource_name = "RESET"

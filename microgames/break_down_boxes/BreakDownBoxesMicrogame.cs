@@ -134,9 +134,9 @@ namespace ShopIsDone.Microgames.BreakDownBoxes
             SetPhysicsProcess(false);
         }
 
-        public override void Init(Dictionary<string, Variant> msg)
+        public override void Init(MicrogamePayload payload)
         {
-            base.Init(msg);
+            base.Init(payload);
 
             // Pick orientation
             if (!_OverrideOrientation)

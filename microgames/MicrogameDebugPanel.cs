@@ -65,7 +65,7 @@ namespace ShopIsDone.Microgames
             await ToSignal(GetTree(), "process_frame");
 
             // Run microgame
-            _Manager.RunMicrogame(microgame, new Godot.Collections.Dictionary<string, Variant>());
+            _Manager.RunMicrogame(microgame, new MicrogamePayload());
             await ToSignal(_Manager, nameof(_Manager.MicrogameFinished));
 
             // Unpause

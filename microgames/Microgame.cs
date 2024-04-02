@@ -63,7 +63,7 @@ namespace ShopIsDone.Microgames
             MicrogameTimer.Timeout += OnBeatTimerTick;
         }
 
-        public virtual void Init(Dictionary<string, Variant> msg)
+        public virtual void Init(MicrogamePayload payload)
         {
 
         }

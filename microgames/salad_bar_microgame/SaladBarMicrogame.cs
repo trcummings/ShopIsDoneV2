@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using Godot.Collections;
 using System.Linq;
 using ShopIsDone.Utils;
 
@@ -21,6 +20,7 @@ namespace ShopIsDone.Microgames.SaladBar
         {
             base._Ready();
 
+            _SaladBarArena = GetNode<SaladBarArena>("%SaladBarArena");
             _HotbarQueue = GetNode<HotbarQueue>("%HotbarQueue");
             _HealthBar = GetNode<HealthBar>("%HealthBar");
             _RoomTone = GetNode<AudioStreamPlayer>("%RoomTone");
@@ -43,16 +43,18 @@ namespace ShopIsDone.Microgames.SaladBar
             _WaveManager.AllWavesFinished += OnAllWavesFinished;
         }
 
-        public override void Init(Dictionary<string, Variant> msg = null)
+        public override void Init(MicrogamePayload payload)
         {
+            base.Init(payload);
+
             // Hide the timer bar
             HideTimer(0.01f);
 
             // Initialize health bar
             // Make health dependent on number of participants in microgame
-            var payload = (MicrogamePayload)msg?["Payload"] ?? new MicrogamePayload();
+            var numTargets = payload.Targets?.Length ?? 1;
             // Max out at 3
-            _HealthBar.Init(Mathf.Min(payload.Targets?.Length ?? 1, 3));
+            _HealthBar.Init(Mathf.Min(numTargets, 3));
         }
 
         public override void Start()

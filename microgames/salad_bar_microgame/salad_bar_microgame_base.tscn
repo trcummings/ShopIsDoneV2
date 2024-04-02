@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=17 format=3 uid="uid://dd6ts3yokna6p"]
 
 [ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1"]
 [ext_resource type="Script" path="res://microgames/salad_bar_microgame/SaladBarMicrogame.cs" id="2"]
@@ -14,106 +14,103 @@
 [ext_resource type="Script" path="res://microgames/salad_bar_microgame/WaveManager.cs" id="12"]
 [ext_resource type="Script" path="res://microgames/salad_bar_microgame/CustomerMonitor.cs" id="13"]
 
-[sub_resource type="AudioStreamRandomPitch" id=1]
-audio_stream = ExtResource( 9 )
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_t340s"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("9")
+stream_0/weight = 1.0
 
-[sub_resource type="AudioStreamRandomPitch" id=2]
-audio_stream = ExtResource( 5 )
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nu2k3"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("5")
+stream_0/weight = 1.0
 
-[sub_resource type="AudioStreamRandomPitch" id=3]
-audio_stream = ExtResource( 11 )
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i6njf"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("11")
+stream_0/weight = 1.0
 
-[node name="SaladBarMicrogameBase" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
+[node name="SaladBarMicrogameBase" node_paths=PackedStringArray("_Camera") instance=ExtResource("1")]
+script = ExtResource("2")
+_Camera = NodePath("World/ViewportContainer2/Viewport/SaladBarArena/Camera2D")
 PromptText = "Defend From Rot! "
-CameraPath = NodePath("World/ViewportContainer2/Viewport/SaladBarArena/Camera2D")
 
 [node name="World" type="VBoxContainer" parent="." index="3"]
-__meta__ = {
-"_edit_lock_": true
-}
 
-[node name="ViewportContainer" type="ViewportContainer" parent="World" index="0"]
-margin_right = 940.0
-margin_bottom = 200.0
+[node name="ViewportContainer" type="SubViewportContainer" parent="World" index="0"]
+layout_mode = 2
 
-[node name="Viewport" type="Viewport" parent="World/ViewportContainer" index="0"]
-size = Vector2( 940, 200 )
-own_world = true
-handle_input_locally = false
-hdr = false
+[node name="Viewport" type="SubViewport" parent="World/ViewportContainer" index="0"]
 disable_3d = true
-usage = 0
-render_target_update_mode = 3
+handle_input_locally = false
+size = Vector2i(940, 200)
+render_target_update_mode = 4
 
-[node name="HotbarQueue" parent="World/ViewportContainer/Viewport" index="0" instance=ExtResource( 6 )]
+[node name="HotbarQueue" parent="World/ViewportContainer/Viewport" index="0" instance=ExtResource("6")]
 unique_name_in_owner = true
 
-[node name="ViewportContainer2" type="ViewportContainer" parent="World" index="1"]
-margin_top = 204.0
-margin_right = 940.0
-margin_bottom = 944.0
+[node name="ViewportContainer2" type="SubViewportContainer" parent="World" index="1"]
+layout_mode = 2
 
-[node name="Viewport" type="Viewport" parent="World/ViewportContainer2" index="0"]
-size = Vector2( 940, 740 )
-own_world = true
+[node name="Viewport" type="SubViewport" parent="World/ViewportContainer2" index="0"]
+disable_3d = true
 transparent_bg = true
 handle_input_locally = false
-hdr = false
-disable_3d = true
-usage = 0
-render_target_update_mode = 3
+size = Vector2i(940, 740)
+render_target_update_mode = 4
 
-[node name="SaladBarArena" parent="World/ViewportContainer2/Viewport" index="0" instance=ExtResource( 3 )]
+[node name="SaladBarArena" parent="World/ViewportContainer2/Viewport" index="0" instance=ExtResource("3")]
 unique_name_in_owner = true
 
-[node name="HealthBar" parent="World/ViewportContainer2" index="1" instance=ExtResource( 4 )]
+[node name="HealthBar" parent="World/ViewportContainer2" index="1" instance=ExtResource("4")]
+layout_mode = 2
 
 [node name="SlapSfxPlayer" type="AudioStreamPlayer" parent="." index="4"]
-stream = SubResource( 1 )
+stream = SubResource("AudioStreamRandomizer_t340s")
 pitch_scale = 0.64
-bus = "Microgames"
+bus = &"Microgames"
 
 [node name="WhiffSfxPlayer" type="AudioStreamPlayer" parent="." index="5"]
-stream = SubResource( 2 )
+stream = SubResource("AudioStreamRandomizer_nu2k3")
 pitch_scale = 0.89
-bus = "Microgames"
+bus = &"Microgames"
 
 [node name="HurtSfxPlayer" type="AudioStreamPlayer" parent="." index="6"]
-stream = SubResource( 3 )
-bus = "Microgames"
+stream = SubResource("AudioStreamRandomizer_i6njf")
+bus = &"Microgames"
 
-[node name="ScreenshakeHandler" parent="." index="7" instance=ExtResource( 7 )]
+[node name="ScreenshakeHandler" parent="." index="7" instance=ExtResource("7")]
 unique_name_in_owner = true
 
 [node name="MicrosleepHelper" type="Node" parent="." index="8"]
-script = ExtResource( 8 )
+script = ExtResource("8")
 
 [node name="RoomTone" type="AudioStreamPlayer" parent="." index="9"]
 unique_name_in_owner = true
-stream = ExtResource( 10 )
+stream = ExtResource("10")
 volume_db = -15.0
-bus = "Room_Tone"
 
 [node name="WavePlayer" type="AnimationPlayer" parent="." index="10"]
 
-[node name="WaveManager" type="Node" parent="." index="11"]
+[node name="WaveManager" type="Node" parent="." index="11" node_paths=PackedStringArray("_WavePlayer")]
 unique_name_in_owner = true
-script = ExtResource( 12 )
-WavePlayerPath = NodePath("../WavePlayer")
+script = ExtResource("12")
+_WavePlayer = NodePath("../WavePlayer")
 
 [node name="CustomerMonitor" type="Node" parent="." index="12"]
-script = ExtResource( 13 )
+script = ExtResource("13")
 
 [connection signal="SpawnedCustomer" from="World/ViewportContainer/Viewport/HotbarQueue" to="CustomerMonitor" method="AddCustomer"]
 [connection signal="HealthDamaged" from="World/ViewportContainer2/Viewport/SaladBarArena" to="World/ViewportContainer2/HealthBar" method="DamageHealth"]
 [connection signal="HealthDrained" from="World/ViewportContainer2/Viewport/SaladBarArena" to="World/ViewportContainer2/HealthBar" method="DrainHealth"]
 [connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="SlapSfxPlayer" method="play"]
-[connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="ScreenshakeHandler" method="Shake" binds= [ 0, 1 ]]
 [connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="MicrosleepHelper" method="Microsleep"]
+[connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="ScreenshakeHandler" method="Shake" binds= [0, 1]]
 [connection signal="Whiffed" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="WhiffSfxPlayer" method="play"]
 [connection signal="Damaged" from="World/ViewportContainer2/HealthBar" to="HurtSfxPlayer" method="play"]
-[connection signal="Damaged" from="World/ViewportContainer2/HealthBar" to="ScreenshakeHandler" method="Shake" binds= [ 1, 1 ]]
+[connection signal="Damaged" from="World/ViewportContainer2/HealthBar" to="ScreenshakeHandler" method="Shake" binds= [1, 1]]
 [connection signal="Died" from="World/ViewportContainer2/HealthBar" to="." method="OnDied"]
 [connection signal="HealthSet" from="World/ViewportContainer2/HealthBar" to="World/ViewportContainer2/Viewport/SaladBarArena" method="SetHealth"]
 [connection signal="ShakeOffsetUpdated" from="ScreenshakeHandler" to="." method="ShakeUpdate"]

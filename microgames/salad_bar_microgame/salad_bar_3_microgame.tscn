@@ -1,106 +1,113 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://cfdrpxlgdxm3m"]
 
-[ext_resource type="PackedScene" path="res://microgames/salad_bar_microgame/salad_bar_microgame_base.tscn" id="14"]
+[ext_resource type="PackedScene" uid="uid://dd6ts3yokna6p" path="res://microgames/salad_bar_microgame/salad_bar_microgame_base.tscn" id="14"]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id="4"]
 resource_name = "wave_1"
 length = 9.0
 tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("World/ViewportContainer2/Viewport/SaladBarArena")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "StartFlyTimer"
-} ]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"StartFlyTimer"
+}]
 }
 tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("World/ViewportContainer/Viewport/HotbarQueue")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 4.7 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "SpawnCustomer"
-} ]
+"times": PackedFloat32Array(4.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"SpawnCustomer"
+}]
 }
 tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id="5"]
 resource_name = "wave_2"
 length = 9.0
 tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("World/ViewportContainer2/Viewport/SaladBarArena")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.7, 3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "StopFlyTimer"
+"times": PackedFloat32Array(0, 1.7, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"StopFlyTimer"
 }, {
-"args": [ 3.0 ],
-"method": "TransitionToNight"
+"args": [3.0],
+"method": &"TransitionToNight"
 }, {
-"args": [ 3.0 ],
-"method": "ShowWeirdLights"
-} ]
+"args": [3.0],
+"method": &"ShowWeirdLights"
+}]
 }
 tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("World/ViewportContainer/Viewport/HotbarQueue")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 7.2 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "SpawnShambler"
-} ]
+"times": PackedFloat32Array(7.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"SpawnShambler"
+}]
 }
 tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 2.5 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ 2.0 ],
-"method": "ShowBackground"
-} ]
+"times": PackedFloat32Array(2.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [2.0],
+"method": &"ShowBackground"
+}]
 }
 
-[node name="SaladBar3Microgame" instance=ExtResource( 14 )]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w5kx1"]
+_data = {
+"wave_1": SubResource("4"),
+"wave_2": SubResource("5")
+}
+
+[node name="SaladBar3Microgame" instance=ExtResource("14")]
 
 [node name="WavePlayer" parent="." index="10"]
-anims/wave_1 = SubResource( 4 )
-anims/wave_2 = SubResource( 5 )
+libraries = {
+"": SubResource("AnimationLibrary_w5kx1")
+}
 
 [editable path="World/ViewportContainer2/Viewport/SaladBarArena"]

@@ -201,7 +201,7 @@ _data = {
 
 [sub_resource type="CapsuleShape2D" id="1"]
 radius = 20.0
-height = 40.0
+height = 90.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8o3nj"]
 random_pitch = 1.1

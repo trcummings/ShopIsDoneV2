@@ -1,168 +1,173 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3 uid="uid://pcut1khhv8i0"]
 
-[ext_resource type="Texture" uid="uid://dv8noacw86xmn" path="res://microgames/salad_bar_microgame/gloved_hands.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://dv8noacw86xmn" path="res://microgames/salad_bar_microgame/gloved_hands.png" id="1"]
 [ext_resource type="Script" path="res://microgames/salad_bar_microgame/GlovedHand.cs" id="2"]
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id="3"]
 radius = 53.2374
 height = 123.603
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 resource_name = "RESET"
 length = 0.01
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("SpritePivot/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ 0 ]
+"values": [0]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("SpritePivot:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ 0.0 ]
+"values": [0.0]
 }
 tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("SpritePivot/Sprite:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0.701961 ) ]
+"values": [Color(1, 1, 1, 0.701961)]
 }
 tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/path = NodePath("SpritePivot:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ Vector2( 0, 0 ) ]
+"values": [Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 resource_name = "slap"
 length = 0.3
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("SpritePivot/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ 0, 1, 0 ]
+"values": [0, 1, 0]
 }
 tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("SpritePivot:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( -11, -0.25, 0, 0.25, 0, -32, -0.248227, 104.255, 0.2, -84, 13, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("SpritePivot/Sprite:modulate")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.7 ) ]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.7)]
 }
 tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/path = NodePath("SpritePivot:position")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( -20, 0 ), Vector2( 0, 0 ) ]
+"values": [Vector2(0, 0), Vector2(-20, 0), Vector2(0, 0)]
 }
 tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
 tracks/4/path = NodePath(".")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "CheckForSlapConnection"
-} ]
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"CheckForSlapConnection"
+}]
 }
 
-[sub_resource type="CapsuleShape2D" id=4]
-radius = 67.8763
-height = 68.0
-
-[node name="GlovedHand" type="KinematicBody2D"]
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_lock_": true
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b8pgr"]
+_data = {
+"RESET": SubResource("2"),
+"slap": SubResource("1")
 }
+
+[sub_resource type="CapsuleShape2D" id="4"]
+radius = 61.9643
+height = 188.886
+
+[node name="GlovedHand" type="CharacterBody2D"]
+script = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -27, -54 )
+position = Vector2(-27, -54)
 rotation = -0.418879
-shape = SubResource( 3 )
+shape = SubResource("3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_b8pgr")
+}
 autoplay = "RESET"
-anims/RESET = SubResource( 2 )
-anims/slap = SubResource( 1 )
 
 [node name="SpritePivot" type="Node2D" parent="."]
 
-[node name="Sprite" type="Sprite" parent="SpritePivot"]
-modulate = Color( 1, 1, 1, 0.701961 )
-position = Vector2( -39, -56 )
+[node name="Sprite" type="Sprite2D" parent="SpritePivot"]
+modulate = Color(1, 1, 1, 0.701961)
+position = Vector2(-39, -56)
 rotation = 0.111842
-scale = Vector2( 1.5, 1.5 )
-texture = ExtResource( 1 )
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1")
 hframes = 2
 
-[node name="Hurtbox" type="Area2D" parent="SpritePivot"]
+[node name="HurtBox" type="Area2D" parent="SpritePivot"]
 unique_name_in_owner = true
-position = Vector2( 16.961, 10.5984 )
+position = Vector2(16.961, 10.5984)
 rotation = 0.558505
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpritePivot/Hurtbox"]
-position = Vector2( -95, -23 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpritePivot/HurtBox"]
+position = Vector2(-95, -23)
 rotation = -1.04196
-shape = SubResource( 4 )
+shape = SubResource("4")
