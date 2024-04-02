@@ -1,0 +1,123 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1"]
+[ext_resource type="Script" path="res://microgames/salad_bar_microgame/SaladBarMicrogame.cs" id="2"]
+[ext_resource type="PackedScene" uid="uid://dhb0ecdjr12kh" path="res://microgames/salad_bar_microgame/salad_bar_arena.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://microgames/salad_bar_microgame/health_bar.tscn" id="4"]
+[ext_resource type="AudioStream" uid="uid://b5bcj4km1327f" path="res://microgames/common/audio/WHIFF__353048__deleted_user_6479820__g_whiff_3.mp3" id="5"]
+[ext_resource type="PackedScene" uid="uid://bso008ermf07x" path="res://microgames/salad_bar_microgame/salad_bar_queue/HotbarQueue.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="7"]
+[ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="8"]
+[ext_resource type="AudioStream" uid="uid://cvh2pkwlqqlrv" path="res://microgames/salad_bar_microgame/SLAP--444407__mootmcnoodles__slap.wav" id="9"]
+[ext_resource type="AudioStream" uid="uid://b8v3egn6r78mq" path="res://microgames/common/audio/ROOM-TONE__201544__delaneyrose13__roomtone.wav" id="10"]
+[ext_resource type="AudioStream" uid="uid://dw71ua0qnx0pd" path="res://action_points/audio/Debt-Damage__damage_1.wav" id="11"]
+[ext_resource type="Script" path="res://microgames/salad_bar_microgame/WaveManager.cs" id="12"]
+[ext_resource type="Script" path="res://microgames/salad_bar_microgame/CustomerMonitor.cs" id="13"]
+
+[sub_resource type="AudioStreamRandomPitch" id=1]
+audio_stream = ExtResource( 9 )
+
+[sub_resource type="AudioStreamRandomPitch" id=2]
+audio_stream = ExtResource( 5 )
+
+[sub_resource type="AudioStreamRandomPitch" id=3]
+audio_stream = ExtResource( 11 )
+
+[node name="SaladBarMicrogameBase" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+PromptText = "Defend From Rot! "
+CameraPath = NodePath("World/ViewportContainer2/Viewport/SaladBarArena/Camera2D")
+
+[node name="World" type="VBoxContainer" parent="." index="3"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="World" index="0"]
+margin_right = 940.0
+margin_bottom = 200.0
+
+[node name="Viewport" type="Viewport" parent="World/ViewportContainer" index="0"]
+size = Vector2( 940, 200 )
+own_world = true
+handle_input_locally = false
+hdr = false
+disable_3d = true
+usage = 0
+render_target_update_mode = 3
+
+[node name="HotbarQueue" parent="World/ViewportContainer/Viewport" index="0" instance=ExtResource( 6 )]
+unique_name_in_owner = true
+
+[node name="ViewportContainer2" type="ViewportContainer" parent="World" index="1"]
+margin_top = 204.0
+margin_right = 940.0
+margin_bottom = 944.0
+
+[node name="Viewport" type="Viewport" parent="World/ViewportContainer2" index="0"]
+size = Vector2( 940, 740 )
+own_world = true
+transparent_bg = true
+handle_input_locally = false
+hdr = false
+disable_3d = true
+usage = 0
+render_target_update_mode = 3
+
+[node name="SaladBarArena" parent="World/ViewportContainer2/Viewport" index="0" instance=ExtResource( 3 )]
+unique_name_in_owner = true
+
+[node name="HealthBar" parent="World/ViewportContainer2" index="1" instance=ExtResource( 4 )]
+
+[node name="SlapSfxPlayer" type="AudioStreamPlayer" parent="." index="4"]
+stream = SubResource( 1 )
+pitch_scale = 0.64
+bus = "Microgames"
+
+[node name="WhiffSfxPlayer" type="AudioStreamPlayer" parent="." index="5"]
+stream = SubResource( 2 )
+pitch_scale = 0.89
+bus = "Microgames"
+
+[node name="HurtSfxPlayer" type="AudioStreamPlayer" parent="." index="6"]
+stream = SubResource( 3 )
+bus = "Microgames"
+
+[node name="ScreenshakeHandler" parent="." index="7" instance=ExtResource( 7 )]
+unique_name_in_owner = true
+
+[node name="MicrosleepHelper" type="Node" parent="." index="8"]
+script = ExtResource( 8 )
+
+[node name="RoomTone" type="AudioStreamPlayer" parent="." index="9"]
+unique_name_in_owner = true
+stream = ExtResource( 10 )
+volume_db = -15.0
+bus = "Room_Tone"
+
+[node name="WavePlayer" type="AnimationPlayer" parent="." index="10"]
+
+[node name="WaveManager" type="Node" parent="." index="11"]
+unique_name_in_owner = true
+script = ExtResource( 12 )
+WavePlayerPath = NodePath("../WavePlayer")
+
+[node name="CustomerMonitor" type="Node" parent="." index="12"]
+script = ExtResource( 13 )
+
+[connection signal="SpawnedCustomer" from="World/ViewportContainer/Viewport/HotbarQueue" to="CustomerMonitor" method="AddCustomer"]
+[connection signal="HealthDamaged" from="World/ViewportContainer2/Viewport/SaladBarArena" to="World/ViewportContainer2/HealthBar" method="DamageHealth"]
+[connection signal="HealthDrained" from="World/ViewportContainer2/Viewport/SaladBarArena" to="World/ViewportContainer2/HealthBar" method="DrainHealth"]
+[connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="SlapSfxPlayer" method="play"]
+[connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="ScreenshakeHandler" method="Shake" binds= [ 0, 1 ]]
+[connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="MicrosleepHelper" method="Microsleep"]
+[connection signal="Whiffed" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="WhiffSfxPlayer" method="play"]
+[connection signal="Damaged" from="World/ViewportContainer2/HealthBar" to="HurtSfxPlayer" method="play"]
+[connection signal="Damaged" from="World/ViewportContainer2/HealthBar" to="ScreenshakeHandler" method="Shake" binds= [ 1, 1 ]]
+[connection signal="Died" from="World/ViewportContainer2/HealthBar" to="." method="OnDied"]
+[connection signal="HealthSet" from="World/ViewportContainer2/HealthBar" to="World/ViewportContainer2/Viewport/SaladBarArena" method="SetHealth"]
+[connection signal="ShakeOffsetUpdated" from="ScreenshakeHandler" to="." method="ShakeUpdate"]
+[connection signal="WaveFinished" from="WaveManager" to="CustomerMonitor" method="Reset"]
+[connection signal="AllCustomersLeft" from="CustomerMonitor" to="WaveManager" method="FinishCurrentWave"]
+
+[editable path="World/ViewportContainer2/Viewport/SaladBarArena"]

@@ -1,0 +1,235 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://microgames/salad_bar_microgame/salad_bar_microgame_base.tscn" id="14"]
+
+[sub_resource type="Animation" id=4]
+resource_name = "wave_1"
+length = 9.0
+tracks/0/type = "method"
+tracks/0/path = NodePath("World/ViewportContainer2/Viewport/SaladBarArena")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "StartFlyTimer"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("World/ViewportContainer/Viewport/HotbarQueue")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3.2, 6.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "wave_2"
+length = 12.0
+tracks/0/type = "method"
+tracks/0/path = NodePath("World/ViewportContainer2/Viewport/SaladBarArena")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 11.5, 12 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ 1.0 ],
+"method": "SetFlyTimer"
+}, {
+"args": [ 3.0 ],
+"method": "SetFlyTimer"
+}, {
+"args": [  ],
+"method": "StopFlyTimer"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("World/ViewportContainer/Viewport/HotbarQueue")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("WaveManager")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 11.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "FinishCurrentWave"
+} ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "wave_3"
+length = 9.0
+tracks/0/type = "method"
+tracks/0/path = NodePath("World/ViewportContainer2/Viewport/SaladBarArena")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "StartFlyTimer"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("World/ViewportContainer/Viewport/HotbarQueue")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.9, 2, 3, 3.9, 4.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "wave_4"
+length = 9.0
+tracks/0/type = "method"
+tracks/0/path = NodePath("World/ViewportContainer2/Viewport/SaladBarArena")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 3.0 ],
+"method": "TransitionToNight"
+}, {
+"args": [ 2.0 ],
+"method": "SetFlyTimer"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("World/ViewportContainer/Viewport/HotbarQueue")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3, 5.4, 8.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+}, {
+"args": [  ],
+"method": "SpawnCustomer"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+
+[node name="SaladBar3Microgame" instance=ExtResource( 14 )]
+
+[node name="WavePlayer" parent="." index="10"]
+anims/wave_1 = SubResource( 4 )
+anims/wave_2 = SubResource( 5 )
+anims/wave_3 = SubResource( 6 )
+anims/wave_4 = SubResource( 7 )
+
+[editable path="World/ViewportContainer2/Viewport/SaladBarArena"]
