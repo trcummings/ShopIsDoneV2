@@ -39,6 +39,11 @@ namespace ShopIsDone.Levels
 
             return succeded;
         }
+
+        public static bool RandomBool()
+        {
+            return (new RandomNumberGenerator().Randi() & 2) -1 == 1;
+        }
     }
 }
 

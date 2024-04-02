@@ -1,0 +1,233 @@
+[gd_scene load_steps=15 format=3 uid="uid://dhb0ecdjr12kh"]
+
+[ext_resource type="Script" path="res://microgames/SaladBarMicrogame/SaladBarArena.cs" id="1"]
+[ext_resource type="Texture2D" uid="uid://biqtjj5rxcnp3" path="res://microgames/SaladBarMicrogame/salad_bar_contents_pixel.png" id="2"]
+[ext_resource type="PackedScene" path="res://microgames/SaladBarMicrogame/GlovedHand.tscn" id="3"]
+[ext_resource type="Texture2D" uid="uid://4uoyhog42r43" path="res://microgames/SaladBarMicrogame/world_background.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://c5q2k7il2krps" path="res://microgames/SaladBarMicrogame/salad_bar_frame_2_pixel.png" id="5"]
+[ext_resource type="Resource" uid="uid://d3gvuiebtkbb2" path="res://microgames/SaladBarMicrogame/SaladBarEvents.tres" id="6"]
+[ext_resource type="PackedScene" uid="uid://b41pq7gf1a6vj" path="res://microgames/SaladBarMicrogame/Grabbers/Tongs.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://bh6m75881oqsg" path="res://microgames/SaladBarMicrogame/Grabbers/NastyHand.tscn" id="8"]
+[ext_resource type="Texture2D" uid="uid://d3fgbl6swvw2u" path="res://microgames/SaladBarMicrogame/circle_05.png" id="9"]
+[ext_resource type="PackedScene" uid="uid://baivcjm7ibe04" path="res://microgames/SaladBarMicrogame/Fly/Fly.tscn" id="10"]
+[ext_resource type="Texture2D" uid="uid://bwmn5l8hvwo4p" path="res://microgames/SaladBarMicrogame/smoke_05.png" id="11"]
+[ext_resource type="PackedScene" path="res://microgames/SaladBarMicrogame/Grabbers/ShamblerHand.tscn" id="12"]
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(940, 20)
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(185.714, 145.714)
+
+[node name="SaladBarArena" type="Node2D"]
+script = ExtResource("1")
+HandSpeed = 7
+NastyHandScene = ExtResource("8")
+TongsScene = ExtResource("7")
+ShamblerHandScene = ExtResource("12")
+FlyScene = ExtResource("10")
+Events = ExtResource("6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Bounds" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bounds"]
+position = Vector2(471, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/StaticBody2D"]
+shape = SubResource("2")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Bounds"]
+position = Vector2(471, 740)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/StaticBody2D2"]
+shape = SubResource("2")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Bounds"]
+position = Vector2(940, 341)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/StaticBody2D3"]
+shape = SubResource("2")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Bounds"]
+position = Vector2(0, 342)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/StaticBody2D4"]
+shape = SubResource("2")
+
+[node name="SaladBarFrame" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="SaladBarFrame"]
+texture = ExtResource("4")
+centered = false
+
+[node name="Bins" type="Node2D" parent="SaladBarFrame"]
+
+[node name="SaladBarBin" type="Node2D" parent="SaladBarFrame/Bins"]
+position = Vector2(273, 197)
+scale = Vector2(1.75, 1.75)
+
+[node name="FreshContents" type="Sprite2D" parent="SaladBarFrame/Bins/SaladBarBin"]
+position = Vector2(-0.999992, -2)
+texture = ExtResource("2")
+hframes = 4
+vframes = 2
+
+[node name="RottenContents" type="Sprite2D" parent="SaladBarFrame/Bins/SaladBarBin" groups=["saladbar_rotten_bin"]]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-0.999992, -2)
+texture = ExtResource("2")
+hframes = 4
+vframes = 2
+frame = 1
+
+[node name="Area2D" type="Area2D" parent="SaladBarFrame/Bins/SaladBarBin"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SaladBarFrame/Bins/SaladBarBin/Area2D" groups=["salad_bar_bin_shape"]]
+shape = SubResource("1")
+
+[node name="TopLeft" type="Node2D" parent="SaladBarFrame/Bins/SaladBarBin" groups=["saladbar_bin_pivot"]]
+rotation = -2.35619
+
+[node name="Position2D" type="Marker2D" parent="SaladBarFrame/Bins/SaladBarBin/TopLeft"]
+position = Vector2(300, 0)
+
+[node name="SaladBarBin2" type="Node2D" parent="SaladBarFrame/Bins"]
+position = Vector2(654, 197)
+scale = Vector2(1.75, 1.75)
+
+[node name="FreshContents" type="Sprite2D" parent="SaladBarFrame/Bins/SaladBarBin2"]
+position = Vector2(-0.999992, -2)
+texture = ExtResource("2")
+hframes = 4
+vframes = 2
+frame = 2
+
+[node name="RottenContents" type="Sprite2D" parent="SaladBarFrame/Bins/SaladBarBin2" groups=["saladbar_rotten_bin"]]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-0.999992, -2)
+texture = ExtResource("2")
+hframes = 4
+vframes = 2
+frame = 3
+
+[node name="Area2D" type="Area2D" parent="SaladBarFrame/Bins/SaladBarBin2"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SaladBarFrame/Bins/SaladBarBin2/Area2D" groups=["salad_bar_bin_shape"]]
+shape = SubResource("1")
+
+[node name="TopRight" type="Node2D" parent="SaladBarFrame/Bins/SaladBarBin2" groups=["saladbar_bin_pivot"]]
+rotation = -0.785398
+
+[node name="Position2D" type="Marker2D" parent="SaladBarFrame/Bins/SaladBarBin2/TopRight"]
+position = Vector2(300, 0)
+
+[node name="SaladBarBin3" type="Node2D" parent="SaladBarFrame/Bins"]
+position = Vector2(266, 487)
+scale = Vector2(1.75, 1.75)
+
+[node name="FreshContents" type="Sprite2D" parent="SaladBarFrame/Bins/SaladBarBin3"]
+position = Vector2(-0.999992, -2)
+texture = ExtResource("2")
+hframes = 4
+vframes = 2
+frame = 4
+
+[node name="RottenContents" type="Sprite2D" parent="SaladBarFrame/Bins/SaladBarBin3" groups=["saladbar_rotten_bin"]]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-0.999992, -2)
+texture = ExtResource("2")
+hframes = 4
+vframes = 2
+frame = 5
+
+[node name="Area2D" type="Area2D" parent="SaladBarFrame/Bins/SaladBarBin3"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SaladBarFrame/Bins/SaladBarBin3/Area2D" groups=["salad_bar_bin_shape"]]
+shape = SubResource("1")
+
+[node name="BottomLeft" type="Node2D" parent="SaladBarFrame/Bins/SaladBarBin3" groups=["saladbar_bin_pivot"]]
+rotation = 2.35619
+
+[node name="Position2D" type="Marker2D" parent="SaladBarFrame/Bins/SaladBarBin3/BottomLeft"]
+position = Vector2(300, 0)
+
+[node name="SaladBarBin4" type="Node2D" parent="SaladBarFrame/Bins"]
+position = Vector2(662, 487)
+scale = Vector2(1.75, 1.75)
+
+[node name="FreshContents" type="Sprite2D" parent="SaladBarFrame/Bins/SaladBarBin4"]
+position = Vector2(-0.999992, -2)
+texture = ExtResource("2")
+hframes = 4
+vframes = 2
+frame = 6
+
+[node name="RottenContents" type="Sprite2D" parent="SaladBarFrame/Bins/SaladBarBin4" groups=["saladbar_rotten_bin"]]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-0.999992, -2)
+texture = ExtResource("2")
+hframes = 4
+vframes = 2
+frame = 7
+
+[node name="Area2D" type="Area2D" parent="SaladBarFrame/Bins/SaladBarBin4"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SaladBarFrame/Bins/SaladBarBin4/Area2D" groups=["salad_bar_bin_shape"]]
+shape = SubResource("1")
+
+[node name="BottomRight" type="Node2D" parent="SaladBarFrame/Bins/SaladBarBin4" groups=["saladbar_bin_pivot"]]
+rotation = 0.785398
+
+[node name="Position2D" type="Marker2D" parent="SaladBarFrame/Bins/SaladBarBin4/BottomRight"]
+position = Vector2(300, 0)
+
+[node name="Sprite" type="Sprite2D" parent="SaladBarFrame"]
+position = Vector2(471, 372)
+scale = Vector2(4, 4)
+texture = ExtResource("5")
+
+[node name="Flies" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Grabbers" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="GlovedHand" parent="." instance=ExtResource("3")]
+unique_name_in_owner = true
+position = Vector2(481, 428)
+
+[node name="Light2D" type="PointLight2D" parent="GlovedHand" groups=["salad_bar_static_light"]]
+visible = false
+position = Vector2(-31, -63)
+texture = ExtResource("9")
+texture_scale = 2.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." groups=["salad_bar_darkness"]]
+visible = false
+color = Color(0.054902, 0.054902, 0.054902, 1)
+
+[node name="FlyTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.0
+
+[node name="Light2D" type="PointLight2D" parent="." groups=["salad_bar_weird_light"]]
+visible = false
+position = Vector2(456, 341)
+color = Color(0.760784, 0.411765, 0.0705882, 1)
+texture = ExtResource("11")
+texture_scale = 2.0
+
+[connection signal="timeout" from="FlyTimer" to="." method="SpawnFly"]
