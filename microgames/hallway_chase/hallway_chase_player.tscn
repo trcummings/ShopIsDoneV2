@@ -18,7 +18,8 @@
 [ext_resource type="AudioStream" uid="uid://c02xm22loqajs" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-SLOW-3__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="16"]
 [ext_resource type="AudioStream" uid="uid://da5hod11brep" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-SLOW-1__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="17"]
 
-[sub_resource type="CapsuleShape3D" id="1"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s0wgs"]
+radius = 0.75
 height = 3.0
 
 [node name="HallwayChasePlayer" type="CharacterBody3D"]
@@ -40,7 +41,7 @@ _Body = NodePath("..")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 0, 1.5, 0)
-shape = SubResource("1")
+shape = SubResource("CapsuleShape3D_s0wgs")
 
 [node name="SprintController" type="Node" parent="." node_paths=PackedStringArray("_Movement")]
 unique_name_in_owner = true
@@ -57,7 +58,10 @@ MediumSteps = [ExtResource("14"), ExtResource("10"), ExtResource("15"), ExtResou
 FastSteps = [ExtResource("7"), ExtResource("12"), ExtResource("6"), ExtResource("13")]
 
 [node name="FootstepSfxPlayer" type="AudioStreamPlayer" parent="FootstepController"]
+bus = &"Microgames"
 
 [node name="FootstepSfxPlayer2" type="AudioStreamPlayer" parent="FootstepController"]
+bus = &"Microgames"
 
 [node name="FootstepSfxPlayer3" type="AudioStreamPlayer" parent="FootstepController"]
+bus = &"Microgames"

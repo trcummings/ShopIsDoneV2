@@ -13,6 +13,18 @@ namespace ShopIsDone.Microgames.HallwayChase
             _HallwayChase = GetNode<HallwayChase>("%HallwayChase");
         }
 
+        public override void Init(MicrogamePayload payload)
+        {
+            base.Init(payload);
+
+            // Connect to the hallway chase finish state
+            _HallwayChase.Connect(nameof(_HallwayChase.PlayerReachedGoal), new Callable(this, nameof(OnPlayerReachedGoal)));
+            _HallwayChase.Connect(nameof(_HallwayChase.PlayerFailed), new Callable(this, nameof(OnPlayerFailed)));
+
+            // Init the hallway chase
+            _HallwayChase.Init();
+        }
+
         public override void Start()
         {
             // NB: Do NOT call base.Start() here. That will run too many
@@ -22,9 +34,7 @@ namespace ShopIsDone.Microgames.HallwayChase
             HideTimer(1.5f);
             // Show the background... slowly
             ShowBackground(2.5f);
-            // Connect to the hallway chase finish state
-            _HallwayChase.Connect(nameof(_HallwayChase.PlayerReachedGoal), new Callable(this, nameof(OnPlayerReachedGoal)));
-            _HallwayChase.Connect(nameof(_HallwayChase.PlayerFailed), new Callable(this, nameof(OnPlayerFailed)));
+        
             // Start the hallway chase game
             _HallwayChase.Start();
         }

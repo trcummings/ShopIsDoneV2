@@ -12,6 +12,9 @@ namespace ShopIsDone.Microgames.HallwayChase
         [Signal]
         public delegate void PlayerFailedEventHandler();
 
+        [Export]
+        public AnimationPlayer _TargetAnimPlayer;
+
         private HallwayChasePlayer _Player;
         private AudioStreamPlayer _RoomTone;
         private Area3D _GoalArea;
@@ -27,9 +30,15 @@ namespace ShopIsDone.Microgames.HallwayChase
 
             // Initially disable the player
             SetPlayerActive(false);
+
             // Connect to goal area and fail area
             _GoalArea.Connect("body_entered", new Callable(this, nameof(OnPlayerEnteredGoalArea)));
             _FailArea.Connect("body_entered", new Callable(this, nameof(OnPlayerEnteredFailArea)));
+        }
+
+        public void Init()
+        {
+            _TargetAnimPlayer.Play("Slump");
         }
 
         public void Start()
@@ -39,8 +48,11 @@ namespace ShopIsDone.Microgames.HallwayChase
 
             // Fade in the room tone
             var goalDb = _RoomTone.VolumeDb;
-            _RoomTone.VolumeDb = Mathf.LinearToDb(0);
-            GetTree().CreateTween().TweenProperty(_RoomTone, "volume_db", goalDb, 0.5f);
+            _RoomTone.VolumeDb = -80;
+            GetTree()
+                .CreateTween()
+                .BindNode(this)
+                .TweenProperty(_RoomTone, "volume_db", goalDb, 0.5f);
             _RoomTone.Play();
         }
 

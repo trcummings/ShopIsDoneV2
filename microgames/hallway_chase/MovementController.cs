@@ -38,21 +38,10 @@ namespace ShopIsDone.Microgames.HallwayChase
             var aim = _Body.GlobalTransform.Basis;
             _Direction = (aim.Z * -moveInput.X) + (aim.X * moveInput.Y);
 
-            // Handle if we're in the air
-            if (_Body.IsOnFloor())
-            {
-                //_Snap = -_Body.GetFloorNormal() - _Body.GetPlatformVelocity() * delta;
-                // Workaround for sliding down after a fall onto a slope
-                if (_Velocity.Y < 0) _Velocity.Y = 0;
-            }
-            else
-            {
-                // Workaround for "vertical bump" when going off a platform
-                //if (_Snap != Vector3.Zero && _Velocity.Y != 0) _Velocity.Y = 0;
-                //_Snap = Vector3.Zero;
-                // Apply Gravity
-                _Velocity.Y -= _Gravity * delta;
-            }
+            // Handle if we're on the floor
+            if (_Body.IsOnFloor() && _Velocity.Y < 0) _Velocity.Y = 0;
+            // Otherwise apply gravity
+            else _Velocity.Y -= _Gravity * delta;
 
             // Handle Acceleration
             var tempVelocity = _Velocity;
