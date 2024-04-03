@@ -1,0 +1,67 @@
+[gd_scene load_steps=19 format=3 uid="uid://bukd04tkk2rnr"]
+
+[ext_resource type="Script" path="res://microgames/hallway_chase/HallwayChasePlayer.cs" id="1"]
+[ext_resource type="Script" path="res://microgames/hallway_chase/HeadController.cs" id="2"]
+[ext_resource type="Script" path="res://microgames/hallway_chase/MovementController.cs" id="3"]
+[ext_resource type="Script" path="res://microgames/hallway_chase/SprintController.cs" id="4"]
+[ext_resource type="Script" path="res://microgames/hallway_chase/FootstepController.cs" id="5"]
+[ext_resource type="AudioStream" uid="uid://dxpo3bh6htghy" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-FAST-3__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="6"]
+[ext_resource type="AudioStream" uid="uid://b2w30jefmpfgu" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-FAST-1__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="7"]
+[ext_resource type="AudioStream" uid="uid://byjyq8lsfp0e2" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-SLOW-2__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="8"]
+[ext_resource type="AudioStream" uid="uid://b1o1g7i1yan1g" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-SLOW-4__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="9"]
+[ext_resource type="AudioStream" uid="uid://da73sqj72sehj" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-MEDIUM-2__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="10"]
+[ext_resource type="AudioStream" uid="uid://mqwxu876pim8" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-MEDIUM-4__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="11"]
+[ext_resource type="AudioStream" uid="uid://d1787iv5khrvk" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-FAST-2__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="12"]
+[ext_resource type="AudioStream" uid="uid://dmq8dhl5qh7sh" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-FAST-4__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="13"]
+[ext_resource type="AudioStream" uid="uid://bafujgjkqrbos" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-MEDIUM-1__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="14"]
+[ext_resource type="AudioStream" uid="uid://io8iql8lrn81" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-MEDIUM-3__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="15"]
+[ext_resource type="AudioStream" uid="uid://c02xm22loqajs" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-SLOW-3__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="16"]
+[ext_resource type="AudioStream" uid="uid://da5hod11brep" path="res://microgames/hallway_chase/footsteps/tile/FOOTSTEPS-TILE-SLOW-1__170506__splicesound__footsteps-tile-male-sneakers-slow-pace.wav" id="17"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s0wgs"]
+radius = 0.75
+height = 3.0
+
+[node name="HallwayChasePlayer" type="CharacterBody3D"]
+script = ExtResource("1")
+
+[node name="MovementController" type="Node" parent="." node_paths=PackedStringArray("_Body")]
+unique_name_in_owner = true
+script = ExtResource("3")
+Speed = 7.0
+Acceleration = 5.0
+Deceleration = 6.0
+_Body = NodePath("..")
+
+[node name="HeadController" type="Node3D" parent="." node_paths=PackedStringArray("_Body")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.81, 0)
+script = ExtResource("2")
+_Body = NodePath("..")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 0, 1.5, 0)
+shape = SubResource("CapsuleShape3D_s0wgs")
+
+[node name="SprintController" type="Node" parent="." node_paths=PackedStringArray("_Movement")]
+unique_name_in_owner = true
+script = ExtResource("4")
+_Movement = NodePath("../MovementController")
+SprintSpeed = 12.0
+FovMultiplier = 1.1
+
+[node name="FootstepController" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5")
+SlowSteps = [ExtResource("17"), ExtResource("8"), ExtResource("16"), ExtResource("9")]
+MediumSteps = [ExtResource("14"), ExtResource("10"), ExtResource("15"), ExtResource("11")]
+FastSteps = [ExtResource("7"), ExtResource("12"), ExtResource("6"), ExtResource("13")]
+
+[node name="FootstepSfxPlayer" type="AudioStreamPlayer" parent="FootstepController"]
+bus = &"Microgames"
+
+[node name="FootstepSfxPlayer2" type="AudioStreamPlayer" parent="FootstepController"]
+bus = &"Microgames"
+
+[node name="FootstepSfxPlayer3" type="AudioStreamPlayer" parent="FootstepController"]
+bus = &"Microgames"
