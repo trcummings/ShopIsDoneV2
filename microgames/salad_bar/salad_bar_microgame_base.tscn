@@ -1,0 +1,120 @@
+[gd_scene load_steps=17 format=3 uid="uid://dd6ts3yokna6p"]
+
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1"]
+[ext_resource type="Script" path="res://microgames/salad_bar/SaladBarMicrogame.cs" id="2"]
+[ext_resource type="PackedScene" uid="uid://dhb0ecdjr12kh" path="res://microgames/salad_bar/salad_bar_arena.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://microgames/salad_bar/health_bar.tscn" id="4"]
+[ext_resource type="AudioStream" uid="uid://b5bcj4km1327f" path="res://microgames/common/audio/WHIFF__353048__deleted_user_6479820__g_whiff_3.mp3" id="5"]
+[ext_resource type="PackedScene" uid="uid://bso008ermf07x" path="res://microgames/salad_bar/salad_bar_queue/hotbar_queue.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="7"]
+[ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="8"]
+[ext_resource type="AudioStream" uid="uid://cvh2pkwlqqlrv" path="res://microgames/salad_bar/SLAP--444407__mootmcnoodles__slap.wav" id="9"]
+[ext_resource type="AudioStream" uid="uid://b8v3egn6r78mq" path="res://microgames/common/audio/ROOM-TONE__201544__delaneyrose13__roomtone.wav" id="10"]
+[ext_resource type="AudioStream" uid="uid://dw71ua0qnx0pd" path="res://action_points/audio/Debt-Damage__damage_1.wav" id="11"]
+[ext_resource type="Script" path="res://microgames/salad_bar/WaveManager.cs" id="12"]
+[ext_resource type="Script" path="res://microgames/salad_bar/CustomerMonitor.cs" id="13"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_t340s"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("9")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nu2k3"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("5")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i6njf"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("11")
+stream_0/weight = 1.0
+
+[node name="SaladBarMicrogameBase" node_paths=PackedStringArray("_Camera") instance=ExtResource("1")]
+script = ExtResource("2")
+_Camera = NodePath("World/ViewportContainer2/Viewport/SaladBarArena/Camera2D")
+PromptText = "Defend From Rot! "
+
+[node name="World" type="VBoxContainer" parent="." index="3"]
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="World" index="0"]
+layout_mode = 2
+
+[node name="Viewport" type="SubViewport" parent="World/ViewportContainer" index="0"]
+disable_3d = true
+handle_input_locally = false
+size = Vector2i(940, 200)
+render_target_update_mode = 4
+
+[node name="HotbarQueue" parent="World/ViewportContainer/Viewport" index="0" instance=ExtResource("6")]
+unique_name_in_owner = true
+
+[node name="ViewportContainer2" type="SubViewportContainer" parent="World" index="1"]
+layout_mode = 2
+
+[node name="Viewport" type="SubViewport" parent="World/ViewportContainer2" index="0"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(940, 740)
+render_target_update_mode = 4
+
+[node name="SaladBarArena" parent="World/ViewportContainer2/Viewport" index="0" instance=ExtResource("3")]
+unique_name_in_owner = true
+
+[node name="HealthBar" parent="World/ViewportContainer2" index="1" instance=ExtResource("4")]
+layout_mode = 2
+
+[node name="SlapSfxPlayer" type="AudioStreamPlayer" parent="." index="4"]
+stream = SubResource("AudioStreamRandomizer_t340s")
+pitch_scale = 0.64
+bus = &"Microgames"
+
+[node name="WhiffSfxPlayer" type="AudioStreamPlayer" parent="." index="5"]
+stream = SubResource("AudioStreamRandomizer_nu2k3")
+pitch_scale = 0.89
+bus = &"Microgames"
+
+[node name="HurtSfxPlayer" type="AudioStreamPlayer" parent="." index="6"]
+stream = SubResource("AudioStreamRandomizer_i6njf")
+bus = &"Microgames"
+
+[node name="ScreenshakeHandler" parent="." index="7" instance=ExtResource("7")]
+unique_name_in_owner = true
+
+[node name="MicrosleepHelper" type="Node" parent="." index="8"]
+script = ExtResource("8")
+
+[node name="RoomTone" type="AudioStreamPlayer" parent="." index="9"]
+unique_name_in_owner = true
+stream = ExtResource("10")
+volume_db = -15.0
+
+[node name="WavePlayer" type="AnimationPlayer" parent="." index="10"]
+
+[node name="WaveManager" type="Node" parent="." index="11" node_paths=PackedStringArray("_WavePlayer")]
+unique_name_in_owner = true
+script = ExtResource("12")
+_WavePlayer = NodePath("../WavePlayer")
+
+[node name="CustomerMonitor" type="Node" parent="." index="12"]
+script = ExtResource("13")
+
+[connection signal="SpawnedCustomer" from="World/ViewportContainer/Viewport/HotbarQueue" to="CustomerMonitor" method="AddCustomer"]
+[connection signal="HealthDamaged" from="World/ViewportContainer2/Viewport/SaladBarArena" to="World/ViewportContainer2/HealthBar" method="DamageHealth"]
+[connection signal="HealthDrained" from="World/ViewportContainer2/Viewport/SaladBarArena" to="World/ViewportContainer2/HealthBar" method="DrainHealth"]
+[connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="SlapSfxPlayer" method="play"]
+[connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="MicrosleepHelper" method="Microsleep"]
+[connection signal="Slapped" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="ScreenshakeHandler" method="Shake" binds= [0, 1]]
+[connection signal="Whiffed" from="World/ViewportContainer2/Viewport/SaladBarArena/GlovedHand" to="WhiffSfxPlayer" method="play"]
+[connection signal="Damaged" from="World/ViewportContainer2/HealthBar" to="HurtSfxPlayer" method="play"]
+[connection signal="Damaged" from="World/ViewportContainer2/HealthBar" to="ScreenshakeHandler" method="Shake" binds= [1, 1]]
+[connection signal="Died" from="World/ViewportContainer2/HealthBar" to="." method="OnDied"]
+[connection signal="HealthSet" from="World/ViewportContainer2/HealthBar" to="World/ViewportContainer2/Viewport/SaladBarArena" method="SetHealth"]
+[connection signal="ShakeOffsetUpdated" from="ScreenshakeHandler" to="." method="ShakeUpdate"]
+[connection signal="WaveFinished" from="WaveManager" to="CustomerMonitor" method="Reset"]
+[connection signal="AllCustomersLeft" from="CustomerMonitor" to="WaveManager" method="FinishCurrentWave"]
+
+[editable path="World/ViewportContainer2/Viewport/SaladBarArena"]

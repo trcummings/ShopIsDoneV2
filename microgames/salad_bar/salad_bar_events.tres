@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://d3gvuiebtkbb2"]
+
+[ext_resource type="Script" path="res://microgames/salad_bar/SaladBarEvents.cs" id="1_ut6lb"]
+
+[resource]
+script = ExtResource("1_ut6lb")

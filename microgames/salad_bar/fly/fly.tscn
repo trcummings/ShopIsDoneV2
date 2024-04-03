@@ -1,0 +1,255 @@
+[gd_scene load_steps=14 format=3 uid="uid://baivcjm7ibe04"]
+
+[ext_resource type="Texture2D" uid="uid://o03pniejhcgy" path="res://microgames/salad_bar/fly/fly_pixel_2.png" id="1"]
+[ext_resource type="Script" path="res://microgames/salad_bar/fly/Fly.cs" id="2"]
+[ext_resource type="Texture2D" uid="uid://cr8eflurjxh5r" path="res://microgames/salad_bar/fly/puke_pixel.png" id="3"]
+[ext_resource type="AudioStream" uid="uid://jcmuno1ku0g7" path="res://microgames/salad_bar/fly/FLY--1__81970__benboncan__fly.wav" id="4_705bw"]
+[ext_resource type="AudioStream" uid="uid://by654mc4uslct" path="res://microgames/salad_bar/fly/FLY--2__81970__benboncan__fly.wav" id="5_uca68"]
+[ext_resource type="AudioStream" uid="uid://8twv7oyt4vg6" path="res://microgames/salad_bar/fly/FLY--3__81970__benboncan__fly.wav" id="6_otb6p"]
+
+[sub_resource type="Animation" id="2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Puke:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="3"]
+resource_name = "fly"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Puke:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="4"]
+resource_name = "land"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Puke:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="5"]
+resource_name = "splat"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Puke:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5ledt"]
+_data = {
+"RESET": SubResource("2"),
+"fly": SubResource("3"),
+"land": SubResource("4"),
+"splat": SubResource("5")
+}
+
+[sub_resource type="CapsuleShape2D" id="1"]
+radius = 20.0
+height = 90.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8o3nj"]
+random_pitch = 1.1
+streams_count = 3
+stream_0/stream = ExtResource("4_705bw")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_uca68")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("6_otb6p")
+stream_2/weight = 1.0
+
+[node name="Fly" type="Node2D" groups=["salad_bar_stoppable"]]
+script = ExtResource("2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_5ledt")
+}
+autoplay = "RESET"
+
+[node name="Pivot" type="Node2D" parent="."]
+rotation = 1.5708
+
+[node name="Hitbox" type="Area2D" parent="Pivot"]
+unique_name_in_owner = true
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hitbox"]
+shape = SubResource("1")
+
+[node name="Puke" type="Sprite2D" parent="Pivot"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(7, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3")
+
+[node name="Sprite" type="Sprite2D" parent="Pivot"]
+texture = ExtResource("1")
+hframes = 2
+
+[node name="BuzzPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_8o3nj")
+bus = &"Microgames"
+
+[connection signal="Landed" from="." to="BuzzPlayer" method="stop"]
+[connection signal="Slapped" from="." to="BuzzPlayer" method="stop"]
+[connection signal="Started" from="." to="BuzzPlayer" method="play"]
