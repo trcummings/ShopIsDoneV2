@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://x80l22ngtps6"]
+
+[ext_resource type="PackedScene" uid="uid://y3nxver43v0g" path="res://microgames/down_stock/stock_items/stock_item.tscn" id="1_7yjvg"]
+[ext_resource type="Material" path="res://widgets/tile_indicator/indicators/blue_indicator.material" id="2_jt7yt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bwfuq"]
+size = Vector3(0.506348, 0.585938, 0.29248)
+
+[node name="StockItem" instance=ExtResource("1_7yjvg")]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="ItemPivot" index="1"]
+size = Vector3(0.5, 0.5, 0.25)
+material = ExtResource("2_jt7yt")
+
+[node name="CollisionShape3D" parent="." index="1"]
+shape = SubResource("BoxShape3D_bwfuq")

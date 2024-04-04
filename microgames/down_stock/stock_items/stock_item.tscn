@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://y3nxver43v0g"]
+
+[node name="StockItem" type="Area3D"]
+
+[node name="ItemPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.196927, 0)
+metadata/_edit_group_ = true
+
+[node name="CursorMount" type="Node3D" parent="ItemPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0179043, 0.260278)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]

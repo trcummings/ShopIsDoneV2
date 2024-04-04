@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwqysmyhy5vfi"]
+
+[ext_resource type="PackedScene" uid="uid://cwap8p2ag2ktw" path="res://Models/Environment/Props/prop_shelf_aisle_empty_01_/prop_shelf_aisle_empty_01_.gltf" id="1_hc2xx"]
+
+[node name="PropShelfAisleEmpty01" type="Node3D"]
+
+[node name="prop_shelf_aisle_empty_01_" parent="." instance=ExtResource("1_hc2xx")]

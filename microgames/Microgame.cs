@@ -1,6 +1,7 @@
 ﻿using System;
 using Godot;
 using Godot.Collections;
+using ShopIsDone.Game;
 
 namespace ShopIsDone.Microgames
 {
@@ -36,6 +37,9 @@ namespace ShopIsDone.Microgames
         [Export]
         public string WidgetText = "Can you help me?";
 
+        [Export]
+        public bool DebugNoTimer = false;
+
         // Microgame Timing
         public int NumBeats = 8;
         public float BPM = 120;
@@ -70,6 +74,10 @@ namespace ShopIsDone.Microgames
 
         public virtual void Start()
         {
+            // If we're in debug mode and flagged to have no timer, don't start
+            // it
+            if (GameManager.IsDebugMode() && DebugNoTimer) return;
+
             // Start timer
             MicrogameTimer.Start();
 
