@@ -8,9 +8,10 @@ size = Vector3(0.506348, 0.585938, 0.29248)
 
 [node name="StockItem" instance=ExtResource("1_6anas")]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="ItemPivot" index="1"]
+[node name="CSGBox3D" type="CSGBox3D" parent="ItemPivot/Item" index="0"]
 size = Vector3(0.5, 0.5, 0.25)
 material = ExtResource("2_8p8fx")
 
 [node name="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.2, 2.08165e-12)
 shape = SubResource("BoxShape3D_2gfye")
