@@ -8,5 +8,14 @@ namespace ShopIsDone.Microgames.DownStock
 
 		void Unhover();
 	}
+
+	public interface IDropzone : IHoverable
+	{
+		bool IsDropzoneHovered();
+
+		bool CanDrop(StockItem item);
+
+		void Drop(StockItem item);
+    }
 }
 

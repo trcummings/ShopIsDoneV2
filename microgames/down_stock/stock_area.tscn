@@ -1,20 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://cm3r8nnskgdh7"]
+[gd_scene load_steps=4 format=3 uid="uid://cm3r8nnskgdh7"]
 
 [ext_resource type="Script" path="res://microgames/down_stock/StockArea.cs" id="1_lndib"]
-[ext_resource type="PackedScene" uid="uid://cgd5un6h63nu2" path="res://Models/GodRayCube/GodRayCube.tscn" id="2_aswis"]
+[ext_resource type="PackedScene" uid="uid://c0elnl127n861" path="res://Models/GodRayCube/god_ray_cube.tscn" id="2_gftbi"]
+[ext_resource type="Script" path="res://microgames/down_stock/GodRayCubeHelper.cs" id="3_lysus"]
 
 [node name="StockArea" type="Node3D"]
 script = ExtResource("1_lndib")
 
 [node name="LeftPoint" type="Marker3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34, 2.08165e-12, 2.08165e-12)
 
 [node name="RightPoint" type="Marker3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34, 2.08165e-12, 2.08165e-12)
 
 [node name="BackPoint" type="Marker3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.206032)
 
-[node name="GodRayCube" parent="." instance=ExtResource("2_aswis")]
+[node name="GodRayCube" parent="." instance=ExtResource("2_gftbi")]
+unique_name_in_owner = true
 transform = Transform3D(0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.25, 2.08165e-12, 0.1, 2.08165e-12)
-visible = false
+script = ExtResource("3_lysus")

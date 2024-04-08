@@ -1,19 +1,30 @@
 ﻿using System;
+using System.Linq;
 using Godot;
 using Godot.Collections;
+using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.Microgames.DownStock
 {
     public partial class DraggingDownStockState : DownStockState
     {
+        [Signal]
+        public delegate void AttemptedIncorrectDropEventHandler();
+
         [Export]
         private Marker3D _GrabPlane; // Just used for its Z value
 
         [Export]
         private Camera3D _Camera3D;
 
+        [Export]
+        private Node3D _StockAreasNode;
+        private Array<StockArea> _StockAreas = new Array<StockArea>();
+
+        // State
         private StockItem _GrabbedStockItem = null;
         private Transform3D _StockItemInitialTransform;
+        private IDropzone _CurrentHovered = null;
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
@@ -25,6 +36,12 @@ namespace ShopIsDone.Microgames.DownStock
             _StockItemInitialTransform = _GrabbedStockItem.Transform;
             // Wiggle it
             _GrabbedStockItem.Wiggle();
+
+            // Collect all stock areas
+            _StockAreas = _StockAreasNode
+                .GetChildren()
+                .OfType<StockArea>()
+                .ToGodotArray();
 
             // Have hand grab
             _GrabHand.Grab();
@@ -40,16 +57,39 @@ namespace ShopIsDone.Microgames.DownStock
         {
             base.UpdateState(delta);
 
+            // Handle dropzone hovering and unhovering 
+            var hoveredDropzones = _StockAreas.Where(a => a.IsDropzoneHovered());
+            if (hoveredDropzones.Any() && hoveredDropzones.First() != _CurrentHovered)
+            {
+                // Set current hovered
+                _CurrentHovered = hoveredDropzones.First();
+            }
+            // Handle when we have no hovered dropzones
+            else if (!hoveredDropzones.Any())
+            {
+                // Null out and unhover
+                _CurrentHovered = null;
+            }
+
             if (Input.IsActionJustReleased("ui_accept"))
             {
                 // If we're over a dropzone, release it there
-
+                if (_CurrentHovered?.CanDrop(_GrabbedStockItem) ?? false)
+                {
+                    // Remove from previous stock area
+                    _StockAreas.ToList().Find(a => a.HasItem(_GrabbedStockItem))?.RemoveItem(_GrabbedStockItem);
+                    // Drop into the new one
+                    _CurrentHovered.Drop(_GrabbedStockItem);
+                }
                 // Otherwise, let it fly back to where it was
-                GetTree()
-                    .CreateTween()
-                    .BindNode(this)
-                    .TweenProperty(_GrabbedStockItem, "transform", _StockItemInitialTransform, 0.15f);
-                // Change back to hovering state
+                else if (_CurrentHovered != null)
+                {
+                    EmitSignal(nameof(AttemptedIncorrectDrop));
+                    ReturnSelected();
+                }
+                else ReturnSelected();
+
+                // Either way, change back to hovering state
                 ChangeState(Consts.States.HOVERING);
             }
         }
@@ -68,6 +108,14 @@ namespace ShopIsDone.Microgames.DownStock
             _GrabbedStockItem.GlobalPosition = _GrabbedStockItem
                 .GlobalPosition
                 .MoveToward(to, (float)delta * 4);
+        }
+
+        private void ReturnSelected()
+        {
+            GetTree()
+                .CreateTween()
+                .BindNode(this)
+                .TweenProperty(_GrabbedStockItem, "transform", _StockItemInitialTransform, 0.15f);
         }
     }
 }

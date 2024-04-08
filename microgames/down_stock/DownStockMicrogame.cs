@@ -6,7 +6,7 @@ using System.Linq;
 using ShopIsDone.Utils.Extensions;
 using Utils.Extensions;
 using ShopIsDone.Utils.StateMachine;
-using ShopIsDone.Levels;
+using SystemGenerics = System.Collections.Generic;
 
 namespace ShopIsDone.Microgames.DownStock
 {
@@ -28,13 +28,23 @@ namespace ShopIsDone.Microgames.DownStock
 
         private StateMachine _StateMachine;
         private CharacterBody2D _GrabHand;
-        private Array<Marker3D> _StockItemPoints = new Array<Marker3D>();
+        private Array<Marker3D> _OverstockItems = new Array<Marker3D>();
         private Array<StockArea> _StockAreas = new Array<StockArea>();
-        private Marker3D _ShoppingCartMarker;
+        private ReturnsCart _ReturnsCart;
         private Node2D _DropAreas;
+        private Node3D _StockItems;
 
-        private Vector2 _StockAreaSize = new Vector2(540, 140);
+        private Vector2 _StockAreaSize = new Vector2(340, 100);
         private Vector2 _ReturnAreaSize = new Vector2(472, 272);
+
+        private Array<StockArea> _UsedStockAreas = new Array<StockArea>();
+        private enum ExtraCases
+        {
+            Null,
+            Missing,
+            WrongPosition,
+            WeirdItem,
+        }
 
         public override void _Ready()
         {
@@ -46,8 +56,10 @@ namespace ShopIsDone.Microgames.DownStock
             _Camera3D = GetNode<Camera3D>("%Camera3D");
             _StateMachine = GetNode<StateMachine>("%StateMachine");
             _DropAreas = GetNode<Node2D>("%DropAreas");
+            _StockItems = GetNode<Node3D>("%StockItems");
+            _ReturnsCart = GetNode<ReturnsCart>("%ReturnsCart");
 
-            _StockItemPoints = GetNode<Node3D>("%OverstockItems")
+            _OverstockItems = GetNode<Node3D>("%OverstockItems")
                 .GetChildren()
                 .OfType<Marker3D>()
                 .ToGodotArray();
@@ -56,8 +68,6 @@ namespace ShopIsDone.Microgames.DownStock
                 .GetChildren()
                 .OfType<StockArea>()
                 .ToGodotArray();
-
-            _ShoppingCartMarker = GetNode<Marker3D>("%ShoppingCartMarker");
 
             // Get grab hand and make transparent
             _GrabHand = GetNode<CharacterBody2D>("%GrabHand");
@@ -82,28 +92,20 @@ namespace ShopIsDone.Microgames.DownStock
 
             /// Set overstock items
             var shuffledItemScenes = StockItemScenes.ToList().Shuffle().ToList();
-            // Pick four used items from the set
-            var usedItemScenes = shuffledItemScenes.Take(4).ToList();
-            // Single out the remaining one
-            var remainingItemScene = shuffledItemScenes.Skip(4).Take(1).First();
-            StockItem remainingItem = null;
             // Create stock items at each point
             var overstockItems = new Array<StockItem>();
-            for (int i = 0; i < usedItemScenes.Count; i++)
+            for (int i = 0; i < shuffledItemScenes.Count; i++)
             {
-                var point = _StockItemPoints[i];
-                var scene = usedItemScenes[i];
+                var point = _OverstockItems[i];
+                var scene = shuffledItemScenes[i];
                 var item = scene.Instantiate<StockItem>();
-                if (scene == remainingItemScene) remainingItem = item;
                 point.AddChild(item);
                 overstockItems.Add(item);
-                // Add some mild random rotation to the stock items
-                var randRotation = (float)GD.RandRange(- Mathf.Pi / 10, Mathf.Pi / 10);
-                item.RotateY(randRotation);
+                item.Init(i);
             }
 
             // Create stock area data
-            for (int i = 0; i < usedItemScenes.Count; i++)
+            for (int i = 0; i < shuffledItemScenes.Count; i++)
             {
                 var area = _StockAreas[i];
                 var item = overstockItems[i];
@@ -111,24 +113,52 @@ namespace ShopIsDone.Microgames.DownStock
                 // Create dropzone for stock area
                 var area2D = CreateArea(area.GlobalPosition, _StockAreaSize);
                 // Initialize the stock area
-                area.Init(area2D);
-                // Fill with data
-                area.IsInOverstock = item != remainingItem;
-                area.Item = item;
+                area.Init(_StockItems, area2D, item);
             }
 
+            // Remove an item from a stock area
+            var shuffledAreas = new SystemGenerics.Stack<StockArea>(_StockAreas.ToList().Shuffle());
+            var firstArea = shuffledAreas.Pop();
+            firstArea.DeleteAnItem();
+            _UsedStockAreas.Add(firstArea);
+
             // Pick one of four different cases
-            // 1. Two items are missing
-            // 2. One item is in the wrong position (the area it's at is missing an
-            //    item)
-            // 3. A weird item is present in an empty shelf and another item is
-            //    missing
-            // 4. A weird item is present in a filled shelf, and that newly empty
-            //    spot must be replaced
-            
+            var selectedCase = Enum.GetValues(typeof(ExtraCases))
+                .OfType<ExtraCases>()
+                .ToList()
+                .PickRandom();
+            switch (selectedCase)
+            {
+                case ExtraCases.Null:
+                    {
+                        // No additional changes necessary
+                        break;
+                    }
+
+                case ExtraCases.Missing:
+                    {
+                        // Remove another item
+                        break;
+                    }
+
+                case ExtraCases.WrongPosition:
+                    {
+                        // Move one item from one stock area to the empty one
+                        break;
+                    }
+
+                case ExtraCases.WeirdItem:
+                    {
+                        break;
+                    }
+            }
 
             // Create return area
-            var returnArea = CreateArea(_ShoppingCartMarker.GlobalPosition, _ReturnAreaSize);
+            var returnArea = CreateArea(
+                _ReturnsCart.DropzoneMarker.GlobalPosition,
+                _ReturnAreaSize
+            );
+            _ReturnsCart.Init(returnArea, new StockItem());
 
             // Start state machine in hovering state
             _StateMachine.ChangeState(Consts.States.HOVERING);
@@ -146,6 +176,11 @@ namespace ShopIsDone.Microgames.DownStock
         {
             var pos = _Camera3D.UnprojectPosition(worldPos);
             var area2D = new Area2D();
+            // Set collision
+            area2D.SetCollisionMaskValue(1, false);
+            area2D.SetCollisionLayerValue(1, false);
+            area2D.SetCollisionMaskValue(2, true);
+            // Set shape
             var shape2D = new CollisionShape2D();
             _DropAreas.AddChild(area2D);
             area2D.AddChild(shape2D);
@@ -157,10 +192,23 @@ namespace ShopIsDone.Microgames.DownStock
             return area2D;
         }
 
+        public override void _Process(double delta)
+        {
+            base._Process(delta);
+
+            // Check all stock areas are filled
+            if (_StockAreas.All(a => a.IsFull()))
+            {
+                WinMicrogame();
+            }
+        }
+
         private void SetPlayerCanProcess(bool value)
         {
             _StateMachine.SetProcess(value);
             _StateMachine.SetPhysicsProcess(value);
+            SetPhysicsProcess(value);
+            SetProcess(value);
         }
 
         protected override void OnTimerFinished()

@@ -21,11 +21,15 @@ namespace ShopIsDone.Microgames.DownStock
 		public void Grab()
 		{
 			_Sprite.Frame = 1;
+			// Set bit
+			SetCollisionLayerValue(2, true);
 		}
 
 		public void Release()
 		{
             _Sprite.Frame = 0;
+            // Unset bit
+            SetCollisionLayerValue(2, false);
         }
 	}
 }

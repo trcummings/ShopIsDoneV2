@@ -5,6 +5,7 @@ namespace ShopIsDone.Microgames.DownStock
 {
     public partial class StockItem : Area3D, IHoverable
     {
+        public int Id;
         private Node3D _Item;
         private Tween _WiggleTween;
 
@@ -12,6 +13,19 @@ namespace ShopIsDone.Microgames.DownStock
         {
             base._Ready();
             _Item = GetNode<Node3D>("%Item");
+        }
+
+        public void Init(int id)
+        {
+            Id = id;
+            RotateRandom();
+        }
+
+        public void RotateRandom()
+        {
+            // Add some mild random rotation to the stock items
+            var randRotation = (float)GD.RandRange(-Mathf.Pi / 10, Mathf.Pi / 10);
+            RotateY(randRotation);
         }
 
         public void Hover()

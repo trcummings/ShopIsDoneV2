@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0elnl127n861"]
+
+[ext_resource type="ArrayMesh" uid="uid://baiau4i7qug75" path="res://Models/GodRayCube/god_ray_cube.mesh" id="1_12bdj"]
+
+[node name="GodRayCube" type="MeshInstance3D"]
+mesh = ExtResource("1_12bdj")
