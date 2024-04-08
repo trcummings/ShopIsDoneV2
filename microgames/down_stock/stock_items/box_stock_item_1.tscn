@@ -1,10 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://btq51h4r34rqd"]
+[gd_scene load_steps=6 format=3 uid="uid://btq51h4r34rqd"]
 
 [ext_resource type="PackedScene" uid="uid://y3nxver43v0g" path="res://microgames/down_stock/stock_items/stock_item.tscn" id="1_s4qx3"]
 [ext_resource type="Material" path="res://widgets/tile_indicator/indicators/green_indicator.material" id="2_v1g3o"]
+[ext_resource type="AudioStream" uid="uid://c58c1eb863jvr" path="res://microgames/down_stock/GRAB_DRY--395333__ihitokage__grab-2.wav" id="3_x1r3o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oes3d"]
 size = Vector3(0.506348, 0.585938, 0.29248)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ualwf"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("3_x1r3o")
+stream_0/weight = 1.0
 
 [node name="StockItem" instance=ExtResource("1_s4qx3")]
 
@@ -15,3 +22,6 @@ material = ExtResource("2_v1g3o")
 [node name="CollisionShape3D" parent="." index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.2, 2.08165e-12)
 shape = SubResource("BoxShape3D_oes3d")
+
+[node name="GrabSfx" parent="." index="2"]
+stream = SubResource("AudioStreamRandomizer_ualwf")

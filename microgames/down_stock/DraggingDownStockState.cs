@@ -45,6 +45,7 @@ namespace ShopIsDone.Microgames.DownStock
 
             // Have hand grab
             _GrabHand.Grab();
+            _GrabbedStockItem.Grab();
 
             // Tween the stock item to the grab plane
             GetTree()
@@ -89,6 +90,8 @@ namespace ShopIsDone.Microgames.DownStock
                 }
                 else ReturnSelected();
 
+                // Ungrab for the sfx
+                _GrabbedStockItem.Grab();
                 // Either way, change back to hovering state
                 ChangeState(Consts.States.HOVERING);
             }

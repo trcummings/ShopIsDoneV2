@@ -5,6 +5,9 @@ namespace ShopIsDone.Microgames.DownStock
 {
     public partial class StockItem : Area3D, IHoverable
     {
+        [Signal]
+        public delegate void ItemGrabbedEventHandler();
+
         public int Id;
         private Node3D _Item;
         private Tween _WiggleTween;
@@ -19,6 +22,11 @@ namespace ShopIsDone.Microgames.DownStock
         {
             Id = id;
             RotateRandom();
+        }
+
+        public void Grab()
+        {
+            EmitSignal(nameof(ItemGrabbed));
         }
 
         public void RotateRandom()
