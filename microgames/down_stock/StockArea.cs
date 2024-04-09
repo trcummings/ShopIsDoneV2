@@ -13,7 +13,7 @@ namespace ShopIsDone.Microgames.DownStock
         [Signal]
         public delegate void HandExitedDropzoneEventHandler();
 
-        public StockItem Item;
+        public int Id;
         private Area2D _Dropzone;
 
         private Node3D _StockItemsNode;
@@ -21,6 +21,7 @@ namespace ShopIsDone.Microgames.DownStock
         private Marker3D _RightPoint;
         private Marker3D _BackPoint;
         private GodRayCubeHelper _GodRayCube;
+        public Array<StockItem> StockItems { get { return _StockItems; } }
         private Array<StockItem> _StockItems = new Array<StockItem>();
 
         public override void _Ready()
@@ -34,19 +35,19 @@ namespace ShopIsDone.Microgames.DownStock
 
         public bool CanDrop(StockItem item)
         {
-            return _StockItems.Count <= 1 && item.Id == Item.Id;
+            return _StockItems.Count <= 1 && item.Id == Id;
         }
 
         public bool IsFull()
         {
-            return _StockItems.Count == 2 && _StockItems.All(i => i.Id == Item.Id);
+            return _StockItems.Count == 2 && _StockItems.All(i => i.Id == Id);
         }
 
         public void Init(Node3D itemsNode, Area2D area2D, StockItem item)
         {
             _StockItemsNode = itemsNode;
             _Dropzone = area2D;
-            Item = item;
+            Id = item.Id;
 
             // Connect to dropzone events
             area2D.BodyEntered += OnHandEntered;
@@ -63,7 +64,8 @@ namespace ShopIsDone.Microgames.DownStock
                 {
                     newItem.SetDeferred("monitorable", false);
                     newItem.SetDeferred("monitoring", false);
-                    newItem.SetCollisionLayerValue(2, false);
+                    newItem.SetCollisionLayerValue(1, false);
+                    newItem.SetCollisionMaskValue(1, false);
                     AddChild(newItem);
                 }
                 // Otherwise, add it as a child of the stock items
@@ -110,12 +112,20 @@ namespace ShopIsDone.Microgames.DownStock
             // Add item
             _StockItems.Add(item);
 
+            // Disable grab
+            item.CanGrab = false;
+
             // Tween item to new position
             var tween = GetTree()
                 .CreateTween()
                 .BindNode(this);
             tween.TweenProperty(item, "global_position", FindEmptyPosition(), 0.15f);
-            tween.TweenCallback(Callable.From(item.RotateRandom));
+            tween.TweenCallback(Callable.From(() => {
+                // Re-enable grab
+                item.CanGrab = true;
+                // Random rotation placement
+                item.RotateRandom();
+            }));
 
         }
 

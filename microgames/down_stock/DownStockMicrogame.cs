@@ -7,6 +7,7 @@ using ShopIsDone.Utils.Extensions;
 using Utils.Extensions;
 using ShopIsDone.Utils.StateMachine;
 using SystemGenerics = System.Collections.Generic;
+using ShopIsDone.Utils;
 
 namespace ShopIsDone.Microgames.DownStock
 {
@@ -35,8 +36,8 @@ namespace ShopIsDone.Microgames.DownStock
         private Node3D _StockItems;
         private StockItem _WeirdStockItem;
 
-        private Vector2 _StockAreaSize = new Vector2(340, 100);
-        private Vector2 _ReturnAreaSize = new Vector2(672, 272);
+        private Vector2 _StockAreaSize = new Vector2(340, 120);
+        private Vector2 _ReturnAreaSize = new Vector2(672, 252);
 
         private Array<StockArea> _UsedStockAreas = new Array<StockArea>();
         private enum ExtraCases
@@ -90,6 +91,27 @@ namespace ShopIsDone.Microgames.DownStock
                 .CreateTween()
                 .BindNode(this)
                 .TweenProperty(_GrabHand, "modulate:a", 1f, 1f);
+            // Tween in return cart
+            var finalCartPos = _ReturnsCart.Position.X;
+            _ReturnsCart.Position = _ReturnsCart.Position with { X = 5 };
+            var cartTween = GetTree()
+                .CreateTween()
+                .BindNode(this)
+                .SetEase(Tween.EaseType.In)
+                .SetTrans(Tween.TransitionType.Bounce);
+            cartTween.TweenProperty(_ReturnsCart, "position:x", finalCartPos, 1f);
+            // Rattle cart on finish
+            cartTween.TweenCallback(Callable.From(() => {
+                _ReturnsCart.EmitSignal(nameof(_ReturnsCart.CartRattled));
+
+                // Create cart return area
+                var returnArea = CreateArea(
+                    _ReturnsCart.DropzoneMarker.GlobalPosition,
+                    _ReturnAreaSize
+                );
+                _ReturnsCart.Init(returnArea, _WeirdStockItem);
+                _ReturnsCart.DroppedItemInCart += DroppedItemInCart;
+            }));
 
             /// Set overstock items
             var shuffledItemScenes = StockItemScenes.ToList().Shuffle().ToList();
@@ -112,7 +134,8 @@ namespace ShopIsDone.Microgames.DownStock
                 var item = overstockItems[i];
 
                 // Create dropzone for stock area
-                var area2D = CreateArea(area.GlobalPosition, _StockAreaSize);
+                var areaPos = area.GlobalPosition with { Y = area.GlobalPosition.Y - 0.1f };
+                var area2D = CreateArea(areaPos, _StockAreaSize);
                 // Initialize the stock area
                 area.Init(_StockItems, area2D, item);
             }
@@ -126,8 +149,10 @@ namespace ShopIsDone.Microgames.DownStock
             // Create a weird stock item, just in case
             _WeirdStockItem = WeirdStockItemScene.Instantiate<StockItem>();
             _WeirdStockItem.Init(-1);
+            _WeirdStockItem.Position = Vec3.FarOffPoint;
+            _StockItems.AddChild(_WeirdStockItem);
 
-            // Pick one of four different cases
+            //Pick one of four different cases
             var selectedCase = Enum.GetValues(typeof(ExtraCases))
                 .OfType<ExtraCases>()
                 .ToList()
@@ -142,29 +167,32 @@ namespace ShopIsDone.Microgames.DownStock
 
                 case ExtraCases.Missing:
                     {
-                        // Remove another item
+                        // Pick another stock area from the unused stock areas
+                        // and delete an item
+                        var nextArea = shuffledAreas.Pop();
+                        nextArea.DeleteAnItem();
+                        _UsedStockAreas.Add(nextArea);
                         break;
                     }
 
                 case ExtraCases.WrongPosition:
                     {
                         // Move one item from one stock area to the empty one
+                        var nextArea = shuffledAreas.Pop();
+                        var item = nextArea.StockItems.PickRandom();
+                        nextArea.RemoveItem(item);
+                        firstArea.AddItem(item);
+                        _UsedStockAreas.Add(nextArea);
                         break;
                     }
 
                 case ExtraCases.WeirdItem:
                     {
+                        // Add the weird item to the first area
+                        firstArea.AddItem(_WeirdStockItem);
                         break;
                     }
             }
-
-            // Create return area
-            var returnArea = CreateArea(
-                _ReturnsCart.DropzoneMarker.GlobalPosition,
-                _ReturnAreaSize
-            );
-            _ReturnsCart.Init(returnArea, _WeirdStockItem);
-            _ReturnsCart.DroppedItemInCart += DroppedItemInCart;
 
             // Start state machine in hovering state
             _StateMachine.ChangeState(Consts.States.HOVERING);

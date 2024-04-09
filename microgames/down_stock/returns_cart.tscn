@@ -23,7 +23,7 @@ text = "Returns"
 
 [node name="ShoppingCartMarker" type="Marker3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0575017, 1.10304, 0.527616)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0575017, 1.04664, 0.527616)
 
 [node name="VisualGuide" type="CSGBox3D" parent="ShoppingCartMarker"]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)

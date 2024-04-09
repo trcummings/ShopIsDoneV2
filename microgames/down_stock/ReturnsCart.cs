@@ -54,6 +54,9 @@ namespace ShopIsDone.Microgames.DownStock
             // Emit
             EmitSignal(nameof(DroppedItemInCart), item);
 
+            // Disable grab on item
+            item.CanGrab = false;
+
             // Tween item into cart
             var tween = GetTree()
                 .CreateTween()

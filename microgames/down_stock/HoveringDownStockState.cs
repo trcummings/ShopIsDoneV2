@@ -32,7 +32,7 @@ namespace ShopIsDone.Microgames.DownStock
 
             // If we're hovering an item and we press and hold, transition to
             // dragging item state
-            if (Input.IsActionJustPressed("ui_accept") && _HoveredStockItem != null)
+            if (Input.IsActionJustPressed("ui_accept") && (_HoveredStockItem?.CanGrab ?? false))
             {
                 _HoveredStockItem.Unhover();
                 ChangeState(Consts.States.DRAGGING, new Dictionary<string, Variant>()

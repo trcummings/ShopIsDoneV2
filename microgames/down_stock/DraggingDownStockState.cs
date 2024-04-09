@@ -120,10 +120,15 @@ namespace ShopIsDone.Microgames.DownStock
 
         private void ReturnSelected()
         {
-            GetTree()
+            var item = _GrabbedStockItem;
+            var tween = GetTree()
                 .CreateTween()
-                .BindNode(this)
-                .TweenProperty(_GrabbedStockItem, "transform", _StockItemInitialTransform, 0.15f);
+                .BindNode(this);
+            // Disable grabbing for that item
+            item.CanGrab = false;
+            tween.TweenProperty(_GrabbedStockItem, "transform", _StockItemInitialTransform, 0.15f);
+            // Enable grabbing on callback
+            tween.TweenCallback(Callable.From(() => item.CanGrab = true));
         }
     }
 }

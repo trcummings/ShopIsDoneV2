@@ -33,7 +33,6 @@ StockItemScenes = Array[PackedScene]([ExtResource("3_0xrbd"), ExtResource("4_2pp
 WeirdStockItemScene = ExtResource("8_p0ojt")
 PromptText = "Stock and Return!"
 WidgetText = "Restock Shelves!"
-DebugNoTimer = true
 
 [node name="BackgroundRectangle" parent="." index="2"]
 metadata/_edit_lock_ = true

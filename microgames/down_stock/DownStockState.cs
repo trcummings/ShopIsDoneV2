@@ -10,8 +10,8 @@ namespace ShopIsDone.Microgames.DownStock
         protected GrabHand _GrabHand;
 
         // Speed and acceleration
-        private float _MaxSpeed = 1000;
-        private float _Acceleration = 1200;
+        private float _MaxSpeed = 1200;
+        private float _Acceleration = 1400;
         private float _Friction = 0.95f;
 
         protected void UpdateHandPosition(float delta)

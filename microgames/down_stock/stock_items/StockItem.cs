@@ -12,6 +12,8 @@ namespace ShopIsDone.Microgames.DownStock
         private Node3D _Item;
         private Tween _WiggleTween;
 
+        public bool CanGrab = true;
+
         public override void _Ready()
         {
             base._Ready();
@@ -38,18 +40,24 @@ namespace ShopIsDone.Microgames.DownStock
 
         public void Hover()
         {
+            if (!CanGrab) return;
+
             TweenScale(Vector3.One * 1.1f);
             Wiggle();
         }
 
         public void Unhover()
         {
+            if (!CanGrab) return;
+
             TweenScale(Vector3.One);
             StopWiggle();
         }
 
         public void Wiggle()
         {
+            if (!CanGrab) return;
+
             _WiggleTween = GetTree()
                 .CreateTween()
                 .BindNode(this)
