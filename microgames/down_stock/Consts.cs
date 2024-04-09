@@ -11,6 +11,11 @@ namespace ShopIsDone.Microgames.DownStock
 			public const string HOVERING = "Hovering";
 			public const string DRAGGING = "Dragging";
 		}
+
+		public static class Groups
+		{
+			public const string DROPZONES = "dsm_dropzones";
+        }
 	}
 }
 

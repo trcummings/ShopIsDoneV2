@@ -33,9 +33,10 @@ namespace ShopIsDone.Microgames.DownStock
         private ReturnsCart _ReturnsCart;
         private Node2D _DropAreas;
         private Node3D _StockItems;
+        private StockItem _WeirdStockItem;
 
         private Vector2 _StockAreaSize = new Vector2(340, 100);
-        private Vector2 _ReturnAreaSize = new Vector2(472, 272);
+        private Vector2 _ReturnAreaSize = new Vector2(672, 272);
 
         private Array<StockArea> _UsedStockAreas = new Array<StockArea>();
         private enum ExtraCases
@@ -122,6 +123,10 @@ namespace ShopIsDone.Microgames.DownStock
             firstArea.DeleteAnItem();
             _UsedStockAreas.Add(firstArea);
 
+            // Create a weird stock item, just in case
+            _WeirdStockItem = WeirdStockItemScene.Instantiate<StockItem>();
+            _WeirdStockItem.Init(-1);
+
             // Pick one of four different cases
             var selectedCase = Enum.GetValues(typeof(ExtraCases))
                 .OfType<ExtraCases>()
@@ -158,7 +163,8 @@ namespace ShopIsDone.Microgames.DownStock
                 _ReturnsCart.DropzoneMarker.GlobalPosition,
                 _ReturnAreaSize
             );
-            _ReturnsCart.Init(returnArea, new StockItem());
+            _ReturnsCart.Init(returnArea, _WeirdStockItem);
+            _ReturnsCart.DroppedItemInCart += DroppedItemInCart;
 
             // Start state machine in hovering state
             _StateMachine.ChangeState(Consts.States.HOVERING);
@@ -231,7 +237,36 @@ namespace ShopIsDone.Microgames.DownStock
             _Camera3D.VOffset = offset.Y;
         }
 
-        private void WinMicrogame()
+        private async void DroppedItemInCart(StockItem item)
+        {
+            if (item.Id != _WeirdStockItem.Id)
+            {
+                // Fail game with screenshake
+                _Screenshake.Shake(
+                    ScreenshakeHandler.ShakePayload.ShakeSizes.Mild,
+                    ScreenshakeHandler.ShakeAxis.XOnly
+                );
+
+                // Stop all player input
+                SetPlayerCanProcess(false);
+
+                // Stop timer
+                MicrogameTimer.Stop();
+
+                // Set outcome
+                Outcome = Outcomes.Loss;
+
+                await ToSignal(GetTree().CreateTimer(.5f), "timeout");
+
+                // Play sfx
+                PlayFailureSfx();
+
+                // Emit outcome
+                EmitSignal(nameof(MicrogameFinished), (int)Outcome);
+            }
+        }
+
+        private async void WinMicrogame()
         {
             // Stop all player input
             SetPlayerCanProcess(false);
@@ -241,6 +276,8 @@ namespace ShopIsDone.Microgames.DownStock
 
             // Set outcome
             Outcome = Outcomes.Win;
+
+            await ToSignal(GetTree().CreateTimer(.5f), "timeout");
 
             // Play sfx
             PlaySuccessSfx();

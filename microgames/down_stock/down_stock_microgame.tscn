@@ -54,11 +54,10 @@ _StockRaycast = NodePath("../../ViewportContainer/Viewport/World/StockRaycast")
 _Camera3D = NodePath("../../ViewportContainer/Viewport/World/Camera3D")
 _GrabHand = NodePath("../../ViewportContainer/Viewport/World2D/GrabHand")
 
-[node name="Dragging" type="Node" parent="StateMachine" index="1" node_paths=PackedStringArray("_GrabPlane", "_Camera3D", "_StockAreasNode", "_GrabHand")]
+[node name="Dragging" type="Node" parent="StateMachine" index="1" node_paths=PackedStringArray("_GrabPlane", "_Camera3D", "_GrabHand")]
 script = ExtResource("12_evfrj")
 _GrabPlane = NodePath("../../ViewportContainer/Viewport/World/GrabPlane")
 _Camera3D = NodePath("../../ViewportContainer/Viewport/World/Camera3D")
-_StockAreasNode = NodePath("../../ViewportContainer/Viewport/World/PropShelfAisleEmpty01/StockAreas")
 _GrabHand = NodePath("../../ViewportContainer/Viewport/World2D/GrabHand")
 
 [node name="ViewportContainer" type="SubViewportContainer" parent="." index="7"]
@@ -122,6 +121,7 @@ unique_name_in_owner = true
 
 [node name="ReturnsCart" parent="ViewportContainer/Viewport/World" index="2" instance=ExtResource("15_mkhd3")]
 unique_name_in_owner = true
+transform = Transform3D(0.99992, -0.0126708, 0, 0.0126708, 0.99992, 0, 0, 0, 1, -0.0913754, -0.697715, 1.70832)
 
 [node name="StockRaycast" type="RayCast3D" parent="ViewportContainer/Viewport/World" index="3"]
 unique_name_in_owner = true
@@ -166,7 +166,7 @@ texture_filter = 1
 texture = ExtResource("17_i73tk")
 
 [node name="Floor" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="9"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -1.02, -0.20109)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -0.0681466, -0.20109)
 axis = 1
 transparent = false
 shaded = true

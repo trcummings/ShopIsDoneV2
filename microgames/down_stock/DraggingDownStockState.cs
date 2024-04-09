@@ -17,10 +17,6 @@ namespace ShopIsDone.Microgames.DownStock
         [Export]
         private Camera3D _Camera3D;
 
-        [Export]
-        private Node3D _StockAreasNode;
-        private Array<StockArea> _StockAreas = new Array<StockArea>();
-
         // State
         private StockItem _GrabbedStockItem = null;
         private Transform3D _StockItemInitialTransform;
@@ -37,12 +33,6 @@ namespace ShopIsDone.Microgames.DownStock
             // Wiggle it
             _GrabbedStockItem.Wiggle();
 
-            // Collect all stock areas
-            _StockAreas = _StockAreasNode
-                .GetChildren()
-                .OfType<StockArea>()
-                .ToGodotArray();
-
             // Have hand grab
             _GrabHand.Grab();
             _GrabbedStockItem.Grab();
@@ -58,8 +48,9 @@ namespace ShopIsDone.Microgames.DownStock
         {
             base.UpdateState(delta);
 
-            // Handle dropzone hovering and unhovering 
-            var hoveredDropzones = _StockAreas.Where(a => a.IsDropzoneHovered());
+            // Handle dropzone hovering and unhovering
+            var dropzones = GetTree().GetNodesInGroup(Consts.Groups.DROPZONES).OfType<IDropzone>();
+            var hoveredDropzones = dropzones.Where(a => a.IsDropzoneHovered());
             if (hoveredDropzones.Any() && hoveredDropzones.First() != _CurrentHovered)
             {
                 // Set current hovered
@@ -78,7 +69,11 @@ namespace ShopIsDone.Microgames.DownStock
                 if (_CurrentHovered?.CanDrop(_GrabbedStockItem) ?? false)
                 {
                     // Remove from previous stock area
-                    _StockAreas.ToList().Find(a => a.HasItem(_GrabbedStockItem))?.RemoveItem(_GrabbedStockItem);
+                    dropzones
+                        .Where(dz => dz is StockArea)
+                        .Select(dz => dz as StockArea)
+                        .ToList()
+                        .Find(a => a.HasItem(_GrabbedStockItem))?.RemoveItem(_GrabbedStockItem);
                     // Drop into the new one
                     _CurrentHovered.Drop(_GrabbedStockItem);
                 }
@@ -105,12 +100,22 @@ namespace ShopIsDone.Microgames.DownStock
             UpdateHandPosition((float)delta);
 
             // Move grabbed stock item in line with the grab hand cursor
+            var grabDepth = GetGrabDepth();
             var from = _Camera3D.ProjectRayOrigin(_GrabHand.GlobalPosition);
-            var dist = _Camera3D.GlobalPosition.Z - _GrabPlane.GlobalPosition.Z;
+            var dist = _Camera3D.GlobalPosition.Z - grabDepth;
             var to = from + _Camera3D.ProjectRayNormal(_GrabHand.GlobalPosition) * dist;
             _GrabbedStockItem.GlobalPosition = _GrabbedStockItem
                 .GlobalPosition
-                .MoveToward(to, (float)delta * 4);
+                .MoveToward(to, (float)delta * 8);
+        }
+
+        private float GetGrabDepth()
+        {
+            if (_CurrentHovered is ReturnsCart cart)
+            {
+                return cart.GrabPlane.GlobalPosition.Z;
+            }
+            return _GrabPlane.GlobalPosition.Z;
         }
 
         private void ReturnSelected()
