@@ -2,14 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_uyyvq"]
 [ext_resource type="Script" path="res://microgames/down_stock/DownStockMicrogame.cs" id="2_qvgbm"]
-[ext_resource type="PackedScene" uid="uid://btq51h4r34rqd" path="res://microgames/down_stock/stock_items/box_stock_item_1.tscn" id="3_0xrbd"]
-[ext_resource type="PackedScene" uid="uid://i8dgvdnkkinf" path="res://microgames/down_stock/stock_items/box_stock_item_2.tscn" id="4_2ppnn"]
+[ext_resource type="PackedScene" uid="uid://btq51h4r34rqd" path="res://microgames/down_stock/stock_items/cereal_box_stock_item.tscn" id="3_0xrbd"]
 [ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="4_3lfff"]
+[ext_resource type="PackedScene" uid="uid://bgnqrxm61eght" path="res://microgames/down_stock/stock_items/oil_bottle_stock_item.tscn" id="4_uit0p"]
 [ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="5_bkopa"]
 [ext_resource type="PackedScene" uid="uid://cm3r8nnskgdh7" path="res://microgames/down_stock/stock_area.tscn" id="5_gad7r"]
 [ext_resource type="PackedScene" uid="uid://bwqysmyhy5vfi" path="res://Models/Environment/Props/prop_shelf_aisle_empty_01_/prop_shelf_aisle_empty_01_.tscn" id="5_kbpfn"]
-[ext_resource type="PackedScene" uid="uid://x80l22ngtps6" path="res://microgames/down_stock/stock_items/box_stock_item_3.tscn" id="5_qv7hc"]
-[ext_resource type="PackedScene" uid="uid://b4q5pikas6gwx" path="res://microgames/down_stock/stock_items/box_stock_item_4.tscn" id="6_lfx6b"]
+[ext_resource type="PackedScene" uid="uid://x80l22ngtps6" path="res://microgames/down_stock/stock_items/cookie_pack_stock_item.tscn" id="5_qv7hc"]
+[ext_resource type="PackedScene" uid="uid://b4q5pikas6gwx" path="res://microgames/down_stock/stock_items/pasta_can_stock_item.tscn" id="6_lfx6b"]
 [ext_resource type="PackedScene" uid="uid://bnnlcjoton03u" path="res://microgames/down_stock/stock_items/weird_stock_item.tscn" id="8_p0ojt"]
 [ext_resource type="PackedScene" uid="uid://cmssnola8dosc" path="res://microgames/down_stock/grab_hand.tscn" id="9_114s0"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="10_j5mte"]
@@ -29,7 +29,7 @@ size = Vector2(64, 1000)
 
 [node name="DownStockMicrogame" instance=ExtResource("1_uyyvq")]
 script = ExtResource("2_qvgbm")
-StockItemScenes = Array[PackedScene]([ExtResource("3_0xrbd"), ExtResource("4_2ppnn"), ExtResource("5_qv7hc"), ExtResource("6_lfx6b")])
+StockItemScenes = Array[PackedScene]([ExtResource("3_0xrbd"), ExtResource("4_uit0p"), ExtResource("5_qv7hc"), ExtResource("6_lfx6b")])
 WeirdStockItemScene = ExtResource("8_p0ojt")
 PromptText = "Stock and Return!"
 WidgetText = "Restock Shelves!"
