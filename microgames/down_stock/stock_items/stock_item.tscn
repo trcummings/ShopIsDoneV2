@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://y3nxver43v0g"]
+
+[ext_resource type="Script" path="res://microgames/down_stock/stock_items/StockItem.cs" id="1_muirt"]
+
+[node name="StockItem" type="Area3D"]
+script = ExtResource("1_muirt")
+
+[node name="ItemPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+metadata/_edit_group_ = true
+
+[node name="Item" type="Node3D" parent="ItemPivot"]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="GrabSfx" type="AudioStreamPlayer" parent="."]
+bus = &"Microgames"
+
+[connection signal="ItemGrabbed" from="." to="GrabSfx" method="play"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bg2miiwdt1h4y"]
+[gd_scene load_steps=14 format=3 uid="uid://bg2miiwdt1h4y"]
 
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="1_1h2mb"]
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="2_88hht"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://fjvoq3olr4fm" path="res://entities/register_task/register_task.tscn" id="6_qif3y"]
 [ext_resource type="PackedScene" uid="uid://br5e18nash7g5" path="res://entities/fix_display_task/fix_display_task.tscn" id="7_1bvuq"]
 [ext_resource type="PackedScene" uid="uid://c7xlqty5qdnif" path="res://entities/clown_puppet/clown_puppet.tscn" id="8_io54v"]
+[ext_resource type="PackedScene" uid="uid://j67ix6p68gsa" path="res://entities/light_switch/light_switch.tscn" id="12_rbl1r"]
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="13_7wsxv"]
 
 [node name="Arena1" instance=ExtResource("1_1h2mb")]
@@ -70,6 +71,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -7)
 [node name="ClownPuppet" parent="Entities" index="6" instance=ExtResource("8_io54v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 1000, -13)
 
+[node name="LightSwitch" parent="Entities" index="7" instance=ExtResource("12_rbl1r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 7)
+EditorFacingDir = 1
+
+[node name="LightSwitchModel" parent="Entities/LightSwitch" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="LightSwitchComponent" parent="Entities/LightSwitch" index="5" node_paths=PackedStringArray("_Lights")]
+_IsFlippedOn = false
+_Lights = [NodePath("../../../Lights/WorldOmniLight3"), NodePath("../../../Lights/WorldOmniLight4"), NodePath("../../../Lights/WorldOmniLight5")]
+
 [node name="Lights" type="Node3D" parent="." index="6"]
 metadata/_edit_lock_ = true
 
@@ -83,6 +95,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1, 0)
 Radius = 3.0
 metadata/_edit_lock_ = true
 
+[node name="WorldOmniLight3" parent="Lights" index="2" instance=ExtResource("13_7wsxv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.862831, 1, 5.92033)
+Radius = 3.0
+
+[node name="WorldOmniLight4" parent="Lights" index="3" instance=ExtResource("13_7wsxv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.862831, 1, -7.29527)
+Radius = 3.0
+
+[node name="WorldOmniLight5" parent="Lights" index="4" instance=ExtResource("13_7wsxv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.30244, 1, 0.290684)
+Radius = 3.0
+
+[editable path="Entities/LightSwitch"]
 [editable path="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SelectUnitCTA"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SwapUnitsCTA"]

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnnlcjoton03u"]
+
+[ext_resource type="PackedScene" uid="uid://y3nxver43v0g" path="res://microgames/down_stock/stock_items/stock_item.tscn" id="1_au5l1"]
+[ext_resource type="PackedScene" uid="uid://i6wywltule5e" path="res://microgames/down_stock/stock_items/meat_pack.gltf" id="2_gdt7n"]
+[ext_resource type="AudioStream" uid="uid://cul6nkiwdcow4" path="res://microgames/down_stock/GRAB_WET--589932__mrfossy__sfx_squelch_slayer_impulse_64.wav" id="3_adm5h"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ixg0l"]
+size = Vector3(0.571289, 0.444214, 0.29248)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_888sj"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("3_adm5h")
+stream_0/weight = 1.0
+
+[node name="WeirdStockItem" instance=ExtResource("1_au5l1")]
+
+[node name="meat_pack" parent="ItemPivot/Item" index="0" instance=ExtResource("2_gdt7n")]
+
+[node name="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000488222, 0.218982, 2.08165e-12)
+shape = SubResource("BoxShape3D_ixg0l")
+
+[node name="GrabSfx" parent="." index="2"]
+stream = SubResource("AudioStreamRandomizer_888sj")

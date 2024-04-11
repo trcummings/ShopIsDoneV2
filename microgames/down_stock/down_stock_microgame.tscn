@@ -1,0 +1,231 @@
+[gd_scene load_steps=23 format=3 uid="uid://b1ppxbmllyau"]
+
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_uyyvq"]
+[ext_resource type="Script" path="res://microgames/down_stock/DownStockMicrogame.cs" id="2_qvgbm"]
+[ext_resource type="PackedScene" uid="uid://btq51h4r34rqd" path="res://microgames/down_stock/stock_items/cereal_box_stock_item.tscn" id="3_0xrbd"]
+[ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="4_3lfff"]
+[ext_resource type="PackedScene" uid="uid://bgnqrxm61eght" path="res://microgames/down_stock/stock_items/oil_bottle_stock_item.tscn" id="4_uit0p"]
+[ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="5_bkopa"]
+[ext_resource type="PackedScene" uid="uid://cm3r8nnskgdh7" path="res://microgames/down_stock/stock_area.tscn" id="5_gad7r"]
+[ext_resource type="PackedScene" uid="uid://bwqysmyhy5vfi" path="res://Models/Environment/Props/prop_shelf_aisle_empty_01_/prop_shelf_aisle_empty_01_.tscn" id="5_kbpfn"]
+[ext_resource type="PackedScene" uid="uid://x80l22ngtps6" path="res://microgames/down_stock/stock_items/cookie_pack_stock_item.tscn" id="5_qv7hc"]
+[ext_resource type="PackedScene" uid="uid://b4q5pikas6gwx" path="res://microgames/down_stock/stock_items/pasta_can_stock_item.tscn" id="6_lfx6b"]
+[ext_resource type="PackedScene" uid="uid://bnnlcjoton03u" path="res://microgames/down_stock/stock_items/weird_stock_item.tscn" id="8_p0ojt"]
+[ext_resource type="PackedScene" uid="uid://cmssnola8dosc" path="res://microgames/down_stock/grab_hand.tscn" id="9_114s0"]
+[ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="10_j5mte"]
+[ext_resource type="Script" path="res://microgames/down_stock/HoveringDownStockState.cs" id="11_ycy5e"]
+[ext_resource type="Script" path="res://microgames/down_stock/DraggingDownStockState.cs" id="12_evfrj"]
+[ext_resource type="PackedScene" uid="uid://bo0vxaf61d2i2" path="res://microgames/down_stock/returns_cart.tscn" id="15_mkhd3"]
+[ext_resource type="Material" uid="uid://ccn43qnni3br4" path="res://microgames/down_stock/earthbound_bg.material" id="16_ygtj0"]
+[ext_resource type="Texture2D" uid="uid://ii7i5mbh27gj" path="res://microgames/break_down_boxes/whitePuff22.png" id="17_i73tk"]
+[ext_resource type="Texture2D" uid="uid://cyd2sbrprk1np" path="res://textures/moodprobiotic_scary_linoleum_floor_top_down_checker_cracked_20c0f4fc-f402-48fd-98d2-76cba59684df.png" id="18_xjb6x"]
+[ext_resource type="PackedScene" uid="uid://dqrhke68klwx2" path="res://audio/ui/ui_invalid_player.tscn" id="20_akg30"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_twi8f"]
+size = Vector2(10, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0pihj"]
+size = Vector2(64, 1000)
+
+[node name="DownStockMicrogame" instance=ExtResource("1_uyyvq")]
+script = ExtResource("2_qvgbm")
+StockItemScenes = Array[PackedScene]([ExtResource("3_0xrbd"), ExtResource("4_uit0p"), ExtResource("5_qv7hc"), ExtResource("6_lfx6b")])
+WeirdStockItemScene = ExtResource("8_p0ojt")
+PromptText = "Stock and Return!"
+WidgetText = "Restock Shelves!"
+
+[node name="BackgroundRectangle" parent="." index="2"]
+metadata/_edit_lock_ = true
+
+[node name="ScreenshakeHandler" parent="." index="4" instance=ExtResource("4_3lfff")]
+unique_name_in_owner = true
+
+[node name="MicrosleepHelper" type="Node" parent="." index="5"]
+script = ExtResource("5_bkopa")
+
+[node name="StateMachine" type="Node" parent="." index="6"]
+unique_name_in_owner = true
+script = ExtResource("10_j5mte")
+
+[node name="Hovering" type="Node" parent="StateMachine" index="0" node_paths=PackedStringArray("_StockRaycast", "_Camera3D", "_GrabHand")]
+script = ExtResource("11_ycy5e")
+_StockRaycast = NodePath("../../ViewportContainer/Viewport/World/StockRaycast")
+_Camera3D = NodePath("../../ViewportContainer/Viewport/World/Camera3D")
+_GrabHand = NodePath("../../ViewportContainer/Viewport/World2D/GrabHand")
+
+[node name="Dragging" type="Node" parent="StateMachine" index="1" node_paths=PackedStringArray("_GrabPlane", "_Camera3D", "_GrabHand")]
+script = ExtResource("12_evfrj")
+_GrabPlane = NodePath("../../ViewportContainer/Viewport/World/GrabPlane")
+_Camera3D = NodePath("../../ViewportContainer/Viewport/World/Camera3D")
+_GrabHand = NodePath("../../ViewportContainer/Viewport/World2D/GrabHand")
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="." index="7"]
+metadata/_edit_lock_ = true
+
+[node name="Viewport" type="SubViewport" parent="ViewportContainer" index="0"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(940, 940)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="ViewportContainer/Viewport" index="0"]
+
+[node name="Camera3D" type="Camera3D" parent="ViewportContainer/Viewport/World" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, -3.59134e-16, 3.48633e-16, 3.48633e-16, 0.99956, 0.0296662, -3.59134e-16, -0.0296662, 0.99956, -0.0692768, 1.35428, 5.24064)
+cull_mask = 1
+fov = 33.5
+size = 2.5
+
+[node name="PropShelfAisleEmpty01" parent="ViewportContainer/Viewport/World" index="1" instance=ExtResource("5_kbpfn")]
+
+[node name="OverstockItems" type="Node3D" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.86, 0.5)
+
+[node name="Spot1" type="Marker3D" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01/OverstockItems" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 2.08165e-12)
+
+[node name="Spot2" type="Marker3D" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01/OverstockItems" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34, 0, 2.08165e-12)
+
+[node name="Spot3" type="Marker3D" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01/OverstockItems" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34, 0, 2.08165e-12)
+
+[node name="Spot4" type="Marker3D" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01/OverstockItems" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2.08165e-12)
+
+[node name="StockAreas" type="Node3D" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01" index="2"]
+unique_name_in_owner = true
+
+[node name="StockArea" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01/StockAreas" index="0" instance=ExtResource("5_gad7r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.8, 0.5)
+
+[node name="StockArea2" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01/StockAreas" index="1" instance=ExtResource("5_gad7r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1.312, 0.5)
+
+[node name="StockArea5" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01/StockAreas" index="2" instance=ExtResource("5_gad7r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 1.312, 0.5)
+
+[node name="StockArea6" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01/StockAreas" index="3" instance=ExtResource("5_gad7r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0.8, 0.5)
+
+[node name="OverstockLabel" type="Label3D" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.81783, 0.789903)
+text = "Overstock"
+
+[node name="StockItems" type="Node3D" parent="ViewportContainer/Viewport/World/PropShelfAisleEmpty01" index="4"]
+unique_name_in_owner = true
+
+[node name="ReturnsCart" parent="ViewportContainer/Viewport/World" index="2" instance=ExtResource("15_mkhd3")]
+unique_name_in_owner = true
+transform = Transform3D(0.99992, -0.0126708, 0, 0.0126708, 0.99992, 0, 0, 0, 1, -0.0913754, -0.697715, 1.70832)
+
+[node name="StockRaycast" type="RayCast3D" parent="ViewportContainer/Viewport/World" index="3"]
+unique_name_in_owner = true
+visible = false
+collide_with_areas = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="ViewportContainer/Viewport/World" index="4"]
+transform = Transform3D(0.888682, 0.318642, -0.329715, -0.0652654, 0.799661, 0.596895, 0.453856, -0.508931, 0.73144, 0, 2.84777, 2.98745)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="GrabPlane" type="Marker3D" parent="ViewportContainer/Viewport/World" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.31065)
+
+[node name="BackgroundMesh" type="MeshInstance3D" parent="ViewportContainer/Viewport/World" index="6"]
+transform = Transform3D(1, 0, 0, 0, 0.767344, -0.641235, 0, 0.641235, 0.767344, 0, 2.65461, -4.76251)
+mesh = SubResource("QuadMesh_twi8f")
+surface_material_override/0 = ExtResource("16_ygtj0")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="ViewportContainer/Viewport/World/BackgroundMesh" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 2.58515e-08, 0, -3.46548e-08, 1, 0, 0, 3.01004)
+
+[node name="BackgroundCloud" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="7"]
+transform = Transform3D(-1.15342, 1.23198, 0.0891117, -1.21114, -1.10406, -0.412674, -0.242617, -0.34551, 1.63642, 0.799795, -2.09641, 0.35647)
+modulate = Color(0.313726, 0.313726, 0.313726, 1)
+shaded = true
+double_sided = false
+alpha_cut = 1
+alpha_scissor_threshold = 0.244
+texture_filter = 1
+texture = ExtResource("17_i73tk")
+
+[node name="BackgroundCloud2" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="8"]
+transform = Transform3D(-1.61252, -0.505272, 0.0243697, 0.492834, -1.58754, -0.304862, 0.114038, -0.283776, 1.6621, -0.551505, -1.96924, 0.552188)
+flip_h = true
+modulate = Color(0.313726, 0.313726, 0.313726, 1)
+shaded = true
+double_sided = false
+alpha_cut = 1
+alpha_scissor_threshold = 0.244
+texture_filter = 1
+texture = ExtResource("17_i73tk")
+
+[node name="Floor" type="Sprite3D" parent="ViewportContainer/Viewport/World" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -0.0681466, -0.20109)
+axis = 1
+transparent = false
+shaded = true
+double_sided = false
+texture = ExtResource("18_xjb6x")
+
+[node name="World2D" type="Node2D" parent="ViewportContainer/Viewport" index="1"]
+metadata/_edit_lock_ = true
+
+[node name="Camera" type="Camera2D" parent="ViewportContainer/Viewport/World2D" index="0"]
+unique_name_in_owner = true
+anchor_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="Arena" type="Node2D" parent="ViewportContainer/Viewport/World2D" index="1"]
+metadata/_edit_lock_ = true
+
+[node name="DropAreas" type="Node2D" parent="ViewportContainer/Viewport/World2D/Arena" index="0"]
+unique_name_in_owner = true
+
+[node name="Bounds" type="Node2D" parent="ViewportContainer/Viewport/World2D/Arena" index="1"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Wall" type="StaticBody2D" parent="ViewportContainer/Viewport/World2D/Arena/Bounds" index="0"]
+position = Vector2(-35, 491)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ViewportContainer/Viewport/World2D/Arena/Bounds/Wall" index="0"]
+shape = SubResource("RectangleShape2D_0pihj")
+
+[node name="Wall2" type="StaticBody2D" parent="ViewportContainer/Viewport/World2D/Arena/Bounds" index="1"]
+position = Vector2(974, 502)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ViewportContainer/Viewport/World2D/Arena/Bounds/Wall2" index="0"]
+shape = SubResource("RectangleShape2D_0pihj")
+
+[node name="Wall3" type="StaticBody2D" parent="ViewportContainer/Viewport/World2D/Arena/Bounds" index="2"]
+position = Vector2(473, -32)
+rotation = 1.5708
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ViewportContainer/Viewport/World2D/Arena/Bounds/Wall3" index="0"]
+shape = SubResource("RectangleShape2D_0pihj")
+
+[node name="Wall4" type="StaticBody2D" parent="ViewportContainer/Viewport/World2D/Arena/Bounds" index="3"]
+position = Vector2(457, 972)
+rotation = 1.5708
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ViewportContainer/Viewport/World2D/Arena/Bounds/Wall4" index="0"]
+shape = SubResource("RectangleShape2D_0pihj")
+
+[node name="GrabHand" parent="ViewportContainer/Viewport/World2D" index="2" instance=ExtResource("9_114s0")]
+unique_name_in_owner = true
+position = Vector2(470, 470)
+
+[node name="UIInvalidPlayer" parent="." index="8" instance=ExtResource("20_akg30")]
+
+[connection signal="Microsleep" from="." to="MicrosleepHelper" method="Microsleep"]
+[connection signal="AttemptedIncorrectDrop" from="StateMachine/Dragging" to="UIInvalidPlayer" method="play"]
+[connection signal="AttemptedIncorrectDrop" from="StateMachine/Dragging" to="ScreenshakeHandler" method="Shake" binds= [0, 1]]
