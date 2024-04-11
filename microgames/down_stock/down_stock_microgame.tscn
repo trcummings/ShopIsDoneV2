@@ -133,7 +133,7 @@ light_energy = 0.5
 shadow_enabled = true
 
 [node name="GrabPlane" type="Marker3D" parent="ViewportContainer/Viewport/World" index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 1.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.31065)
 
 [node name="BackgroundMesh" type="MeshInstance3D" parent="ViewportContainer/Viewport/World" index="6"]
 transform = Transform3D(1, 0, 0, 0, 0.767344, -0.641235, 0, 0.641235, 0.767344, 0, 2.65461, -4.76251)

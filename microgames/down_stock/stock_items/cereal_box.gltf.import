@@ -31,9 +31,9 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "materials": {
-"Material": {
+"CerealBox": {
 "use_external/enabled": true,
-"use_external/path": "res://widgets/tile_indicator/indicators/green_indicator.material"
+"use_external/path": "res://microgames/down_stock/stock_items/cereal_box_stock_item.material"
 },
 "Outline": {
 "use_external/enabled": true,

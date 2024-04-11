@@ -128,7 +128,10 @@ namespace ShopIsDone.Microgames.DownStock
             item.CanGrab = false;
             tween.TweenProperty(_GrabbedStockItem, "transform", _StockItemInitialTransform, 0.15f);
             // Enable grabbing on callback
-            tween.TweenCallback(Callable.From(() => item.CanGrab = true));
+            tween.TweenCallback(Callable.From(() => {
+                item.CanGrab = true;
+                item.StopWiggle();
+            }));
         }
     }
 }

@@ -48,10 +48,10 @@ namespace ShopIsDone.Microgames.DownStock
 
         public void Unhover()
         {
-            if (!CanGrab) return;
-
-            TweenScale(Vector3.One);
             StopWiggle();
+
+            if (!CanGrab) return;
+            TweenScale(Vector3.One);
         }
 
         public void Wiggle()

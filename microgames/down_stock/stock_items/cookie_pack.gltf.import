@@ -33,7 +33,7 @@ _subresources={
 "materials": {
 "Material": {
 "use_external/enabled": true,
-"use_external/path": "res://widgets/tile_indicator/indicators/blue_indicator.material"
+"use_external/path": "res://microgames/down_stock/stock_items/down_stock_item_textures.material"
 },
 "Outline": {
 "use_external/enabled": true,

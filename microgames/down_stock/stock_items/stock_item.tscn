@@ -14,6 +14,7 @@ unique_name_in_owner = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
+visible = false
 
 [node name="GrabSfx" type="AudioStreamPlayer" parent="."]
 bus = &"Microgames"
