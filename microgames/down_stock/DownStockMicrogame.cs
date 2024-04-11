@@ -183,6 +183,9 @@ namespace ShopIsDone.Microgames.DownStock
                         nextArea.RemoveItem(item);
                         firstArea.AddItem(item);
                         _UsedStockAreas.Add(nextArea);
+                        // Delete the overstock item for the missing one so they
+                        // can't accidentally place it in the missing area first
+                        overstockItems.ToList().Find(i => i.Id == nextArea.Id)?.QueueFree();
                         break;
                     }
 
