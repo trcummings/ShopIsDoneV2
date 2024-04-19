@@ -7,7 +7,7 @@ namespace ShopIsDone.Microgames.PoseMannequin
         public static class States
         {
             public const string CHOOSING_POSE = "ChoosingPose";
-            public const string POSE_RESULT = "PoseResult";
+            public const string APPROACHING_MANNEQUIN = "ApproachingMannequin";
         }
 
         public static class Groups

@@ -11,11 +11,17 @@ namespace ShopIsDone.Microgames.PoseMannequin
         [Signal]
         public delegate void ChangedPoseEventHandler();
 
+        [Signal]
+        public delegate void ConfirmedPoseEventHandler();
+
         [Export]
         private Node3D _PoseableMannequin;
 
         [Export]
         private AnimationPlayer _AnimPlayer;
+
+        [Export]
+        private Camera3D _Camera;
 
         private Array<string> _AllPoses = new Array<string>()
         {
@@ -39,6 +45,9 @@ namespace ShopIsDone.Microgames.PoseMannequin
             // Pick the first pose
             var initialPose = _CurrentPoses[_CurrentIdx];
             _AnimPlayer.Play(initialPose);
+
+            // Make this camera the current camera
+            _Camera.MakeCurrent();
         }
 
         public override void UpdateState(double delta)
@@ -51,7 +60,8 @@ namespace ShopIsDone.Microgames.PoseMannequin
             // Handle accept pose input
             else if (Input.IsActionJustPressed("ui_accept"))
             {
-
+                EmitSignal(nameof(ConfirmedPose));
+                ChangeState(Consts.States.APPROACHING_MANNEQUIN);
             }
         }
 
@@ -61,6 +71,8 @@ namespace ShopIsDone.Microgames.PoseMannequin
             _CurrentIdx = _CurrentPoses.IndexOf(nextPose);
             _AnimPlayer.Play(nextPose);
             EmitSignal(nameof(ChangedPose));
+
+            // Juice the pose change
             var tween = GetTree()
                 .CreateTween()
                 .BindNode(this)

@@ -1,9 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://dnoga1kbptipw"]
+[gd_scene load_steps=22 format=3 uid="uid://dnoga1kbptipw"]
 
 [ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_fh68k"]
 [ext_resource type="Script" path="res://microgames/pose_mannequin_clown_game/PoseMannequinClownMicrogame.cs" id="2_gqonr"]
 [ext_resource type="Script" path="res://microgames/pose_mannequin_clown_game/ChoosingPoseState.cs" id="6_hvyws"]
-[ext_resource type="Script" path="res://microgames/pose_mannequin_clown_game/PoseResultState.cs" id="7_wtafl"]
+[ext_resource type="Script" path="res://microgames/pose_mannequin_clown_game/ApproachingMannequinState.cs" id="7_wtafl"]
 [ext_resource type="PackedScene" uid="uid://521m8e8gm0lc" path="res://camera/screenshake_handler.tscn" id="8_0yht8"]
 [ext_resource type="Script" path="res://util/MicrosleepHelper.cs" id="9_4hho2"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="10_cqi5c"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://s178hyd623u2" path="res://microgames/pose_mannequin_clown_game/find_your_new_wow.png" id="15_18fq7"]
 [ext_resource type="Texture2D" uid="uid://brej1wf5destc" path="res://microgames/pose_mannequin_clown_game/carpet_floor.png" id="16_mo8yh"]
 [ext_resource type="PackedScene" uid="uid://c1djrupohmfdf" path="res://audio/ui/ui_select_player.tscn" id="16_mpdu5"]
+[ext_resource type="PackedScene" uid="uid://c3gagjd3n48d2" path="res://audio/ui/ui_confirm_player.tscn" id="17_facn4"]
 [ext_resource type="Texture2D" uid="uid://mgaxryfoe043" path="res://microgames/pose_mannequin_clown_game/model_banner_1.png" id="17_xktoo"]
 [ext_resource type="Texture2D" uid="uid://fbbc6l1vpoux" path="res://microgames/pose_mannequin_clown_game/model_banner_2.png" id="18_saewa"]
 
@@ -31,10 +32,11 @@ uv1_scale = Vector3(10, 10, 10)
 [sub_resource type="PlaneMesh" id="PlaneMesh_pata5"]
 material = SubResource("StandardMaterial3D_4a8if")
 
-[node name="PoseMannequinClownMicrogame" instance=ExtResource("1_fh68k")]
+[node name="PoseMannequinClownMicrogame" node_paths=PackedStringArray("Cameras") instance=ExtResource("1_fh68k")]
 script = ExtResource("2_gqonr")
-StockItemScenes = null
-WeirdStockItemScene = null
+Cameras = []
+PromptText = "Match Its Pose"
+WidgetText = "Match Its Pose"
 DebugNoTimer = true
 
 [node name="BackgroundRectangle" parent="." index="2"]
@@ -50,18 +52,21 @@ script = ExtResource("9_4hho2")
 unique_name_in_owner = true
 script = ExtResource("10_cqi5c")
 
-[node name="ChoosingPose" type="Node" parent="StateMachine" index="0" node_paths=PackedStringArray("_PoseableMannequin", "_AnimPlayer")]
+[node name="ChoosingPose" type="Node" parent="StateMachine" index="0" node_paths=PackedStringArray("_PoseableMannequin", "_AnimPlayer", "_Camera")]
 script = ExtResource("6_hvyws")
 _PoseableMannequin = NodePath("../../ViewportContainer/Viewport/World/PosingMannequinNodes/WhiteMannequin")
 _AnimPlayer = NodePath("../../ViewportContainer/Viewport/World/PosingMannequinNodes/WhiteMannequin/white_mannequin/AnimationPlayer")
+_Camera = NodePath("../../ViewportContainer/Viewport/World/PosingMannequinNodes/PoseMannequinCamera")
 
-[node name="PoseResult" type="Node" parent="StateMachine" index="1"]
+[node name="ApproachingMannequin" type="Node" parent="StateMachine" index="1" node_paths=PackedStringArray("_Camera")]
 script = ExtResource("7_wtafl")
+_Camera = NodePath("../../ViewportContainer/Viewport/World/ApproachingMannequinNodes/ApproachingMannequinCamera")
 
 [node name="ViewportContainer" type="SubViewportContainer" parent="." index="7"]
 metadata/_edit_lock_ = true
 
 [node name="Viewport" type="SubViewport" parent="ViewportContainer" index="0"]
+own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(940, 940)
@@ -69,47 +74,50 @@ render_target_update_mode = 4
 
 [node name="World" type="Node3D" parent="ViewportContainer/Viewport" index="0"]
 
-[node name="Camera3D" type="Camera3D" parent="ViewportContainer/Viewport/World" index="0"]
-unique_name_in_owner = true
-transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 2.08165e-12, 1.25, 5)
+[node name="ApproachingMannequinNodes" type="Node3D" parent="ViewportContainer/Viewport/World" index="0"]
+
+[node name="ApproachingMannequinCamera" type="Camera3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="0"]
+transform = Transform3D(1, -3.79186e-16, 3.4746e-16, 3.4746e-16, 0.996195, 0.0871557, -3.79186e-16, -0.0871557, 0.996195, 2.08165e-12, 1.5, 6.5)
 cull_mask = 1
 fov = 33.5
 size = 2.5
 
-[node name="ApproachingMannequinNodes" type="Node3D" parent="ViewportContainer/Viewport/World" index="1"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="0"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="1"]
 transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0)
 mesh = SubResource("PlaneMesh_ab6if")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="1"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="2"]
 transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, -10)
 mesh = SubResource("PlaneMesh_ab6if")
 skeleton = NodePath("../..")
 
-[node name="SpotLight3D" type="SpotLight3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="2"]
+[node name="SpotLight3D" type="SpotLight3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="3"]
 transform = Transform3D(1, -6.97574e-16, -1.52459e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 0, 4.88724, 0)
+light_bake_mode = 1
 spot_range = 7.17367
 spot_angle = 12.5234
 
-[node name="SpotLight3D2" type="SpotLight3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="3"]
+[node name="SpotLight3D2" type="SpotLight3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="4"]
 transform = Transform3D(1, -6.97574e-16, -1.52459e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 0, 4.88724, -6)
+light_bake_mode = 1
 spot_range = 7.17367
 spot_angle = 12.5234
 
-[node name="SpotLight3D3" type="SpotLight3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="4"]
+[node name="SpotLight3D3" type="SpotLight3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="5"]
 transform = Transform3D(1, -6.97574e-16, -1.52459e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 0, 4.88724, -3)
+light_bake_mode = 1
 spot_range = 7.17367
 spot_angle = 12.5234
 
-[node name="SpotLight3D4" type="SpotLight3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="5"]
+[node name="SpotLight3D4" type="SpotLight3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="6"]
 transform = Transform3D(0.999268, -0.00197933, 0.0382145, 6.97475e-16, 0.998661, 0.051726, -0.0382657, -0.0516881, 0.99793, 0, 1.44506, 5.65081)
+light_bake_mode = 1
 spot_range = 7.17367
 spot_attenuation = 3.03143
 spot_angle = 12.5234
 
-[node name="Node3D" type="Node3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="6"]
+[node name="Node3D" type="Node3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="7"]
 
 [node name="SI_Prop_ClothesRack_02" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes/Node3D" index="0" instance=ExtResource("12_5tldu")]
 transform = Transform3D(20.3225, 0, -45.6837, 0, 50, 0, 45.6837, 0, 20.3225, -1.59977, 2.38419e-07, 1.763)
@@ -117,7 +125,7 @@ transform = Transform3D(20.3225, 0, -45.6837, 0, 50, 0, 45.6837, 0, 20.3225, -1.
 [node name="SI_Prop_ClothesRack_03" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes/Node3D" index="1" instance=ExtResource("13_c1i1p")]
 transform = Transform3D(40.7973, 0, 28.9064, 0, 50, 0, -28.9064, 0, 40.7973, 1.69135, 0, -1.37833)
 
-[node name="WhiteMannequin" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="7" instance=ExtResource("11_r87g8")]
+[node name="WhiteMannequin" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes" index="8" instance=ExtResource("11_r87g8")]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 2.08165e-12, -3)
 
 [node name="Skeleton3D" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes/WhiteMannequin/white_mannequin/Armature" index="0"]
@@ -249,7 +257,7 @@ bones/64/rotation = Quaternion(-4.35393e-08, -1.09596e-06, -2.42981e-08, 1)
 [node name="AnimationPlayer" parent="ViewportContainer/Viewport/World/ApproachingMannequinNodes/WhiteMannequin/white_mannequin" index="1"]
 autoplay = "FoldArms-Pose"
 
-[node name="PosingMannequinNodes" type="Node3D" parent="ViewportContainer/Viewport/World" index="2"]
+[node name="PosingMannequinNodes" type="Node3D" parent="ViewportContainer/Viewport/World" index="1"]
 
 [node name="Sprite3D" type="Sprite3D" parent="ViewportContainer/Viewport/World/PosingMannequinNodes" index="0"]
 transform = Transform3D(-0.232808, 0, -0.0583132, 0, 0.24, 0, 0.0583132, 0, -0.232808, 0.0294971, 1.93898, 13.0112)
@@ -262,6 +270,7 @@ size = Vector3(1, 0.25, 0.5)
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="ViewportContainer/Viewport/World/PosingMannequinNodes" index="2"]
 transform = Transform3D(1, -6.97574e-16, -1.52459e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 0, 5.26437, 9.93501)
+light_bake_mode = 1
 spot_range = 7.17367
 spot_angle = 12.5234
 
@@ -399,10 +408,12 @@ autoplay = "Walk-Pose"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="ViewportContainer/Viewport/World/PosingMannequinNodes" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0952091, 2.30374, 11.3255)
+light_bake_mode = 1
 omni_range = 2.53531
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="ViewportContainer/Viewport/World/PosingMannequinNodes" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.00704, 6.71349)
+light_bake_mode = 1
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="ViewportContainer/Viewport/World/PosingMannequinNodes" index="6"]
 transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 9.82618)
@@ -430,7 +441,15 @@ transform = Transform3D(20.3225, 0, -45.6837, 0, 50, 0, 45.6837, 0, 20.3225, -1.
 [node name="SI_Prop_ClothesRack_03" parent="ViewportContainer/Viewport/World/PosingMannequinNodes/Node3D2" index="1" instance=ExtResource("13_c1i1p")]
 transform = Transform3D(40.7973, 0, 28.9064, 0, 50, 0, -28.9064, 0, 40.7973, 1.69135, 0, -1.37833)
 
+[node name="PoseMannequinCamera" type="Camera3D" parent="ViewportContainer/Viewport/World/PosingMannequinNodes" index="10"]
+transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 2.08165e-12, 1.25, 5)
+cull_mask = 1
+fov = 33.5
+size = 2.5
+
 [node name="UISelectPlayer" parent="." index="8" instance=ExtResource("16_mpdu5")]
+
+[node name="UIConfirmPlayer" parent="." index="9" instance=ExtResource("17_facn4")]
 
 [connection signal="ChangedPose" from="StateMachine/ChoosingPose" to="UISelectPlayer" method="play"]
 

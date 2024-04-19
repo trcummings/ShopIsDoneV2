@@ -12,14 +12,10 @@ namespace ShopIsDone.Microgames.PoseMannequin
         public delegate void MicrosleepEventHandler();
 
         [Export]
-        public Array<PackedScene> StockItemScenes;
-
-        [Export]
-        public PackedScene WeirdStockItemScene;
+        public Array<Camera3D> Cameras = new Array<Camera3D>();
 
         // Nodes
         private ScreenshakeHandler _Screenshake;
-        private Camera3D _Camera3D;
 
         private StateMachine _StateMachine;
 
@@ -29,7 +25,6 @@ namespace ShopIsDone.Microgames.PoseMannequin
 
             // Ready nodes
             _Screenshake = GetNode<ScreenshakeHandler>("%ScreenshakeHandler");
-            _Camera3D = GetNode<Camera3D>("%Camera3D");
             _StateMachine = GetNode<StateMachine>("%StateMachine");
 
             // Connect screenshake
@@ -83,8 +78,11 @@ namespace ShopIsDone.Microgames.PoseMannequin
 
         private void ShakeUpdate(Vector2 offset)
         {
-            _Camera3D.HOffset = offset.X;
-            _Camera3D.VOffset = offset.Y;
+            foreach (var camera in Cameras)
+            {
+                camera.HOffset = offset.X;
+                camera.VOffset = offset.Y;
+            }
         }
 
         private async void WinMicrogame()
