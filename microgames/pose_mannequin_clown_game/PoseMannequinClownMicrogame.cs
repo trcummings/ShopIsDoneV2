@@ -82,9 +82,6 @@ namespace ShopIsDone.Microgames.PoseMannequin
 
         private async void WinMicrogame()
         {
-            // Stop timer
-            MicrogameTimer.Stop();
-
             // Set outcome
             Outcome = Outcomes.Win;
 
@@ -92,6 +89,15 @@ namespace ShopIsDone.Microgames.PoseMannequin
 
             // Play sfx
             PlaySuccessSfx();
+
+            // Emit outcome
+            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
+        }
+
+        private void FailMicrogame()
+        {
+            // Set outcome
+            Outcome = Outcomes.Loss;
 
             // Emit outcome
             EmitSignal(nameof(MicrogameFinished), (int)Outcome);

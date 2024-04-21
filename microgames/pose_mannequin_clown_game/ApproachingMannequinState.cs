@@ -18,6 +18,9 @@ namespace ShopIsDone.Microgames.PoseMannequin
         [Signal]
         public delegate void FailedForLastTimeEventHandler();
 
+        [Signal]
+        public delegate void LightBuzzEventHandler();
+
         [Export]
         private ShaderMaterial _DistortionMaterial;
 
@@ -34,6 +37,9 @@ namespace ShopIsDone.Microgames.PoseMannequin
 
         [Export]
         private AnimationPlayer _AnimPlayer;
+
+        [Export]
+        private AnimationPlayer _FinalAnimPlayer;
 
         [Export]
         private PoseManager _PoseManager;
@@ -104,6 +110,27 @@ namespace ShopIsDone.Microgames.PoseMannequin
                 // same, end the microgame
                 if (_PoseManager.CurrentPose == chosenPose)
                 {
+                    await ToSignal(GetTree().CreateTimer(2f), "timeout");
+
+                    var idx = _CurrentMarker.GetIndex();
+                    var groupName = $"pmcm_spot_{idx + 1}";
+                    var lights = GetTree().GetNodesInGroup(groupName).OfType<Light3D>();
+
+                    // Kill the lights at that spot
+                    foreach (var light in lights) light.Hide();
+                    EmitSignal(nameof(LightBuzz));
+
+                    // Hide mannequin
+                    _Mannequin.Hide();
+                    // Wait a little
+                    await ToSignal(GetTree().CreateTimer(1f), "timeout");
+
+                    // Turn them back on
+                    foreach (var light in lights) light.Show();
+
+                    // Wait a little
+                    await ToSignal(GetTree().CreateTimer(1f), "timeout");
+
                     EmitSignal(nameof(SelectedCorrectPose));
                 }
                 // If they're wrong and it's not the last marker, then emit an
@@ -125,9 +152,34 @@ namespace ShopIsDone.Microgames.PoseMannequin
                     // Go back to choosing pose state
                     ChangeState(Consts.States.CHOOSING_POSE);
                 }
-                // If we're on the last one,
+                // If we're on the last one
                 else
                 {
+                    await ToSignal(GetTree().CreateTimer(2, true), "timeout");
+
+                    EmitSignal(nameof(FailedSelection));
+
+                    // Cut the lights
+                    var lights = GetTree().GetNodesInGroup("pmcm_lights").OfType<Light3D>();
+                    // Kill the lights at that spot
+                    foreach (var light in lights) light.Hide();
+                    EmitSignal(nameof(LightBuzz));
+
+                    // Have the mannequin pray
+                    _AnimPlayer.Play("Desperation-Pose-1");
+                    _Mannequin.RotationDegrees = _Mannequin.RotationDegrees with { Y = -180 };
+
+                    await ToSignal(GetTree().CreateTimer(2, true), "timeout");
+
+                    // Turn on the flashlight
+                    var flashlight = lights.Where(l => l.IsInGroup("pmcm_flashlight")).First();
+                    flashlight.Show();
+
+                    await ToSignal(GetTree().CreateTimer(2, true), "timeout");
+
+                    _FinalAnimPlayer.Play("default");
+                    await ToSignal(_FinalAnimPlayer, "animation_finished");
+
                     EmitSignal(nameof(FailedForLastTime));
                 }
             }
