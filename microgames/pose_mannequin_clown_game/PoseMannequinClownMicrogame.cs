@@ -11,10 +11,8 @@ namespace ShopIsDone.Microgames.PoseMannequin
         [Signal]
         public delegate void MicrosleepEventHandler();
 
-        [Export]
-        public Array<Camera3D> Cameras = new Array<Camera3D>();
-
         // Nodes
+        private Camera3D _Camera;
         private ScreenshakeHandler _Screenshake;
 
         private StateMachine _StateMachine;
@@ -24,72 +22,66 @@ namespace ShopIsDone.Microgames.PoseMannequin
             base._Ready();
 
             // Ready nodes
+            _Camera = GetNode<Camera3D>("%Camera");
             _Screenshake = GetNode<ScreenshakeHandler>("%ScreenshakeHandler");
             _StateMachine = GetNode<StateMachine>("%StateMachine");
 
             // Connect screenshake
             _Screenshake.ShakeOffsetUpdated += ShakeUpdate;
-
-            // Do not allow player input
-            SetPlayerCanProcess(false);
         }
 
         public override void Init(MicrogamePayload payload)
         {
             base.Init(payload);
 
+            // Hide the timer bar
+            HideTimer(0.1f);
+            // Show the background
+            ShowBackground(0.5f);
+
             // Start state machine in hovering state
-            _StateMachine.ChangeState(Consts.States.CHOOSING_POSE);
+            _StateMachine.ChangeState(Consts.States.APPROACHING_MANNEQUIN, new Dictionary<string, Variant>()
+            {
+                { Consts.IS_FIRST_TIME_KEY, true }
+            });
         }
 
         public override void Start()
         {
-            base.Start();
-
-            // Allow player input
-            SetPlayerCanProcess(true);
+            // Override so nothing happens on start
         }
 
+        public void InterruptTimer()
+        {
+            MicrogameTimer.Stop();
+            HideTimer(0.1f);
+        }
+
+        public void StartTimer()
+        {
+            base.Start();
+            ShowTimer(0.1f);
+        }
+
+        protected override void OnTimerFinished()
+        {
+            // Hide the timer bar
+            HideTimer(0.1f);
+        }
 
         public override void _Process(double delta)
         {
             base._Process(delta);
         }
 
-        private void SetPlayerCanProcess(bool value)
-        {
-            _StateMachine.SetProcess(value);
-            _StateMachine.SetPhysicsProcess(value);
-            SetPhysicsProcess(value);
-            SetProcess(value);
-        }
-
-        protected override void OnTimerFinished()
-        {
-            // Stop all player input
-            SetPlayerCanProcess(false);
-
-            // This is a failure case only, so play the sound
-            PlayFailureSfx();
-
-            // Emit
-            EmitSignal(nameof(MicrogameFinished), (int)Outcome);
-        }
-
         private void ShakeUpdate(Vector2 offset)
         {
-            foreach (var camera in Cameras)
-            {
-                camera.HOffset = offset.X;
-                camera.VOffset = offset.Y;
-            }
+            _Camera.HOffset = offset.X;
+            _Camera.VOffset = offset.Y;
         }
 
         private async void WinMicrogame()
         {
-            // Stop all player input
-            SetPlayerCanProcess(false);
-
             // Stop timer
             MicrogameTimer.Stop();
 

@@ -3,6 +3,7 @@ using System;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
 using ShopIsDone.Utils.Extensions;
+using System.Linq;
 
 namespace ShopIsDone.Microgames.PoseMannequin
 {
@@ -14,6 +15,9 @@ namespace ShopIsDone.Microgames.PoseMannequin
         [Signal]
         public delegate void ConfirmedPoseEventHandler();
 
+        [Signal]
+        public delegate void RequestTimerEventHandler();
+
         [Export]
         private Node3D _PoseableMannequin;
 
@@ -23,31 +27,59 @@ namespace ShopIsDone.Microgames.PoseMannequin
         [Export]
         private Camera3D _Camera;
 
-        private Array<string> _AllPoses = new Array<string>()
-        {
-            "FoldArms-Pose",
-            "HandsOnHips-Pose",
-            "Pray-Pose",
-            "TurnRight-Pose",
-            "Walk-Pose",
-        };
+        [Export]
+        private PoseManager _PoseManager;
+
         private Array<string> _CurrentPoses = new Array<string>();
         private int _CurrentIdx = 0;
+        private SceneTreeTimer _Timer;
 
-        public override void OnStart(Dictionary<string, Variant> message)
+        public async override void OnStart(Dictionary<string, Variant> message)
         {
-            base.OnStart(message);
+            // Set the next correct pose
+            _PoseManager.PickNextPoseSet();
 
             // Pick set of poses for this try
-            _CurrentPoses = _AllPoses.Duplicate();
+            _CurrentIdx = 0;
+            _CurrentPoses = _PoseManager.AvailablePoses;
             _CurrentPoses.Shuffle();
+            // Make sure the correct pose isn't the first one the player sees
+            while (_CurrentPoses.First() == _PoseManager.CurrentPose)
+            {
+                _CurrentPoses.Shuffle();
+            }
 
             // Pick the first pose
             var initialPose = _CurrentPoses[_CurrentIdx];
             _AnimPlayer.Play(initialPose);
 
-            // Make this camera the current camera
-            _Camera.MakeCurrent();
+            // Swivel camera back
+            var tween = GetTree()
+                .CreateTween()
+                .BindNode(this)
+                .SetTrans(Tween.TransitionType.Cubic)
+                .SetEase(Tween.EaseType.Out);
+            tween.TweenProperty(_Camera, "rotation_degrees:y", -180, 0.25f);
+            await ToSignal(tween, "finished");
+
+            // Finish on start hook
+            base.OnStart(message);
+
+            _Timer = GetTree().CreateTimer(5f, true);
+            _Timer.Timeout += OnDelayFinished;
+        }
+
+        public void OnTimerFinished()
+        {
+            ChangeState(Consts.States.APPROACHING_MANNEQUIN, new Dictionary<string, Variant>()
+            {
+                { Consts.CHOSEN_POSE_KEY, _CurrentPoses[_CurrentIdx] }
+            });
+        }
+
+        private void OnDelayFinished()
+        {
+            EmitSignal(nameof(RequestTimer));
         }
 
         public override void UpdateState(double delta)
@@ -60,8 +92,9 @@ namespace ShopIsDone.Microgames.PoseMannequin
             // Handle accept pose input
             else if (Input.IsActionJustPressed("ui_accept"))
             {
+                _Timer.Timeout -= OnDelayFinished;
                 EmitSignal(nameof(ConfirmedPose));
-                ChangeState(Consts.States.APPROACHING_MANNEQUIN);
+                OnTimerFinished();
             }
         }
 
