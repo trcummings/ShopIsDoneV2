@@ -249,6 +249,12 @@ namespace ShopIsDone.Microgames
                 _RemainingTicksLabel.Show();
             }
 
+            // On first beat just make sure we're set to max
+            if (currentBeat == 0)
+            {
+                _ProgressBar.Value = 100;
+            }
+
             // Increment current beat by 1 so we're ahead of the final beat
             var goalValue = (1f - ((currentBeat + 1) / (float)_Microgame.NumBeats)) * 100;
             var duration = _Microgame.GetSecondsPerBeat();

@@ -14,6 +14,9 @@ namespace ShopIsDone.Microgames
         public delegate void BeatTickedEventHandler(int beat);
 
         [Signal]
+        public delegate void AllBeatsTickedEventHandler();
+
+        [Signal]
         public delegate void HideTimerRequestedEventHandler(float duration);
 
         [Signal]
@@ -82,8 +85,9 @@ namespace ShopIsDone.Microgames
             MicrogameTimer.Start();
 
             // Emit first beat
+            CurrentBeat = 0;
             OnBeat(CurrentBeat);
-            EmitSignal(nameof(BeatTicked), 0);
+            EmitSignal(nameof(BeatTicked), CurrentBeat);
         }
 
         public float GetSecondsPerBeat()
@@ -171,6 +175,7 @@ namespace ShopIsDone.Microgames
             if (CurrentBeat == NumBeats)
             {
                 MicrogameTimer.Stop();
+                EmitSignal(nameof(AllBeatsTicked));
                 OnTimerFinished();
             }
         }
