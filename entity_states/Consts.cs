@@ -15,6 +15,7 @@ namespace ShopIsDone.EntityStates
 		{
 			public const string DO_TASK = "do_task";
 			public const string USE_ABILITY = "use_ability";
+			public const string EXITED = "exited";
 		}
 
 		public static class Customers

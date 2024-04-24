@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://djuvrc34vfx23"]
+
+[ext_resource type="Theme" uid="uid://cd4frxuakmb2x" path="res://ui_theme/base_ui_theme.theme" id="1"]
+[ext_resource type="Script" path="res://exit/ExitInfoUI.cs" id="2"]
+[ext_resource type="PackedScene" uid="uid://bmafmnvdq8368" path="res://ui/window_border.tscn" id="2_itdbi"]
+
+[node name="ExitInfoUI" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 2.08165e-12)
+offset_right = 102.0
+offset_bottom = 47.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2")
+
+[node name="BorderedUIWindow" parent="." instance=ExtResource("2_itdbi")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="DoorStatus" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="StatusText" type="Label" parent="MarginContainer/DoorStatus"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1")
+theme_type_variation = &"LabelDark"
+text = "Status:"
+
+[node name="Spacer" type="Control" parent="MarginContainer/DoorStatus"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OpenText" type="Label" parent="MarginContainer/DoorStatus"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1")
+theme_override_colors/font_color = Color(0, 0.388235, 0, 1)
+theme_override_constants/outline_size = 4
+text = "Open"
+
+[node name="LockedText" type="Label" parent="MarginContainer/DoorStatus"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1")
+theme_override_colors/font_color = Color(0.686275, 0, 0, 1)
+text = "Locked"

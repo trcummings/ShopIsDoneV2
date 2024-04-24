@@ -3,6 +3,7 @@ using System;
 
 namespace ShopIsDone.Exit
 {
+    [Tool]
     public partial class ExitDoorLight : Node3D
     {
         [Export]
