@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="1_1h2mb"]
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="2_88hht"]
-[ext_resource type="Script" path="res://levels/test_level/conditions/CustomerSatisfiedCondition.cs" id="2_mulww"]
 [ext_resource type="PackedScene" uid="uid://xolev31q2oiu" path="res://entities/vegetable_fridge_task/vegetable_fridge_task.tscn" id="3_c4x54"]
 [ext_resource type="Script" path="res://levels/test_level/conditions/TaskCompletedCondition.cs" id="3_qnavv"]
 [ext_resource type="Script" path="res://clown_rules/action_rules/MoveInLShapeActionRule.cs" id="4_slyis"]
@@ -13,21 +12,13 @@
 [ext_resource type="PackedScene" uid="uid://c7xlqty5qdnif" path="res://entities/clown_puppet/clown_puppet.tscn" id="8_io54v"]
 [ext_resource type="PackedScene" uid="uid://j67ix6p68gsa" path="res://entities/light_switch/light_switch.tscn" id="12_rbl1r"]
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="13_7wsxv"]
+[ext_resource type="PackedScene" uid="uid://dl32plo1uc25s" path="res://entities/exit_door/exit_door.tscn" id="13_xc0y5"]
 
 [node name="Arena1" instance=ExtResource("1_1h2mb")]
 
-[node name="CustomerSatisfiedCondition" type="Node" parent="Services/ConditionsService" index="0" node_paths=PackedStringArray("Customer")]
-script = ExtResource("2_mulww")
-Customer = NodePath("../../../Entities/Customer")
-_Id = "customer_satisfied_condition"
-IsVisibleInUI = true
-Verb = "Satisfy"
-Noun = "Customer"
-PluralNoun = "Customers"
-
-[node name="TaskCompletedCondition" type="Node" parent="Services/ConditionsService" index="1" node_paths=PackedStringArray("Task")]
+[node name="TaskCompletedCondition" type="Node" parent="Services/ConditionsService" index="0" node_paths=PackedStringArray("Task")]
 script = ExtResource("3_qnavv")
-Task = NodePath("../../../Entities/RegisterTask")
+Task = NodePath("../../../Entities/VegetableFridge")
 _Id = "task_completed_condition"
 IsVisibleInUI = true
 Verb = "Complete"
@@ -81,6 +72,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 [node name="LightSwitchComponent" parent="Entities/LightSwitch" index="5" node_paths=PackedStringArray("_Lights")]
 _IsFlippedOn = false
 _Lights = [NodePath("../../../Lights/WorldOmniLight3"), NodePath("../../../Lights/WorldOmniLight4"), NodePath("../../../Lights/WorldOmniLight5")]
+
+[node name="ExitDoor" parent="Entities" index="8" instance=ExtResource("13_xc0y5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 1)
+EditorFacingDir = 1
 
 [node name="Lights" type="Node3D" parent="." index="6"]
 metadata/_edit_lock_ = true

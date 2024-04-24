@@ -1,15 +1,137 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3edvxooy0nm3"]
+[gd_scene load_steps=14 format=3 uid="uid://d3edvxooy0nm3"]
 
 [ext_resource type="Material" path="res://exit/exit_door.material" id="1_442ua"]
+[ext_resource type="Script" path="res://render/Model.cs" id="1_ibt30"]
 [ext_resource type="PackedScene" uid="uid://cojwv587ghlem" path="res://exit/exit_door_light.tscn" id="2_jreyl"]
+[ext_resource type="AudioStream" uid="uid://b2lnv2bif1qxy" path="res://exit/DOOR_LOCKING__131024__dymewiz__locking-a-door_01.wav" id="4_htc2f"]
+[ext_resource type="AudioStream" uid="uid://8xewturbtuqf" path="res://exit/DOOR_UNLOCKING__519065__angelkunev__door-unlock.wav" id="5_evhk2"]
 
 [sub_resource type="QuadMesh" id="2"]
 material = ExtResource("1_442ua")
 size = Vector2(1, 2)
 center_offset = Vector3(0, 0, -0.5)
 
-[node name="ExitModel" type="Node3D" groups=["renderable"]]
+[sub_resource type="Animation" id="Animation_fsifb"]
+resource_name = "unlock"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorUnlockingPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DoorLight")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"UnlockDoor"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_epf0r"]
+resource_name = "lock"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorLight")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"LockDoor"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DoorLockingPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_n0xig"]
+resource_name = "lock_silent"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorLight")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"LockDoor"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_1xuu3"]
+resource_name = "unlock_silent"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorLight")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"UnlockDoor"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jdvwg"]
+_data = {
+"lock": SubResource("Animation_epf0r"),
+"lock_silent": SubResource("Animation_n0xig"),
+"unlock": SubResource("Animation_fsifb"),
+"unlock_silent": SubResource("Animation_1xuu3")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_felbd"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("4_htc2f")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rqhod"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("5_evhk2")
+stream_0/weight = 1.0
+
+[node name="ExitModel" type="Node3D" node_paths=PackedStringArray("_AnimPlayer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01, 0, 0)
+script = ExtResource("1_ibt30")
+LoopingAnimations = []
+_AnimPlayer = NodePath("AnimationPlayer")
 
 [node name="ExitDoorMesh" type="CSGMesh3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.49, 1, 2.08165e-12)
@@ -20,3 +142,14 @@ unique_name_in_owner = true
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.9, 2.15, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jdvwg")
+}
+
+[node name="DoorLockingPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_felbd")
+bus = &"SFX"
+
+[node name="DoorUnlockingPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_rqhod")
+bus = &"SFX"

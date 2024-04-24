@@ -107,6 +107,8 @@ namespace ShopIsDone.Actions
             return WinFailCheck(new DeferredCommand(() => new SeriesCommand(
                 // Update tiles
                 new DeferredCommand(() => new ActionCommand(_TileManager.UpdateTiles)),
+                // Update entities
+                new DeferredCommand(UpdateEntities),
                 // Idle all units
                 new DeferredCommand(IdleAllUnits),
 
@@ -123,6 +125,17 @@ namespace ShopIsDone.Actions
                 // Idle all units
                 new DeferredCommand(IdleAllUnits)
             )));
+        }
+
+        private Command UpdateEntities()
+        {
+            return new SeriesCommand(
+                _ArenaEntities
+                    .GetAllArenaEntities()
+                    .Where(e => e.IsInArena())
+                    .Select(e => e.Update())
+                    .ToArray()
+                );
         }
 
         private Command IdleAllUnits()

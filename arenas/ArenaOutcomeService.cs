@@ -7,6 +7,7 @@ using Godot.Collections;
 using ArenaStateConsts = ShopIsDone.Arenas.States.Consts;
 using FinishedConsts = ShopIsDone.Arenas.States.Finished.Consts;
 using ShopIsDone.Conditions;
+using ShopIsDone.Core;
 
 namespace ShopIsDone.Arenas
 {
@@ -20,6 +21,8 @@ namespace ShopIsDone.Arenas
 
         [Export]
         private ConditionsService _ConditionsService;
+
+        private Array<LevelEntity> _ExitedUnits = new Array<LevelEntity>();
 
         public void AdvanceToVictoryPhase()
         {
@@ -37,6 +40,11 @@ namespace ShopIsDone.Arenas
             });
         }
 
+        public void ExitUnit(LevelEntity entity)
+        {
+            _ExitedUnits.Add(entity);
+        }
+
         public bool WasOutcomeReached()
         {
             return IsPlayerVictorious() || WasPlayerDefeated();
@@ -44,24 +52,23 @@ namespace ShopIsDone.Arenas
 
         public bool IsPlayerVictorious()
         {
-            return _ConditionsService.AllConditionsComplete();
+            return _ConditionsService.AllConditionsComplete() && _ExitedUnits.Count > 0;
         }
 
         public bool WasPlayerDefeated()
         {
             // TODO: Add other conditions here
 
-
             // The player must not be victorious in order to be defeated. obviously.
-            var playerNotVictorious = !IsPlayerVictorious();
+            return !IsPlayerVictorious() && NoMoreActivePlayerUnits();
+        }
 
-            // No more active player pawns in the arena
-            var noMoreActivePlayerPawnsInArena = _PlayerUnitService
+        private bool NoMoreActivePlayerUnits()
+        {
+            return _PlayerUnitService
                 .GetUnits()
                 // All units are either not active or not in the arena
                 .All(unit => !unit.IsActive() || !unit.IsInArena());
-
-            return playerNotVictorious && noMoreActivePlayerPawnsInArena;
         }
     }
 }

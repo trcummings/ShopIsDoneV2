@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ba3fv8flh1nna"]
+[gd_scene load_steps=4 format=3 uid="uid://ba3fv8flh1nna"]
 
 [ext_resource type="Script" path="res://entity_states/EntityStateHandler.cs" id="1_qq2mc"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="2_mrpex"]
+[ext_resource type="Script" path="res://entity_states/ExitedEntityState.cs" id="3_v0kxt"]
 
 [node name="EmployeeStateHandler" type="Node" node_paths=PackedStringArray("InitialState")]
 script = ExtResource("1_qq2mc")
@@ -27,3 +28,9 @@ script = ExtResource("2_mrpex")
 _EnterAnimName = "meltdown"
 Id = "dead"
 _IsActive = false
+
+[node name="Exited" type="Node" parent="."]
+script = ExtResource("3_v0kxt")
+Id = "exited"
+_IsActive = false
+_IsInArena = false

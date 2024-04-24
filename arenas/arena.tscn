@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=96 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -80,6 +80,7 @@
 [ext_resource type="PackedScene" uid="uid://b2dsmfror0n7j" path="res://entities/clown_puppet/clown_puppet_info_ui.tscn" id="73_7mvf3"]
 [ext_resource type="PackedScene" uid="uid://dkd8del2h3k7q" path="res://arenas/states/unit_placement/ConfirmPlacementPrompt.tscn" id="74_defnj"]
 [ext_resource type="PackedScene" uid="uid://b55lvstnyky6x" path="res://ui/button_cta.tscn" id="75_aedxp"]
+[ext_resource type="PackedScene" uid="uid://djuvrc34vfx23" path="res://exit/exit_info_ui.tscn" id="77_7p3ei"]
 [ext_resource type="Script" path="res://ui/VerticalDrawer.cs" id="78_lb4oy"]
 [ext_resource type="PackedScene" uid="uid://bwhrj81x35dr7" path="res://clown_rules/ui/rules_drawer_child.tscn" id="80_63bq2"]
 [ext_resource type="PackedScene" uid="uid://b5q8ihxc5ibv2" path="res://pausing/blur_background.tscn" id="80_b46ih"]
@@ -772,6 +773,10 @@ visible = false
 layout_mode = 2
 
 [node name="ClownPuppetInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer" instance=ExtResource("73_7mvf3")]
+visible = false
+layout_mode = 2
+
+[node name="ExitInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer" instance=ExtResource("77_7p3ei")]
 visible = false
 layout_mode = 2
 
