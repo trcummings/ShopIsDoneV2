@@ -20,6 +20,8 @@ Id = "move"
 
 [node name="DoTask" type="Node" parent="."]
 script = ExtResource("2_mrpex")
+_WaitForEnterAnimToFinish = false
+_WaitForExitAnimToFinish = false
 _IdleAnimName = "do_task"
 Id = "do_task"
 

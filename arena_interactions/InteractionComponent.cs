@@ -8,6 +8,7 @@ using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Tiles;
 using ShopIsDone.ArenaInteractions.Selectors;
+using ShopIsDone.Tasks;
 
 namespace ShopIsDone.ArenaInteractions
 {
@@ -54,6 +55,14 @@ namespace ShopIsDone.ArenaInteractions
                 .OrderBy(iTile => iTile.GlobalPosition.DistanceTo(pos))
                 .Select(iTile => iTile.Tile)
                 .FirstOrDefault();
+        }
+
+        public Array<Tile> GetSelectTiles()
+        {
+            return _InteractionSelector
+                .GetSelectableTiles()
+                .Select(t => t.Tile)
+                .ToGodotArray();
         }
 
         private void SetInteractionInTiles()

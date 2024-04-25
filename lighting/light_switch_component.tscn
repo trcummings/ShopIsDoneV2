@@ -7,6 +7,7 @@
 [node name="LightSwitchComponent" type="Node3D" node_paths=PackedStringArray("_SwitchLight")]
 script = ExtResource("1_qlv73")
 _IsFlippedOn = true
+_ModelPath = NodePath("")
 _SwitchLight = NodePath("WorldOmniLight")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true

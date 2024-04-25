@@ -1,6 +1,7 @@
 ﻿using Godot;
 using Godot.Collections;
 using ShopIsDone.ArenaInteractions;
+using ShopIsDone.Arenas.UI;
 
 namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
 {
@@ -8,6 +9,9 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
     {
         [Export]
         private UnitInteractionService _UnitInteractionService;
+
+        [Export]
+        private InfoUIContainer _InfoUIContainer;
 
         private bool _JustConfirmedInteraction = false;
 
@@ -21,6 +25,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Wire up unit interaction service
             _UnitInteractionService.ConfirmedInteraction += OnConfirmInteraction;
             _UnitInteractionService.CanceledInteraction += OnCancel;
+            _UnitInteractionService.SelectedInteraction += OnSelectInteraction;
             _UnitInteractionService.Activate(_SelectedUnit);
         }
 
@@ -39,7 +44,11 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             // Clean up unit interaction service
             _UnitInteractionService.ConfirmedInteraction -= OnConfirmInteraction;
             _UnitInteractionService.CanceledInteraction -= OnCancel;
+            _UnitInteractionService.SelectedInteraction -= OnSelectInteraction;
             _UnitInteractionService.Deactivate();
+
+            // Clean up ui container
+            _InfoUIContainer.CleanUp();
 
             // Base OnExit
             base.OnExit(nextState);
@@ -61,6 +70,12 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
                 { Consts.ACTION_KEY, _Action },
                 { Consts.INTERACTION_KEY, interaction }
             });
+        }
+
+        private void OnSelectInteraction(InteractionComponent interaction)
+        {
+            // Handle the UI
+            _InfoUIContainer.Init(interaction.Entity);
         }
     }
 }

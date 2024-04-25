@@ -133,30 +133,8 @@ namespace ShopIsDone.ArenaInteractions
 
         private void SelectInteractable(InteractionComponent interaction)
         {
-            //    // Cancel the current diff
-            //    CancelApDiff();
-
-            //    // Hide the current interactable UI
-            //    _InteractableUIContainer.Hide();
             // Set the interactable as the selected interaction
             _SelectedInteraction = interaction;
-            //    // Activate its relevant UI
-            //    _InteractableUIContainer.SelectInteractable(_SelectedInteractable);
-            //    // Show it
-            //    _InteractableUIContainer.Show();
-
-            //    // If the selected unit can afford the interaction, show the confirmation UI
-            //    var pawnCanAfford = SelectedUnitCanAffordInteraction(interactable);
-            //    if (interactable.IsActive() && pawnCanAfford)
-            //    {
-            //        _InteractionConfirmationUI.SetCallToAction(interaction.CTA);
-            //        _InteractionConfirmationUI.Show();
-            //    }
-            //    else _InteractionConfirmationUI.Hide();
-
-            //    // If there are multiple interactables, show the cycle interactables UI
-            //    if (_Interactables.Count > 1) _CycleInteractionsUI.Show();
-            //    else _CycleInteractionsUI.Hide();
 
             // Point the finger cursor at the interaction
             var destination = _SelectedInteraction.Entity.GlobalPosition;
@@ -169,15 +147,8 @@ namespace ShopIsDone.ArenaInteractions
                 _SelectedUnit.FacingDirection = _SelectedUnit.GetFacingDirTowards(closestTile.GlobalPosition);
             }
 
-            //    // Set the UI action cost diff
-            //    RequestApDiff(new ActionPointHandlerComponent()
-            //    {
-            //        ActionPoints = interaction.InteractionAPCost
-            //    });
-
-            //    // Unhighlight other interactables and highlight this one
-            //    foreach (var otherInteractable in _Interactables) otherInteractable.GetComponent<HoverEntityComponent>()?.Unhover();
-            //    interactable.GetComponent<HoverEntityComponent>()?.Hover();
+            // Emit
+            EmitSignal(nameof(SelectedInteraction), interaction);
         }
     }
 }

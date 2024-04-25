@@ -22,7 +22,7 @@ namespace ShopIsDone.Lighting
             var model = handler.GetComponent<ModelComponent>();
 
             return new SeriesCommand(
-                // Change to doing task state
+                // Run do task animation
                 model.RunPerformAction(StateConsts.Employees.DO_TASK),
                 // Flip off the lights
                 _LightSwitch.RunFlipLights(),

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b46xb2dilpr4v" path="res://tasks/task_tile.tscn" id="4_pnv6m"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="5_4xk0f"]
 [ext_resource type="Script" path="res://tasks/task_models/AnimatedTaskModelHelper.cs" id="5_wi31c"]
-[ext_resource type="PackedScene" path="res://microgames/always_outcome/always_win_microgame.tscn" id="6_gal1p"]
+[ext_resource type="PackedScene" uid="uid://b1ppxbmllyau" path="res://microgames/down_stock/down_stock_microgame.tscn" id="7_7auic"]
 [ext_resource type="PackedScene" uid="uid://d4apl4ogrj486" path="res://entities/stock_shelves_task/stock_shelves_task_model.tscn" id="7_i3tky"]
 [ext_resource type="Script" path="res://render/ModelComponent.cs" id="9_krvv8"]
 
@@ -69,11 +69,12 @@ AnimName = "ProgressTask"
 
 [node name="MicrogameHandler" type="Node" parent="." index="4"]
 script = ExtResource("5_4xk0f")
-MicrogameScene = ExtResource("6_gal1p")
+MicrogameScene = ExtResource("7_7auic")
 _OutcomeHandlerPath = NodePath("../TaskComponent")
 
 [node name="StockShelvesTaskModel" parent="." index="5" instance=ExtResource("7_i3tky")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+LoopingAnimations = []
 
 [node name="CollisionRotator" type="RemoteTransform3D" parent="StockShelvesTaskModel" index="3"]
 transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 1, 1.05, 2.05814e-13)
@@ -89,7 +90,7 @@ transform = Transform3D(1, -3.48787e-16, 0, 3.48787e-16, 1, -3.48787e-16, 0, 3.4
 remote_path = NodePath("../../WidgetPoint")
 
 [node name="WidgetPoint" parent="." index="6"]
-transform = Transform3D(-1, 3.48787e-16, 1.50996e-07, 3.48787e-16, 1, -3.48787e-16, -1.50996e-07, -3.48787e-16, -1, -1, 1, 6.86257e-15)
+transform = Transform3D(-1, 3.48787e-16, 1.50996e-07, 3.48787e-16, 1, -3.48787e-16, -1.50996e-07, -3.48787e-16, -1, -1, 1, 2.76871e-13)
 
 [node name="ModelComponent" type="Node" parent="." index="7"]
 script = ExtResource("9_krvv8")

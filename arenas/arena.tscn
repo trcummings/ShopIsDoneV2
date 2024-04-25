@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://dq2epbd2snfbt"]
+[gd_scene load_steps=97 format=3 uid="uid://dq2epbd2snfbt"]
 
 [ext_resource type="Script" path="res://arenas/Arena.cs" id="1_loukv"]
 [ext_resource type="Script" path="res://util/state_machine/StateMachine.cs" id="2_1igvu"]
@@ -80,6 +80,7 @@
 [ext_resource type="PackedScene" uid="uid://b2dsmfror0n7j" path="res://entities/clown_puppet/clown_puppet_info_ui.tscn" id="73_7mvf3"]
 [ext_resource type="PackedScene" uid="uid://dkd8del2h3k7q" path="res://arenas/states/unit_placement/ConfirmPlacementPrompt.tscn" id="74_defnj"]
 [ext_resource type="PackedScene" uid="uid://b55lvstnyky6x" path="res://ui/button_cta.tscn" id="75_aedxp"]
+[ext_resource type="PackedScene" uid="uid://c5dae2dbd555q" path="res://lighting/light_switch_info_ui.tscn" id="75_csbby"]
 [ext_resource type="PackedScene" uid="uid://djuvrc34vfx23" path="res://exit/exit_info_ui.tscn" id="77_7p3ei"]
 [ext_resource type="Script" path="res://ui/VerticalDrawer.cs" id="78_lb4oy"]
 [ext_resource type="PackedScene" uid="uid://bwhrj81x35dr7" path="res://clown_rules/ui/rules_drawer_child.tscn" id="80_63bq2"]
@@ -345,9 +346,10 @@ _ActionDescription = NodePath("../../../../../../../../UILayer/ActionMenuContain
 _InfoUIContainer = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer")
 _ActionDescription = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/ActionDescription")
 
-[node name="Interact" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitInteractionService", "_ActionDescription")]
+[node name="Interact" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitInteractionService", "_InfoUIContainer", "_ActionDescription")]
 script = ExtResource("29_22p7l")
 _UnitInteractionService = NodePath("../../../../../../../../Services/UnitInteractionService")
+_InfoUIContainer = NodePath("../../../../../../../../UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer")
 _ActionDescription = NodePath("../../../../../../../../UILayer/ActionMenuContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/ActionDescription")
 
 [node name="Task" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine/PlayerTurn/PlayerTurnStateMachine/ChoosingAction/ActionStateMachine" node_paths=PackedStringArray("_UnitTaskService", "_InfoUIContainer", "_ActionDescription")]
@@ -765,6 +767,10 @@ layout_mode = 2
 script = ExtResource("72_r3j85")
 
 [node name="CustomerInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer" instance=ExtResource("65_5pv26")]
+visible = false
+layout_mode = 2
+
+[node name="LightSwitchInfoUI" parent="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/InfoUIContainer" instance=ExtResource("75_csbby")]
 visible = false
 layout_mode = 2
 
