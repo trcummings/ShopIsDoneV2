@@ -5,15 +5,12 @@ using ShopIsDone.Actions;
 using ShopIsDone.Core;
 using ShopIsDone.Utils.Commands;
 using Godot.Collections;
-using ShopIsDone.Utils.DependencyInjection;
 using ShopIsDone.Utils.Extensions;
 
 namespace ShopIsDone.AI
 {
     public partial class ActionPlanner : NodeComponent
     {
-        [Export]
-        private Array<TurnPlan> _TurnPlans = new Array<TurnPlan>();
 
         [Export]
         protected Node3D _SensorsNode;
@@ -21,6 +18,8 @@ namespace ShopIsDone.AI
 
         [Export]
         protected ActionHandler _ActionHandler;
+
+        private Array<TurnPlan> _TurnPlans = new Array<TurnPlan>();
 
         // The blackboard is the "mind" of the AI, where values get recorded for
         // sensors to update, and for turns and action plans to use
@@ -35,19 +34,14 @@ namespace ShopIsDone.AI
         public override void Init()
         {
             base.Init();
-            // TODO: Initialize
-            var provider = InjectionProvider.GetProvider(this);
-            // Duplicate turn plans (recursively)
-            _TurnPlans = _TurnPlans.Select(tp => (TurnPlan)tp.Duplicate()).ToGodotArray();
-            // Initialize turn plans and inject depdencies
+
+            // Pull plans from children of planner
+            _TurnPlans = GetChildren().OfType<TurnPlan>().ToGodotArray();
+
+            // Init turn plans
             foreach (var turnPlan in _TurnPlans)
             {
-                provider.InjectObject(turnPlan);
                 turnPlan.Init(_Blackboard, _ActionHandler.Actions);
-                foreach (var plan in turnPlan.ActionPlans)
-                {
-                    provider.InjectObject(plan);
-                }
             }
             // Init sensors
             foreach (var sensor in _Sensors) sensor.Init();

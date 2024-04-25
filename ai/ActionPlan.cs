@@ -10,12 +10,11 @@ using ShopIsDone.Utils.DependencyInjection;
 using static ShopIsDone.Widgets.TileIndicator;
 using SystemGenerics = System.Collections.Generic;
 using ShopIsDone.Widgets;
-using ShopIsDone.Utils.Extensions;
 using ShopIsDone.Lighting;
 
 namespace ShopIsDone.AI
 {
-    public partial class ActionPlan : Resource
+    public partial class ActionPlan : Node
     {
         [Export]
         public string ActionId;
@@ -37,6 +36,8 @@ namespace ShopIsDone.AI
 
         public virtual void Init(ArenaAction action, Dictionary<string, Variant> blackboard)
         {
+            InjectionProvider.Inject(this);
+
             _Action = action;
             _Entity = action.Entity;
             _Blackboard = blackboard;
