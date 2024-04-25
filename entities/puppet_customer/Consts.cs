@@ -7,6 +7,7 @@ namespace ShopIsDone.Entities.PuppetCustomers
 		public const string ENTITY_TARGET = "Target";
 		public const string TILE_TARGET = "TileTarget";
 		public const string PRIORITY_GOAL_TILES = "PriorityGoalTiles";
+        public const string BOTHERED_EMPLOYEE = "BotheredEmployee";
 
         public static class States
         {

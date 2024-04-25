@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b45hm4qtkjkef"]
+
+[ext_resource type="PackedScene" uid="uid://ojwe5uopm5sn" path="res://microgames/null_microgame.tscn" id="1_d2pxd"]
+[ext_resource type="Script" path="res://microgames/obscene_gesture/ObsceneGestureMicrogame.cs" id="2_u8dmh"]
+
+[node name="ObsceneGestureMicrogame" instance=ExtResource("1_d2pxd")]
+script = ExtResource("2_u8dmh")
+ShowPrompt = false
+ShowPopupText = false

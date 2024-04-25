@@ -40,6 +40,11 @@ namespace ShopIsDone.Microgames
             return GetMicrogame(payload).WidgetText;
         }
 
+        public bool GetShouldShowMicrogameText(MicrogamePayload payload)
+        {
+            return GetMicrogame(payload).ShowPopupText;
+        }
+
         private Microgame GetMicrogame(MicrogamePayload _)
         {
             _MicrogameScene = MicrogameScene.Instantiate<Microgame>();

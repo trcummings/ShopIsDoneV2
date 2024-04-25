@@ -69,9 +69,13 @@ namespace ShopIsDone.Entities.PuppetCustomers.Actions
                     // Run bother animation
                     _ModelComponent.RunPerformAction(StateConsts.Customers.BOTHER),
                     // Show prompt popup
-                    new AsyncCommand(() => _EntityWidgetService.PopupLabelAsync(
-                        Entity.WidgetPoint,
-                        _MicrogameHandler.GetMicrogamePrompt(payload))
+                    new ConditionalCommand(
+                        // Should show check
+                        () => _MicrogameHandler.GetShouldShowMicrogameText(payload),
+                        new AsyncCommand(() => _EntityWidgetService.PopupLabelAsync(
+                            Entity.WidgetPoint,
+                            _MicrogameHandler.GetMicrogamePrompt(payload))
+                        )
                     ),
                     // Target alert popup
                     new AsyncCommand(() => _EntityWidgetService.AlertAsync(target.WidgetPoint)),

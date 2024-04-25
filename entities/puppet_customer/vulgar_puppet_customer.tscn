@@ -1,0 +1,48 @@
+[gd_scene load_steps=11 format=3 uid="uid://clhtmtqacedwj"]
+
+[ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="1_6fmp8"]
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/turn_plans/HarassTargetTurnPlan.cs" id="2_w2lx6"]
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/MoveTowardsGoalActionPlan.cs" id="3_15bii"]
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/WaitAndEndTurnActionPlan.cs" id="4_5b1ky"]
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/BotherEmployeeActionPlan.cs" id="5_7h7jn"]
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/turn_plans/LeaveAfterHarassmentTurnPlan.cs" id="6_y6haj"]
+[ext_resource type="Script" path="res://ai/ActionPlan.cs" id="7_psqug"]
+[ext_resource type="Script" path="res://microgames/OutcomeHandler.cs" id="8_1rx3i"]
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/sensors/NearestEmployeeSensor.cs" id="8_7ajd0"]
+[ext_resource type="PackedScene" uid="uid://b45hm4qtkjkef" path="res://microgames/obscene_gesture/obscene_gesture_microgame.tscn" id="9_jlxse"]
+
+[node name="VulgarCustomer" instance=ExtResource("1_6fmp8")]
+Id = "vulgar_puppet_customer_type_1"
+
+[node name="HarassTarget" type="Node" parent="ActionPlanner" index="0"]
+script = ExtResource("2_w2lx6")
+
+[node name="MoveTowardsGoal" type="Node" parent="ActionPlanner/HarassTarget" index="0"]
+script = ExtResource("3_15bii")
+ActionId = "move"
+
+[node name="BotherEmployee" type="Node" parent="ActionPlanner/HarassTarget" index="1"]
+script = ExtResource("5_7h7jn")
+ActionId = "bother_employee"
+
+[node name="WaitAndEndTurn" type="Node" parent="ActionPlanner/HarassTarget" index="2"]
+script = ExtResource("4_5b1ky")
+ActionId = "wait"
+
+[node name="LeaveAfterHarassment" type="Node" parent="ActionPlanner" index="1"]
+script = ExtResource("6_y6haj")
+
+[node name="Leave" type="Node" parent="ActionPlanner/LeaveAfterHarassment" index="0"]
+script = ExtResource("7_psqug")
+ActionId = "leave"
+
+[node name="NearestEmployeeSensor" type="Node3D" parent="Sensors" index="0"]
+script = ExtResource("8_7ajd0")
+
+[node name="OutcomeHandler" parent="." index="12"]
+script = ExtResource("8_1rx3i")
+
+[node name="MicrogameHandler" parent="." index="13"]
+MicrogameScene = ExtResource("9_jlxse")
+
+[editable path="ActionPointHandler"]

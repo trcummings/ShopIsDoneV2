@@ -191,11 +191,16 @@ namespace ShopIsDone.ActionPoints
                         new DeferredCommand(() => new ConditionalCommand(
                             () => ActionPointDebt == MaxActionPoints,
                             // If we've maxed out AP debt, run death
-                            new DeferredCommand(() => _DeathHandler.Die(payload))
+                            new DeferredCommand(() => Die(payload))
                         ))
                     )
                 )
             );
+        }
+
+        public Command Die(ApDamagePayload payload)
+        {
+            return _DeathHandler.Die(payload);
         }
 
         public virtual void SpendAPOnAction(int amount)
