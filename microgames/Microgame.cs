@@ -43,6 +43,12 @@ namespace ShopIsDone.Microgames
         [Export]
         public bool DebugNoTimer = false;
 
+        [Export]
+        public bool ShowPrompt = true;
+
+        [Export]
+        public bool ShowPopupText = true;
+
         // Microgame Timing
         public int NumBeats = 8;
         public float BPM = 120;

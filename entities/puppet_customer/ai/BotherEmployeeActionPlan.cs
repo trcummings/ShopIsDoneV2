@@ -79,6 +79,11 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                     { ActionConsts.TARGET, target },
                     // Get positioning of action
                     { ActionConsts.POSITIONING, (int)Positioning.GetPositioning(_Entity.FacingDirection, target.FacingDirection) }
+                })),
+                // Set blackboard values
+                new DeferredCommand(() => new ActionCommand(() =>
+                {
+                    _Blackboard.Add(Consts.BOTHERED_EMPLOYEE, true);
                 }))
             );
         }
