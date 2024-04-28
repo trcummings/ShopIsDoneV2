@@ -6,18 +6,21 @@ using ShopIsDone.Utils.Commands;
 using System.Linq;
 using GenericCollections = System.Collections.Generic;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Utils.DependencyInjection;
 
 namespace ShopIsDone.AI
 {
     // A Turn Plan makes decisions around what actions an AI should plan and execute,
     // among a collection of action plans
     [GlobalClass]
-    public partial class TurnPlan : Resource
+    public partial class TurnPlan : Node
     {
         [Signal]
         public delegate void TurnFinishedEventHandler();
 
         [Export]
+        public int BasePriority = 1;
+
         private Array<ActionPlan> _ActionPlans;
         public Array<ActionPlan> ActionPlans { get { return _ActionPlans; } }
 
@@ -26,11 +29,14 @@ namespace ShopIsDone.AI
 
         public virtual void Init(Dictionary<string, Variant> blackboard, Array<ArenaAction> actions)
         {
+            InjectionProvider.Inject(this);
+
             // Set blackboard
             _Blackboard = blackboard;
 
-            // Duplicate plans
-            _ActionPlans = _ActionPlans.Select(ap => (ActionPlan)ap.Duplicate()).ToGodotArray();
+            // Get the action plans that are the child of this turn plan
+            _ActionPlans = GetChildren().OfType<ActionPlan>().ToGodotArray();
+
             // Initialize each action plan with the accompanying action
             foreach (var plan in _ActionPlans)
             {
@@ -39,7 +45,7 @@ namespace ShopIsDone.AI
                     .ToList()
                     .Find(a => a.Id == plan.ActionId);
                 if (action != null) plan.Init(action, _Blackboard);
-                else GD.PrintErr($"Unable to find Action {plan.ActionId} for {ResourceName}");
+                else GD.PrintErr($"Unable to find Action {plan.ActionId} for {Name}");
             }
         }
 
@@ -55,7 +61,7 @@ namespace ShopIsDone.AI
 
         public virtual int GetPriority()
         {
-            return 1;
+            return BasePriority;
         }
 
         public bool IsPlanFinished()

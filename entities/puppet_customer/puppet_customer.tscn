@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c84riwntsfpy5"]
+[gd_scene load_steps=31 format=3 uid="uid://c84riwntsfpy5"]
 
 [ext_resource type="Script" path="res://core/LevelEntity.cs" id="1_hv7oi"]
 [ext_resource type="PackedScene" uid="uid://ovynrpipvul4" path="res://entities/puppet_customer/puppet_customer_type_1/customer_type_1_model.tscn" id="2_5ehyc"]
@@ -19,9 +19,8 @@
 [ext_resource type="Resource" uid="uid://dqrp4gg7h6k1n" path="res://arena_actions/actions/wait_action.tres" id="14_u6t0o"]
 [ext_resource type="Resource" uid="uid://bqh5iqllvqmhp" path="res://entities/puppet_customer/actions/intimidate_action.tres" id="15_v7snx"]
 [ext_resource type="Script" path="res://entity_states/AnimatedEntityState.cs" id="18_e7js2"]
+[ext_resource type="Resource" uid="uid://bkqielg0j0f5h" path="res://entities/puppet_customer/actions/leave_action.tres" id="18_mc6iw"]
 [ext_resource type="Script" path="res://ai/ActionPlanner.cs" id="18_ock78"]
-[ext_resource type="Resource" uid="uid://dgdoi87t5014c" path="res://entities/puppet_customer/ai/aggressive_turn_plan.tres" id="19_ynvcu"]
-[ext_resource type="Script" path="res://entities/puppet_customer/ai/sensors/NearestEmployeeSensor.cs" id="20_oymu8"]
 [ext_resource type="Script" path="res://entities/puppet_customer/CustomerOutcomeHandler.cs" id="26_vx53h"]
 [ext_resource type="Script" path="res://microgames/MicrogameHandler.cs" id="27_fpgq0"]
 [ext_resource type="PackedScene" uid="uid://b530vht7q6kmg" path="res://microgames/only_service_animals/only_service_animals_microgame.tscn" id="28_v08d8"]
@@ -96,7 +95,7 @@ _StateHandler = NodePath("../StateHandler")
 
 [node name="ActionHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("11_5w0ou")
-Actions = [ExtResource("12_3ebgi"), ExtResource("13_k6cqb"), ExtResource("14_ejwco"), ExtResource("14_u6t0o"), ExtResource("15_v7snx")]
+Actions = [ExtResource("12_3ebgi"), ExtResource("13_k6cqb"), ExtResource("14_ejwco"), ExtResource("14_u6t0o"), ExtResource("15_v7snx"), ExtResource("18_mc6iw")]
 _ActionPointHandler = NodePath("../ActionPointHandler")
 
 [node name="StateHandler" type="Node" parent="." node_paths=PackedStringArray("InitialState", "_ModelComponent")]
@@ -123,14 +122,10 @@ _IsInArena = false
 
 [node name="ActionPlanner" type="Node" parent="." node_paths=PackedStringArray("_SensorsNode", "_ActionHandler")]
 script = ExtResource("18_ock78")
-_TurnPlans = [ExtResource("19_ynvcu")]
 _SensorsNode = NodePath("../Sensors")
 _ActionHandler = NodePath("../ActionHandler")
 
 [node name="Sensors" type="Node3D" parent="."]
-
-[node name="NearestEmployeeSensor" type="Node3D" parent="Sensors"]
-script = ExtResource("20_oymu8")
 
 [node name="OutcomeHandler" type="Node" parent="." node_paths=PackedStringArray("_ActionPointHandler")]
 script = ExtResource("26_vx53h")

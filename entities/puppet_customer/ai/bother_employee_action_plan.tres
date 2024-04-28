@@ -1,7 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://d2ssm4uv76b0p"]
-
-[ext_resource type="Script" path="res://entities/puppet_customer/ai/BotherEmployeeActionPlan.cs" id="1_vmjk5"]
-
-[resource]
-script = ExtResource("1_vmjk5")
-ActionId = "bother_employee"

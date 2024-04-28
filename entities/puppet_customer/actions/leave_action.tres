@@ -1,0 +1,22 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bkqielg0j0f5h"]
+
+[ext_resource type="Script" path="res://entities/puppet_customer/actions/LeaveAction.cs" id="1_kcuwp"]
+
+[resource]
+script = ExtResource("1_kcuwp")
+Id = "leave"
+ActionName = "Leave"
+EndsTurnAfterUse = true
+CanBeUsedMultipleTimes = false
+ActionCost = 0
+ExcessAPCost = 0
+UsesEffort = false
+CanTargetSelf = true
+Range = 0
+TargetDisposition = 0
+ActionType = 0
+IndicatorType = 0
+FollowEntity = true
+FocusEntity = false
+RotateToFaceEntity = true
+Description = "Die Immediately"

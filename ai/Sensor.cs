@@ -8,7 +8,7 @@ namespace ShopIsDone.AI
 {
     public partial class Sensor : Node3D
 	{
-		public void Init()
+		public virtual void Init()
 		{
 			InjectionProvider.Inject(this);
 		}

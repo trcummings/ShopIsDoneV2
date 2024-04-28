@@ -176,11 +176,15 @@ namespace ShopIsDone.Core
         protected virtual void OnEnabled()
         {
             Show();
+            var shape = GetNode<CollisionShape3D>("CollisionShape");
+            shape.SetDeferred("disabled", false);
         }
 
         protected virtual void OnDisabled()
         {
             Hide();
+            var shape = GetNode<CollisionShape3D>("CollisionShape");
+            shape.SetDeferred("disabled", true);
         }
 
         // Is On Tile

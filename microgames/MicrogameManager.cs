@@ -155,22 +155,26 @@ namespace ShopIsDone.Microgames
 				.SetEase(Tween.EaseType.Out)
 				.SetTrans(Tween.TransitionType.Bounce);
 
-			// In parallel, tween prompt
-			// Transparency
-			tween
-                .Parallel()
-				.TweenProperty(_PromptLabel, "modulate:a", 1f, 0.35f)
-                // Set ease and trans type
-                .SetEase(Tween.EaseType.In)
-                .SetTrans(Tween.TransitionType.Expo);
+            // If this microgame shows the prompt, then run the prompt's tweens
+            if (_Microgame.ShowPrompt)
+            {
+			    // In parallel, tween prompt transparency
+			    tween
+                    .Parallel()
+				    .TweenProperty(_PromptLabel, "modulate:a", 1f, 0.35f)
+                    // Set ease and trans type
+                    .SetEase(Tween.EaseType.In)
+                    .SetTrans(Tween.TransitionType.Expo);
 
-			// Scale
-            tween
-                .Parallel()
-				.TweenProperty(_PromptLabel, "scale", new Vector2(1f, 1f), 0.5f)
-                // Set ease and trans type
-                .SetEase(Tween.EaseType.Out)
-                .SetTrans(Tween.TransitionType.Elastic);
+			    // and prompt scale
+                tween
+                    .Parallel()
+				    .TweenProperty(_PromptLabel, "scale", new Vector2(1f, 1f), 0.5f)
+                    // Set ease and trans type
+                    .SetEase(Tween.EaseType.Out)
+                    .SetTrans(Tween.TransitionType.Elastic);
+            }
+
 
 			// Await finish
             await ToSignal(tween, "finished");

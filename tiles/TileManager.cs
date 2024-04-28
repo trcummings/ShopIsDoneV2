@@ -44,7 +44,7 @@ namespace ShopIsDone.Tiles
                 var tileScene = scene.Instantiate<Tile>();
                 AddChild(tileScene);
                 tileScene.TilemapPosition = cell;
-                var cellPosition = _ArenaTilemap.ToGlobal(_ArenaTilemap.MapToLocal(cell));
+                var cellPosition = _ArenaTilemap.ToGlobal(_ArenaTilemap.MapToLocal(cell)).Round();
                 tileScene.GlobalPosition = cellPosition;
                 // Set cell in dictionary
                 SetTile(tileScene);
@@ -99,13 +99,13 @@ namespace ShopIsDone.Tiles
 
         public bool HasTileAtGlobalPos(Vector3 globalPos)
         {
-            var mapPos = _ArenaTilemap.LocalToMap(ToLocal(globalPos));
+            var mapPos = _ArenaTilemap.LocalToMap(_ArenaTilemap.ToLocal(globalPos));
             return _TilesByPos.ContainsKey(mapPos);
         }
 
         public Tile GetTileAtGlobalPos(Vector3 globalPos)
         {
-            var mapPos = _ArenaTilemap.LocalToMap(ToLocal(globalPos));
+            var mapPos = _ArenaTilemap.LocalToMap(_ArenaTilemap.ToLocal(globalPos));
             return GetTileAtTilemapPos(mapPos);
         }
 
@@ -133,6 +133,11 @@ namespace ShopIsDone.Tiles
             return GetAllTilesInArena()
                 .Where(t => t.IsInGroup("placement_tile"))
                 .ToGodotArray();
+        }
+
+        public Vector3 GlobalToMap(Vector3 global)
+        {
+            return _ArenaTilemap.LocalToMap(_ArenaTilemap.ToLocal(global));
         }
     }
 }

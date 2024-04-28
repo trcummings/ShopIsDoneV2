@@ -39,7 +39,7 @@ environment = ExtResource("2_2x2uj")
 
 [node name="AmbiencePlayer" type="AudioStreamPlayer" parent="Audio" index="1"]
 stream = ExtResource("3_wcrlx")
-volume_db = -16.709
+volume_db = -26.939
 autoplay = true
 bus = &"Ambience"
 
