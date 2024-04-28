@@ -39,7 +39,7 @@ environment = ExtResource("2_2x2uj")
 
 [node name="AmbiencePlayer" type="AudioStreamPlayer" parent="Audio" index="1"]
 stream = ExtResource("3_wcrlx")
-volume_db = -16.709
+volume_db = -26.939
 autoplay = true
 bus = &"Ambience"
 
@@ -88,6 +88,15 @@ transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08,
 visible = false
 light_energy = 0.089
 light_cull_mask = 4294967039
+
+[node name="Camera" parent="World/GridSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/LightSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/WidgetsSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
 [node name="Lights" type="Node3D" parent="World" index="9"]
 

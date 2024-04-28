@@ -18,6 +18,9 @@ namespace ShopIsDone.AI
         [Signal]
         public delegate void TurnFinishedEventHandler();
 
+        [Export]
+        public int BasePriority = 1;
+
         private Array<ActionPlan> _ActionPlans;
         public Array<ActionPlan> ActionPlans { get { return _ActionPlans; } }
 
@@ -58,7 +61,7 @@ namespace ShopIsDone.AI
 
         public virtual int GetPriority()
         {
-            return 1;
+            return BasePriority;
         }
 
         public bool IsPlanFinished()

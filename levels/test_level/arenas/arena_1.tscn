@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bg2miiwdt1h4y"]
+[gd_scene load_steps=20 format=3 uid="uid://bg2miiwdt1h4y"]
 
 [ext_resource type="PackedScene" uid="uid://dq2epbd2snfbt" path="res://arenas/arena.tscn" id="1_1h2mb"]
 [ext_resource type="PackedScene" uid="uid://c84riwntsfpy5" path="res://entities/puppet_customer/puppet_customer.tscn" id="2_88hht"]
@@ -16,12 +16,21 @@
 [ext_resource type="PackedScene" uid="uid://j67ix6p68gsa" path="res://entities/light_switch/light_switch.tscn" id="12_rbl1r"]
 [ext_resource type="PackedScene" uid="uid://b40u8k00jhhja" path="res://lighting/world_omni_light.tscn" id="13_7wsxv"]
 [ext_resource type="PackedScene" uid="uid://dl32plo1uc25s" path="res://entities/exit_door/exit_door.tscn" id="13_xc0y5"]
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/FollowPathActionPlan.cs" id="15_kixgh"]
+[ext_resource type="Script" path="res://entities/puppet_customer/ai/sensors/FollowPathSensor.cs" id="15_n0q76"]
+
+[sub_resource type="Curve3D" id="Curve3D_8483q"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.06665, 0.0132132, 7.16813, 0, 0, 0, 0, 0, 0, -2.90005, 0, 7.10414, 0, 0, 0, 0, 0, 0, -3.17435, 0.136833, -5.03677, 0, 0, 0, 0, 0, 0, 1.07915, 0, -4.92033, 0, 0, 0, 0, 0, 0, 1.35727, 0, 7.15452),
+"tilts": PackedFloat32Array(1.52646, 1.41305, 1.17713, -1.87384, 0)
+}
+point_count = 5
 
 [node name="Arena1" instance=ExtResource("1_1h2mb")]
 
 [node name="TaskCompletedCondition" type="Node" parent="Services/ConditionsService" index="0" node_paths=PackedStringArray("Task")]
 script = ExtResource("3_qnavv")
-Task = NodePath("../../../StockShelvesTask4")
+Task = NodePath("../../../Entities/StockShelvesTask4")
 _Id = "task_completed_condition"
 IsVisibleInUI = true
 Verb = "Complete"
@@ -72,6 +81,7 @@ script = ExtResource("10_ic5a6")
 
 [node name="VulgarCustomer" parent="Entities" index="1" instance=ExtResource("11_qmsvi")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3, 0, 3)
+Enabled = false
 
 [node name="ClownPuppet" parent="Entities" index="2" instance=ExtResource("8_io54v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64, 1000, -13)
@@ -90,6 +100,46 @@ _Lights = [NodePath("../../../Lights/WorldOmniLight3"), NodePath("../../../Light
 [node name="ExitDoor" parent="Entities" index="4" instance=ExtResource("13_xc0y5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 1)
 EditorFacingDir = 1
+
+[node name="PatrollingCustomer" parent="Entities" index="5" instance=ExtResource("2_88hht")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0, -1)
+
+[node name="FollowPath" type="Node" parent="Entities/PatrollingCustomer/ActionPlanner" index="0"]
+script = ExtResource("5_ghpnr")
+
+[node name="FollowPath" type="Node" parent="Entities/PatrollingCustomer/ActionPlanner/FollowPath" index="0"]
+script = ExtResource("15_kixgh")
+ActionId = "move"
+
+[node name="BotherEmployee" type="Node" parent="Entities/PatrollingCustomer/ActionPlanner/FollowPath" index="1"]
+script = ExtResource("8_2jlpg")
+ActionId = "bother_employee"
+
+[node name="FollowPathSensor" type="Node3D" parent="Entities/PatrollingCustomer/Sensors" index="0" node_paths=PackedStringArray("_Path")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1, 0, -1)
+script = ExtResource("15_n0q76")
+_Path = NodePath("../../../../Path3D")
+_IsMovingForward = false
+_ShouldReverseAtEnds = true
+
+[node name="StockShelvesTask" parent="Entities" index="6" instance=ExtResource("9_b656f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, 3)
+EditorFacingDir = 2
+
+[node name="StockShelvesTask2" parent="Entities" index="7" node_paths=PackedStringArray("WidgetPoint") instance=ExtResource("9_b656f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.08165e-12, 3)
+WidgetPoint = NodePath("../StockShelvesTask/WidgetPoint")
+EditorFacingDir = 2
+
+[node name="StockShelvesTask3" parent="Entities" index="8" node_paths=PackedStringArray("WidgetPoint") instance=ExtResource("9_b656f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.08165e-12, -3)
+WidgetPoint = NodePath("../StockShelvesTask/WidgetPoint")
+EditorFacingDir = 2
+
+[node name="StockShelvesTask4" parent="Entities" index="9" node_paths=PackedStringArray("WidgetPoint") instance=ExtResource("9_b656f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, -3)
+WidgetPoint = NodePath("../StockShelvesTask/WidgetPoint")
+EditorFacingDir = 2
 
 [node name="Lights" type="Node3D" parent="." index="6"]
 metadata/_edit_lock_ = true
@@ -116,28 +166,15 @@ Radius = 4.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.30244, 1, 0.290684)
 Radius = 3.0
 
-[node name="StockShelvesTask" parent="." index="8" instance=ExtResource("9_b656f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, 3)
-EditorFacingDir = 2
-
-[node name="StockShelvesTask2" parent="." index="9" node_paths=PackedStringArray("WidgetPoint") instance=ExtResource("9_b656f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.08165e-12, 3)
-WidgetPoint = NodePath("../StockShelvesTask/WidgetPoint")
-EditorFacingDir = 2
-
-[node name="StockShelvesTask3" parent="." index="10" node_paths=PackedStringArray("WidgetPoint") instance=ExtResource("9_b656f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.08165e-12, -3)
-WidgetPoint = NodePath("../StockShelvesTask/WidgetPoint")
-EditorFacingDir = 2
-
-[node name="StockShelvesTask4" parent="." index="11" node_paths=PackedStringArray("WidgetPoint") instance=ExtResource("9_b656f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, -3)
-WidgetPoint = NodePath("../StockShelvesTask/WidgetPoint")
-EditorFacingDir = 2
+[node name="Path3D" type="Path3D" parent="." index="8"]
+curve = SubResource("Curve3D_8483q")
+metadata/_edit_lock_ = true
 
 [editable path="Entities/Customer"]
 [editable path="Entities/Customer/ActionPointHandler"]
 [editable path="Entities/LightSwitch"]
+[editable path="Entities/PatrollingCustomer"]
+[editable path="Entities/PatrollingCustomer/ActionPointHandler"]
 [editable path="UILayer/TileHoverUIContainer/MarginContainer/VBoxContainer/MoreInfoPrompt"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SelectUnitCTA"]
 [editable path="UILayer/PlacementUIContainer/MarginContainer/HBoxContainer/VBoxContainer2/SwapUnitsCTA"]

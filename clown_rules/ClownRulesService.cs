@@ -324,6 +324,9 @@ namespace ShopIsDone.ClownRules
         private Command WarpJudgeOut()
         {
             return new SeriesCommand(
+                // Do not follow judge during exit
+                _CameraService.SetCameraTarget(_TileManager.GetTileAtTilemapPos(_Judge.TilemapPosition)),
+                // Warp away
                 new ParallelCommand(
                     new AsyncCommand(async () => await ToSignal(
                         GetTree()
