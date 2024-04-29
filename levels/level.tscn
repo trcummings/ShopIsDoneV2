@@ -72,10 +72,11 @@ script = ExtResource("2_4ygry")
 [node name="LevelStateMachine" type="Node" parent="."]
 script = ExtResource("2_b2cin")
 
-[node name="Initializing" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_PlayerCharacterManager", "_PauseInputHandler")]
+[node name="Initializing" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_PlayerCharacterManager", "_PauseInputHandler", "_CameraService")]
 script = ExtResource("3_v4svp")
 _PlayerCharacterManager = NodePath("../../World/PlayerCharacterManager")
 _PauseInputHandler = NodePath("../../Services/PauseInputHandler")
+_CameraService = NodePath("../../Services/CameraService")
 
 [node name="Cutscene" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_PlayerCharacterManager", "_PauseInputHandler", "_CutsceneService")]
 script = ExtResource("4_o6jlb")

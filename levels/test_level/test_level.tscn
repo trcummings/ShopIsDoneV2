@@ -32,7 +32,8 @@ shader_parameter/signal_quality = 0.023
 shader_parameter/bottom_strenth = 0.587
 shader_parameter/grain_tex = SubResource("NoiseTexture2D_v2388")
 
-[node name="Level" instance=ExtResource("1_egns7")]
+[node name="Level" node_paths=PackedStringArray("_AutoEnterArena") instance=ExtResource("1_egns7")]
+_AutoEnterArena = NodePath("World/NavigationRegion3D/Environment/Arena1")
 
 [node name="WorldEnvironment" parent="." index="1"]
 environment = ExtResource("2_2x2uj")

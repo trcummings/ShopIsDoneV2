@@ -11,9 +11,6 @@ namespace ShopIsDone.Levels.States
     public partial class FreeMoveState : State
     {
         [Export]
-        private CameraService _CameraService;
-
-        [Export]
         private PlayerCameraService _PlayerCameraService;
 
         [Export]
@@ -35,10 +32,6 @@ namespace ShopIsDone.Levels.States
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
-            // Activate camera service
-            _CameraService.Init();
-            _CameraService.SetCameraTarget(_PlayerCharacterManager.Leader).Execute();
-
             // Place the followers back near the leader
             var leader = _PlayerCharacterManager.Leader;
             _PlayerCharacterManager.PlaceFollowers(leader.GlobalPosition, leader.FacingDirection);

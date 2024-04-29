@@ -6,16 +6,11 @@ using ShopIsDone.Pausing;
 using ShopIsDone.Arenas;
 using System.Linq;
 using ShopIsDone.Interactables;
+using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Cameras;
 
 namespace ShopIsDone.Levels.States
 {
-    public partial class SaveLevelData : GodotObject
-    {
-        public bool IsInArena;
-        public NodePath CurrentArena;
-
-    }
-
     public partial class InitializingState : State
     {
         [Export]
@@ -23,6 +18,9 @@ namespace ShopIsDone.Levels.States
 
         [Export]
         private PauseInputHandler _PauseInputHandler;
+
+        [Export]
+        private CameraService _CameraService;
 
         public override void OnStart(Dictionary<string, Variant> message)
         {
@@ -59,19 +57,32 @@ namespace ShopIsDone.Levels.States
 
             // TODO: Load in data
 
-            // Load arenas
-            var arenas = GetTree().GetNodesInGroup("arena").OfType<Arena>();
-
-
             // Finish the start hook
             base.OnStart(message);
 
             // Finish initialization (to raise the curtain)
             onFinishedInit.Call();
 
-            // TODO: Pick next initial state based on some hitherto unknown
-            // factor
-            ChangeState(Consts.States.FREE_MOVE);
+            // Activate camera service
+            _CameraService.Init();
+            _CameraService.SetCameraTarget(_PlayerCharacterManager.Leader).Execute();
+
+            // Pull auto-start arena out of message
+            var autoArena = (Arena)message.GetValueOrDefault(Level.AUTO_ENTER_ARENA);
+
+            // If we're not given an auto arena to start, go into free move state
+            if (autoArena?.Equals(default(Variant)) ?? true)
+            {
+                ChangeState(Consts.States.FREE_MOVE);
+            }
+            // Otherwise, start the arena immediately
+            else
+            {
+                ChangeState(Consts.States.ARENA, new Dictionary<string, Variant>()
+                {
+                    { Consts.States.ARENA_KEY, autoArena },
+                });
+            }
         }
     }
 }

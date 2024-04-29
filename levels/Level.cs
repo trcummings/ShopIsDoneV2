@@ -15,6 +15,9 @@ namespace ShopIsDone.Levels
         [Export]
         private StateMachine _LevelStateMachine;
 
+        [Export]
+        private Arena _AutoEnterArena;
+
         // Services
         private ServicesContainer _Services;
 
@@ -44,6 +47,7 @@ namespace ShopIsDone.Levels
 
         public const string ON_FINISHED_INIT = "OnFinishedInit";
         public const string ON_PLAYER_ENTERED_ARENA = "OnPlayerEnteredArena";
+        public const string AUTO_ENTER_ARENA = "AutoEnterArena";
 
         public void Init()
         {
@@ -51,7 +55,8 @@ namespace ShopIsDone.Levels
             _LevelStateMachine.ChangeState(Consts.States.INITIALIZING, new Dictionary<string, Variant>()
             {
                 { ON_FINISHED_INIT, Callable.From(() => EmitSignal(nameof(Initialized))) },
-                { ON_PLAYER_ENTERED_ARENA, new Callable(this, nameof(OnPlayerEnteredArena)) }
+                { ON_PLAYER_ENTERED_ARENA, new Callable(this, nameof(OnPlayerEnteredArena)) },
+                { AUTO_ENTER_ARENA, _AutoEnterArena ?? default(Variant) }
             });
         }
 
