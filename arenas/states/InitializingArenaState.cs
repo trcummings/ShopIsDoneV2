@@ -75,6 +75,15 @@ namespace ShopIsDone.Arenas.States
             // Add player units to player unit service
             _PlayerUnitService.Init(_Units.ToList());
 
+            // Init all entities under the arena
+            foreach (var entity in _EntitiesService.GetArenaChildEntities())
+            {
+                entity.Init();
+            }
+
+            // Update all tiles
+            _TileManager.UpdateTiles();
+
             // Change to the selecting unit state
             _PlacementStateMachine.ChangeState(PlacementConsts.States.SELECTING_UNIT);
         }
@@ -83,12 +92,6 @@ namespace ShopIsDone.Arenas.States
         {
             // Change placement state machine to idle
             _PlacementStateMachine.ChangeState(PlacementConsts.States.IDLE);
-
-            // Init all entities under the arena
-            foreach (var entity in _EntitiesService.GetArenaChildEntities())
-            {
-                entity.Init();
-            }
 
             // Update all tiles
             _TileManager.UpdateTiles();

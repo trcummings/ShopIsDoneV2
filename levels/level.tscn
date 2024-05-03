@@ -84,9 +84,8 @@ _PlayerCharacterManager = NodePath("../../World/PlayerCharacterManager")
 _PauseInputHandler = NodePath("../../Services/PauseInputHandler")
 _CutsceneService = NodePath("../../Services/CutsceneService")
 
-[node name="FreeMove" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_CameraService", "_PlayerCameraService", "_PlayerCharacterManager", "_InputXformer", "_PauseInputHandler")]
+[node name="FreeMove" type="Node" parent="LevelStateMachine" node_paths=PackedStringArray("_PlayerCameraService", "_PlayerCharacterManager", "_InputXformer", "_PauseInputHandler")]
 script = ExtResource("4_x3fct")
-_CameraService = NodePath("../../Services/CameraService")
 _PlayerCameraService = NodePath("../../Services/PlayerCameraService")
 _PlayerCharacterManager = NodePath("../../World/PlayerCharacterManager")
 _InputXformer = NodePath("../../Services/InputXformer")

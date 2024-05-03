@@ -102,7 +102,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 1)
 EditorFacingDir = 1
 
 [node name="PatrollingCustomer" parent="Entities" index="5" instance=ExtResource("2_88hht")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0, -1)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0, -5)
 Id = "patrolling_customer"
 
 [node name="FollowPath" type="Node" parent="Entities/PatrollingCustomer/ActionPlanner" index="0"]

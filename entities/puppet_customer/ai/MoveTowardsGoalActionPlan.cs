@@ -76,11 +76,14 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                 : FindBestPath(currentTile, goalTile, availableMoves.ToGodotArray());
 
             return new SeriesCommand(
-                // Show indicators
-                new ActionCommand(() => CreateTileIndicators(
-                    availableMoves.Select(t => t.TilemapPosition),
-                    TileIndicator.IndicatorColor.Blue
-                )),
+                // Show indicators if in light
+                new ConditionalCommand(
+                    currentTile.IsLit,
+                    new ActionCommand(() => CreateTileIndicators(
+                        availableMoves.Select(t => t.TilemapPosition),
+                        TileIndicator.IndicatorColor.Blue
+                    ))
+                ),
                 // Move
                 _ActionService.ExecuteAction(_Action, new Dictionary<string, Variant>()
                 {
