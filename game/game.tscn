@@ -13,8 +13,6 @@
 [node name="Game" type="Node"]
 process_mode = 3
 script = ExtResource("1_ej1mk")
-OverrideModeAfterLoad = 2
-InitialLevelId = "test_level_1"
 
 [node name="GameStateMachine" type="Node" parent="."]
 unique_name_in_owner = true

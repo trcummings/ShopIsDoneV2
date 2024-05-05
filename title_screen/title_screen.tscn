@@ -78,17 +78,17 @@ _data = {
 "idle": SubResource("7")
 }
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_1unkw"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_7kwf2"]
 resource_local_to_scene = true
-metadata/creation_stamp = 176922554379304
+metadata/creation_stamp = 51827018165147
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_2vwt5"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_2daqm"]
 resource_local_to_scene = true
-metadata/creation_stamp = 176922587934198
+metadata/creation_stamp = 51827051718377
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_akqp7"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_0g3yk"]
 resource_local_to_scene = true
-metadata/creation_stamp = 176922621488129
+metadata/creation_stamp = 51827085272595
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1y60q"]
 
@@ -146,34 +146,34 @@ autoplay = "idle"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="LeftHandBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="6"]
-transform = Transform3D(-0.0236984, 0.999719, 2.79865e-07, -0.999719, -0.0236984, -9.56403e-09, -2.92897e-09, -2.80014e-07, 1, 0.347213, 0.641387, -0.010874)
+transform = Transform3D(-0.0667507, 0.99777, 7.84395e-07, -0.99777, -0.0667506, 2.62288e-05, 2.62229e-05, 9.53191e-07, 1, 0.510954, 0.88208, 4.97326e-07)
 
 [node name="RightHandBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="7"]
-transform = Transform3D(-0.0236984, -0.999719, -2.28963e-07, 0.999719, -0.0236985, -1.34464e-08, 8.01656e-09, -2.29217e-07, 1, -0.357195, 0.647653, 0.000615555)
+transform = Transform3D(-0.0667508, -0.99777, -7.02909e-07, 0.99777, -0.0667507, 2.62241e-05, -2.62187e-05, 1.09475e-06, 1, -0.510954, 0.88208, 5.23403e-07)
 
 [node name="LeftFootBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="8"]
-transform = Transform3D(0.0138835, -0.0157091, -0.99978, -0.873735, -0.486382, -0.00449085, -0.486205, 0.873605, -0.0204784, 0.153452, 0.0828101, -0.0275269)
+transform = Transform3D(0.0168325, 0.0980765, -0.995036, -0.906154, -0.419138, -0.0566414, -0.422613, 0.90261, 0.0818174, 0.153452, 0.0484632, -0.0275269)
 
 [node name="RightFootBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="9"]
-transform = Transform3D(-0.0332959, -0.0856945, 0.995765, 0.567709, -0.821602, -0.0517236, 0.822555, 0.563583, 0.0760056, -0.153452, 0.0828101, -0.0275269)
+transform = Transform3D(0.0168325, -0.0980765, 0.995036, 0.906154, -0.419138, -0.0566414, 0.422613, 0.90261, 0.0818174, -0.153452, 0.0484632, -0.0275269)
 
 [node name="NeckBoneAttachment" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="10"]
-transform = Transform3D(1, -6.27978e-11, 2.38358e-07, -2.27147e-07, -0.303324, 0.952887, 7.22398e-08, -0.952887, -0.303324, 1.39696e-12, 1.00516, -0.00879175)
+transform = Transform3D(1, 1.42109e-12, 2.38418e-07, -8.07717e-08, 0.940867, 0.338776, -2.24319e-07, -0.338776, 0.940867, 6.54137e-13, 0.970811, -0.00879175)
 
 [node name="NeckWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="11"]
-transform = Transform3D(1, -6.27978e-11, 2.38358e-07, -2.27147e-07, -0.303324, 0.952887, 7.22398e-08, -0.952887, -0.303324, 1.39696e-12, 1.00516, -0.00879175)
+transform = Transform3D(1, 1.42109e-12, 2.38418e-07, -8.07717e-08, 0.940867, 0.338776, -2.24319e-07, -0.338776, 0.940867, 6.54137e-13, 0.970811, -0.00879175)
 
 [node name="HatWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="12"]
-transform = Transform3D(0.906944, 0.419739, 0.0356572, -0.421247, 0.904049, 0.0724381, -0.00183076, -0.0807179, 0.996735, 0.0400278, 1.2264, -0.0654571)
+transform = Transform3D(0.896655, 0.439096, 0.0566058, -0.442056, 0.894992, 0.0598053, -0.0244014, -0.0786477, 0.996604, 0.0400278, 1.27412, -0.0322634)
 
 [node name="PelvisWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="13"]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 1.40746e-12, 0.035929, 1.40746e-12)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 6.64639e-13, 0.00158207, 6.64639e-13)
 
 [node name="LArmWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="14"]
-transform = Transform3D(-0.810899, 0.579659, 0.0802384, -0.580846, -0.813951, 0.0100575, 0.0711401, -0.0384506, 0.996725, 0.160266, 0.940745, -1.11759e-08)
+transform = Transform3D(-0.0691781, 0.991308, 0.111911, -0.997604, -0.0687443, -0.00773449, 2.59615e-05, -0.112178, 0.993688, 0.160266, 0.906398, -1.11759e-08)
 
 [node name="RArmWiggleBone" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/Armature/Skeleton3D" index="15"]
-transform = Transform3D(-0.831449, -0.555411, 0.0145103, 0.555063, -0.829214, 0.0656411, -0.0244257, 0.0626314, 0.997738, -0.160266, 0.940745, -2.23517e-08)
+transform = Transform3D(-0.0691782, -0.991307, -0.111911, 0.997604, -0.0687444, -0.00773451, -2.59541e-05, -0.112177, 0.993688, -0.160266, 0.906398, -2.23517e-08)
 
 [node name="LeftHandTarget" parent="TitleScreenClownPuppet/ClownPuppetModel/clown_puppet/LeftHandHandle" index="0"]
 transform = Transform3D(-3.61999e-06, 1, 3.48787e-16, -1, -3.61999e-06, -3.48787e-16, -3.48786e-16, -3.48788e-16, 1, 0, 0, 0)
@@ -188,7 +188,7 @@ transform = Transform3D(1, 0, 0, 0, -3.61999e-06, -1, 0, 1, -3.61999e-06, 0, -0.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0999976, 3.20003, -0.160006)
 material_override = ExtResource("8_vvi6j")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_1unkw")
+mesh = SubResource("ImmediateMesh_7kwf2")
 script = ExtResource("9_n03u7")
 AttachEnd = NodePath("../ClownPuppetModel/clown_puppet/Armature/Skeleton3D/RightHandBoneAttachment")
 RopeLength = 2.0
@@ -196,26 +196,26 @@ RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="TitleScreenClownPuppet/RightRope"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -3.2, 0.16)
-aabb = AABB(-0.255227, -2.42873, -0.00241535, 0.264886, 2.42977, 0.164952)
+aabb = AABB(-0.417476, -2.13213, -0.00181223, 0.427299, 2.13277, 0.164007)
 
 [node name="LeftRope" type="MeshInstance3D" parent="TitleScreenClownPuppet" node_paths=PackedStringArray("AttachEnd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.100001, 3.20003, -0.160003)
 material_override = ExtResource("8_vvi6j")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_2vwt5")
+mesh = SubResource("ImmediateMesh_2daqm")
 script = ExtResource("9_n03u7")
 AttachEnd = NodePath("../ClownPuppetModel/clown_puppet/Armature/Skeleton3D/LeftHandBoneAttachment")
 RopeLength = 2.0
 RopeWidth = 0.01
 
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier3D" parent="TitleScreenClownPuppet/LeftRope"]
-aabb = AABB(-0.00967023, -2.43453, -0.00234725, 0.254708, 2.43553, 0.154721)
+aabb = AABB(-0.00981323, -2.13213, -0.00181225, 0.427285, 2.13278, 0.164004)
 
 [node name="HeadRope" type="MeshInstance3D" parent="TitleScreenClownPuppet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.82859e-06, 3.20003, -0.620004)
 material_override = ExtResource("8_vvi6j")
 cast_shadow = 0
-mesh = SubResource("ImmediateMesh_akqp7")
+mesh = SubResource("ImmediateMesh_0g3yk")
 script = ExtResource("9_n03u7")
 RopeLength = 1.5
 RopeWidth = 0.01
@@ -308,19 +308,25 @@ layout_mode = 2
 size_flags_vertical = 4
 mouse_filter = 2
 
-[node name="ContinueButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
+[node name="BreakRoom" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_next = NodePath("../NewGameButton")
+theme = ExtResource("14_do1gh")
+text = "Break Room"
+
+[node name="ContinueButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
 theme = ExtResource("14_do1gh")
 disabled = true
 text = "Continue"
 
 [node name="NewGameButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-focus_next = NodePath("../SettingsButton")
-focus_previous = NodePath("../ContinueButton")
 theme = ExtResource("14_do1gh")
 disabled = true
 text = "New Game"
@@ -328,15 +334,12 @@ text = "New Game"
 [node name="SettingsButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-focus_next = NodePath("../QuitGameButton")
-focus_previous = NodePath("../NewGameButton")
 theme = ExtResource("14_do1gh")
 text = "Settings"
 
 [node name="QuitGameButton" type="Button" parent="TextOverlayContainer/HBoxContainer/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-focus_previous = NodePath("../SettingsButton")
 theme = ExtResource("14_do1gh")
 text = "Quit Game"
 

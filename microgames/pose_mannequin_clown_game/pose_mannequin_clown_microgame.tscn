@@ -796,6 +796,12 @@ bones/163/scale = Vector3(1, 1, 1)
 bones/164/rotation = Quaternion(0.707039, -0.00981774, -0.00981879, 0.707039)
 bones/164/scale = Vector3(1, 1, 1)
 
+[node name="Pants1" parent="ViewportContainer/Viewport/World/PosingMannequinNodes/WhiteMannequin/white_mannequin/Armature/Skeleton3D" index="1"]
+visible = true
+
+[node name="Shirt1" parent="ViewportContainer/Viewport/World/PosingMannequinNodes/WhiteMannequin/white_mannequin/Armature/Skeleton3D" index="2"]
+visible = true
+
 [node name="AnimationPlayer" parent="ViewportContainer/Viewport/World/PosingMannequinNodes/WhiteMannequin/white_mannequin" index="1"]
 autoplay = "Walk-Pose"
 

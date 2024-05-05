@@ -17,11 +17,15 @@ namespace ShopIsDone.TitleScreen
         [Signal]
         public delegate void QuitGameRequestedEventHandler();
 
+        [Signal]
+        public delegate void BreakRoomRequestedEventHandler();
+
         [Export]
         private LevelDb _LevelDb;
 
         // Nodes
         private Control _ButtonContainer;
+        private Button _BreakRoomButton;
         private Button _ContinueButton;
         private Button _NewGameButton;
         private Button _SettingsButton;
@@ -34,6 +38,7 @@ namespace ShopIsDone.TitleScreen
         {
             // Ready nodes
             _ButtonContainer = GetNode<Control>("%ButtonContainer");
+            _BreakRoomButton = GetNode<Button>("%BreakRoom");
             _ContinueButton = GetNode<Button>("%ContinueButton");
             _NewGameButton = GetNode<Button>("%NewGameButton");
             _SettingsButton = GetNode<Button>("%SettingsButton");
@@ -44,6 +49,7 @@ namespace ShopIsDone.TitleScreen
             _ContinueButton.Pressed += OnContinuePressed;
             _QuitGameButton.Pressed += OnQuitGamePressed;
             _SettingsButton.Pressed += OnSettingsPressed;
+            _BreakRoomButton.Pressed += () => EmitSignal(nameof(BreakRoomRequested));
 
             // TODO: If we have a Suspended Game folder, then we can continue
 

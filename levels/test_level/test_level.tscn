@@ -2,12 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://clfmotf3uelqh" path="res://levels/level.tscn" id="1_egns7"]
 [ext_resource type="Environment" uid="uid://cx2vp7oxgj01x" path="res://environments/dark_world.tres" id="2_2x2uj"]
-[ext_resource type="PackedScene" uid="uid://mn346u6gevet" path="res://levels/test_level/test_layout.tscn" id="2_5q5uu"]
 [ext_resource type="PackedScene" uid="uid://dvyl4d7ds1ji7" path="res://dialogue/dialogue_area.tscn" id="3_hk7sm"]
 [ext_resource type="AudioStream" uid="uid://dr20xme1nxxyw" path="res://levels/test_level/Atmopshere (Deep Meditation) - The Sample Stop.wav" id="3_wcrlx"]
 [ext_resource type="PackedScene" uid="uid://cf243oyu5kvrf" path="res://actors/haskell_actor.tscn" id="3_xxrhr"]
 [ext_resource type="PackedScene" uid="uid://b7n2nvaxotrvp" path="res://actors/ricky_actor.tscn" id="4_qbaqy"]
 [ext_resource type="PackedScene" uid="uid://bhmg13nssujbh" path="res://actors/aubrette_actor.tscn" id="6_yvfpe"]
+[ext_resource type="PackedScene" uid="uid://bs2dlg6weu5pt" path="res://levels/test_level/test_layout.gltf" id="7_gybeg"]
 [ext_resource type="Script" path="res://arenas/EnterArenaArea.cs" id="9_3xb4y"]
 [ext_resource type="PackedScene" uid="uid://bg2miiwdt1h4y" path="res://levels/test_level/arenas/arena_1.tscn" id="9_maxd7"]
 [ext_resource type="Shader" path="res://levels/test_level/ntsc.gdshader" id="16_2hx3x"]
@@ -51,8 +51,7 @@ _FollowerScenes = [ExtResource("4_qbaqy"), ExtResource("6_yvfpe")]
 [node name="NavigationRegion3D" parent="World" index="3"]
 navigation_mesh = SubResource("NavigationMesh_n5n74")
 
-[node name="test_layout" parent="World/NavigationRegion3D/Environment" index="0" instance=ExtResource("2_5q5uu")]
-metadata/_edit_lock_ = true
+[node name="test_layout" parent="World/NavigationRegion3D/Environment" index="0" instance=ExtResource("7_gybeg")]
 
 [node name="DialogueArea" parent="World/NavigationRegion3D/Environment" index="1" instance=ExtResource("3_hk7sm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1546, -4.76835e-07, -1.31345)
@@ -89,6 +88,15 @@ transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08,
 visible = false
 light_energy = 0.089
 light_cull_mask = 4294967039
+
+[node name="Camera" parent="World/GridSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/LightSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
+
+[node name="Camera" parent="World/WidgetsSubViewport/Pivot" index="0"]
+transform = Transform3D(0.707107, -0.353553, 0.612373, 4.29723e-16, 0.866026, 0.5, -0.707107, -0.353553, 0.612373, 30.6186, 25, 30.6186)
 
 [node name="Lights" type="Node3D" parent="World" index="9"]
 

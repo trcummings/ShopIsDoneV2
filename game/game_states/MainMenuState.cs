@@ -3,6 +3,7 @@ using System;
 using Godot.Collections;
 using ShopIsDone.Utils.StateMachine;
 using ShopIsDone.TitleScreen;
+using ShopIsDone.Core.Data;
 
 namespace ShopIsDone.Game.States
 {
@@ -27,10 +28,19 @@ namespace ShopIsDone.Game.States
             _TitleScreen = TitleScreenScene.Instantiate<TitleScreenManager>();
             AddChild(_TitleScreen);
 
+
             // Connect to title screen events
             _TitleScreen.NewGameRequested += OnNewGameRequested;
             _TitleScreen.ContinueRequested += OnContinueGameRequested;
             _TitleScreen.QuitGameRequested += () => _Events.EmitSignal(nameof(_Events.QuitGameRequested));
+            var leveldb = LevelDb.GetLevelDb(this);
+            _TitleScreen.BreakRoomRequested += () =>
+            {
+                ChangeState(Consts.GameStates.LEVEL, new Dictionary<string, Variant>()
+                {
+                    { Consts.LEVEL_KEY, leveldb.BreakRoomLevel }
+                });
+            };
 
             // Init title screen
             _TitleScreen.Init();

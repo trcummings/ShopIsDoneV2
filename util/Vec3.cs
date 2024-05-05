@@ -179,7 +179,7 @@ namespace ShopIsDone.Utils
                 }
                 else
                 {
-                    throw new NotImplementedException($"Given facing direction {facingDir} not one of four allowed cases!");
+                    throw new NotImplementedException($"Given facing direction {facingDir} not one of four allowed cases for viewed dir {viewedDir}!");
                 }
             }
             else if (viewedDir == ForwardLeft)
@@ -202,7 +202,7 @@ namespace ShopIsDone.Utils
                 }
                 else
                 {
-                    throw new NotImplementedException($"Given facing direction {facingDir} not one of four allowed cases!");
+                    throw new NotImplementedException($"Given facing direction {facingDir} not one of four allowed cases for viewed dir {viewedDir}!");
                 }
             }
             else if (viewedDir == BackRight)
@@ -225,7 +225,7 @@ namespace ShopIsDone.Utils
                 }
                 else
                 {
-                    throw new NotImplementedException($"Given facing direction {facingDir} not one of four allowed cases!");
+                    throw new NotImplementedException($"Given facing direction {facingDir} not one of four allowed cases for viewed dir {viewedDir}!");
                 }
             }
             else if (viewedDir == BackLeft)
@@ -248,7 +248,7 @@ namespace ShopIsDone.Utils
                 }
                 else
                 {
-                    throw new NotImplementedException($"Given facing direction {facingDir} not one of four allowed cases!");
+                    throw new NotImplementedException($"Given facing direction {facingDir} not one of four allowed cases for viewed dir {viewedDir}!");
                 }
             }
             else

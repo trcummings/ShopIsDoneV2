@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://mn346u6gevet"]
-
-[ext_resource type="PackedScene" uid="uid://cswx47o5bdn15" path="res://levels/test_level/test_layout.blend" id="1_6qn0j"]
-
-[node name="test_layout" instance=ExtResource("1_6qn0j")]

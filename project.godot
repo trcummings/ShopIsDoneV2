@@ -25,7 +25,7 @@ config/name="Shop Is Done"
 run/main_scene="res://game/game.tscn"
 config/custom_user_dir_name="ShopIsDone"
 config/features=PackedStringArray("4.2", "C#")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 

@@ -18,7 +18,7 @@ namespace ShopIsDone.Debug
             // Connect to Events
             var events = Events.GetEvents(this);
             events.AddDebugPanelRequested += (Control panel) => _PanelContainer.AddChild(panel);
-            events.RemoveDebugPanelRequested += (Control panel) => _PanelContainer.AddChild(panel);
+            events.RemoveDebugPanelRequested += _PanelContainer.RemoveChild;
         }
 
         public void SetVisibility(bool value)
