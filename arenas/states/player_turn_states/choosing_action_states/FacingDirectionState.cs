@@ -82,7 +82,7 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             }
 
             // Get transformed movement vector from input
-            var moveVec = _DirectionalInputHelper.InputDir;
+            var moveVec = _DirectionalInputHelper.JustPressedInputDir;
 
             // Ignore if no movement input
             if (moveVec == Vector3.Zero) return;

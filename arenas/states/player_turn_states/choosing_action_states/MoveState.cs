@@ -156,11 +156,11 @@ namespace ShopIsDone.Arenas.PlayerTurn.ChoosingActions
             }
 
             // Ignore if no movement input
-            if (_InputHelper.InputDir == Vector3.Zero) return;
+            if (_InputHelper.JustPressedInputDir == Vector3.Zero) return;
 
             // Get the tile we're interested in from the neighbors of the latest tile
             // on the stack
-            var candidateTile = _MovePath.Last().GetNeighborAtDir(_InputHelper.InputDir);
+            var candidateTile = _MovePath.Last().GetNeighborAtDir(_InputHelper.JustPressedInputDir);
 
             // If no tile, invalid move
             if (candidateTile == null)

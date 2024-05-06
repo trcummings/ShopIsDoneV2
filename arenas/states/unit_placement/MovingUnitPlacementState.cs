@@ -165,10 +165,10 @@ namespace ShopIsDone.Arenas.UnitPlacement
             }
 
             // Ignore if no movement input
-            if (_InputHelper.InputDir == Vector3.Zero) return;
+            if (_InputHelper.JustPressedInputDir == Vector3.Zero) return;
 
             // Check for invalid movement
-            var newTile = _SelectedTile.TilemapPosition + _InputHelper.InputDir;
+            var newTile = _SelectedTile.TilemapPosition + _InputHelper.JustPressedInputDir;
             if (!_PlacementTiles.ContainsKey(newTile))
             {
                 // Emit

@@ -50,6 +50,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
         [Export]
         private Control _MoreInfoPrompt;
 
+        [Export]
+        private HoldInputHelper _HoldInputHelper;
+
         [Inject]
         private DirectionalInputHelper _InputHelper;
 
@@ -135,6 +138,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _InfoUIContainer.InfoPanelRequested += OnMoreInfoPayload;
             _InfoUIContainer.PanelAvailabilityChanged += OnPanelAvailabilityChanged;
 
+            // Connect hold input helper
+            _HoldInputHelper.ActionFired += UpdateCursor;
+
             // Base start hook
             base.OnStart(message);
         }
@@ -215,11 +221,13 @@ namespace ShopIsDone.Arenas.PlayerTurn
                 return;
             }
 
-            // Ignore if no movement input
-            if (_InputHelper.InputDir == Vector3.Zero) return;
+            // Handle input
+            _HoldInputHelper.Update(_InputHelper.InputDir);
+        }
 
-            // Otherwise, move the two cursors in that direction
-            _TileCursor.MoveCursorInDirection(_InputHelper.InputDir);
+        private void UpdateCursor(Vector3 dir)
+        {
+            _TileCursor.MoveCursorInDirection(dir);
             _FingerCursor.MoveCursorTo(_TileCursor.CurrentTile.GlobalPosition);
         }
 
@@ -254,6 +262,9 @@ namespace ShopIsDone.Arenas.PlayerTurn
             // Disconnect from
             _InfoUIContainer.InfoPanelRequested -= OnMoreInfoPayload;
             _InfoUIContainer.PanelAvailabilityChanged -= OnPanelAvailabilityChanged;
+
+            // Disconnect hold input helper
+            _HoldInputHelper.ActionFired -= UpdateCursor;
 
             // Base OnExit
             base.OnExit(nextState);

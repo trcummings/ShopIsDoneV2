@@ -196,10 +196,10 @@ namespace ShopIsDone.Arenas.UnitPlacement
             }
 
             // Ignore if no movement input
-            if (_InputHelper.InputDir == Vector3.Zero) return;
+            if (_InputHelper.JustPressedInputDir == Vector3.Zero) return;
 
             // Check for invalid movement
-            var newTile = _SelectedTile.TilemapPosition + _InputHelper.InputDir;
+            var newTile = _SelectedTile.TilemapPosition + _InputHelper.JustPressedInputDir;
             if (!_PlacementTiles.ContainsKey(newTile))
             {
                 // Emit
@@ -216,7 +216,7 @@ namespace ShopIsDone.Arenas.UnitPlacement
             }
 
             // Otherwise, move the cursors to that position
-            _TileCursor.MoveCursorInDirection(_InputHelper.InputDir);
+            _TileCursor.MoveCursorInDirection(_InputHelper.JustPressedInputDir);
             _FingerCursor.MoveCursorTo(_TileCursor.CurrentTile.GlobalPosition);
 
             // Set the selected tile

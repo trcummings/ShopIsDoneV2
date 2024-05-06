@@ -10,6 +10,7 @@ namespace ShopIsDone.Utils
         [Export]
         public IsometricCamera _IsometricCamera;
 
+        public Vector3 JustPressedInputDir = Vector3.Zero;
         public Vector3 InputDir = Vector3.Zero;
 
         public override void _Process(double delta)
@@ -30,6 +31,28 @@ namespace ShopIsDone.Utils
                 horizontal -= 1;
             }
             if (Input.IsActionJustPressed("move_right") || Input.IsActionJustPressed("fps_move_right"))
+            {
+                horizontal += 1;
+            }
+
+            JustPressedInputDir = _IsometricCamera.GetBasisXformedDir(horizontal, vertical).Round();
+
+            // Reset for pressed values
+            horizontal = 0;
+            vertical = 0;
+            if (Input.IsActionPressed("move_up") || Input.IsActionPressed("fps_move_forward"))
+            {
+                vertical += 1;
+            }
+            if (Input.IsActionPressed("move_down") || Input.IsActionPressed("fps_move_backward"))
+            {
+                vertical -= 1;
+            }
+            if (Input.IsActionPressed("move_left") || Input.IsActionPressed("fps_move_left"))
+            {
+                horizontal -= 1;
+            }
+            if (Input.IsActionPressed("move_right") || Input.IsActionPressed("fps_move_right"))
             {
                 horizontal += 1;
             }
