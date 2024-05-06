@@ -38,9 +38,9 @@ namespace ShopIsDone.Game.States
             _ShaderCache.RunCache();
             await ToSignal(_ShaderCache, nameof(ShaderCache.FinishedCaching));
 
-            // If the game is in release mode (debug build or no), proceed to the
-            // vanity card
-            if (GameManager.IsRelease())
+            // If the game is a standalone build and not in debug mode, proceed
+            // to the vanity card
+            if (GameManager.IsRelease() && !GameManager.IsDebugMode())
             {
                 ChangeState(Consts.GameStates.VANITY_CARD);
                 return;

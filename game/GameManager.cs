@@ -121,12 +121,12 @@ namespace ShopIsDone.Game
         }
 
         /*
-         * If this is a built version of the game (debug or not)
+         * If this is a built version of the game (non-debug build
          */
         public static bool IsRelease()
         {
-            // Basically if we're running a debug build
-            return OS.HasFeature("standalone");
+            // Basically if we're running a standalone build
+            return OS.HasFeature("template");
         }
 
         /*
