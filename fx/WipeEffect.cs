@@ -7,21 +7,27 @@ namespace ShopIsDone.FX
     public partial class WipeEffect : SubViewportContainer
     {
         private ShaderMaterial _Material;
+        private Callable _SetTime;
 
         public override void _Ready()
         {
             base._Ready();
 
             _Material = (ShaderMaterial)Material;
+            _SetTime = new Callable(this, nameof(SetTime));
+
             // Connect to global trigger
             var events = Events.GetEvents(this);
-            events.BloodWipeRequested += RunWipeEffect;
+            events.Connect(nameof(events.BloodWipeRequested), Callable.From(RunWipeEffect));
         }
 
         public void RunWipeEffect()
         {
-            var tween = CreateTween().BindNode(this).SetEase(Tween.EaseType.OutIn);
-            tween.TweenMethod(new Callable(this, nameof(SetTime)), 0f, 2f, 0.75f);
+            GetTree()
+                .CreateTween()
+                .BindNode(this)
+                .SetEase(Tween.EaseType.OutIn)
+                .TweenMethod(_SetTime, 0f, 2f, 0.75f);
         }
 
         private void SetTime(float time)

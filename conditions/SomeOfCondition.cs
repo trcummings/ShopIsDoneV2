@@ -20,11 +20,6 @@ namespace ShopIsDone.Conditions
                 // Weight against required number
                 ) >= NumRequired;
         }
-
-        public override string GetDescription()
-        {
-            return Verb + " " + NumRequired.ToString() + " " + PluralNoun;
-        }
     }
 }
 

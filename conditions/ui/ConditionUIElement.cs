@@ -39,7 +39,7 @@ namespace ShopIsDone.Conditions.UI
             _CheckBox.ButtonPressed = _Condition.IsComplete();
 
             // Set the label
-            _Label.Text = _Condition.GetDescription();
+            _Label.Text = _Condition.Description;
         }
     }
 }

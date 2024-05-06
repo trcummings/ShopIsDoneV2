@@ -9,11 +9,6 @@ namespace ShopIsDone.Conditions
         {
             return _Conditions.All(condition => condition.IsComplete());
         }
-
-        public override string GetDescription()
-        {
-            return Verb + " all " + PluralNoun;
-        }
     }
 }
 

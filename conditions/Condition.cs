@@ -23,29 +23,13 @@ namespace ShopIsDone.Conditions
         public bool IsVisibleInUI;
 
         [Export]
-        public string Verb = "[Verb]";
-
-        [Export]
-        public string Noun = "[Noun]";
-
-        [Export]
-        public string PluralNoun = "[Nouns]";
-
-        [Export]
-        public string Article = "a";
-
-        public string Description { get { return GetDescription(); } }
+        public string Description;
 
         protected ConditionsService _ConditionsService;
 
         public virtual bool IsComplete()
         {
             return false;
-        }
-
-        public virtual string GetDescription()
-        {
-            return Verb + " " + Article + " " + Noun;
         }
 
         // This is just for our composite conditions to overwrite
