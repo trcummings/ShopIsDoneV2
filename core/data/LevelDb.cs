@@ -3,6 +3,7 @@ using System;
 using Godot.Collections;
 using System.Linq;
 using ShopIsDone.Utils.Extensions;
+using ShopIsDone.Game;
 
 namespace ShopIsDone.Core.Data
 {
@@ -37,7 +38,10 @@ namespace ShopIsDone.Core.Data
         {
             return Levels
                 .Values
-                .Where(level => level.Id != BreakRoomLevel)
+                .Where(level =>
+                    level.Id != BreakRoomLevel &&
+                    ((level.DebugModeOnly && GameManager.IsDebugMode()) || !level.DebugModeOnly)
+                )
                 .ToGodotArray();
         }
     }

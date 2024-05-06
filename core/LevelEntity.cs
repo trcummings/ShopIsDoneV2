@@ -72,14 +72,15 @@ namespace ShopIsDone.Core
 
         #region Dir Tool Export
         [Export]
-        private DirEnum.Dir EditorFacingDir
+        public DirEnum.Dir EditorFacingDir
         {
-            get { return DirEnum.VectorToDir(FacingDirection); }
+            get { return DirEnum.VectorToDir(_EditorFacingDir); }
             set {
                 _EditorFacingDir = DirEnum.DirToVector(value);
                 FacingDirection = DirEnum.DirToVector(value);
             }
         }
+        [Export]
         private Vector3 _EditorFacingDir = Vector3.Forward;
         #endregion
 

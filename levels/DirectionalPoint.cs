@@ -21,6 +21,7 @@ namespace ShopIsDone.Levels
         }
         #endregion
 
+        [Export]
         public Vector3 FacingDirection
         {
             get { return _FacingDirection; }
