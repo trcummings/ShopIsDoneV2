@@ -35,6 +35,7 @@ _UpdateFacingTarget = false
 [node name="TaskComponent" parent="." index="3" node_paths=PackedStringArray("_MicrogameHandler") instance=ExtResource("2_0yyud")]
 transform = Transform3D(-1, 3.48787e-16, 1.50996e-07, 3.48787e-16, 1, -3.48787e-16, -1.50996e-07, -3.48787e-16, -1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 TaskHealth = 2
+MaxTaskHealth = 2
 OperatorsAllowed = 2
 TaskDescription = "Imagine hands. Rooting. Grubbing. Rummaging around in your insides. Pawing and pushing things. That's what it feels like to the store when a guest has to search a messy shelf for what they desire. Let's share in the joy of orderly abcession."
 _MicrogameHandler = NodePath("../MicrogameHandler")
