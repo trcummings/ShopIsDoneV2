@@ -13,6 +13,9 @@ using ShopIsDone.Cameras;
 using ShopIsDone.EntityStates;
 using ShopIsDone.Models;
 using CustomerConsts = ShopIsDone.Entities.PuppetCustomers.Consts;
+using ShopIsDone.Entities.PuppetCustomers;
+using ShopIsDone.ActionPoints;
+using ApConsts = ShopIsDone.ActionPoints.Consts;
 
 namespace ShopIsDone.Entities.EntitySpawner
 {
@@ -21,6 +24,9 @@ namespace ShopIsDone.Entities.EntitySpawner
     // turns
     public partial class EntitySpawnerComponent : NodeComponent
     {
+        [Signal]
+        public delegate void SpawnBlockedEventHandler();
+
         [Export]
         public Array<LevelEntity> Entities;
 
@@ -29,6 +35,9 @@ namespace ShopIsDone.Entities.EntitySpawner
 
         [Export]
         public int CurrentTurnsTillSpawn = 4;
+
+        [Export]
+        private SpawnPool _SpawnPool;
 
         [Inject]
         private TileManager _TileManager;
@@ -67,16 +76,37 @@ namespace ShopIsDone.Entities.EntitySpawner
                     new IfElseCommand(
                         // Blocked tile check
                         () => currentTile.HasObstacleOnTile || currentTile.HasUnitOnTile(),
-                        // If the spawn is blocked, TODO: emit an environmental hazard on
-                        // that tile
+                        // If the spawn is blocked, emit an environmental hazard
                         new SeriesCommand(
-                            // Play the blocked effect
-                            new ActionCommand(() => GD.Print("Spawn blocked!")),
+                            // Show the spawn pool & play an SFX
+                            new AsyncCommand(async () =>
+                            {
+                                _SpawnPool.Appear();
+                                _SpawnPool.Show();
+                                await ToSignal(_SpawnPool, nameof(_SpawnPool.Appeared));
+                                EmitSignal(nameof(SpawnBlocked));
+                            }),
                             // If it's a player unit, cause an environmental hazard
                             new ConditionalCommand(
                                 () => _PlayerUnitService.IsPlayerUnit(currentTile.UnitOnTile),
-                                new ActionCommand(() => GD.Print("Environmental Hazard!"))
-                            )
+                                new DeferredCommand(() =>
+                                {
+                                    var unitOnTile = currentTile.UnitOnTile;
+                                    var apHandler = unitOnTile.GetComponent<ActionPointHandler>();
+
+                                    return apHandler.TakeAPDamage(new Dictionary<string, Variant>()
+                                    {
+                                        { ApConsts.DAMAGE_AMOUNT, 2 }
+                                    });
+                                })
+                            ),
+                            // Hide the spawn pool
+                            new AsyncCommand(async () =>
+                            {
+                                _SpawnPool.Disappear();
+                                await ToSignal(_SpawnPool, nameof(_SpawnPool.Disappeared));
+                                _SpawnPool.Hide();
+                            })
                         ),
                         // Otherwise spawn in the entity there
                         new DeferredCommand(SpawnEntity)
