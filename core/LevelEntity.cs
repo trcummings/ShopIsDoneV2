@@ -165,13 +165,13 @@ namespace ShopIsDone.Core
         }
 
         // Enabled
-        public Command SetEnabled(bool value)
+        public void SetEnabled(bool value)
         {
-            return new SetEnabledCommand()
-            {
-                Entity = this,
-                Value = value
-            };
+            // Set value
+            Enabled = value;
+
+            if (value) EmitSignal(nameof(EntityEnabled));
+            else EmitSignal(nameof(EntityDisabled));
         }
 
         protected virtual void OnEnabled()
@@ -226,11 +226,7 @@ namespace ShopIsDone.Core
         private SystemCollections.List<IEntityActiveHandler> _ActiveHandlers;
         public virtual bool IsInArena()
         {
-            if (_ActiveHandlers == null)
-            {
-                _ActiveHandlers = GetChildren().OfType<IEntityActiveHandler>().ToList();
-            }
-
+            _ActiveHandlers ??= GetChildren().OfType<IEntityActiveHandler>().ToList();
             // Default to true
             if (_ActiveHandlers.Count == 0) return true;
             // Iterate through active handlers
@@ -239,42 +235,11 @@ namespace ShopIsDone.Core
 
         public virtual bool IsActive()
         {
-            if (_ActiveHandlers == null)
-            {
-                _ActiveHandlers = GetChildren().OfType<IEntityActiveHandler>().ToList();
-            }
-
+            _ActiveHandlers ??= GetChildren().OfType<IEntityActiveHandler>().ToList();
             // Default to true
             if (_ActiveHandlers.Count == 0) return true;
             // Iterate through active handlers
             return _ActiveHandlers.All(h => h.IsActive());
-        }
-
-        // Commands
-        private partial class SetEnabledCommand : Command
-        {
-            public LevelEntity Entity;
-            public bool Value;
-
-            public override void Execute()
-            {
-                // Only update if the value changed
-                if (Value == Entity.Enabled) 
-                {
-                    Finish();
-                    return;
-                }
-
-                // Otherwise do an update
-                if (Value) Entity.EmitSignal(nameof(EntityEnabled));
-                else Entity.EmitSignal(nameof(EntityDisabled));
-
-                // Set enabled
-                Entity.Enabled = Value;
-
-                // Finish
-                Finish();
-            }
         }
     }
 }

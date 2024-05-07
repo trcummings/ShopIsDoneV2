@@ -20,6 +20,8 @@ namespace ShopIsDone.Entities.PuppetCustomers
         public static class Actions
         {
             public const string BOTHER_EMPLOYEE = "bother_employee";
+            public const string HIDDEN = "hidden";
+            public const string EMERGE = "Emerge";
         }
     }
 }

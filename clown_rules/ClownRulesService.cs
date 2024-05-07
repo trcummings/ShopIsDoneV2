@@ -34,6 +34,7 @@ using ShopIsDone.Lighting;
 using DialogueManagerRuntime;
 using ShopIsDone.Dialogue;
 using ShopIsDone.Models;
+using ShopIsDone.Entities.EntitySpawner;
 
 namespace ShopIsDone.ClownRules
 {
@@ -65,6 +66,9 @@ namespace ShopIsDone.ClownRules
 
         [Inject]
         private TileManager _TileManager;
+
+        [Inject]
+        private ArenaEntitiesService _EntitiesService;
 
         [Inject]
         private ArenaLightService _ArenaLightService;
@@ -413,8 +417,11 @@ namespace ShopIsDone.ClownRules
 
         private SystemGenerics.HashSet<Tile> GetInvalidJudgeTiles(int range = 2)
         {
-            return _PlayerUnitService
-                .GetUnits()
+            // Get all entities that have a team but aren't the judge
+            var set = _EntitiesService
+                .GetAllArenaEntities()
+                .Where(e => e.IsActive() && e.IsInArena())
+                .Where(e => e.HasComponent<TeamHandler>() && e != _Judge)
                 .Aggregate(new SystemGenerics.HashSet<Tile>(), (acc, unit) =>
                 {
                     var unitTile = _TileManager.GetTileAtTilemapPos(unit.TilemapPosition);
@@ -422,6 +429,22 @@ namespace ShopIsDone.ClownRules
                     foreach (var tile in tiles) acc.Add(tile);
                     return acc;
                 });
+
+            // TODO: Figure out a better way to say this tile is "occupied" by a
+            // non-unit and apply that to all non-unit non-preferred tiles
+            // Get spawners
+            var spawners = _EntitiesService
+                .GetAllArenaEntities()
+                    .Where(e => e.IsActive() && e.IsInArena())
+                    .Where(e => e.HasComponent<EntitySpawnerComponent>())
+                    .Select(e => e.GetComponent<EntitySpawnerComponent>());
+            foreach (var spawner in spawners)
+            {
+                var spawnerTile = _TileManager.GetTileAtTilemapPos(spawner.Entity.TilemapPosition);
+                set.Add(spawnerTile);
+            }
+
+            return set;
         }
 
         private Command UpdateJudgeBehavior(bool warn = false)

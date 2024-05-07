@@ -1,9 +1,9 @@
 using Godot;
 using ShopIsDone.Utils.StateMachine;
 using Godot.Collections;
-using ShopIsDone.AI;
-using SystemGenerics = System.Collections.Generic;
 using ShopIsDone.Entities.BehindSpirit;
+using System.Linq;
+using ShopIsDone.Entities.EntitySpawner;
 
 namespace ShopIsDone.Arenas.Battles.States
 {
@@ -17,14 +17,13 @@ namespace ShopIsDone.Arenas.Battles.States
         //private Control _EnemyActivityUI;
 
         [Export]
+        private ArenaEntitiesService _EntitiesService;
+
+        [Export]
         private UnitAIService _EnemyTurnService;
 
         [Export]
         private BehindSpiritService _BehindSpiritService;
-
-        // State
-        private SystemGenerics.Queue<ActionPlanner> _Customers = new SystemGenerics.Queue<ActionPlanner>();
-        private ActionPlanner _CurrentCustomer = null;
 
         public async override void OnStart(Dictionary<string, Variant> message = null)
         {
@@ -35,6 +34,18 @@ namespace ShopIsDone.Arenas.Battles.States
             {
                 await _BehindSpiritService.Execute().AwaitCommandFrom(this);
             }
+
+            // Progress spawners
+            var spawners = _EntitiesService
+                .GetAllArenaEntities()
+                .Where(e => e.IsActive() && e.IsInArena())
+                .Where(e => e.HasComponent<EntitySpawnerComponent>())
+                .Select(e => e.GetComponent<EntitySpawnerComponent>());
+            foreach (var spawner in spawners)
+            {
+                await spawner.ProgressSpawner().AwaitCommandFrom(this);
+            }
+
 
             // Resolve status effects
             await _EnemyTurnService.ResolveEffects().AwaitCommandFrom(this);
