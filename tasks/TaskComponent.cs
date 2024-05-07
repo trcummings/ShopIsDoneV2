@@ -220,6 +220,11 @@ namespace ShopIsDone.Tasks
         // We are our own damage target
         public IDamageTarget DamageTarget { get { return this; } }
 
+        public bool CanReceiveDamage()
+        {
+            return true;
+        }
+
         public Command InflictDamage(IDamageTarget target, MicrogamePayload outcomePayload)
         {
             return target.ReceiveDamage(GetDamage(outcomePayload));

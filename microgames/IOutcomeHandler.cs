@@ -28,11 +28,18 @@ namespace ShopIsDone.Microgames.Outcomes
 
     public interface IDamageTarget
     {
+        bool CanReceiveDamage();
+
         Command ReceiveDamage(DamagePayload damage);
     }
 
     public class NullDamageTarget : IDamageTarget
     {
+        public bool CanReceiveDamage()
+        {
+            return false;
+        }
+
         public Command ReceiveDamage(DamagePayload _)
         {
             return new Command();

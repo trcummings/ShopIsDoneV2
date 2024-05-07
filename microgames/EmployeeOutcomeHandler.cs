@@ -17,6 +17,11 @@ namespace ShopIsDone.Microgames.Outcomes
         public LevelEntity Entity;
         public ActionPointHandler ApHandler;
 
+        public bool CanReceiveDamage()
+        {
+            return true;
+        }
+
         public Command ReceiveDamage(DamagePayload payload)
         {
             return new DeferredCommand(() =>
@@ -87,6 +92,8 @@ namespace ShopIsDone.Microgames.Outcomes
             {
                 var competence = Competence.GetValue();
                 var wasIncompetent =
+                    // If we can actually inflict damage
+                    target.CanReceiveDamage() &&
                     // If we won
                     outcomePayload.WonMicrogame() &&
                     // And our competence is a liability
