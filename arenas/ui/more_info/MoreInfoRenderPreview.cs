@@ -25,7 +25,7 @@ namespace ShopIsDone.Arenas.UI
         public void AddRender(Node3D node, Vector3 offset)
         {
             _RenderSpot.AddChild(node);
-            node.Position = offset;
+            node.Position -= offset;
         }
 
         public void Reset()
