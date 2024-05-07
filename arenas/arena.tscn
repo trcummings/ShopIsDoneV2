@@ -210,9 +210,10 @@ script = ExtResource("23_ssg27")
 ClownColor = Color(0.764706, 0.407843, 0.133333, 1)
 _Arena = NodePath("../..")
 
-[node name="ArenaEntitiesService" type="Node" parent="Services" node_paths=PackedStringArray("_Arena")]
+[node name="ArenaEntitiesService" type="Node" parent="Services" node_paths=PackedStringArray("_Arena", "_EntitiesNode")]
 script = ExtResource("25_04uvk")
 _Arena = NodePath("../..")
+_EntitiesNode = NodePath("../../Entities")
 
 [node name="RuleDisplayService" type="Node" parent="Services" node_paths=PackedStringArray("_RulesContainer", "_ConditionsContainer", "_RulesUI", "_ConditionsUI")]
 script = ExtResource("26_olbmy")
@@ -282,9 +283,10 @@ _OutcomeService = NodePath("../../../../Services/ArenaOutcomeService")
 _Arena = NodePath("../../../..")
 _ActionService = NodePath("../../../../Services/ActionService")
 
-[node name="EnemyActivity" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_EnemyTurnService", "_BehindSpiritService")]
+[node name="EnemyActivity" type="Node" parent="ArenaStateMachine/Running/BattleStateMachine" node_paths=PackedStringArray("_PhaseManager", "_EntitiesService", "_EnemyTurnService", "_BehindSpiritService")]
 script = ExtResource("8_om56i")
 _PhaseManager = NodePath("../../BattlePhaseManager")
+_EntitiesService = NodePath("../../../../Services/ArenaEntitiesService")
 _EnemyTurnService = NodePath("../../../../Services/EnemyTurnUnitService")
 _BehindSpiritService = NodePath("../../../../Services/BehindSpiritService")
 
@@ -405,7 +407,6 @@ _TileScenes = Array[PackedScene]([ExtResource("5_hl2gx"), ExtResource("57_yy6as"
 metadata/_edit_lock_ = true
 
 [node name="Entities" type="Node3D" parent="."]
-unique_name_in_owner = true
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 layer = 16

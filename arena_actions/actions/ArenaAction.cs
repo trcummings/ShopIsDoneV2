@@ -119,23 +119,11 @@ namespace ShopIsDone.Actions
             // If the unit is not active, then they're invalid
             if (!unit.IsActive()) return false;
 
-            // If the unit doesn't have the required components, it's an invalid
-            // target
+            // If the unit doesn't have the required components, invalid target
             if (!TargetHasRequiredComponents(unit)) return false;
 
             // Check disposition
-            var teamHandler = Entity.GetComponent<TeamHandler>();
-            if (TargetDisposition == DispositionTypes.Any) return true;
-            else if (TargetDisposition == DispositionTypes.Friends)
-            {
-                return teamHandler.IsOnSameTeam(unit);
-            }
-            else if (TargetDisposition == DispositionTypes.Enemies)
-            {
-                return !teamHandler.IsOnSameTeam(unit);
-            }
-
-            return false;
+            return Entity.GetComponent<TeamHandler>().CanActAgainst(TargetDisposition, unit);
         }
 
         public virtual bool HasRequiredComponents(LevelEntity entity)

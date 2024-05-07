@@ -120,6 +120,15 @@ Id = "dead"
 _IsActive = false
 _IsInArena = false
 
+[node name="Hidden" type="Node" parent="StateHandler"]
+script = ExtResource("18_e7js2")
+_WaitForEnterAnimToFinish = false
+_WaitForExitAnimToFinish = false
+_IdleAnimName = "hidden"
+Id = "hidden"
+_IsActive = false
+_IsInArena = false
+
 [node name="ActionPlanner" type="Node" parent="." node_paths=PackedStringArray("_SensorsNode", "_ActionHandler")]
 script = ExtResource("18_ock78")
 _SensorsNode = NodePath("../Sensors")
