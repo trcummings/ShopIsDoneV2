@@ -36,6 +36,17 @@ namespace ShopIsDone.ClownRules.UI
                 _RuleElements.AddChild(elem);
                 elem.Text = rule.RuleDescription;
             }
+
+            if (rules.Count == 0)
+            {
+                (GetParent() as Control).Hide();
+                Hide();
+            }
+            else
+            {
+                (GetParent() as Control).Show();
+                Show();
+            }
         }
     }
 }
