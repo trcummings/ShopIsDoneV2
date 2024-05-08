@@ -65,7 +65,7 @@ namespace ShopIsDone.Levels.States
 
             // Activate camera service
             _CameraService.Init();
-            _CameraService.SetCameraTarget(_PlayerCharacterManager.Leader).Execute();
+            _CameraService.SetCameraTarget(_PlayerCharacterManager.Leader);
 
             // Pull auto-start arena out of message
             var autoArena = (Arena)message.GetValueOrDefault(Level.AUTO_ENTER_ARENA);

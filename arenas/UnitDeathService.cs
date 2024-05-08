@@ -29,7 +29,7 @@ namespace ShopIsDone.Arenas
             {
                 // Set camera target to tile the unit is on
                 var lastTile = _TileManager.GetTileAtTilemapPos(entity.TilemapPosition);
-                _CameraService.SetCameraTarget(lastTile).Execute();
+                _CameraService.SetCameraTarget(lastTile);
             }
 
             // Move to far off point

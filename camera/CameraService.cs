@@ -58,7 +58,12 @@ namespace ShopIsDone.Cameras
             _IsometricCamera.RotateLeft();
         }
 
-        public Command SetCameraTarget(Node3D target)
+        public void SetCameraTarget(Node3D target)
+        {
+            _IsometricCamera.Target = target;
+        }
+
+        public Command RunSetCameraTarget(Node3D target)
         {
             return new SetCameraTargetCommand()
             {
@@ -165,7 +170,7 @@ namespace ShopIsDone.Cameras
                 {
                     oldCameraTarget = GetCameraTarget();
                 }),
-                SetCameraTarget(target),
+                RunSetCameraTarget(target),
                 new DeferredCommand(() => new SeriesCommand(
                     next,
                     // Set camera back to old target

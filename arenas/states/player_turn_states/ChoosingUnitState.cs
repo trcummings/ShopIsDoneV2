@@ -108,7 +108,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
             _TileCursor.Init(_TileManager);
 
             // Have camera follow cursor
-            _CameraService.SetCameraTarget(_TileCursor).Execute();
+            _CameraService.SetCameraTarget(_TileCursor);
 
             // Move the cursors to the last selected tile
             _TileCursor.MoveCursorTo(_LastSelectedTile);
@@ -235,7 +235,7 @@ namespace ShopIsDone.Arenas.PlayerTurn
         {
             _PlayerCameraService.Deactivate();
             // Remove camera target
-            _CameraService.SetCameraTarget(null).Execute();
+            _CameraService.SetCameraTarget(null);
 
             _RulesDisplay.Deactivate();
 

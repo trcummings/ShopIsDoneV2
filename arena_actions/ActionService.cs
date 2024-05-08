@@ -252,7 +252,7 @@ namespace ShopIsDone.Actions
             return new SeriesCommand(
                 new ConditionalCommand(
                     () => action.FollowEntity,
-                    _CameraService.SetCameraTarget(action.Entity)
+                    _CameraService.RunSetCameraTarget(action.Entity)
                 ),
                 next
             );

@@ -329,7 +329,7 @@ namespace ShopIsDone.ClownRules
         {
             return new SeriesCommand(
                 // Do not follow judge during exit
-                _CameraService.SetCameraTarget(_TileManager.GetTileAtTilemapPos(_Judge.TilemapPosition)),
+                _CameraService.RunSetCameraTarget(_TileManager.GetTileAtTilemapPos(_Judge.TilemapPosition)),
                 // Warp away
                 new ParallelCommand(
                     new AsyncCommand(async () => await ToSignal(

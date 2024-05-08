@@ -130,7 +130,7 @@ namespace ShopIsDone.Arenas.UnitPlacement
             _FingerCursor.WarpCursorTo(_SelectedTile.GlobalPosition);
 
             // Have the camera follow the finger cursor
-            _CameraService.SetCameraTarget(_FingerCursor).Execute();
+            _CameraService.SetCameraTarget(_FingerCursor);
 
             // Rotate the camera so it's facing the selected unit
             _CameraService.RotateCameraTo(selectedUnit.FacingDirection);
@@ -248,7 +248,7 @@ namespace ShopIsDone.Arenas.UnitPlacement
             if (nextState != Consts.States.MOVING_UNIT)
             {
                 // Remove camera target
-                _CameraService.SetCameraTarget(null).Execute();
+                _CameraService.SetCameraTarget(null);
 
                 // Clear indicators
                 _TileIndicator.ClearIndicators();
