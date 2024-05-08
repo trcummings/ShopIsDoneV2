@@ -34,6 +34,10 @@ _subresources={
 "ClownPuppetMaterial": {
 "use_external/enabled": true,
 "use_external/path": "res://Models/clown_puppet/clown_puppet.material"
+},
+"Material": {
+"use_external/enabled": true,
+"use_external/path": "res://Materials/toon_outline.material"
 }
 }
 }
