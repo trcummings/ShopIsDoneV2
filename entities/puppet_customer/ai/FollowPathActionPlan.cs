@@ -60,7 +60,7 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
             return new SeriesCommand(
                 new IfElseCommand(
                     () => target != null,
-                    new ActionCommand(() => _Blackboard.Add(Consts.ENTITY_TARGET, target)),
+                    new ActionCommand(() => _Blackboard.SafeAdd(Consts.ENTITY_TARGET, target)),
                     new ActionCommand(() => _Blackboard.Remove(Consts.ENTITY_TARGET))
                 ),
                 // Show indicators
