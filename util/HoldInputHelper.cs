@@ -60,7 +60,7 @@ namespace ShopIsDone.Utils
 
             // Otherwise, we've pressed a new value, emit immediately, and start
             // the initial delay timer
-            else if (dir != _PrevValue)
+            else if (dir != _PrevValue && IsCardinalDirection(dir))
             {
                 // Reset any timers
                 Reset();
@@ -77,6 +77,15 @@ namespace ShopIsDone.Utils
 
             // Update the value
             _PrevValue = dir;
+        }
+
+        private static bool IsCardinalDirection(Vector3 dir)
+        {
+            return
+                dir == Vector3.Back ||
+                dir == Vector3.Forward ||
+                dir == Vector3.Left ||
+                dir == Vector3.Right;
         }
 
         private void Reset()
