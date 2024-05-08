@@ -21,7 +21,7 @@ namespace ShopIsDone.Microgames
         [Inject]
         private MicrogameController _MicrogameController;
 
-        private Microgame _MicrogameScene;
+        protected Microgame _MicrogameScene;
 
         public override void _Ready()
         {
@@ -45,7 +45,7 @@ namespace ShopIsDone.Microgames
             return GetMicrogame(payload).ShowPopupText;
         }
 
-        private Microgame GetMicrogame(MicrogamePayload _)
+        protected virtual Microgame GetMicrogame(MicrogamePayload _)
         {
             _MicrogameScene = MicrogameScene.Instantiate<Microgame>();
             return _MicrogameScene;
