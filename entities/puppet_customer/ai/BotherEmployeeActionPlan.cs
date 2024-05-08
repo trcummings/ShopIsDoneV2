@@ -83,7 +83,10 @@ namespace ShopIsDone.Entities.PuppetCustomers.AI
                 // Set blackboard values
                 new DeferredCommand(() => new ActionCommand(() =>
                 {
-                    _Blackboard.Add(Consts.BOTHERED_EMPLOYEE, true);
+                    if (!_Blackboard.ContainsKey(Consts.BOTHERED_EMPLOYEE))
+                    {
+                        _Blackboard.Add(Consts.BOTHERED_EMPLOYEE, true);
+                    }
                 }))
             );
         }
